@@ -18,8 +18,8 @@ class Bracket(db.Model):
     points = db.Column(db.Integer, nullable=False)
     max_points = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(30), nullable=False)
-    year = db.Column(db.String(5), nullable=False)
-    tournament_winner = db.Column(db.String(30), nullable=True)
+    year = db.Column(db.Integer, nullable=False)
+    winner = db.Column(db.String(30), nullable=True)
     # game1 = db.Column(db.String(30), nullable=False)
     # game2 = db.Column(db.String(30), nullable=False)
     # game3 = db.Column(db.String(30), nullable=False)
@@ -42,9 +42,32 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     bracket_id = db.Column(db.Integer, db.ForeignKey('bracket.id'), nullable=False)
-    game = db.Column(db.Integer, nullable=True)
+    game_num = db.Column(db.String(10), nullable=False)
     winner = db.Column(db.String(30), nullable=True)
+
+class CorrectBracket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    winner = db.Column(db.String(30), nullable=True)
+    w_goals = db.Column(db.Integer)
+    l_goals = db.Column(db.Integer)
+
+class CorrectGame(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bracket_id = db.Column(db.Integer, db.ForeignKey(CorrectBracket.id), nullable=False)
+    game_num = db.Column(db.String(10), nullable=False)
+    winner = db.Column(db.String(30), nullable=True)
+    loser = db.Column(db.String(30), nullable=True)
+    w_goals = db.Column(db.Integer, nullable=True)
+    l_goals = db.Column(db.Integer, nullable=True)
+
+class DefaultBracket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+
+class DefaultGame(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bracket_id = db.Column(db.Integer, db.ForeignKey(DefaultBracket.id), nullable=False)
+    game_num = db.Column(db.String(10), nullable=False)
     home = db.Column(db.String(30), nullable=True)
     away = db.Column(db.String(30), nullable=True)
-    home_goals = db.Column(db.Integer, nullable=True)
-    away_goals = db.Column(db.Integer, nullable=True)

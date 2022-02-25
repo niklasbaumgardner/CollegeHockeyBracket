@@ -186,36 +186,36 @@
                             <div class="round round-one current">
                                 <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game9_team1('North Dakota')" type="radio" name="game1" value="North Dakota" required {% if bracket.game1 == "North Dakota" %}checked{% endif %}> 1 North Dakota<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game9_team1('AIC')" type="radio" name="game1" value="AIC" {% if bracket.game1 == "AIC" %}checked{% endif %}> AIC<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game9_team1('North Dakota')" type="radio" name="game1" value="North Dakota" required {% if bracket.game1 == "North Dakota" %}checked{% endif %}> 1 North Dakota</li>
+                                    <li class="team team-top"><input onclick="game9_team1('AIC')" type="radio" name="game1" value="AIC" {% if bracket.game1 == "AIC" %}checked{% endif %}> AIC</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game9_team2('Minnesota Duluth')" type="radio" name="game2" value="Minnesota Duluth" required {% if bracket.game2 == "Minnesota Duluth" %}checked{% endif %}> Minnesota Duluth<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game9_team2('Michigan')" type="radio" name="game2" value="Michigan" {% if bracket.game2 == "Michigan" %}checked{% endif %}> Michigan<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game9_team2('Minnesota Duluth')" type="radio" name="game2" value="Minnesota Duluth" required {% if bracket.game2 == "Minnesota Duluth" %}checked{% endif %}> Minnesota Duluth</li>
+                                    <li class="team team-top"><input onclick="game9_team2('Michigan')" type="radio" name="game2" value="Michigan" {% if bracket.game2 == "Michigan" %}checked{% endif %}> Michigan</li>
                                 </ul>
                                 <br><br><br><br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game10_team1('Wisconsin')" type="radio" name="game3" value="Wisconsin" required {% if bracket.game3 == "Wisconsin" %}checked{% endif %}> 4 Wisconsin<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game10_team1('Bemidji State')" type="radio" name="game3" value="Bemidji State" {% if bracket.game3 == "Bemidji State" %}checked{% endif %}> Bemidji State<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game10_team1('Wisconsin')" type="radio" name="game3" value="Wisconsin" required {% if bracket.game3 == "Wisconsin" %}checked{% endif %}> 4 Wisconsin</li>
+                                    <li class="team team-top"><input onclick="game10_team1('Bemidji State')" type="radio" name="game3" value="Bemidji State" {% if bracket.game3 == "Bemidji State" %}checked{% endif %}> Bemidji State</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game10_team2('Lake Superior State')" type="radio" name="game4" value="Lake Superior State" required {% if bracket.game4 == "Lake Superior State" %}checked{% endif %}> Lake Superior State<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game10_team2('Massachusetts')" type="radio" name="game4" value="Massachusetts" {% if bracket.game4 == "Massachusetts" %}checked{% endif %}> Massachusetts<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game10_team2('Lake Superior State')" type="radio" name="game4" value="Lake Superior State" required {% if bracket.game4 == "Lake Superior State" %}checked{% endif %}> Lake Superior State</li>
+                                    <li class="team team-top"><input onclick="game10_team2('Massachusetts')" type="radio" name="game4" value="Massachusetts" {% if bracket.game4 == "Massachusetts" %}checked{% endif %}> Massachusetts</li>
                                 </ul>
                             </div>	<!-- END ROUND ONE -->
                     
                             <div class="round round-two current">
                                 <div class="round-details">Round 2<br/><span class="date">March 18</span></div>			
                                 <ul class="matchup">
-                                    <li id="g9t1" class="team team-top"><input onclick="game13_team1('{{ bracket.game1 }}')" type="radio" name="game9" value="{{ bracket.game1 }}" required {% if bracket.game1 == bracket.game9 %}checked{% endif %}>{{ bracket.game1 }}<span class="score"></span></li>
-                                    <li id="g9t2" class="team team-top"><input onclick="game13_team1('{{ bracket.game2 }}')" type="radio" name="game9" value="{{ bracket.game2 }}" required {% if bracket.game2 == bracket.game9 %}checked{% endif %}>{{ bracket.game2 }}<span class="score"></span></li>
+                                    <li id="g9t1" class="team team-top"><input onclick="game13_team1('{{ bracket.game1 }}')" type="radio" name="game9" value="{{ bracket.game1 }}" required {% if bracket.game1 == bracket.game9 %}checked{% endif %}>{{ bracket.game1 }}</li>
+                                    <li id="g9t2" class="team team-top"><input onclick="game13_team1('{{ bracket.game2 }}')" type="radio" name="game9" value="{{ bracket.game2 }}" required {% if bracket.game2 == bracket.game9 %}checked{% endif %}>{{ bracket.game2 }}</li>
                                 </ul>
                                 <br><br><br><br><br><br>
                                 <ul class="matchup">
-                                    <li id="g10t1" class="team team-top"><input onclick="game13_team2('{{ bracket.game3 }}')" type="radio" name="game10" value="{{ bracket.game3 }}" required {% if bracket.game3 == bracket.game10 %}checked{% endif %}>{{ bracket.game3 }}<span class="score"></span></li>
-                                    <li id="g10t2" class="team team-bottom"><input onclick="game13_team2('{{ bracket.game4 }}')" type="radio" name="game10" value="{{ bracket.game4 }}" required {% if bracket.game4 == bracket.game10 %}checked{% endif %}>{{ bracket.game4 }}<span class="score"></span></li>
+                                    <li id="g10t1" class="team team-top"><input onclick="game13_team2('{{ bracket.game3 }}')" type="radio" name="game10" value="{{ bracket.game3 }}" required {% if bracket.game3 == bracket.game10 %}checked{% endif %}>{{ bracket.game3 }}</li>
+                                    <li id="g10t2" class="team team-bottom"><input onclick="game13_team2('{{ bracket.game4 }}')" type="radio" name="game10" value="{{ bracket.game4 }}" required {% if bracket.game4 == bracket.game10 %}checked{% endif %}>{{ bracket.game4 }}</li>
                                 </ul>
                             </div>	<!-- END ROUND TWO -->
                             
@@ -223,8 +223,8 @@
                                 <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
                                 <br><br>	
                                 <ul class="matchup">
-                                    <li id="g13t1" class="team team-top"><input onclick="game15_team1('{{ bracket.game9 }}')" type="radio" name="game13" value="{{ bracket.game9 }}" required {% if bracket.game9 == bracket.game13 %}checked{% endif %}>{{ bracket.game9 }}<span class="score"></span></li>
-                                    <li id="g13t2" class="team team-bottom"><input onclick="game15_team1('{{ bracket.game10 }}')" type="radio" name="game13" value="{{ bracket.game10 }}" required {% if bracket.game10 == bracket.game13 %}checked{% endif %}>{{ bracket.game10 }}<span class="score"></span></li>
+                                    <li id="g13t1" class="team team-top"><input onclick="game15_team1('{{ bracket.game9 }}')" type="radio" name="game13" value="{{ bracket.game9 }}" required {% if bracket.game9 == bracket.game13 %}checked{% endif %}>{{ bracket.game9 }}</li>
+                                    <li id="g13t2" class="team team-bottom"><input onclick="game15_team1('{{ bracket.game10 }}')" type="radio" name="game13" value="{{ bracket.game10 }}" required {% if bracket.game10 == bracket.game13 %}checked{% endif %}>{{ bracket.game10 }}</li>
                                 </ul>
                             </div>	<!-- END ROUND THREE -->		
                         </div> 
@@ -235,8 +235,8 @@
                                 <div class="round-details">championship <br/><span class="date">March 30 - Apr. 1</span></div>
                                 
                                 <ul class ="matchup championship">
-                                    <li id="g15t1" class="team team-top"><input type="radio" name="game15" value="{{ bracket.game13 }}" required {% if bracket.game13 == bracket.game15 %}checked{% endif %}>{{ bracket.game13 }}<span class="vote-count"></span></li>
-                                    <li id="g15t2" class="team team-bottom"><input type="radio" name="game15" value="{{ bracket.game14 }}" required {% if bracket.game14 == bracket.game15 %}checked{% endif %}>{{ bracket.game14 }}<span class="vote-count"></span></li>
+                                    <li id="g15t1" class="team team-top"><input type="radio" name="game15" value="{{ bracket.game13 }}" required {% if bracket.game13 == bracket.game15 %}checked{% endif %}>{{ bracket.game13 }}</li>
+                                    <li id="g15t2" class="team team-bottom"><input type="radio" name="game15" value="{{ bracket.game14 }}" required {% if bracket.game14 == bracket.game15 %}checked{% endif %}>{{ bracket.game14 }}</li>
                                 </ul>
                                 
                             </div>
@@ -260,43 +260,43 @@
                                 <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
                                 <br><br>					
                                 <ul class="matchup">
-                                    <li id="g14t1" class="team team-top"><input onclick="game15_team2('{{ bracket.game11 }}')" type="radio" name="game14" value="{{ bracket.game11 }}" required {% if bracket.game11 == bracket.game14 %}checked{% endif %}>{{ bracket.game11 }}<span class="score"></span></li>
-                                    <li id="g14t2" class="team team-bottom"><input onclick="game15_team2('{{ bracket.game12 }}')" type="radio" name="game14" value="{{ bracket.game12 }}" required {% if bracket.game12 == bracket.game14 %}checked{% endif %}>{{ bracket.game12 }}<span class="score"></span></li>
+                                    <li id="g14t1" class="team team-top"><input onclick="game15_team2('{{ bracket.game11 }}')" type="radio" name="game14" value="{{ bracket.game11 }}" required {% if bracket.game11 == bracket.game14 %}checked{% endif %}>{{ bracket.game11 }}</li>
+                                    <li id="g14t2" class="team team-bottom"><input onclick="game15_team2('{{ bracket.game12 }}')" type="radio" name="game14" value="{{ bracket.game12 }}" required {% if bracket.game12 == bracket.game14 %}checked{% endif %}>{{ bracket.game12 }}</li>
                                 </ul>
                             </div>	<!-- END ROUND THREE -->	
                     
                             <div class="round round-two current">
                                 <div class="round-details">Round 2<br/><span class="date">March 18</span></div>						
                                 <ul class="matchup">
-                                    <li id="g11t1" class="team team-top"><input onclick="game14_team1('{{ bracket.game5 }}')" type="radio" name="game11" value="{{ bracket.game5 }}" required {% if bracket.game5 == bracket.game11 %}checked{% endif %}>{{ bracket.game5 }}<span class="score"></span></li>
-                                    <li id="g11t2" class="team team-bottom"><input onclick="game14_team1('{{ bracket.game6 }}')" type="radio" name="game11" value="{{ bracket.game6 }}" required {% if bracket.game6 == bracket.game11 %}checked{% endif %}>{{ bracket.game6 }}<span class="score"></span></li>
+                                    <li id="g11t1" class="team team-top"><input onclick="game14_team1('{{ bracket.game5 }}')" type="radio" name="game11" value="{{ bracket.game5 }}" required {% if bracket.game5 == bracket.game11 %}checked{% endif %}>{{ bracket.game5 }}</li>
+                                    <li id="g11t2" class="team team-bottom"><input onclick="game14_team1('{{ bracket.game6 }}')" type="radio" name="game11" value="{{ bracket.game6 }}" required {% if bracket.game6 == bracket.game11 %}checked{% endif %}>{{ bracket.game6 }}</li>
                                 </ul>
                                 <br><br><br><br><br><br>
                                 <ul class="matchup">
-                                    <li id="g12t1" class="team team-top"><input onclick="game14_team2('{{ bracket.game7 }}')" type="radio" name="game12" value="{{ bracket.game7 }}" required {% if bracket.game7 == bracket.game12 %}checked{% endif %}>{{ bracket.game7 }}<span class="score"></span></li>
-                                    <li id="g12t2" class="team team-bottom"><input onclick="game14_team2('{{ bracket.game8 }}')" type="radio" name="game12" value="{{ bracket.game8 }}" required {% if bracket.game8 == bracket.game12 %}checked{% endif %}>{{ bracket.game8 }}<span class="score"></span></li>
+                                    <li id="g12t1" class="team team-top"><input onclick="game14_team2('{{ bracket.game7 }}')" type="radio" name="game12" value="{{ bracket.game7 }}" required {% if bracket.game7 == bracket.game12 %}checked{% endif %}>{{ bracket.game7 }}</li>
+                                    <li id="g12t2" class="team team-bottom"><input onclick="game14_team2('{{ bracket.game8 }}')" type="radio" name="game12" value="{{ bracket.game8 }}" required {% if bracket.game8 == bracket.game12 %}checked{% endif %}>{{ bracket.game8 }}</li>
                                 </ul>
                             </div>	<!-- END ROUND TWO -->
                             <div class="round round-one current">
                                 <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game11_team1('Minnesota')" type="radio" name="game5" value="Minnesota" required {% if bracket.game5 == "Minnesota" %}checked{% endif %}> 3 Minnesota<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game11_team1('Omaha')" type="radio" name="game5" value="Omaha" {% if bracket.game5 == "Omaha" %}checked{% endif %}> Omaha<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game11_team1('Minnesota')" type="radio" name="game5" value="Minnesota" required {% if bracket.game5 == "Minnesota" %}checked{% endif %}> 3 Minnesota</li>
+                                    <li class="team team-top"><input onclick="game11_team1('Omaha')" type="radio" name="game5" value="Omaha" {% if bracket.game5 == "Omaha" %}checked{% endif %}> Omaha</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game11_team2('Minnesota State')" type="radio" name="game6" value="Minnesota State" required {% if bracket.game6 == "Minnesota State" %}checked{% endif %}> Minnesota State<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game11_team2('Quinnipiac')" type="radio" name="game6" value="Quinnipiac" {% if bracket.game6 == "Quinnipiac" %}checked{% endif %}> Quinnipiac<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game11_team2('Minnesota State')" type="radio" name="game6" value="Minnesota State" required {% if bracket.game6 == "Minnesota State" %}checked{% endif %}> Minnesota State</li>
+                                    <li class="team team-top"><input onclick="game11_team2('Quinnipiac')" type="radio" name="game6" value="Quinnipiac" {% if bracket.game6 == "Quinnipiac" %}checked{% endif %}> Quinnipiac</li>
                                 </ul>
                                 <br><br><br><br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game12_team1('Boston College')" type="radio" name="game7" value="Boston College" required {% if bracket.game7 == "Boston College" %}checked{% endif %}> 2 Boston College<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game12_team1('Notre Dame')" type="radio" name="game7" value="Notre Dame" {% if bracket.game7 == "Notre Dame" %}checked{% endif %}> Notre Dame<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game12_team1('Boston College')" type="radio" name="game7" value="Boston College" required {% if bracket.game7 == "Boston College" %}checked{% endif %}> 2 Boston College</li>
+                                    <li class="team team-top"><input onclick="game12_team1('Notre Dame')" type="radio" name="game7" value="Notre Dame" {% if bracket.game7 == "Notre Dame" %}checked{% endif %}> Notre Dame</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game12_team2('St. Cloud State')" type="radio" name="game8" value="St. Cloud State" required {% if bracket.game8 == "St. Cloud State" %}checked{% endif %}> St. Cloud State<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game12_team2('Boston University')" type="radio" name="game8" value="Boston University" {% if bracket.game8 == "Boston University" %}checked{% endif %}> Boston University<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game12_team2('St. Cloud State')" type="radio" name="game8" value="St. Cloud State" required {% if bracket.game8 == "St. Cloud State" %}checked{% endif %}> St. Cloud State</li>
+                                    <li class="team team-top"><input onclick="game12_team2('Boston University')" type="radio" name="game8" value="Boston University" {% if bracket.game8 == "Boston University" %}checked{% endif %}> Boston University</li>
                                 </ul>
                             </div>	<!-- END ROUND ONE -->          				
                         </div>
@@ -311,36 +311,36 @@
                             <div class="round round-one current">
                                 <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game9_team1('North Dakota')" type="radio" id="North Dakota" name="game1" value="North Dakota" required> 1 North Dakota<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game9_team1('AIC')" type="radio" id="AIC" name="game1" value="AIC"> AIC<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game9_team1('North Dakota')" type="radio" id="North Dakota" name="game1" value="North Dakota" required> 1 North Dakota</li>
+                                    <li class="team team-top"><input onclick="game9_team1('AIC')" type="radio" id="AIC" name="game1" value="AIC"> AIC</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game9_team2('Minnesota Duluth')" type="radio" id="Minnesota Duluth" name="game2" value="Minnesota Duluth" required> Minnesota Duluth<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game9_team2('Michigan')" type="radio" id="Michigan" name="game2" value="Michigan"> Michigan<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game9_team2('Minnesota Duluth')" type="radio" id="Minnesota Duluth" name="game2" value="Minnesota Duluth" required> Minnesota Duluth</li>
+                                    <li class="team team-top"><input onclick="game9_team2('Michigan')" type="radio" id="Michigan" name="game2" value="Michigan"> Michigan</li>
                                 </ul>
                                 <br><br><br><br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game10_team1('Wisconsin')" type="radio" id="Wisconsin" name="game3" value="Wisconsin" required> Wisconsin<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game10_team1('Bemidji State')" type="radio" id="Bemidji State" name="game3" value="Bemidji State"> Bemidji State<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game10_team1('Wisconsin')" type="radio" id="Wisconsin" name="game3" value="Wisconsin" required> Wisconsin</li>
+                                    <li class="team team-top"><input onclick="game10_team1('Bemidji State')" type="radio" id="Bemidji State" name="game3" value="Bemidji State"> Bemidji State</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game10_team2('Lake Superior State')" type="radio" id="Lake Superior State" name="game4" value="Lake Superior State" required> Lake Superior State<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game10_team2('Massachusetts')" type="radio" id="Massachusetts" name="game4" value="Massachusetts"> Massachusetts<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game10_team2('Lake Superior State')" type="radio" id="Lake Superior State" name="game4" value="Lake Superior State" required> Lake Superior State</li>
+                                    <li class="team team-top"><input onclick="game10_team2('Massachusetts')" type="radio" id="Massachusetts" name="game4" value="Massachusetts"> Massachusetts</li>
                                 </ul>
                             </div>	<!-- END ROUND ONE -->
                     
                             <div class="round round-two current">
                                 <div class="round-details">Round 2<br/><span class="date">March 18</span></div>			
                                 <ul class="matchup">
-                                    <li id="g9t1" class="team team-top"><span class="score"></span></li>
-                                    <li id="g9t2" class="team team-top"><span class="score"></span></li>
+                                    <li id="g9t1" class="team team-top"></li>
+                                    <li id="g9t2" class="team team-top"></li>
                                 </ul>
                                 <br><br><br><br><br><br>
                                 <ul class="matchup">
-                                    <li id="g10t1" class="team team-top"><span class="score"></span></li>
-                                    <li id="g10t2" class="team team-bottom"><span class="score"></span></li>
+                                    <li id="g10t1" class="team team-top"></li>
+                                    <li id="g10t2" class="team team-bottom"></li>
                                 </ul>
                             </div>	<!-- END ROUND TWO -->
                             
@@ -348,8 +348,8 @@
                                 <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
                                 <br><br>	
                                 <ul class="matchup">
-                                    <li id="g13t1" class="team team-top"><span class="score"></span></li>
-                                    <li id="g13t2" class="team team-bottom"><span class="score"></span></li>
+                                    <li id="g13t1" class="team team-top"></li>
+                                    <li id="g13t2" class="team team-bottom"></li>
                                 </ul>
                             </div>	<!-- END ROUND THREE -->		
                         </div> 
@@ -379,43 +379,43 @@
                                 <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
                                 <br><br>					
                                 <ul class="matchup">
-                                    <li id="g14t1" class="team team-top"><span class="score"></span></li>
-                                    <li id="g14t2" class="team team-bottom"><span class="score"></span></li>
+                                    <li id="g14t1" class="team team-top"></li>
+                                    <li id="g14t2" class="team team-bottom"></li>
                                 </ul>
                             </div>	<!-- END ROUND THREE -->	
                     
                             <div class="round round-two current">
                                 <div class="round-details">Round 2<br/><span class="date">March 18</span></div>						
                                 <ul class="matchup">
-                                    <li id="g11t1" class="team team-top"><span class="score"></span></li>
-                                    <li id="g11t2" class="team team-bottom"><span class="score"></span></li>
+                                    <li id="g11t1" class="team team-top"></li>
+                                    <li id="g11t2" class="team team-bottom"></li>
                                 </ul>
                                 <br><br><br><br><br><br>
                                 <ul class="matchup">
-                                    <li id="g12t1" class="team team-top"><span class="score"></span></li>
-                                    <li id="g12t2" class="team team-bottom"><span class="score"></span></li>
+                                    <li id="g12t1" class="team team-top"></li>
+                                    <li id="g12t2" class="team team-bottom"></li>
                                 </ul>
                             </div>	<!-- END ROUND TWO -->
                             <div class="round round-one current">
                                 <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game11_team1('Minnesota')" type="radio" name="game5" value="Minnesota" required> 3 Minnesota<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game11_team1('Omaha')" type="radio" name="game5" value="Omaha"> Omaha<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game11_team1('Minnesota')" type="radio" name="game5" value="Minnesota" required> 3 Minnesota</li>
+                                    <li class="team team-top"><input onclick="game11_team1('Omaha')" type="radio" name="game5" value="Omaha"> Omaha</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game11_team2('Minnesota State')" type="radio" name="game6" value="Minnesota State" required> Minnesota State<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game11_team2('Quinnipiac')" type="radio" name="game6" value="Quinnipiac"> Quinnipiac<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game11_team2('Minnesota State')" type="radio" name="game6" value="Minnesota State" required> Minnesota State</li>
+                                    <li class="team team-top"><input onclick="game11_team2('Quinnipiac')" type="radio" name="game6" value="Quinnipiac"> Quinnipiac</li>
                                 </ul>
                                 <br><br><br><br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game12_team1('Boston College')" type="radio" name="game7" value="Boston College" required> 2 Boston College<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game12_team1('Notre Dame')" type="radio" name="game7" value="Notre Dame"> Notre Dame<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game12_team1('Boston College')" type="radio" name="game7" value="Boston College" required> 2 Boston College</li>
+                                    <li class="team team-top"><input onclick="game12_team1('Notre Dame')" type="radio" name="game7" value="Notre Dame"> Notre Dame</li>
                                 </ul>
                                 <br>
                                 <ul class="matchup">
-                                    <li class="team team-top"><input onclick="game12_team2('St. Cloud State')" type="radio" name="game8" value="St. Cloud State" required> St. Cloud State<span class="score"></span></li>
-                                    <li class="team team-top"><input onclick="game12_team2('Boston University')" type="radio" name="game8" value="Boston University"> Boston University<span class="score"></span></li>
+                                    <li class="team team-top"><input onclick="game12_team2('St. Cloud State')" type="radio" name="game8" value="St. Cloud State" required> St. Cloud State</li>
+                                    <li class="team team-top"><input onclick="game12_team2('Boston University')" type="radio" name="game8" value="Boston University"> Boston University</li>
                                 </ul>
                             </div>	<!-- END ROUND ONE -->          				
                         </div>

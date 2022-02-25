@@ -1,0 +1,112 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock title %}
+{% block admin %}active{% endblock admin %}
+
+{% block content %}
+<div class="pb-5 d-flex justify-content-center mx-0">
+    <div class="fw-bold fs-1">
+        Admin page.
+    </div>
+</div>
+<div class="container mx-0 bg-light p-3">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Default Bracket
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <form action="{{ url_for('home.update_default') }}" method="POST">
+                        <div class="row">
+                            {% for game in default.games %}
+                                <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <p class="fs-1">{{ game.game_num }}</p>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-home">Home</label>
+                                        <input type="text" id="{{ game.game_num }}-home" name="{{ game.game_num }}-home" class="form-control" value="{{ game.home }}" />
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-away">Away</label>
+                                        <input type="text" id="{{ game.game_num }}-away" name="{{ game.game_num }}-away" class="form-control" value="{{ game.away }}"/>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <input type="submit" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Correct Bracket
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <form action="{{ url_for('home.update_correct') }}" method="POST">
+                        <div class="row">
+                            {% for game in correct.games %}
+                                <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <p class="fs-1">{{ game.game_num }}</p>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-winner">Winner</label>
+                                        <select id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-select" aria-label="Default select example">
+                                            {% for g in default.games %}
+                                                {% if g.home == game.winner %}
+                                                    <option value="{{ g.home }}" selected>{{ g.home }}</option>
+                                                {% else %}
+                                                    <option value="{{ g.home }}">{{ g.home }}</option>
+                                                {% endif %}
+                                                {% if g.away == game.winner %}
+                                                    <option value="{{ g.away }}" selected>{{ g.away }}</option>
+                                                {% else %}
+                                                    <option value="{{ g.away }}">{{ g.away }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <!-- <input type="text" id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-control" value="{{ game.winner }}" /> -->
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-w_goals">Winner Goals</label>
+                                        <input type="number" id="{{ game.game_num }}-w_goals" name="{{ game.game_num }}-w_goals" class="form-control" value="{{ game.w_goals }}"/>
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-loser">Loser</label>
+                                        <select id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-select" aria-label="Default select example">
+                                            {% for g in default.games %}
+                                                {% if g.home == game.loser %}
+                                                    <option value="{{ g.home }}" selected>{{ g.home }}</option>
+                                                {% else %}
+                                                    <option value="{{ g.home }}">{{ g.home }}</option>
+                                                {% endif %}
+                                                {% if g.away == game.loser %}
+                                                    <option value="{{ g.away }}" selected>{{ g.away }}</option>
+                                                {% else %}
+                                                    <option value="{{ g.away }}">{{ g.away }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <!-- <input type="text" id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-control" value="{{ game.loser }}"/> -->
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-l_goals">Loser Goals</label>
+                                        <input type="number" id="{{ game.game_num }}-l_goals" name="{{ game.game_num }}-l_goals" class="form-control" value="{{ game.l_goals }}"/>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <input type="submit" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

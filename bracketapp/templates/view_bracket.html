@@ -19,40 +19,40 @@
             <div class="round round-one current">
                 <div class="round-details">Round 1</div>
                 <ul class="matchup">
-                    <li class="team team-top">Duke<span class="score">76</span></li>
-                    <li class="team team-bottom">Virginia<span class="score">82</span></li>
+                    <li class="team team-top">{{ default.games[0].home }}<span class="score">66</span></li>
+                    <li class="team team-bottom">{{ default.games[0].away }}<span class="score">82</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">Wake Forest<span class="score">64</span></li>
-                    <li class="team team-bottom">Clemson<span class="score">56</span></li>
+                    <li class="team team-top">{{ default.games[1].home }}<span class="score">64</span></li>
+                    <li class="team team-bottom">{{ default.games[1].away }}<span class="score">56</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">North Carolina<span class="score">68</span></li>
-                    <li class="team team-bottom">Florida State<span class="score">54</span></li>
+                    <li class="team team-top">{{ default.games[2].home }}<span class="score">68</span></li>
+                    <li class="team team-bottom">{{ default.games[2].away }}<span class="score">54</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">NC State<span class="score">74</span></li>
-                    <li class="team team-bottom">Maryland<span class="score">92</span></li>
+                    <li class="team team-top">{{ default.games[3].home }}<span class="score">74</span></li>
+                    <li class="team team-bottom">{{ default.games[3].away }}<span class="score">92</span></li>
                 </ul>
             </div>	<!-- END ROUND ONE -->
 
             <div class="round round-two">
                 <div class="round-details">Round 2</div>
                 <ul class="matchup">
-                    <li class="team team-top">Team<span class="score">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[0].winner != 'None' %}{{ correct.games[0].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[1].winner != 'None' %}{{ correct.games[1].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[2].winner != 'None' %}{{ correct.games[2].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[3].winner != 'None' %}{{ correct.games[3].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
             </div>	<!-- END ROUND TWO -->
 
             <div class="round round-three">
                 <div class="round-details">Round 3</div>
                 <ul class="matchup">
-                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[8].winner != 'None' %}{{ correct.games[8].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[9].winner != 'None' %}{{ correct.games[9].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
             </div>	<!-- END ROUND THREE -->
         </div>
@@ -62,52 +62,61 @@
                 <i class="fa fa-trophy"></i>
                 <div class="round-details">championship</div>
                 <ul class ="matchup championship">
-                    <li class="team team-top">&nbsp;<span class="vote-count">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[12].winner != 'None' %}{{ correct.games[12].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[13].winner != 'None' %}{{ correct.games[13].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
+            </div>
+
+            <div class="semis-r">
+                <fieldset>
+                    <legend>Final Game Score</legend>
+                    <label for="w_goals">Winner goals</label><br>
+                    <div name="w_goals"><span class="team team-top">{{ bracket.w_goals }}</span></div>
+                    <label for="l_goals">Loser goals</label><br>
+                    <div name="l_goals"><span class="vote-count">{{ bracket.l_goals }}</span></div>
+                </fieldset>
             </div>
         </div>
 
 
         <div class="split split-two">
 
-
             <div class="round round-three">
                 <div class="round-details">Round 3</div>
                 <ul class="matchup">
-                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[10].winner != 'None' %}{{ correct.games[10].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[11].winner != 'None' %}{{ correct.games[11].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
             </div>	<!-- END ROUND THREE -->	
 
             <div class="round round-two">
                 <div class="round-details">Round 2</div>
                 <ul class="matchup">
-                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[4].winner != 'None' %}{{ correct.games[4].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[5].winner != 'None' %}{{ correct.games[5].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
-                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-top">{% if correct.games[6].winner != 'None' %}{{ correct.games[6].winner }}{% endif %}<span class="score">6969</span></li>
+                    <li class="team team-bottom">{% if correct.games[7].winner != 'None' %}{{ correct.games[7].winner }}{% endif %}<span class="score">6969</span></li>
                 </ul>
             </div>	<!-- END ROUND TWO -->
             <div class="round round-one current">
                 <div class="round-details">Round 1</div>
                 <ul class="matchup">
-                    <li class="team team-top">Minnesota<span class="score">62</span></li>
-                    <li class="team team-bottom">Northwestern<span class="score">54</span></li>
+                    <li class="team team-top">{{ default.games[4].home }}<span class="score">62</span></li>
+                    <li class="team team-bottom">{{ default.games[4].away }}<span class="score">54</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">Michigan<span class="score">68</span></li>
-                    <li class="team team-bottom">Iowa<span class="score">66</span></li>
+                    <li class="team team-top">{{ default.games[5].home }}<span class="score">68</span></li>
+                    <li class="team team-bottom">{{ default.games[5].away }}<span class="score">66</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">Illinois<span class="score">64</span></li>
-                    <li class="team team-bottom">Wisconsin<span class="score">56</span></li>
+                    <li class="team team-top">{{ default.games[6].home }}<span class="score">64</span></li>
+                    <li class="team team-bottom">{{ default.games[6].away }}<span class="score">56</span></li>
                 </ul>
                 <ul class="matchup">
-                    <li class="team team-top">Purdue<span class="score">36</span></li>
-                    <li class="team team-bottom">Boise State<span class="score">40</span></li>
+                    <li class="team team-top">{{ default.games[7].home }}<span class="score">36</span></li>
+                    <li class="team team-bottom">{{ default.games[7].away }}<span class="score">40</span></li>
                 </ul>
             </div>	<!-- END ROUND ONE -->
         </div>
