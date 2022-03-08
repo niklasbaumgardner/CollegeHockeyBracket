@@ -11,6 +11,11 @@
     </div>
 </div>
 <div class="container mx-0 bg-light p-3">
+    <div class="mb-5">
+        <a class="btn btn-danger" href="{{ url_for('home.delete_default') }}">Delete Default Bracket</a>
+        <a class="btn btn-danger" href="{{ url_for('home.delete_correct') }}">Delete Correct Bracket</a>
+        <a class="btn btn-primary" href="{{ url_for('home.update_points') }}">Update Bracket Points</a>
+    </div>
     <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
@@ -58,45 +63,53 @@
                                         <label class="form-label" for="{{ game.game_num }}-winner">Winner</label>
                                         <select id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-select" aria-label="Default select example">
                                             {% for g in default.games %}
-                                                {% if g.home == game.winner %}
-                                                    <option value="{{ g.home }}" selected>{{ g.home }}</option>
-                                                {% else %}
-                                                    <option value="{{ g.home }}">{{ g.home }}</option>
+                                                {% if should_game_exist(g.home, game.game_num) %}
+                                                    {% if g.home == game.winner %}
+                                                        <option value="{{ g.home }}" selected>{{ g.home }}</option>
+                                                    {% else %}
+                                                        <option value="{{ g.home }}">{{ g.home }}</option>
+                                                    {% endif %}
                                                 {% endif %}
-                                                {% if g.away == game.winner %}
-                                                    <option value="{{ g.away }}" selected>{{ g.away }}</option>
-                                                {% else %}
-                                                    <option value="{{ g.away }}">{{ g.away }}</option>
+                                                {% if should_game_exist(g.away, game.game_num) %}
+                                                    {% if g.away == game.winner %}
+                                                        <option value="{{ g.away }}" selected>{{ g.away }}</option>
+                                                    {% else %}
+                                                        <option value="{{ g.away }}">{{ g.away }}</option>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
                                         <!-- <input type="text" id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-control" value="{{ game.winner }}" /> -->
                                     </div>
                                     <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-w_goals">Winner Goals</label>
-                                        <input type="number" id="{{ game.game_num }}-w_goals" name="{{ game.game_num }}-w_goals" class="form-control" value="{{ game.w_goals }}"/>
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
                                         <label class="form-label" for="{{ game.game_num }}-loser">Loser</label>
                                         <select id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-select" aria-label="Default select example">
                                             {% for g in default.games %}
-                                                {% if g.home == game.loser %}
-                                                    <option value="{{ g.home }}" selected>{{ g.home }}</option>
-                                                {% else %}
-                                                    <option value="{{ g.home }}">{{ g.home }}</option>
+                                                {% if should_game_exist(g.home, game.game_num) %}
+                                                    {% if g.home == game.loser %}
+                                                        <option value="{{ g.home }}" selected>{{ g.home }}</option>
+                                                    {% else %}
+                                                        <option value="{{ g.home }}">{{ g.home }}</option>
+                                                    {% endif %}
                                                 {% endif %}
-                                                {% if g.away == game.loser %}
-                                                    <option value="{{ g.away }}" selected>{{ g.away }}</option>
-                                                {% else %}
-                                                    <option value="{{ g.away }}">{{ g.away }}</option>
+                                                {% if should_game_exist(g.away, game.game_num) %}
+                                                    {% if g.away == game.loser %}
+                                                        <option value="{{ g.away }}" selected>{{ g.away }}</option>
+                                                    {% else %}
+                                                        <option value="{{ g.away }}">{{ g.away }}</option>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
                                         <!-- <input type="text" id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-control" value="{{ game.loser }}"/> -->
                                     </div>
                                     <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-l_goals">Loser Goals</label>
-                                        <input type="number" id="{{ game.game_num }}-l_goals" name="{{ game.game_num }}-l_goals" class="form-control" value="{{ game.l_goals }}"/>
+                                        <label class="form-label" for="{{ game.game_num }}-h_goals">Home Goals</label>
+                                        <input type="number" id="{{ game.game_num }}-h_goals" name="{{ game.game_num }}-h_goals" class="form-control" value="{{ game.h_goals }}"/>
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <label class="form-label" for="{{ game.game_num }}-a_goals">Away Goals</label>
+                                        <input type="number" id="{{ game.game_num }}-a_goals" name="{{ game.game_num }}-a_goals" class="form-control" value="{{ game.a_goals }}"/>
                                     </div>
                                 </div>
                             {% endfor %}

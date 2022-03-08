@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock title %}
-{% block home %}active{% endblock home %}
+{% block title %}Standings{% endblock title %}
+{% block standings %}active{% endblock standings %}
 
 
 
 {% block content %}
+<script>
+    function goToURL(url) {
+        location.href = url;
+    }
+</script>
 
 <div class="pb-5 d-flex justify-content-center mx-0">
     <div class="fw-bold fs-1">
@@ -14,7 +19,7 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped {% if can_click %}table-hover{% endif %}">
         <thead>
             <tr>
                 <th scope="col">Rank</th>
@@ -26,66 +31,51 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    Bracket name is...
-                </td>
-                <td>
-                    Niklas
-                </td>
-                <td>
-                    Boston College
-                </td>
-                <td>
-                    69
-                </td>
-                <td>
-                    169
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2
-                </td>
-                <td>
-                    Bracket name is...
-                </td>
-                <td>
-                    Niklas
-                </td>
-                <td>
-                    Boston College
-                </td>
-                <td>
-                    69
-                </td>
-                <td>
-                    169
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    3
-                </td>
-                <td>
-                    Bracket name is...
-                </td>
-                <td>
-                    Niklas
-                </td>
-                <td>
-                    Boston College
-                </td>
-                <td>
-                    69
-                </td>
-                <td>
-                    169
-                </td>
-            </tr>
+            {% for bracket in brackets %}
+                {% if can_click %}
+                    <tr style="cursor:pointer;" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
+                        <td>
+                            {{ bracket.rank }}
+                        </td>
+                        <td>
+                            {{ bracket.bracket.name }}
+                        </td>
+                        <td>
+                            {{ bracket.user_name }}
+                        </td>
+                        <td>
+                            {{ bracket.bracket.winner }}
+                        </td>
+                        <td>
+                            {{ bracket.bracket.points }}
+                        </td>
+                        <td>
+                            {{ bracket.bracket.max_points }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            {{ bracket.rank }}
+                        </td>
+                        <td>
+                            {{ bracket.bracket.name }}
+                        </td>
+                        <td>
+                            {{ bracket.user_name }}
+                        </td>
+                        <td>
+                            Winner
+                        </td>
+                        <td>
+                            {{ bracket.bracket.points }}
+                        </td>
+                        <td>
+                            {{ bracket.bracket.max_points }}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 

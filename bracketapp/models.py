@@ -58,8 +58,8 @@ class CorrectGame(db.Model):
     game_num = db.Column(db.String(10), nullable=False)
     winner = db.Column(db.String(30), nullable=True)
     loser = db.Column(db.String(30), nullable=True)
-    w_goals = db.Column(db.Integer, nullable=True)
-    l_goals = db.Column(db.Integer, nullable=True)
+    h_goals = db.Column(db.Integer, nullable=True)
+    a_goals = db.Column(db.Integer, nullable=True)
 
 class DefaultBracket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
