@@ -29,10 +29,11 @@ def index():
 @home.route('/view_bracket/<int:id>', methods=["GET"])
 def view_bracket(id):
     can_edit = can_edit = can_edit_bracket()
+    current_user_id = current_user.get_id()
+
     if id and not can_edit:
         bracket = bracketUtils.fullBracket(id)
     else:
-        current_user_id = current_user.get_id()
         if current_user_id:
             bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
             if bracket:
@@ -53,7 +54,9 @@ def view_bracket(id):
     except:
         correct = None
 
-    return render_template("view_bracket.html", default=default, correct=correct, bracket=bracket, can_edit=can_edit)
+    mine = 'active' if current_user_id == str(bracket.user_id) else ''
+
+    return render_template("view_bracket.html", default=default, correct=correct, bracket=bracket, can_edit=can_edit, mine=mine)
 
 
 # @home.route('/edit_bracket', methods=["GET", "POST"])
@@ -290,7 +293,10 @@ def update_points():
 
 
 @home.route('/debugging')
+@login_required
 def debugging():
+    if not isAdmin():
+        return redirect(url_for('home.index'))
     string = ''
     users = User.query.all()
 

@@ -10,7 +10,9 @@ class fullBracket():
         self.bracket = Bracket.query.filter_by(id=bracket_id, year=datetime.now().year).first()
         self.games = Game.query.filter_by(bracket_id=self.bracket.id).all()
         self.games.sort(key=lambda x: int(x.game_num[4:]))
-        self.user_name = User.query.filter_by(id=self.bracket.user_id).first().name
+        user = User.query.filter_by(id=self.bracket.user_id).first()
+        self.user_name = user.name
+        self.user_id = user.id
         self.rank = None
 
 class fullCorrectBracket():
