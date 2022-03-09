@@ -30,7 +30,7 @@ def index():
 @home.route('/view_bracket/<int:id>', methods=["GET"])
 def view_bracket(id):
     can_edit = can_edit = can_edit_bracket()
-    if id:
+    if id and not can_edit:
         bracket = bracketUtils.fullBracket(id)
     else:
         current_user_id = current_user.get_id()
@@ -48,7 +48,7 @@ def view_bracket(id):
                 else:
                     return redirect(url_for('home.index'))
         else:
-            return redirect(url_for('auth.signup'))
+            return redirect(url_for('auth.login'))
 
     default = bracketUtils.fullDefaultBracket()
     try:
