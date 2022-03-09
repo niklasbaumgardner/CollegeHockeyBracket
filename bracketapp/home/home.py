@@ -12,16 +12,15 @@ home = Blueprint('home', __name__)
 
 
 def can_edit_bracket():
-    print(os.environ.get('CAN_EDIT_BRACKET'), type(os.environ.get('CAN_EDIT_BRACKET')), os.environ.get('CAN_EDIT_BRACKET') == 'True')
     return os.environ.get('CAN_EDIT_BRACKET') == 'True'
+
+def isAdmin():
+    return current_user.get_id() == '1'
 
 
 @home.route('/', methods=["GET"])
 def index():
     can_click = not can_edit_bracket()
-    # print(can_click)
-    # can_click = not can_click
-    # print(can_click)
     standings = bracketUtils.getAllRankedBrackets()
     return render_template("index.html", brackets=standings, can_click=can_click)
 
@@ -38,11 +37,9 @@ def view_bracket(id):
             bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
             if bracket:
                 bracket = bracketUtils.fullBracket(bracket.id)
-                print('mid', can_edit)
                 # if not can_edit:
                 #     return redirect(url_for('home.view_bracket', id=bracket.bracket.id))
             else:
-                print('no bracket', can_edit)
                 if can_edit:
                     return redirect(url_for('home.edit_bracket'))
                 else:
@@ -55,9 +52,57 @@ def view_bracket(id):
         correct = bracketUtils.fullCorrectBracket()
     except:
         correct = None
-    print(can_edit)
+
     return render_template("view_bracket.html", default=default, correct=correct, bracket=bracket, can_edit=can_edit)
 
+
+# @home.route('/edit_bracket', methods=["GET", "POST"])
+# @login_required
+# def edit_bracket():
+#     can_edit = can_edit_bracket()
+#     if not can_edit:
+#         return redirect(url_for('home.view_bracket'))
+
+#     if request.method == "GET":
+#         default = bracketUtils.fullDefaultBracket()
+#         bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+#         if bracket:
+#             bracket = bracketUtils.fullBracket(bracket.id)
+#         else:
+#             bracket = None
+#         return render_template("edit_bracket.html", bracket=bracket, default=default)
+#     elif request.method == "POST":
+#         existing_bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+
+#         if existing_bracket:
+#             existing_bracket.name = request.form.get('name')
+#             existing_bracket.winner = request.form.get('game15')
+#             existing_bracket.w_goals = request.form.get('w_goals')
+#             existing_bracket.l_goals = request.form.get('l_goals')
+#             db.session.commit()
+
+#             for i in range(1, 16):
+#                 game_number = f'game{i}'
+#                 existing_game = Game.query.filter_by(user_id=current_user.get_id(), bracket_id=existing_bracket.id, game_num=game_number).first()
+#                 winner = request.form.get(game_number)
+#                 existing_game.winner = winner
+#                 db.session.commit()
+#         else:
+#             game15 = request.form.get('game15')
+#             name = request.form.get('name')
+#             w_goals = request.form.get('w_goals')
+#             l_goals = request.form.get('l_goals')
+#             new_bracket = Bracket(user_id=current_user.get_id(), name=name, year=datetime.now().year, winner=game15,
+#                 w_goals=w_goals, l_goals=l_goals, max_points=320, points=0)
+#             db.session.add(new_bracket)
+#             db.session.commit()
+
+#             for i in range(1, 16):
+#                 new_game = Game(user_id=current_user.get_id(), bracket_id=new_bracket.id, game_num=f'game{i}', winner=request.form.get(f'game{i}'))
+#                 db.session.add(new_game)
+#                 db.session.commit()
+
+#     return redirect(url_for('home.view_bracket'))
 
 @home.route('/edit_bracket', methods=["GET", "POST"])
 @login_required
@@ -73,7 +118,7 @@ def edit_bracket():
             bracket = bracketUtils.fullBracket(bracket.id)
         else:
             bracket = None
-        return render_template("edit_bracket.html", bracket=bracket, default=default)
+        return render_template("test_edit_bracket.html", bracket=bracket, default=default)
     elif request.method == "POST":
         existing_bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
 
@@ -88,7 +133,6 @@ def edit_bracket():
                 game_number = f'game{i}'
                 existing_game = Game.query.filter_by(user_id=current_user.get_id(), bracket_id=existing_bracket.id, game_num=game_number).first()
                 winner = request.form.get(game_number)
-                print(existing_game.winner, winner)
                 existing_game.winner = winner
                 db.session.commit()
         else:
@@ -127,18 +171,47 @@ def admin():
         default = bracketUtils.createDefaultBracket()
     return render_template("admin.html", correct=correct, default=default, should_game_exist=bracketUtils.should_game_exist)
 
+@home.route('/delete_brackets', methods=["GET"])
+@login_required
+def delete_brackets():
+    if not isAdmin():
+        return redirect(url_for('home.index'))
+
+    brackets = Bracket.query.all()
+    db_users = User.query.all()
+    users = {}
+    for u in db_users:
+        users[u.id] = u
+
+    return render_template("delete_brackets.html", users=users, brackets=brackets)
+
+
+@home.route('/delete_bracket/<id>', methods=["GET"])
+@login_required
+def delete_bracket(id):
+    if not id or not isAdmin():
+        return redirect(url_for('home.index'))
+
+    if id == 'all':
+        # delete all brackets
+        bracketUtils.deleteAllBrackets()
+    else:
+        bracketUtils.deleteBracket(id)
+
+    return redirect(url_for('home.index'))
+
+
 
 @home.route('/update_correct', methods=["POST"])
 @login_required
 def update_correct():
-    if current_user.get_id() != '1':
+    if not isAdmin():
         return redirect(url_for('home.index'))
 
     c_bracket = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
     for i in range(1, 16):
         update_game = request.form.get(f'game{i}-checked') == 'True'
-        print(update_game)
         if not update_game:
             continue
         game_num = f'game{i}'
@@ -150,7 +223,7 @@ def update_correct():
             h_goals=h_goals, loser=loser, a_goals=a_goals)
 
     update_game15 = request.form.get(f'game15-checked') == 'True'
-    print(update_game15)
+
     if update_game15:
         winner = request.form.get(f'game15-winner')
         h_goals = request.form.get(f'game15-h_goals')
@@ -172,7 +245,7 @@ def update_correct():
 @home.route('/update_default', methods=["POST"])
 @login_required
 def update_default():
-    if current_user.get_id() != '1':
+    if not isAdmin():
         return redirect(url_for('home.index'))
 
     d_bracket = DefaultBracket.query.filter_by(year=datetime.now().year).first()
@@ -187,7 +260,7 @@ def update_default():
 @home.route('/delete_default', methods=["GET"])
 @login_required
 def delete_default():
-    if current_user.get_id() != '1':
+    if not isAdmin():
         return redirect(url_for('home.index'))
 
     bracketUtils.deleteDefault()
@@ -197,7 +270,7 @@ def delete_default():
 @home.route('/delete_correct', methods=["GET"])
 @login_required
 def delete_correct():
-    if current_user.get_id() != '1':
+    if not isAdmin():
         return redirect(url_for('home.index'))
 
     bracketUtils.deleteCorrect()
@@ -208,7 +281,7 @@ def delete_correct():
 @home.route('/update_points')
 @login_required
 def update_points():
-    if current_user.get_id() != '1':
+    if not isAdmin():
         return redirect(url_for('home.index'))
 
     bracketUtils.updateAllBrackets()

@@ -1,0 +1,565 @@
+{% extends "base.html" %}
+
+{% block title %}My Bracket{% endblock title %}
+{% block mybracket %}active{% endblock mybracket %}
+
+
+
+{% block content %}
+    <script>
+        class Node {
+            constructor(ele, next, top, bottom) {
+                this.ele = ele;
+                this.next = next;
+                this.top = top;
+                this.bottom = bottom;
+
+                if (this.top && this.bottom) {
+                    this.top.next = this;
+                    this.bottom.next = this;
+                }
+            }
+
+            getValue() {
+                return this.ele.childNodes[0].value;
+            }
+
+            setTeamName(teamName) {
+                this.ele.childNodes[0].value = teamName;
+                this.setUnchecked();
+
+                let textNode = this.ele.childNodes[1];
+                if (textNode) {
+                    textNode.nodeValue = ` ${teamName}`;
+                }
+                else {
+                    this.ele.innerHTML += ` ${teamName}`;
+                }
+            }
+
+            setUnchecked() {
+                this.ele.childNodes[0].checked = false;
+            }
+
+            setNullValue() {
+                this.setTeamName("");
+            }
+        }
+
+        function clearNext(node, exclusions) {
+            if (node && exclusions.has(node.getValue())) {
+                node.setUnchecked();
+                node.setNullValue();
+
+                clearNext(node.next, exclusions);
+            }
+        }
+
+        function nodeClick(id) {
+            let node = NODES[id];
+
+            if (!node.getValue()) {
+                return node.setUnchecked();
+            }
+
+            let next = node.next;
+
+            if (next) {
+                if (node.getValue() === next.getValue()) {
+                    return;
+                }
+
+                next.setTeamName(node.ele.childNodes[0].value)
+
+                let exclusions = new Set([next.top.getValue(), next.bottom.getValue()]);
+                clearNext(next.next, exclusions);
+            }
+
+        }
+
+        function checkAllInputs(event) {
+            event.preventDefault();
+            let failed = false;
+            let arr = document.querySelectorAll("li.team");
+            for (let a of arr) {
+                let input = a.querySelector("input");
+                if (!input) {
+                    a.classList.add('red-border');
+                    failed = true;
+                }
+            }
+
+            if (!failed) {
+                document.querySelector("#updateBracketInput").click();
+            }
+        }
+    </script>
+    
+    
+        <section id="bracket" class="container">
+            <form action="" method="POST">
+                {% if bracket %}
+                    <div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <div class="form-outline form-white mb-4 fs-5">
+                                    <label class="form-label" for="name">Bracket name</label>
+                                    <input class="form-control" type="text" id="name" name="name" value="{{ bracket.bracket.name }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="split split-one">
+                            <div class="round round-one current">
+                                <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
+                                <ul class="matchup">
+                                    <li id="g1t1" class="team "><input onclick="nodeClick('g1t1')" type="radio" name="game1" value="{{ default.games[0].home }}" required {% if bracket.games[0].winner == default.games[0].home %}checked{% endif %}> {{ default.games[0].home }}</li>
+                                    <li id="g1t2" class="team "><input onclick="nodeClick('g1t2')" type="radio" name="game1" value="{{ default.games[0].away }}" required {% if bracket.games[0].winner == default.games[0].away %}checked{% endif %}> {{ default.games[0].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g2t1" class="team "><input onclick="nodeClick('g2t1')" type="radio" name="game2" value="{{ default.games[1].home }}" required {% if bracket.games[1].winner == default.games[1].home %}checked{% endif %}> {{ default.games[1].home }}</li>
+                                    <li id="g2t2" class="team "><input onclick="nodeClick('g2t2')" type="radio" name="game2" value="{{ default.games[1].away }}" required {% if bracket.games[1].winner == default.games[1].away %}checked{% endif %}> {{ default.games[1].away }}</li>
+                                </ul>
+                                <br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g3t1" class="team "><input onclick="nodeClick('g3t1')" type="radio" name="game3" value="{{ default.games[2].home }}" required {% if bracket.games[2].winner == default.games[2].home %}checked{% endif %}> {{ default.games[2].home }}</li>
+                                    <li id="g3t2" class="team "><input onclick="nodeClick('g3t2')" type="radio" name="game3" value="{{ default.games[2].away }}" required {% if bracket.games[2].winner == default.games[2].away %}checked{% endif %}> {{ default.games[2].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g4t1" class="team "><input onclick="nodeClick('g4t1')" type="radio" name="game4" value="{{ default.games[3].home }}" required {% if bracket.games[3].winner == default.games[3].home %}checked{% endif %}> {{ default.games[3].home }}</li>
+                                    <li id="g4t2" class="team "><input onclick="nodeClick('g4t2')" type="radio" name="game4" value="{{ default.games[3].away }}" required {% if bracket.games[3].winner == default.games[3].away %}checked{% endif %}> {{ default.games[3].away }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND ONE -->
+                    
+                            <div class="round round-two current">
+                                <div class="round-details">Round 2<br/><span class="date">March 18</span></div>
+                                <ul class="matchup">
+                                    <li id="g9t1" class="team "><input onclick="nodeClick('g9t1')" type="radio" name="game9" value="{{ bracket.games[0].winner }}" required {% if bracket.games[0].winner == bracket.games[8].winner %}checked{% endif %}> {{ bracket.games[0].winner }}</li>
+                                    <li id="g9t2" class="team "><input onclick="nodeClick('g9t2')" type="radio" name="game9" value="{{ bracket.games[1].winner }}" required {% if bracket.games[1].winner == bracket.games[8].winner %}checked{% endif %}> {{ bracket.games[1].winner }}</li>
+                                </ul>
+                                <br><br><br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g10t1" class="team "><input onclick="nodeClick('g10t1')" type="radio" name="game10" value="{{ bracket.games[2].winner }}" required {% if bracket.games[2].winner == bracket.games[9].winner %}checked{% endif %}> {{ bracket.games[2].winner }}</li>
+                                    <li id="g10t2" class="team "><input onclick="nodeClick('g10t2')" type="radio" name="game10" value="{{ bracket.games[3].winner }}" required {% if bracket.games[3].winner == bracket.games[9].winner %}checked{% endif %}> {{ bracket.games[3].winner }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND TWO -->
+                            
+                            <div class="round round-three current">
+                                <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
+                                <br><br>	
+                                <ul class="matchup">
+                                    <li id="g13t1" class="team "><input onclick="nodeClick('g13t1')" type="radio" name="game13" value="{{ bracket.games[8].winner }}" required {% if bracket.games[8].winner == bracket.games[12].winner %}checked{% endif %}> {{ bracket.games[8].winner }}</li>
+                                    <li id="g13t2" class="team "><input onclick="nodeClick('g13t2')" type="radio" name="game13" value="{{ bracket.games[9].winner }}" required {% if bracket.games[9].winner == bracket.games[12].winner %}checked{% endif %}> {{ bracket.games[9].winner }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND THREE -->		
+                        </div> 
+                    
+                    <div class="champion">
+                        <div class="row justify-content-center">
+                            <div class="final current col">
+                                <div class="round-details">championship <br/><span class="date">March 30 - Apr. 1</span></div>
+                                <ul class ="matchup championship">
+                                    <li id="g15t1" class="team "><input onclick="nodeClick('g15t1')" type="radio" name="game15" value="{{ bracket.games[12].winner }}" required {% if bracket.games[12].winner == bracket.games[14].winner %}checked{% endif %}> {{ bracket.games[12].winner }}</li>
+                                    <li id="g15t2" class="team "><input onclick="nodeClick('g15t2')" type="radio" name="game15" value="{{ bracket.games[13].winner }}" required {% if bracket.games[13].winner == bracket.games[14].winner %}checked{% endif %}> {{ bracket.games[13].winner }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="semis-r col-auto">
+                                <p class="fs-6">Final Game Score</p>
+                                <div class="team ">Winner goals</div>
+                                <div class="team "><input name="w_goals" class="team goals" type="number" size="2" required value="{{ bracket.bracket.w_goals }}"></div>
+                                <br>
+                                <div class="team ">Loser goals</div>
+                                <div class="team "><input name="l_goals" class="team goals" type="number" size="2" required value="{{ bracket.bracket.l_goals }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                        <div class="split split-two">
+
+                            <div class="round round-three current">
+                                <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
+                                <br><br>					
+                                <ul class="matchup">
+                                    <li id="g14t1" class="team "><input onclick="nodeClick('g14t1')" type="radio" name="game14" value="{{ bracket.games[10].winner }}" required {% if bracket.games[10].winner == bracket.games[13].winner %}checked{% endif %}> {{ bracket.games[10].winner }}</li>
+                                    <li id="g14t2" class="team "><input onclick="nodeClick('g14t2')" type="radio" name="game14" value="{{ bracket.games[11].winner }}" required {% if bracket.games[11].winner == bracket.games[13].winner %}checked{% endif %}> {{ bracket.games[11].winner }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND THREE -->	
+                    
+                            <div class="round round-two current">
+                                <div class="round-details">Round 2<br/><span class="date">March 18</span></div>						
+                                <ul class="matchup">
+                                    <li id="g11t1" class="team "><input onclick="nodeClick('g11t1')" type="radio" name="game11" value="{{ bracket.games[4].winner }}" required {% if bracket.games[4].winner == bracket.games[10].winner %}checked{% endif %}> {{ bracket.games[4].winner }}</li>
+                                    <li id="g11t2" class="team "><input onclick="nodeClick('g11t2')" type="radio" name="game11" value="{{ bracket.games[5].winner }}" required {% if bracket.games[5].winner == bracket.games[10].winner %}checked{% endif %}> {{ bracket.games[5].winner }}</li>
+                                </ul>
+                                <br><br><br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g12t1" class="team "><input onclick="nodeClick('g12t1')" type="radio" name="game12" value="{{ bracket.games[6].winner }}" required {% if bracket.games[6].winner == bracket.games[11].winner %}checked{% endif %}> {{ bracket.games[6].winner }}</li>
+                                    <li id="g12t2" class="team "><input onclick="nodeClick('g12t2')" type="radio" name="game12" value="{{ bracket.games[7].winner }}" required {% if bracket.games[7].winner == bracket.games[11].winner %}checked{% endif %}> {{ bracket.games[7].winner }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND TWO -->
+                            <div class="round round-one current">
+                                <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
+                                <ul class="matchup">
+                                    <li id="g5t1" class="team "><input onclick="nodeClick('g5t1')" type="radio" name="game5" value="{{ default.games[4].home }}" required {% if bracket.games[4].winner == default.games[4].home %}checked{% endif %}> {{ default.games[4].home }}</li>
+                                    <li id="g5t2" class="team "><input onclick="nodeClick('g5t2')" type="radio" name="game5" value="{{ default.games[4].away }}" required {% if bracket.games[4].winner == default.games[4].away %}checked{% endif %}> {{ default.games[4].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g6t1" class="team "><input onclick="nodeClick('g6t1')" type="radio" name="game6" value="{{ default.games[5].home }}" required {% if bracket.games[5].winner == default.games[5].home %}checked{% endif %}> {{ default.games[5].home }}</li>
+                                    <li id="g6t2" class="team "><input onclick="nodeClick('g6t2')" type="radio" name="game6" value="{{ default.games[5].away }}" required {% if bracket.games[5].winner == default.games[5].away %}checked{% endif %}> {{ default.games[5].away }}</li>
+                                </ul>
+                                <br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g7t1" class="team "><input onclick="nodeClick('g7t1')" type="radio" name="game7" value="{{ default.games[6].home }}" required {% if bracket.games[6].winner == default.games[6].home %}checked{% endif %}> {{ default.games[6].home }}</li>
+                                    <li id="g7t2" class="team "><input onclick="nodeClick('g7t2')" type="radio" name="game7" value="{{ default.games[6].away }}" required {% if bracket.games[6].winner == default.games[6].away %}checked{% endif %}> {{ default.games[6].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g8t1" class="team "><input onclick="nodeClick('g8t1')" type="radio" name="game8" value="{{ default.games[7].home }}" required {% if bracket.games[7].winner == default.games[7].home %}checked{% endif %}> {{ default.games[7].home }}</li>
+                                    <li id="g8t2" class="team "><input onclick="nodeClick('g8t2')" type="radio" name="game8" value="{{ default.games[7].away }}" required {% if bracket.games[7].winner == default.games[7].away %}checked{% endif %}> {{ default.games[7].away }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND ONE -->          				
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <input id="updateBracketInput" class="btn btn-primary" type="submit" value="Submit bracket" hidden>
+                                <button class="btn btn-primary" value="Update bracket" onclick="checkAllInputs(event)">Update bracket</button>
+                            </div>
+                            <div class="col-auto">
+                                <a class="btn btn-outline-primary" href="{{ url_for('home.view_bracket') }}">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <div class="form-outline form-white mb-4 fs-5">
+                                    <label class="form-label" for="name">Bracket name</label>
+                                    <input class="form-control" type="text" id="name" name="name" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="split split-one">
+                            <div class="round round-one current">
+                                <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
+                                <ul class="matchup">
+                                    <li id="g1t1" class="team "><input onclick="nodeClick('g1t1')" type="radio" name="game1" value="{{ default.games[0].home }}" required> {{ default.games[0].home }}</li>
+                                    <li id="g1t2" class="team "><input onclick="nodeClick('g1t2')" type="radio" name="game1" value="{{ default.games[0].away }}" required> {{ default.games[0].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g2t1" class="team "><input onclick="nodeClick('g2t1')" type="radio" name="game2" value="{{ default.games[1].home }}" required> {{ default.games[1].home }}</li>
+                                    <li id="g2t2" class="team "><input onclick="nodeClick('g2t2')" type="radio" name="game2" value="{{ default.games[1].away }}" required> {{ default.games[1].away }}</li>
+                                </ul>
+                                <br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g3t1" class="team "><input onclick="nodeClick('g3t1')" type="radio" name="game3" value="{{ default.games[2].home }}" required> {{ default.games[2].home }}</li>
+                                    <li id="g3t2" class="team "><input onclick="nodeClick('g3t2')" type="radio" name="game3" value="{{ default.games[2].away }}" required> {{ default.games[2].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g4t1" class="team "><input onclick="nodeClick('g4t1')" type="radio" name="game4" value="{{ default.games[3].home }}" required> {{ default.games[3].home }}</li>
+                                    <li id="g4t2" class="team "><input onclick="nodeClick('g4t2')" type="radio" name="game4" value="{{ default.games[3].away }}" required> {{ default.games[3].away }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND ONE -->
+                    
+                            <div class="round round-two current">
+                                <div class="round-details">Round 2<br/><span class="date">March 18</span></div>
+                                <ul class="matchup">
+                                    <li id="g9t1" class="team "><input onclick="nodeClick('g9t1')" type="radio" name="game9" value="" required></li>
+                                    <li id="g9t2" class="team "><input onclick="nodeClick('g9t2')" type="radio" name="game9" value="" required></li>
+                                </ul>
+                                <br><br><br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g10t1" class="team "><input onclick="nodeClick('g10t1')" type="radio" name="game10" value="" required></li>
+                                    <li id="g10t2" class="team "><input onclick="nodeClick('g10t2')" type="radio" name="game10" value="" required></li>
+                                </ul>
+                            </div>	<!-- END ROUND TWO -->
+                            
+                            <div class="round round-three current">
+                                <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
+                                <br><br>
+                                <ul class="matchup">
+                                    <li id="g13t1" class="team "><input onclick="nodeClick('g13t1')" type="radio" name="game13" value="" required></li>
+                                    <li id="g13t2" class="team "><input onclick="nodeClick('g13t2')" type="radio" name="game13" value="" required></li>
+                                </ul>
+                            </div>	<!-- END ROUND THREE -->		
+                        </div> 
+                    
+                    <div class="champion">
+                            <!-- <div class="final current">
+                                <i class="fa fa-trophy"></i>
+                                <div class="round-details">championship <br/><span class="date">March 30 - Apr. 1</span></div>
+
+                                <ul class ="matchup championship">
+                                    <li id="g15t1" class="team "><span class="vote-count"></span></li>
+                                    <li id="g15t2" class="team "><span class="vote-count"></span></li>
+
+                                    <label for="w_goals">Winner goals</label><br>
+                                    <input name="w_goals" class="team" type="number" size="2" required>
+                                    <label for="l_goals">Loser goals</label><br>
+                                    <input name="l_goals" class="team" type="number" size="2" required>
+                                </ul>
+                            </div> -->
+                            <div class="row justify-content-center">
+                                <div class="final current col">
+                                    <div class="round-details">championship <br/><span class="date">March 30 - Apr. 1</span></div>
+                                    <ul class ="matchup championship">
+                                        <li id="g15t1" class="team "><input onclick="nodeClick('g15t1')" type="radio" name="game15" value="" required></li>
+                                        <li id="g15t2" class="team "><input onclick="nodeClick('g15t2')" type="radio" name="game15" value="" required></li>
+                                    </ul>
+                                    <!-- <ul class ="matchup championship">
+                                        <li id="g15t1" class="team "><span class="vote-count"></span></li>
+                                        <li id="g15t2" class="team "><span class="vote-count"></span></li>
+                                    </ul> -->
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="semis-r col-auto">
+                                    <p class="fs-4">Final Game Score</p>
+                                    <div class="team ">Winner goals</div>
+                                    <div class="team "><input name="w_goals" class="team goals" type="number" size="2" required></div>
+                                    <br>
+                                    <div class="team ">Loser goals</div>
+                                    <div class="team "><input name="l_goals" class="team goals" type="number" size="2" required></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="split split-two">
+                    
+                    
+                            <div class="round round-three current">
+                                <div class="round-details">Round 3<br/><span class="date">March 22</span></div>
+                                <br><br>
+                                <ul class="matchup">
+                                    <li id="g14t1" class="team "><input onclick="nodeClick('g14t1')" type="radio" name="game14" value="" required></li>
+                                    <li id="g14t2" class="team "><input onclick="nodeClick('g14t2')" type="radio" name="game14" value="" required></li>
+                                </ul>
+                                <!-- <ul class="matchup">
+                                    <li id="g14t1" class="team "></li>
+                                    <li id="g14t2" class="team "></li>
+                                </ul> -->
+                            </div>	<!-- END ROUND THREE -->	
+                    
+                            <div class="round round-two current">
+                                <div class="round-details">Round 2<br/><span class="date">March 18</span></div>
+                                <ul class="matchup">
+                                    <li id="g11t1" class="team "><input onclick="nodeClick('g11t1')" type="radio" name="game11" value="" required></li>
+                                    <li id="g11t2" class="team "><input onclick="nodeClick('g11t2')" type="radio" name="game11" value="" required></li>
+                                </ul>
+                                <br><br><br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g12t1" class="team "><input onclick="nodeClick('g12t1')" type="radio" name="game12" value="" required></li>
+                                    <li id="g12t2" class="team "><input onclick="nodeClick('g12t2')" type="radio" name="game12" value="" required></li>
+                                </ul>
+                            </div>	<!-- END ROUND TWO -->
+                            <div class="round round-one current">
+                                <div class="round-details">Round 1<br/><span class="date">March 16</span></div>
+                                <ul class="matchup">
+                                    <li id="g5t1" class="team "><input onclick="nodeClick('g5t1')" type="radio" name="game5" value="{{ default.games[4].home }}" required> {{ default.games[4].home }}</li>
+                                    <li id="g5t2" class="team "><input onclick="nodeClick('g5t2')" type="radio" name="game5" value="{{ default.games[4].away }}" required> {{ default.games[4].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g6t1" class="team "><input onclick="nodeClick('g6t1')" type="radio" name="game6" value="{{ default.games[5].home }}" required> {{ default.games[5].home }}</li>
+                                    <li id="g6t2" class="team "><input onclick="nodeClick('g6t2')" type="radio" name="game6" value="{{ default.games[5].away }}" required> {{ default.games[5].away }}</li>
+                                </ul>
+                                <br><br><br><br>
+                                <ul class="matchup">
+                                    <li id="g7t1" class="team "><input onclick="nodeClick('g7t1')" type="radio" name="game7" value="{{ default.games[6].home }}" required> {{ default.games[6].home }}</li>
+                                    <li id="g7t2" class="team "><input onclick="nodeClick('g7t2')" type="radio" name="game7" value="{{ default.games[6].away }}" required> {{ default.games[6].away }}</li>
+                                </ul>
+                                <br>
+                                <ul class="matchup">
+                                    <li id="g8t1" class="team "><input onclick="nodeClick('g8t1')" type="radio" name="game8" value="{{ default.games[7].home }}" required> {{ default.games[7].home }}</li>
+                                    <li id="g8t2" class="team "><input onclick="nodeClick('g8t2')" type="radio" name="game8" value="{{ default.games[7].away }}" required> {{ default.games[7].away }}</li>
+                                </ul>
+                            </div>	<!-- END ROUND ONE -->          				
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <input id="updateBracketInput" class="btn btn-primary" type="submit" value="Submit bracket" hidden>
+                                <button class="btn btn-primary" value="Update bracket" onclick="checkAllInputs(event)">Submit bracket</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </form>
+        </section>
+
+        <script>
+
+            let g15t1 = document.getElementById("g15t1");
+            let g15t2 = document.getElementById("g15t2");
+
+
+            let g14t1 = document.getElementById("g14t1");
+            let g14t2 = document.getElementById("g14t2");
+
+            let g13t1 = document.getElementById("g13t1");
+            let g13t2 = document.getElementById("g13t2");
+
+
+            let g12t1 = document.getElementById("g12t1");
+            let g12t2 = document.getElementById("g12t2");
+
+            let g11t1 = document.getElementById("g11t1");
+            let g11t2 = document.getElementById("g11t2");
+
+            let g10t1 = document.getElementById("g10t1");
+            let g10t2 = document.getElementById("g10t2");
+
+            let g9t1 = document.getElementById("g9t1");
+            let g9t2 = document.getElementById("g9t2");
+
+
+            let g8t1 = document.getElementById("g8t1");
+            let g8t2 = document.getElementById("g8t2");
+
+            let g7t1 = document.getElementById("g7t1");
+            let g7t2 = document.getElementById("g7t2");
+
+            let g6t1 = document.getElementById("g6t1");
+            let g6t2 = document.getElementById("g6t2");
+
+            let g5t1 = document.getElementById("g5t1");
+            let g5t2 = document.getElementById("g5t2");
+
+
+            let g4t1 = document.getElementById("g4t1");
+            let g4t2 = document.getElementById("g4t2");
+
+            let g3t1 = document.getElementById("g3t1");
+            let g3t2 = document.getElementById("g3t2");
+
+            let g2t1 = document.getElementById("g2t1");
+            let g2t2 = document.getElementById("g2t2");
+
+            let g1t1 = document.getElementById("g1t1");
+            let g1t2 = document.getElementById("g1t2");
+
+            // class Node {
+            //     constructor(ele, next, top, bottom) {
+            //         this.ele = ele;
+            //         this.next = next;
+            //         this.top = top;
+            //         this.bottom = bottom;
+            //     }
+            // }
+            let g1t1Node = new Node(g1t1, null, null, null);
+            let g1t2Node = new Node(g1t2, null, null, null);
+
+            let g2t1Node = new Node(g2t1, null, null, null);
+            let g2t2Node = new Node(g2t2, null, null, null);
+
+            let g3t1Node = new Node(g3t1, null, null, null);
+            let g3t2Node = new Node(g3t2, null, null, null);
+
+            let g4t1Node = new Node(g4t1, null, null, null);
+            let g4t2Node = new Node(g4t2, null, null, null);
+
+
+            let g5t1Node = new Node(g5t1, null, null, null);
+            let g5t2Node = new Node(g5t2, null, null, null);
+
+            let g6t1Node = new Node(g6t1, null, null, null);
+            let g6t2Node = new Node(g6t2, null, null, null);
+
+            let g7t1Node = new Node(g7t1, null, null, null);
+            let g7t2Node = new Node(g7t2, null, null, null);
+
+            let g8t1Node = new Node(g8t1, null, null, null);
+            let g8t2Node = new Node(g8t2, null, null, null);
+
+
+            let g9t1Node = new Node(g9t1, null, g1t1Node, g1t2Node);
+            let g9t2Node = new Node(g9t2, null, g2t1Node, g2t2Node);
+
+            let g10t1Node = new Node(g10t1, null, g3t1Node, g3t2Node);
+            let g10t2Node = new Node(g10t2, null, g4t1Node, g4t2Node);
+
+            let g11t1Node = new Node(g11t1, null, g5t1Node, g5t2Node);
+            let g11t2Node = new Node(g11t2, null, g6t1Node, g6t2Node);
+
+            let g12t1Node = new Node(g12t1, null, g7t1Node, g7t2Node);
+            let g12t2Node = new Node(g12t2, null, g8t1Node, g8t2Node);
+
+
+            let g13t1Node = new Node(g13t1, null, g9t1Node, g9t2Node);
+            let g13t2Node = new Node(g13t2, null, g10t1Node, g10t2Node);
+
+            let g14t1Node = new Node(g14t1, null, g11t1Node, g11t2Node);
+            let g14t2Node = new Node(g14t2, null, g12t1Node, g12t2Node);
+
+
+            let g15t1Node = new Node(g15t1, null, g13t1Node, g13t2Node);
+            let g15t2Node = new Node(g15t2, null, g14t1Node, g14t2Node);
+
+            const NODES = {
+                g1t1: g1t1Node,
+                g1t2: g1t2Node,
+
+                g2t1: g2t1Node,
+                g2t2: g2t2Node,
+
+                g3t1: g3t1Node,
+                g3t2: g3t2Node,
+
+                g4t1: g4t1Node,
+                g4t2: g4t2Node,
+
+                g5t1: g5t1Node,
+                g5t2: g5t2Node,
+
+                g6t1: g6t1Node,
+                g6t2: g6t2Node,
+
+                g7t1: g7t1Node,
+                g7t2: g7t2Node,
+
+                g8t1: g8t1Node,
+                g8t2: g8t2Node,
+
+
+                g9t1: g9t1Node,
+                g9t2: g9t2Node,
+
+                g10t1: g10t1Node,
+                g10t2: g10t2Node,
+
+                g11t1: g11t1Node,
+                g11t2: g11t2Node,
+
+                g12t1: g12t1Node,
+                g12t2: g12t2Node,
+
+
+                g13t1: g13t1Node,
+                g13t2: g13t2Node,
+
+                g14t1: g14t1Node,
+                g14t2: g14t2Node,
+
+
+                g15t1: g15t1Node,
+                g15t2: g15t2Node,
+            };
+        </script>
+
+{% endblock content %}

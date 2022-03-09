@@ -200,6 +200,23 @@ def deleteCorrect():
     db.session.commit()
 
 
+def deleteBracket(id):
+    bracket = fullBracket(id)
+
+    for game in bracket.games:
+        db.session.delete(game)
+        db.session.commit()
+
+    db.session.delete(bracket.bracket)
+    db.session.commit()
+
+
+def deleteAllBrackets():
+    brackets = Bracket.query.all()
+    for b in brackets:
+        deleteBracket(b.id)
+
+
 def updateAllBrackets():
     brackets = getAllBrackets()
 
