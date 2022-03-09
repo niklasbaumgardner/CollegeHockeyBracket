@@ -23,7 +23,7 @@
             {% endif %}
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <p class="fs-2">{{ bracket.bracket.name }}</p>
+                    <p class="fs-3">{{ bracket.bracket.name }}</p>
                 </div>
             </div>
 
@@ -80,9 +80,10 @@
                 <div class="final">
                     <div class="round-details">Winner</div>
                     <ul class ="matchup championship">
-                        <li class="team team-top">Winner:</li>
-                        <li class="team team-bottom">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>
                         <li class="team team-user-pick {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li>
+                        <li class="team team-bottom">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>
+                        <li class="team team-user-pick">Predicted Score:</li>
+                        <li class="team team-user-pick">{{ bracket.bracket.w_goals }} - {{ bracket.bracket.l_goals }}</li>
                     </ul>
                 </div>
 
