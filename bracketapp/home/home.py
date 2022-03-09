@@ -68,9 +68,10 @@ def edit_bracket():
 
     if request.method == "GET":
         default = bracketUtils.fullDefaultBracket()
-        try:
-            bracket = bracketUtils.fullBracket(current_user.get_id())
-        except:
+        bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+        if bracket:
+            bracket = bracketUtils.fullBracket(bracket.id)
+        else:
             bracket = None
         return render_template("edit_bracket.html", bracket=bracket, default=default)
     elif request.method == "POST":
@@ -206,3 +207,21 @@ def update_points():
     bracketUtils.updateAllBrackets()
 
     return redirect(url_for('home.index'))
+
+
+@home.route('/debugging')
+def debugging():
+    string = ''
+    users = User.query.all()
+
+    brackets = Bracket.query.all()
+
+    for u in users:
+        string += f'{u.id} {u.name}<br>'
+
+    string += '<br>'
+
+    for b in brackets:
+        string += f'{b.id} {b.user_id} {b.name}<br>'
+
+    return string
