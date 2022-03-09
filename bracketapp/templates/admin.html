@@ -60,6 +60,12 @@
                                 <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
                                     <p class="fs-1">{{ game.game_num }}</p>
                                     <div class="form-outline form-white mb-4">
+                                        <input class="form-check-input" type="checkbox" id="{{ game.game_num }}-checked" name="{{ game.game_num }}-checked" value="True">
+                                        <label class="form-check-label" for="{{ game.game_num }}-checked">
+                                            Update {{ game.game_num }}?
+                                        </label>
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
                                         <label class="form-label" for="{{ game.game_num }}-winner">Winner</label>
                                         <select id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-select" aria-label="Default select example">
                                             {% for g in default.games %}

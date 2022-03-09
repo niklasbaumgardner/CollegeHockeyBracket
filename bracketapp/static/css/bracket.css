@@ -17,6 +17,10 @@ li {
   background-color: #eeeff0;
 }
 
+.red-border {
+  border: 2px red solid;
+}
+
 .split {
   display: block;
   float: left;

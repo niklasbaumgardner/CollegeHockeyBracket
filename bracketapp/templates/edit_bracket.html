@@ -8,166 +8,185 @@
 {% block content %}
     <script>
         function game9_team1(team_name) {
-            var g9t1 = document.getElementById("g9t1");
-            var temp = '<input onclick="game13_team1(\'' + team_name + '\')" type="radio" name="game9" value="' + team_name +  '" required> ' + team_name;
+            let g9t1 = document.getElementById("g9t1");
+            let temp = '<input onclick="game13_team1(\'' + team_name + '\')" type="radio" name="game9" value="' + team_name +  '" required> ' + team_name;
             if (g9t1.innerHTML.includes(team_name))
             {
                 return;
             }
             g9t1.innerHTML = temp;
-            var g13t1 = document.getElementById("g13t1");
+            let g13t1 = document.getElementById("g13t1");
             g13t1.innerHTML = '';
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
             g15t1.innerHTML = '';
         }
         function game9_team2(team_name) {
-            var g9t2 = document.getElementById("g9t2");
-            var temp = '<input onclick="game13_team1(\'' + team_name + '\')" type="radio" name="game9" value="' + team_name +  '" required> ' + team_name;
+            let g9t2 = document.getElementById("g9t2");
+            let temp = '<input onclick="game13_team1(\'' + team_name + '\')" type="radio" name="game9" value="' + team_name +  '" required> ' + team_name;
             if (g9t2.innerHTML.includes(team_name))
             {
                 return;
             }
             g9t2.innerHTML = temp;
-            var g13t1 = document.getElementById("g13t1");
+            let g13t1 = document.getElementById("g13t1");
             g13t1.innerHTML = '';
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
             g15t1.innerHTML = '';
         }
 
         function game10_team1(team_name) {
-            var g10t1 = document.getElementById("g10t1");
-            var temp = '<input onclick="game13_team2(\'' + team_name + '\')" type="radio" name="game10" value="' + team_name +  '" required> ' + team_name;
+            let g10t1 = document.getElementById("g10t1");
+            let temp = '<input onclick="game13_team2(\'' + team_name + '\')" type="radio" name="game10" value="' + team_name +  '" required> ' + team_name;
             if (g10t1.innerHTML.includes(team_name))
             {
                 return;
             }
             g10t1.innerHTML = temp;
-            var g13t2 = document.getElementById("g13t2");
+            let g13t2 = document.getElementById("g13t2");
             g13t2.innerHTML = '';
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
             g15t1.innerHTML = '';
         }
         function game10_team2(team_name) {
-            var g10t2 = document.getElementById("g10t2");
-            var temp = '<input onclick="game13_team2(\'' + team_name + '\')" type="radio" name="game10" value="' + team_name +  '" required> ' + team_name;
+            let g10t2 = document.getElementById("g10t2");
+            let temp = '<input onclick="game13_team2(\'' + team_name + '\')" type="radio" name="game10" value="' + team_name +  '" required> ' + team_name;
             if (g10t2.innerHTML.includes(team_name))
             {
                 return;
             }
             g10t2.innerHTML = temp;
-            var g13t2 = document.getElementById("g13t2");
+            let g13t2 = document.getElementById("g13t2");
             g13t2.innerHTML = '';
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
             g15t1.innerHTML = '';
         }
 
         function game13_team1(team_name) {
-            var g13t1 = document.getElementById("g13t1");
-            var temp = '<input onclick="game15_team1(\'' + team_name + '\')" type="radio" name="game13" value="' + team_name +  '" required> ' + team_name;
+            let g13t1 = document.getElementById("g13t1");
+            let temp = '<input onclick="game15_team1(\'' + team_name + '\')" type="radio" name="game13" value="' + team_name +  '" required> ' + team_name;
             if (g13t1.innerHTML.includes(team_name))
             {
                 return;
             }
             g13t1.innerHTML = temp;
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
             g15t1.innerHTML = '';
         }
         function game13_team2(team_name) {
-            var g13t2 = document.getElementById("g13t2");
-            var temp = '<input onclick="game15_team1(\'' + team_name + '\')" type="radio" name="game13" value="' + team_name +  '" required> ' + team_name;
+            let g13t2 = document.getElementById("g13t2");
+            let temp = '<input onclick="game15_team1(\'' + team_name + '\')" type="radio" name="game13" value="' + team_name +  '" required> ' + team_name;
             if (g13t2.innerHTML.includes(team_name))
             {
                 return;
             }
             g13t2.innerHTML = temp;
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
             g15t1.innerHTML = '';
         }
 
         function game15_team1(team_name) {
-            var g15t1 = document.getElementById("g15t1");
+            let g15t1 = document.getElementById("g15t1");
+            g15t1.classList.remove("red-border");
             g15t1.innerHTML = '<input type="radio" name="game15" value="' + team_name +  '" required> ' + team_name;
         }
         function game15_team2(team_name) {
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
+            g15t2.classList.remove("red-border");
             g15t2.innerHTML = '<input type="radio" name="game15" value="' + team_name +  '" required> ' + team_name;
         }
 
         function game14_team1(team_name) {
-            var g14t1 = document.getElementById("g14t1");
-            var temp = '<input onclick="game15_team2(\'' + team_name + '\')" type="radio" name="game14" value="' + team_name +  '" required> ' + team_name;
+            let g14t1 = document.getElementById("g14t1");
+            let temp = '<input onclick="game15_team2(\'' + team_name + '\')" type="radio" name="game14" value="' + team_name +  '" required> ' + team_name;
             if (g14t1.innerHTML.includes(team_name))
             {
                 return;
             }
             g14t1.innerHTML = temp;
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
             g15t2.innerHTML = '';
         }
         function game14_team2(team_name) {
-            var g14t2 = document.getElementById("g14t2");
-            var temp = '<input onclick="game15_team2(\'' + team_name + '\')" type="radio" name="game14" value="' + team_name +  '" required> ' + team_name;
+            let g14t2 = document.getElementById("g14t2");
+            let temp = '<input onclick="game15_team2(\'' + team_name + '\')" type="radio" name="game14" value="' + team_name +  '" required> ' + team_name;
             if (g14t2.innerHTML.includes(team_name))
             {
                 return;
             }
             g14t2.innerHTML = temp;
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
             g15t2.innerHTML = '';
         }
 
         function game12_team1(team_name) {
-            var g12t1 = document.getElementById("g12t1");
-            var temp = '<input onclick="game14_team2(\'' + team_name + '\')" type="radio" name="game12" value="' + team_name +  '" required> ' + team_name;
+            let g12t1 = document.getElementById("g12t1");
+            let temp = '<input onclick="game14_team2(\'' + team_name + '\')" type="radio" name="game12" value="' + team_name +  '" required> ' + team_name;
             if (g12t1.innerHTML.includes(team_name))
             {
                 return;
             }
             g12t1.innerHTML = temp;
-            var g14t2 = document.getElementById("g14t2");
+            let g14t2 = document.getElementById("g14t2");
             g14t2.innerHTML = '';
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
             g15t2.innerHTML = '';
         }
         function game12_team2(team_name) {
-            var g12t2 = document.getElementById("g12t2");
-            var temp = '<input onclick="game14_team2(\'' + team_name + '\')" type="radio" name="game12" value="' + team_name +  '" required> ' + team_name;
+            let g12t2 = document.getElementById("g12t2");
+            let temp = '<input onclick="game14_team2(\'' + team_name + '\')" type="radio" name="game12" value="' + team_name +  '" required> ' + team_name;
             if (g12t2.innerHTML.includes(team_name))
             {
                 return;
             }
             g12t2.innerHTML = temp;
-            var g14t2 = document.getElementById("g14t2");
+            let g14t2 = document.getElementById("g14t2");
             g14t2.innerHTML = '';
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
             g15t2.innerHTML = '';
         }
 
         function game11_team1(team_name) {
-            var g11t1 = document.getElementById("g11t1");
-            var temp = '<input onclick="game14_team1(\'' + team_name + '\')" type="radio" name="game11" value="' + team_name +  '" required> ' + team_name;
+            let g11t1 = document.getElementById("g11t1");
+            let temp = '<input onclick="game14_team1(\'' + team_name + '\')" type="radio" name="game11" value="' + team_name +  '" required> ' + team_name;
             if (g11t1.innerHTML.includes(team_name))
             {
                 return;
             }
             g11t1.innerHTML = temp;
-            var g14t1 = document.getElementById("g14t1");
+            let g14t1 = document.getElementById("g14t1");
             g14t1.innerHTML = '';
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
             g15t2.innerHTML = '';
         }
         function game11_team2(team_name) {
-            var g11t2 = document.getElementById("g11t2");
-            var temp = '<input onclick="game14_team1(\'' + team_name + '\')" type="radio" name="game11" value="' + team_name +  '" required> ' + team_name;
+            let g11t2 = document.getElementById("g11t2");
+            let temp = '<input onclick="game14_team1(\'' + team_name + '\')" type="radio" name="game11" value="' + team_name +  '" required> ' + team_name;
             if (g11t2.innerHTML.includes(team_name))
             {
                 return;
             }
             g11t2.innerHTML = temp;
-            var g14t1 = document.getElementById("g14t1");
+            let g14t1 = document.getElementById("g14t1");
             g14t1.innerHTML = '';
-            var g15t2 = document.getElementById("g15t2");
+            let g15t2 = document.getElementById("g15t2");
             g15t2.innerHTML = '';
+        }
+
+        function checkAllInputs(event) {
+            event.preventDefault();
+            let failed = false;
+            let arr = document.querySelectorAll("li.team");
+            for (let a of arr) {
+                let input = a.querySelector("input");
+                if (!input) {
+                    a.classList.add('red-border');
+                    failed = true;
+                }
+            }
+
+            if (!failed) {
+                document.querySelector("#updateBracketInput").click();
+            }
         }
     </script>
     
@@ -307,7 +326,8 @@
                     <div>
                         <div class="row justify-content-center">
                             <div class="col-auto">
-                                <input class="btn btn-primary" type="submit" value="Submit bracket">
+                                <input id="updateBracketInput" class="btn btn-primary" type="submit" value="Submit bracket" hidden>
+                                <button class="btn btn-primary" value="Update bracket" onclick="checkAllInputs(event)">Update bracket</button>
                             </div>
                             <div class="col-auto">
                                 <a class="btn btn-outline-primary" href="{{ url_for('home.view_bracket') }}">Cancel</a>
@@ -461,7 +481,8 @@
                     <div>
                         <div class="row justify-content-center">
                             <div class="col-auto">
-                                <input class="btn btn-primary" type="submit" value="Submit bracket">
+                                <input id="updateBracketInput" class="btn btn-primary" type="submit" value="Submit bracket" hidden>
+                                <button class="btn btn-primary" value="Update bracket" onclick="checkAllInputs(event)">Submit bracket</button>
                             </div>
                         </div>
                     </div>

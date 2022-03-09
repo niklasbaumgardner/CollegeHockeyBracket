@@ -137,6 +137,10 @@ def update_correct():
     c_bracket = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
     for i in range(1, 16):
+        update_game = request.form.get(f'game{i}-checked') == 'True'
+        print(update_game)
+        if not update_game:
+            continue
         game_num = f'game{i}'
         winner = request.form.get(f'game{i}-winner')
         loser = request.form.get(f'game{i}-loser')
@@ -145,19 +149,22 @@ def update_correct():
         bracketUtils.updateCorrectGame(c_bracket.id, game_num=game_num, winner=winner,
             h_goals=h_goals, loser=loser, a_goals=a_goals)
 
-    winner = request.form.get(f'game15-winner')
-    h_goals = request.form.get(f'game{i}-h_goals')
-    a_goals = request.form.get(f'game{i}-a_goals')
-    if winner and h_goals and a_goals:
-        c_bracket.winner = winner
+    update_game15 = request.form.get(f'game15-checked') == 'True'
+    print(update_game15)
+    if update_game15:
+        winner = request.form.get(f'game15-winner')
+        h_goals = request.form.get(f'game15-h_goals')
+        a_goals = request.form.get(f'game15-a_goals')
+        if winner and h_goals and a_goals:
+            c_bracket.winner = winner
 
-        more_goals = h_goals if h_goals > a_goals else a_goals
-        less_goals = a_goals if a_goals > h_goals else h_goals
-        c_bracket.w_goals = more_goals
-        c_bracket.l_goals = less_goals
-        db.session.commit()
+            more_goals = h_goals if h_goals > a_goals else a_goals
+            less_goals = a_goals if a_goals > h_goals else h_goals
+            c_bracket.w_goals = more_goals
+            c_bracket.l_goals = less_goals
+            db.session.commit()
 
-    bracketUtils.updateAllBrackets()
+    # bracketUtils.updateAllBrackets()
 
     return redirect(url_for('home.admin'))
 
