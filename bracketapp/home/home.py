@@ -240,7 +240,7 @@ def update_correct():
             c_bracket.l_goals = less_goals
             db.session.commit()
 
-    # bracketUtils.updateAllBrackets()
+    bracketUtils.updateAllBrackets()
 
     return redirect(url_for('home.admin'))
 

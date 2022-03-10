@@ -319,6 +319,7 @@ def getMaxPointsForBracket(bracket, correct=None, teams=None):
         max_points += 10
         game8 = True
 
+    # print(bracket.bracket.name)
     # print(max_points)
     # ROUND 2
     game9 = False
@@ -381,11 +382,16 @@ def getMaxPointsForBracket(bracket, correct=None, teams=None):
         max_points += 40
         game14 = True
 
+    # print(max_points)
+
     # WINNER
     if ((bracket.games[14].winner == correct.games[14].winner)
     or (correct.games[14].winner not in teams and
         ((game13 and bracket.games[12].winner == bracket.games[14].winner)
-        or (game14 and bracket.games[12].winner == bracket.games[14].winner)))):
+        or (game14 and bracket.games[13].winner == bracket.games[14].winner)))):
         max_points += 80
+
+    # print(max_points)
+    # print()
 
     return max_points
