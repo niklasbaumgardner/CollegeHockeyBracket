@@ -14,6 +14,7 @@ class fullBracket():
         self.user_name = user.name
         self.user_id = user.id
         self.rank = None
+        self.goal_difference = 0
 
 class fullCorrectBracket():
     def __init__(self):
@@ -35,6 +36,11 @@ class correctBracketTree():
 
         self.treeGames = {}
 
+class bracketWinner():
+    def __init__(self, winning_bracket, tie):
+        self.winner = winning_bracket
+        self.tie = tie
+
 
 def getAllTeams():
     default = fullDefaultBracket()
@@ -54,8 +60,39 @@ def getAllBrackets():
     return brackets
 
 
+def getWinner(standings):
+    correct = CorrectBracket.query.filter_by(year=datetime.now().year).first()
+
+    if not correct.winner:
+        return None
+
+    winners = [ b for b in standings if b.rank == 1 ]
+
+    if len(winners) == 1:
+        return bracketWinner(winners, False)
+
+    for w in winners:
+        w.goal_difference = abs(w.bracket.w_goals  + w.bracket.l_goals - (correct.w_goals + correct.l_goals))
+
+    winners.sort(key=lambda x: x.goal_difference)
+
+    min_goal_diff = winners[0].goal_difference
+
+    winners = [ w for w in winners if w.goal_difference <= min_goal_diff ]
+
+    return bracketWinner(winners, True)
+
+
 def getAllRankedBrackets():
     brackets = getAllBrackets()
+
+    correct = CorrectBracket.query.filter_by(year=datetime.now().year).first()
+
+    if correct.winner:
+        for bracket in brackets:
+            bracket.goal_difference = abs(bracket.bracket.w_goals  + bracket.bracket.l_goals - (correct.w_goals + correct.l_goals))
+
+        brackets.sort(key=lambda x: x.goal_difference)
 
     brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
     brackets.sort(key=lambda b: b.bracket.points, reverse=True)
@@ -73,7 +110,9 @@ def getAllRankedBrackets():
             rank = i + 1
             bracket.rank = rank
             standings.append(bracket)
+
     return standings
+
 
 
 def createCorrectBracket():

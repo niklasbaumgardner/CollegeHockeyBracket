@@ -18,6 +18,41 @@
     </div>
 </div>
 
+{% if winner %}
+    <div class="row justify-content-center mx-0 mb-5">
+        {% if winner.tie and len(winner.winner) > 1 %}
+            <div class="col-auto fs-3 border border-danger border-4 p-5">
+                The winning brackets are
+                {% for w in winner.winner %}
+                    <div class="fw-bold">
+                        {{ w.bracket.name }}
+                    </div>
+                {% endfor %}
+                They were still tied after the total goals tiebreaker.
+                <br>
+                Congratulations to the winners
+                {% for w in winner.winner %}
+                    <div class="fw-bold">
+                        {{ w.user_name }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif winner.tie and len(winner.winner) == 1 %}
+            <div class="col-auto fs-3 border border-danger border-4 p-5">
+                There was a tie and <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> won the total goals tiebreak.
+                <br>
+                Congratulations to <span class="fw-bold">{{ winner.winner[0].user_name }}</span>!
+            </div>
+        {% else %}
+            <div class="col-auto fs-3 border border-danger border-4 p-5">
+                The winning bracket is <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> with <span class="fw-bold">{{ winner.winner[0].bracket.points }}</span> points.
+                <br>
+                Congratulations to <span class="fw-bold">{{ winner.winner[0].user_name }}</span>!
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+
 <div class="table-responsive">
     <table class="table table-striped {% if can_click %}table-hover{% endif %}">
         <thead>

@@ -22,7 +22,8 @@ def isAdmin():
 def index():
     can_click = not can_edit_bracket()
     standings = bracketUtils.getAllRankedBrackets()
-    return render_template("index.html", brackets=standings, can_click=can_click)
+    winner = bracketUtils.getWinner(standings)
+    return render_template("index.html", brackets=standings, can_click=can_click, winner=winner, len=len)
 
 
 @home.route('/view_bracket', defaults={'id': None}, methods=["GET"])
