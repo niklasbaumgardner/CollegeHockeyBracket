@@ -63,7 +63,7 @@ def getAllBrackets():
 def getWinner(standings):
     correct = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
-    if not correct.winner:
+    if not correct or not correct.winner:
         return None
 
     winners = [ b for b in standings if b.rank == 1 ]
@@ -88,7 +88,7 @@ def getAllRankedBrackets():
 
     correct = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
-    if correct.winner:
+    if correct and correct.winner:
         for bracket in brackets:
             bracket.goal_difference = abs(bracket.bracket.w_goals  + bracket.bracket.l_goals - (correct.w_goals + correct.l_goals))
 
