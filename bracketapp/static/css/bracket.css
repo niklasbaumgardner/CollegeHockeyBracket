@@ -11,9 +11,8 @@ li {
 
 #bracket {
   overflow: hidden;
-  padding-top: 20px;
   font-size: 12px;
-  padding: 20px 0;
+  padding: 20px 10px;
   background-color: #eeeff0;
 }
 
@@ -186,7 +185,7 @@ li {
 }
 
 .final {
-  margin: 4.5em 0;
+  margin: 1.5em 0;
 }
 
 @-webkit-keyframes pulse {
@@ -242,7 +241,7 @@ li {
 }
 
 @media screen and (max-width: 980px) {
-  .split, .champion {width: 90%;margin: 35px 5%;}
+  .split, .champion {width: 90%;margin: 0 5% 35px 5%;}
   .champion {-webkit-box-ordinal-group:3;-moz-box-ordinal-group:3;-ms-flex-order:3;-webkit-order:3;order:3;}
   .split {border-bottom: 1px solid #b6b6b6; padding-bottom: 20px;}
   .hero p.intro {font-size: 24px;}
