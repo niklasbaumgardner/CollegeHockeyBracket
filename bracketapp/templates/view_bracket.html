@@ -79,6 +79,7 @@
             <div class="champion">
                 <div class="final">
                     <div class="round-details">champion</div>
+                    <img width="50px" height="50px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
                     <ul class ="matchup championship">
                         <li class="team team-user-pick {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li>
                         <li class="team ">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>

@@ -16,7 +16,7 @@ class fullBracket():
         self.user_id = user.id
         self.rank = None
         self.goal_difference = 0
-        self.img_url = ''
+        self.img_url = assignImage(self.bracket)
 
 class fullCorrectBracket():
     def __init__(self):
@@ -85,11 +85,8 @@ def getWinner(standings):
     return bracketWinner(winners, True)
 
 
-def getAllRankedBrackets(can_click):
+def getAllRankedBrackets():
     brackets = getAllBrackets()
-
-    if can_click:
-        assignImages(brackets)
 
     correct = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
@@ -119,11 +116,10 @@ def getAllRankedBrackets(can_click):
     return standings
 
 
-def assignImages(brackets):
-    for bracket in brackets:
-        url_list = bracket.bracket.winner.split(' ')
-        url = ''.join(url_list[1:]).replace('.', '')
-        bracket.img_url = url
+def assignImage(bracket):
+    url_list = bracket.winner.split(' ')
+    url = ''.join(url_list[1:]).replace('.', '')
+    return url
 
 
 # this is for checking the image urls are correct
