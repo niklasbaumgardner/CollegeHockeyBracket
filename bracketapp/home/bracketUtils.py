@@ -4,6 +4,7 @@ from sqlalchemy import true
 from bracketapp.models import CorrectBracket, CorrectGame, User, Bracket, Game, DefaultBracket, DefaultGame
 from bracketapp.extensions import db
 from datetime import datetime
+import os.path
 
 class fullBracket():
     def __init__(self, bracket_id):
@@ -15,6 +16,7 @@ class fullBracket():
         self.user_id = user.id
         self.rank = None
         self.goal_difference = 0
+        self.img_url = ''
 
 class fullCorrectBracket():
     def __init__(self):
@@ -83,8 +85,11 @@ def getWinner(standings):
     return bracketWinner(winners, True)
 
 
-def getAllRankedBrackets():
+def getAllRankedBrackets(can_click):
     brackets = getAllBrackets()
+
+    if can_click:
+        assignImages(brackets)
 
     correct = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
@@ -113,6 +118,27 @@ def getAllRankedBrackets():
 
     return standings
 
+
+def assignImages(brackets):
+    for bracket in brackets:
+        url_list = bracket.bracket.winner.split(' ')
+        url = ''.join(url_list[1:]).replace('.', '')
+        bracket.img_url = url
+
+
+# this is for checking the image urls are correct
+def checkImgUrls(default_brackets):
+    path = os.path.dirname(os.path.abspath(__file__))[:-4]
+    for game in default_brackets.games:
+        url_list = game.home.split(' ')
+        url = ''.join(url_list[1:]).replace('.', '')
+        print(url)
+        print(os.path.isfile(f'{path}/static/images/{url}.svg'))
+
+        url_list = game.away.split(' ')
+        url = ''.join(url_list[1:]).replace('.', '')
+        print(url)
+        print(os.path.isfile(f'{path}/static/images/{url}.svg'))
 
 
 def createCorrectBracket():

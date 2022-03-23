@@ -53,67 +53,71 @@
     </div>
 {% endif %}
 
-<div class="table-responsive">
-    <table class="table table-striped {% if can_click %}table-hover{% endif %}">
-        <thead>
-            <tr>
-                <th scope="col">Rank</th>
-                <th scope="col">Bracket Name</th>
-                <th scope="col">User Name</th>
-                <th scope="col">Bracket Winner</th>
-                <th scope="col">Points</th>
-                <th scope="col">Max Points</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for bracket in brackets %}
-                {% if can_click %}
-                    <tr style="cursor:pointer;" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
-                        <td>
-                            {{ bracket.rank }}
-                        </td>
-                        <td>
-                            {{ bracket.bracket.name }}
-                        </td>
-                        <td>
-                            {{ bracket.user_name }}
-                        </td>
-                        <td>
-                            {{ bracket.bracket.winner }}
-                        </td>
-                        <td>
-                            {{ bracket.bracket.points }}
-                        </td>
-                        <td>
-                            {{ bracket.bracket.max_points }}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td>
-                            {{ bracket.rank }}
-                        </td>
-                        <td>
-                            {{ bracket.bracket.name }}
-                        </td>
-                        <td>
-                            {{ bracket.user_name }}
-                        </td>
-                        <td>
-                            Winner
-                        </td>
-                        <td>
-                            {{ bracket.bracket.points }}
-                        </td>
-                        <td>
-                            {{ bracket.bracket.max_points }}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container table-striped {% if can_click %}table-hover{% endif %}">
+    <div class="row table-header">
+        <div class="col-2">
+            Rank
+        </div>
+        <div class="col-5 col-md-6">
+            Bracket
+        </div>
+        <div class="col-2">
+            Points
+        </div>
+        <div class="col-3 col-md-2">
+            Max Points
+        </div>
+    </div>
 
+    {% for bracket in brackets %}
+        {% if can_click %}
+            <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
+                <div class="col-2">
+                    -
+                </div>
+                <div class="col-5 col-md-6">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img width="25px" height="25px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                        </div>
+                        <div class="col-auto">
+                            {{ bracket.bracket.name }}
+                            <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    {{ bracket.bracket.points }}
+                </div>
+                <div class="col-3 col-md-2">
+                    {{ bracket.bracket.max_points }}
+                </div>
+            </div>
+        {% else %}
+            <div class="row table-row border-top p-1">
+                <div class="col-2">
+                    -
+                </div>
+                <div class="col-5 col-md-6">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img class="greyscale" width="25px" height="25px" src="/static/images/logo.png" alt="Logo"/>
+                        </div>
+                        <div class="col-auto">
+                            {{ bracket.bracket.name }}
+                            <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    {{ bracket.bracket.points }}
+                </div>
+                <div class="col-3 col-md-2">
+                    {{ bracket.bracket.max_points }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
 </div>
 
 {% endblock content %}
