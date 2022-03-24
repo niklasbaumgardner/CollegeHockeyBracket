@@ -79,26 +79,27 @@
                         <div class="final-round-grid">
                             <div class="top">
                                 <div class="row justify-content-center">
-                                    <div class="round-details">champion</div>
-                                    <div class="row justify-content-center champion matchup">
-                                        <img class="winner-img" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
-                                        <li class="team team-user-pick center-text {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li>
-                                        <li class="team team-user-pick center-text">Predicted Score:</li>
-                                        <li class="team team-user-pick center-text">{{ bracket.bracket.w_goals }} - {{ bracket.bracket.l_goals }}</li>
+                                    <div class="champion-grid">
+                                        <div class="round-details champion-top">champion</div>
+                                        <div class="row justify-content-center champion matchup champion-middle">
+                                            <img class="winner-img" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                                            <li class="team team-user-pick center-text {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li>
+                                            <li class="team team-user-pick center-text">Predicted Score:</li>
+                                            <li class="team team-user-pick center-text">{{ bracket.bracket.w_goals }} - {{ bracket.bracket.l_goals }}</li>
+                                        </div>
+                                        <div class="row justify-content-center champion-bottom">
+                                            <ul class ="matchup ">
+                                                <li class="team center-text ">Champion:</li>
+                                                <li class="team center-text ">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <ul class ="matchup championship row justify-content-center">
-                                        <!-- <li class="team team-user-pick {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li> -->
-                                        <li class="team center-text">Champion:</li>
-                                        <li class="team center-text">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>
-                                        <!-- <li class="team team-user-pick">Predicted Score:</li>
-                                        <li class="team team-user-pick">{{ bracket.bracket.w_goals }} - {{ bracket.bracket.l_goals }}</li> -->
-                                    </ul>
                                 </div>
                             </div>
                             <div class="bottom">
-                                <div class="row justify-content-center">
+                                <div class="championship-grid">
                                     <div class="round-details">championship</div>
-                                    <ul class ="matchup row justify-content-center">
+                                    <ul class ="matchup">
                                         <li class="team team-user-pick {% if correct and correct.games[12].winner == bracket.games[12].winner %}correct{% elif correct and correct.games[12].winner != None %}incorrect{% endif %}">{{ bracket.games[12].winner }}</li>
                                         <li class="team ">{% if correct.games[12].winner != None %}{{ correct.games[12].winner }}{% endif %}<span class="score">{% if correct.games[14].h_goals != None %}{{ correct.games[14].h_goals }}{% endif %}</span></li>
                                         <li class="team ">{% if correct.games[13].winner != None %}{{ correct.games[13].winner }}{% endif %}<span class="score">{% if correct.games[14].a_goals != None %}{{ correct.games[14].a_goals }}{% endif %}</span></li>

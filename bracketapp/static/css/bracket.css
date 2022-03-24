@@ -13,7 +13,6 @@ li {
   font-size: 12px;
   padding: 20px 10px;
   background-color: #eeeff0;
-  overflow-x: scroll;
 }
 
 .red-border {
@@ -23,6 +22,7 @@ li {
 .matchup {
   margin: 0;
   width: 100%;
+  max-width: 175px;
   padding: 10px 0;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
@@ -172,5 +172,27 @@ li {
       'round-three-right round-two-right round-one-right'
       'round-final round-final round-final';
   }
+}
 
+@media screen and (max-width: 409px) {
+
+  #bracket {
+    overflow-x: auto;
+  }
+}
+
+.champion-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  grid-template-rows: auto;
+  gap: 10px;
+}
+
+.championship-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  grid-template-rows: auto;
+  gap: 10px;
 }
