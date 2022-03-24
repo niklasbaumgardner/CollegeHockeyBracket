@@ -10,7 +10,6 @@ li {
 }
 
 #bracket {
-  overflow: hidden;
   font-size: 12px;
   padding: 20px 10px;
   background-color: #eeeff0;
@@ -44,7 +43,6 @@ li {
   align-self: center;
   margin-top: -15px;
   text-align: center;
-  padding: 230px 0\9;
 }
 
 .champion i {
@@ -64,7 +62,7 @@ li {
   -webkit-flex-direction: column;
   flex-direction: column;
   width: 95%;
-  width: 30.8333%\9;
+  width: 30.8333%;
 }
 
 .split-one .round {
@@ -261,4 +259,40 @@ li {
   .hero-wrap {padding: 2.5em;}
   .hero p.year {margin: 5px 0 10px; font-size: 18px;}
 
+}
+
+
+.bracket-grid {
+  max-width: 100%;
+  display: grid;
+  grid-template: 'round-one-left round-two-left round-three-left round-final round-three-right round-two-right round-one-right';
+}
+
+.round-one-left {
+  grid-area: round-one-left;
+}
+
+.round-two-left {
+  grid-area: round-two-left;
+}
+
+.round-three-left {
+  grid-area: round-three-left;
+}
+
+.round-final {
+  grid-area: round-final;
+  justify-content: center;
+}
+
+.round-one-right {
+  grid-area: round-one-right;
+}
+
+.round-two-right {
+  grid-area: round-two-right;
+}
+
+.round-three-right {
+  grid-area: round-three-right;
 }
