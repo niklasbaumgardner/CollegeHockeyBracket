@@ -160,8 +160,7 @@ def edit_bracket():
 @home.route('/admin', methods=["GET"])
 @login_required
 def admin():
-    admin_id = '1'
-    if current_user.get_id() != admin_id:
+    if not isAdmin():
         return redirect(url_for('home.index'))
 
     try:
@@ -206,57 +205,91 @@ def delete_bracket(id):
 
 
 
-@home.route('/update_correct', methods=["POST"])
+@home.route('/update_correct', methods=["GET", "POST"])
 @login_required
 def update_correct():
     if not isAdmin():
         return redirect(url_for('home.index'))
 
-    c_bracket = CorrectBracket.query.filter_by(year=datetime.now().year).first()
+    if request.method == "POST":
+        c_bracket = CorrectBracket.query.filter_by(year=datetime.now().year).first()
 
-    for i in range(1, 16):
-        update_game = request.form.get(f'game{i}-checked') == 'True'
-        if not update_game:
-            continue
-        game_num = f'game{i}'
-        winner = request.form.get(f'game{i}-winner')
-        loser = request.form.get(f'game{i}-loser')
-        h_goals = request.form.get(f'game{i}-h_goals')
-        a_goals = request.form.get(f'game{i}-a_goals')
-        bracketUtils.updateCorrectGame(c_bracket.id, game_num=game_num, winner=winner,
-            h_goals=h_goals, loser=loser, a_goals=a_goals)
+        for i in range(1, 16):
+            update_game = request.form.get(f'game{i}-checked') == 'True'
+            if not update_game:
+                continue
+            game_num = f'game{i}'
+            winner = request.form.get(f'game{i}-winner')
+            loser = request.form.get(f'game{i}-loser')
+            h_goals = request.form.get(f'game{i}-h_goals')
+            a_goals = request.form.get(f'game{i}-a_goals')
+            bracketUtils.updateCorrectGame(c_bracket.id, game_num=game_num, winner=winner,
+                h_goals=h_goals, loser=loser, a_goals=a_goals)
 
-    update_game15 = request.form.get(f'game15-checked') == 'True'
+        update_game15 = request.form.get(f'game15-checked') == 'True'
 
-    if update_game15:
-        winner = request.form.get(f'game15-winner')
-        h_goals = request.form.get(f'game15-h_goals')
-        a_goals = request.form.get(f'game15-a_goals')
-        if winner and h_goals and a_goals:
-            c_bracket.winner = winner
+        if update_game15:
+            winner = request.form.get(f'game15-winner')
+            h_goals = request.form.get(f'game15-h_goals')
+            a_goals = request.form.get(f'game15-a_goals')
+            if winner and h_goals and a_goals:
+                c_bracket.winner = winner
 
-            more_goals = h_goals if h_goals > a_goals else a_goals
-            less_goals = a_goals if a_goals > h_goals else h_goals
-            c_bracket.w_goals = more_goals
-            c_bracket.l_goals = less_goals
-            db.session.commit()
+                more_goals = h_goals if h_goals > a_goals else a_goals
+                less_goals = a_goals if a_goals > h_goals else h_goals
+                c_bracket.w_goals = more_goals
+                c_bracket.l_goals = less_goals
+                db.session.commit()
 
-    bracketUtils.updateAllBrackets()
+        bracketUtils.updateAllBrackets()
+
+    if request.method == "GET":
+        include_all = request.args.get('all') == 'True'
+        try:
+            correct = bracketUtils.fullCorrectBracket()
+        except:
+            correct = bracketUtils.createCorrectBracket()
+
+        try:
+            default = bracketUtils.fullDefaultBracket()
+        except:
+            default = bracketUtils.createDefaultBracket()
+
+        if not include_all:
+            empty_correct_games = []
+            for game in correct.games:
+                if not game.winner:
+                    empty_correct_games.append(game)
+            correct.games = empty_correct_games
+
+        return render_template("update_correct.html", correct=correct, default=default, should_game_exist=bracketUtils.should_game_exist)
 
     return redirect(url_for('home.admin'))
 
 
-@home.route('/update_default', methods=["POST"])
+@home.route('/update_default', methods=["GET", "POST"])
 @login_required
 def update_default():
     if not isAdmin():
         return redirect(url_for('home.index'))
+    if request.method == "POST":
+        d_bracket = DefaultBracket.query.filter_by(year=datetime.now().year).first()
 
-    d_bracket = DefaultBracket.query.filter_by(year=datetime.now().year).first()
+        for i in range(1, 9):
+            game_num = f'game{i}'
+            bracketUtils.updateDefault(d_bracket.id, game_num, request.form.get(f'game{i}-home'), request.form.get(f'game{i}-away'))
 
-    for i in range(1, 9):
-        game_num = f'game{i}'
-        bracketUtils.updateDefault(d_bracket.id, game_num, request.form.get(f'game{i}-home'), request.form.get(f'game{i}-away'))
+    if request.method == "GET":
+        try:
+            correct = bracketUtils.fullCorrectBracket()
+        except:
+            correct = bracketUtils.createCorrectBracket()
+
+        try:
+            default = bracketUtils.fullDefaultBracket()
+        except:
+            default = bracketUtils.createDefaultBracket()
+        return render_template("default_bracket.html", default=default)
 
     return redirect(url_for('home.admin'))
 

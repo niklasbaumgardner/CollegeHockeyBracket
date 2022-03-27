@@ -11,121 +11,41 @@
     </div>
 </div>
 <div class="container mx-0 bg-light p-3">
-    <div class="mb-5">
-        <a class="btn btn-danger m-2" href="{{ url_for('home.delete_default') }}">Delete Default Bracket</a>
-        <a class="btn btn-danger m-2" href="{{ url_for('home.delete_correct') }}">Delete Correct Bracket</a>
-        <a class="btn btn-primary m-2" href="{{ url_for('home.update_points') }}">Update Bracket Points</a>
-    </div>
-    <div class="accordion accordion-flush" id="accordionFlushExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Default Bracket
-                </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">
-                    <form action="{{ url_for('home.update_default') }}" method="POST">
-                        <div class="row">
-                            {% for game in default.games %}
-                                <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <p class="fs-1">{{ game.game_num }}</p>
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-home">Home</label>
-                                        <input type="text" id="{{ game.game_num }}-home" name="{{ game.game_num }}-home" class="form-control" value="{{ game.home }}" />
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-away">Away</label>
-                                        <input type="text" id="{{ game.game_num }}-away" name="{{ game.game_num }}-away" class="form-control" value="{{ game.away }}"/>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <input type="submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    Correct Bracket
-                </button>
-            </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">
-                    <form action="{{ url_for('home.update_correct') }}" method="POST">
-                        <div class="row">
-                            {% for game in correct.games %}
-                                <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <p class="fs-1">{{ game.game_num }}</p>
-                                    <div class="form-outline form-white mb-4">
-                                        <input class="form-check-input" type="checkbox" id="{{ game.game_num }}-checked" name="{{ game.game_num }}-checked" value="True">
-                                        <label class="form-check-label" for="{{ game.game_num }}-checked">
-                                            Update {{ game.game_num }}?
-                                        </label>
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-winner">Winner</label>
-                                        <select id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-select" aria-label="Default select example">
-                                            {% for g in default.games %}
-                                                {% if should_game_exist(g.home, game.game_num) %}
-                                                    {% if g.home == game.winner %}
-                                                        <option value="{{ g.home }}" selected>{{ g.home }}</option>
-                                                    {% else %}
-                                                        <option value="{{ g.home }}">{{ g.home }}</option>
-                                                    {% endif %}
-                                                {% endif %}
-                                                {% if should_game_exist(g.away, game.game_num) %}
-                                                    {% if g.away == game.winner %}
-                                                        <option value="{{ g.away }}" selected>{{ g.away }}</option>
-                                                    {% else %}
-                                                        <option value="{{ g.away }}">{{ g.away }}</option>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                        <!-- <input type="text" id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-control" value="{{ game.winner }}" /> -->
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-loser">Loser</label>
-                                        <select id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-select" aria-label="Default select example">
-                                            {% for g in default.games %}
-                                                {% if should_game_exist(g.home, game.game_num) %}
-                                                    {% if g.home == game.loser %}
-                                                        <option value="{{ g.home }}" selected>{{ g.home }}</option>
-                                                    {% else %}
-                                                        <option value="{{ g.home }}">{{ g.home }}</option>
-                                                    {% endif %}
-                                                {% endif %}
-                                                {% if should_game_exist(g.away, game.game_num) %}
-                                                    {% if g.away == game.loser %}
-                                                        <option value="{{ g.away }}" selected>{{ g.away }}</option>
-                                                    {% else %}
-                                                        <option value="{{ g.away }}">{{ g.away }}</option>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                        <!-- <input type="text" id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-control" value="{{ game.loser }}"/> -->
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-h_goals">Home Goals</label>
-                                        <input type="number" id="{{ game.game_num }}-h_goals" name="{{ game.game_num }}-h_goals" class="form-control" value="{{ game.h_goals }}"/>
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        <label class="form-label" for="{{ game.game_num }}-a_goals">Away Goals</label>
-                                        <input type="number" id="{{ game.game_num }}-a_goals" name="{{ game.game_num }}-a_goals" class="form-control" value="{{ game.a_goals }}"/>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <input type="submit" />
-                    </form>
-                </div>
-            </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <a class="btn btn-outline-primary m-3" href="{{ url_for('home.update_correct') }}">Update correct bracket page</a>
         </div>
     </div>
-
+    <div class="row mb-5">
+        <div class="col-12">
+            <a class="btn btn-primary m-3" href="{{ url_for('home.update_points') }}">Update bracket points</a>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <a class="btn btn-outline-primary m-3" href="{{ url_for('home.update_correct', all='True') }}">Correct bracket page</a>
+            <a class="btn btn-outline-primary m-3" href="{{ url_for('home.update_default') }}">Default bracket page</a>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <a class="btn btn-outline-danger m-3" href="{{ url_for('home.delete_brackets') }}">Delete brackets page</a>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <a class="btn btn-danger m-3" href="{{ url_for('home.delete_default') }}">Delete Default Bracket</a>
+            <a class="btn btn-danger m-3" href="{{ url_for('home.delete_correct') }}">Delete Correct Bracket</a>
+        </div>
+    </div>
+    <!-- <div class="mb-5">
+        <a class="btn btn-outline-primary m-3" href="{{ url_for('home.update_correct') }}">Update Correct Bracket</a>
+        <a class="btn btn-primary m-3" href="{{ url_for('home.update_points') }}">Default Bracket</a>
+        <a class="btn btn-primary m-3" href="{{ url_for('home.update_correct', all='True') }}">Correct Bracket</a>
+        <a class="btn btn-danger m-3" href="{{ url_for('home.delete_default') }}">Delete Default Bracket</a>
+        <a class="btn btn-danger m-3" href="{{ url_for('home.delete_correct') }}">Delete Correct Bracket</a>
+        <a class="btn btn-outline-danger" href="{{ url_for('home.delete_brackets') }}">Delete brackets</a>
+        <a class="btn btn-primary m-3" href="{{ url_for('home.update_points') }}">Update Bracket Points</a>
+    </div> -->
 </div>
 {% endblock content %}

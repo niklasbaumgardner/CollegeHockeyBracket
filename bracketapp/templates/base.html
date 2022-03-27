@@ -38,9 +38,6 @@
                         <li class="nav-item">
                             <a class="nav-link {% block admin %}{% endblock admin %}" href="{{ url_for('home.admin') }}">Admin</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% block delete %}{% endblock delete %}" href="{{ url_for('home.delete_brackets') }}">Delete brackets</a>
-                        </li>
                     {% endif %}
                 </ul>
                 {% if current_user.is_authenticated %}
