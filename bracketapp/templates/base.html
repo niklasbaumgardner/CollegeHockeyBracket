@@ -39,6 +39,11 @@
                             <a class="nav-link {% block admin %}{% endblock admin %}" href="{{ url_for('home.admin') }}">Admin</a>
                         </li>
                     {% endif %}
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block profile %}{% endblock profile %}" href="{{ url_for('home.profile') }}">Profile</a>
+                        </li>
+                    {% endif %}
                 </ul>
                 {% if current_user.is_authenticated %}
                     <a class="nav-link text-white-50" href="{{ url_for('auth.logout') }}">Logout from {{ current_user.email.split('@')[0] }}</a>

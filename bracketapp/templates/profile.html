@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock title %}
+{% block profile %}active{% endblock profile %}
+
+
+
+{% block content %}
+
+<!-- <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-4">Sidebar</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                Orders
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                Products
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                Customers
+            </a>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>mdo</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+            <li><a class="dropdown-item" href="#">New project...</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+    </div>
+</div> -->
+<!-- <div class="card">
+    <div>
+
+    </div>
+
+</div> -->
+
+<div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-light">
+                <div class="card-header px-3">
+                    <div class="fs-4">
+                        Account details
+                    </div>
+                </div>
+
+                <div class="card-body px-5 pb-5">
+                    <form action="{{ url_for('home.profile') }}" method="POST" autocomplete="off">
+                        <div class="mb-4">
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="email">First name</label>
+                                <input class="form-control" type="text" id="fname" name="fname" value="{{ f_name }}" required>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="email">Last name</label>
+                                <input class="form-control" type="text" id="lname" name="lname" value="{{ l_name }}" required>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" value="{{ email }}"/>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="password">Update password</label>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Update password"/>
+                            </div>
+                            <button class="btn btn-outline-primary px-5" type="submit">Update details</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

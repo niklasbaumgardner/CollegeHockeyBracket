@@ -1,3 +1,4 @@
+import email
 from urllib.parse import parse_qs
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
@@ -155,6 +156,27 @@ def edit_bracket():
                 db.session.commit()
 
     return redirect(url_for('home.view_bracket'))
+
+
+@home.route('/profile', methods=["GET", "POST"])
+@login_required
+def profile():
+    user = User.query.filter_by(id=current_user.get_id()).first()
+    if request.method == "POST":
+        f_name = request.form.get('fname')
+        l_name = request.form.get('lname')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user.name = f_name + ' ' + l_name
+        user.email = email
+        user.password = password
+        db.session.commit()
+
+    f_name, l_name = user.name.split(' ')
+    # f_name, l_name = 'test', 'test'
+    email = user.email
+    return render_template("profile.html", f_name=f_name, l_name=l_name, email=email)
 
 
 @home.route('/admin', methods=["GET"])
