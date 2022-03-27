@@ -3,6 +3,7 @@ from urllib.parse import parse_qs
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 from bracketapp.models import CorrectBracket, DefaultBracket, User, Bracket, Game
+from bracketapp import bcrypt
 from bracketapp.extensions import db
 from bracketapp.home import bracketUtils
 from datetime import datetime
@@ -170,7 +171,8 @@ def profile():
 
         user.name = f_name + ' ' + l_name
         user.email = email
-        user.password = password
+        hash_ = bcrypt.generate_password_hash(password).decode('utf-8')
+        user.password = hash_
         db.session.commit()
 
     f_name, l_name = user.name.split(' ')
