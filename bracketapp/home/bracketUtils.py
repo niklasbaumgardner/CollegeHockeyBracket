@@ -1,6 +1,5 @@
 from re import T, U
 
-from sqlalchemy import true
 from bracketapp.models import CorrectBracket, CorrectGame, User, Bracket, Game, DefaultBracket, DefaultGame
 from bracketapp.extensions import db
 from datetime import datetime
@@ -60,6 +59,10 @@ def getAllBrackets():
         brackets.append(fullBracket(b.id))
 
     return brackets
+
+
+def getUserBracket(user_id):
+    return Bracket.query.filter_by(user_id=user_id).first()
 
 
 def getWinner(standings):

@@ -1,7 +1,7 @@
 import email
 from urllib.parse import parse_qs
-from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_login import login_user, current_user, logout_user, login_required
+from flask import Blueprint, render_template, redirect, url_for, request
+from flask_login import current_user, login_required
 from bracketapp.models import CorrectBracket, DefaultBracket, User, Bracket, Game
 from bracketapp import bcrypt
 from bracketapp.extensions import db
@@ -31,14 +31,14 @@ def index():
 @home.route('/view_bracket', defaults={'id': None}, methods=["GET"])
 @home.route('/view_bracket/<int:id>', methods=["GET"])
 def view_bracket(id):
-    can_edit = can_edit = can_edit_bracket()
+    can_edit = can_edit_bracket()
     current_user_id = current_user.get_id()
 
     if id and not can_edit:
         bracket = bracketUtils.fullBracket(id)
     else:
         if current_user_id:
-            bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+            bracket = bracketUtils.getUserBracket(user_id=current_user.get_id())
             if bracket:
                 bracket = bracketUtils.fullBracket(bracket.id)
                 # if not can_edit:
@@ -71,14 +71,14 @@ def view_bracket(id):
 
 #     if request.method == "GET":
 #         default = bracketUtils.fullDefaultBracket()
-#         bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+#         bracket = bracketUtils.getUserBracket(user_id=current_user.get_id(), year=datetime.now().year).first()
 #         if bracket:
 #             bracket = bracketUtils.fullBracket(bracket.id)
 #         else:
 #             bracket = None
 #         return render_template("edit_bracket.html", bracket=bracket, default=default)
 #     elif request.method == "POST":
-#         existing_bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+#         existing_bracket = bracketUtils.getUserBracket(user_id=current_user.get_id(), year=datetime.now().year).first()
 
 #         if existing_bracket:
 #             existing_bracket.name = request.form.get('name')
@@ -119,14 +119,14 @@ def edit_bracket():
 
     if request.method == "GET":
         default = bracketUtils.fullDefaultBracket()
-        bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+        bracket = bracketUtils.getUserBracket(user_id=current_user.get_id())
         if bracket:
             bracket = bracketUtils.fullBracket(bracket.id)
         else:
             bracket = None
         return render_template("test_edit_bracket.html", bracket=bracket, default=default)
     elif request.method == "POST":
-        existing_bracket = Bracket.query.filter_by(user_id=current_user.get_id(), year=datetime.now().year).first()
+        existing_bracket = bracketUtils.getUserBracket(user_id=current_user.get_id())
 
         if existing_bracket:
             existing_bracket.name = request.form.get('name')
