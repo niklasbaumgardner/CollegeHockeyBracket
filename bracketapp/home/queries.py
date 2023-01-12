@@ -114,12 +114,14 @@ def getAllUserGamesForBracket(bracket_id):
 
 
 def deleteAllUserBrackets():
-    brackets = Bracket.query.all()
+    return  # I don't want to accidentally delete the brackets
+    brackets = Bracket.query.filter_by(year=YEAR).all()
     for b in brackets:
         deleteUserBracket(b.id)
 
 
 def deleteUserBracket(bracket_id):
+    return  # I don't want to accidentally delete the brackets
     bracket = getUserBracketFromBracketId(bracket_id)
 
     for game in bracket.games:
@@ -154,7 +156,6 @@ def updateCorrectBracket(winner, w_goals, l_goals, bracket=None):
     db.session.commit()
 
     return bracket
-
 
 
 def updateCorrectGame(b_id, game_num, winner, h_goals, loser, a_goals):
@@ -212,12 +213,12 @@ def updateDefaultGame(b_id, game_num, home, away):
     db.session.commit()
 
 
-def getDefaultGame(bracket_id, game_num):
-    return DefaultGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
-
-
 def getDefaultBracket():
     return DefaultBracket.query.filter_by(year=YEAR).first()
+
+
+def getDefaultGame(bracket_id, game_num):
+    return DefaultGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
 def getAllDefaultGamesForDefaultBracket(bracket_id):
