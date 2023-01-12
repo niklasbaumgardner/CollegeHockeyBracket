@@ -235,7 +235,7 @@ def update_correct():
     if request.method == "GET":
         include_all = request.args.get("all") == "True"
         try:
-            correct = queries.getCorrectBracket()
+            correct = bracketUtils.fullCorrectBracket()
         except:
             correct = queries.createCorrectBracket()
 

@@ -1,8 +1,11 @@
 from bracketapp.home import queries
 
+
 class userBracket:
     def __init__(self, bracket_id, bracket=None, games=None):
-        self.bracket = bracket if bracket else queries.getUserBracketFromBracketId(bracket_id)
+        self.bracket = (
+            bracket if bracket else queries.getUserBracketFromBracketId(bracket_id)
+        )
         self.games = games if games else queries.getAllUserGamesForBracket(bracket_id)
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         user = queries.getUser(id=self.bracket.user_id)
@@ -46,10 +49,7 @@ class bracketWinner:
         self.tie = tie
 
 
-def should_game_exist(team_name, game_num):
-    default = queries.fullDefaultBracket()
-    correct = queries.fullCorrectBracket()
-
+def should_game_exist(team_name, game_num, correct, default):
     ret = False
 
     if game_num == "game1":

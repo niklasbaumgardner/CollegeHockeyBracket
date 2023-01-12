@@ -24,14 +24,14 @@
                         <label class="form-label" for="{{ game.game_num }}-winner">Winner</label>
                         <select id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-select" aria-label="Default select example">
                             {% for g in default.games %}
-                                {% if should_game_exist(g.home, game.game_num) %}
+                                {% if should_game_exist(g.home, game.game_num, correct, default) %}
                                     {% if g.home == game.winner %}
                                         <option value="{{ g.home }}" selected>{{ g.home }}</option>
                                     {% else %}
                                         <option value="{{ g.home }}">{{ g.home }}</option>
                                     {% endif %}
                                 {% endif %}
-                                {% if should_game_exist(g.away, game.game_num) %}
+                                {% if should_game_exist(g.away, game.game_num, correct, default) %}
                                     {% if g.away == game.winner %}
                                         <option value="{{ g.away }}" selected>{{ g.away }}</option>
                                     {% else %}
@@ -46,14 +46,14 @@
                         <label class="form-label" for="{{ game.game_num }}-loser">Loser</label>
                         <select id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-select" aria-label="Default select example">
                             {% for g in default.games %}
-                                {% if should_game_exist(g.home, game.game_num) %}
+                                {% if should_game_exist(g.home, game.game_num, correct, default) %}
                                     {% if g.home == game.loser %}
                                         <option value="{{ g.home }}" selected>{{ g.home }}</option>
                                     {% else %}
                                         <option value="{{ g.home }}">{{ g.home }}</option>
                                     {% endif %}
                                 {% endif %}
-                                {% if should_game_exist(g.away, game.game_num) %}
+                                {% if should_game_exist(g.away, game.game_num, correct, default) %}
                                     {% if g.away == game.loser %}
                                         <option value="{{ g.away }}" selected>{{ g.away }}</option>
                                     {% else %}
