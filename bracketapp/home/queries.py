@@ -93,7 +93,7 @@ def getUserBracketFromBracketId(bracket_id):
 
 
 def getUserBracketFromUserId(user_id):
-    return Bracket.query.filter_by(user_id=user_id).first()
+    return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
 
 
 def getUserGame(bracket_id, game_num):

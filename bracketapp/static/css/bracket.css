@@ -58,6 +58,10 @@ li {
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
+.final-game-score-edit {
+  font-size: .9rem;
+}
+
 .winner-img {
   padding: 10px;
   width: 70px;
@@ -85,20 +89,12 @@ li {
   border: none;
 }
 
-.edit {
-  margin-top: 20px !important;
-}
-
 .round-details {
   font-size: 13px;
   color: #2C7399;
   text-transform: uppercase;
   text-align: center;
 }
-
-/* .final {
-  margin: 1.5em 0;
-} */
 
 .round-one > .matchup {
   padding: 36px 0;
@@ -108,12 +104,17 @@ li {
   padding: 72px 0;
 }
 
+.bracket-grid-edit .round-two > .matchup {
+  padding: 90px 0;
+}
+
 .round-three > .matchup {
   padding: 180px 0;
 }
 
 
-.bracket-grid {
+.bracket-grid,
+.bracket-grid-edit {
   max-width: 100%;
   display: grid;
   gap: 10px;
@@ -166,7 +167,15 @@ li {
 
 @media screen and (max-width: 992px) {
   .bracket-grid {
-    display: grid;
+    grid-template:
+      'round-final round-final round-final'
+      'round-one-left round-two-left round-three-left'
+      'round-three-right round-two-right round-one-right';
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .bracket-grid-edit {
     grid-template:
       'round-one-left round-two-left round-three-left'
       'round-three-right round-two-right round-one-right'
@@ -175,7 +184,6 @@ li {
 }
 
 @media screen and (max-width: 409px) {
-
   #bracket {
     overflow-x: auto;
   }
