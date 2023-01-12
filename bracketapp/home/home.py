@@ -18,7 +18,7 @@ def isAdmin():
 def index():
     can_click = not CAN_EDIT_BRACKET
     standings = bracketUtils.getBracketStandings()
-    winner = queries.getWinner(standings) if can_click else None
+    winner = bracketUtils.getWinner(standings) if can_click else None
     return render_template(
         "index.html", brackets=standings, can_click=can_click, winner=winner, len=len
     )
