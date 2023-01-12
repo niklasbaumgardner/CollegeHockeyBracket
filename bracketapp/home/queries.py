@@ -8,7 +8,7 @@ from bracketapp.models import (
     DefaultGame,
 )
 from bracketapp.extensions import db
-from bracketapp.home import helpers, bracketUtils
+from bracketapp.home import bracketUtils
 from bracketapp import bcrypt
 import os
 
@@ -246,75 +246,16 @@ def getAllTeams():
     return set(lst)
 
 
-def getWinner(standings):
-    correct = getCorrectBracket()
-
-    if not correct or not correct.winner:
-        return None
-
-    winners = [b for b in standings if b.rank == 1]
-
-    if len(winners) == 1:
-        return bracketUtils.bracketWinner(winners, False)
-
-    for w in winners:
-        w.goal_difference = abs(
-            w.bracket.w_goals + w.bracket.l_goals - (correct.w_goals + correct.l_goals)
-        )
-
-    winners.sort(key=lambda x: x.goal_difference)
-
-    min_goal_diff = winners[0].goal_difference
-
-    winners = [w for w in winners if w.goal_difference <= min_goal_diff]
-
-    return bracketUtils.bracketWinner(winners, True)
-
-
-def getBracketStandings():
-    brackets = getAllUserBrackets()
-    correct = getCorrectBracket()
-
-    if correct and correct.winner:
-        for bracket in brackets:
-            bracket.goal_difference = abs(
-                bracket.bracket.w_goals
-                + bracket.bracket.l_goals
-                - (correct.w_goals + correct.l_goals)
-            )
-
-        brackets.sort(key=lambda x: x.goal_difference)
-
-    brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
-    brackets.sort(key=lambda b: b.bracket.points, reverse=True)
-
-    rank = 1
-    standings = []
-    for i, bracket in enumerate(brackets):
-        if i == 0:
-            bracket.rank = rank
-            standings.append(bracket)
-        elif bracket.bracket.points == brackets[i - 1].bracket.points:
-            bracket.rank = rank
-            standings.append(bracket)
-        else:
-            rank = i + 1
-            bracket.rank = rank
-            standings.append(bracket)
-
-    return standings
-
-
 def updateAllBracketPoints():
     brackets = getAllUserBrackets()
     correct = getCorrectBracket()
     teams = getAllTeams()
 
     for user_bracket in brackets:
-        user_bracket.bracket.points = helpers.calculatePointsForBracket(
+        user_bracket.bracket.points = bracketUtils.calculatePointsForBracket(
             user_bracket, correct, teams
         )
-        user_bracket.bracket.max_points = helpers.calculateMaxPointsForBracket(
+        user_bracket.bracket.max_points = bracketUtils.calculateMaxPointsForBracket(
             user_bracket, correct, teams
         )
         db.session.commit()

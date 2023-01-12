@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user, login_required
 from bracketapp.home import bracketUtils, queries
-from datetime import datetime
 import os
 
 
@@ -18,7 +17,7 @@ def isAdmin():
 @home.route("/", methods=["GET"])
 def index():
     can_click = not CAN_EDIT_BRACKET
-    standings = queries.getBracketStandings()
+    standings = bracketUtils.getBracketStandings()
     winner = queries.getWinner(standings) if can_click else None
     return render_template(
         "index.html", brackets=standings, can_click=can_click, winner=winner, len=len
