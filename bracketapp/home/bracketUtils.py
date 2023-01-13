@@ -14,28 +14,39 @@ class userBracket:
         self.user_id = user.id
         self.rank = None
         self.goal_difference = 0
-        self.img_url = self.assignImage()
+        self.img_url = assignImage(self.bracket)
 
-    def assignImage(self):
-        url_list = self.bracket.winner.split(" ")
-        url = "".join(url_list[1:]).replace(".", "")
-        return url
+
+class baseCorrectBracket:
+    def __init__(self, year=None, bracket=None):
+        if year:
+            self.bracket = queries.getCorrectBracketForYear(year)
+        else:
+            self.bracket = bracket if bracket else queries.getCorrectBracket()
+        self.img_url = assignImage(self.bracket)
 
 
 class fullCorrectBracket:
-    def __init__(self, bracket=None, games=None):
-        self.bracket = bracket if bracket else queries.getCorrectBracket()
+    def __init__(self, year=None, bracket=None, games=None):
+        if year:
+            self.bracket = queries.getCorrectBracketForYear(year)
+        else:
+            self.bracket = bracket if bracket else queries.getCorrectBracket()
         self.games = (
             games
             if games
             else queries.getAllCorrectGamesForCorrectBracket(bracket_id=self.bracket.id)
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
+        self.img_url = assignImage(self.bracket)
 
 
 class fullDefaultBracket:
-    def __init__(self, bracket=None, games=None):
-        self.bracket = bracket if bracket else queries.getDefaultBracket()
+    def __init__(self, year=None, bracket=None, games=None):
+        if year:
+            self.bracket = queries.getDefaultBracketForYear(year)
+        else:
+            self.bracket = bracket if bracket else queries.getDefaultBracket()
         self.games = (
             games
             if games
@@ -48,6 +59,12 @@ class bracketWinner:
     def __init__(self, winning_bracket, tie):
         self.winner = winning_bracket
         self.tie = tie
+
+
+def assignImage(bracket):
+    url_list = bracket.winner.split(" ")
+    url = "".join(url_list[1:]).replace(".", "")
+    return url
 
 
 def getWinner(standings):
@@ -106,6 +123,39 @@ def getBracketStandings():
             standings.append(bracket)
 
     return standings
+
+
+def getBracketStandingsForYear(year):
+    brackets = queries.getAllUserBracketsForYear(year=year)
+    correct = queries.getCorrectBracketForYear(year=year)
+
+    for bracket in brackets:
+        bracket.goal_difference = abs(
+            bracket.bracket.w_goals
+            + bracket.bracket.l_goals
+            - (correct.w_goals + correct.l_goals)
+        )
+
+        brackets.sort(key=lambda x: x.goal_difference)
+
+    brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
+    brackets.sort(key=lambda b: b.bracket.points, reverse=True)
+
+    rank = 1
+    standings = []
+    for i, bracket in enumerate(brackets):
+        if i == 0:
+            bracket.rank = rank
+            standings.append(bracket)
+        elif bracket.bracket.points == brackets[i - 1].bracket.points:
+            bracket.rank = rank
+            standings.append(bracket)
+        else:
+            rank = i + 1
+            bracket.rank = rank
+            standings.append(bracket)
+
+    return standings, baseCorrectBracket(bracket=correct)
 
 
 def calculatePointsForBracket(bracket, correct, teams):

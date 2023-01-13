@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link {% block standings %}{% endblock standings %}" href="/">Bracket Standings</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block archive %}{% endblock archive %}" href="{{ url_for('home.archive') }}">Archive</a>
+                    </li>
                     {% if current_user.is_authenticated and current_user.id == 1 %}
                         <li class="nav-item">
                             <a class="nav-link {% block admin %}{% endblock admin %}" href="{{ url_for('home.admin') }}">Admin</a>

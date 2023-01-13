@@ -24,6 +24,36 @@ def index():
     )
 
 
+@home.route("/archive", defaults={"year": None}, methods={"GET"})
+@home.route("/archive/<int:year>", methods={"GET"})
+def archive(year):
+    if not year:
+        archived_years = []
+
+        for y in range(2016, queries.YEAR + 1):
+            if y == 2020:
+                # covid
+                continue
+            bracket = queries.getCorrectBracketForYear(y)
+            if bracket and bracket.winner:
+                archived_years.append(bracketUtils.baseCorrectBracket(year=y))
+        # archived_years = [
+        #     queries.getCorrectBracketForYear(y) for y in range(2016, queries.YEAR + 1)
+        # ]
+        # archived_years = [
+        #     bracketUtils.baseCorrectBracket(bracket=bracket)
+        #     for bracket in archived_years
+        #     if bracket and bracket.winner
+        # ]
+
+        return render_template("archive.html", archived_years=archived_years)
+    else:
+        standings, correct = bracketUtils.getBracketStandingsForYear(year)
+        return render_template(
+            "archive_standings.html", brackets=standings, correct=correct
+        )
+
+
 @home.route("/view_bracket", defaults={"id": None}, methods=["GET"])
 @home.route("/view_bracket/<int:id>", methods=["GET"])
 def view_bracket(id):
@@ -61,6 +91,17 @@ def view_bracket(id):
         can_edit=can_edit,
         mine=mine,
     )
+
+
+@home.route("/view_cbracket/<int:year>", methods=["GET"])
+def view_cbracket(year):
+    bracket = bracketUtils.fullCorrectBracket(year=year)
+
+    default = bracketUtils.fullDefaultBracket(year=year)
+
+    return render_template("view_cbracket.html", correct=bracket, default=default)
+
+
 
 
 @home.route("/edit_bracket", methods=["GET", "POST"])

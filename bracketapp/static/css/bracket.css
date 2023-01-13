@@ -104,7 +104,8 @@ li {
   padding: 72px 0;
 }
 
-.bracket-grid-edit .round-two > .matchup {
+.bracket-grid-edit .round-two > .matchup,
+.cbracket-grid .round-two > .matchup {
   padding: 90px 0;
 }
 
@@ -114,7 +115,8 @@ li {
 
 
 .bracket-grid,
-.bracket-grid-edit {
+.bracket-grid-edit,
+.cbracket-grid {
   max-width: 100%;
   display: grid;
   gap: 10px;
@@ -166,7 +168,8 @@ li {
 }
 
 @media screen and (max-width: 992px) {
-  .bracket-grid {
+  .bracket-grid,
+  .cbracket-grid {
     grid-template:
       'round-final round-final round-final'
       'round-one-left round-two-left round-three-left'

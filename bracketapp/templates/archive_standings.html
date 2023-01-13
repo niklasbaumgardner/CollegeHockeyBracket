@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Archive {{ correct.bracket.year }}{% endblock title %}
+{% block archive %}active{% endblock archive %}
+
+
+
+{% block content %}
+<script>
+    function goToURL(url) {
+        location.href = url;
+    }
+</script>
+
+<div class="pb-5 d-flex justify-content-center mx-0">
+    <div class="fw-bold fs-1">
+        Standings for {{ correct.bracket.year }}
+    </div>
+</div>
+
+<div class="container table-striped table-hover">
+    <div class="row table-header">
+        <div class="col-2">
+            Rank
+        </div>
+        <div class="col-5 col-md-6">
+            Bracket
+        </div>
+        <div class="col-2">
+            Points
+        </div>
+        <div class="col-3 col-md-2">
+            Max Points
+        </div>
+    </div>
+
+    <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_cbracket', year=correct.bracket.year) }}`)">
+        <div class="col-2">
+            -
+        </div>
+        <div class="col-5 col-md-6">
+            <div class="row">
+                <div class="col-1">
+                    <img width="25px" height="25px" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
+                </div>
+                <div class="col-11">
+                    Final bracket
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            320
+        </div>
+        <div class="col-3 col-md-2">
+            320
+        </div>
+    </div>
+
+    {% for bracket in brackets %}
+        <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
+            <div class="col-2">
+                {{ bracket.rank }}
+            </div>
+            <div class="col-5 col-md-6">
+                <div class="row">
+                    <div class="col-1">
+                        <img width="25px" height="25px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                    </div>
+                    <div class="col-11">
+                        {{ bracket.bracket.name }}
+                        <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                {{ bracket.bracket.points }}
+            </div>
+            <div class="col-3 col-md-2">
+                {{ bracket.bracket.max_points }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

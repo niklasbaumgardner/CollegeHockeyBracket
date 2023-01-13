@@ -109,6 +109,15 @@ def getAllUserBrackets():
     return brackets
 
 
+def getAllUserBracketsForYear(year):
+    brackets = []
+    bs = Bracket.query.filter_by(year=year).all()
+    for b in bs:
+        brackets.append(bracketUtils.userBracket(b.id, bracket=b))
+
+    return brackets
+
+
 def getAllUserGamesForBracket(bracket_id):
     return Game.query.filter_by(bracket_id=bracket_id).all()
 
@@ -172,6 +181,10 @@ def getCorrectBracket():
     return CorrectBracket.query.filter_by(year=YEAR).first()
 
 
+def getCorrectBracketForYear(year):
+    return CorrectBracket.query.filter_by(year=year).first()
+
+
 def getCorrectGame(bracket_id, game_num):
     return CorrectGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
@@ -215,6 +228,10 @@ def updateDefaultGame(b_id, game_num, home, away):
 
 def getDefaultBracket():
     return DefaultBracket.query.filter_by(year=YEAR).first()
+
+
+def getDefaultBracketForYear(year):
+    return DefaultBracket.query.filter_by(year=year).first()
 
 
 def getDefaultGame(bracket_id, game_num):

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Archive{% endblock title %}
+{% block archive %}active{% endblock archive %}
+
+
+
+{% block content %}
+<script>
+    function goToURL(url) {
+        location.href = url;
+    }
+</script>
+
+<div class="pb-5 d-flex justify-content-center mx-0">
+    <div class="fw-bold fs-1">
+        Archive
+    </div>
+</div>
+
+<div class="container table-striped table-hover">
+    <div class="row table-header">
+        <div class="col-3">
+            Winner
+        </div>
+        <div class="col-9">
+            Year
+        </div>
+    </div>
+
+    {% for bracket in archived_years %}
+        <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.archive', year=bracket.bracket.year) }}`)">
+            <div class="col-3">
+                <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+            </div>
+            <div class="col-9">
+                <p class="fs-1">{{ bracket.bracket.year }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
