@@ -272,7 +272,6 @@ def update_correct():
         queries.updateAllBracketPoints()
 
     if request.method == "GET":
-        include_all = request.args.get("all") == "True"
         try:
             correct = bracketUtils.fullCorrectBracket()
         except:
@@ -282,13 +281,6 @@ def update_correct():
             default = bracketUtils.fullDefaultBracket()
         except:
             default = queries.createDefaultBracket()
-
-        if not include_all:
-            empty_correct_games = []
-            for game in correct.games:
-                if not game.winner:
-                    empty_correct_games.append(game)
-            correct.games = empty_correct_games
 
         return render_template(
             "update_correct.html",

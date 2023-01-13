@@ -1,23 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Final Bracket {{ correct.bracket.year }}{% endblock title %}
+{% block title %}{{ correct.bracket.year }} Final Bracket{% endblock title %}
 
 
 
 {% block content %}
     <div class="pb-5 d-flex justify-content-center mx-0">
         <div class="fs-1">
-            NCAA College Hockey Bracket Final
+            {{ correct.bracket.year }} NCAA College Hockey Bracket Final
         </div>
     </div>
 
     <section id="bracket">
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <p class="fs-3">Final bracket {{ correct.bracket.year }}</p>
-            </div>
-        </div>
-    
         <div class="row">
             <div class="cbracket-grid">
                 <div class="round-one-left round-one">

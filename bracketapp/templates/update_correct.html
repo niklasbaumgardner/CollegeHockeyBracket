@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Update Correct{% endblock title %}
+{% block title %}{{ correct.bracket.year }} Update Correct{% endblock title %}
 
 {% block content %}
 <script>
@@ -96,6 +96,11 @@
     // }
 </script>
 
+<div class="pb-5 d-flex justify-content-center mx-0">
+    <div class="fs-1">
+        {{ correct.bracket.year }} Correct bracket
+    </div>
+</div>
 
     <section id="bracket">
         <form action="{{ url_for('home.update_correct') }}" method="POST">
