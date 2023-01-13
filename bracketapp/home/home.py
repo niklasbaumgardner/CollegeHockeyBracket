@@ -54,19 +54,26 @@ def archive(year):
         )
 
 
-@home.route("/view_bracket", defaults={"id": None}, methods=["GET"])
+@home.route("/view_bracket", defaults={"year": None, "id": None}, methods=["GET"])
 @home.route("/view_bracket/<int:id>", methods=["GET"])
-def view_bracket(id):
-    can_edit = CAN_EDIT_BRACKET
+@home.route("/view_bracket/<int:year>/<int:id>", methods=["GET"])
+def view_bracket(year, id):
     current_user_id = current_user.get_id()
+    can_view_brackets = not CAN_EDIT_BRACKET
 
-    if id and not can_edit:
-        bracket = queries.getUserBracketFromBracketId(id)
+    if year and id:
+        if year == queries.YEAR and CAN_EDIT_BRACKET:
+            return redirect(url_for("home.index"))
+        bracket = queries.getUserBracketForBracketIdAndYear(bracket_id=id, year=year)
+
+    elif id and can_view_brackets:
+        bracket = queries.getUserBracketForBracketId(id)
+
     else:
         if current_user_id:
-            bracket = queries.getUserBracketFromUserId(user_id=current_user_id)
+            bracket = queries.getUserBracketForUserId(user_id=current_user_id)
             if not bracket:
-                if can_edit:
+                if CAN_EDIT_BRACKET:
                     return redirect(url_for("home.edit_bracket"))
                 else:
                     return redirect(url_for("home.index"))
@@ -79,6 +86,9 @@ def view_bracket(id):
     except:
         correct = None
 
+    if not bracket:
+        return redirect(url_for("home.index"))
+
     mine = "active" if current_user_id == str(bracket.user_id) else ""
 
     bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
@@ -88,14 +98,20 @@ def view_bracket(id):
         default=default,
         correct=correct,
         bracket=bracket,
-        can_edit=can_edit,
+        can_edit=CAN_EDIT_BRACKET,
         mine=mine,
     )
 
 
 @home.route("/view_cbracket/<int:year>", methods=["GET"])
 def view_cbracket(year):
+    if year >= queries.YEAR and not isAdmin():
+        return redirect(url_for("home.archive"))
+
     bracket = bracketUtils.fullCorrectBracket(year=year)
+
+    if not bracket:
+        return redirect(url_for("home.archive"))
 
     default = bracketUtils.fullDefaultBracket(year=year)
 
@@ -105,13 +121,12 @@ def view_cbracket(year):
 @home.route("/edit_bracket", methods=["GET", "POST"])
 @login_required
 def edit_bracket():
-    can_edit = CAN_EDIT_BRACKET
-    if not can_edit:
+    if not CAN_EDIT_BRACKET:
         return redirect(url_for("home.view_bracket"))
 
     if request.method == "GET":
         default = bracketUtils.fullDefaultBracket()
-        bracket = queries.getUserBracketFromUserId(user_id=current_user.get_id())
+        bracket = queries.getUserBracketForUserId(user_id=current_user.get_id())
         if bracket:
             bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
         else:
@@ -120,7 +135,7 @@ def edit_bracket():
             "test_edit_bracket.html", bracket=bracket, default=default
         )
     elif request.method == "POST":
-        existing_bracket = queries.getUserBracketFromUserId(
+        existing_bracket = queries.getUserBracketForUserId(
             user_id=current_user.get_id()
         )
 

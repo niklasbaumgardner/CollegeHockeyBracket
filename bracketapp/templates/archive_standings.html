@@ -57,7 +57,7 @@
     </div>
 
     {% for bracket in brackets %}
-        <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
+        <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_bracket', year=bracket.bracket.year, id=bracket.bracket.id) }}`)">
             <div class="col-2">
                 {{ bracket.rank }}
             </div>

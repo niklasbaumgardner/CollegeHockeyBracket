@@ -5,7 +5,7 @@ import os.path
 class userBracket:
     def __init__(self, bracket_id, bracket=None, games=None):
         self.bracket = (
-            bracket if bracket else queries.getUserBracketFromBracketId(bracket_id)
+            bracket if bracket else queries.getUserBracketForBracketId(bracket_id)
         )
         self.games = games if games else queries.getAllUserGamesForBracket(bracket_id)
         self.games.sort(key=lambda x: int(x.game_num[4:]))
