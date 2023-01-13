@@ -3,79 +3,552 @@
 {% block title %}Update Correct{% endblock title %}
 
 {% block content %}
-<div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fw-bold fs-1">
-        Update correct games
-    </div>
-</div>
-<div class="container mx-0 bg-light p-3">
-    <form action="{{ url_for('home.update_correct') }}" method="POST">
-        <div class="row">
-            {% for game in correct.games %}
-                <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
-                    <p class="fs-1">{{ game.game_num }}</p>
-                    <div class="form-outline form-white mb-4">
-                        <input class="form-check-input" type="checkbox" id="{{ game.game_num }}-checked" name="{{ game.game_num }}-checked" value="True">
-                        <label class="form-check-label" for="{{ game.game_num }}-checked">
-                            Update {{ game.game_num }}?
-                        </label>
+<script>
+    class Node {
+        constructor(ele, next, top, bottom) {
+            this.ele = ele;
+            this.next = next;
+            this.top = top;
+            this.bottom = bottom;
+
+            if (this.top && this.bottom) {
+                this.top.next = this;
+                this.bottom.next = this;
+            }
+
+            if (this.teamName === "None") {
+                this.setTeamName("");
+            }
+        }
+
+        get teamName() {
+            return this.ele.querySelector("input").value;
+        }
+
+        setTeamName(teamName) {
+            this.ele.querySelector("input").value = teamName;
+            this.setUnchecked();
+
+            let textNode = this.ele.querySelector("label").childNodes[2];
+            if (textNode) {
+                textNode.nodeValue = ` ${teamName}`;
+            }
+            else {
+                this.ele.innerHTML += ` ${teamName}`;
+            }
+        }
+
+        setUnchecked() {
+            this.ele.querySelector("input").checked = false;
+        }
+
+        setNullValue() {
+            this.setTeamName("");
+        }
+    }
+
+    function clearNext(node, exclusions) {
+        if (node && exclusions.has(node.teamName)) {
+            node.setUnchecked();
+            node.setNullValue();
+
+            clearNext(node.next, exclusions);
+        }
+    }
+
+    function nodeClick(id) {
+        let node = NODES[id];
+
+        if (!node.teamName) {
+            return node.setUnchecked();
+        }
+
+        let next = node.next;
+
+        if (next) {
+            if (node.teamName === next.teamName) {
+                return;
+            }
+
+            next.setTeamName(node.teamName)
+
+            let exclusions = new Set([next.top.teamName, next.bottom.teamName]);
+            clearNext(next.next, exclusions);
+        }
+
+    }
+
+    // function checkAllInputs(event) {
+    //     event.preventDefault();
+    //     let failed = false;
+    //     let arr = document.querySelectorAll("li.team");
+    //     for (let a of arr) {
+    //         let input = a.querySelector("input");
+    //         if (!input) {
+    //             a.classList.add('red-border');
+    //             failed = true;
+    //         }
+    //     }
+
+    //     if (!failed) {
+    //         document.querySelector("#updateBracketInput").click();
+    //     }
+    // }
+</script>
+
+
+    <section id="bracket">
+        <form action="{{ url_for('home.update_correct') }}" method="POST">
+            <div class="row">
+                <div class="cbracket-grid-edit mb-5">
+                    <div class="round-one-left round-one">
+                        <div class="round-details">Round 1</div>
+                        <ul class="matchup">
+                            <li id="g1t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g1t1')" type="radio" name="game1" value="{{ default.games[0].home }}"{% if bracket.games[0].winner == default.games[0].home %}checked{% endif %}>
+                                    {{ default.games[0].home }}
+                                </label>
+                                <input type="number" name="game1-h_goals" value="{{ bracket.games[0].h_goals }}"/>
+                            </li>
+                            <li id="g1t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g1t2')" type="radio" name="game1" value="{{ default.games[0].away }}"{% if bracket.games[0].winner == default.games[0].away %}checked{% endif %}>
+                                    {{ default.games[0].away }}
+                                </label>
+                                <input type="number" name="game1-a_goals" value="{{ bracket.games[0].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g2t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g2t1')" type="radio" name="game2" value="{{ default.games[1].home }}"{% if bracket.games[1].winner == default.games[1].home %}checked{% endif %}>
+                                    {{ default.games[1].home }}
+                                </label>
+                                <input type="number" name="game2-h_goals" value="{{ bracket.games[1].h_goals }}"/>
+                            </li>
+                            <li id="g2t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g2t2')" type="radio" name="game2" value="{{ default.games[1].away }}"{% if bracket.games[1].winner == default.games[1].away %}checked{% endif %}>
+                                    {{ default.games[1].away }}
+                                </label>
+                                <input type="number" name="game2-a_goals" value="{{ bracket.games[1].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g3t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g3t1')" type="radio" name="game3" value="{{ default.games[2].home }}"{% if bracket.games[2].winner == default.games[2].home %}checked{% endif %}>
+                                    {{ default.games[2].home }}
+                                </label>
+                                <input type="number" name="game3-h_goals" value="{{ bracket.games[2].h_goals }}"/>
+                            </li>
+                            <li id="g3t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g3t2')" type="radio" name="game3" value="{{ default.games[2].away }}"{% if bracket.games[2].winner == default.games[2].away %}checked{% endif %}>
+                                    {{ default.games[2].away }}
+                                </label>
+                                <input type="number" name="game3-a_goals" value="{{ bracket.games[2].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g4t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g4t1')" type="radio" name="game4" value="{{ default.games[3].home }}"{% if bracket.games[3].winner == default.games[3].home %}checked{% endif %}>
+                                    {{ default.games[3].home }}
+                                </label>
+                                <input type="number" name="game4-h_goals" value="{{ bracket.games[3].h_goals }}"/>
+                            </li>
+                            <li id="g4t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g4t2')" type="radio" name="game4" value="{{ default.games[3].away }}"{% if bracket.games[3].winner == default.games[3].away %}checked{% endif %}>
+                                    {{ default.games[3].away }}
+                                </label>
+                                <input type="number" name="game4-a_goals" value="{{ bracket.games[3].a_goals }}"/>
+                            </li>
+                        </ul>
+                    </div>	<!-- END ROUND ONE -->
+
+
+                    <div class="round-two-left round-two">
+                        <div class="round-details">Round 2</div>
+                        <ul class="matchup">
+                            <li id="g9t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g9t1')" type="radio" name="game9" value="{{ bracket.games[0].winner }}"{% if bracket.games[0].winner == bracket.games[8].winner %}checked{% endif %}>
+                                    {{ bracket.games[0].winner }}
+                                </label>
+                                <input type="number" name="game9-h_goals" value="{{ bracket.games[8].h_goals }}"/>
+                            </li>
+                            <li id="g9t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g9t2')" type="radio" name="game9" value="{{ bracket.games[1].winner }}"{% if bracket.games[1].winner == bracket.games[8].winner %}checked{% endif %}>
+                                    {{ bracket.games[1].winner }}
+                                </label>
+                                <input type="number" name="game9-a_goals" value="{{ bracket.games[8].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g10t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g10t1')" type="radio" name="game10" value="{{ bracket.games[2].winner }}"{% if bracket.games[2].winner == bracket.games[9].winner %}checked{% endif %}>
+                                    {{ bracket.games[2].winner }}
+                                </label>
+                                <input type="number" name="game10-h_goals" value="{{ bracket.games[9].h_goals }}"/>
+                            </li>
+                            <li id="g10t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g10t2')" type="radio" name="game10" value="{{ bracket.games[3].winner }}"{% if bracket.games[3].winner == bracket.games[9].winner %}checked{% endif %}>
+                                    {{ bracket.games[3].winner }}
+                                </label>
+                                <input type="number" name="game10-a_goals" value="{{ bracket.games[9].a_goals }}"/>
+                            </li>
+                        </ul>
+                    </div>	<!-- END ROUND TWO -->
+
+
+                    <div class="round-three-left round-three">
+                        <div class="round-details">Round 3</div>
+                        <ul class="matchup">
+                            <li id="g13t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g13t1')" type="radio" name="game13" value="{{ bracket.games[8].winner }}"{% if bracket.games[8].winner == bracket.games[12].winner %}checked{% endif %}>
+                                    {{ bracket.games[8].winner }}
+                                </label>
+                                <input type="number" name="game13-h_goals" value="{{ bracket.games[12].h_goals }}"/>
+                            </li>
+                            <li id="g13t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g13t2')" type="radio" name="game13" value="{{ bracket.games[9].winner }}"{% if bracket.games[9].winner == bracket.games[12].winner %}checked{% endif %}>
+                                    {{ bracket.games[9].winner }}
+                                </label>
+                                <input type="number" name="game13-a_goals" value="{{ bracket.games[12].a_goals }}"/>
+                            </li>
+                        </ul>
+                    </div>	<!-- END ROUND THREE -->
+
+
+                    <div class="round-final">
+                        <div class="final-round-grid">
+                            <div class="top">
+                                <div class="championship-grid">
+                                    <div class="round-details">championship</div>
+                                    <ul class ="matchup">
+                                        <li id="g15t1" class="team ">
+                                            <label>
+                                                <input onclick="nodeClick('g15t1')" type="radio" name="game15" value="{{ bracket.games[12].winner }}"{% if bracket.games[12].winner == bracket.games[14].winner %}checked{% endif %}>
+                                                {{ bracket.games[12].winner }}
+                                            </label>
+                                            <input type="number" name="game15-h_goals" value="{{ bracket.games[14].h_goals }}"/>
+                                        </li>
+                                        <li id="g15t2" class="team ">
+                                            <label>
+                                                <input onclick="nodeClick('g15t2')" type="radio" name="game15" value="{{ bracket.games[13].winner }}"{% if bracket.games[13].winner == bracket.games[14].winner %}checked{% endif %}>
+                                                {{ bracket.games[13].winner }}
+                                            </label>
+                                            <input type="number" name="game15-a_goals" value="{{ bracket.games[14].a_goals }}"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="{{ game.game_num }}-winner">Winner</label>
-                        <select id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-select" aria-label="Default select example">
-                            {% for g in default.games %}
-                                {% if should_game_exist(g.home, game.game_num, correct, default) %}
-                                    {% if g.home == game.winner %}
-                                        <option value="{{ g.home }}" selected>{{ g.home }}</option>
-                                    {% else %}
-                                        <option value="{{ g.home }}">{{ g.home }}</option>
-                                    {% endif %}
-                                {% endif %}
-                                {% if should_game_exist(g.away, game.game_num, correct, default) %}
-                                    {% if g.away == game.winner %}
-                                        <option value="{{ g.away }}" selected>{{ g.away }}</option>
-                                    {% else %}
-                                        <option value="{{ g.away }}">{{ g.away }}</option>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <!-- <input type="text" id="{{ game.game_num }}-winner" name="{{ game.game_num }}-winner" class="form-control" value="{{ game.winner }}" /> -->
-                    </div>
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="{{ game.game_num }}-loser">Loser</label>
-                        <select id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-select" aria-label="Default select example">
-                            {% for g in default.games %}
-                                {% if should_game_exist(g.home, game.game_num, correct, default) %}
-                                    {% if g.home == game.loser %}
-                                        <option value="{{ g.home }}" selected>{{ g.home }}</option>
-                                    {% else %}
-                                        <option value="{{ g.home }}">{{ g.home }}</option>
-                                    {% endif %}
-                                {% endif %}
-                                {% if should_game_exist(g.away, game.game_num, correct, default) %}
-                                    {% if g.away == game.loser %}
-                                        <option value="{{ g.away }}" selected>{{ g.away }}</option>
-                                    {% else %}
-                                        <option value="{{ g.away }}">{{ g.away }}</option>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <!-- <input type="text" id="{{ game.game_num }}-loser" name="{{ game.game_num }}-loser" class="form-control" value="{{ game.loser }}"/> -->
-                    </div>
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="{{ game.game_num }}-h_goals">Home Goals</label>
-                        <input type="number" id="{{ game.game_num }}-h_goals" name="{{ game.game_num }}-h_goals" class="form-control" value="{{ game.h_goals }}"/>
-                    </div>
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="{{ game.game_num }}-a_goals">Away Goals</label>
-                        <input type="number" id="{{ game.game_num }}-a_goals" name="{{ game.game_num }}-a_goals" class="form-control" value="{{ game.a_goals }}"/>
+
+
+                    <div class="round-three-right round-three">
+                        <div class="round-details">Round 3</div>
+                        <ul class="matchup">
+                            <li id="g14t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g14t1')" type="radio" name="game14" value="{{ bracket.games[10].winner }}"{% if bracket.games[10].winner == bracket.games[13].winner %}checked{% endif %}>
+                                    {{ bracket.games[10].winner }}
+                                </label>
+                                <input type="number" name="game14-h_goals" value="{{ bracket.games[13].h_goals }}"/>
+                            </li>
+                            <li id="g14t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g14t2')" type="radio" name="game14" value="{{ bracket.games[11].winner }}"{% if bracket.games[11].winner == bracket.games[13].winner %}checked{% endif %}>
+                                    {{ bracket.games[11].winner }}
+                                </label>
+                                <input type="number" name="game14-a_goals" value="{{ bracket.games[13].a_goals }}"/>
+                            </li>
+                        </ul>
+                    </div>	<!-- END ROUND THREE -->
+
+
+                    <div class="round-two-right round-two">
+                        <div class="round-details">Round 2</div>
+                        <ul class="matchup">
+                            <li id="g11t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g11t1')" type="radio" name="game11" value="{{ bracket.games[4].winner }}"{% if bracket.games[4].winner == bracket.games[10].winner %}checked{% endif %}>
+                                    {{ bracket.games[4].winner }}
+                                </label>
+                                <input type="number" name="game11-h_goals" value="{{ bracket.games[10].h_goals }}"/>
+                            </li>
+                            <li id="g11t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g11t2')" type="radio" name="game11" value="{{ bracket.games[5].winner }}"{% if bracket.games[5].winner == bracket.games[10].winner %}checked{% endif %}>
+                                    {{ bracket.games[5].winner }}
+                                </label>
+                                <input type="number" name="game11-a_goals" value="{{ bracket.games[10].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g12t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g12t1')" type="radio" name="game12" value="{{ bracket.games[6].winner }}"{% if bracket.games[6].winner == bracket.games[11].winner %}checked{% endif %}>
+                                    {{ bracket.games[6].winner }}
+                                </label>
+                                <input type="number" name="game12-h_goals" value="{{ bracket.games[11].h_goals }}"/>
+                            </li>
+                            <li id="g12t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g12t2')" type="radio" name="game12" value="{{ bracket.games[7].winner }}"{% if bracket.games[7].winner == bracket.games[11].winner %}checked{% endif %}>
+                                    {{ bracket.games[7].winner }}
+                                </label>
+                                <input type="number" name="game12-a_goals" value="{{ bracket.games[11].a_goals }}"/>
+                            </li>
+                        </ul>
+                    </div>	<!-- END ROUND TWO -->
+
+
+                    <div class="round-one-right round-one">
+                        <div class="round-details">Round 1</div>
+                        <ul class="matchup">
+                            <li id="g5t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g5t1')" type="radio" name="game5" value="{{ default.games[4].home }}"{% if bracket.games[4].winner == default.games[4].home %}checked{% endif %}>
+                                    {{ default.games[4].home }}
+                                </label>
+                                <input type="number" name="game5-h_goals" value="{{ bracket.games[4].h_goals }}"/>
+                            </li>
+                            <li id="g5t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g5t2')" type="radio" name="game5" value="{{ default.games[4].away }}"{% if bracket.games[4].winner == default.games[4].away %}checked{% endif %}>
+                                    {{ default.games[4].away }}
+                                </label>
+                                <input type="number" name="game5-a_goals" value="{{ bracket.games[4].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g6t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g6t1')" type="radio" name="game6" value="{{ default.games[5].home }}"{% if bracket.games[5].winner == default.games[5].home %}checked{% endif %}>
+                                    {{ default.games[5].home }}
+                                </label>
+                                <input type="number" name="game6-h_goals" value="{{ bracket.games[5].h_goals }}"/>
+                            </li>
+                            <li id="g6t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g6t2')" type="radio" name="game6" value="{{ default.games[5].away }}"{% if bracket.games[5].winner == default.games[5].away %}checked{% endif %}>
+                                    {{ default.games[5].away }}
+                                </label>
+                                <input type="number" name="game6-a_goals" value="{{ bracket.games[5].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g7t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g7t1')" type="radio" name="game7" value="{{ default.games[6].home }}"{% if bracket.games[6].winner == default.games[6].home %}checked{% endif %}>
+                                    {{ default.games[6].home }}
+                                </label>
+                                <input type="number" name="game7-h_goals" value="{{ bracket.games[6].h_goals }}"/>
+                            </li>
+                            <li id="g7t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g7t2')" type="radio" name="game7" value="{{ default.games[6].away }}"{% if bracket.games[6].winner == default.games[6].away %}checked{% endif %}>
+                                    {{ default.games[6].away }}
+                                </label>
+                                <input type="number" name="game7-a_goals" value="{{ bracket.games[6].a_goals }}"/>
+                            </li>
+                        </ul>
+                        <ul class="matchup">
+                            <li id="g8t1" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g8t1')" type="radio" name="game8" value="{{ default.games[7].home }}"{% if bracket.games[7].winner == default.games[7].home %}checked{% endif %}>
+                                    {{ default.games[7].home }}
+                                </label>
+                                <input type="number" name="game8-h_goals" value="{{ bracket.games[7].h_goals }}"/>
+                            </li>
+                            <li id="g8t2" class="team ">
+                                <label>
+                                    <input onclick="nodeClick('g8t2')" type="radio" name="game8" value="{{ default.games[7].away }}"{% if bracket.games[7].winner == default.games[7].away %}checked{% endif %}>
+                                    {{ default.games[7].away }}
+                                </label>
+                                <input type="number" name="game8-a_goals" value="{{ bracket.games[7].a_goals }}"/>
+                            </li>
+                        </ul>
+                    </div>	<!-- END ROUND ONE -->
+                </div>
+            </div>
+
+            <div>
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <input id="updateBracketInput" class="btn btn-primary" type="submit" value="Update correct bracket">
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-        <input type="submit" />
-    </form>
-</div>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        let g15t1 = document.getElementById("g15t1");
+        let g15t2 = document.getElementById("g15t2");
+
+
+        let g14t1 = document.getElementById("g14t1");
+        let g14t2 = document.getElementById("g14t2");
+
+        let g13t1 = document.getElementById("g13t1");
+        let g13t2 = document.getElementById("g13t2");
+
+
+        let g12t1 = document.getElementById("g12t1");
+        let g12t2 = document.getElementById("g12t2");
+
+        let g11t1 = document.getElementById("g11t1");
+        let g11t2 = document.getElementById("g11t2");
+
+        let g10t1 = document.getElementById("g10t1");
+        let g10t2 = document.getElementById("g10t2");
+
+        let g9t1 = document.getElementById("g9t1");
+        let g9t2 = document.getElementById("g9t2");
+
+
+        let g8t1 = document.getElementById("g8t1");
+        let g8t2 = document.getElementById("g8t2");
+
+        let g7t1 = document.getElementById("g7t1");
+        let g7t2 = document.getElementById("g7t2");
+
+        let g6t1 = document.getElementById("g6t1");
+        let g6t2 = document.getElementById("g6t2");
+
+        let g5t1 = document.getElementById("g5t1");
+        let g5t2 = document.getElementById("g5t2");
+
+
+        let g4t1 = document.getElementById("g4t1");
+        let g4t2 = document.getElementById("g4t2");
+
+        let g3t1 = document.getElementById("g3t1");
+        let g3t2 = document.getElementById("g3t2");
+
+        let g2t1 = document.getElementById("g2t1");
+        let g2t2 = document.getElementById("g2t2");
+
+        let g1t1 = document.getElementById("g1t1");
+        let g1t2 = document.getElementById("g1t2");
+
+        // class Node {
+        //     constructor(ele, next, top, bottom) {
+        //         this.ele = ele;
+        //         this.next = next;
+        //         this.top = top;
+        //         this.bottom = bottom;
+        //     }
+        // }
+        let g1t1Node = new Node(g1t1, null, null, null);
+        let g1t2Node = new Node(g1t2, null, null, null);
+
+        let g2t1Node = new Node(g2t1, null, null, null);
+        let g2t2Node = new Node(g2t2, null, null, null);
+
+        let g3t1Node = new Node(g3t1, null, null, null);
+        let g3t2Node = new Node(g3t2, null, null, null);
+
+        let g4t1Node = new Node(g4t1, null, null, null);
+        let g4t2Node = new Node(g4t2, null, null, null);
+
+
+        let g5t1Node = new Node(g5t1, null, null, null);
+        let g5t2Node = new Node(g5t2, null, null, null);
+
+        let g6t1Node = new Node(g6t1, null, null, null);
+        let g6t2Node = new Node(g6t2, null, null, null);
+
+        let g7t1Node = new Node(g7t1, null, null, null);
+        let g7t2Node = new Node(g7t2, null, null, null);
+
+        let g8t1Node = new Node(g8t1, null, null, null);
+        let g8t2Node = new Node(g8t2, null, null, null);
+
+
+        let g9t1Node = new Node(g9t1, null, g1t1Node, g1t2Node);
+        let g9t2Node = new Node(g9t2, null, g2t1Node, g2t2Node);
+
+        let g10t1Node = new Node(g10t1, null, g3t1Node, g3t2Node);
+        let g10t2Node = new Node(g10t2, null, g4t1Node, g4t2Node);
+
+        let g11t1Node = new Node(g11t1, null, g5t1Node, g5t2Node);
+        let g11t2Node = new Node(g11t2, null, g6t1Node, g6t2Node);
+
+        let g12t1Node = new Node(g12t1, null, g7t1Node, g7t2Node);
+        let g12t2Node = new Node(g12t2, null, g8t1Node, g8t2Node);
+
+
+        let g13t1Node = new Node(g13t1, null, g9t1Node, g9t2Node);
+        let g13t2Node = new Node(g13t2, null, g10t1Node, g10t2Node);
+
+        let g14t1Node = new Node(g14t1, null, g11t1Node, g11t2Node);
+        let g14t2Node = new Node(g14t2, null, g12t1Node, g12t2Node);
+
+
+        let g15t1Node = new Node(g15t1, null, g13t1Node, g13t2Node);
+        let g15t2Node = new Node(g15t2, null, g14t1Node, g14t2Node);
+
+        const NODES = {
+            g1t1: g1t1Node,
+            g1t2: g1t2Node,
+
+            g2t1: g2t1Node,
+            g2t2: g2t2Node,
+
+            g3t1: g3t1Node,
+            g3t2: g3t2Node,
+
+            g4t1: g4t1Node,
+            g4t2: g4t2Node,
+
+            g5t1: g5t1Node,
+            g5t2: g5t2Node,
+
+            g6t1: g6t1Node,
+            g6t2: g6t2Node,
+
+            g7t1: g7t1Node,
+            g7t2: g7t2Node,
+
+            g8t1: g8t1Node,
+            g8t2: g8t2Node,
+
+
+            g9t1: g9t1Node,
+            g9t2: g9t2Node,
+
+            g10t1: g10t1Node,
+            g10t2: g10t2Node,
+
+            g11t1: g11t1Node,
+            g11t2: g11t2Node,
+
+            g12t1: g12t1Node,
+            g12t2: g12t2Node,
+
+
+            g13t1: g13t1Node,
+            g13t2: g13t2Node,
+
+            g14t1: g14t1Node,
+            g14t2: g14t2Node,
+
+
+            g15t1: g15t1Node,
+            g15t2: g15t2Node,
+        };
+    </script>
+
 {% endblock content %}

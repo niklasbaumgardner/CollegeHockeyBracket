@@ -62,6 +62,8 @@ class bracketWinner:
 
 
 def assignImage(bracket):
+    if not bracket or not bracket.winner:
+        return
     url_list = bracket.winner.split(" ")
     url = "".join(url_list[1:]).replace(".", "")
     return url

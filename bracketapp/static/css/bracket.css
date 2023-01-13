@@ -105,7 +105,8 @@ li {
 }
 
 .bracket-grid-edit .round-two > .matchup,
-.cbracket-grid .round-two > .matchup {
+.cbracket-grid .round-two > .matchup,
+.cbracket-grid-edit .round-two > .matchup {
   padding: 90px 0;
 }
 
@@ -113,10 +114,22 @@ li {
   padding: 180px 0;
 }
 
+.cbracket-grid-edit li > input[type="number"] {
+  width: 30px;
+  height: 18px;
+  float: right;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.cbracket-grid-edit li  input[type="radio"] {
+  margin-right: 4px;
+}
 
 .bracket-grid,
 .bracket-grid-edit,
-.cbracket-grid {
+.cbracket-grid,
+.cbracket-grid-edit {
   max-width: 100%;
   display: grid;
   gap: 10px;
@@ -178,7 +191,8 @@ li {
 }
 
 @media screen and (max-width: 992px) {
-  .bracket-grid-edit {
+  .bracket-grid-edit,
+  .cbracket-grid-edit {
     grid-template:
       'round-one-left round-two-left round-three-left'
       'round-three-right round-two-right round-one-right'

@@ -30,7 +30,7 @@ def archive(year):
     if not year:
         archived_years = []
 
-        for y in range(2016, queries.YEAR + 1):
+        for y in range(2022, 2015, -1):
             if y == 2020:
                 # covid
                 continue
@@ -100,8 +100,6 @@ def view_cbracket(year):
     default = bracketUtils.fullDefaultBracket(year=year)
 
     return render_template("view_cbracket.html", correct=bracket, default=default)
-
-
 
 
 @home.route("/edit_bracket", methods=["GET", "POST"])
@@ -236,15 +234,21 @@ def update_correct():
         c_bracket = queries.getCorrectBracket()
 
         for i in range(1, 16):
-            update_game = request.form.get(f"game{i}-checked") == "True"
-            if not update_game:
-                continue
-
             game_num = f"game{i}"
-            winner = request.form.get(f"game{i}-winner")
+            winner = request.form.get(f"game{i}")
             loser = request.form.get(f"game{i}-loser")
             h_goals = request.form.get(f"game{i}-h_goals")
             a_goals = request.form.get(f"game{i}-a_goals")
+
+            if not game_num or not winner or not h_goals or not a_goals:
+                continue
+
+            try:
+                h_goals = int(h_goals)
+                a_goals = int(a_goals)
+            except:
+                continue
+
             queries.updateCorrectGame(
                 b_id=c_bracket.id,
                 game_num=game_num,
@@ -254,15 +258,10 @@ def update_correct():
                 a_goals=a_goals,
             )
 
-        update_game15 = request.form.get(f"game15-checked") == "True"
-
-        if update_game15:
-            winner = request.form.get(f"game15-winner")
-            h_goals = request.form.get(f"game15-h_goals")
-            a_goals = request.form.get(f"game15-a_goals")
-            if winner and h_goals and a_goals:
+            if game_num == "game15":
                 more_goals = h_goals if h_goals > a_goals else a_goals
                 less_goals = a_goals if a_goals > h_goals else h_goals
+
                 queries.updateCorrectBracket(
                     winner=winner,
                     w_goals=more_goals,
@@ -294,6 +293,7 @@ def update_correct():
         return render_template(
             "update_correct.html",
             correct=correct,
+            bracket=correct,
             default=default,
             should_game_exist=bracketUtils.should_game_exist,
         )
