@@ -17,6 +17,8 @@ YEAR = int(os.environ.get("YEAR"))
 
 # User queries
 def getUser(id):
+    if not id:
+        return
     return User.query.filter_by(id=id).first()
 
 
@@ -67,7 +69,7 @@ def createUserGame(user_id, bracket_id, game_num, winner):
 
 
 def updateUserBracket(user_id, name, winner, w_goals, l_goals, bracket=None):
-    bracket = bracket if bracket else getUserBracketFromUserId(user_id=user_id)
+    bracket = bracket if bracket else getUserBracketForUserId(user_id=user_id)
 
     bracket.name = name
     bracket.winner = winner
@@ -88,15 +90,27 @@ def updateUserGame(bracket_id, game_num, winner):
     return game
 
 
-def getUserBracketFromBracketId(bracket_id):
+def getUserBracketForBracketId(bracket_id):
+    if not bracket_id:
+        return
     return Bracket.query.filter_by(id=bracket_id, year=YEAR).first()
 
 
-def getUserBracketFromUserId(user_id):
+def getUserBracketForBracketIdAndYear(bracket_id, year):
+    if not bracket_id or not year:
+        return
+    return Bracket.query.filter_by(id=bracket_id, year=year).first()
+
+
+def getUserBracketForUserId(user_id):
+    if not user_id:
+        return
     return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
 
 
 def getUserGame(bracket_id, game_num):
+    if not bracket_id or not game_num:
+        return
     return Game.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
@@ -110,6 +124,8 @@ def getAllUserBrackets():
 
 
 def getAllUserBracketsForYear(year):
+    if not year:
+        return []
     brackets = []
     bs = Bracket.query.filter_by(year=year).all()
     for b in bs:
@@ -119,6 +135,8 @@ def getAllUserBracketsForYear(year):
 
 
 def getAllUserGamesForBracket(bracket_id):
+    if not bracket_id:
+        return []
     return Game.query.filter_by(bracket_id=bracket_id).all()
 
 
@@ -131,7 +149,7 @@ def deleteAllUserBrackets():
 
 def deleteUserBracket(bracket_id):
     return  # I don't want to accidentally delete the brackets
-    bracket = getUserBracketFromBracketId(bracket_id)
+    bracket = getUserBracketForBracketId(bracket_id)
 
     for game in bracket.games:
         db.session.delete(game)
@@ -182,14 +200,20 @@ def getCorrectBracket():
 
 
 def getCorrectBracketForYear(year):
+    if not year:
+        return
     return CorrectBracket.query.filter_by(year=year).first()
 
 
 def getCorrectGame(bracket_id, game_num):
+    if not bracket_id or not game_num:
+        return
     return CorrectGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
 def getAllCorrectGamesForCorrectBracket(bracket_id):
+    if not bracket_id:
+        return
     return CorrectGame.query.filter_by(bracket_id=bracket_id).all()
 
 
@@ -231,14 +255,20 @@ def getDefaultBracket():
 
 
 def getDefaultBracketForYear(year):
+    if not year:
+        return
     return DefaultBracket.query.filter_by(year=year).first()
 
 
 def getDefaultGame(bracket_id, game_num):
+    if not bracket_id or not game_num:
+        return
     return DefaultGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
 def getAllDefaultGamesForDefaultBracket(bracket_id):
+    if not bracket_id:
+        return []
     return DefaultGame.query.filter_by(bracket_id=bracket_id).all()
 
 
