@@ -55,7 +55,7 @@ def archive(year):
 
 
 @home.route("/view_bracket", defaults={"year": None, "id": None}, methods=["GET"])
-@home.route("/view_bracket/<int:id>", methods=["GET"])
+@home.route("/view_bracket/<int:id>", defaults={"year": None}, methods=["GET"])
 @home.route("/view_bracket/<int:year>/<int:id>", methods=["GET"])
 def view_bracket(year, id):
     current_user_id = current_user.get_id()
