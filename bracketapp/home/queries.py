@@ -141,21 +141,22 @@ def getAllUserGamesForBracket(bracket_id):
 
 
 def deleteAllUserBrackets():
-    return  # I don't want to accidentally delete the brackets
+    # return  # I don't want to accidentally delete the brackets
     brackets = Bracket.query.filter_by(year=YEAR).all()
     for b in brackets:
         deleteUserBracket(b.id)
 
 
 def deleteUserBracket(bracket_id):
-    return  # I don't want to accidentally delete the brackets
+    # return  # I don't want to accidentally delete the brackets
     bracket = getUserBracketForBracketId(bracket_id)
+    games = getAllUserGamesForBracket(bracket_id=bracket.id)
 
-    for game in bracket.games:
+    for game in games:
         db.session.delete(game)
         db.session.commit()
 
-    db.session.delete(bracket.bracket)
+    db.session.delete(bracket)
     db.session.commit()
 
 

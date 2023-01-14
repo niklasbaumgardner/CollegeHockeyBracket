@@ -2,6 +2,21 @@ from bracketapp.home import queries
 import os.path
 
 
+class emptyBracket:
+    def __init__(self):
+        self.user_id = None
+        self.name = ""
+        self.w_goals = None
+        self.l_goals = None
+        self.winner = None
+
+
+class emptyGame:
+    def __init__(self, num):
+        self.game_num = f"game{num}"
+        self.winner = None
+
+
 class userBracket:
     def __init__(self, bracket_id, bracket=None, games=None):
         self.bracket = (
@@ -10,8 +25,11 @@ class userBracket:
         self.games = games if games else queries.getAllUserGamesForBracket(bracket_id)
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         user = queries.getUser(id=self.bracket.user_id)
-        self.user_name = user.name
-        self.user_id = user.id
+        try:
+            self.user_name = user.name
+            self.user_id = user.id
+        except:
+            pass
         self.rank = None
         self.goal_difference = 0
         self.img_url = assignImage(self.bracket)
@@ -67,6 +85,12 @@ def assignImage(bracket):
     url_list = bracket.winner.split(" ")
     url = "".join(url_list[1:]).replace(".", "")
     return url
+
+
+def createEmptyBracket():
+    games = [ emptyGame(i) for i in range(15) ]
+    print(len(games))
+    return userBracket(bracket_id=None, bracket=emptyBracket(), games=games)
 
 
 def getWinner(standings):

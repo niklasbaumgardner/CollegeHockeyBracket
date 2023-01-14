@@ -130,9 +130,9 @@ def edit_bracket():
         if bracket:
             bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
         else:
-            bracket = None
+            bracket = bracketUtils.createEmptyBracket()
         return render_template(
-            "test_edit_bracket.html", bracket=bracket, default=default
+            "edit_bracket.html", bracket=bracket, default=default
         )
     elif request.method == "POST":
         existing_bracket = queries.getUserBracketForUserId(

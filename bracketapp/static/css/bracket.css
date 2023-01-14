@@ -16,7 +16,7 @@ li {
 }
 
 .red-border {
-  border: 2px red solid;
+  border: 1px red solid;
 }
 
 .matchup {
@@ -73,7 +73,6 @@ li {
 }
 
 .correct {
-  /* color: green; */
   color: rgb(0, 128, 0);
   background-color: rgb(0, 128, 0, .05);
 }
@@ -122,7 +121,8 @@ li {
   -moz-appearance: textfield;
 }
 
-.cbracket-grid-edit li  input[type="radio"] {
+.bracket-grid-edit li input[type="radio"],
+.cbracket-grid-edit li input[type="radio"] {
   margin-right: 4px;
 }
 
