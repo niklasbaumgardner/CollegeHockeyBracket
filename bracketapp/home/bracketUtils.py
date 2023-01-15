@@ -18,10 +18,15 @@ class emptyGame:
 
 
 class userBracket:
-    def __init__(self, bracket_id, bracket=None, games=None):
-        self.bracket = (
-            bracket if bracket else queries.getUserBracketForBracketId(bracket_id)
-        )
+    def __init__(self, bracket_id, year=None, bracket=None, games=None):
+        if year:
+            self.bracket = queries.getUserBracketForBracketIdAndYear(
+                bracket_id=bracket_id, year=year
+            )
+        else:
+            self.bracket = (
+                bracket if bracket else queries.getUserBracketForBracketId(bracket_id)
+            )
         self.games = games if games else queries.getAllUserGamesForBracket(bracket_id)
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         user = queries.getUser(id=self.bracket.user_id)
@@ -88,7 +93,7 @@ def assignImage(bracket):
 
 
 def createEmptyBracket():
-    games = [ emptyGame(i) for i in range(15) ]
+    games = [emptyGame(i) for i in range(15)]
     print(len(games))
     return userBracket(bracket_id=None, bracket=emptyBracket(), games=games)
 

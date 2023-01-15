@@ -54,19 +54,27 @@ def archive(year):
         )
 
 
-@home.route("/view_bracket", defaults={"year": None, "id": None}, methods=["GET"])
-@home.route("/view_bracket/<int:id>", defaults={"year": None}, methods=["GET"])
 @home.route("/view_bracket/<int:year>/<int:id>", methods=["GET"])
-def view_bracket(year, id):
+def view_archive_bracket(year, id):
+    if year == queries.YEAR and CAN_EDIT_BRACKET:
+        return redirect(url_for("home.index"))
+
+    bracket = bracketUtils.userBracket(bracket_id=id, year=year)
+    default = bracketUtils.fullDefaultBracket(year=year)
+    correct = bracketUtils.fullCorrectBracket(year=year)
+
+    return render_template(
+        "view_bracket.html", default=default, correct=correct, bracket=bracket
+    )
+
+
+@home.route("/view_bracket", defaults={"id": None}, methods=["GET"])
+@home.route("/view_bracket/<int:id>", methods=["GET"])
+def view_bracket(id):
     current_user_id = current_user.get_id()
     can_view_brackets = not CAN_EDIT_BRACKET
 
-    if year and id:
-        if year == queries.YEAR and CAN_EDIT_BRACKET:
-            return redirect(url_for("home.index"))
-        bracket = queries.getUserBracketForBracketIdAndYear(bracket_id=id, year=year)
-
-    elif id and can_view_brackets:
+    if id and can_view_brackets:
         bracket = queries.getUserBracketForBracketId(id)
 
     else:
@@ -131,9 +139,7 @@ def edit_bracket():
             bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
         else:
             bracket = bracketUtils.createEmptyBracket()
-        return render_template(
-            "edit_bracket.html", bracket=bracket, default=default
-        )
+        return render_template("edit_bracket.html", bracket=bracket, default=default)
     elif request.method == "POST":
         existing_bracket = queries.getUserBracketForUserId(
             user_id=current_user.get_id()
