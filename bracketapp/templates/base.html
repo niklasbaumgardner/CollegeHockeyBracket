@@ -19,7 +19,7 @@
 
 <body class="gradient-custom mt-3 pt-5">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" aria-label="Eighth navbar example">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark fixed-top" data-bs-theme="dark">
         <div class="container">
             {% block backButton %}{% endblock backButton %}
             <a class="navbar-brand" href="/">NB Bracket App</a>
@@ -38,22 +38,28 @@
                     <li class="nav-item">
                         <a class="nav-link {% block archive %}{% endblock archive %}" href="{{ url_for('home.archive') }}">Archive</a>
                     </li>
-                    {% if current_user.is_authenticated and current_user.id == 1 %}
-                        <li class="nav-item">
-                            <a class="nav-link {% block admin %}{% endblock admin %}" href="{{ url_for('home.admin') }}">Admin</a>
-                        </li>
-                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if current_user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ current_user.email.split('@')[0] }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if current_user.is_authenticated and current_user.id == 1 %}
+                                    <li><a class="dropdown-item" href="{{ url_for('home.admin') }}">Admin</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{{ url_for('home.profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+
+                    {% else %}
                         <li class="nav-item">
-                            <a class="nav-link {% block profile %}{% endblock profile %}" href="{{ url_for('home.profile') }}">Profile</a>
+                            <a class="nav-link {% block login %}{% endblock login %}" href="{{ url_for('auth.login') }}">Login</a>
                         </li>
                     {% endif %}
                 </ul>
-                {% if current_user.is_authenticated %}
-                    <a class="nav-link text-white-50" href="{{ url_for('auth.logout') }}">Logout from {{ current_user.email.split('@')[0] }}</a>
-                {% else %}
-                    <a class="nav-link {% block login %}{% endblock login %}" href="{{ url_for('auth.login') }}">Login</a>
-                {% endif %}
             </div>
         </div>
     </nav>
