@@ -18,68 +18,72 @@
     </div>
 </div>
 
-<div class="container table-striped table-hover">
-    <div class="row table-header">
-        <div class="col-2">
-            Rank
-        </div>
-        <div class="col-5 col-md-6">
-            Bracket
-        </div>
-        <div class="col-2">
-            Points
-        </div>
-        <div class="col-3 col-md-2">
-            Max Points
-        </div>
-    </div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="">
+            <th class="col-2">
+                Rank
+            </th>
+            <th class="col-5 col-md-6">
+                Bracket
+            </th>
+            <th class="col-2">
+                Points
+            </th>
+            <th class="col-3 col-md-2">
+                Max Points
+            </th>
+        </tr>
+    </thead>
 
-    <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_cbracket', year=correct.bracket.year) }}`)">
-        <div class="col-2">
-            -
-        </div>
-        <div class="col-5 col-md-6">
-            <div class="row">
-                <div class="col-1">
-                    <img width="25px" height="25px" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
-                </div>
-                <div class="col-11">
-                    Final bracket
-                </div>
-            </div>
-        </div>
-        <div class="col-2">
-            320
-        </div>
-        <div class="col-3 col-md-2">
-            320
-        </div>
-    </div>
-
-    {% for bracket in brackets %}
-        <div class="row table-row border-top p-1" onclick="goToURL(`{{ url_for('home.view_archive_bracket', year=bracket.bracket.year, id=bracket.bracket.id) }}`)">
-            <div class="col-2">
-                {{ bracket.rank }}
-            </div>
-            <div class="col-5 col-md-6">
+    <tbody>
+        <tr class="" onclick="goToURL(`{{ url_for('home.view_cbracket', year=correct.bracket.year) }}`)">
+            <td class="col-2">
+                -
+            </td>
+            <td class="col-5 col-md-6">
                 <div class="row">
                     <div class="col-1">
-                        <img width="25px" height="25px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                        <img width="25px" height="25px" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
                     </div>
                     <div class="col-11">
-                        {{ bracket.bracket.name }}
-                        <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                        Final bracket
                     </div>
                 </div>
-            </div>
-            <div class="col-2">
-                {{ bracket.bracket.points }}
-            </div>
-            <div class="col-3 col-md-2">
-                {{ bracket.bracket.max_points }}
-            </div>
-        </div>
-    {% endfor %}
-</div>
+            </td>
+            <td class="col-2">
+                320
+            </td>
+            <td class="col-3 col-md-2">
+                320
+            </td>
+        </tr>
+    
+        {% for bracket in brackets %}
+            <tr class="" onclick="goToURL(`{{ url_for('home.view_archive_bracket', year=bracket.bracket.year, id=bracket.bracket.id) }}`)">
+                <td class="col-2">
+                    {{ bracket.rank }}
+                </td>
+                <td class="col-5 col-md-6">
+                    <div class="row">
+                        <div class="col-1">
+                            <img width="25px" height="25px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                        </div>
+                        <div class="col-11">
+                            {{ bracket.bracket.name }}
+                            <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="col-2">
+                    {{ bracket.bracket.points }}
+                </td>
+                <td class="col-3 col-md-2">
+                    {{ bracket.bracket.max_points }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock content %}
