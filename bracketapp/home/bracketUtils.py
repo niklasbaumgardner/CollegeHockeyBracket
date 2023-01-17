@@ -99,6 +99,9 @@ def createEmptyBracket():
 
 
 def getWinner(standings):
+    if not standings:
+        return
+
     correct = queries.getCorrectBracket()
 
     if not correct or not correct.winner:
