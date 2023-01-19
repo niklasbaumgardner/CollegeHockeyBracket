@@ -1,22 +1,22 @@
 :root[data-bs-theme="dark"] input {
-    color-scheme: dark;
+  color-scheme: dark;
 }
 
 .bracket-user-name {
-    font-size: x-small;
+  font-size: x-small;
 }
 
 .greyscale {
-    filter: grayscale(1);
-    opacity: .5;
+  filter: grayscale(1);
+  opacity: .5;
 }
 
 .table-hover > tbody > tr:hover {
-    background-color: #ced4da;
-    cursor: pointer;
+  background-color: #ced4da;
+  cursor: pointer;
 }
 
 :root[data-bs-theme="dark"] .table-hover > tbody > tr:hover {
-    background-color: #1a1d20;
-    cursor: pointer;
+  background-color: #1a1d20;
+  cursor: pointer;
 }
