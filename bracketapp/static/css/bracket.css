@@ -12,7 +12,6 @@ li {
 #bracket {
   font-size: 12px;
   padding: 20px 10px;
-  background-color: #eeeff0;
 }
 
 .red-border {
@@ -39,7 +38,6 @@ li {
   padding: 0 5px;
   margin: 0;
   white-space: nowrap;
-  background-color: #fff;
   opacity: 1;
   height: 18px;
   min-width: 115px;
@@ -52,7 +50,6 @@ li {
 }
 
 .champion {
-  background-color: white;
   max-width: 175px;
   padding: 0 !important;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
@@ -68,20 +65,16 @@ li {
   height: 70px;
 }
 
-.team-user-pick {
-  background-color: #f8f9fa;
-}
-
 .correct {
   color: rgb(0, 128, 0);
-  background-color: rgb(0, 128, 0, .05);
+  background-color: rgb(0, 128, 0, .05) !important;
 }
 
 .incorrect {
   color: red;
   text-decoration-line: line-through;
   text-decoration-thickness: 2px;
-  background-color: rgb(255, 0, 0, .05);
+  background-color: rgb(255, 0, 0, .05) !important;
 }
 
 .goals {
@@ -90,7 +83,7 @@ li {
 
 .round-details {
   font-size: 13px;
-  color: #2C7399;
+  color: #3d8bfd;
   text-transform: uppercase;
   text-align: center;
 }

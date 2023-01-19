@@ -8,17 +8,17 @@
         {{ default.bracket.year }} Default bracket
     </div>
 </div>
-<div class="container mx-0 bg-light p-3">
+<div class="container mx-0 p-3 bg-body-secondary">
     <form action="{{ url_for('home.update_default') }}" method="POST">
         <div class="row">
             {% for game in default.games %}
                 <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
                     <p class="fs-1">{{ game.game_num }}</p>
-                    <div class="form-outline form-white mb-4">
+                    <div class="form-outline mb-4">
                         <label class="form-label" for="{{ game.game_num }}-home">Home</label>
                         <input type="text" id="{{ game.game_num }}-home" name="{{ game.game_num }}-home" class="form-control" value="{{ game.home }}" />
                     </div>
-                    <div class="form-outline form-white mb-4">
+                    <div class="form-outline mb-4">
                         <label class="form-label" for="{{ game.game_num }}-away">Away</label>
                         <input type="text" id="{{ game.game_num }}-away" name="{{ game.game_num }}-away" class="form-control" value="{{ game.away }}"/>
                     </div>

@@ -11,26 +11,26 @@
         </div>
     </div>
 
-    <section id="bracket">
+    <div id="bracket" class="bg-body-secondary">
         <div class="row">
             <div class="cbracket-grid">
                 <div class="round-one-left round-one">
                     <div class="round-details">Round 1</div>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[0].home }}<span class="score">{{ correct.games[0].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[0].away }}<span class="score">{{ correct.games[0].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[0].home }}<span class="score">{{ correct.games[0].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[0].away }}<span class="score">{{ correct.games[0].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[1].home }}<span class="score">{{ correct.games[1].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[1].away }}<span class="score">{{ correct.games[1].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[1].home }}<span class="score">{{ correct.games[1].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[1].away }}<span class="score">{{ correct.games[1].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[2].home }}<span class="score">{{ correct.games[2].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[2].away }}<span class="score">{{ correct.games[2].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[2].home }}<span class="score">{{ correct.games[2].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[2].away }}<span class="score">{{ correct.games[2].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[3].home }}<span class="score">{{ correct.games[3].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[3].away }}<span class="score">{{ correct.games[3].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[3].home }}<span class="score">{{ correct.games[3].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[3].away }}<span class="score">{{ correct.games[3].a_goals }}</span></li>
                     </ul>
                 </div>	<!-- END ROUND ONE -->
     
@@ -38,12 +38,12 @@
                 <div class="round-two-left round-two">
                     <div class="round-details">Round 2</div>
                     <ul class="matchup">
-                        <li class="team ">{{ correct.games[0].winner }}<span class="score">{{ correct.games[8].h_goals }}</span></li>
-                        <li class="team ">{{ correct.games[1].winner }}<span class="score">{{ correct.games[8].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[0].winner }}<span class="score">{{ correct.games[8].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[1].winner }}<span class="score">{{ correct.games[8].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ correct.games[2].winner }}<span class="score">{{ correct.games[9].h_goals }}</span></li>
-                        <li class="team ">{{ correct.games[3].winner }}<span class="score">{{ correct.games[9].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[2].winner }}<span class="score">{{ correct.games[9].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[3].winner }}<span class="score">{{ correct.games[9].a_goals }}</span></li>
                     </ul>
                 </div>	<!-- END ROUND TWO -->
     
@@ -51,8 +51,8 @@
                 <div class="round-three-left round-three">
                     <div class="round-details">Round 3</div>
                     <ul class="matchup">
-                        <li class="team ">{{ correct.games[8].winner }}<span class="score">{{ correct.games[12].h_goals }}</span></li>
-                        <li class="team ">{{ correct.games[9].winner }}<span class="score">{{ correct.games[12].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[8].winner }}<span class="score">{{ correct.games[12].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[9].winner }}<span class="score">{{ correct.games[12].a_goals }}</span></li>
                     </ul>
                 </div>	<!-- END ROUND THREE -->
     
@@ -63,9 +63,9 @@
                             <div class="row justify-content-center">
                                 <div class="champion-grid">
                                     <div class="round-details champion-top">champion</div>
-                                    <div class="row justify-content-center champion matchup champion-middle">
+                                    <div class="row justify-content-center champion matchup champion-middle bg-body">
                                         <img class="winner-img" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
-                                        <li class="team center-text">{{ correct.bracket.winner }}</li>
+                                        <li class="team bg-body center-text">{{ correct.bracket.winner }}</li>
                                     </div>
                                 </div>
                             </div>
@@ -74,8 +74,8 @@
                             <div class="championship-grid">
                                 <div class="round-details">championship</div>
                                 <ul class ="matchup">
-                                    <li class="team ">{{ correct.games[12].winner }}<span class="score">{{ correct.games[14].h_goals }}</span></li>
-                                    <li class="team ">{{ correct.games[13].winner }}<span class="score">{{ correct.games[14].a_goals }}</span></li>
+                                    <li class="team bg-body ">{{ correct.games[12].winner }}<span class="score">{{ correct.games[14].h_goals }}</span></li>
+                                    <li class="team bg-body ">{{ correct.games[13].winner }}<span class="score">{{ correct.games[14].a_goals }}</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -86,8 +86,8 @@
                 <div class="round-three-right round-three">
                     <div class="round-details">Round 3</div>
                     <ul class="matchup">
-                        <li class="team ">{{ correct.games[10].winner }}<span class="score">{{ correct.games[13].h_goals }}</span></li>
-                        <li class="team ">{{ correct.games[11].winner }}<span class="score">{{ correct.games[13].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[10].winner }}<span class="score">{{ correct.games[13].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[11].winner }}<span class="score">{{ correct.games[13].a_goals }}</span></li>
                     </ul>
                 </div>	<!-- END ROUND THREE -->
     
@@ -95,12 +95,12 @@
                 <div class="round-two-right round-two">
                     <div class="round-details">Round 2</div>
                     <ul class="matchup">
-                        <li class="team ">{{ correct.games[4].winner }}<span class="score">{{ correct.games[10].h_goals }}</span></li>
-                        <li class="team ">{{ correct.games[5].winner }}<span class="score">{{ correct.games[10].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[4].winner }}<span class="score">{{ correct.games[10].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[5].winner }}<span class="score">{{ correct.games[10].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ correct.games[6].winner }}<span class="score">{{ correct.games[11].h_goals }}</span></li>
-                        <li class="team ">{{ correct.games[7].winner }}<span class="score">{{ correct.games[11].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[6].winner }}<span class="score">{{ correct.games[11].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ correct.games[7].winner }}<span class="score">{{ correct.games[11].a_goals }}</span></li>
                     </ul>
                 </div>	<!-- END ROUND TWO -->
     
@@ -108,24 +108,24 @@
                 <div class="round-one-right round-one">
                     <div class="round-details">Round 1</div>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[4].home }}<span class="score">{{ correct.games[4].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[4].away }}<span class="score">{{ correct.games[4].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[4].home }}<span class="score">{{ correct.games[4].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[4].away }}<span class="score">{{ correct.games[4].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[5].home }}<span class="score">{{ correct.games[5].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[5].away }}<span class="score">{{ correct.games[5].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[5].home }}<span class="score">{{ correct.games[5].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[5].away }}<span class="score">{{ correct.games[5].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[6].home }}<span class="score">{{ correct.games[6].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[6].away }}<span class="score">{{ correct.games[6].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[6].home }}<span class="score">{{ correct.games[6].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[6].away }}<span class="score">{{ correct.games[6].a_goals }}</span></li>
                     </ul>
                     <ul class="matchup">
-                        <li class="team ">{{ default.games[7].home }}<span class="score">{{ correct.games[7].h_goals }}</span></li>
-                        <li class="team ">{{ default.games[7].away }}<span class="score">{{ correct.games[7].a_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[7].home }}<span class="score">{{ correct.games[7].h_goals }}</span></li>
+                        <li class="team bg-body ">{{ default.games[7].away }}<span class="score">{{ correct.games[7].a_goals }}</span></li>
                     </ul>
                 </div>	<!-- END ROUND ONE -->
             </div>
         </div>
-    </section>
+    </div>
 
 {% endblock content %}

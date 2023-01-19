@@ -13,7 +13,7 @@
     </div>
 
     {% if bracket %}
-        <section id="bracket">
+        <div id="bracket" class="bg-body-secondary">
             {% if can_edit %}
                 <div class="row justify-content-center">
                     <div class="col-auto">
@@ -32,20 +32,20 @@
                     <div class="round-one-left round-one">
                         <div class="round-details">Round 1</div>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[0].home }}<span class="score">{% if correct.games[0].h_goals != None %}{{ correct.games[0].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[0].away }}<span class="score">{% if correct.games[0].a_goals != None %}{{ correct.games[0].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[0].home }}<span class="score">{% if correct.games[0].h_goals != None %}{{ correct.games[0].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[0].away }}<span class="score">{% if correct.games[0].a_goals != None %}{{ correct.games[0].a_goals }}{% endif %}</span></li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[1].home }}<span class="score">{% if correct.games[1].h_goals != None %}{{ correct.games[1].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[1].away }}<span class="score">{% if correct.games[1].a_goals != None %}{{ correct.games[1].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[1].home }}<span class="score">{% if correct.games[1].h_goals != None %}{{ correct.games[1].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[1].away }}<span class="score">{% if correct.games[1].a_goals != None %}{{ correct.games[1].a_goals }}{% endif %}</span></li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[2].home }}<span class="score">{% if correct.games[2].h_goals != None %}{{ correct.games[2].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[2].away }}<span class="score">{% if correct.games[2].a_goals != None %}{{ correct.games[2].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[2].home }}<span class="score">{% if correct.games[2].h_goals != None %}{{ correct.games[2].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[2].away }}<span class="score">{% if correct.games[2].a_goals != None %}{{ correct.games[2].a_goals }}{% endif %}</span></li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[3].home }}<span class="score">{% if correct.games[3].h_goals != None %}{{ correct.games[3].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[3].away }}<span class="score">{% if correct.games[3].a_goals != None %}{{ correct.games[3].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[3].home }}<span class="score">{% if correct.games[3].h_goals != None %}{{ correct.games[3].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[3].away }}<span class="score">{% if correct.games[3].a_goals != None %}{{ correct.games[3].a_goals }}{% endif %}</span></li>
                         </ul>
                     </div>	<!-- END ROUND ONE -->
 
@@ -53,16 +53,16 @@
                     <div class="round-two-left round-two">
                         <div class="round-details">Round 2</div>
                         <ul class="matchup">
-                            <li class="team team-user-pick {% if correct and correct.games[0].winner == bracket.games[0].winner %}correct{% elif correct and correct.games[0].winner != None %}incorrect{% endif %}">{{ bracket.games[0].winner }}</li>
-                            <li class="team ">{% if correct.games[0].winner != None %}{{ correct.games[0].winner }}{% endif %}<span class="score">{% if correct.games[8].h_goals != None %}{{ correct.games[8].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{% if correct.games[1].winner != None %}{{ correct.games[1].winner }}{% endif %}<span class="score">{% if correct.games[8].a_goals != None %}{{ correct.games[8].a_goals }}{% endif %}</span></li>
-                            <li class="team team-user-pick {% if correct and correct.games[1].winner == bracket.games[1].winner %}correct{% elif correct and correct.games[1].winner != None %}incorrect{% endif %}">{{ bracket.games[1].winner }}</li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[0].winner == bracket.games[0].winner %}correct{% elif correct and correct.games[0].winner != None %}incorrect{% endif %}">{{ bracket.games[0].winner }}</li>
+                            <li class="team bg-body ">{% if correct.games[0].winner != None %}{{ correct.games[0].winner }}{% endif %}<span class="score">{% if correct.games[8].h_goals != None %}{{ correct.games[8].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{% if correct.games[1].winner != None %}{{ correct.games[1].winner }}{% endif %}<span class="score">{% if correct.games[8].a_goals != None %}{{ correct.games[8].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[1].winner == bracket.games[1].winner %}correct{% elif correct and correct.games[1].winner != None %}incorrect{% endif %}">{{ bracket.games[1].winner }}</li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team team-user-pick {% if correct and correct.games[2].winner == bracket.games[2].winner %}correct{% elif correct and correct.games[2].winner != None %}incorrect{% endif %}">{{ bracket.games[2].winner }}</li>
-                            <li class="team ">{% if correct.games[2].winner != None %}{{ correct.games[2].winner }}{% endif %}<span class="score">{% if correct.games[9].h_goals != None %}{{ correct.games[9].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{% if correct.games[3].winner != None %}{{ correct.games[3].winner }}{% endif %}<span class="score">{% if correct.games[9].a_goals != None %}{{ correct.games[9].a_goals }}{% endif %}</span></li>
-                            <li class="team team-user-pick {% if correct and correct.games[3].winner == bracket.games[3].winner %}correct{% elif correct and correct.games[3].winner != None %}incorrect{% endif %}">{{ bracket.games[3].winner }}</li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[2].winner == bracket.games[2].winner %}correct{% elif correct and correct.games[2].winner != None %}incorrect{% endif %}">{{ bracket.games[2].winner }}</li>
+                            <li class="team bg-body ">{% if correct.games[2].winner != None %}{{ correct.games[2].winner }}{% endif %}<span class="score">{% if correct.games[9].h_goals != None %}{{ correct.games[9].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{% if correct.games[3].winner != None %}{{ correct.games[3].winner }}{% endif %}<span class="score">{% if correct.games[9].a_goals != None %}{{ correct.games[9].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[3].winner == bracket.games[3].winner %}correct{% elif correct and correct.games[3].winner != None %}incorrect{% endif %}">{{ bracket.games[3].winner }}</li>
                         </ul>
                     </div>	<!-- END ROUND TWO -->
 
@@ -70,10 +70,10 @@
                     <div class="round-three-left round-three">
                         <div class="round-details">Round 3</div>
                         <ul class="matchup">
-                            <li class="team team-user-pick {% if correct and correct.games[8].winner == bracket.games[8].winner %}correct{% elif correct and correct.games[8].winner != None %}incorrect{% endif %}">{{ bracket.games[8].winner }}</li>
-                            <li class="team ">{% if correct.games[8].winner != None %}{{ correct.games[8].winner }}{% endif %}<span class="score">{% if correct.games[12].h_goals != None %}{{ correct.games[12].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{% if correct.games[9].winner != None %}{{ correct.games[9].winner }}{% endif %}<span class="score">{% if correct.games[12].a_goals != None %}{{ correct.games[12].a_goals }}{% endif %}</span></li>
-                            <li class="team team-user-pick {% if correct and correct.games[9].winner == bracket.games[9].winner %}correct{% elif correct and correct.games[9].winner != None %}incorrect{% endif %}">{{ bracket.games[9].winner }}</li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[8].winner == bracket.games[8].winner %}correct{% elif correct and correct.games[8].winner != None %}incorrect{% endif %}">{{ bracket.games[8].winner }}</li>
+                            <li class="team bg-body ">{% if correct.games[8].winner != None %}{{ correct.games[8].winner }}{% endif %}<span class="score">{% if correct.games[12].h_goals != None %}{{ correct.games[12].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{% if correct.games[9].winner != None %}{{ correct.games[9].winner }}{% endif %}<span class="score">{% if correct.games[12].a_goals != None %}{{ correct.games[12].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[9].winner == bracket.games[9].winner %}correct{% elif correct and correct.games[9].winner != None %}incorrect{% endif %}">{{ bracket.games[9].winner }}</li>
                         </ul>
                     </div>	<!-- END ROUND THREE -->
 
@@ -84,16 +84,16 @@
                                 <div class="row justify-content-center">
                                     <div class="champion-grid">
                                         <div class="round-details champion-top">champion</div>
-                                        <div class="row justify-content-center champion matchup champion-middle">
+                                        <div class="row justify-content-center champion matchup champion-middle bg-dark-subtle">
                                             <img class="winner-img" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
-                                            <li class="team team-user-pick center-text {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li>
-                                            <li class="team team-user-pick center-text">Predicted Score:</li>
-                                            <li class="team team-user-pick center-text">{{ bracket.bracket.w_goals }} - {{ bracket.bracket.l_goals }}</li>
+                                            <li class="team bg-body team-user-pick bg-dark-subtle center-text {% if correct and correct.games[14].winner == bracket.games[14].winner %}correct{% elif correct and correct.games[14].winner != None %}incorrect{% endif %}">{{ bracket.games[14].winner }}</li>
+                                            <li class="team bg-body team-user-pick bg-dark-subtle center-text">Predicted Score:</li>
+                                            <li class="team bg-body team-user-pick bg-dark-subtle center-text">{{ bracket.bracket.w_goals }} - {{ bracket.bracket.l_goals }}</li>
                                         </div>
                                         <div class="row justify-content-center champion-bottom">
                                             <ul class ="matchup ">
-                                                <li class="team center-text ">Champion:</li>
-                                                <li class="team center-text ">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>
+                                                <li class="team bg-body center-text ">National Champion</li>
+                                                <li class="team bg-body center-text ">{% if correct.bracket.winner != None %}{{ correct.bracket.winner }}{% endif %}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -103,10 +103,10 @@
                                 <div class="championship-grid">
                                     <div class="round-details">championship</div>
                                     <ul class ="matchup">
-                                        <li class="team team-user-pick {% if correct and correct.games[12].winner == bracket.games[12].winner %}correct{% elif correct and correct.games[12].winner != None %}incorrect{% endif %}">{{ bracket.games[12].winner }}</li>
-                                        <li class="team ">{% if correct.games[12].winner != None %}{{ correct.games[12].winner }}{% endif %}<span class="score">{% if correct.games[14].h_goals != None %}{{ correct.games[14].h_goals }}{% endif %}</span></li>
-                                        <li class="team ">{% if correct.games[13].winner != None %}{{ correct.games[13].winner }}{% endif %}<span class="score">{% if correct.games[14].a_goals != None %}{{ correct.games[14].a_goals }}{% endif %}</span></li>
-                                        <li class="team team-user-pick {% if correct and correct.games[13].winner == bracket.games[13].winner %}correct{% elif correct and correct.games[13].winner != None %}incorrect{% endif %}">{{ bracket.games[13].winner }}</li>
+                                        <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[12].winner == bracket.games[12].winner %}correct{% elif correct and correct.games[12].winner != None %}incorrect{% endif %}">{{ bracket.games[12].winner }}</li>
+                                        <li class="team bg-body ">{% if correct.games[12].winner != None %}{{ correct.games[12].winner }}{% endif %}<span class="score">{% if correct.games[14].h_goals != None %}{{ correct.games[14].h_goals }}{% endif %}</span></li>
+                                        <li class="team bg-body ">{% if correct.games[13].winner != None %}{{ correct.games[13].winner }}{% endif %}<span class="score">{% if correct.games[14].a_goals != None %}{{ correct.games[14].a_goals }}{% endif %}</span></li>
+                                        <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[13].winner == bracket.games[13].winner %}correct{% elif correct and correct.games[13].winner != None %}incorrect{% endif %}">{{ bracket.games[13].winner }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -117,10 +117,10 @@
                     <div class="round-three-right round-three">
                         <div class="round-details">Round 3</div>
                         <ul class="matchup">
-                            <li class="team team-user-pick {% if correct and correct.games[10].winner == bracket.games[10].winner %}correct{% elif correct and correct.games[10].winner != None %}incorrect{% endif %}">{{ bracket.games[10].winner }}</li>
-                            <li class="team ">{% if correct.games[10].winner != None %}{{ correct.games[10].winner }}{% endif %}<span class="score">{% if correct.games[13].h_goals != None %}{{ correct.games[13].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{% if correct.games[11].winner != None %}{{ correct.games[11].winner }}{% endif %}<span class="score">{% if correct.games[13].a_goals != None %}{{ correct.games[13].a_goals }}{% endif %}</span></li>
-                            <li class="team team-user-pick {% if correct and correct.games[11].winner == bracket.games[11].winner %}correct{% elif correct and correct.games[11].winner != None %}incorrect{% endif %}">{{ bracket.games[11].winner }}</li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[10].winner == bracket.games[10].winner %}correct{% elif correct and correct.games[10].winner != None %}incorrect{% endif %}">{{ bracket.games[10].winner }}</li>
+                            <li class="team bg-body ">{% if correct.games[10].winner != None %}{{ correct.games[10].winner }}{% endif %}<span class="score">{% if correct.games[13].h_goals != None %}{{ correct.games[13].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{% if correct.games[11].winner != None %}{{ correct.games[11].winner }}{% endif %}<span class="score">{% if correct.games[13].a_goals != None %}{{ correct.games[13].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[11].winner == bracket.games[11].winner %}correct{% elif correct and correct.games[11].winner != None %}incorrect{% endif %}">{{ bracket.games[11].winner }}</li>
                         </ul>
                     </div>	<!-- END ROUND THREE -->
 
@@ -128,16 +128,16 @@
                     <div class="round-two-right round-two">
                         <div class="round-details">Round 2</div>
                         <ul class="matchup">
-                            <li class="team team-user-pick {% if correct and correct.games[4].winner == bracket.games[4].winner %}correct{% elif correct and correct.games[4].winner != None %}incorrect{% endif %}">{{ bracket.games[4].winner }}</li>
-                            <li class="team ">{% if correct.games[4].winner != None %}{{ correct.games[4].winner }}{% endif %}<span class="score">{% if correct.games[10].h_goals != None %}{{ correct.games[10].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{% if correct.games[5].winner != None %}{{ correct.games[5].winner }}{% endif %}<span class="score">{% if correct.games[10].a_goals != None %}{{ correct.games[10].a_goals }}{% endif %}</span></li>
-                            <li class="team team-user-pick {% if correct and correct.games[5].winner == bracket.games[5].winner %}correct{% elif correct and correct.games[5].winner != None %}incorrect{% endif %}">{{ bracket.games[5].winner }}</li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[4].winner == bracket.games[4].winner %}correct{% elif correct and correct.games[4].winner != None %}incorrect{% endif %}">{{ bracket.games[4].winner }}</li>
+                            <li class="team bg-body ">{% if correct.games[4].winner != None %}{{ correct.games[4].winner }}{% endif %}<span class="score">{% if correct.games[10].h_goals != None %}{{ correct.games[10].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{% if correct.games[5].winner != None %}{{ correct.games[5].winner }}{% endif %}<span class="score">{% if correct.games[10].a_goals != None %}{{ correct.games[10].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[5].winner == bracket.games[5].winner %}correct{% elif correct and correct.games[5].winner != None %}incorrect{% endif %}">{{ bracket.games[5].winner }}</li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team team-user-pick {% if correct and correct.games[6].winner == bracket.games[6].winner %}correct{% elif correct and correct.games[6].winner != None %}incorrect{% endif %}">{{ bracket.games[6].winner }}</li>
-                            <li class="team ">{% if correct.games[6].winner != None %}{{ correct.games[6].winner }}{% endif %}<span class="score">{% if correct.games[11].h_goals != None %}{{ correct.games[11].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{% if correct.games[7].winner != None %}{{ correct.games[7].winner }}{% endif %}<span class="score">{% if correct.games[11].a_goals != None %}{{ correct.games[11].a_goals }}{% endif %}</span></li>
-                            <li class="team team-user-pick {% if correct and correct.games[7].winner == bracket.games[7].winner %}correct{% elif correct and correct.games[7].winner != None %}incorrect{% endif %}">{{ bracket.games[7].winner }}</li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[6].winner == bracket.games[6].winner %}correct{% elif correct and correct.games[6].winner != None %}incorrect{% endif %}">{{ bracket.games[6].winner }}</li>
+                            <li class="team bg-body ">{% if correct.games[6].winner != None %}{{ correct.games[6].winner }}{% endif %}<span class="score">{% if correct.games[11].h_goals != None %}{{ correct.games[11].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{% if correct.games[7].winner != None %}{{ correct.games[7].winner }}{% endif %}<span class="score">{% if correct.games[11].a_goals != None %}{{ correct.games[11].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body team-user-pick bg-dark-subtle {% if correct and correct.games[7].winner == bracket.games[7].winner %}correct{% elif correct and correct.games[7].winner != None %}incorrect{% endif %}">{{ bracket.games[7].winner }}</li>
                         </ul>
                     </div>	<!-- END ROUND TWO -->
 
@@ -145,25 +145,25 @@
                     <div class="round-one-right round-one">
                         <div class="round-details">Round 1</div>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[4].home }}<span class="score">{% if correct.games[4].h_goals != None %}{{ correct.games[4].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[4].away }}<span class="score">{% if correct.games[4].a_goals != None %}{{ correct.games[4].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[4].home }}<span class="score">{% if correct.games[4].h_goals != None %}{{ correct.games[4].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[4].away }}<span class="score">{% if correct.games[4].a_goals != None %}{{ correct.games[4].a_goals }}{% endif %}</span></li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[5].home }}<span class="score">{% if correct.games[5].h_goals != None %}{{ correct.games[5].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[5].away }}<span class="score">{% if correct.games[5].a_goals != None %}{{ correct.games[5].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[5].home }}<span class="score">{% if correct.games[5].h_goals != None %}{{ correct.games[5].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[5].away }}<span class="score">{% if correct.games[5].a_goals != None %}{{ correct.games[5].a_goals }}{% endif %}</span></li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[6].home }}<span class="score">{% if correct.games[6].h_goals != None %}{{ correct.games[6].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[6].away }}<span class="score">{% if correct.games[6].a_goals != None %}{{ correct.games[6].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[6].home }}<span class="score">{% if correct.games[6].h_goals != None %}{{ correct.games[6].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[6].away }}<span class="score">{% if correct.games[6].a_goals != None %}{{ correct.games[6].a_goals }}{% endif %}</span></li>
                         </ul>
                         <ul class="matchup">
-                            <li class="team ">{{ default.games[7].home }}<span class="score">{% if correct.games[7].h_goals != None %}{{ correct.games[7].h_goals }}{% endif %}</span></li>
-                            <li class="team ">{{ default.games[7].away }}<span class="score">{% if correct.games[7].a_goals != None %}{{ correct.games[7].a_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[7].home }}<span class="score">{% if correct.games[7].h_goals != None %}{{ correct.games[7].h_goals }}{% endif %}</span></li>
+                            <li class="team bg-body ">{{ default.games[7].away }}<span class="score">{% if correct.games[7].a_goals != None %}{{ correct.games[7].a_goals }}{% endif %}</span></li>
                         </ul>
                     </div>	<!-- END ROUND ONE -->
                 </div>
             </div>
-        </section>
+        </div>
     {% else %}
         <p>You don't have a bracket. Please create a bracket <a href="{{ url_for('home.edit_bracket') }}">HERE</a></p>
     {% endif %}

@@ -21,10 +21,10 @@
 <table class="table table-striped table-hover">
     <thead class="">
         <tr>
-            <th scope="col-3" class="">
+            <th scope="col-7" class="">
                 Winner
             </th>
-            <th scope="col-9" class="">
+            <th scope="col-3" class="">
                 Year
             </th>
         </tr>
@@ -33,10 +33,10 @@
     <tbody>
         {% for bracket in archived_years %}
             <tr onclick="goToURL(`{{ url_for('home.archive', year=bracket.bracket.year) }}`)">
-                <td class="col-3">
-                    <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                <td class="col-7 fs-1">
+                    <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/> &nbsp;&nbsp;&nbsp;&nbsp; {{ bracket.bracket.winner }}
                 </td>
-                <td class="col-9">
+                <td class="col-5">
                     <p class="fs-1">{{ bracket.bracket.year }}</p>
                 </td>
             </tr>

@@ -1,10 +1,9 @@
-.bracket-user-name {
-    font-size: x-small;
+:root[data-bs-theme="dark"] input {
+    color-scheme: dark;
 }
 
-.table-header {
-    font-size: large;
-    font-weight: bold;
+.bracket-user-name {
+    font-size: x-small;
 }
 
 .greyscale {
@@ -13,6 +12,11 @@
 }
 
 .table-hover > tbody > tr:hover {
-    background-color: lightgray;
+    background-color: #ced4da;
+    cursor: pointer;
+}
+
+:root[data-bs-theme="dark"] .table-hover > tbody > tr:hover {
+    background-color: #1a1d20;
     cursor: pointer;
 }
