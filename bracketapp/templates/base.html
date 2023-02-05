@@ -32,7 +32,7 @@
                         <a class="nav-link {% block mybracket %}{% endblock mybracket %}" href="{{ url_for('home.view_bracket') }}">My Bracket</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block standings %}{% endblock standings %}" href="/">Bracket Standings</a>
+                        <a class="nav-link {% block standings %}{% endblock standings %}" href="{{ url_for('home.standings') }}">Bracket Standings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% block archive %}{% endblock archive %}" href="{{ url_for('home.archive') }}">Archive</a>

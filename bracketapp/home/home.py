@@ -16,16 +16,25 @@ def isAdmin():
 
 @home.route("/", methods=["GET"])
 def index():
-    # TODO: Make a separate route for standings
-    # if current_user.is_authenticated:
-    #     if CAN_EDIT_BRACKET:
-    #         return redirect(url_for("home.view_bracket"))
+    if current_user.is_authenticated:
+        if CAN_EDIT_BRACKET:
+            return redirect(url_for("home.view_bracket"))
 
+    return redirect(url_for("home.standings"))
+
+
+@home.route("/standings", methods=["GET"])
+def standings():
     can_click = not CAN_EDIT_BRACKET
     standings = bracketUtils.getBracketStandings()
     winner = bracketUtils.getWinner(standings) if can_click else None
     return render_template(
-        "index.html", brackets=standings, can_click=can_click, winner=winner, len=len, year=queries.YEAR
+        "index.html",
+        brackets=standings,
+        can_click=can_click,
+        winner=winner,
+        len=len,
+        year=queries.YEAR,
     )
 
 
