@@ -14,41 +14,39 @@
 
 <div class="pb-5 d-flex justify-content-center mx-0">
     <div class="fw-bold fs-1">
-        Standings
+        {{ year }} Standings
     </div>
 </div>
 
 {% if winner %}
-    <div class="row justify-content-center mx-0 mb-5">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Congratulations!!</h4>
         {% if winner.tie and len(winner.winner) > 1 %}
-            <div class="col-auto fs-3 border border-danger border-4 p-5">
-                The winning brackets are
+            <p>We have a tie!</p>
+            <p>
+                The winners are
                 {% for w in winner.winner %}
-                    <div class="fw-bold">
+                    <span class="fw-bold">
                         {{ w.bracket.name }}
-                    </div>
+                    </span>
                 {% endfor %}
                 They were still tied after the total goals tiebreaker.
                 <br>
                 Congratulations to the winners
                 {% for w in winner.winner %}
-                    <div class="fw-bold">
+                    <span class="fw-bold">
                         {{ w.username }}
-                    </div>
+                    </span>
                 {% endfor %}
-            </div>
+            </p>
         {% elif winner.tie and len(winner.winner) == 1 %}
-            <div class="col-auto fs-3 border border-danger border-4 p-5">
-                There was a tie and <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> won the total goals tiebreak.
-                <br>
-                Congratulations to <span class="fw-bold">{{ winner.winner[0].username }}</span>!
-            </div>
+            <p>
+                <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> ({{ winner.winner[0].username }}) the total goals tiebreaker and is this year's bracket challenge winner with <span class="fw-bold">{{ winner.winner[0].bracket.points }}</span> points.
+            </p>
         {% else %}
-            <div class="col-auto fs-3 border border-danger border-4 p-5">
-                The winning bracket is <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> with <span class="fw-bold">{{ winner.winner[0].bracket.points }}</span> points.
-                <br>
-                Congratulations to <span class="fw-bold">{{ winner.winner[0].username }}</span>!
-            </div>
+            <p>
+                <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> ({{ winner.winner[0].username }}) has won this year's bracket challenge with <span class="fw-bold">{{ winner.winner[0].bracket.points }}</span> points.
+            </p>
         {% endif %}
     </div>
 {% endif %}

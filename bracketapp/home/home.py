@@ -16,6 +16,10 @@ def isAdmin():
 
 @home.route("/", methods=["GET"])
 def index():
+    if current_user.is_authenticated:
+        if CAN_EDIT_BRACKET:
+            return redirect(url_for("home.view_bracket"))
+
     can_click = not CAN_EDIT_BRACKET
     standings = bracketUtils.getBracketStandings()
     winner = bracketUtils.getWinner(standings) if can_click else None
@@ -37,14 +41,6 @@ def archive(year):
             bracket = queries.getCorrectBracketForYear(y)
             if bracket and bracket.winner:
                 archived_years.append(bracketUtils.baseCorrectBracket(year=y))
-        # archived_years = [
-        #     queries.getCorrectBracketForYear(y) for y in range(2016, queries.YEAR + 1)
-        # ]
-        # archived_years = [
-        #     bracketUtils.baseCorrectBracket(bracket=bracket)
-        #     for bracket in archived_years
-        #     if bracket and bracket.winner
-        # ]
 
         return render_template("archive.html", archived_years=archived_years)
     else:
