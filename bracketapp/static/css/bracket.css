@@ -42,7 +42,7 @@ li {
   height: 18px;
   min-width: 115px;
   max-width: 175px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .center-text {
@@ -52,7 +52,7 @@ li {
 .champion {
   max-width: 175px;
   padding: 0 !important;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .final-game-score-edit {
@@ -70,11 +70,27 @@ li {
   background-color: rgb(0, 128, 0, .05) !important;
 }
 
+.bg-correct,
+.bg-correct > li {
+  background-color: rgb(0, 128, 0, .05) !important;
+}
+
+.bg-correct > li,
+.bg-incorrect > li {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: none;
+}
+
 .incorrect {
   color: red;
   text-decoration-line: line-through;
   text-decoration-thickness: 2px;
-  background-color: rgb(255, 0, 0, .05) !important;
+  background-color: rgb(255, 0, 0, .1) !important;
+}
+
+.bg-incorrect,
+.bg-incorrect > li {
+  background-color: rgb(255, 0, 0, .1) !important;
 }
 
 .goals {
