@@ -74,7 +74,7 @@
             {% if can_click %}
                 <tr class="" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
                     <td class="col-2">
-                        {{ bracket.rank }}
+                        {{ bracket.bracket.rank }}
                     </td>
                     <td class="col-5 col-md-6">
                         <div class="row">
@@ -111,10 +111,10 @@
                         </div>
                     </td>
                     <td class="col-2">
-                        {{ bracket.bracket.points }}
+                        -
                     </td>
                     <td class="col-3 col-md-2">
-                        {{ bracket.bracket.max_points }}
+                        320
                     </td>
                 </tr>
             {% endif %}

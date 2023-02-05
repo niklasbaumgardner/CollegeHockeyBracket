@@ -37,7 +37,7 @@ class Bracket(db.Model):
     name = db.Column(db.String(30), nullable=False)
     year = db.Column(db.Integer, nullable=False)
     winner = db.Column(db.String(30), nullable=True)  # TODO: make winner not nullable
-    # TODO: add rank
+    rank = db.Column(db.Integer, nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
 

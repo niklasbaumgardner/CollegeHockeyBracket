@@ -69,6 +69,12 @@ def updateUserBracket(user_id, name, winner, w_goals, l_goals, bracket=None):
     return bracket
 
 
+def updateUserBracketRank(bracket, rank):
+    print(bracket.name, rank)
+    bracket.rank = rank
+    db.session.commit()
+
+
 def updateUserGame(bracket_id, game_num, winner):
     game = getUserGame(bracket_id=bracket_id, game_num=game_num)
     game.winner = winner
@@ -282,9 +288,42 @@ def getAllTeams():
     return set(lst)
 
 
+def updateBracketStandings(brackets=None, correct=None):
+    brackets = brackets if brackets else getAllUserBrackets()
+    correct = correct if correct else getCorrectBracket()
+
+    if correct and correct.bracket.winner:
+        for bracket in brackets:
+            bracket.goal_difference = abs(
+                bracket.bracket.w_goals
+                + bracket.bracket.l_goals
+                - (correct.bracket.w_goals + correct.bracket.l_goals)
+            )
+
+        brackets.sort(key=lambda x: x.goal_difference)
+
+    brackets.sort(key=lambda b: b.bracket.points, reverse=True)
+
+    rank = 1
+    standings = []
+    for i, bracket in enumerate(brackets):
+        if i == 0:
+            bracket.bracket.rank = rank
+            standings.append(bracket)
+        elif bracket.bracket.points == brackets[i - 1].bracket.points:
+            bracket.bracket.rank = rank
+            standings.append(bracket)
+        else:
+            rank = i + 1
+            bracket.bracket.rank = rank
+            standings.append(bracket)
+
+        updateUserBracketRank(bracket=bracket.bracket, rank=rank)
+
+
 def updateAllBracketPoints():
     brackets = getAllUserBrackets()
-    correct = getCorrectBracket()
+    correct = bracketUtils.fullCorrectBracket(bracket=getCorrectBracket())
     teams = getAllTeams()
 
     for user_bracket in brackets:
@@ -295,3 +334,5 @@ def updateAllBracketPoints():
             user_bracket, correct, teams
         )
         db.session.commit()
+
+    updateBracketStandings(brackets=brackets, correct=correct)

@@ -62,7 +62,7 @@
         {% for bracket in brackets %}
             <tr class="" onclick="goToURL(`{{ url_for('home.view_archive_bracket', year=bracket.bracket.year, id=bracket.bracket.id) }}`)">
                 <td class="col-2">
-                    {{ bracket.rank }}
+                    {{ bracket.bracket.rank }}
                 </td>
                 <td class="col-5 col-md-6">
                     <div class="row">

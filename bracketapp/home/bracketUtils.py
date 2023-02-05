@@ -35,7 +35,6 @@ class userBracket:
             self.user_id = user.id
         except:
             pass
-        self.rank = None
         self.goal_difference = 0
         self.img_url = assignImage(self.bracket)
 
@@ -107,7 +106,10 @@ def getWinner(standings):
     if not correct or not correct.winner:
         return None
 
-    winners = [b for b in standings if b.rank == 1]
+    winners = [b for b in standings if b.bracket.rank == 1]
+
+    if len(winners) == 0:
+        return None
 
     if len(winners) == 1:
         return bracketWinner(winners, False)
@@ -139,24 +141,12 @@ def getBracketStandings():
 
         brackets.sort(key=lambda x: x.goal_difference)
 
-    brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
-    brackets.sort(key=lambda b: b.bracket.points, reverse=True)
+    brackets.sort(key=lambda b: b.bracket.name)
+    if brackets and brackets[0] and brackets[0].bracket.rank:
+        brackets.sort(key=lambda b: b.bracket.rank)
+        brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
 
-    rank = 1
-    standings = []
-    for i, bracket in enumerate(brackets):
-        if i == 0:
-            bracket.rank = rank
-            standings.append(bracket)
-        elif bracket.bracket.points == brackets[i - 1].bracket.points:
-            bracket.rank = rank
-            standings.append(bracket)
-        else:
-            rank = i + 1
-            bracket.rank = rank
-            standings.append(bracket)
-
-    return standings
+    return brackets
 
 
 def getBracketStandingsForYear(year):
@@ -172,24 +162,11 @@ def getBracketStandingsForYear(year):
 
         brackets.sort(key=lambda x: x.goal_difference)
 
+    brackets.sort(key=lambda b: b.bracket.name)
+    brackets.sort(key=lambda b: b.bracket.rank)
     brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
-    brackets.sort(key=lambda b: b.bracket.points, reverse=True)
 
-    rank = 1
-    standings = []
-    for i, bracket in enumerate(brackets):
-        if i == 0:
-            bracket.rank = rank
-            standings.append(bracket)
-        elif bracket.bracket.points == brackets[i - 1].bracket.points:
-            bracket.rank = rank
-            standings.append(bracket)
-        else:
-            rank = i + 1
-            bracket.rank = rank
-            standings.append(bracket)
-
-    return standings, baseCorrectBracket(bracket=correct)
+    return brackets, baseCorrectBracket(bracket=correct)
 
 
 def calculatePointsForBracket(bracket, correct, teams):
