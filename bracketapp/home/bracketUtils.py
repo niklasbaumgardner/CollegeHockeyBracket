@@ -31,7 +31,7 @@ class userBracket:
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         user = queries.getUser(id=self.bracket.user_id)
         try:
-            self.user_name = user.name
+            self.username = user.username
             self.user_id = user.id
         except:
             pass

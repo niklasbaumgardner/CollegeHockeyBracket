@@ -33,7 +33,7 @@
                 Congratulations to the winners
                 {% for w in winner.winner %}
                     <div class="fw-bold">
-                        {{ w.user_name }}
+                        {{ w.username }}
                     </div>
                 {% endfor %}
             </div>
@@ -41,13 +41,13 @@
             <div class="col-auto fs-3 border border-danger border-4 p-5">
                 There was a tie and <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> won the total goals tiebreak.
                 <br>
-                Congratulations to <span class="fw-bold">{{ winner.winner[0].user_name }}</span>!
+                Congratulations to <span class="fw-bold">{{ winner.winner[0].username }}</span>!
             </div>
         {% else %}
             <div class="col-auto fs-3 border border-danger border-4 p-5">
                 The winning bracket is <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> with <span class="fw-bold">{{ winner.winner[0].bracket.points }}</span> points.
                 <br>
-                Congratulations to <span class="fw-bold">{{ winner.winner[0].user_name }}</span>!
+                Congratulations to <span class="fw-bold">{{ winner.winner[0].username }}</span>!
             </div>
         {% endif %}
     </div>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-11">
                                 {{ bracket.bracket.name }}
-                                <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                                <p class="bracket-user-name m-0">{{ bracket.username }}</p>
                             </div>
                         </div>
                     </td>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="col-auto">
                                 {{ bracket.bracket.name }}
-                                <p class="bracket-user-name m-0">{{ bracket.user_name }}</p>
+                                <p class="bracket-user-name m-0">{{ bracket.username }}</p>
                             </div>
                         </div>
                     </td>

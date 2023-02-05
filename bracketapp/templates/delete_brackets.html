@@ -8,7 +8,7 @@
     <div class="row">
         {% for b in brackets %}
             <div class="col-3 m-5">
-                <a class="btn btn-outline-danger" href="{{ url_for('home.delete_bracket', id=b.bracket.id) }}">Delete {{ users[b.user_id].name }}'s<br>{{ b.name }}</a>
+                <a class="btn btn-outline-danger" href="{{ url_for('home.delete_bracket', id=b.bracket.id) }}">Delete {{ users[b.user_id].username }}'s<br>{{ b.name }}</a>
             </div>
         {% endfor %}
 

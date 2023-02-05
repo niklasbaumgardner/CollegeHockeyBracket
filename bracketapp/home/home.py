@@ -20,7 +20,7 @@ def index():
     standings = bracketUtils.getBracketStandings()
     winner = bracketUtils.getWinner(standings) if can_click else None
     return render_template(
-        "index.html", brackets=standings, can_click=can_click, winner=winner, len=len
+        "index.html", brackets=standings, can_click=can_click, winner=winner, len=len, year=queries.YEAR
     )
 
 
@@ -184,26 +184,6 @@ def edit_bracket():
                 )
 
     return redirect(url_for("home.view_bracket"))
-
-
-@home.route("/profile", methods=["GET", "POST"])
-@login_required
-def profile():
-    if request.method == "POST":
-        queries.updateUser(
-            current_user.get_id(),
-            f_name=request.form.get("fname"),
-            l_name=request.form.get("lname"),
-            email=request.form.get("email"),
-            password=request.form.get("password"),
-        )
-        return redirect(url_for("home.profile"))
-
-    user = queries.getUser(id=current_user.get_id())
-
-    f_name, l_name = user.name.split(" ")
-    email = user.email
-    return render_template("profile.html", f_name=f_name, l_name=l_name, email=email)
 
 
 @home.route("/admin", methods=["GET"])
@@ -385,7 +365,7 @@ def debugging():
     brackets = queries.getAllUserBrackets()
 
     for u in users:
-        string += f"{u.id} {u.name}<br>"
+        string += f"{u.id} {u.username}<br>"
 
     string += "<br>"
 

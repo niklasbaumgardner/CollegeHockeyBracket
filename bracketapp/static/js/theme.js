@@ -37,9 +37,7 @@ function setTheme(theme) {
 
 window.addEventListener("DOMContentLoaded", () => {
   let storedTheme = getTheme();
-  if (storedTheme !== "light") {
-    setTheme(storedTheme);
-  }
+  setTheme(storedTheme);
 
   let themeButtons = getThemeButtons();
 

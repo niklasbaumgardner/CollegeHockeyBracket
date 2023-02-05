@@ -6,19 +6,20 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <div class="container-fluid pt-5 mt-alerts d-flex justify-content-center">
-            {% for category, message in messages %}
-                <div class=" alert alert-primary alert-dismissible fade show w-25" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container d-flex justify-content-center">
+                {% for category, message in messages %}
+                    <div class="alert alert-absolute alert-dismissible {{ category }} fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
 
-    {% endif %}
-{% endwith %}
+        {% endif %}
+    {% endwith %}
+
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card">
@@ -39,7 +40,7 @@
                                 <input type="email" id="email" name="email" class="form-control" placeholder="Your email"/>
                             </div>
 
-                            <div class="form-outline mb-4">
+                            <div class="form-outline mb-2">
                                 <label class="form-label" for="password">Password</label>
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Your password"/>
                             </div>
@@ -50,13 +51,14 @@
                                     Remember me?
                                 </label>
                             </div>
-                            <p class="small"><a class="" href="{{ url_for('auth.password_request') }}">Forgot password?</a></p>
-                            <button class="btn btn-outline-primary px-5" type="submit">Login</button>
+
+                            <button class="btn btn-primary w-100 mb-2" type="submit">Login</button>
+
+                            <p class="small"><a href="{{ url_for('auth.password_request') }}">Forgot password?</a></p>
                         </div>
                     </form>
-                    <div>
-                        <p class="mb-0">Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign Up</a></p>
-                    </div>
+
+                    <p class="mb-0">Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign Up</a></p>
                 </div>
             </div>
         </div>

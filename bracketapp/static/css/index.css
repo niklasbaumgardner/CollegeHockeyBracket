@@ -1,3 +1,14 @@
+.alert-absolute {
+  position: absolute;
+  z-index: 1;
+  max-width: 500px;
+  margin: -50px -.25rem 0 -.25rem;
+}
+
+.display-block {
+  display: block !important;
+}
+
 :root[data-bs-theme="dark"] input {
   color-scheme: dark;
 }

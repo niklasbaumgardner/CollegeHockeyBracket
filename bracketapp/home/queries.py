@@ -26,18 +26,6 @@ def getAllUsers():
     return User.query.all()
 
 
-def updateUser(id, f_name, l_name, email, password):
-    user = getUser(id=id)
-
-    user.name = f_name + " " + l_name
-    user.email = email
-    user.password = bcrypt.generate_password_hash(password=password).decode("utf-8")
-
-    db.session.commit()
-
-    return user
-
-
 # UserBracket/UserGame queries
 def createUserBracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
