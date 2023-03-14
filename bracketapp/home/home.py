@@ -379,3 +379,24 @@ def debugging():
         string += f"{b.id} {b.user_id} {b.name}<br>"
 
     return string
+
+
+@home.route("/set_theme", methods=["GET"])
+@login_required
+def set_theme():
+    color = request.args.get("theme")
+    color = "dark" if color == "dark" else "light"
+    theme = queries.get_theme()
+    if theme:
+        queries.update_theme(theme=theme, color=color)
+    else:
+        queries.create_theme(color=color)
+    return {"success": True}
+
+
+@home.context_processor
+def utility_processor():
+    theme = queries.get_theme()
+    if theme:
+        return dict(theme=theme.color)
+    return dict(theme="")

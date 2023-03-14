@@ -17,6 +17,8 @@ function getThemeButtons() {
 function setTheme(theme) {
   theme = theme === "dark" ? "dark" : "light";
 
+  console.log("setting theme", theme);
+
   // Set html element theme
   document.documentElement.setAttribute("data-bs-theme", theme);
 
@@ -32,12 +34,15 @@ function setTheme(theme) {
   currentThemeButton.parentElement.parentElement.previousElementSibling.innerText = currentThemeButton.innerText.trim();
 
   storage.setItem("theme", theme);
+  fetch(THEME_URL + "?" + new URLSearchParams({ theme }));
 }
 
 
 window.addEventListener("DOMContentLoaded", () => {
-  let storedTheme = getTheme();
-  setTheme(storedTheme);
+  if (THEME === "") {
+    let storedTheme = getTheme();
+    setTheme(storedTheme);
+  }
 
   let themeButtons = getThemeButtons();
 

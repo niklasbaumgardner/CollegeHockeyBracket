@@ -6,13 +6,34 @@ from bracketapp.models import (
     Game,
     DefaultBracket,
     DefaultGame,
+    Theme,
 )
 from bracketapp.extensions import db
 from bracketapp.home import bracketUtils
-from bracketapp import bcrypt
+from flask_login import current_user
 import os
 
 YEAR = int(os.environ.get("YEAR"))
+
+
+# Theme queries
+def get_theme():
+    if current_user.is_authenticated:
+        theme = Theme.query.filter_by(user_id=current_user.get_id()).first()
+        if theme:
+            return theme
+    return None
+
+
+def create_theme(color):
+    theme = Theme(user_id=current_user.get_id(), color=color)
+    db.session.add(theme)
+    db.session.commit()
+
+
+def update_theme(theme, color):
+    theme.color = color
+    db.session.commit()
 
 
 # User queries

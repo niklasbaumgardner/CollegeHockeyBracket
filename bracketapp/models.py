@@ -79,3 +79,8 @@ class DefaultGame(db.Model):
     game_num = db.Column(db.String(10), nullable=False)
     home = db.Column(db.String(30), nullable=True)
     away = db.Column(db.String(30), nullable=True)
+
+class Theme(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    color = db.Column(db.String, nullable=False)
