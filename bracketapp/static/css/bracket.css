@@ -108,7 +108,13 @@ li {
 }
 
 .goals {
+  border-radius: 0 !important;
   border: none;
+  -moz-appearance: textfield;
+  text-align: right;
+  max-width: 50px;
+  min-width: 50px;
+  padding-right: 15px;
 }
 
 .round-details {

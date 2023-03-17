@@ -107,8 +107,13 @@
     }
 </script>
 
+<div class="pb-5 d-flex justify-content-center mx-0">
+    <div class="fs-1">
+        {{ year }} NCAA College Hockey Bracket
+    </div>
+</div>
 
-<div id="bracket" class="bg-body-secondary">
+<div id="bracket" class="border border-dark-subtle">
     <form action="{{ url_for('home.edit_bracket') }}" method="POST">
         <div class="row">
             <div>
@@ -232,7 +237,7 @@
                 </div>	<!-- END ROUND THREE -->
 
 
-                <div class="round-final">
+                <div class="round-final bg-body border border-dark-subtle p-3 my-auto">
                     <div class="final-round-grid">
                         <div class="top">
                             <div class="championship-grid">
@@ -255,12 +260,10 @@
                         </div>
                         <div class="bottom">
                             <div class="championship-grid">
-                                <p class="final-game-score-edit m-0">Final Game Score</p>
+                                <p class="final-game-score-edit m-0 fs-6">Final Game Score</p>
                                 <div>
-                                    <div class="team bg-body ">Winner goals</div>
-                                    <div class="team bg-body "><input name="w_goals" class="team bg-body goals" type="number" size="2" required value="{{ bracket.bracket.w_goals }}"></div>
-                                    <div class="team bg-body ">Loser goals</div>
-                                    <div class="team bg-body "><input name="l_goals" class="team bg-body goals" type="number" size="2" required value="{{ bracket.bracket.l_goals }}"></div>
+                                    <input name="w_goals" class="team bg-body goals" type="number" size="2" required value="{{ bracket.bracket.w_goals }}"> -
+                                    <input name="l_goals" class="team bg-body goals" type="number" size="2" required value="{{ bracket.bracket.l_goals }}">
                                 </div>
                             </div>
                         </div>
