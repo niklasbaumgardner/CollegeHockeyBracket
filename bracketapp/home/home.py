@@ -30,7 +30,6 @@ def standings():
         can_click=can_click,
         winner=winner,
         len=len,
-        year=queries.YEAR,
     )
 
 
@@ -404,3 +403,7 @@ def utility_processor():
     if theme:
         return dict(theme=theme.color)
     return dict(theme="")
+
+@home.context_processor
+def utility_processor():
+    return dict(year=queries.YEAR)
