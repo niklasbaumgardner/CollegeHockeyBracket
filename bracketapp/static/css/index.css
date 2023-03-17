@@ -31,3 +31,7 @@
   background-color: #1a1d20;
   cursor: pointer;
 }
+
+.dropdown-nb {
+  user-select: none;
+}
