@@ -16,10 +16,6 @@ def isAdmin():
 
 @home.route("/", methods=["GET"])
 def index():
-    if current_user.is_authenticated:
-        if CAN_EDIT_BRACKET:
-            return redirect(url_for("home.view_bracket"))
-
     return redirect(url_for("home.standings"))
 
 
@@ -139,13 +135,16 @@ def edit_bracket():
         return redirect(url_for("home.view_bracket"))
 
     if request.method == "GET":
-        default = bracketUtils.fullDefaultBracket()
-        bracket = queries.getUserBracketForUserId(user_id=current_user.get_id())
-        if bracket:
-            bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
-        else:
-            bracket = bracketUtils.createEmptyBracket()
-        return render_template("edit_bracket.html", bracket=bracket, default=default)
+        try:
+            default = bracketUtils.fullDefaultBracket()
+            bracket = queries.getUserBracketForUserId(user_id=current_user.get_id())
+            if bracket:
+                bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
+            else:
+                bracket = bracketUtils.createEmptyBracket()
+            return render_template("edit_bracket.html", bracket=bracket, default=default)
+        except:
+            return redirect(url_for("home.index"))
     elif request.method == "POST":
         existing_bracket = queries.getUserBracketForUserId(
             user_id=current_user.get_id()
@@ -316,6 +315,11 @@ def update_default():
                 home=request.form.get(f"game{i}-home"),
                 away=request.form.get(f"game{i}-away"),
             )
+
+        # create the correct bracket after creating the default
+        correct = queries.getCorrectBracket()
+        if not correct:
+            queries.createCorrectBracket()
 
     if request.method == "GET":
         try:
