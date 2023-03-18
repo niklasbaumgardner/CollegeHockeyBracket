@@ -22,6 +22,10 @@
   opacity: .5;
 }
 
+:root[data-bs-theme="dark"] .greyscale {
+  opacity: .25;
+}
+
 .table-hover > tbody > tr:hover {
   background-color: #ced4da;
   cursor: pointer;
