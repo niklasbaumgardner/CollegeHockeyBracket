@@ -98,7 +98,6 @@ li {
 .incorrect {
   color: red;
   text-decoration-line: line-through;
-  text-decoration-thickness: 2px;
   background-color: rgb(255, 0, 0, .1) !important;
 }
 
