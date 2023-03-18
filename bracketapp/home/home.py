@@ -64,8 +64,17 @@ def view_archive_bracket(year, id):
     default = bracketUtils.fullDefaultBracket(year=year)
     correct = bracketUtils.fullCorrectBracket(year=year)
 
+    mine = "active" if current_user.get_id() == str(bracket.user_id) else ""
+
     return render_template(
-        "view_bracket.html", default=default, correct=correct, bracket=bracket
+        "view_bracket.html",
+        mine=mine,
+        correct_json=correct.tojson(),
+        default_json=default.tojson(),
+        bracket_json=bracket.tojson(),
+        bracket_winner_img=bracket.img_url,
+        correct_winner_img=correct.img_url,
+        name=bracket.bracket.name,
     )
 
 
@@ -95,7 +104,9 @@ def view_bracket(id):
     except:
         correct = None
 
-    if not bracket:
+    if not bracket and CAN_EDIT_BRACKET and current_user.is_authenticated():
+        return redirect(url_for("home.edit_bracket"))
+    elif not bracket:
         return redirect(url_for("home.index"))
 
     mine = "active" if current_user_id == str(bracket.user_id) else ""
@@ -104,11 +115,14 @@ def view_bracket(id):
 
     return render_template(
         "view_bracket.html",
-        default=default,
-        correct=correct,
-        bracket=bracket,
         can_edit=CAN_EDIT_BRACKET,
         mine=mine,
+        correct_json=correct.tojson(),
+        default_json=default.tojson(),
+        bracket_json=bracket.tojson(),
+        bracket_winner_img=bracket.img_url,
+        correct_winner_img=correct.img_url,
+        name=bracket.bracket.name,
     )
 
 
@@ -138,10 +152,14 @@ def edit_bracket():
             default = bracketUtils.fullDefaultBracket()
             bracket = queries.getUserBracketForUserId(user_id=current_user.get_id())
             if bracket:
-                bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
+                bracket = bracketUtils.userBracket(
+                    bracket_id=bracket.id, bracket=bracket
+                )
             else:
                 bracket = bracketUtils.createEmptyBracket()
-            return render_template("edit_bracket.html", bracket=bracket, default=default)
+            return render_template(
+                "edit_bracket.html", bracket=bracket, default=default
+            )
         except:
             return redirect(url_for("home.index"))
     elif request.method == "POST":
@@ -403,6 +421,7 @@ def utility_processor():
     if theme:
         return dict(theme=theme.color)
     return dict(theme="")
+
 
 @home.context_processor
 def utility_processor():
