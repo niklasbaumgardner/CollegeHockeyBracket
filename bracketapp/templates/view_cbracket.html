@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div id="bracket" class="bg-body-secondary">
+    <div id="bracket" class="border border-dark-subtle">
         <div class="row">
             <div class="cbracket-grid">
                 <div class="round-one-left round-one">
@@ -57,22 +57,18 @@
                 </div>	<!-- END ROUND THREE -->
     
     
-                <div class="round-final">
+                <div class="round-final bg-body border border-dark-subtle p-3 my-auto">
                     <div class="final-round-grid">
                         <div class="top">
                             <div class="row justify-content-center">
                                 <div class="champion-grid">
-                                    <div class="round-details champion-top">champion</div>
-                                    <div class="row justify-content-center champion matchup champion-middle bg-body">
-                                        <img class="winner-img" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
-                                        <li class="team bg-body center-text">{{ correct.bracket.winner }}</li>
-                                    </div>
+                                    <div class="round-details champion-top">National Champion</div>
+                                    <img class="winner-img" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="bottom">
                             <div class="championship-grid">
-                                <div class="round-details">championship</div>
                                 <ul class ="matchup">
                                     <li class="team bg-body ">{{ correct.games[12].winner }}<span class="score">{{ correct.games[14].h_goals }}</span></li>
                                     <li class="team bg-body ">{{ correct.games[13].winner }}<span class="score">{{ correct.games[14].a_goals }}</span></li>
