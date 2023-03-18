@@ -18,7 +18,7 @@
 }
 
 .greyscale {
-  filter: grayscale(1);
+  filter: grayscale(.5);
   opacity: .5;
 }
 
