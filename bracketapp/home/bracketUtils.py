@@ -38,6 +38,27 @@ class userBracket:
         self.goal_difference = 0
         self.img_url = assignImage(self.bracket)
 
+    def tojson(self):
+        object = dict()
+        object["id"] = self.bracket.id
+        object["name"] = self.bracket.name
+        object["points"] = self.bracket.points
+        object["max_points"] = self.bracket.max_points
+        object["rank"] = self.bracket.rank
+        object["winner"] = self.bracket.winner
+        object["w_goals"] = self.bracket.w_goals
+        object["l_goals"] = self.bracket.l_goals
+        object["games"] = dict()
+
+        for game in self.games:
+            game_object = dict()
+            game_object["game_num"] = game.game_num
+            game_object["winner"] = game.winner
+
+            object["games"][game.game_num] = game_object
+
+        return object
+
 
 class baseCorrectBracket:
     def __init__(self, year=None, bracket=None):
@@ -62,6 +83,26 @@ class fullCorrectBracket:
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         self.img_url = assignImage(self.bracket)
 
+    def tojson(self):
+        object = dict()
+        object["id"] = self.bracket.id
+        object["winner"] = self.bracket.winner
+        object["w_goals"] = self.bracket.w_goals
+        object["l_goals"] = self.bracket.l_goals
+        object["games"] = dict()
+
+        for game in self.games:
+            game_object = dict()
+            game_object["game_num"] = game.game_num
+            game_object["winner"] = game.winner
+            game_object["loser"] = game.loser
+            game_object["h_goals"] = game.h_goals
+            game_object["a_goals"] = game.a_goals
+
+            object["games"][game.game_num] = game_object
+
+        return object
+
 
 class fullDefaultBracket:
     def __init__(self, year=None, bracket=None, games=None):
@@ -76,6 +117,22 @@ class fullDefaultBracket:
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
 
+    def tojson(self):
+        object = dict()
+        object["id"] = self.bracket.id
+        object["year"] = self.bracket.year
+        object["games"] = dict()
+
+        for game in self.games:
+            game_object = dict()
+            game_object["game_num"] = game.game_num
+            game_object["home"] = game.home
+            game_object["away"] = game.away
+
+            object["games"][game.game_num] = game_object
+
+        return object
+
 
 class bracketWinner:
     def __init__(self, winning_bracket, tie):
@@ -85,7 +142,7 @@ class bracketWinner:
 
 def assignImage(bracket):
     if not bracket or not bracket.winner:
-        return
+        return ""
     url_list = bracket.winner.split(" ")
     url = "".join(url_list[1:]).replace(".", "")
     return url
