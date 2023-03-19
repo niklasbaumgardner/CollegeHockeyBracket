@@ -39,3 +39,27 @@
 .dropdown-nb {
   user-select: none;
 }
+
+.bg-nb {
+  background-color: #eeeeee;
+}
+
+:root[data-bs-theme="dark"] .bg-nb {
+  background-color: #0d1117;
+}
+
+.bg-body-secondary-nb {
+  background-color: #f1f1f1;
+}
+
+:root[data-bs-theme="dark"] .bg-body-secondary-nb {
+  background-color: #22272e;
+}
+
+.bg-body-nb {
+  background-color: #ffffff;
+}
+
+:root[data-bs-theme="dark"] .bg-body-nb {
+  background-color: #161b22;
+}

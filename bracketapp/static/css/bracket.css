@@ -34,7 +34,7 @@ li {
 .score {
   font-size: 11px;
   float: right;
-  color: #2C7399;
+  color: #296ccb;
   font-weight: bold;
 }
 
@@ -47,16 +47,25 @@ li {
   min-width: 115px;
   max-width: 175px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-color: #adb5db !important;
+  border-left: 1px solid;
+  border-right: 1px solid;
+}
+
+:root[data-bs-theme="dark"] .team {
+  border-color: #343a40 !important;
 }
 
 .team:first-child {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  border-top: 1px solid;
 }
 
 .team:last-child {
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+  border-bottom: 1px solid;
 }
 
 .center-text {
@@ -107,10 +116,11 @@ li {
 }
 
 .goals {
+  padding: 0 !important;
   border-radius: 0 !important;
-  border: none;
+  border: 1px solid;
   -moz-appearance: textfield;
-  text-align: right;
+  text-align: center;
   max-width: 50px;
   min-width: 50px;
   padding-right: 15px;

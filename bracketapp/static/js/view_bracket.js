@@ -178,7 +178,9 @@ class Matchup {
       }
       this.topWinner = createElement({
         type: "li",
-        classString: "team bg-body bg-body-secondary" + additionalClassString,
+        classString:
+          "team bg-body-secondary-nb" +
+          additionalClassString,
         content: this.top.game.winner,
       });
       this.element.appendChild(this.topWinner);
@@ -187,7 +189,8 @@ class Matchup {
     // create the correct matchup
     this.home = createElement({
       type: "li",
-      classString: "team bg-body",
+      classString:
+        "team bg-body-nb",
       content: this.isDefaultGame ? this.default.home : this.top.correct.winner,
     });
     this.element.appendChild(this.home);
@@ -201,7 +204,8 @@ class Matchup {
 
     this.away = createElement({
       type: "li",
-      classString: "team bg-body",
+      classString:
+        "team bg-body-nb",
       content: this.isDefaultGame
         ? this.default.away
         : this.bottom.correct.winner,
@@ -226,7 +230,9 @@ class Matchup {
       }
       this.bottomWinner = createElement({
         type: "li",
-        classString: "team bg-body bg-body-secondary" + additionalClassString,
+        classString:
+          "team bg-body-secondary-nb" +
+          additionalClassString,
         content: this.bottom.game.winner,
       });
       this.element.appendChild(this.bottomWinner);
