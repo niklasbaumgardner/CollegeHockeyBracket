@@ -10,6 +10,17 @@ const ROUND_FINAL_SELECTOR = "round-final";
 
 const GAME_NUM_TO_SELECTOR = {};
 
+function teamNameToSVGFileName(teamName) {
+  if (!teamName) {
+    return "";
+  }
+
+  let filename = teamName.substring(2);
+  filename = filename.replaceAll(" ", "");
+  filename = filename.replaceAll(".", "");
+  return `/static/images/${filename}.svg`;
+}
+
 class Bracket {
   constructor() {
     this.created = false;
@@ -185,11 +196,28 @@ class Matchup {
     }
 
     // create the correct matchup
+    let homeTeam = this.isDefaultGame
+      ? this.default.home
+      : this.top.correct.winner;
     this.home = createElement({
       type: "li",
       classString: "team bg-body-nb",
-      content: this.isDefaultGame ? this.default.home : this.top.correct.winner,
     });
+
+    if (homeTeam) {
+      this.home.appendChild(
+        createElement({
+          type: "img",
+          classString: "team-img",
+          src: teamNameToSVGFileName(homeTeam),
+          alt: homeTeam,
+        })
+      );
+      this.home.appendChild(
+        createElement({ type: "span", content: " " + homeTeam })
+      );
+    }
+
     this.element.appendChild(this.home);
     this.home.appendChild(
       createElement({
@@ -199,14 +227,28 @@ class Matchup {
       })
     );
 
+    let awayTeam = this.isDefaultGame
+      ? this.default.away
+      : this.bottom.correct.winner;
     this.away = createElement({
       type: "li",
       classString: "team bg-body-nb",
-      content: this.isDefaultGame
-        ? this.default.away
-        : this.bottom.correct.winner,
     });
-    console.log("goals:", this.correct.h_goals, this.correct.a_goals);
+
+    if (awayTeam) {
+      this.away.appendChild(
+        createElement({
+          type: "img",
+          classString: "team-img",
+          src: teamNameToSVGFileName(awayTeam),
+          alt: awayTeam,
+        })
+      );
+      this.away.appendChild(
+        createElement({ type: "span", content: " " + awayTeam })
+      );
+    }
+
     this.element.appendChild(this.away);
     this.away.appendChild(
       createElement({
