@@ -68,6 +68,10 @@ li {
   border-bottom: 1px solid;
 }
 
+.bracket-grid-edit .team > label {
+  width: 100%;
+}
+
 .center-text {
   text-align: center;
 }
