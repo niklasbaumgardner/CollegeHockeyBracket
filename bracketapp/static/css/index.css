@@ -63,3 +63,12 @@
 :root[data-bs-theme="dark"] .bg-body-nb {
   background-color: #161b22;
 }
+
+.time-list {
+  display: inline-block;
+  list-style-type: none;
+}
+
+.time {
+  display: block;
+}
