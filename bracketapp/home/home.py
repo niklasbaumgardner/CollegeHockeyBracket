@@ -131,14 +131,20 @@ def view_cbracket(year):
     if year >= queries.YEAR and not isAdmin():
         return redirect(url_for("home.archive"))
 
-    bracket = bracketUtils.fullCorrectBracket(year=year)
+    correct = bracketUtils.fullCorrectBracket(year=year)
 
-    if not bracket:
+    if not correct:
         return redirect(url_for("home.archive"))
 
     default = bracketUtils.fullDefaultBracket(year=year)
 
-    return render_template("view_cbracket.html", correct=bracket, default=default)
+    return render_template(
+        "view_cbracket.html",
+        correct_json=correct.tojson(),
+        default_json=default.tojson(),
+        correct=correct,
+        default=default,
+    )
 
 
 @home.route("/edit_bracket", methods=["GET", "POST"])

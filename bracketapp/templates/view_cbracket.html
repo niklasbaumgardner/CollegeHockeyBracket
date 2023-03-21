@@ -3,8 +3,13 @@
 {% block title %}{{ correct.bracket.year }} Final Bracket{% endblock title %}
 
 
-
 {% block content %}
+<script>
+    const CORRECT = {{ correct_json|tojson }};
+    const DEFAULT = {{ default_json|tojson }};
+</script>
+<script src="/static/js/createElement.js"></script>
+
     <div class="pb-5 d-flex justify-content-center mx-0">
         <div class="fs-1">
             {{ correct.bracket.year }} NCAA College Hockey Bracket Final
@@ -16,112 +21,44 @@
             <div class="cbracket-grid">
                 <div class="round-one-left round-one">
                     <div class="round-details">Round 1</div>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[0].home }}<span class="score">{{ correct.games[0].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[0].away }}<span class="score">{{ correct.games[0].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[1].home }}<span class="score">{{ correct.games[1].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[1].away }}<span class="score">{{ correct.games[1].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[2].home }}<span class="score">{{ correct.games[2].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[2].away }}<span class="score">{{ correct.games[2].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[3].home }}<span class="score">{{ correct.games[3].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[3].away }}<span class="score">{{ correct.games[3].a_goals }}</span></li>
-                    </ul>
                 </div>	<!-- END ROUND ONE -->
-    
-    
+
+
                 <div class="round-two-left round-two">
                     <div class="round-details">Round 2</div>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ correct.games[0].winner }}<span class="score">{{ correct.games[8].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ correct.games[1].winner }}<span class="score">{{ correct.games[8].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ correct.games[2].winner }}<span class="score">{{ correct.games[9].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ correct.games[3].winner }}<span class="score">{{ correct.games[9].a_goals }}</span></li>
-                    </ul>
                 </div>	<!-- END ROUND TWO -->
-    
-    
+
+
                 <div class="round-three-left round-three">
                     <div class="round-details">Round 3</div>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ correct.games[8].winner }}<span class="score">{{ correct.games[12].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ correct.games[9].winner }}<span class="score">{{ correct.games[12].a_goals }}</span></li>
-                    </ul>
                 </div>	<!-- END ROUND THREE -->
-    
-    
+
+
                 <div class="round-final bg-body-nb border border-dark-subtle p-3 my-auto">
-                    <div class="final-round-grid">
-                        <div class="top">
-                            <div class="row justify-content-center">
-                                <div class="champion-grid">
-                                    <div class="round-details champion-top">National Champion</div>
-                                    <img class="winner-img" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="championship-grid">
-                                <ul class ="matchup">
-                                    <li class="team bg-body-nb ">{{ correct.games[12].winner }}<span class="score">{{ correct.games[14].h_goals }}</span></li>
-                                    <li class="team bg-body-nb ">{{ correct.games[13].winner }}<span class="score">{{ correct.games[14].a_goals }}</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-    
-    
+
+
                 <div class="round-three-right round-three">
                     <div class="round-details">Round 3</div>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ correct.games[10].winner }}<span class="score">{{ correct.games[13].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ correct.games[11].winner }}<span class="score">{{ correct.games[13].a_goals }}</span></li>
-                    </ul>
                 </div>	<!-- END ROUND THREE -->
-    
-    
+
+
                 <div class="round-two-right round-two">
                     <div class="round-details">Round 2</div>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ correct.games[4].winner }}<span class="score">{{ correct.games[10].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ correct.games[5].winner }}<span class="score">{{ correct.games[10].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ correct.games[6].winner }}<span class="score">{{ correct.games[11].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ correct.games[7].winner }}<span class="score">{{ correct.games[11].a_goals }}</span></li>
-                    </ul>
                 </div>	<!-- END ROUND TWO -->
-    
-    
+
+
                 <div class="round-one-right round-one">
                     <div class="round-details">Round 1</div>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[4].home }}<span class="score">{{ correct.games[4].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[4].away }}<span class="score">{{ correct.games[4].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[5].home }}<span class="score">{{ correct.games[5].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[5].away }}<span class="score">{{ correct.games[5].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[6].home }}<span class="score">{{ correct.games[6].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[6].away }}<span class="score">{{ correct.games[6].a_goals }}</span></li>
-                    </ul>
-                    <ul class="matchup">
-                        <li class="team bg-body-nb ">{{ default.games[7].home }}<span class="score">{{ correct.games[7].h_goals }}</span></li>
-                        <li class="team bg-body-nb ">{{ default.games[7].away }}<span class="score">{{ correct.games[7].a_goals }}</span></li>
-                    </ul>
                 </div>	<!-- END ROUND ONE -->
             </div>
         </div>
     </div>
+
+    <script src="/static/js/view_cbracket.js"></script>
+    <script>
+        const bracket = new Bracket();
+        bracket.render();
+    </script>
 
 {% endblock content %}
