@@ -142,8 +142,6 @@ def view_cbracket(year):
         "view_cbracket.html",
         correct_json=correct.tojson(),
         default_json=default.tojson(),
-        correct=correct,
-        default=default,
     )
 
 
@@ -164,7 +162,9 @@ def edit_bracket():
             else:
                 bracket = bracketUtils.createEmptyBracket()
             return render_template(
-                "edit_bracket.html", bracket=bracket, default=default
+                "edit_bracket.html",
+                bracket=bracket,
+                default=default,
             )
         except:
             return redirect(url_for("home.index"))

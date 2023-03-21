@@ -1,26 +1,5 @@
 "use strict";
 
-const ROUND_ONE_LEFT_SELECTOR = "round-one-left";
-const ROUND_ONE_RIGHT_SELECTOR = "round-one-right";
-const ROUND_TWO_LEFT_SELECTOR = "round-two-left";
-const ROUND_TWO_RIGHT_SELECTOR = "round-two-right";
-const ROUND_THREE_LEFT_SELECTOR = "round-three-left";
-const ROUND_THREE_RIGHT_SELECTOR = "round-three-right";
-const ROUND_FINAL_SELECTOR = "round-final";
-
-const GAME_NUM_TO_SELECTOR = {};
-
-function teamNameToSVGFileName(teamName) {
-  if (!teamName) {
-    return "";
-  }
-
-  let filename = teamName.substring(2);
-  filename = filename.replaceAll(" ", "");
-  filename = filename.replaceAll(".", "");
-  return `/static/images/${filename}.svg`;
-}
-
 class Bracket {
   constructor() {
     this.created = false;
