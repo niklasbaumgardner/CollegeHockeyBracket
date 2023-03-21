@@ -1,5 +1,16 @@
 "use strict";
 
+function teamNameToSVGFileName(teamName) {
+  if (!teamName) {
+    return "";
+  }
+
+  let filename = teamName.substring(2);
+  filename = filename.replaceAll(" ", "");
+  filename = filename.replaceAll(".", "");
+  return `/static/images/${filename}.svg`;
+}
+
 function createElement(options) {
   if (!options.type) {
     options.type = "div";
@@ -89,6 +100,10 @@ function createElement(options) {
 
   if (options.alt) {
     ele.alt = options.alt;
+  }
+
+  if (options.checked) {
+    ele.checked = options.checked;
   }
 
   return ele;

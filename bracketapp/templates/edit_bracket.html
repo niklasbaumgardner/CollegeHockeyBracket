@@ -6,105 +6,10 @@
 
 
 {% block content %}
+<script src="/static/js/createElement.js"></script>
 <script>
-    class Node {
-        constructor(ele, next, top, bottom) {
-            this.ele = ele;
-            this.next = next;
-            this.top = top;
-            this.bottom = bottom;
-
-            if (this.top && this.bottom) {
-                this.top.next = this;
-                this.bottom.next = this;
-            }
-
-            if (this.teamName === "None") {
-                this.setTeamName("");
-            }
-        }
-
-        get teamName() {
-            return this.ele.querySelector("input").value;
-        }
-
-        setTeamName(teamName) {
-            this.ele.querySelector("input").value = teamName;
-            this.setUnchecked();
-
-            let textNode = this.ele.querySelector("label").childNodes[2];
-            if (textNode) {
-                textNode.nodeValue = ` ${teamName}`;
-            }
-            else {
-                this.ele.innerHTML += ` ${teamName}`;
-            }
-        }
-
-        setUnchecked() {
-            this.ele.querySelector("input").checked = false;
-        }
-
-        setNullValue() {
-            this.setTeamName("");
-        }
-    }
-
-    function clearNext(node, exclusions) {
-        if (node && exclusions.has(node.teamName)) {
-            node.setUnchecked();
-            node.setNullValue();
-
-            clearNext(node.next, exclusions);
-        }
-    }
-
-    function nodeClick(id) {
-        let node = NODES[id];
-
-        if (!node.teamName) {
-            return node.setUnchecked();
-        }
-
-        for (let ele of node.ele.parentElement.children) {
-            ele.classList.remove("red-border");
-        }
-
-        let next = node.next;
-
-        if (next) {
-            if (node.teamName === next.teamName) {
-                return;
-            }
-
-            next.setTeamName(node.teamName)
-
-            let exclusions = new Set([next.top.teamName, next.bottom.teamName]);
-            clearNext(next.next, exclusions);
-        }
-    }
-
-    function checkAllInputs(event) {
-        event.preventDefault();
-        let failed = false;
-        for (let i = 1; i < 16; i++) {
-            let [ input1, input2 ] = document.querySelectorAll(`input[type='radio'][name='game${i}']`);
-            // console.log(inputs);
-            if (!input1.checked && !input2.checked) {
-                console.log(input1.name);
-                input1.parentElement.parentElement.classList.add('red-border');
-                input2.parentElement.parentElement.classList.add('red-border');
-                failed = true;
-            } else {
-                input1.parentElement.parentElement.classList.remove('red-border');
-                input2.parentElement.parentElement.classList.remove('red-border');
-            }
-        }
-
-        if (!failed) {
-            document.querySelector("#updateBracketInput").click();
-        }
-    }
+    const DEFAULT = {{ default_json|tojson }};
+    const BRACKET = {{ bracket_json|tojson }};
 </script>
 
 <div class="pb-5 d-flex justify-content-center mx-0">
@@ -130,13 +35,15 @@
                         <li id="g1t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g1t1')" type="radio" name="game1" value="{{ default.games[0].home }}" required {% if bracket.games[0].winner == default.games[0].home %}checked{% endif %}>
-                                {{ default.games[0].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[0].home }}</span>
                             </label>
                         </li>
                         <li id="g1t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g1t2')" type="radio" name="game1" value="{{ default.games[0].away }}" required {% if bracket.games[0].winner == default.games[0].away %}checked{% endif %}>
-                                {{ default.games[0].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[0].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -144,13 +51,15 @@
                         <li id="g2t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g2t1')" type="radio" name="game2" value="{{ default.games[1].home }}" required {% if bracket.games[1].winner == default.games[1].home %}checked{% endif %}>
-                                {{ default.games[1].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[1].home }}</span>
                             </label>
                         </li>
                         <li id="g2t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g2t2')" type="radio" name="game2" value="{{ default.games[1].away }}" required {% if bracket.games[1].winner == default.games[1].away %}checked{% endif %}>
-                                {{ default.games[1].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[1].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -158,13 +67,15 @@
                         <li id="g3t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g3t1')" type="radio" name="game3" value="{{ default.games[2].home }}" required {% if bracket.games[2].winner == default.games[2].home %}checked{% endif %}>
-                                {{ default.games[2].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[2].home }}</span>
                             </label>
                         </li>
                         <li id="g3t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g3t2')" type="radio" name="game3" value="{{ default.games[2].away }}" required {% if bracket.games[2].winner == default.games[2].away %}checked{% endif %}>
-                                {{ default.games[2].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[2].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -172,13 +83,15 @@
                         <li id="g4t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g4t1')" type="radio" name="game4" value="{{ default.games[3].home }}" required {% if bracket.games[3].winner == default.games[3].home %}checked{% endif %}>
-                                {{ default.games[3].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[3].home }}</span>
                             </label>
                         </li>
                         <li id="g4t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g4t2')" type="radio" name="game4" value="{{ default.games[3].away }}" required {% if bracket.games[3].winner == default.games[3].away %}checked{% endif %}>
-                                {{ default.games[3].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[3].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -191,13 +104,15 @@
                         <li id="g9t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g9t1')" type="radio" name="game9" value="{{ bracket.games[0].winner }}" required {% if bracket.games[0].winner == bracket.games[8].winner %}checked{% endif %}>
-                                {{ bracket.games[0].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[0].winner }}</span>
                             </label>
                         </li>
                         <li id="g9t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g9t2')" type="radio" name="game9" value="{{ bracket.games[1].winner }}" required {% if bracket.games[1].winner == bracket.games[8].winner %}checked{% endif %}>
-                                {{ bracket.games[1].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[1].winner }}</span>
                             </label>
                         </li>
                     </ul>
@@ -205,13 +120,15 @@
                         <li id="g10t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g10t1')" type="radio" name="game10" value="{{ bracket.games[2].winner }}" required {% if bracket.games[2].winner == bracket.games[9].winner %}checked{% endif %}>
-                                {{ bracket.games[2].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[2].winner }}</span>
                             </label>
                         </li>
                         <li id="g10t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g10t2')" type="radio" name="game10" value="{{ bracket.games[3].winner }}" required {% if bracket.games[3].winner == bracket.games[9].winner %}checked{% endif %}>
-                                {{ bracket.games[3].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[3].winner }}</span>
                             </label>
                         </li>
                     </ul>
@@ -224,13 +141,15 @@
                         <li id="g13t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g13t1')" type="radio" name="game13" value="{{ bracket.games[8].winner }}" required {% if bracket.games[8].winner == bracket.games[12].winner %}checked{% endif %}>
-                                {{ bracket.games[8].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[8].winner }}</span>
                             </label>
                         </li>
                         <li id="g13t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g13t2')" type="radio" name="game13" value="{{ bracket.games[9].winner }}" required {% if bracket.games[9].winner == bracket.games[12].winner %}checked{% endif %}>
-                                {{ bracket.games[9].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[9].winner }}</span>
                             </label>
                         </li>
                     </ul>
@@ -246,13 +165,15 @@
                                     <li id="g15t1" class="team bg-body-nb ">
                                         <label>
                                             <input onclick="nodeClick('g15t1')" type="radio" name="game15" value="{{ bracket.games[12].winner }}" required {% if bracket.games[12].winner == bracket.games[14].winner %}checked{% endif %}>
-                                            {{ bracket.games[12].winner }}
+                                            <img class="team-img" src="" alt="">
+                                            <span>{{ bracket.games[12].winner }}</span>
                                         </label>
                                     </li>
                                     <li id="g15t2" class="team bg-body-nb ">
                                         <label>
                                             <input onclick="nodeClick('g15t2')" type="radio" name="game15" value="{{ bracket.games[13].winner }}" required {% if bracket.games[13].winner == bracket.games[14].winner %}checked{% endif %}>
-                                            {{ bracket.games[13].winner }}
+                                            <img class="team-img" src="" alt="">
+                                            <span>{{ bracket.games[13].winner }}</span>
                                         </label>
                                     </li>
                                 </ul>
@@ -277,13 +198,15 @@
                         <li id="g14t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g14t1')" type="radio" name="game14" value="{{ bracket.games[10].winner }}" required {% if bracket.games[10].winner == bracket.games[13].winner %}checked{% endif %}>
-                                {{ bracket.games[10].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[10].winner }}</span>
                             </label>
                         </li>
                         <li id="g14t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g14t2')" type="radio" name="game14" value="{{ bracket.games[11].winner }}" required {% if bracket.games[11].winner == bracket.games[13].winner %}checked{% endif %}>
-                                {{ bracket.games[11].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[11].winner }}</span>
                             </label>
                         </li>
                     </ul>
@@ -296,13 +219,15 @@
                         <li id="g11t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g11t1')" type="radio" name="game11" value="{{ bracket.games[4].winner }}" required {% if bracket.games[4].winner == bracket.games[10].winner %}checked{% endif %}>
-                                {{ bracket.games[4].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[4].winner }}</span>
                             </label>
                         </li>
                         <li id="g11t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g11t2')" type="radio" name="game11" value="{{ bracket.games[5].winner }}" required {% if bracket.games[5].winner == bracket.games[10].winner %}checked{% endif %}>
-                                {{ bracket.games[5].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[5].winner }}</span>
                             </label>
                         </li>
                     </ul>
@@ -310,13 +235,15 @@
                         <li id="g12t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g12t1')" type="radio" name="game12" value="{{ bracket.games[6].winner }}" required {% if bracket.games[6].winner == bracket.games[11].winner %}checked{% endif %}>
-                                {{ bracket.games[6].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[6].winner }}</span>
                             </label>
                         </li>
                         <li id="g12t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g12t2')" type="radio" name="game12" value="{{ bracket.games[7].winner }}" required {% if bracket.games[7].winner == bracket.games[11].winner %}checked{% endif %}>
-                                {{ bracket.games[7].winner }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ bracket.games[7].winner }}</span>
                             </label>
                         </li>
                     </ul>
@@ -329,13 +256,15 @@
                         <li id="g5t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g5t1')" type="radio" name="game5" value="{{ default.games[4].home }}" required {% if bracket.games[4].winner == default.games[4].home %}checked{% endif %}>
-                                {{ default.games[4].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[4].home }}</span>
                             </label>
                         </li>
                         <li id="g5t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g5t2')" type="radio" name="game5" value="{{ default.games[4].away }}" required {% if bracket.games[4].winner == default.games[4].away %}checked{% endif %}>
-                                {{ default.games[4].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[4].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -343,13 +272,15 @@
                         <li id="g6t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g6t1')" type="radio" name="game6" value="{{ default.games[5].home }}" required {% if bracket.games[5].winner == default.games[5].home %}checked{% endif %}>
-                                {{ default.games[5].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[5].home }}</span>
                             </label>
                         </li>
                         <li id="g6t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g6t2')" type="radio" name="game6" value="{{ default.games[5].away }}" required {% if bracket.games[5].winner == default.games[5].away %}checked{% endif %}>
-                                {{ default.games[5].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[5].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -357,13 +288,15 @@
                         <li id="g7t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g7t1')" type="radio" name="game7" value="{{ default.games[6].home }}" required {% if bracket.games[6].winner == default.games[6].home %}checked{% endif %}>
-                                {{ default.games[6].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[6].home }}</span>
                             </label>
                         </li>
                         <li id="g7t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g7t2')" type="radio" name="game7" value="{{ default.games[6].away }}" required {% if bracket.games[6].winner == default.games[6].away %}checked{% endif %}>
-                                {{ default.games[6].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[6].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -371,13 +304,15 @@
                         <li id="g8t1" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g8t1')" type="radio" name="game8" value="{{ default.games[7].home }}" required {% if bracket.games[7].winner == default.games[7].home %}checked{% endif %}>
-                                {{ default.games[7].home }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[7].home }}</span>
                             </label>
                         </li>
                         <li id="g8t2" class="team bg-body-nb ">
                             <label>
                                 <input onclick="nodeClick('g8t2')" type="radio" name="game8" value="{{ default.games[7].away }}" required {% if bracket.games[7].winner == default.games[7].away %}checked{% endif %}>
-                                {{ default.games[7].away }}
+                                <img class="team-img" src="" alt="">
+                                <span>{{ default.games[7].away }}</span>
                             </label>
                         </li>
                     </ul>
@@ -399,7 +334,17 @@
     </form>
 </div>
 
+<script src="/static/js/edit_bracket.js"></script>
 <script>
+    // const bracket = new Bracket();
+    // bracket.render();
+
+    for (let img of document.querySelectorAll(".team-img")) {
+        let teamName = img.previousElementSibling.value;
+        img.src = teamNameToSVGFileName(teamName);
+        img.alt = teamName;
+    }
+
     let g15t1 = document.getElementById("g15t1");
     let g15t2 = document.getElementById("g15t2");
 
@@ -555,6 +500,8 @@
         g15t1: g15t1Node,
         g15t2: g15t2Node,
     };
+
+    document.querySelector("form").reset();
 </script>
 
 {% endblock content %}

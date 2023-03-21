@@ -18,10 +18,6 @@ li {
   background-color: rgb(26, 26, 26) !important;
 }
 
-.red-border {
-  border: 1px red solid;
-}
-
 .matchup {
   margin: 0;
   width: 100%;
@@ -53,6 +49,10 @@ li {
 
 :root[data-bs-theme="dark"] .team {
   border-color: #343a40 !important;
+}
+
+.red-border {
+  border: 1px red solid !important;
 }
 
 .team:first-child {
@@ -271,5 +271,4 @@ li {
 
 .team-img {
   width: 18px;
-  height: 18px;
 }
