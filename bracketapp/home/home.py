@@ -75,6 +75,7 @@ def view_archive_bracket(year, id):
         bracket_winner_img=bracket.img_url,
         correct_winner_img=correct.img_url,
         name=bracket.bracket.name,
+        year=bracket.bracket.year,
     )
 
 
@@ -123,6 +124,7 @@ def view_bracket(id):
         bracket_winner_img=bracket.img_url,
         correct_winner_img=correct.img_url,
         name=bracket.bracket.name,
+        year=bracket.bracket.year,
     )
 
 
@@ -142,6 +144,7 @@ def view_cbracket(year):
         "view_cbracket.html",
         correct_json=correct.tojson(),
         default_json=default.tojson(),
+        year=correct.bracket.year,
     )
 
 
@@ -431,4 +434,4 @@ def utility_processor():
 
 @home.context_processor
 def utility_processor():
-    return dict(year=queries.YEAR)
+    return dict(current_year=queries.YEAR)
