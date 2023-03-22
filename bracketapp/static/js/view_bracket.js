@@ -354,7 +354,7 @@ class FinalMatch extends Matchup {
 
     let p = createElement({
       type: "p",
-      classString: "center-text fs-6",
+      classString: "center-text fs-6 display-inline-flex",
     });
     this.bottomColRight.appendChild(p);
 

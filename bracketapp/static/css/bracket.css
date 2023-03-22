@@ -11,7 +11,7 @@ li {
 
 #bracket {
   font-size: 12px;
-  padding: 20px 10px;
+  padding: 20px 12px;
 }
 
 :root[data-bs-theme="dark"] .bg-body-secondary {
@@ -87,8 +87,10 @@ li {
 
 .winner-img {
   padding: 10px;
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  min-height: 120px;
 }
 
 .correct {
@@ -196,6 +198,7 @@ li {
 }
 
 .round-final {
+  min-width: 250px;
   grid-area: round-final;
   justify-content: center;
 }
@@ -227,29 +230,27 @@ li {
   grid-area: bottom;
 }
 
-@media screen and (max-width: 992px) {
+.display-inline-flex {
+  display: inline-flex;
+}
+
+@media screen and (max-width: 1200px) {
   .bracket-grid,
   .cbracket-grid {
+    overflow-x: scroll;
     grid-template:
-      'round-final round-final round-final'
-      'round-one-left round-two-left round-three-left'
-      'round-three-right round-two-right round-one-right';
+      'round-one-left round-two-left round-three-left round-final'
+      'round-one-right round-two-right round-three-right round-final';
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1200px) {
   .bracket-grid-edit,
   .cbracket-grid-edit {
+    overflow-x: scroll;
     grid-template:
-      'round-one-left round-two-left round-three-left'
-      'round-three-right round-two-right round-one-right'
-      'round-final round-final round-final';
-  }
-}
-
-@media screen and (max-width: 409px) {
-  #bracket {
-    overflow-x: auto;
+      'round-one-left round-two-left round-three-left round-final'
+      'round-one-right round-two-right round-three-right round-final';
   }
 }
 
