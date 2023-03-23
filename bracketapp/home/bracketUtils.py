@@ -200,8 +200,8 @@ def getBracketStandings():
 
     brackets.sort(key=lambda b: b.bracket.name)
     if brackets and brackets[0] and brackets[0].bracket.rank:
-        brackets.sort(key=lambda b: b.bracket.rank)
         brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
+        brackets.sort(key=lambda b: b.bracket.rank)
 
     return brackets
 
