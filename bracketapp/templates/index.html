@@ -74,7 +74,7 @@
             {% if can_click %}
                 <tr class="" onclick="goToURL(`{{ url_for('home.view_bracket', id=bracket.bracket.id) }}`)">
                     <td class="col-2">
-                        {{ bracket.bracket.rank }}
+                        {% if bracket.bracket.rank %}{{ bracket.bracket.rank }}{% else %}-{% endif %}
                     </td>
                     <td class="col-5 col-md-6">
                         <div class="row">
