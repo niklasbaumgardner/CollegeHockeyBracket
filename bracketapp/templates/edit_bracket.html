@@ -497,7 +497,10 @@
         g15t2: g15t2Node,
     };
 
-    document.querySelector("form").reset();
+    const BRACKET_DEFINED = "{{ bracket.games[0].winner }}" !== "None";
+    if (BRACKET_DEFINED) {
+        document.querySelector("form").reset();
+    }
 </script>
 
 {% endblock content %}
