@@ -220,8 +220,8 @@ def getBracketStandingsForYear(year):
         brackets.sort(key=lambda x: x.goal_difference)
 
     brackets.sort(key=lambda b: b.bracket.name)
-    brackets.sort(key=lambda b: b.bracket.rank)
     brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
+    brackets.sort(key=lambda b: b.bracket.rank)
 
     return brackets, baseCorrectBracket(bracket=correct)
 
