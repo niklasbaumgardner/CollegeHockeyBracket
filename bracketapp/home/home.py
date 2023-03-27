@@ -25,7 +25,7 @@ def standings():
     standings = bracketUtils.getBracketStandings()
     winner = bracketUtils.getWinner(standings) if can_click else None
     return render_template(
-        "index.html",
+        "standings.html",
         brackets=standings,
         can_click=can_click,
         winner=winner,
@@ -51,7 +51,7 @@ def archive(year):
     else:
         standings, correct = bracketUtils.getBracketStandingsForYear(year)
         return render_template(
-            "archive_standings.html", brackets=standings, correct=correct
+            "standings.html", brackets=standings, correct=correct, can_click=True
         )
 
 
