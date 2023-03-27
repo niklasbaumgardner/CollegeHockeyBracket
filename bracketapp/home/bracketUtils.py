@@ -271,7 +271,7 @@ def calculatePointsForBracket(bracket, correct, teams):
         r4 += 80
 
     points = r1 + r2 + r3 + r4
-    points_dict = dict(r1=r1, r2=r1, r3=r3, r4=r4, points=points)
+    points_dict = dict(r1=r1, r2=r2, r3=r3, r4=r4, points=points)
 
     return points_dict
 
