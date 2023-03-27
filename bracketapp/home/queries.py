@@ -91,7 +91,6 @@ def updateUserBracket(user_id, name, winner, w_goals, l_goals, bracket=None):
 
 
 def updateUserBracketRank(bracket, rank):
-    print(bracket.name, rank)
     bracket.rank = rank
     db.session.commit()
 
@@ -348,9 +347,16 @@ def updateAllBracketPoints():
     teams = getAllTeams()
 
     for user_bracket in brackets:
-        user_bracket.bracket.points = bracketUtils.calculatePointsForBracket(
+        points_dict = bracketUtils.calculatePointsForBracket(
             user_bracket, correct, teams
         )
+
+        user_bracket.bracket.r1 = points_dict.get("r1")
+        user_bracket.bracket.r2 = points_dict.get("r2")
+        user_bracket.bracket.r3 = points_dict.get("r3")
+        user_bracket.bracket.r4 = points_dict.get("r4")
+        user_bracket.bracket.points = points_dict.get("points")
+
         user_bracket.bracket.max_points = bracketUtils.calculateMaxPointsForBracket(
             user_bracket, correct, teams
         )

@@ -227,47 +227,53 @@ def getBracketStandingsForYear(year):
 
 
 def calculatePointsForBracket(bracket, correct, teams):
-    points = 0
+    r1 = 0
+    r2 = 0
+    r3 = 0
+    r4 = 0
 
     # ROUND 1
     if bracket.games[0].winner == correct.games[0].winner:
-        points += 10
+        r1 += 10
     if bracket.games[1].winner == correct.games[1].winner:
-        points += 10
+        r1 += 10
     if bracket.games[2].winner == correct.games[2].winner:
-        points += 10
+        r1 += 10
     if bracket.games[3].winner == correct.games[3].winner:
-        points += 10
+        r1 += 10
     if bracket.games[4].winner == correct.games[4].winner:
-        points += 10
+        r1 += 10
     if bracket.games[5].winner == correct.games[5].winner:
-        points += 10
+        r1 += 10
     if bracket.games[6].winner == correct.games[6].winner:
-        points += 10
+        r1 += 10
     if bracket.games[7].winner == correct.games[7].winner:
-        points += 10
+        r1 += 10
 
     # ROUND 2
     if bracket.games[8].winner == correct.games[8].winner:
-        points += 20
+        r2 += 20
     if bracket.games[9].winner == correct.games[9].winner:
-        points += 20
+        r2 += 20
     if bracket.games[10].winner == correct.games[10].winner:
-        points += 20
+        r2 += 20
     if bracket.games[11].winner == correct.games[11].winner:
-        points += 20
+        r2 += 20
 
     # ROUND 3
     if bracket.games[12].winner == correct.games[12].winner:
-        points += 40
+        r3 += 40
     if bracket.games[13].winner == correct.games[13].winner:
-        points += 40
+        r3 += 40
 
     # WINNER
     if bracket.games[14].winner == correct.games[14].winner:
-        points += 80
+        r4 += 80
 
-    return points
+    points = r1 + r2 + r3 + r4
+    points_dict = dict(r1=r1, r2=r1, r3=r3, r4=r4, points=points)
+
+    return points_dict
 
 
 def calculateMaxPointsForBracket(bracket, correct, teams):

@@ -34,6 +34,10 @@ class Bracket(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     points = db.Column(db.Integer, nullable=False)
     max_points = db.Column(db.Integer, nullable=False)
+    r1 = db.Column(db.Integer, nullable=True)
+    r2 = db.Column(db.Integer, nullable=True)
+    r3 = db.Column(db.Integer, nullable=True)
+    r4 = db.Column(db.Integer, nullable=True)
     name = db.Column(db.String(30), nullable=False)
     year = db.Column(db.Integer, nullable=False)
     winner = db.Column(db.String(30), nullable=True)  # TODO: make winner not nullable
