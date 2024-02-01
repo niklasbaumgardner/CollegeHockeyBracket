@@ -193,7 +193,11 @@ class Matchup {
         })
       );
       this.home.appendChild(
-        createElement({ type: "span", content: " " + homeTeam })
+        createElement({
+          classString: "team-name",
+          type: "span",
+          content: " " + homeTeam,
+        })
       );
     }
 
@@ -224,7 +228,11 @@ class Matchup {
         })
       );
       this.away.appendChild(
-        createElement({ type: "span", content: " " + awayTeam })
+        createElement({
+          classString: "team-name",
+          type: "span",
+          content: " " + awayTeam,
+        })
       );
     }
 
