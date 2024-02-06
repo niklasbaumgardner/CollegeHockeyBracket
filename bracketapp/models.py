@@ -1,4 +1,4 @@
-from bracketapp.extensions import db, login_manager
+from bracketapp import db, login_manager
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 import os
@@ -83,6 +83,7 @@ class DefaultGame(db.Model):
     game_num = db.Column(db.String(10), nullable=False)
     home = db.Column(db.String(30), nullable=True)
     away = db.Column(db.String(30), nullable=True)
+
 
 class Theme(db.Model):
     id = db.Column(db.Integer, primary_key=True)

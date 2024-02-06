@@ -31,7 +31,8 @@ function setTheme(theme, options) {
   let currentThemeButton = getThemeButton(theme);
   currentThemeButton.classList.add("active");
 
-  currentThemeButton.parentElement.parentElement.previousElementSibling.innerText = currentThemeButton.innerText.trim();
+  currentThemeButton.parentElement.parentElement.previousElementSibling.innerText =
+    currentThemeButton.innerText.trim();
 
   storage.setItem("theme", theme);
   if (!(options?.dontSend === true)) {
@@ -39,8 +40,7 @@ function setTheme(theme, options) {
   }
 }
 
-
-window.addEventListener("DOMContentLoaded", () => {
+(() => {
   if (THEME === "") {
     let storedTheme = getTheme();
     setTheme(storedTheme);
@@ -56,4 +56,4 @@ window.addEventListener("DOMContentLoaded", () => {
       setTheme(theme);
     });
   }
-});
+})();

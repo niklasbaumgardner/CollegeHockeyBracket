@@ -15,7 +15,7 @@
 </div>
 
 <div id="bracket" class="border border-dark-subtle">
-    <form action="{{ url_for('home.edit_bracket') }}" method="POST">
+    <form action="{{ url_for('editbracket_bp.edit_bracket') }}" method="POST">
         <div class="row">
             <div>
                 <div class="row justify-content-center mb-3">
@@ -323,7 +323,7 @@
             </div>
             {% if bracket.bracket.winner != None %}
                 <div class="col-auto">
-                    <a class="btn btn-outline-primary" href="{{ url_for('home.view_bracket') }}">Cancel</a>
+                    <a class="btn btn-outline-primary" href="{{ url_for('viewbracket_bp.view_bracket') }}">Cancel</a>
                 </div>
             {% endif %}
         </div>

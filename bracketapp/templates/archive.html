@@ -32,7 +32,7 @@
 
     <tbody>
         {% for bracket in archived_years %}
-            <tr onclick="goToURL(`{{ url_for('home.archive', year=bracket.bracket.year) }}`)">
+            <tr onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
                 <td class="col-7 fs-1">
                     <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/> &nbsp;&nbsp;&nbsp;&nbsp; {{ bracket.bracket.winner }}
                 </td>

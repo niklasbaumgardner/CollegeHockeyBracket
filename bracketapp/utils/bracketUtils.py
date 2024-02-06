@@ -1,4 +1,4 @@
-from bracketapp.home import queries
+from bracketapp.utils import queries
 import os.path
 
 
@@ -29,7 +29,7 @@ class userBracket:
             )
         self.games = games if games else queries.getAllUserGamesForBracket(bracket_id)
         self.games.sort(key=lambda x: int(x.game_num[4:]))
-        user = queries.getUser(id=self.bracket.user_id)
+        user = queries.get_user_by_id(id=self.bracket.user_id)
         try:
             self.username = user.username
             self.user_id = user.id
