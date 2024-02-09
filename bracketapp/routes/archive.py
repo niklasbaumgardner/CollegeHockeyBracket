@@ -11,7 +11,7 @@ def archive(year):
     if not year:
         archived_years = []
 
-        for y in range(2022, 2015, -1):
+        for y in range(2022, 2014, -1):
             if y == 2020:
                 # covid
                 continue

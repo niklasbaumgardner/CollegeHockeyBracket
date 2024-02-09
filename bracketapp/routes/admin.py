@@ -72,6 +72,7 @@ def update_correct():
         for i in range(1, 16):
             game_num = f"game{i}"
             winner = request.form.get(f"game{i}")
+            loser = request.form.get(f"game{i}-loser")
             h_goals = request.form.get(f"game{i}-h_goals")
             a_goals = request.form.get(f"game{i}-a_goals")
 
@@ -89,6 +90,7 @@ def update_correct():
                 game_num=game_num,
                 winner=winner,
                 h_goals=h_goals,
+                loser=loser,
                 a_goals=a_goals,
             )
 

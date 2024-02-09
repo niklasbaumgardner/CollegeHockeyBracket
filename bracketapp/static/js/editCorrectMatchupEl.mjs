@@ -47,7 +47,6 @@ class EditCorrectMatchup extends NikElement {
       id="${this.game}bottom"
       name="${this.game}"
       value="${bottom}"
-      required=""
       ?checked=${!!(bottom && this.winner && this.winner === bottom)}
     />`;
   }

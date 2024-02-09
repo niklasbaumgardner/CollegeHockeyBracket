@@ -99,8 +99,8 @@ class EditCorrectBracket extends NikElement {
       winner=${options.winner}
       winnerTop=${options.winnerTop}
       winnerBottom=${options.winnerBottom}
-      homeGoals=${options.homeGoals}
-      awayGoals=${options.awayGoals}
+      homeGoals=${options.homeGoals || nothing}
+      awayGoals=${options.awayGoals || nothing}
     ></nb-edit-correct-matchup>`;
   }
 
@@ -313,7 +313,7 @@ class EditCorrectBracket extends NikElement {
       return;
     }
 
-    let matchup = el.closest("nb-edit-matchup");
+    let matchup = el.closest("nb-edit-correct-matchup");
     matchup.winner = el.value;
 
     let gameNum = id.match(/\d/g).join("");
