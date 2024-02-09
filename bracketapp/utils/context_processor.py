@@ -18,13 +18,14 @@ def utility_processor():
     theme = get_theme()
 
     if theme:
-        return dict(
-            theme=theme.theme, backgroundColor=theme.backgroundColor, color=theme.color
-        )
+        # return dict(
+        #     theme=theme.theme, backgroundColor=theme.backgroundColor, color=theme.color
+        # )
+        return dict(theme=theme.color)
 
     return dict(theme="", backgroundColor="", color="")
 
 
-@context_processor_bp.context_processor
+@context_processor_bp.app_context_processor
 def utility_processor():
     return dict(current_year=YEAR)

@@ -10,13 +10,13 @@ from bracketapp.models import (
 )
 from bracketapp import db
 from bracketapp import bcrypt
-from bracketapp.utils import bracketUtils
+from bracketapp.utils import bracket_utils
 from flask_login import current_user
 from bracketapp.config import YEAR
 
 
-# UserBracket/UserGame queries
-def createUserBracket(user_id, name, winner, w_goals, l_goals):
+# user_bracket/user_game queries
+def create_user_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
         name=name,
@@ -34,7 +34,7 @@ def createUserBracket(user_id, name, winner, w_goals, l_goals):
     return new_bracket
 
 
-def createUserGame(user_id, bracket_id, game_num, winner):
+def create_user_game(user_id, bracket_id, game_num, winner):
     new_game = Game(
         user_id=user_id, bracket_id=bracket_id, game_num=game_num, winner=winner
     )
@@ -45,8 +45,8 @@ def createUserGame(user_id, bracket_id, game_num, winner):
     return new_game
 
 
-def updateUserBracket(user_id, name, winner, w_goals, l_goals, bracket=None):
-    bracket = bracket if bracket else getUserBracketForUserId(user_id=user_id)
+def update_user_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
+    bracket = bracket if bracket else get_user_bracket_for_user_id(user_id=user_id)
 
     bracket.name = name
     bracket.winner = winner
@@ -58,13 +58,13 @@ def updateUserBracket(user_id, name, winner, w_goals, l_goals, bracket=None):
     return bracket
 
 
-def updateUserBracketRank(bracket, rank):
+def update_user_bracket_rank(bracket, rank):
     bracket.rank = rank
     db.session.commit()
 
 
-def updateUserGame(bracket_id, game_num, winner):
-    game = getUserGame(bracket_id=bracket_id, game_num=game_num)
+def update_user_game(bracket_id, game_num, winner):
+    game = get_user_game(bracket_id=bracket_id, game_num=game_num)
     game.winner = winner
 
     db.session.commit()
@@ -72,67 +72,67 @@ def updateUserGame(bracket_id, game_num, winner):
     return game
 
 
-def getUserBracketForBracketId(bracket_id):
+def get_user_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
     return Bracket.query.filter_by(id=bracket_id, year=YEAR).first()
 
 
-def getUserBracketForBracketIdAndYear(bracket_id, year):
+def get_user_bracket_for_bracket_id_and_year(bracket_id, year):
     if not bracket_id or not year:
         return
     return Bracket.query.filter_by(id=bracket_id, year=year).first()
 
 
-def getUserBracketForUserId(user_id):
+def get_user_bracket_for_user_id(user_id):
     if not user_id:
         return
     return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
 
 
-def getUserGame(bracket_id, game_num):
+def get_user_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
     return Game.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
-def getAllUserBrackets():
+def get_all_user_brackets():
     brackets = []
     bs = Bracket.query.filter_by(year=YEAR).all()
     for b in bs:
-        brackets.append(bracketUtils.userBracket(b.id, bracket=b))
+        brackets.append(bracket_utils.BracketInterface(b.id, bracket=b))
 
     return brackets
 
 
-def getAllUserBracketsForYear(year):
+def get_all_user_brackets_for_year(year):
     if not year:
         return []
     brackets = []
     bs = Bracket.query.filter_by(year=year).all()
     for b in bs:
-        brackets.append(bracketUtils.userBracket(b.id, bracket=b))
+        brackets.append(bracket_utils.BracketInterface(b.id, bracket=b))
 
     return brackets
 
 
-def getAllUserGamesForBracket(bracket_id):
+def get_all_user_games_for_bracket(bracket_id):
     if not bracket_id:
         return []
     return Game.query.filter_by(bracket_id=bracket_id).all()
 
 
-def deleteAllUserBrackets():
-    # return  # I don't want to accidentally delete the brackets
+def delete_all_user_brackets():
+    # return  # i don't want to accidentally delete the brackets
     brackets = Bracket.query.filter_by(year=YEAR).all()
     for b in brackets:
-        deleteUserBracket(b.id)
+        delete_user_bracket(b.id)
 
 
-def deleteUserBracket(bracket_id):
-    # return  # I don't want to accidentally delete the brackets
-    bracket = getUserBracketForBracketId(bracket_id)
-    games = getAllUserGamesForBracket(bracket_id=bracket.id)
+def delete_user_bracket(bracket_id):
+    # return  # i don't want to accidentally delete the brackets
+    bracket = get_user_bracket_for_bracket_id(bracket_id)
+    games = get_all_user_games_for_bracket(bracket_id=bracket.id)
 
     for game in games:
         db.session.delete(game)
@@ -142,8 +142,8 @@ def deleteUserBracket(bracket_id):
     db.session.commit()
 
 
-# CorrectBracket/CorrectGame queries
-def createCorrectBracket():
+# correct_bracket/correct_game queries
+def create_correct_bracket():
     correct = CorrectBracket(year=YEAR)
     db.session.add(correct)
     db.session.commit()
@@ -153,11 +153,11 @@ def createCorrectBracket():
         db.session.add(new_game)
         db.session.commit()
 
-    return bracketUtils.fullCorrectBracket(bracket=correct)
+    return bracket_utils.CorrectBracketInterface(bracket=correct)
 
 
-def updateCorrectBracket(winner, w_goals, l_goals, bracket=None):
-    bracket = bracket if bracket else getCorrectBracket()
+def update_correct_bracket(winner, w_goals, l_goals, bracket=None):
+    bracket = bracket if bracket else get_correct_bracket()
 
     bracket.winner = winner
     bracket.w_goals = w_goals
@@ -168,8 +168,8 @@ def updateCorrectBracket(winner, w_goals, l_goals, bracket=None):
     return bracket
 
 
-def updateCorrectGame(b_id, game_num, winner, h_goals, loser, a_goals):
-    game = getCorrectGame(bracket_id=b_id, game_num=game_num)
+def update_correct_game(b_id, game_num, winner, h_goals, loser, a_goals):
+    game = get_correct_game(bracket_id=b_id, game_num=game_num)
     game.winner = winner
     game.loser = loser
     game.h_goals = h_goals
@@ -178,30 +178,30 @@ def updateCorrectGame(b_id, game_num, winner, h_goals, loser, a_goals):
     db.session.commit()
 
 
-def getCorrectBracket():
+def get_correct_bracket():
     return CorrectBracket.query.filter_by(year=YEAR).first()
 
 
-def getCorrectBracketForYear(year):
+def get_correct_bracket_for_year(year):
     if not year:
         return
     return CorrectBracket.query.filter_by(year=year).first()
 
 
-def getCorrectGame(bracket_id, game_num):
+def get_correct_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
     return CorrectGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
-def getAllCorrectGamesForCorrectBracket(bracket_id):
+def get_all_correct_games_for_correct_bracket(bracket_id):
     if not bracket_id:
         return
     return CorrectGame.query.filter_by(bracket_id=bracket_id).all()
 
 
-def deleteCorrectBracket():
-    correct = bracketUtils.fullCorrectBracket()
+def delete_correct_bracket():
+    correct = bracket_utils.CorrectBracketInterface()
 
     for game in correct.games:
         db.session.delete(game)
@@ -211,8 +211,8 @@ def deleteCorrectBracket():
     db.session.commit()
 
 
-# DefaultBracket/DefaultGame queries
-def createDefaultBracket():
+# default_bracket/default_game queries
+def create_default_bracket():
     default = DefaultBracket(year=YEAR)
     db.session.add(default)
     db.session.commit()
@@ -222,41 +222,41 @@ def createDefaultBracket():
         db.session.add(new_game)
         db.session.commit()
 
-    return bracketUtils.fullDefaultBracket(bracket=default)
+    return bracket_utils.DefaultBracketInterface(bracket=default)
 
 
-def updateDefaultGame(b_id, game_num, home, away):
-    game = getDefaultGame(bracket_id=b_id, game_num=game_num)
+def update_default_game(b_id, game_num, home, away):
+    game = get_default_game(bracket_id=b_id, game_num=game_num)
     game.home = home
     game.away = away
 
     db.session.commit()
 
 
-def getDefaultBracket():
+def get_default_bracket():
     return DefaultBracket.query.filter_by(year=YEAR).first()
 
 
-def getDefaultBracketForYear(year):
+def get_default_bracket_for_year(year):
     if not year:
         return
     return DefaultBracket.query.filter_by(year=year).first()
 
 
-def getDefaultGame(bracket_id, game_num):
+def get_default_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
     return DefaultGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
-def getAllDefaultGamesForDefaultBracket(bracket_id):
+def get_all_default_games_for_default_bracket(bracket_id):
     if not bracket_id:
         return []
     return DefaultGame.query.filter_by(bracket_id=bracket_id).all()
 
 
-def deleteDefaultBracket():
-    default = bracketUtils.fullDefaultBracket()
+def delete_default_bracket():
+    default = bracket_utils.DefaultBracketInterface()
 
     for game in default.games:
         db.session.delete(game)
@@ -266,9 +266,9 @@ def deleteDefaultBracket():
     db.session.commit()
 
 
-# Other queries
-def getAllTeams():
-    default = bracketUtils.fullDefaultBracket()
+# other queries
+def get_all_teams():
+    default = bracket_utils.DefaultBracketInterface()
     lst = []
     for game in default.games:
         lst += [game.home, game.away]
@@ -276,9 +276,9 @@ def getAllTeams():
     return set(lst)
 
 
-def updateBracketStandings(brackets=None, correct=None):
-    brackets = brackets if brackets else getAllUserBrackets()
-    correct = correct if correct else getCorrectBracket()
+def update_bracket_standings(brackets=None, correct=None):
+    brackets = brackets if brackets else get_all_user_brackets()
+    correct = correct if correct else get_correct_bracket()
 
     if correct and correct.bracket.winner:
         for bracket in brackets:
@@ -306,16 +306,16 @@ def updateBracketStandings(brackets=None, correct=None):
             bracket.bracket.rank = rank
             standings.append(bracket)
 
-        updateUserBracketRank(bracket=bracket.bracket, rank=rank)
+        update_user_bracket_rank(bracket=bracket.bracket, rank=rank)
 
 
-def updateAllBracketPoints():
-    brackets = getAllUserBrackets()
-    correct = bracketUtils.fullCorrectBracket(bracket=getCorrectBracket())
-    teams = getAllTeams()
+def update_all_bracket_points():
+    brackets = get_all_user_brackets()
+    correct = bracket_utils.CorrectBracketInterface(bracket=get_correct_bracket())
+    teams = get_all_teams()
 
     for user_bracket in brackets:
-        points_dict = bracketUtils.calculatePointsForBracket(
+        points_dict = bracket_utils.calculate_points_for_bracket(
             user_bracket, correct, teams
         )
 
@@ -325,16 +325,16 @@ def updateAllBracketPoints():
         user_bracket.bracket.r4 = points_dict.get("r4")
         user_bracket.bracket.points = points_dict.get("points")
 
-        user_bracket.bracket.max_points = bracketUtils.calculateMaxPointsForBracket(
-            user_bracket, correct, teams
+        user_bracket.bracket.max_points = (
+            bracket_utils.calculate_max_points_for_bracket(user_bracket, correct, teams)
         )
         db.session.commit()
 
-    updateBracketStandings(brackets=brackets, correct=correct)
+    update_bracket_standings(brackets=brackets, correct=correct)
 
 
 ##
-## Theme queries
+## theme queries
 ##
 
 
@@ -350,19 +350,22 @@ def set_theme(theme_color=None, background_color=None, color=None):
 
     if theme:
         if theme_color is not None:
-            theme.theme = theme_color
-        if background_color is not None:
-            theme.backgroundColor = background_color
-        if color is not None:
-            theme.color = color
+            # fix this when updating theme stuff
+            # theme.theme = theme_color
+            theme.color = theme_color
+        # if background_color is not None:
+        #     theme.background_color = background_color
+        # if color is not None:
+        #     theme.color = color
         db.session.commit()
     else:
-        theme = Theme(
-            user_id=current_user.id,
-            theme=theme_color or "",
-            backgroundColor=background_color or "",
-            color=color or "",
-        )
+        theme = theme(user_id=current_user.id, color=theme_color or "")
+        # theme = theme(
+        #     user_id=current_user.id,
+        #     theme=theme_color or "",
+        #     background_color=background_color or "",
+        #     color=color or "",
+        # )
         db.session.add(theme)
         db.session.commit()
 
@@ -370,7 +373,7 @@ def set_theme(theme_color=None, background_color=None, color=None):
 
 
 ##
-## User queries
+## user queries
 ##
 
 

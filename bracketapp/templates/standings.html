@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Standings{% endblock title %}
-{% block standings %}active{% endblock standings %}
-
+{% block title %}{% if year == current_year %}Standings{% else %}Archive {{ year }}{% endif %}{% endblock title %}
 
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
-    function goToURL(url) {
-        location.href = url;
-    }
+    const GRID_DATA = {{ standings|tojson }};
 </script>
 
 <div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fw-bold fs-1">
-        {{ current_year }} Standings
+    <div class="fs-1">
+        {{ year }} Standings
     </div>
 </div>
 
@@ -51,148 +48,44 @@
     </div>
 {% endif %}
 
-<div class="table-responsive">
-    <table class="table table table-striped {% if can_click %}table-hover{% endif %}">
-        <thead>
-            <tr class="">
-                <th class="col-1">
-                    Rank
-                </th>
-                <th class="col-5">
-                    Bracket
-                </th>
-                <th class="col-1">
-                    R1
-                </th>
-                <th class="col-1">
-                    R2
-                </th>
-                <th class="col-1">
-                    R3
-                </th>
-                <th class="col-1">
-                    R4
-                </th>
-                <th class="col-1">
-                    Total
-                </th>
-                <th class="col-1">
-                    Max
-                </th>
-            </tr>
-        </thead>
-    
-        <tbody>
-            {% if correct %}
-                <tr class="" onclick="goToURL(`{{ url_for('viewbracket_bp.view_cbracket', year=correct.bracket.year) }}`)">
-                    <td class="col-1">
-                        -
-                    </td>
-                    <td class="col-5">
-                        <div class="row">
-                            <div class="col-1">
-                                <img width="25px" height="25px" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
-                            </div>
-                            <div class="col-11">
-                                Final bracket
-                            </div>
-                        </div>
-                    </td>
-                    <td class="col-1">
-                        80
-                    </td>
-                    <td class="col-1">
-                        80
-                    </td>
-                    <td class="col-1">
-                        80
-                    </td>
-                    <td class="col-1">
-                        80
-                    </td>
-                    <td class="col-1">
-                        320
-                    </td>
-                    <td class="col-1">
-                        320
-                    </td>
-                </tr>
-            {% endif %}
-            {% for bracket in brackets %}
-                {% if can_click %}
-                    <tr class="" onclick="goToURL(`{{ url_for('viewbracket_bp.view_bracket', id=bracket.bracket.id) }}`)">
-                        <td class="col-1">
-                            {% if bracket.bracket.rank %}{{ bracket.bracket.rank }}{% else %}-{% endif %}
-                        </td>
-                        <td class="col-5">
-                            <div class="row">
-                                <div class="col-1">
-                                    <img width="25px" height="25px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
-                                </div>
-                                <div class="col-11">
-                                    {{ bracket.bracket.name }}
-                                    <p class="bracket-user-name m-0">{{ bracket.username }}</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-1">
-                            {{ bracket.bracket.r1 }}
-                        </td>
-                        <td class="col-1">
-                            {{ bracket.bracket.r2 }}
-                        </td>
-                        <td class="col-1">
-                            {{ bracket.bracket.r3 }}
-                        </td>
-                        <td class="col-1">
-                            {{ bracket.bracket.r4 }}
-                        </td>
-                        <td class="col-1">
-                            {{ bracket.bracket.points }}
-                        </td>
-                        <td class="col-1">
-                            {{ bracket.bracket.max_points }}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr class="">
-                        <td class="col-1">
-                            -
-                        </td>
-                        <td class="col-5">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <img class="greyscale" width="25px" height="25px" src="/static/images/logo.png" alt="Logo"/>
-                                </div>
-                                <div class="col-auto">
-                                    {{ bracket.bracket.name }}
-                                    <p class="bracket-user-name m-0">{{ bracket.username }}</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-1">
-                            -
-                        </td>
-                        <td class="col-1">
-                            -
-                        </td>
-                        <td class="col-1">
-                            -
-                        </td>
-                        <td class="col-1">
-                            -
-                        </td>
-                        <td class="col-1">
-                            -
-                        </td>
-                        <td class="col-1">
-                            -
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<div id="standingsGrid" style="height: 800px;" class="{% if theme == 'dark' %}ag-theme-quartz-dark{% else %}ag-theme-quartz{% endif %}"></div>
+
+{% if correct %}
+    <tr>
+        <td class="col-1">
+            -
+        </td>
+        <td class="col-5">
+            <div class="row">
+                <div class="col-1">
+                    <img width="25px" height="25px" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
+                </div>
+                <div class="col-11">
+                    Final bracket
+                </div>
+            </div>
+        </td>
+        <td class="col-1">
+            80
+        </td>
+        <td class="col-1">
+            80
+        </td>
+        <td class="col-1">
+            80
+        </td>
+        <td class="col-1">
+            80
+        </td>
+        <td class="col-1">
+            320
+        </td>
+        <td class="col-1">
+            320
+        </td>
+    </tr>
+{% endif %}
+
+<script src="/static/js/standings.mjs" type="module"></script>
 
 {% endblock content %}

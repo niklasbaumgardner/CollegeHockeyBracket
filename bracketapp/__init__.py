@@ -39,6 +39,7 @@ from bracketapp.routes.index import index_bp
 from bracketapp.routes.profile import profile_bp
 from bracketapp.routes.theme import theme_bp
 from bracketapp.routes.viewbracket import viewbracket_bp
+from bracketapp.utils.context_processor import context_processor_bp
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(archive_bp)
@@ -48,8 +49,13 @@ app.register_blueprint(index_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(theme_bp)
 app.register_blueprint(viewbracket_bp)
+app.register_blueprint(context_processor_bp)
 
 with app.app_context():
     db.create_all()
 
 migrate.init_app(app, db)
+
+from bracketapp.utils.jinja_filters import add_filters
+
+add_filters()

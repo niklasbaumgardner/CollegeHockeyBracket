@@ -21,6 +21,11 @@ function setTheme(theme, options) {
 
   // Set html element theme
   document.documentElement.setAttribute("data-bs-theme", theme);
+  document.documentElement.classList.toggle("sl-theme-dark", theme === "dark");
+  document.documentElement.classList.toggle(
+    "sl-theme-light",
+    theme === "light"
+  );
 
   // Set all buttons to inactive
   for (let button of getThemeButtons()) {

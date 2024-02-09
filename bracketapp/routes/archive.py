@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from bracketapp.utils import queries, bracketUtils
+from bracketapp.utils import bracket_utils, queries
 
 
 archive_bp = Blueprint("archive_bp", __name__)
@@ -15,13 +15,17 @@ def archive(year):
             if y == 2020:
                 # covid
                 continue
-            bracket = queries.getCorrectBracketForYear(y)
+            bracket = queries.get_correct_bracket_for_year(y)
             if bracket and bracket.winner:
-                archived_years.append(bracketUtils.baseCorrectBracket(year=y))
+                archived_years.append(bracket_utils.BaseCorrectBracketInterface(year=y))
 
         return render_template("archive.html", archived_years=archived_years)
     else:
-        standings, correct = bracketUtils.getBracketStandingsForYear(year)
+        standings, correct = bracket_utils.get_bracket_standings_for_year(year)
+        standings_json = [correct.to_json()] + [b.to_json() for b in standings]
         return render_template(
-            "standings.html", brackets=standings, correct=correct, can_click=True
+            "standings.html",
+            standings=standings_json,
+            CAN_CLICK=True,
+            year=year,
         )

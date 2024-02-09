@@ -13,35 +13,37 @@
 </script>
 
 <div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fw-bold fs-1">
+    <div class="fs-1">
         Archive
     </div>
 </div>
 
-<table class="table table-striped table-hover">
-    <thead class="">
-        <tr>
-            <th scope="col-7" class="">
-                National Champion
-            </th>
-            <th scope="col-3" class="">
-                Year
-            </th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for bracket in archived_years %}
-            <tr onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
-                <td class="col-7 fs-1">
-                    <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/> &nbsp;&nbsp;&nbsp;&nbsp; {{ bracket.bracket.winner }}
-                </td>
-                <td class="col-5">
-                    <p class="fs-1">{{ bracket.bracket.year }}</p>
-                </td>
+<sl-card class="w-100">
+    <table class="table table-striped table-hover">
+        <thead class="">
+            <tr>
+                <th scope="col-7" class="fs-3">
+                    National Champion
+                </th>
+                <th scope="col-3" class="fs-3">
+                    Year
+                </th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            {% for bracket in archived_years %}
+                <tr onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
+                    <td class="col-7 fs-3">
+                        <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/> &nbsp;&nbsp;&nbsp;&nbsp; {{ bracket.bracket.winner }}
+                    </td>
+                    <td class="col-5">
+                        <p class="fs-3">{{ bracket.bracket.year }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</sl-card>
 
 {% endblock content %}

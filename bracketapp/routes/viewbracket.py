@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
-from bracketapp.utils import queries, bracketUtils
+from bracketapp.utils import bracket_utils, queries
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 
 
@@ -16,18 +16,18 @@ def view_archive_bracket(year, id):
     if year == YEAR and CAN_EDIT_BRACKET:
         return redirect(url_for("index_bp.index"))
 
-    bracket = bracketUtils.userBracket(bracket_id=id, year=year)
-    default = bracketUtils.fullDefaultBracket(year=year)
-    correct = bracketUtils.fullCorrectBracket(year=year)
+    bracket = bracket_utils.BracketInterface(bracket_id=id, year=year)
+    default = bracket_utils.DefaultBracketInterface(year=year)
+    correct = bracket_utils.CorrectBracketInterface(year=year)
 
     mine = "active" if current_user.get_id() == str(bracket.user_id) else ""
 
     return render_template(
         "view_bracket.html",
         mine=mine,
-        correct_json=correct.tojson(),
-        default_json=default.tojson(),
-        bracket_json=bracket.tojson(),
+        correct=correct.to_json(),
+        default=default.to_json(),
+        bracket=bracket.to_json(),
         bracket_winner_img=bracket.img_url,
         correct_winner_img=correct.img_url,
         name=bracket.bracket.name,
@@ -38,15 +38,14 @@ def view_archive_bracket(year, id):
 @viewbracket_bp.route("/view_bracket", defaults={"id": None}, methods=["GET"])
 @viewbracket_bp.route("/view_bracket/<int:id>", methods=["GET"])
 def view_bracket(id):
-    current_user_id = current_user.get_id()
     can_view_brackets = not CAN_EDIT_BRACKET
 
     if id and can_view_brackets:
-        bracket = queries.getUserBracketForBracketId(id)
+        bracket = queries.get_user_bracket_for_bracket_id(bracket_id=id)
 
     else:
-        if current_user_id:
-            bracket = queries.getUserBracketForUserId(user_id=current_user_id)
+        if current_user.is_authenticated and current_user.id:
+            bracket = queries.get_user_bracket_for_user_id(user_id=current_user.id)
             if not bracket:
                 if CAN_EDIT_BRACKET:
                     return redirect(url_for("editbracket_bp.edit_bracket"))
@@ -55,9 +54,9 @@ def view_bracket(id):
         else:
             return redirect(url_for("auth_bp.login"))
 
-    default = bracketUtils.fullDefaultBracket()
+    default = bracket_utils.DefaultBracketInterface()
     try:
-        correct = bracketUtils.fullCorrectBracket()
+        correct = bracket_utils.CorrectBracketInterface()
     except:
         correct = None
 
@@ -66,17 +65,17 @@ def view_bracket(id):
     elif not bracket:
         return redirect(url_for("index_bp.index"))
 
-    mine = "active" if current_user_id == str(bracket.user_id) else ""
+    mine = "active" if current_user.id == bracket.user_id else ""
 
-    bracket = bracketUtils.userBracket(bracket_id=bracket.id, bracket=bracket)
+    bracket = bracket_utils.BracketInterface(bracket_id=bracket.id, bracket=bracket)
 
     return render_template(
         "view_bracket.html",
-        can_edit=CAN_EDIT_BRACKET,
+        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         mine=mine,
-        correct_json=correct.tojson(),
-        default_json=default.tojson(),
-        bracket_json=bracket.tojson(),
+        correct=correct.to_json(),
+        default=default.to_json(),
+        bracket=bracket.to_json(),
         bracket_winner_img=bracket.img_url,
         correct_winner_img=correct.img_url,
         name=bracket.bracket.name,
@@ -89,16 +88,16 @@ def view_cbracket(year):
     if year >= YEAR and not isAdmin():
         return redirect(url_for("archive_bp.archive"))
 
-    correct = bracketUtils.fullCorrectBracket(year=year)
+    correct = bracket_utils.CorrectBracketInterface(year=year)
 
     if not correct:
         return redirect(url_for("archive_bp.archive"))
 
-    default = bracketUtils.fullDefaultBracket(year=year)
+    default = bracket_utils.DefaultBracketInterface(year=year)
 
     return render_template(
         "view_cbracket.html",
-        correct_json=correct.tojson(),
-        default_json=default.tojson(),
+        correct=correct.to_json(),
+        default=default.to_json(),
         year=correct.bracket.year,
     )

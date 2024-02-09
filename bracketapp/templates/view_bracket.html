@@ -7,77 +7,25 @@
 
 {% block content %}
     <script>
-        const CORRECT = {{ correct_json|tojson }};
-        const DEFAULT = {{ default_json|tojson }};
-        const BRACKET = {{ bracket_json|tojson }};
         const BRACKET_WINNER_IMAGE = "{{ bracket_winner_img }}";
         const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
         const IS_ME = "{{ mine }}" === "active";
     </script>
-    <script src="/static/js/createElement.js"></script>
+
     <div class="pb-5 d-flex justify-content-center mx-0">
         <div class="fs-1">
             {{ year }} NCAA College Hockey Bracket
         </div>
     </div>
 
-    <div id="bracket" class="border border-dark-subtle">
-        {% if can_edit %}
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <a class="btn btn-outline-primary" href="{{ url_for('editbracket_bp.edit_bracket') }}">Edit Bracket</a>
-                </div>
-            </div>
-        {% endif %}
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <p class="fs-3">{{ name }}</p>
-            </div>
+    {% if mine and CAN_EDIT_BRACKET %}
+        <div class="d-flex justify-content-center mb-3">
+            <sl-button href="{{ url_for('editbracket_bp.edit_bracket') }}">Edit bracket</sl-button>
         </div>
+    {% endif %}
 
-        <div class="row">
-            <div class="bracket-grid">
-                <div class="round-one-left round-one">
-                    <div class="round-details">Round 1</div>
-                </div>	<!-- END ROUND ONE -->
+    <nb-bracket bracket="{{ bracket }}" default="{{ default }}" correct="{{ correct }}"></nb-bracket>
 
-
-                <div class="round-two-left round-two">
-                    <div class="round-details">Round 2</div>
-                </div>	<!-- END ROUND TWO -->
-
-
-                <div class="round-three-left round-three">
-                    <div class="round-details">Round 3</div>
-                </div>	<!-- END ROUND THREE -->
-
-
-                <div class="round-final bg-body-nb border border-dark-subtle p-3 my-auto">
-                    <div class="round-details champion-top">National Champion</div>
-                </div>
-
-
-                <div class="round-three-right round-three">
-                    <div class="round-details">Round 3</div>
-                </div>	<!-- END ROUND THREE -->
-
-
-                <div class="round-two-right round-two">
-                    <div class="round-details">Round 2</div>
-                </div>	<!-- END ROUND TWO -->
-
-
-                <div class="round-one-right round-one">
-                    <div class="round-details">Round 1</div>
-                </div>	<!-- END ROUND ONE -->
-            </div>
-        </div>
-    </div>
-
-    <script src="/static/js/view_bracket.js"></script>
-    <script>
-        const bracket = new Bracket();
-        bracket.render();
-    </script>
+    <script type="module" src="/static/js/bracketEl.mjs"></script>
 
 {% endblock content %}

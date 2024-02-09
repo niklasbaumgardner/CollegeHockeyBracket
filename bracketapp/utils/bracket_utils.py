@@ -1,8 +1,11 @@
 from bracketapp.utils import queries
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from flask import url_for
 import os.path
+import json
 
 
-class emptyBracket:
+class EmptyBracket:
     def __init__(self):
         self.user_id = None
         self.name = ""
@@ -10,24 +13,31 @@ class emptyBracket:
         self.l_goals = None
         self.winner = None
 
+    def to_json(self):
+        return json.dumps(dict())
 
-class emptyGame:
+
+class EmptyGame:
     def __init__(self, num):
         self.game_num = f"game{num}"
         self.winner = None
 
 
-class userBracket:
+class BracketInterface:
     def __init__(self, bracket_id, year=None, bracket=None, games=None):
         if year:
-            self.bracket = queries.getUserBracketForBracketIdAndYear(
+            self.bracket = queries.get_user_bracket_for_bracket_id_and_year(
                 bracket_id=bracket_id, year=year
             )
         else:
             self.bracket = (
-                bracket if bracket else queries.getUserBracketForBracketId(bracket_id)
+                bracket
+                if bracket
+                else queries.get_user_bracket_for_bracket_id(bracket_id)
             )
-        self.games = games if games else queries.getAllUserGamesForBracket(bracket_id)
+        self.games = (
+            games if games else queries.get_all_user_games_for_bracket(bracket_id)
+        )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         user = queries.get_user_by_id(id=self.bracket.user_id)
         try:
@@ -36,111 +46,131 @@ class userBracket:
         except:
             pass
         self.goal_difference = 0
-        self.img_url = assignImage(self.bracket)
+        self.img_url = assign_image(self.bracket)
 
-    def tojson(self):
-        object = dict()
-        object["id"] = self.bracket.id
-        object["name"] = self.bracket.name
-        object["points"] = self.bracket.points
-        object["max_points"] = self.bracket.max_points
-        object["rank"] = self.bracket.rank
-        object["winner"] = self.bracket.winner
-        object["w_goals"] = self.bracket.w_goals
-        object["l_goals"] = self.bracket.l_goals
-        object["games"] = dict()
+    def to_json(self):
+        obj = dict(
+            id=self.bracket.id,
+            username=self.username,
+            name=self.bracket.name,
+            points=self.bracket.points,
+            r1=self.bracket.r1,
+            r2=self.bracket.r2,
+            r3=self.bracket.r3,
+            r4=self.bracket.r4,
+            maxPoints=self.bracket.max_points,
+            rank=self.bracket.rank,
+            winner=self.bracket.winner,
+            wGoals=self.bracket.w_goals,
+            lGoals=self.bracket.l_goals,
+        )
+        if not CAN_EDIT_BRACKET or self.bracket.year < YEAR:
+            obj["url"] = url_for("viewbracket_bp.view_bracket", id=self.bracket.id)
 
+        games = dict()
         for game in self.games:
-            game_object = dict()
-            game_object["game_num"] = game.game_num
-            game_object["winner"] = game.winner
+            game_obj = dict(gameNum=game.game_num, winner=game.winner)
+            games[game.game_num] = game_obj
 
-            object["games"][game.game_num] = game_object
+        obj["games"] = games
 
-        return object
+        return json.dumps(obj)
 
 
-class baseCorrectBracket:
+class BaseCorrectBracketInterface:
     def __init__(self, year=None, bracket=None):
         if year:
-            self.bracket = queries.getCorrectBracketForYear(year)
+            self.bracket = queries.get_correct_bracket_for_year(year)
         else:
-            self.bracket = bracket if bracket else queries.getCorrectBracket()
-        self.img_url = assignImage(self.bracket)
+            self.bracket = bracket if bracket else queries.get_correct_bracket()
+        self.img_url = assign_image(self.bracket)
 
 
-class fullCorrectBracket:
+class CorrectBracketInterface:
     def __init__(self, year=None, bracket=None, games=None):
         if year:
-            self.bracket = queries.getCorrectBracketForYear(year)
+            self.bracket = queries.get_correct_bracket_for_year(year)
         else:
-            self.bracket = bracket if bracket else queries.getCorrectBracket()
+            self.bracket = bracket if bracket else queries.get_correct_bracket()
         self.games = (
             games
             if games
-            else queries.getAllCorrectGamesForCorrectBracket(bracket_id=self.bracket.id)
+            else queries.get_all_correct_games_for_correct_bracket(
+                bracket_id=self.bracket.id
+            )
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
-        self.img_url = assignImage(self.bracket)
+        self.img_url = assign_image(self.bracket)
 
-    def tojson(self):
-        object = dict()
-        object["id"] = self.bracket.id
-        object["winner"] = self.bracket.winner
-        object["w_goals"] = self.bracket.w_goals
-        object["l_goals"] = self.bracket.l_goals
-        object["games"] = dict()
+    def to_json(self):
+        obj = dict(
+            id=self.bracket.id,
+            rank="-",
+            name=f"{self.bracket.year} final bracket",
+            username="NB Bracket App",
+            points=320,
+            r1=80,
+            r2=80,
+            r3=80,
+            r4=80,
+            maxPoints=320,
+            winner=self.bracket.winner,
+            wGoals=self.bracket.w_goals,
+            lGoals=self.bracket.l_goals,
+            url=url_for("viewbracket_bp.view_cbracket", year=self.bracket.year),
+        )
 
+        games = dict()
         for game in self.games:
-            game_object = dict()
-            game_object["game_num"] = game.game_num
-            game_object["winner"] = game.winner
-            game_object["loser"] = game.loser
-            game_object["h_goals"] = game.h_goals
-            game_object["a_goals"] = game.a_goals
+            game_object = dict(
+                gameNum=game.game_num,
+                winner=game.winner,
+                loser=game.loser,
+                hGoals=game.h_goals,
+                aGoals=game.a_goals,
+            )
+            games[game.game_num] = game_object
 
-            object["games"][game.game_num] = game_object
+        obj["games"] = games
 
-        return object
+        return json.dumps(obj)
 
 
-class fullDefaultBracket:
+class DefaultBracketInterface:
     def __init__(self, year=None, bracket=None, games=None):
         if year:
-            self.bracket = queries.getDefaultBracketForYear(year)
+            self.bracket = queries.get_default_bracket_for_year(year)
         else:
-            self.bracket = bracket if bracket else queries.getDefaultBracket()
+            self.bracket = bracket if bracket else queries.get_default_bracket()
         self.games = (
             games
             if games
-            else queries.getAllDefaultGamesForDefaultBracket(bracket_id=self.bracket.id)
+            else queries.get_all_default_games_for_default_bracket(
+                bracket_id=self.bracket.id
+            )
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
 
-    def tojson(self):
-        object = dict()
-        object["id"] = self.bracket.id
-        object["year"] = self.bracket.year
-        object["games"] = dict()
+    def to_json(self):
+        obj = dict(id=self.bracket.id, year=self.bracket.year)
 
+        games = dict()
         for game in self.games:
-            game_object = dict()
-            game_object["game_num"] = game.game_num
-            game_object["home"] = game.home
-            game_object["away"] = game.away
+            game_obj = dict(gameNum=game.game_num, home=game.home, away=game.away)
+            games[game.game_num] = game_obj
 
-            object["games"][game.game_num] = game_object
+        obj["games"] = games
 
-        return object
+        return json.dumps(obj)
 
 
-class bracketWinner:
+class BracketWinner:
     def __init__(self, winning_bracket, tie):
         self.winner = winning_bracket
         self.tie = tie
 
 
-def assignImage(bracket):
+def assign_image(bracket):
     if not bracket or not bracket.winner:
         return ""
     url_list = bracket.winner.split(" ")
@@ -148,17 +178,16 @@ def assignImage(bracket):
     return url
 
 
-def createEmptyBracket():
-    games = [emptyGame(i) for i in range(15)]
-    print(len(games))
-    return userBracket(bracket_id=None, bracket=emptyBracket(), games=games)
+def create_empty_bracket():
+    games = [EmptyGame(i) for i in range(15)]
+    return BracketInterface(bracket_id=None, bracket=EmptyBracket(), games=games)
 
 
-def getWinner(standings):
+def get_winner(standings):
     if not standings:
         return
 
-    correct = queries.getCorrectBracket()
+    correct = queries.get_correct_bracket()
 
     if not correct or not correct.winner:
         return None
@@ -169,7 +198,7 @@ def getWinner(standings):
         return None
 
     if len(winners) == 1:
-        return bracketWinner(winners, False)
+        return BracketWinner(winners, False)
 
     for w in winners:
         w.goal_difference = abs(
@@ -181,12 +210,12 @@ def getWinner(standings):
     min_goal_diff = winners[0].goal_difference
     winners = [w for w in winners if w.goal_difference <= min_goal_diff]
 
-    return bracketWinner(winners, True)
+    return BracketWinner(winners, True)
 
 
-def getBracketStandings():
-    brackets = queries.getAllUserBrackets()
-    correct = queries.getCorrectBracket()
+def get_bracket_standings():
+    brackets = queries.get_all_user_brackets()
+    correct = queries.get_correct_bracket()
 
     if correct and correct.winner:
         for bracket in brackets:
@@ -206,9 +235,9 @@ def getBracketStandings():
     return brackets
 
 
-def getBracketStandingsForYear(year):
-    brackets = queries.getAllUserBracketsForYear(year=year)
-    correct = queries.getCorrectBracketForYear(year=year)
+def get_bracket_standings_for_year(year):
+    brackets = queries.get_all_user_brackets_for_year(year=year)
+    correct = queries.get_correct_bracket_for_year(year=year)
 
     for bracket in brackets:
         bracket.goal_difference = abs(
@@ -223,16 +252,16 @@ def getBracketStandingsForYear(year):
     brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
     brackets.sort(key=lambda b: b.bracket.rank)
 
-    return brackets, baseCorrectBracket(bracket=correct)
+    return brackets, CorrectBracketInterface(bracket=correct)
 
 
-def calculatePointsForBracket(bracket, correct, teams):
+def calculate_points_for_bracket(bracket, correct, teams):
     r1 = 0
     r2 = 0
     r3 = 0
     r4 = 0
 
-    # ROUND 1
+    # round 1
     if bracket.games[0].winner == correct.games[0].winner:
         r1 += 10
     if bracket.games[1].winner == correct.games[1].winner:
@@ -250,7 +279,7 @@ def calculatePointsForBracket(bracket, correct, teams):
     if bracket.games[7].winner == correct.games[7].winner:
         r1 += 10
 
-    # ROUND 2
+    # round 2
     if bracket.games[8].winner == correct.games[8].winner:
         r2 += 20
     if bracket.games[9].winner == correct.games[9].winner:
@@ -260,13 +289,13 @@ def calculatePointsForBracket(bracket, correct, teams):
     if bracket.games[11].winner == correct.games[11].winner:
         r2 += 20
 
-    # ROUND 3
+    # round 3
     if bracket.games[12].winner == correct.games[12].winner:
         r3 += 40
     if bracket.games[13].winner == correct.games[13].winner:
         r3 += 40
 
-    # WINNER
+    # winner
     if bracket.games[14].winner == correct.games[14].winner:
         r4 += 80
 
@@ -276,10 +305,10 @@ def calculatePointsForBracket(bracket, correct, teams):
     return points_dict
 
 
-def calculateMaxPointsForBracket(bracket, correct, teams):
+def calculate_max_points_for_bracket(bracket, correct, teams):
     max_points = 0
 
-    # ROUND 1
+    # round 1
     game1 = False
     game2 = False
     game3 = False
@@ -337,7 +366,7 @@ def calculateMaxPointsForBracket(bracket, correct, teams):
         max_points += 10
         game8 = True
 
-    # ROUND 2
+    # round 2
     game9 = False
     game10 = False
     game11 = False
@@ -439,7 +468,7 @@ def calculateMaxPointsForBracket(bracket, correct, teams):
         max_points += 20
         game12 = True
 
-    # ROUND 3
+    # round 3
     game13 = False
     game14 = False
 
@@ -465,7 +494,7 @@ def calculateMaxPointsForBracket(bracket, correct, teams):
         max_points += 40
         game14 = True
 
-    # WINNER
+    # winner
     if (bracket.games[14].winner == correct.games[14].winner) or (
         correct.games[14].winner not in teams
         and (
@@ -546,7 +575,7 @@ def should_game_exist(team_name, game_num, correct, default):
 
 
 # this is for checking the image urls are correct
-def checkImgUrls(default_brackets):
+def check_img_urls(default_brackets):
     path = os.path.dirname(os.path.abspath(__file__))[:-4]
     for game in default_brackets.games:
         url_list = game.home.split(" ")
