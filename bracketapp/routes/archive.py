@@ -10,14 +10,8 @@ archive_bp = Blueprint("archive_bp", __name__)
 def archive(year):
     if not year:
         archived_years = []
-
-        for y in range(2022, 2014, -1):
-            if y == 2020:
-                # covid
-                continue
-            bracket = queries.get_correct_bracket_for_year(y)
-            if bracket and bracket.winner:
-                archived_years.append(bracket_utils.BaseCorrectBracketInterface(year=y))
+        for cb in queries.get_all_completed_correct_brackets():
+            archived_years.append(bracket_utils.BaseCorrectBracketInterface(bracket=cb))
 
         return render_template("archive.html", archived_years=archived_years)
     else:

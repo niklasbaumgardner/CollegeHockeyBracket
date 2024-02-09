@@ -16,8 +16,8 @@
 </div>
 
 {% if winner %}
-    <div class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Congratulations!!</h4>
+    <sl-alert class="mb-4" variant="success" open>
+        <h4 class="">Congratulations!!</h4>
         {% if winner.tie and len(winner.winner) > 1 %}
             <p>We have a tie!</p>
             <p>
@@ -45,46 +45,10 @@
                 <span class="fw-bold">{{ winner.winner[0].bracket.name }}</span> ({{ winner.winner[0].username }}) has won this year's bracket challenge with <span class="fw-bold">{{ winner.winner[0].bracket.points }}</span> points.
             </p>
         {% endif %}
-    </div>
+    </sl-alert>
 {% endif %}
 
 <div id="standingsGrid" style="height: 800px;" class="{% if theme == 'dark' %}ag-theme-quartz-dark{% else %}ag-theme-quartz{% endif %}"></div>
-
-{% if correct %}
-    <tr>
-        <td class="col-1">
-            -
-        </td>
-        <td class="col-5">
-            <div class="row">
-                <div class="col-1">
-                    <img width="25px" height="25px" src="/static/images/{{ correct.img_url }}.svg" alt="{{ correct.img_url }}"/>
-                </div>
-                <div class="col-11">
-                    Final bracket
-                </div>
-            </div>
-        </td>
-        <td class="col-1">
-            80
-        </td>
-        <td class="col-1">
-            80
-        </td>
-        <td class="col-1">
-            80
-        </td>
-        <td class="col-1">
-            80
-        </td>
-        <td class="col-1">
-            320
-        </td>
-        <td class="col-1">
-            320
-        </td>
-    </tr>
-{% endif %}
 
 <script src="/static/js/standings.mjs" type="module"></script>
 

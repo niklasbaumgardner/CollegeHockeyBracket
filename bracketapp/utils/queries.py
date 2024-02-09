@@ -15,7 +15,9 @@ from flask_login import current_user
 from bracketapp.config import YEAR
 
 
-# user_bracket/user_game queries
+##
+## Bracket and Game queries
+##
 def create_user_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
@@ -142,7 +144,9 @@ def delete_user_bracket(bracket_id):
     db.session.commit()
 
 
-# correct_bracket/correct_game queries
+##
+## CorrectBracket and CorrectGame queries
+##
 def create_correct_bracket():
     correct = CorrectBracket(year=YEAR)
     db.session.add(correct)
@@ -188,6 +192,14 @@ def get_correct_bracket_for_year(year):
     return CorrectBracket.query.filter_by(year=year).first()
 
 
+def get_all_completed_correct_brackets():
+    return (
+        CorrectBracket.query.filter(CorrectBracket.winner != None)
+        .order_by(CorrectBracket.year.desc())
+        .all()
+    )
+
+
 def get_correct_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
@@ -211,7 +223,9 @@ def delete_correct_bracket():
     db.session.commit()
 
 
-# default_bracket/default_game queries
+##
+## DefaultBracket and DefaultGame queries
+##
 def create_default_bracket():
     default = DefaultBracket(year=YEAR)
     db.session.add(default)
@@ -266,7 +280,9 @@ def delete_default_bracket():
     db.session.commit()
 
 
-# other queries
+##
+## other queries
+##
 def get_all_teams():
     default = bracket_utils.DefaultBracketInterface()
     lst = []
@@ -336,8 +352,6 @@ def update_all_bracket_points():
 ##
 ## theme queries
 ##
-
-
 def get_theme():
     return Theme.query.filter_by(user_id=current_user.id).first()
 
@@ -375,8 +389,6 @@ def set_theme(theme_color=None, background_color=None, color=None):
 ##
 ## user queries
 ##
-
-
 def create_user(email, username, password):
     hash_ = hash_password(password=password)
     new_user = User(email=email, username=username, password=hash_)

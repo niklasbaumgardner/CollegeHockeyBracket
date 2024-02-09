@@ -295,11 +295,12 @@ class EditBracket extends NikElement {
     let content = html`<sl-button variant="primary" type="submit"
       >Save bracket</sl-button
     >`;
-    if (!this.bracket.name) {
-      return html`${content}<sl-button @click=${this.resetForm}
-          >Reset bracket</sl-button
-        >`;
-    }
+    // TODO: Fix this
+    // if (!this.bracket.name) {
+    //   return html`${content}<sl-button @click=${this.resetForm}
+    //       >Reset bracket</sl-button
+    //     >`;
+    // }
 
     return html`${content}<sl-button href=${CANCEL_BRACKET_URL}
         >Cancel</sl-button
@@ -391,6 +392,7 @@ class EditBracket extends NikElement {
               label="Bracket name"
               placeholder="mybracket"
               value=${this.bracket.name}
+              required=""
             ></sl-input>
           </div>
         </div>
