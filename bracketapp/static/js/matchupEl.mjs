@@ -41,6 +41,10 @@ class Matchup extends NikElement {
   }
 
   getImageElement(team) {
+    if (!team) {
+      return null;
+    }
+
     return html`<img
       class="team-img"
       src="${this.getImageUrl(team)}"

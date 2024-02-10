@@ -20,6 +20,7 @@ class Bracket extends NikElement {
     if (!teamName) {
       return "";
     }
+
     let filename = teamName.substring(2);
     filename = filename.replaceAll(" ", "");
     filename = filename.replaceAll(".", "");
@@ -30,7 +31,9 @@ class Bracket extends NikElement {
     if (!team) {
       return null;
     }
-    let isWinnerCorrect = this.correct?.winner && this.correct?.winner === team;
+
+    let isWinnerCorrect =
+      !this.correct?.winner || this.correct?.winner === team;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
       src="${this.getImageUrl(team)}"

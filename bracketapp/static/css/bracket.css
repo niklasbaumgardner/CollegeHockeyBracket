@@ -59,6 +59,13 @@ nb-edit-correct-matchup {
   height: 24px;
 }
 
+label#top,
+label#bottom {
+  display: inline-flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 .team-img {
   width: 20px;
   padding-right: var(--sl-spacing-2x-small);

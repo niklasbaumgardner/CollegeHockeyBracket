@@ -373,7 +373,8 @@ def set_theme(theme_color=None, background_color=None, color=None):
         #     theme.color = color
         db.session.commit()
     else:
-        theme = theme(user_id=current_user.id, color=theme_color or "")
+
+        theme = Theme(user_id=current_user.id, color=theme_color or "")
         # theme = theme(
         #     user_id=current_user.id,
         #     theme=theme_color or "",

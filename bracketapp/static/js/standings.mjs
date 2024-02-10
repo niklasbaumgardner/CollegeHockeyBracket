@@ -50,6 +50,10 @@ class StandingsGridManager {
           document.querySelector(".ag-center-cols-container").scrollHeight +
           document.querySelector(".ag-header-row").scrollHeight;
 
+        if (height < 192) {
+          height = 192;
+        }
+
         this.standingsGridEl.style.height = `${height + 3}px`;
       },
     };

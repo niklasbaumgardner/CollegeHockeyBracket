@@ -389,6 +389,7 @@ class EditBracket extends NikElement {
         <div class="row justify-content-center">
           <div class="col-auto">
             <sl-input
+              name="name"
               label="Bracket name"
               placeholder="mybracket"
               value=${this.bracket.name}
