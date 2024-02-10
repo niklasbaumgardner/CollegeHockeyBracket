@@ -53,32 +53,15 @@ class Matchup extends NikElement {
   }
 
   defaultMatchupTemplate() {
-    return html`<div class="nb-team nb-team-border-bottom">
+    return html`<div class="nb-team">
         ${this.getImageElement(this.default.home)}
         <span class="team-name">${this.default.home}</span
         ><span>${this.correct?.hGoals}</span>
       </div>
-      <div class="nb-team nb-team-border-top">
+      <div class="nb-team">
         ${this.getImageElement(this.default.away)}<span class="team-name"
           >${this.default.away}</span
         ><span>${this.correct?.aGoals}</span>
-      </div>`;
-  }
-
-  defaultEditMatchupTemplate() {
-    return html`<div class="nb-team nb-team-border-bottom">
-        <label id="top">
-          ${this.topInput(this.winnerTop)}
-          ${this.getImageElement(this.default.home)}
-          <span>${this.default.home}</span>
-        </label>
-      </div>
-      <div class="nb-team nb-team-border-top">
-        <label id="bottom">
-          ${this.bottomInput(this.winnerBottom)}
-          ${this.getImageElement(this.default.away)}
-          <span>${this.default.away}</span>
-        </label>
       </div>`;
   }
 
@@ -116,20 +99,12 @@ class Matchup extends NikElement {
 
   matchupTemplate() {
     return html`${this.getTopWinner()}
-      <div
-        class="nb-team nb-team-border-bottom ${!!this.winnerTop
-          ? "nb-team-border-top"
-          : ""}"
-      >
+      <div class="nb-team">
         ${this.getImageElement(this.correctTop)}<span class="team-name"
           >${this.correctTop}</span
         ><span>${this.correct?.hGoals}</span>
       </div>
-      <div
-        class="nb-team nb-team-border-top ${!!this.winnerBottom
-          ? "nb-team-border-bottom"
-          : ""}"
-      >
+      <div class="nb-team">
         ${this.getImageElement(this.correctBottom)}<span class="team-name"
           >${this.correctBottom}</span
         ><span>${this.correct?.aGoals}</span>
@@ -137,54 +112,10 @@ class Matchup extends NikElement {
       ${this.getBottomWinner()}`;
   }
 
-  topInput(top) {
-    return html`<input
-      type="radio"
-      id="${this.game}top"
-      name="${this.game}"
-      value="${top}"
-      required=""
-      ?checked="${!!(top && this.winner && this.winner === top)}"
-    />`;
-  }
-
-  bottomInput(bottom) {
-    return html`<input
-      type="radio"
-      id="${this.game}bottom"
-      name="${this.game}"
-      value="${bottom}"
-      required=""
-      ?checked=${!!(bottom && this.winnner && this.winner === bottom)}
-    />`;
-  }
-
-  editMatchupTemplate() {
-    return html`<div class="nb-team nb-team-border-bottom">
-        <label id="top">
-          ${this.topInput(this.winnerTop)}${this.getImageElement(
-            this.winnerTop
-          )}
-          <span>${this.winnerTop}</span>
-        </label>
-      </div>
-      <div class="nb-team nb-team-border-top">
-        <label id="bottom">
-          ${this.bottomInput(this.winnerBottom)}
-          ${this.getImageElement(this.winnerBottom)}
-          <span>${this.winnerBottom}</span>
-        </label>
-      </div>`;
-  }
-
   render() {
     let content;
     if (this.type === "default") {
       content = this.defaultMatchupTemplate();
-    } else if (this.type === "default-edit") {
-      content = this.defaultEditMatchupTemplate();
-    } else if (this.type === "edit") {
-      content = this.editMatchupTemplate();
     } else {
       content = this.matchupTemplate();
     }

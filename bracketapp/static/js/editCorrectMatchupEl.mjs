@@ -61,14 +61,14 @@ class EditCorrectMatchup extends NikElement {
 
   render() {
     return html`<div class="matchup">
-      <div class="nb-team nb-team-border-bottom">
+      <div class="nb-team">
         <label id="top">
           ${this.topTeamInput(this.winnerTop)}
           <span>${this.winnerTop}</span>
           ${this.topScoreInput()}
         </label>
       </div>
-      <div class="nb-team nb-team-border-top">
+      <div class="nb-team">
         <label id="bottom">
           ${this.bottomTeamInput(this.winnerBottom)}
           <span>${this.winnerBottom}</span>

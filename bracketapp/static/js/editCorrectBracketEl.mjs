@@ -188,7 +188,7 @@ class EditCorrectBracket extends NikElement {
 
   championTemplate() {
     return html`<div class="round-final my-auto">
-      <sl-card style="--sl-panel-background-color: var(--sl-color-neutral-100)">
+      <sl-card>
         <div class="championship-grid">
           <p class="round-details champion-top m-0">National Champion</p>
           <div class="row mb-2">

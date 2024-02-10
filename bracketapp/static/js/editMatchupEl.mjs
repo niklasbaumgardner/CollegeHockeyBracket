@@ -64,7 +64,7 @@ class EditMatchup extends NikElement {
 
   render() {
     return html`<div class="matchup">
-      <div class="nb-team nb-team-border-bottom">
+      <div class="nb-team">
         <label id="top">
           ${this.topInput(this.winnerTop)}${this.getImageElement(
             this.winnerTop
@@ -72,7 +72,7 @@ class EditMatchup extends NikElement {
           <span>${this.winnerTop}</span>
         </label>
       </div>
-      <div class="nb-team nb-team-border-top">
+      <div class="nb-team">
         <label id="bottom">
           ${this.bottomInput(this.winnerBottom)}
           ${this.getImageElement(this.winnerBottom)}
