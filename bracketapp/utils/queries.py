@@ -48,7 +48,7 @@ def create_user_game(user_id, bracket_id, game_num, winner):
 
 
 def update_user_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
-    bracket = bracket if bracket else get_user_bracket_for_user_id(user_id=user_id)
+    bracket = bracket if bracket else get_bracket_for_user_id(user_id=user_id)
 
     bracket.name = name
     bracket.winner = winner
@@ -74,7 +74,7 @@ def update_user_game(bracket_id, game_num, winner):
     return game
 
 
-def get_user_bracket_for_bracket_id(bracket_id):
+def get_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
     return Bracket.query.filter_by(id=bracket_id, year=YEAR).first()
@@ -86,7 +86,7 @@ def get_user_bracket_for_bracket_id_and_year(bracket_id, year):
     return Bracket.query.filter_by(id=bracket_id, year=year).first()
 
 
-def get_user_bracket_for_user_id(user_id):
+def get_bracket_for_user_id(user_id):
     if not user_id:
         return
     return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
@@ -117,7 +117,9 @@ def get_all_user_brackets_for_year(year):
     brackets = []
     bs = Bracket.query.filter_by(year=year).all()
     for b in bs:
-        brackets.append(bracket_utils.BracketInterface(b.id, bracket=b))
+        brackets.append(
+            bracket_utils.BracketInterface(b.id, bracket=b, safe_only=False)
+        )
 
     return brackets
 
@@ -137,7 +139,7 @@ def delete_all_user_brackets():
 
 def delete_user_bracket(bracket_id):
     # return  # i don't want to accidentally delete the brackets
-    bracket = get_user_bracket_for_bracket_id(bracket_id)
+    bracket = get_bracket_for_bracket_id(bracket_id=bracket_id)
     games = get_all_user_games_for_bracket(bracket_id=bracket.id)
 
     for game in games:

@@ -24,34 +24,36 @@ class EmptyGame:
 
 
 class BracketInterface:
-    def __init__(self, bracket_id, year=None, bracket=None, games=None):
+    def __init__(self, bracket_id, safe_only=True, year=None, bracket=None, games=None):
         if year:
             self.bracket = queries.get_user_bracket_for_bracket_id_and_year(
                 bracket_id=bracket_id, year=year
             )
         else:
             self.bracket = (
-                bracket
-                if bracket
-                else queries.get_user_bracket_for_bracket_id(bracket_id)
+                bracket if bracket else queries.get_bracket_for_bracket_id(bracket_id)
             )
+
         self.games = (
             games
             if games is not None
             else queries.get_all_user_games_for_bracket(bracket_id)
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
+
         user = queries.get_user_by_id(id=self.bracket.user_id)
         try:
             self.username = user.username
             self.user_id = user.id
         except:
             pass
+
+        self.safe_only = safe_only
         self.goal_difference = 0
         self.img_url = assign_image(self.bracket)
 
     def to_json(self):
-        obj = self.bracket.to_dict()
+        obj = self.bracket.to_dict(safe_only=self.safe_only)
         obj["username"] = self.username
         if not CAN_EDIT_BRACKET or self.bracket.year < YEAR:
             obj["url"] = url_for("viewbracket_bp.view_bracket", id=self.bracket.id)
@@ -204,7 +206,9 @@ def get_winner(standings):
 
 def get_bracket_standings():
     brackets = [
-        BracketInterface(bracket_id=b.id, bracket=b, games=[])
+        BracketInterface(
+            bracket_id=b.id, safe_only=CAN_EDIT_BRACKET, bracket=b, games=[]
+        )
         for b in queries.get_all_brackets()
     ]
     correct = queries.get_correct_bracket()

@@ -11,43 +11,25 @@ def isAdmin():
     return current_user.id == 1
 
 
-@viewbracket_bp.route("/view_bracket/<int:year>/<int:id>", methods=["GET"])
-def view_archive_bracket(year, id):
-    if year == YEAR and CAN_EDIT_BRACKET:
-        return redirect(url_for("index_bp.index"))
-
-    bracket = bracket_utils.BracketInterface(bracket_id=id, year=year)
-    default = bracket_utils.DefaultBracketInterface(year=year)
-    correct = bracket_utils.CorrectBracketInterface(year=year)
-
-    mine = "active" if current_user.id == bracket.user_id else ""
-
-    return render_template(
-        "view_bracket.html",
-        mine=mine,
-        correct=correct.to_json(),
-        default=default.to_json(),
-        bracket=bracket.to_json(),
-        bracket_winner_img=bracket.img_url,
-        correct_winner_img=correct.img_url,
-        name=bracket.bracket.name,
-        year=bracket.bracket.year,
-    )
-
-
 @viewbracket_bp.route("/view_bracket", defaults={"id": None}, methods=["GET"])
 @viewbracket_bp.route("/view_bracket/<int:id>", methods=["GET"])
 def view_bracket(id):
-    can_view_brackets = not CAN_EDIT_BRACKET
+    bracket = None
 
-    if id and can_view_brackets:
-        bracket = queries.get_user_bracket_for_bracket_id(bracket_id=id)
+    if id:
+        bracket = queries.get_bracket_for_bracket_id(bracket_id=id)
+        if not (
+            bracket.user_id == current_user.id
+            or not CAN_EDIT_BRACKET
+            or bracket.year < YEAR
+        ):
+            return redirect(url_for("index_bp.index"))
 
     elif current_user.is_authenticated:
-        if not id and CAN_EDIT_BRACKET:
+        if CAN_EDIT_BRACKET:
             return redirect(url_for("editbracket_bp.edit_bracket"))
         else:
-            return redirect(url_for("index_bp.index"))
+            bracket = queries.get_bracket_for_user_id(user_id=current_user.id)
     else:
         return redirect(url_for("auth_bp.login"))
 
@@ -64,7 +46,9 @@ def view_bracket(id):
 
     mine = "active" if current_user.id == bracket.user_id else ""
 
-    bracket = bracket_utils.BracketInterface(bracket_id=bracket.id, bracket=bracket)
+    bracket = bracket_utils.BracketInterface(
+        bracket_id=bracket.id, bracket=bracket, safe_only=False
+    )
 
     return render_template(
         "view_bracket.html",

@@ -47,15 +47,17 @@ class Bracket(db.Model):
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
 
-    def to_dict(self):
-        if CAN_EDIT_BRACKET:
+    def to_dict(self, safe_only=True):
+        if safe_only:
             obj = dict(
                 id=self.id,
                 name=self.name,
                 points=self.points,
                 maxPoints=self.max_points,
                 rank=self.rank,
+                winner="  logo",
             )
+
         else:
             obj = dict(
                 id=self.id,
@@ -74,8 +76,8 @@ class Bracket(db.Model):
 
         return obj
 
-    def to_json(self):
-        return json.dumps(self.to_dict())
+    def to_json(self, safe_only=True):
+        return json.dumps(self.to_dict(safe_only=safe_only))
 
 
 class Game(db.Model):
