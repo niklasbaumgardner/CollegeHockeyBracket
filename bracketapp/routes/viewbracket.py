@@ -20,7 +20,7 @@ def view_archive_bracket(year, id):
     default = bracket_utils.DefaultBracketInterface(year=year)
     correct = bracket_utils.CorrectBracketInterface(year=year)
 
-    mine = "active" if current_user.get_id() == str(bracket.user_id) else ""
+    mine = "active" if current_user.id == bracket.user_id else ""
 
     return render_template(
         "view_bracket.html",
@@ -43,16 +43,13 @@ def view_bracket(id):
     if id and can_view_brackets:
         bracket = queries.get_user_bracket_for_bracket_id(bracket_id=id)
 
-    else:
-        if current_user.is_authenticated and current_user.id:
-            bracket = queries.get_user_bracket_for_user_id(user_id=current_user.id)
-            if not bracket:
-                if CAN_EDIT_BRACKET:
-                    return redirect(url_for("editbracket_bp.edit_bracket"))
-                else:
-                    return redirect(url_for("index_bp.index"))
+    elif current_user.is_authenticated:
+        if not id and CAN_EDIT_BRACKET:
+            return redirect(url_for("editbracket_bp.edit_bracket"))
         else:
-            return redirect(url_for("auth_bp.login"))
+            return redirect(url_for("index_bp.index"))
+    else:
+        return redirect(url_for("auth_bp.login"))
 
     default = bracket_utils.DefaultBracketInterface()
     try:
