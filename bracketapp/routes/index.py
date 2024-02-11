@@ -16,7 +16,7 @@ def index():
     return render_template(
         "standings.html",
         standings=standings_json,
-        CAN_CLICK=can_click,
+        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         winner=winner,
         year=YEAR,
     )

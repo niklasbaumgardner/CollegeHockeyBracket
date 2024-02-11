@@ -98,6 +98,10 @@ def get_user_game(bracket_id, game_num):
     return Game.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
+def get_all_brackets():
+    return Bracket.query.filter_by(year=YEAR).all()
+
+
 def get_all_user_brackets():
     brackets = []
     bs = Bracket.query.filter_by(year=YEAR).all()

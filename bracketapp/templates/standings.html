@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
     const GRID_DATA = {{ standings|tojson }};
+    const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
 </script>
 
 <div class="pb-5 d-flex justify-content-center mx-0">

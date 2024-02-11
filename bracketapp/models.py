@@ -1,7 +1,9 @@
 from bracketapp import db, login_manager
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
+from bracketapp.config import CAN_EDIT_BRACKET
 import os
+import json
 
 
 @login_manager.user_loader
@@ -44,6 +46,36 @@ class Bracket(db.Model):
     rank = db.Column(db.Integer, nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
+
+    def to_dict(self):
+        if CAN_EDIT_BRACKET:
+            obj = dict(
+                id=self.id,
+                name=self.name,
+                points=self.points,
+                maxPoints=self.max_points,
+                rank=self.rank,
+            )
+        else:
+            obj = dict(
+                id=self.id,
+                name=self.name,
+                points=self.points,
+                r1=self.r1,
+                r2=self.r2,
+                r3=self.r3,
+                r4=self.r4,
+                maxPoints=self.max_points,
+                rank=self.rank,
+                winner=self.winner,
+                wGoals=self.w_goals,
+                lGoals=self.l_goals,
+            )
+
+        return obj
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
 
 
 class Game(db.Model):

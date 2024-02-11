@@ -7,6 +7,29 @@ class StandingsGridManager {
     this.setupThemeWatcher();
   }
 
+  getImageUrl(teamName) {
+    if (!teamName) {
+      return "";
+    }
+
+    let filename = teamName.substring(2);
+    filename = filename.replaceAll(" ", "");
+    filename = filename.replaceAll(".", "");
+    return `/static/images/${filename}.svg`;
+  }
+
+  getImageElement(team) {
+    if (!team) {
+      return null;
+    }
+
+    return `<img
+      class="team-img"
+      src="${this.getImageUrl(team)}"
+      alt="${team}"
+    />`;
+  }
+
   createDataGrid() {
     const rowData = [];
     for (let string of GRID_DATA) {
@@ -20,7 +43,9 @@ class StandingsGridManager {
         headerName: "Bracket, Owner",
         cellRenderer: (param) => {
           if (param.data.url) {
-            return `<a href="${param.data.url}">${param.value}</a>, ${param.data.username}`;
+            return `${this.getImageElement(param.data.winner)}<a href="${
+              param.data.url
+            }">${param.value}</a>, ${param.data.username}`;
           }
           return `${param.value}, ${param.data.username}`;
         },
