@@ -232,3 +232,9 @@ nb-edit-correct-matchup input[type="number"] {
   appearance: textfield;
   -moz-appearance: textfield;
 }
+
+.round-details {
+  display: inherit;
+  width: 100%;
+  text-align: center;
+}

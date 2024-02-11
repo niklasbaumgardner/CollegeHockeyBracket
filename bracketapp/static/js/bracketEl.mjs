@@ -176,7 +176,7 @@ class Bracket extends NikElement {
     return html`<div class="round-final my-auto">
       <sl-card>
         <div class="champion-card">
-          <span class="round-details champion-top">National Champion</span>
+          <span class="champion-top">National Champion</span>
           <div class="row justify-content-center">
             ${this.pickedChampionTemplate()} ${this.correctChampionTemplate()}
           </div>
