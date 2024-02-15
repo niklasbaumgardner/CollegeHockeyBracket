@@ -18,10 +18,9 @@ def utility_processor():
     theme = get_theme()
 
     if theme:
-        # return dict(
-        #     theme=theme.theme, backgroundColor=theme.backgroundColor, color=theme.color
-        # )
-        return dict(theme=theme.color)
+        return dict(
+            theme=theme.theme, backgroundColor=theme.backgroundColor, color=theme.color
+        )
 
     return dict(theme="", backgroundColor="", color="")
 

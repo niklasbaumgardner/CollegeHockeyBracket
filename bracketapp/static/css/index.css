@@ -20,6 +20,10 @@ body {
   color: var(--sl-color-neutral-900);
 }
 
+a {
+  color: var(--sl-color-primary-700);
+}
+
 .greyscale {
   filter: grayscale(0.5);
   opacity: 0.5;
@@ -53,4 +57,42 @@ body {
 
 .time {
   display: block;
+}
+
+.nb-row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.nb-row-sm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+sl-card {
+  width: 100%;
+}
+
+sl-dialog[open] {
+  position: fixed;
+  z-index: 9999;
+}
+
+sl-dialog:not([open]) {
+  display: none;
+}
+
+:host,
+:root {
+  .button--medium {
+    --sl-button-font-size-medium: var(--sl-font-size-medium);
+  }
+}
+
+.background-preview {
+  border: 2px solid var(--sl-color-neutral-1000);
+  width: 100px;
+  height: 100px;
 }

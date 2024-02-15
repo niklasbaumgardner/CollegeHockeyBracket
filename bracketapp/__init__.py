@@ -36,6 +36,7 @@ from bracketapp.routes.archive import archive_bp
 from bracketapp.routes.auth import auth_bp
 from bracketapp.routes.editbracket import editbracket_bp
 from bracketapp.routes.index import index_bp
+from bracketapp.routes.preferences import preferences_bp
 from bracketapp.routes.profile import profile_bp
 from bracketapp.routes.theme import theme_bp
 from bracketapp.routes.viewbracket import viewbracket_bp
@@ -46,6 +47,7 @@ app.register_blueprint(archive_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(editbracket_bp)
 app.register_blueprint(index_bp)
+app.register_blueprint(preferences_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(theme_bp)
 app.register_blueprint(viewbracket_bp)
