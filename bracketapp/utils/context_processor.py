@@ -1,6 +1,6 @@
 from flask_login import current_user
 from flask import Blueprint
-from bracketapp.utils import queries
+from bracketapp.queries import theme_queries
 from bracketapp.config import YEAR
 
 context_processor_bp = Blueprint("context_processor_bp", __name__)
@@ -12,7 +12,7 @@ def utility_processor():
         if not current_user.is_authenticated:
             return None
 
-        theme = queries.get_theme()
+        theme = theme_queries.get_theme()
         return theme
 
     theme = get_theme()

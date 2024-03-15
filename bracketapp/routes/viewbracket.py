@@ -1,6 +1,7 @@
+from bracketapp.queries import bracket_queries
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
-from bracketapp.utils import bracket_utils, queries
+from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 
 
@@ -17,7 +18,7 @@ def view_bracket(id):
     bracket = None
 
     if id:
-        bracket = queries.get_bracket_for_bracket_id(bracket_id=id)
+        bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=id)
         if not (
             bracket.user_id == current_user.id
             or not CAN_EDIT_BRACKET
@@ -29,7 +30,7 @@ def view_bracket(id):
         if CAN_EDIT_BRACKET:
             return redirect(url_for("editbracket_bp.edit_bracket"))
         else:
-            bracket = queries.get_bracket_for_user_id(user_id=current_user.id)
+            bracket = bracket_queries.get_bracket_for_user_id(user_id=current_user.id)
     else:
         return redirect(url_for("auth_bp.login"))
 

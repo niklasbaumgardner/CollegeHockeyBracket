@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
-from bracketapp.utils import queries
+from bracketapp.queries import user_queries
 from bracketapp.models import User
 from bracketapp import bcrypt
 from bracketapp.utils.send_email import send_reset_email
@@ -27,7 +27,7 @@ def login():
     remember = request.form.get("remember")
 
     if email and password:
-        user = queries.get_user_by_email(email=email)
+        user = user_queries.get_user_by_email(email=email)
 
         if user and bcrypt.check_password_hash(user.password, password):
             remember = True if remember == "True" else False
@@ -61,11 +61,11 @@ def signup():
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
-        if not queries.is_email_unique(email):
+        if not user_queries.is_email_unique(email):
             flash("Email already exists. Please log in", "primary")
             return redirect(url_for("auth_bp.login", email=email))
 
-        if not queries.is_username_unique(username):
+        if not user_queries.is_username_unique(username):
             flash(
                 "Username already exists. Please choose a different username",
                 "danger",
@@ -76,7 +76,7 @@ def signup():
             flash("Passwords don't match. Try again", "warning")
             return render_template("signup.html", email=email)
 
-        queries.create_user(email=email, username=username, password=password1)
+        user_queries.create_user(email=email, username=username, password=password1)
         flash("Sign up succesful", "success")
         return redirect(url_for("auth_bp.login"))
 
@@ -86,13 +86,13 @@ def signup():
 @auth_bp.route("/password_request", methods=["GET", "POST"])
 def password_request():
     if current_user.is_authenticated:
-        user = queries.get_user_by_id(id=current_user.id)
+        user = user_queries.get_user_by_id(id=current_user.id)
         token = user.get_reset_token()
         return redirect(url_for("auth_bp.password_reset", token=token))
 
     if request.method == "POST":
         email = request.form.get("email")
-        user = queries.get_user_by_email(email=email)
+        user = user_queries.get_user_by_email(email=email)
         send_reset_email(user)
         flash(
             "An email has been sent with instructions to reset your password. (Check spam folder)",
@@ -122,7 +122,7 @@ def password_reset():
             flash("Passwords are not equal. Please try again", "warning")
             return render_template("password_reset.html")
 
-        queries.update_user_password(user.id, password=password1)
+        user_queries.update_user_password(user.id, password=password1)
         flash(
             "Your password has been updated! You are now able to log in",
             "success",
@@ -143,11 +143,11 @@ def logout():
 def username_unique():
     username = request.args.get("username")
 
-    return {"isUnique": queries.is_username_unique(username)}
+    return {"isUnique": user_queries.is_username_unique(username)}
 
 
 @auth_bp.route("/email_unique", methods=["GET"])
 def email_unique():
     email = request.args.get("email")
 
-    return {"isUnique": queries.is_email_unique(email)}
+    return {"isUnique": user_queries.is_email_unique(email)}

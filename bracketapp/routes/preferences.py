@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required
-from bracketapp.utils import queries
+from bracketapp.queries import theme_queries
 
 preferences_bp = Blueprint("preferences_bp", __name__)
 
@@ -15,7 +15,7 @@ def preferences():
 @login_required
 def set_primary_color():
     color = request.args.get("color")
-    queries.set_theme(color=color)
+    theme_queries.set_theme(color=color)
     return {"success": True}
 
 
@@ -23,5 +23,5 @@ def set_primary_color():
 @login_required
 def set_background_color():
     background_color = request.args.get("backgroundColor")
-    queries.set_theme(background_color=background_color)
+    theme_queries.set_theme(background_color=background_color)
     return {"success": True}

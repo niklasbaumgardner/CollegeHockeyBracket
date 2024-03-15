@@ -1,6 +1,7 @@
+from bracketapp.queries import bracket_queries, user_queries
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user, login_required
-from bracketapp.utils import bracket_utils, queries
+from bracketapp.utils import bracket_utils
 
 
 admin_bp = Blueprint("admin_bp", __name__)
@@ -25,7 +26,7 @@ def update_points():
     if not isAdmin():
         return redirect(url_for("index_bp.index"))
 
-    queries.update_all_bracket_points()
+    bracket_queries.update_all_bracket_points()
 
     return redirect(url_for("index_bp.index"))
 
@@ -36,8 +37,8 @@ def delete_brackets():
     if not isAdmin():
         return redirect(url_for("index_bp.index"))
 
-    brackets = queries.get_all_user_brackets()
-    db_users = queries.get_all_users()
+    brackets = bracket_queries.get_all_user_brackets()
+    db_users = bracket_queries.get_all_users()
     users = {}
     for u in db_users:
         users[u.id] = u
@@ -53,9 +54,9 @@ def delete_bracket(id):
 
     if id == "all":
         # delete all brackets
-        queries.delete_all_user_brackets()
+        bracket_queries.delete_all_user_brackets()
     else:
-        queries.delete_user_bracket(id)
+        bracket_queries.delete_user_bracket(id)
 
     return redirect(url_for("index_bp.index"))
 
@@ -67,7 +68,7 @@ def update_correct():
         return redirect(url_for("index_bp.index"))
 
     if request.method == "POST":
-        c_bracket = queries.get_correct_bracket()
+        c_bracket = bracket_queries.get_correct_bracket()
 
         for i in range(1, 16):
             game_num = f"game{i}"
@@ -85,7 +86,7 @@ def update_correct():
             except:
                 continue
 
-            queries.update_correct_game(
+            bracket_queries.update_correct_game(
                 b_id=c_bracket.id,
                 game_num=game_num,
                 winner=winner,
@@ -98,25 +99,25 @@ def update_correct():
                 more_goals = h_goals if h_goals > a_goals else a_goals
                 less_goals = a_goals if a_goals > h_goals else h_goals
 
-                queries.update_correct_bracket(
+                bracket_queries.update_correct_bracket(
                     winner=winner,
                     w_goals=more_goals,
                     l_goals=less_goals,
                     bracket=c_bracket,
                 )
 
-        queries.update_all_bracket_points()
+        bracket_queries.update_all_bracket_points()
 
     if request.method == "GET":
         try:
             correct = bracket_utils.CorrectBracketInterface()
         except:
-            correct = queries.create_correct_bracket()
+            correct = bracket_queries.create_correct_bracket()
 
         try:
             default = bracket_utils.DefaultBracketInterface()
         except:
-            default = queries.create_default_bracket()
+            default = bracket_queries.create_default_bracket()
 
         return render_template(
             "update_correct.html",
@@ -133,11 +134,11 @@ def update_default():
     if not isAdmin():
         return redirect(url_for("index_bp.index"))
     if request.method == "POST":
-        d_bracket = queries.get_default_bracket()
+        d_bracket = bracket_queries.get_default_bracket()
 
         for i in range(1, 9):
             game_num = f"game{i}"
-            queries.update_default_game(
+            bracket_queries.update_default_game(
                 b_id=d_bracket.id,
                 game_num=game_num,
                 home=request.form.get(f"game{i}-home"),
@@ -145,15 +146,15 @@ def update_default():
             )
 
         # create the correct bracket after creating the default
-        correct = queries.get_correct_bracket()
+        correct = bracket_queries.get_correct_bracket()
         if not correct:
-            queries.create_correct_bracket()
+            bracket_queries.create_correct_bracket()
 
     if request.method == "GET":
         try:
             default = bracket_utils.DefaultBracketInterface()
         except:
-            default = queries.create_default_bracket()
+            default = bracket_queries.create_default_bracket()
         return render_template("default_bracket.html", default=default)
 
     return redirect(url_for("admin_bp.admin"))
@@ -165,7 +166,7 @@ def delete_default():
     if not isAdmin():
         return redirect(url_for("index_bp.index"))
 
-    queries.delete_default_bracket()
+    bracket_queries.delete_default_bracket()
 
     return redirect(url_for("index_bp.index"))
 
@@ -176,7 +177,7 @@ def delete_correct():
     if not isAdmin():
         return redirect(url_for("index_bp.index"))
 
-    queries.delete_correct_bracket()
+    bracket_queries.delete_correct_bracket()
 
     return redirect(url_for("index_bp.index"))
 
@@ -187,9 +188,9 @@ def debugging():
     if not isAdmin():
         return redirect(url_for("index_bp.index"))
     string = ""
-    users = queries.get_all_users()
+    users = user_queries.get_all_users()
 
-    brackets = queries.get_all_user_brackets()
+    brackets = bracket_queries.get_all_user_brackets()
 
     for u in users:
         string += f"{u.id} {u.username}<br>"

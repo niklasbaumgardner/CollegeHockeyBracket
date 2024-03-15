@@ -1,5 +1,6 @@
+from bracketapp.queries import bracket_queries
 from flask import Blueprint, render_template
-from bracketapp.utils import bracket_utils, queries
+from bracketapp.utils import bracket_utils
 
 
 archive_bp = Blueprint("archive_bp", __name__)
@@ -10,7 +11,7 @@ archive_bp = Blueprint("archive_bp", __name__)
 def archive(year):
     if not year:
         archived_years = []
-        for cb in queries.get_all_completed_correct_brackets():
+        for cb in bracket_queries.get_all_completed_correct_brackets():
             archived_years.append(bracket_utils.BaseCorrectBracketInterface(bracket=cb))
 
         return render_template("archive.html", archived_years=archived_years)

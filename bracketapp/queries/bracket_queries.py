@@ -1,17 +1,13 @@
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
-    User,
     Bracket,
     Game,
     DefaultBracket,
     DefaultGame,
-    Theme,
 )
 from bracketapp import db
-from bracketapp import bcrypt
 from bracketapp.utils import bracket_utils
-from flask_login import current_user
 from bracketapp.config import YEAR
 
 
@@ -353,147 +349,3 @@ def update_all_bracket_points():
         db.session.commit()
 
     update_bracket_standings(brackets=brackets, correct=correct)
-
-
-##
-## theme queries
-##
-def get_theme():
-    return Theme.query.filter_by(user_id=current_user.id).first()
-
-
-def set_theme(theme_color=None, background_color=None, color=None):
-    if not current_user.is_authenticated:
-        return
-
-    if theme_color is not None and theme_color not in ("", "dark", "light"):
-        return
-
-    if background_color is not None and background_color not in (
-        "",
-        "niks-favorite",
-        "red",
-        "gray",
-        "orange",
-        "amber",
-        "yellow",
-        "lime",
-        "green",
-        "emerald",
-        "teal",
-        "cyan",
-        "sky",
-        "blue",
-        "indigo",
-        "violet",
-        "purple",
-        "fuchsia",
-        "pink",
-        "rose",
-    ):
-        return
-
-    if color is not None and color not in (
-        "",
-        "red",
-        "gray",
-        "orange",
-        "amber",
-        "yellow",
-        "lime",
-        "green",
-        "emerald",
-        "teal",
-        "cyan",
-        "sky",
-        "blue",
-        "indigo",
-        "violet",
-        "purple",
-        "fuchsia",
-        "pink",
-        "rose",
-    ):
-        return
-
-    theme = get_theme()
-
-    if theme:
-        if theme_color is not None:
-            theme.theme = theme_color
-        if background_color is not None:
-            theme.backgroundColor = background_color
-        if color is not None:
-            theme.color = color
-        db.session.commit()
-    else:
-        theme = Theme(
-            user_id=current_user.id,
-            theme=theme_color or "",
-            backgroundColor=background_color or "",
-            color=color or "",
-        )
-        db.session.add(theme)
-        db.session.commit()
-
-    return theme
-
-
-##
-## user queries
-##
-def create_user(email, username, password):
-    hash_ = hash_password(password=password)
-    new_user = User(email=email, username=username, password=hash_)
-    db.session.add(new_user)
-    db.session.commit()
-
-
-def get_user_by_id(id):
-    return User.query.filter_by(id=id).first()
-
-
-def get_user_by_email(email):
-    return User.query.filter_by(email=email).first()
-
-
-def get_all_users():
-    return User.query.all()
-
-
-def update_user(id, username, email):
-    user = get_user_by_id(id=id)
-
-    username = username if is_username_unique(username=username) else None
-    email = email if is_email_unique(email=email) else None
-
-    if username:
-        user.username = username
-
-    if email:
-        user.email = email
-
-    db.session.commit()
-
-
-def update_user_password(id, password):
-    if not password or not id:
-        return
-
-    user = get_user_by_id(id=id)
-    hash_ = hash_password(password=password)
-    user.password = hash_
-
-    db.session.commit()
-
-
-def hash_password(password):
-    return bcrypt.generate_password_hash(password=password).decode("utf-8")
-
-
-def is_email_unique(email):
-    return not User.query.filter_by(email=email).first()
-
-
-def is_username_unique(username):
-    return not User.query.filter_by(username=username).first()

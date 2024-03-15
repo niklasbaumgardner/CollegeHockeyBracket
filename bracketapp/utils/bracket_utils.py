@@ -1,4 +1,4 @@
-from bracketapp.utils import queries
+from bracketapp.queries import bracket_queries, user_queries
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from flask import url_for
 import os.path
@@ -26,22 +26,24 @@ class EmptyGame:
 class BracketInterface:
     def __init__(self, bracket_id, safe_only=True, year=None, bracket=None, games=None):
         if year:
-            self.bracket = queries.get_user_bracket_for_bracket_id_and_year(
+            self.bracket = bracket_queries.get_user_bracket_for_bracket_id_and_year(
                 bracket_id=bracket_id, year=year
             )
         else:
             self.bracket = (
-                bracket if bracket else queries.get_bracket_for_bracket_id(bracket_id)
+                bracket
+                if bracket
+                else bracket_queries.get_bracket_for_bracket_id(bracket_id)
             )
 
         self.games = (
             games
             if games is not None
-            else queries.get_all_user_games_for_bracket(bracket_id)
+            else bracket_queries.get_all_user_games_for_bracket(bracket_id)
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
 
-        user = queries.get_user_by_id(id=self.bracket.user_id)
+        user = user_queries.get_user_by_id(id=self.bracket.user_id)
         try:
             self.username = user.username
             self.user_id = user.id
@@ -71,22 +73,22 @@ class BracketInterface:
 class BaseCorrectBracketInterface:
     def __init__(self, year=None, bracket=None):
         if year:
-            self.bracket = queries.get_correct_bracket_for_year(year)
+            self.bracket = bracket_queries.get_correct_bracket_for_year(year)
         else:
-            self.bracket = bracket if bracket else queries.get_correct_bracket()
+            self.bracket = bracket if bracket else bracket_queries.get_correct_bracket()
         self.img_url = assign_image(self.bracket)
 
 
 class CorrectBracketInterface:
     def __init__(self, year=None, bracket=None, games=None):
         if year:
-            self.bracket = queries.get_correct_bracket_for_year(year)
+            self.bracket = bracket_queries.get_correct_bracket_for_year(year)
         else:
-            self.bracket = bracket if bracket else queries.get_correct_bracket()
+            self.bracket = bracket if bracket else bracket_queries.get_correct_bracket()
         self.games = (
             games
             if games
-            else queries.get_all_correct_games_for_correct_bracket(
+            else bracket_queries.get_all_correct_games_for_correct_bracket(
                 bracket_id=self.bracket.id
             )
         )
@@ -130,13 +132,13 @@ class CorrectBracketInterface:
 class DefaultBracketInterface:
     def __init__(self, year=None, bracket=None, games=None):
         if year:
-            self.bracket = queries.get_default_bracket_for_year(year)
+            self.bracket = bracket_queries.get_default_bracket_for_year(year)
         else:
-            self.bracket = bracket if bracket else queries.get_default_bracket()
+            self.bracket = bracket if bracket else bracket_queries.get_default_bracket()
         self.games = (
             games
             if games
-            else queries.get_all_default_games_for_default_bracket(
+            else bracket_queries.get_all_default_games_for_default_bracket(
                 bracket_id=self.bracket.id
             )
         )
@@ -178,7 +180,7 @@ def get_winner(standings):
     if not standings:
         return
 
-    correct = queries.get_correct_bracket()
+    correct = bracket_queries.get_correct_bracket()
 
     if not correct or not correct.winner:
         return None
@@ -209,9 +211,9 @@ def get_bracket_standings():
         BracketInterface(
             bracket_id=b.id, safe_only=CAN_EDIT_BRACKET, bracket=b, games=[]
         )
-        for b in queries.get_all_brackets()
+        for b in bracket_queries.get_all_brackets()
     ]
-    correct = queries.get_correct_bracket()
+    correct = bracket_queries.get_correct_bracket()
 
     if correct and correct.winner:
         for bracket in brackets:
@@ -232,8 +234,8 @@ def get_bracket_standings():
 
 
 def get_bracket_standings_for_year(year):
-    brackets = queries.get_all_user_brackets_for_year(year=year)
-    correct = queries.get_correct_bracket_for_year(year=year)
+    brackets = bracket_queries.get_all_user_brackets_for_year(year=year)
+    correct = bracket_queries.get_correct_bracket_for_year(year=year)
 
     for bracket in brackets:
         bracket.goal_difference = abs(
