@@ -21,7 +21,6 @@
             <div class="mb-2">
                 <form action="{{ url_for('auth_bp.login', next=request.args.get('next', '')) }}" method="POST">
                     <div class="nb-row">
-                        <!-- <sl-input type="email" name="email" label="Email" placeholder="Your email" required></sl-input> -->
                         <div>
                             <label>Email *</label>
                             <div>
@@ -29,7 +28,6 @@
                             </div>
                         </div>
                         <div>
-                            <!-- <sl-input class="mb-2" type="password" name="password" label="Password" placeholder="Your password" required></sl-input> -->
                             <div>
                                 <label>Password *</label>
                                 <div>
@@ -39,6 +37,8 @@
                             <sl-checkbox name="remember" value="True" checked>Remember me?</sl-checkbox>
                         </div>
                         <div class="w-100">
+                            <!-- This submit button is hidden so "Enter" will submit the form -->
+                            <button type="submit" hidden></button>
                             <sl-button class="w-100 mb-2" type="submit" variant="primary">Login</sl-button>
                             <p class="small"><a href="{{ url_for('auth_bp.password_request') }}">Forgot password?</a></p>
                         </div>
@@ -49,4 +49,5 @@
         </sl-card>
     </div>
 </div>
+
 {% endblock content %}
