@@ -19,33 +19,20 @@ nb-edit-correct-matchup {
   display: inline-flex;
   align-items: center;
   padding: var(--sl-spacing-2x-small);
-
-  border: var(--border-width) solid var(--sl-color-neutral-300);
-
-  &:first-child {
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
-  }
-
-  &:last-child {
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-  }
 }
 
-.correct {
-  color: var(--sl-color-success-900);
-  background-color: rgb(0, 255, 0, 0.05);
-  padding: var(--sl-spacing-3x-small);
-  height: 24px;
-}
-
+.correct,
 .incorrect {
-  color: var(--sl-color-danger-900);
-  text-decoration-line: line-through;
-  background-color: rgb(255, 0, 0, 0.05);
-  padding: var(--sl-spacing-3x-small);
-  height: 24px;
+  padding-block: 0;
+  height: 22px;
+}
+
+.correct > sl-icon {
+  color: var(--sl-color-success-500);
+}
+
+.incorrect > sl-icon {
+  color: var(--sl-color-danger-500);
 }
 
 label#top,
@@ -60,12 +47,16 @@ label#bottom {
   padding-right: var(--sl-spacing-2x-small);
 }
 
+.loser-team {
+  color: var(--sl-color-neutral-700);
+}
+
 .team-name {
   margin-right: auto;
 }
 
 .winner-img {
-  padding: 10px;
+  padding: 0;
   width: 120px;
   height: 120px;
   min-width: 120px;
@@ -75,15 +66,15 @@ label#bottom {
 .round-one > nb-matchup,
 .round-one > nb-edit-matchup,
 .round-one > nb-edit-correct-matchup {
-  padding: 36px 0;
+  padding: 31px 0;
 }
 
 .round-two > nb-matchup {
-  padding: 76px 0;
+  padding: 73px 0;
 }
 
 .round-three > nb-matchup {
-  padding: 200px 0;
+  padding: 201px 0;
 }
 
 .bracket-grid-edit .round-two > nb-matchup,
@@ -91,7 +82,7 @@ label#bottom {
 .cbracket-grid-edit .round-two > nb-matchup,
 .round-two > nb-edit-matchup,
 .round-two > nb-edit-correct-matchup {
-  padding: 100px 0;
+  padding: 95px 0;
 }
 
 .bracket-grid-edit .round-three > nb-matchup,
@@ -99,7 +90,7 @@ label#bottom {
 .cbracket-grid-edit .round-three > nb-matchup,
 .round-three > nb-edit-matchup,
 .round-three > nb-edit-correct-matchup {
-  padding: 228px 0;
+  padding: 223px 0;
 }
 
 .cbracket-grid-edit li > input[type="number"] {
@@ -181,21 +172,23 @@ label#bottom {
 
 @media screen and (max-width: 1400px) {
   .bracket-grid,
-  .cbracket-grid {
-    overflow-x: scroll;
+  .cbracket-grid,
+  .bracket-grid-edit,
+  .cbracket-grid-edit {
     grid-template:
       "round-one-left round-two-left round-three-left round-final"
       "round-one-right round-two-right round-three-right round-final";
   }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 992px) {
+  .bracket-grid,
+  .cbracket-grid,
   .bracket-grid-edit,
   .cbracket-grid-edit {
     overflow-x: scroll;
-    grid-template:
-      "round-one-left round-two-left round-three-left round-final"
-      "round-one-right round-two-right round-three-right round-final";
+    box-shadow: var(--sl-shadow-x-large);
+    padding: var(--sl-spacing-small);
   }
 }
 
@@ -237,4 +230,29 @@ nb-edit-correct-matchup input[type="number"] {
   display: inherit;
   width: 100%;
   text-align: center;
+}
+
+.bracket-details-content {
+  font-weight: var(--sl-font-weight-bold);
+  padding: var(--sl-spacing-x-small);
+}
+
+.bracket-details-label {
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--sl-color-neutral-700);
+  font-size: var(--sl-font-size-x-small);
+  padding: var(--sl-spacing-x-small);
+}
+
+.bracket-sub-details {
+  .bracket-details-content {
+    font-size: var(--sl-font-size-x-small);
+    padding: var(--sl-spacing-2x-small);
+  }
+
+  .bracket-details-label {
+    font-size: var(--sl-font-size-2x-small);
+    padding: var(--sl-spacing-2x-small);
+  }
 }

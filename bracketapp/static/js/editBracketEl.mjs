@@ -302,9 +302,7 @@ class EditBracket extends NikElement {
     //     >`;
     // }
 
-    return html`${content}<sl-button href=${CANCEL_BRACKET_URL}
-        >Cancel</sl-button
-      >`;
+    return html`<sl-button href=${STANDINGS_URL}>Cancel</sl-button>${content}`;
   }
 
   setNext(el) {
@@ -382,11 +380,9 @@ class EditBracket extends NikElement {
   }
 
   render() {
-    return html`<sl-card
-      class="w-100"
-      style="--sl-panel-background-color: var(--sl-color-neutral-0)"
-      ><form action="${BRACKET_FORM_URL}" method="POST">
-        <div class="row justify-content-center">
+    return html`<div class="w-100">
+      <form action="${BRACKET_FORM_URL}" method="POST">
+        <div class="row justify-content-center mb-3">
           <div class="col-auto">
             <sl-input
               name="name"
@@ -397,46 +393,44 @@ class EditBracket extends NikElement {
             ></sl-input>
           </div>
         </div>
-        <div class="row">
-          <div class="bracket-grid-edit" @click=${this.handleClick}>
-            <div class="round-one-left">
-              <span class="round-details">Round 1</span>
-              ${this.roundOneLeftTemplate()}
-            </div>
+        <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
+          <div class="round-one-left">
+            <span class="round-details">Round 1</span>
+            ${this.roundOneLeftTemplate()}
+          </div>
 
-            <div class="round-two-left">
-              <span class="round-details">Round 2</span>
-              ${this.roundTwoLeftTemplate()}
-            </div>
+          <div class="round-two-left">
+            <span class="round-details">Round 2</span>
+            ${this.roundTwoLeftTemplate()}
+          </div>
 
-            <div class="round-three-left">
-              <span class="round-details">Round 3</span>
-              ${this.roundThreeLeftTemplate()}
-            </div>
+          <div class="round-three-left">
+            <span class="round-details">Round 3</span>
+            ${this.roundThreeLeftTemplate()}
+          </div>
 
-            ${this.championTemplate()}
+          ${this.championTemplate()}
 
-            <div class="round-three-right">
-              <span class="round-details">Round 3</span>
-              ${this.roundThreeRightTemplate()}
-            </div>
+          <div class="round-three-right">
+            <span class="round-details">Round 3</span>
+            ${this.roundThreeRightTemplate()}
+          </div>
 
-            <div class="round-two-right">
-              <span class="round-details">Round 2</span>
-              ${this.roundTwoRightTemplate()}
-            </div>
+          <div class="round-two-right">
+            <span class="round-details">Round 2</span>
+            ${this.roundTwoRightTemplate()}
+          </div>
 
-            <div class="round-one-right round-one">
-              <span class="round-details">Round 1</span>
-              ${this.roundOneRightTemplate()}
-            </div>
+          <div class="round-one-right round-one">
+            <span class="round-details">Round 1</span>
+            ${this.roundOneRightTemplate()}
           </div>
         </div>
         <div class="d-flex justify-content-center" style="gap:1rem;">
           ${this.buttonsTemplate()}
         </div>
-      </form></sl-card
-    >`;
+      </form>
+    </div>`;
   }
 }
 

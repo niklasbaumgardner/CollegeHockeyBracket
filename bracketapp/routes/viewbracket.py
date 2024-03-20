@@ -20,7 +20,7 @@ def view_bracket(id):
     if id:
         bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=id)
         if not (
-            bracket.user_id == current_user.id
+            (current_user.is_authenticated and bracket.user_id == current_user.id)
             or not CAN_EDIT_BRACKET
             or bracket.year < YEAR
         ):
@@ -40,12 +40,16 @@ def view_bracket(id):
     except:
         correct = None
 
-    if not bracket and CAN_EDIT_BRACKET and current_user.is_authenticated():
+    if not bracket and CAN_EDIT_BRACKET and current_user.is_authenticated:
         return redirect(url_for("editbracket_bp.edit_bracket"))
     elif not bracket:
         return redirect(url_for("index_bp.index"))
 
-    mine = "active" if current_user.id == bracket.user_id else ""
+    mine = (
+        "active"
+        if current_user.is_authenticated and current_user.id == bracket.user_id
+        else ""
+    )
 
     bracket = bracket_utils.BracketInterface(
         bracket_id=bracket.id, bracket=bracket, safe_only=False

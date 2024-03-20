@@ -52,6 +52,7 @@ class Bracket(db.Model):
             obj = dict(
                 id=self.id,
                 name=self.name,
+                year=self.year,
                 points=self.points,
                 maxPoints=self.max_points,
                 rank=self.rank,
@@ -62,6 +63,7 @@ class Bracket(db.Model):
             obj = dict(
                 id=self.id,
                 name=self.name,
+                year=self.year,
                 points=self.points,
                 r1=self.r1,
                 r2=self.r2,

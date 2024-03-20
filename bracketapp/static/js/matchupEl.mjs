@@ -55,11 +55,21 @@ class Matchup extends NikElement {
   defaultMatchupTemplate() {
     return html`<div class="nb-team">
         ${this.getImageElement(this.default.home)}
-        <span class="team-name">${this.default.home}</span
+        <span
+          class="team-name ${this.correct.winner &&
+          this.correct.winner !== this.default.home
+            ? "loser-team"
+            : ""}"
+          >${this.default.home}</span
         ><span>${this.correct?.hGoals}</span>
       </div>
       <div class="nb-team">
-        ${this.getImageElement(this.default.away)}<span class="team-name"
+        ${this.getImageElement(this.default.away)}
+        <span
+          class="team-name ${this.correct.winner &&
+          this.correct.winner !== this.default.away
+            ? "loser-team"
+            : ""}"
           >${this.default.away}</span
         ><span>${this.correct?.aGoals}</span>
       </div>`;
@@ -72,6 +82,17 @@ class Matchup extends NikElement {
     return "";
   }
 
+  getTopIcon() {
+    if (this.correctTop) {
+      return html`<sl-icon
+        name="${this.correctTop === this.winnerTop
+          ? "check-circle-fill"
+          : "x-circle-fill"}"
+      ></sl-icon>`;
+    }
+    return null;
+  }
+
   getBottomClass() {
     if (this.correctBottom) {
       return this.correctBottom === this.winnerBottom ? "correct" : "incorrect";
@@ -79,12 +100,23 @@ class Matchup extends NikElement {
     return "";
   }
 
+  getBottomIcon() {
+    if (this.correctBottom) {
+      return html`<sl-icon
+        name="${this.correctBottom === this.winnerBottom
+          ? "check-circle-fill"
+          : "x-circle-fill"}"
+      ></sl-icon>`;
+    }
+    return null;
+  }
+
   getTopWinner() {
     if (!this.winnerTop) {
       return null;
     }
     return html`<div class="nb-team ${this.getTopClass()}">
-      <span class="team-name">${this.winnerTop}</span>
+      <span class="team-name">${this.winnerTop}</span>${this.getTopIcon()}
     </div>`;
   }
 
@@ -93,19 +125,29 @@ class Matchup extends NikElement {
       return null;
     }
     return html`<div class="nb-team ${this.getBottomClass()}">
-      <span class="team-name">${this.winnerBottom}</span>
+      <span class="team-name">${this.winnerBottom}</span>${this.getBottomIcon()}
     </div>`;
   }
 
   matchupTemplate() {
     return html`${this.getTopWinner()}
       <div class="nb-team">
-        ${this.getImageElement(this.correctTop)}<span class="team-name"
+        ${this.getImageElement(this.correctTop)}
+        <span
+          class="team-name ${this.correct.winner &&
+          this.correct.winner !== this.correctTop
+            ? "loser-team"
+            : ""}"
           >${this.correctTop}</span
         ><span>${this.correct?.hGoals}</span>
       </div>
       <div class="nb-team">
-        ${this.getImageElement(this.correctBottom)}<span class="team-name"
+        ${this.getImageElement(this.correctBottom)}
+        <span
+          class="team-name ${this.correct.winner &&
+          this.correct.winner !== this.correctBottom
+            ? "loser-team"
+            : ""}"
           >${this.correctBottom}</span
         ><span>${this.correct?.aGoals}</span>
       </div>
@@ -119,7 +161,11 @@ class Matchup extends NikElement {
     } else {
       content = this.matchupTemplate();
     }
-    return html`<div class="matchup">${content}</div>`;
+    return html`<sl-card
+      class="matchup"
+      style="--padding: var(--sl-spacing-2x-small);"
+      >${content}</sl-card
+    >`;
   }
 }
 

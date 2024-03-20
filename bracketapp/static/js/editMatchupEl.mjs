@@ -63,12 +63,14 @@ class EditMatchup extends NikElement {
   }
 
   render() {
-    return html`<div class="matchup">
+    return html`<sl-card
+      class="matchup"
+      style="--padding: var(--sl-spacing-2x-small);--border-color: transparent;"
+    >
       <div class="nb-team">
         <label id="top">
-          ${this.topInput(this.winnerTop)}${this.getImageElement(
-            this.winnerTop
-          )}
+          ${this.topInput(this.winnerTop)}
+          ${this.getImageElement(this.winnerTop)}
           <span>${this.winnerTop}</span>
         </label>
       </div>
@@ -79,7 +81,7 @@ class EditMatchup extends NikElement {
           <span>${this.winnerBottom}</span>
         </label>
       </div>
-    </div>`;
+    </sl-card>`;
   }
 }
 
