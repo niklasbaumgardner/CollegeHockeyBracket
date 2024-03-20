@@ -297,11 +297,11 @@ class Bracket extends NikElement {
           <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
         </div>
         <sl-divider></sl-divider>
-        <div class="d-flex justify-content-center gap-4">
+        <div class="d-flex justify-content-center gap-4 flex-wrap">
           ${this.getImageElement(this.bracket.winner, true)}
           <div>
             <h4>${this.bracket?.name}</h4>
-            <div class="d-flex justify-content-evenly flex-wrap">
+            <div class="d-flex justify-content-evenly">
               <div class="d-flex">
                 <span
                   ><p class="bracket-details-content">
