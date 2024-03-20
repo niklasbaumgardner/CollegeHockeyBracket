@@ -149,3 +149,7 @@ sl-dialog:not([open]) {
   opacity: 1;
   transition: 0.2s opacity;
 }
+
+.display-inline-grid {
+  display: inline-grid;
+}

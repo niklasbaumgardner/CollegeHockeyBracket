@@ -272,6 +272,90 @@ class Bracket extends NikElement {
     </div>`;
   }
 
+  topCardTemplate() {
+    return html`<sl-card class="mb-3">
+      <div class="d-flex justify-content-center" slot="header">
+        <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
+      </div>
+      <div class="d-flex justify-content-center gap-4 flex-wrap">
+        ${this.getImageElement(this.bracket.winner, true)}
+        <div>
+          <h4>${this.bracket?.name}</h4>
+          <div class="d-flex justify-content-evenly">
+            <div class="d-flex">
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.rank ?? "--"}
+                </p>
+                <p class="bracket-details-label">Rank</p></span
+              >
+            </div>
+            <div class="d-flex">
+              <sl-divider vertical></sl-divider>
+              <span
+                ><p class="bracket-details-content">${this.bracket?.points}</p>
+                <p class="bracket-details-label">Points</p></span
+              >
+            </div>
+            <div class="d-flex">
+              <sl-divider vertical></sl-divider>
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.maxPoints}
+                </p>
+                <p class="bracket-details-label">Max points</p></span
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="bracket-sub-details display-inline-grid align-content-center"
+        >
+          <div class="d-flex justify-content-center">
+            <p>Points breakdown</p>
+          </div>
+          <div class="d-flex justify-content-evenly">
+            <div class="d-flex">
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.r2 ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Round 1</p></span
+              >
+            </div>
+            <div class="d-flex">
+              <sl-divider vertical></sl-divider>
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.r2 ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Round 2</p></span
+              >
+            </div>
+            <div class="d-flex">
+              <sl-divider vertical></sl-divider>
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.r3 ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Final Four</p></span
+              >
+            </div>
+            <div class="d-flex">
+              <sl-divider vertical></sl-divider>
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.r4 ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Championship</p></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </sl-card>`;
+  }
+
   render() {
     // let roundPoints = html`<div class="d-flex flex-wrap bracket-sub-details">
     //   <div class="d-flex">
@@ -304,46 +388,7 @@ class Bracket extends NikElement {
     // </div>`;
 
     return html`<div class="w-100">
-      <sl-card class="mb-3">
-        <div class="d-flex justify-content-center">
-          <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
-        </div>
-        <sl-divider></sl-divider>
-        <div class="d-flex justify-content-center gap-4 flex-wrap">
-          ${this.getImageElement(this.bracket.winner, true)}
-          <div>
-            <h4>${this.bracket?.name}</h4>
-            <div class="d-flex justify-content-evenly">
-              <div class="d-flex">
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.rank ?? "--"}
-                  </p>
-                  <p class="bracket-details-label">Rank</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.points}
-                  </p>
-                  <p class="bracket-details-label">Points</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.maxPoints}
-                  </p>
-                  <p class="bracket-details-label">Max points</p></span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </sl-card>
+      ${this.topCardTemplate()}
 
       <div class="${this.getBracketClass()}">
         <div class="round-one-left">
