@@ -21,17 +21,24 @@ nb-edit-correct-matchup {
   padding: var(--sl-spacing-2x-small);
 }
 
+.champion-pick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .correct,
 .incorrect {
   padding-block: 0;
   height: 22px;
 }
 
-.correct > sl-icon {
+sl-icon[name="check-circle-fill"] {
   color: var(--sl-color-success-500);
 }
 
-.incorrect > sl-icon {
+sl-icon[name="x-circle-fill"] {
   color: var(--sl-color-danger-500);
 }
 

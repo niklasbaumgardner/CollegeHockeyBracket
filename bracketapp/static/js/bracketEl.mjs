@@ -142,9 +142,19 @@ class Bracket extends NikElement {
     return html`<div class="col text-center">
       <div class="row justify-content-center">
         ${this.getImageElement(this.correct?.winner)}
-        <span class="fs-5">Champion</span>
+        <p>Champion</p>
       </div>
     </div>`;
+  }
+
+  getChampionPickIcon() {
+    if (this.correct.winner) {
+      if (this.correct.winner === this.bracket.winner) {
+        return html`<sl-icon name="check-circle-fill"></sl-icon>`;
+      }
+      return html`<sl-icon name="x-circle-fill"></sl-icon>`;
+    }
+    return null;
   }
 
   pickedChampionTemplate() {
@@ -155,7 +165,9 @@ class Bracket extends NikElement {
     return html`<div class="col text-center">
       <div class="row justify-content-center">
         ${this.getImageElement(this.bracket?.winner)}
-        <span class="fs-5">${IS_ME ? "Your pick" : "Their pick"}</span>
+        <p class="champion-pick">
+          ${IS_ME ? "Your pick" : "Their pick"}${this.getChampionPickIcon()}
+        </p>
       </div>
     </div>`;
   }
