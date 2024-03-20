@@ -100,3 +100,52 @@ sl-dialog:not([open]) {
   width: 100px;
   height: 100px;
 }
+
+.archive-grid {
+  display: grid;
+  column-gap: var(--sl-spacing-small);
+  row-gap: var(--sl-spacing-small);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .archive-grid {
+    grid-template-columns: repeat(2, 342px);
+  }
+}
+
+@media (min-width: 992px) {
+  .archive-grid {
+    grid-template-columns: repeat(3, 304px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .archive-grid {
+    grid-template-columns: repeat(3, 364px);
+  }
+}
+
+@media (min-width: 1400px) {
+  .archive-grid {
+    grid-template-columns: repeat(4, 315px);
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.width-fit-content {
+  width: fit-content;
+}
+
+:not(:defined) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+:defined {
+  opacity: 1;
+  transition: 0.2s opacity;
+}

@@ -12,38 +12,31 @@
     }
 </script>
 
-<div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fs-1">
-        Archive
-    </div>
+<div class="d-flex justify-content-center">
+    <sl-card class="mb-5 width-fit-content">
+        <div slot="header">
+            <h1>Archive</h1>
+        </div>
+        Click on the cards below to view the standings and brackets of each respective year
+    </sl-card>
 </div>
 
-<sl-card class="w-100">
-    <table class="table table-striped table-hover">
-        <thead class="">
-            <tr>
-                <th scope="col-7" class="fs-3">
-                    National Champion
-                </th>
-                <th scope="col-3" class="fs-3">
-                    Year
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for bracket in archived_years %}
-                <tr onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
-                    <td class="col-7 fs-3">
-                        <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/> &nbsp;&nbsp;&nbsp;&nbsp; {{ bracket.bracket.winner }}
-                    </td>
-                    <td class="col-5">
-                        <p class="fs-3">{{ bracket.bracket.year }}</p>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</sl-card>
+<div class="archive-grid">
+    {% for bracket in archived_years %}
+        <sl-card class="cursor-pointer" onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
+            <div class="row mb-2">
+                <div class="col">
+                    <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                </div>
+                <div class="col">
+                    <h2>{{ bracket.bracket.year }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <h3><a href="{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}">{{ bracket.bracket.winner }}</a></h3>
+            </div>
+        </sl-card>
+    {% endfor %}
+</div>
 
 {% endblock content %}

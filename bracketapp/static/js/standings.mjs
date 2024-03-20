@@ -51,12 +51,12 @@ class StandingsGridManager {
         },
         resizable: false,
       },
+      { field: "points", headerName: "Total points", resizable: false },
+      { field: "maxPoints", headerName: "Max points", resizable: false },
       { field: "r1", resizable: false },
       { field: "r2", resizable: false },
       { field: "r3", resizable: false },
       { field: "r4", resizable: false },
-      { field: "points", headerName: "Total points", resizable: false },
-      { field: "maxPoints", headerName: "Max points", resizable: false },
     ];
     const gridOptions = {
       columnDefs,
@@ -68,6 +68,14 @@ class StandingsGridManager {
           {
             colId: "name",
             minWidth: 400,
+          },
+          {
+            colId: "points",
+            minWidth: 125,
+          },
+          {
+            colId: "maxPoints",
+            minWidth: 125,
           },
         ],
       },
