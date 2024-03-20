@@ -37,7 +37,7 @@ class StandingsGridManager {
     }
 
     const columnDefs = [
-      { field: "rank" },
+      { field: "rank", resizable: false },
       {
         field: "name",
         headerName: "Bracket, Owner",
@@ -49,13 +49,14 @@ class StandingsGridManager {
           }
           return `${param.value}, ${param.data.username}`;
         },
+        resizable: false,
       },
-      { field: "r1" },
-      { field: "r2" },
-      { field: "r3" },
-      { field: "r4" },
-      { field: "points", headerName: "Total points" },
-      { field: "maxPoints", headerName: "Max points" },
+      { field: "r1", resizable: false },
+      { field: "r2", resizable: false },
+      { field: "r3", resizable: false },
+      { field: "r4", resizable: false },
+      { field: "points", headerName: "Total points", resizable: false },
+      { field: "maxPoints", headerName: "Max points", resizable: false },
     ];
     const gridOptions = {
       columnDefs,
@@ -66,7 +67,7 @@ class StandingsGridManager {
         columnLimits: [
           {
             colId: "name",
-            minWidth: 300,
+            minWidth: 400,
           },
         ],
       },
