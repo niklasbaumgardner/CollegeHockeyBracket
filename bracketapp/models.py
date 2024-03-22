@@ -31,6 +31,19 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
 
+class Team(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+    icon_path = db.Column(db.String, nullable=False)
+
+
+class BracketTeam(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer, db.ForeignKey(Team.id), nullable=False)
+    rank = db.Column(db.Integer, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+
+
 class Bracket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -42,7 +55,8 @@ class Bracket(db.Model):
     r4 = db.Column(db.Integer, nullable=True)
     name = db.Column(db.String(30), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    winner = db.Column(db.String(30), nullable=True)  # TODO: make winner not nullable
+    # winner = db.Column(db.String(30), nullable=True)  # TODO: make winner not nullable
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=False)
     rank = db.Column(db.Integer, nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
@@ -84,16 +98,18 @@ class Bracket(db.Model):
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    bracket_id = db.Column(db.Integer, db.ForeignKey("bracket.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    bracket_id = db.Column(db.Integer, db.ForeignKey(Bracket.id), nullable=False)
     game_num = db.Column(db.String(10), nullable=False)
-    winner = db.Column(db.String(30), nullable=True)
+    # winner = db.Column(db.String(30), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
 
 
 class CorrectBracket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
-    winner = db.Column(db.String(30), nullable=True)
+    # winner = db.Column(db.String(30), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
 
@@ -102,8 +118,10 @@ class CorrectGame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bracket_id = db.Column(db.Integer, db.ForeignKey(CorrectBracket.id), nullable=False)
     game_num = db.Column(db.String(10), nullable=False)
-    winner = db.Column(db.String(30), nullable=True)
-    loser = db.Column(db.String(30), nullable=True)
+    # winner = db.Column(db.String(30), nullable=True)
+    # loser = db.Column(db.String(30), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    loser = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     h_goals = db.Column(db.Integer, nullable=True)
     a_goals = db.Column(db.Integer, nullable=True)
 
@@ -117,13 +135,15 @@ class DefaultGame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bracket_id = db.Column(db.Integer, db.ForeignKey(DefaultBracket.id), nullable=False)
     game_num = db.Column(db.String(10), nullable=False)
-    home = db.Column(db.String(30), nullable=True)
-    away = db.Column(db.String(30), nullable=True)
+    # home = db.Column(db.String(30), nullable=True)
+    # away = db.Column(db.String(30), nullable=True)
+    home = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    away = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
 
 
 class Theme(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     theme = db.Column(db.String, nullable=True)
     backgroundColor = db.Column(db.String, nullable=True)
     color = db.Column(db.String, nullable=True)
