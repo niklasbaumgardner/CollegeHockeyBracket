@@ -73,7 +73,7 @@ def update_user_game(bracket_id, game_num, winner):
 def get_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
-    return Bracket.query.filter_by(id=bracket_id, year=YEAR).first()
+    return Bracket.query.filter_by(id=bracket_id).first()
 
 
 def get_user_bracket_for_bracket_id_and_year(bracket_id, year):

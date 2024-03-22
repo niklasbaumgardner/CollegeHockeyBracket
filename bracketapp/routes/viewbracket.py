@@ -34,11 +34,18 @@ def view_bracket(id):
     else:
         return redirect(url_for("auth_bp.login"))
 
-    default = bracket_utils.DefaultBracketInterface()
-    try:
-        correct = bracket_utils.CorrectBracketInterface()
-    except:
-        correct = None
+    if bracket:
+        default = bracket_utils.DefaultBracketInterface(year=bracket.year)
+        try:
+            correct = bracket_utils.CorrectBracketInterface(year=bracket.year)
+        except:
+            correct = None
+    else:
+        default = bracket_utils.DefaultBracketInterface()
+        try:
+            correct = bracket_utils.CorrectBracketInterface()
+        except:
+            correct = None
 
     if not bracket and CAN_EDIT_BRACKET and current_user.is_authenticated:
         return redirect(url_for("editbracket_bp.edit_bracket"))
