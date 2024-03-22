@@ -116,10 +116,10 @@ class StandingsGridManager {
   handleThemeChange() {
     let theme = document.documentElement.getAttribute("data-bs-theme");
     this.standingsGridEl.classList.toggle(
-      "ag-theme-quartz-dark",
+      "ag-theme-alpine-dark",
       theme === "dark"
     );
-    this.standingsGridEl.classList.toggle("ag-theme-quartz", theme === "light");
+    this.standingsGridEl.classList.toggle("ag-theme-alpine", theme === "light");
   }
 }
 
