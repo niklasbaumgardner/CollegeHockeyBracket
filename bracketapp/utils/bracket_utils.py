@@ -158,9 +158,10 @@ class DefaultBracketInterface:
 
 
 class BracketWinner:
-    def __init__(self, winning_bracket, tie):
+    def __init__(self, winning_bracket, tie, total_correct_goals=0):
         self.winner = winning_bracket
         self.tie = tie
+        self.total_correct_goals = total_correct_goals
 
 
 def assign_image(bracket):
@@ -203,7 +204,9 @@ def get_winner(standings):
     min_goal_diff = winners[0].goal_difference
     winners = [w for w in winners if w.goal_difference <= min_goal_diff]
 
-    return BracketWinner(winners, True)
+    return BracketWinner(
+        winners, True, total_correct_goals=correct.w_goals + correct.l_goals
+    )
 
 
 def get_bracket_standings():

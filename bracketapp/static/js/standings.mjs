@@ -53,11 +53,17 @@ class StandingsGridManager {
       },
       { field: "points", headerName: "Total points", resizable: false },
       { field: "maxPoints", headerName: "Max points", resizable: false },
-      { field: "r1", resizable: false },
-      { field: "r2", resizable: false },
-      { field: "r3", resizable: false },
-      { field: "r4", resizable: false },
     ];
+
+    if (rowData.length > 1 && !!rowData[0].r1) {
+      columnDefs.push(
+        { field: "r1", resizable: false },
+        { field: "r2", resizable: false },
+        { field: "r3", resizable: false },
+        { field: "r4", resizable: false }
+      );
+    }
+
     const gridOptions = {
       columnDefs,
       rowData,
@@ -65,6 +71,7 @@ class StandingsGridManager {
         type: "fitGridWidth",
         defaultMinWidth: 75,
         columnLimits: [
+          { colId: "rank", maxWidth: 75 },
           {
             colId: "name",
             minWidth: 400,
