@@ -65,7 +65,7 @@ class EditMatchup extends NikElement {
   render() {
     return html`<sl-card
       class="matchup"
-      style="--padding: var(--sl-spacing-2x-small);--border-color: transparent;"
+      style="--padding: var(--sl-spacing-2x-small);"
     >
       <div class="nb-team">
         <label id="top">

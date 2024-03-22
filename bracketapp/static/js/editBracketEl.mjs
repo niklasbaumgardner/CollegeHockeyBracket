@@ -379,20 +379,54 @@ class EditBracket extends NikElement {
     this.formEl.reset();
   }
 
+  topCardTemplate() {
+    return html` <div class="d-flex justify-content-center">
+      <sl-card class="width-fit-content mb-3">
+        <div class="d-flex justify-content-center" slot="header">
+          <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
+        </div>
+        <div class="d-flex justify-content-center mb-5">
+          <div>
+            <h5>
+              To view current conference standings
+              <a
+                href="https://www.collegehockeynews.com/reports/standings.php"
+                target="_blank"
+                >click here</a
+              >.
+            </h5>
+            <h5>
+              To view stats
+              <a href="https://www.collegehockeynews.com/stats/" target="_blank"
+                >click here</a
+              >.
+            </h5>
+            <h5>
+              To view previous years brackets
+              <a href="${ARCHIVE_URL}" target="_blank">click here</a>.
+            </h5>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-5">
+          <sl-input
+            name="name"
+            label="Bracket name"
+            placeholder="mybracket"
+            value=${this.bracket.name}
+            required=""
+          ></sl-input>
+        </div>
+        <div class="d-flex justify-content-center" style="gap:1rem;">
+          ${this.buttonsTemplate()}
+        </div>
+      </sl-card>
+    </div>`;
+  }
+
   render() {
     return html`<div class="w-100">
       <form action="${BRACKET_FORM_URL}" method="POST">
-        <div class="row justify-content-center mb-3">
-          <div class="col-auto">
-            <sl-input
-              name="name"
-              label="Bracket name"
-              placeholder="mybracket"
-              value=${this.bracket.name}
-              required=""
-            ></sl-input>
-          </div>
-        </div>
+        ${this.topCardTemplate()}
         <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
           <div class="round-one-left">
             <span class="round-details">Round 1</span>
@@ -425,9 +459,6 @@ class EditBracket extends NikElement {
             <span class="round-details">Round 1</span>
             ${this.roundOneRightTemplate()}
           </div>
-        </div>
-        <div class="d-flex justify-content-center" style="gap:1rem;">
-          ${this.buttonsTemplate()}
         </div>
       </form>
     </div>`;

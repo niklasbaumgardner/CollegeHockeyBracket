@@ -10,14 +10,8 @@
     const BRACKET_FORM_URL = "{{ url_for('editbracket_bp.edit_bracket') }}";
     const CANCEL_BRACKET_URL = "{{ url_for('viewbracket_bp.view_bracket') }}";
     const STANDINGS_URL = "{{ url_for('index_bp.index') }}"
+    const ARCHIVE_URL = "{{ url_for('archive_bp.archive') }}";
 </script>
-
-
-<div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fs-1">
-        {{ year }} NCAA College Hockey Bracket
-    </div>
-</div>
 
 <nb-edit-bracket bracket="{{ bracket }}" default="{{ default }}"></nb-edit-bracket>
 
