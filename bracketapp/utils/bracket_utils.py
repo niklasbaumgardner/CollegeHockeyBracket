@@ -1,5 +1,6 @@
 from bracketapp.queries import bracket_queries, user_queries
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from flask_login import current_user
 from flask import url_for
 import os.path
 import json
@@ -207,6 +208,42 @@ def get_winner(standings):
     return BracketWinner(
         winners, True, total_correct_goals=correct.w_goals + correct.l_goals
     )
+
+
+def get_standings_message(standings, winner=None, force=False):
+    message = f'Welcome to this years bracket challenge! The tournament starts on Thursday, March 28 at 2:00PM ET.<br/>Make sure to <a href="{ url_for("editbracket_bp.edit_bracket") }">create your bracket</a> before then!<br/>To view or edit your bracket <a href="{ url_for("editbracket_bp.edit_bracket") }">click here</a>.'
+
+    if force or not CAN_EDIT_BRACKET:
+        winner = get_winner(standings=standings) if not winner else winner
+
+        if winner:
+            if not winner.tie and len(winner.winner) == 1:
+                message = f'<h4>Congratulations to { winner.winner[0].username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].bracket.id) }">{ winner.winner[0].bracket.name }</a>, { winner.winner[0].username } won this year\'s bracket challenge with <b>{ winner.winner[0].bracket.points }</b> points.'
+            elif winner.tie and len(winner.winner) > 1:
+                message = (
+                    f"<h4>We have a tie between {len(winner.winner)} brackets</h4>"
+                )
+                message += f"<div>The following brackets have tied with {winner.winner[0].bracket.points} points after the tiebreak (total goals: {winner.total_correct_goals})</div>"
+                for bracket in winner.winner:
+                    message += f'<div><a href="{ url_for("viewbracket_bp.view_bracket", id=bracket.bracket.id) }">{ bracket.bracket.name }</a>, { bracket.username } tied this year\'s bracket challenge with { winner.winner[0].bracket.points } points and { bracket.bracket.w_goals + bracket.bracket.l_goals } total goals</div>'
+            elif winner.tie and len(winner.winner) == 1:
+                message = f'<h4>Congratulations to { winner.winner[0].username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].bracket.id) }">{ winner.winner[0].bracket.name }</a>, { winner.winner[0].username } won this year\'s bracket challenge by the tiebreak with <b>{ winner.winner[0].bracket.points }</b> points and a goal differential of <b>{ abs((winner.winner[0].bracket.w_goals + winner.winner[0].bracket.l_goals) - (winner.total_correct_goals)) }</b>.'
+        else:
+            message = f"The tournament has started. See the current standings below."
+            if current_user.is_authenticated:
+                message += f' To view your bracket <a href="{ url_for("viewbracket_bp.view_bracket") }">click here</a>.'
+
+    return message
+
+
+def get_archive_message(standings):
+    winner = get_winner(standings=standings)
+    if not winner:
+        message = "There are no brackets for this year. See the final bracket below."
+    else:
+        message = get_standings_message(standings=standings, winner=winner, force=True)
+
+    return message
 
 
 def get_bracket_standings():

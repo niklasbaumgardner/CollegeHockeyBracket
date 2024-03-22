@@ -17,10 +17,12 @@ def archive(year):
         return render_template("archive.html", archived_years=archived_years)
     else:
         standings, correct = bracket_utils.get_bracket_standings_for_year(year)
+        message = bracket_utils.get_archive_message(standings)
         standings_json = [correct.to_json()] + [b.to_json() for b in standings]
         return render_template(
             "standings.html",
             standings=standings_json,
             CAN_CLICK=True,
             year=year,
+            message=message,
         )
