@@ -276,7 +276,7 @@ class Bracket extends NikElement {
     return html`<div class="d-flex justify-content-center">
       <sl-card class="width-fit-content mb-3">
         <div class="d-flex justify-content-center" slot="header">
-          <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
+          <h2>${this.default.year} NCAA College Hockey Bracket</h2>
         </div>
         <div class="d-flex justify-content-center gap-4 flex-wrap">
           ${this.getImageElement(this.bracket?.winner, true)}
