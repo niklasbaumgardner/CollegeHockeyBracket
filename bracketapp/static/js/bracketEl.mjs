@@ -78,25 +78,21 @@ class Bracket extends NikElement {
     return html`<div class="round-one">
       ${this.matchupTemplate({
         type: "default",
-        winner: this.bracket.games.game1.winner,
         default: this.default.games.game1,
         correct: this.correct?.games.game1,
       })}
       ${this.matchupTemplate({
         type: "default",
-        winner: this.bracket.games.game2.winner,
         default: this.default.games.game2,
         correct: this.correct?.games.game2,
       })}
       ${this.matchupTemplate({
         type: "default",
-        winner: this.bracket.games.game3.winner,
         default: this.default.games.game3,
         correct: this.correct?.games.game3,
       })}
       ${this.matchupTemplate({
         type: "default",
-        winner: this.bracket.games.game4.winner,
         default: this.default.games.game4,
         correct: this.correct?.games.game4,
       })}
@@ -148,8 +144,12 @@ class Bracket extends NikElement {
   }
 
   getChampionPickIcon() {
+    if (!this.bracket?.winner) {
+      return null;
+    }
+
     if (this.correct.winner) {
-      if (this.correct.winner === this.bracket.winner) {
+      if (this.correct.winner === this.bracket?.winner) {
         return html`<sl-icon name="check-circle-fill"></sl-icon>`;
       }
       return html`<sl-icon name="x-circle-fill"></sl-icon>`;
@@ -279,7 +279,7 @@ class Bracket extends NikElement {
           <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
         </div>
         <div class="d-flex justify-content-center gap-4 flex-wrap">
-          ${this.getImageElement(this.bracket.winner, true)}
+          ${this.getImageElement(this.bracket?.winner, true)}
           <div>
             <h4>${this.bracket?.name}</h4>
             <div class="d-flex justify-content-evenly">
