@@ -201,3 +201,20 @@ def debugging():
         string += f"{b.id} {b.user_id} {b.name}<br>"
 
     return string
+
+
+@admin_bp.get("/create_team")
+@login_required
+def create_team():
+    if not isAdmin():
+        return redirect(url_for("index_bp.index"))
+
+    team = request.args.get("team")
+
+    if bracket_queries.get_team_by_name(name=team):
+        return redirect(url_for("admin_bp.admin"))
+
+    if bracket_utils.does_team_image_exist(team):
+        bracket_queries.create_team(teamname=team)
+
+    return redirect(url_for("admin_bp.admin"))
