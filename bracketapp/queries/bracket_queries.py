@@ -5,6 +5,8 @@ from bracketapp.models import (
     Game,
     DefaultBracket,
     DefaultGame,
+    Team,
+    BracketTeam,
 )
 from bracketapp import db
 from bracketapp.utils import bracket_utils
@@ -349,3 +351,48 @@ def update_all_bracket_points():
         db.session.commit()
 
     update_bracket_standings(brackets=brackets, correct=correct)
+
+
+##
+## Team and BracketTeam queries
+##
+
+
+def get_icon_path(name):
+    name_stripped = name.replace(" ", "").replace(".", "")
+    return f"/static/images/{name_stripped}.svg"
+
+
+def create_team(teamname):
+    icon_path = get_icon_path(teamname)
+    team = Team(name=teamname, icon_path=icon_path)
+    db.session.add(team)
+    db.session.commit()
+
+
+def get_team_by_name(name):
+    return Team.query.filter_by(name=name).first()
+
+
+def get_team_by_id(id):
+    return Team.query.filter_by(id=id).first()
+
+
+def create_bracket_team(team_name, rank, year):
+    team = get_team_by_name(name=team_name)
+    b_team = BracketTeam(team_id=team.id, rank=rank, year=year)
+    db.session.add(b_team)
+    db.session.commit()
+
+
+def get_bracket_team_by_name_and_year(team_name, year):
+    team = get_team_by_name(name=team_name)
+    return BracketTeam.query.filter_by(team_id=team.id, year=year).first()
+
+
+def get_bracket_team_by_id(id):
+    return BracketTeam.query.filter_by(id=id).first()
+
+
+def get_all_bracket_teams_for_year(year):
+    return BracketTeam.query.filter_by(year=year).all()

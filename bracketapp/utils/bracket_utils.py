@@ -24,6 +24,33 @@ class EmptyGame:
         self.winner = None
 
 
+class BracketTeamInterface:
+    def __init__(self, b_team_id, b_team=None):
+        self.id = b_team_id
+        self.b_team = (
+            b_team
+            if b_team is not None
+            else bracket_queries.get_bracket_team(id=b_team_id)
+        )
+        self.team = bracket_queries.get_team_by_id(id=self.b_team.team_id)
+        self.year = self.b_team.year
+        self.rank = self.b_team.rank
+        self.name = self.team.name
+        self.icon_path = self.team.icon_path
+
+    def to_dict(self):
+        return dict(
+            id=self.id,
+            year=self.year,
+            rank=self.rank,
+            name=self.name,
+            icon_path=self.icon_path,
+        )
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
+
+
 class BracketInterface:
     def __init__(self, bracket_id, safe_only=True, year=None, bracket=None, games=None):
         if year:
@@ -144,6 +171,11 @@ class DefaultBracketInterface:
             )
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
+        self.teams = dict()
+        for b_team in bracket_queries.get_all_bracket_teams_for_year(self.bracket.year):
+            self.teams[b_team.id] = BracketTeamInterface(
+                b_team_id=b_team.id, b_team=b_team
+            ).to_dict()
 
     def to_json(self):
         obj = dict(id=self.bracket.id, year=self.bracket.year)
@@ -154,6 +186,8 @@ class DefaultBracketInterface:
             games[game.game_num] = game_obj
 
         obj["games"] = games
+
+        obj["teams"] = self.teams
 
         return json.dumps(obj)
 
@@ -612,16 +646,19 @@ def should_game_exist(team_name, game_num, correct, default):
     return ret
 
 
+def does_team_image_exist(name):
+    name = name.replace(" ", "").replace(".", "")
+    path = os.path.dirname(os.path.abspath(__file__))[:-5]
+    # print(name, f"{path}/static/images/{name}.svg")
+    # print(os.path.isfile(f"{path}/static/images/{name}.svg"))
+    return os.path.isfile(f"{path}/static/images/{name}.svg")
+
+
 # this is for checking the image urls are correct
 def check_img_urls(default_brackets):
     path = os.path.dirname(os.path.abspath(__file__))[:-4]
     for game in default_brackets.games:
         url_list = game.home.split(" ")
-        url = "".join(url_list[1:]).replace(".", "")
-        # print(url)
-        # print(os.path.isfile(f"{path}/static/images/{url}.svg"))
-
-        url_list = game.away.split(" ")
         url = "".join(url_list[1:]).replace(".", "")
         # print(url)
         # print(os.path.isfile(f"{path}/static/images/{url}.svg"))
