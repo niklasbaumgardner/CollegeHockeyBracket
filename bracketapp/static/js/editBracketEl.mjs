@@ -93,6 +93,7 @@ class EditBracket extends NikElement {
 
   matchupTemplate(options) {
     return html`<nb-edit-matchup
+      .teams=${this.default.teams}
       id=${options.game}
       game=${options.game}
       type="${options.type}"

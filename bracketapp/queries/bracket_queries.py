@@ -287,13 +287,6 @@ def delete_default_bracket():
 ##
 ## other queries
 ##
-def get_all_teams():
-    default = bracket_utils.DefaultBracketInterface()
-    lst = []
-    for game in default.games:
-        lst += [game.home, game.away]
-
-    return set(lst)
 
 
 def update_bracket_standings(brackets=None, correct=None):
@@ -370,6 +363,10 @@ def create_team(teamname):
     db.session.commit()
 
 
+def get_all_teams():
+    return Team.query.all()
+
+
 def get_team_by_name(name):
     return Team.query.filter_by(name=name).first()
 
@@ -381,6 +378,13 @@ def get_team_by_id(id):
 def get_team_by_bracket_team_id(id):
     b_team = get_bracket_team_by_id(id=id)
     return get_team_by_id(id=b_team.team_id)
+
+
+def create_default_bracket_team(team_id, rank):
+    b_team = BracketTeam(team_id=team_id, rank=rank, year=YEAR)
+    db.session.add(b_team)
+    db.session.commit()
+    return b_team
 
 
 def create_bracket_team(team_name, rank, year):

@@ -99,8 +99,6 @@ class BracketInterface:
 
         obj["games"] = games
 
-        print(obj)
-
         return json.dumps(obj)
 
 
@@ -129,7 +127,8 @@ class CorrectBracketInterface:
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         self.img_url = assign_image(self.bracket)
-        self.bracket_team = BracketTeamInterface(b_team_id=self.bracket.winner)
+        if self.bracket.winner:
+            self.bracket_team = BracketTeamInterface(b_team_id=self.bracket.winner)
 
     def to_json(self):
         obj = dict(
@@ -149,7 +148,8 @@ class CorrectBracketInterface:
             url=url_for("viewbracket_bp.view_cbracket", year=self.bracket.year),
         )
 
-        obj["team"] = self.bracket_team.to_dict()
+        if hasattr(self, "bracket_team"):
+            obj["team"] = self.bracket_team.to_dict()
 
         games = dict()
         for game in self.games:
@@ -181,11 +181,13 @@ class DefaultBracketInterface:
             )
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
+        b_teams = bracket_queries.get_all_bracket_teams_for_year(self.bracket.year)
         self.teams = dict()
-        for b_team in bracket_queries.get_all_bracket_teams_for_year(self.bracket.year):
-            self.teams[b_team.id] = BracketTeamInterface(
-                b_team_id=b_team.id, b_team=b_team
-            ).to_dict()
+        self.teams_dict = dict()
+        for b_team in b_teams:
+            bti = BracketTeamInterface(b_team_id=b_team.id, b_team=b_team)
+            self.teams[b_team.id] = bti
+            self.teams_dict[b_team.id] = bti.to_dict()
 
     def to_json(self):
         obj = dict(id=self.bracket.id, year=self.bracket.year)
@@ -197,7 +199,7 @@ class DefaultBracketInterface:
 
         obj["games"] = games
 
-        obj["teams"] = self.teams
+        obj["teams"] = self.teams_dict
 
         return json.dumps(obj)
 

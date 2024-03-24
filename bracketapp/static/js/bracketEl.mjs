@@ -16,25 +16,19 @@ class Bracket extends NikElement {
     type: { type: String },
   };
 
-  getImageUrl(teamId) {
+  getImageElement(teamId, force = false) {
     if (!teamId) {
-      return "";
-    }
-
-    return this.default.teams[teamId].icon_path;
-  }
-
-  getImageElement(team, force = false) {
-    if (!team) {
       return null;
     }
+
+    let team = this.default.teams[teamId];
 
     let isWinnerCorrect =
       force || !this.correct?.winner || this.correct?.winner === team;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
-      src="${this.getImageUrl(team)}"
-      alt="${team}"
+      src="${team.icon_path}"
+      alt="${team.name}"
     />`;
   }
 

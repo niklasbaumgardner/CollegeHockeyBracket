@@ -10,16 +10,16 @@ class Matchup extends NikElement {
       type: Object,
     },
     correctTop: {
-      type: String,
+      type: Number,
     },
     correctBottom: {
-      type: String,
+      type: Number,
     },
     winnerTop: {
-      type: String,
+      type: Number,
     },
     winnerBottom: {
-      type: String,
+      type: Number,
     },
     winner: { type: String },
     type: { type: String },
@@ -40,51 +40,52 @@ class Matchup extends NikElement {
 
   get defaultHomeName() {
     let team = this.teams[this.default.home];
-    return `${team.rank} ${team.name}`;
+    return this.teamTemplate(team);
   }
 
   get defaultAwayName() {
     let team = this.teams[this.default.away];
-    return `${team.rank} ${team.name}`;
+    return this.teamTemplate(team);
   }
 
   get correctTopName() {
     let team = this.teams[this.correctTop];
-    return `${team.rank} ${team.name}`;
+    return this.teamTemplate(team);
   }
 
   get correctBottomName() {
     let team = this.teams[this.correctBottom];
-    return `${team.rank} ${team.name}`;
+    return this.teamTemplate(team);
   }
 
   get winnerTopName() {
     let team = this.teams[this.winnerTop];
-    return `${team.rank} ${team.name}`;
+    return this.teamTemplate(team);
   }
 
   get winnerBottomName() {
     let team = this.teams[this.winnerBottom];
-    return `${team.rank} ${team.name}`;
+    return this.teamTemplate(team);
   }
 
-  getImageUrl(teamId) {
-    if (!teamId) {
-      return "";
+  teamTemplate(team) {
+    if (team) {
+      return `${team.rank} ${team.name}`;
     }
-
-    return this.teams[teamId].icon_path;
+    return "";
   }
 
-  getImageElement(team) {
-    if (!team) {
+  getImageElement(teamId) {
+    if (!teamId) {
       return null;
     }
 
+    let team = this.teams[teamId];
+
     return html`<img
       class="team-img"
-      src="${this.getImageUrl(team)}"
-      alt="${team}"
+      src="${team.icon_path}"
+      alt="${team.name}"
     />`;
   }
 
@@ -93,7 +94,7 @@ class Matchup extends NikElement {
         ${this.getImageElement(this.default.home)}
         <span
           class="team-name ${this.correct.winner &&
-          this.correct.winner != this.default.home
+          this.correct.winner !== this.default.home
             ? "loser-team"
             : ""}"
           >${this.defaultHomeName}</span
@@ -103,7 +104,7 @@ class Matchup extends NikElement {
         ${this.getImageElement(this.default.away)}
         <span
           class="team-name ${this.correct.winner &&
-          this.correct.winner != this.default.away
+          this.correct.winner !== this.default.away
             ? "loser-team"
             : ""}"
           >${this.defaultAwayName}</span
