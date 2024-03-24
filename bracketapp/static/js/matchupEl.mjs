@@ -93,7 +93,7 @@ class Matchup extends NikElement {
         ${this.getImageElement(this.default.home)}
         <span
           class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.default.home
+          this.correct.winner != this.default.home
             ? "loser-team"
             : ""}"
           >${this.defaultHomeName}</span
@@ -103,7 +103,7 @@ class Matchup extends NikElement {
         ${this.getImageElement(this.default.away)}
         <span
           class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.default.away
+          this.correct.winner != this.default.away
             ? "loser-team"
             : ""}"
           >${this.defaultAwayName}</span
@@ -172,7 +172,7 @@ class Matchup extends NikElement {
         ${this.getImageElement(this.correctTop)}
         <span
           class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.correctTop
+          this.correct.winner != this.correctTop
             ? "loser-team"
             : ""}"
           >${this.correctTopName}</span
@@ -182,7 +182,7 @@ class Matchup extends NikElement {
         ${this.getImageElement(this.correctBottom)}
         <span
           class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.correctBottom
+          this.correct.winner != this.correctBottom
             ? "loser-team"
             : ""}"
           >${this.correctBottomName}</span

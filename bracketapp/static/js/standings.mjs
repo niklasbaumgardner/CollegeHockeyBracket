@@ -7,15 +7,12 @@ class StandingsGridManager {
     this.setupThemeWatcher();
   }
 
-  getImageUrl(teamName) {
-    if (!teamName) {
+  getImageUrl(team) {
+    if (!team) {
       return "";
     }
 
-    let filename = teamName.substring(2);
-    filename = filename.replaceAll(" ", "");
-    filename = filename.replaceAll(".", "");
-    return `/static/images/${filename}.svg`;
+    return team.icon_path;
   }
 
   getImageElement(team) {
@@ -26,7 +23,7 @@ class StandingsGridManager {
     return `<img
       class="team-img"
       src="${this.getImageUrl(team)}"
-      alt="${team}"
+      alt="${team.name}"
     />`;
   }
 
@@ -43,7 +40,7 @@ class StandingsGridManager {
         headerName: "Bracket, Owner",
         cellRenderer: (param) => {
           if (param.data.url) {
-            return `${this.getImageElement(param.data.winner)}<a href="${
+            return `${this.getImageElement(param.data.team)}<a href="${
               param.data.url
             }">${param.value}</a>, ${param.data.username}`;
           }

@@ -26,14 +26,14 @@
         <sl-card class="cursor-pointer" onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
             <div class="row mb-2">
                 <div class="col">
-                    <img width="75px" height="75px" src="/static/images/{{ bracket.img_url }}.svg" alt="{{ bracket.img_url }}"/>
+                    <img width="75px" height="75px" src="{{ bracket.img_url }}" alt="{{ bracket.bracket_team.name }}"/>
                 </div>
                 <div class="col">
                     <h2>{{ bracket.bracket.year }}</h2>
                 </div>
             </div>
             <div class="row">
-                <h3><a href="{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}">{{ bracket.bracket.winner }}</a></h3>
+                <h3><a href="{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}">{{ bracket.bracket_team.name }}</a></h3>
             </div>
         </sl-card>
     {% endfor %}

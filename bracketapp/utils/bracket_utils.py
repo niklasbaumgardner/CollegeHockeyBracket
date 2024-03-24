@@ -30,7 +30,7 @@ class BracketTeamInterface:
         self.b_team = (
             b_team
             if b_team is not None
-            else bracket_queries.get_bracket_team(id=b_team_id)
+            else bracket_queries.get_bracket_team_by_id(id=b_team_id)
         )
         self.team = bracket_queries.get_team_by_id(id=self.b_team.team_id)
         self.year = self.b_team.year
@@ -81,9 +81,13 @@ class BracketInterface:
         self.safe_only = safe_only
         self.goal_difference = 0
         self.img_url = assign_image(self.bracket)
+        self.bracket_team = BracketTeamInterface(b_team_id=self.bracket.winner)
 
     def to_json(self):
         obj = self.bracket.to_dict(safe_only=self.safe_only)
+        if not self.safe_only:
+            obj["team"] = self.bracket_team.to_dict()
+
         obj["username"] = self.username
         if not CAN_EDIT_BRACKET or self.bracket.year < YEAR:
             obj["url"] = url_for("viewbracket_bp.view_bracket", id=self.bracket.id)
@@ -95,6 +99,8 @@ class BracketInterface:
 
         obj["games"] = games
 
+        print(obj)
+
         return json.dumps(obj)
 
 
@@ -105,6 +111,7 @@ class BaseCorrectBracketInterface:
         else:
             self.bracket = bracket if bracket else bracket_queries.get_correct_bracket()
         self.img_url = assign_image(self.bracket)
+        self.bracket_team = BracketTeamInterface(b_team_id=self.bracket.winner)
 
 
 class CorrectBracketInterface:
@@ -122,6 +129,7 @@ class CorrectBracketInterface:
         )
         self.games.sort(key=lambda x: int(x.game_num[4:]))
         self.img_url = assign_image(self.bracket)
+        self.bracket_team = BracketTeamInterface(b_team_id=self.bracket.winner)
 
     def to_json(self):
         obj = dict(
@@ -140,6 +148,8 @@ class CorrectBracketInterface:
             lGoals=self.bracket.l_goals,
             url=url_for("viewbracket_bp.view_cbracket", year=self.bracket.year),
         )
+
+        obj["team"] = self.bracket_team.to_dict()
 
         games = dict()
         for game in self.games:
