@@ -55,8 +55,7 @@ class Bracket(db.Model):
     r4 = db.Column(db.Integer, nullable=True)
     name = db.Column(db.String(30), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    winner = db.Column(db.String(30), nullable=True)  # TODO: make winner not nullable
-    winner_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     rank = db.Column(db.Integer, nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
@@ -101,15 +100,13 @@ class Game(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     bracket_id = db.Column(db.Integer, db.ForeignKey(Bracket.id), nullable=False)
     game_num = db.Column(db.String(10), nullable=False)
-    winner = db.Column(db.String(30), nullable=True)
-    winner_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
 
 
 class CorrectBracket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
-    winner = db.Column(db.String(30), nullable=True)
-    winner_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
 
@@ -118,10 +115,8 @@ class CorrectGame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bracket_id = db.Column(db.Integer, db.ForeignKey(CorrectBracket.id), nullable=False)
     game_num = db.Column(db.String(10), nullable=False)
-    winner = db.Column(db.String(30), nullable=True)
-    loser = db.Column(db.String(30), nullable=True)
-    winner_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    loser_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    loser = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     h_goals = db.Column(db.Integer, nullable=True)
     a_goals = db.Column(db.Integer, nullable=True)
 
@@ -135,10 +130,8 @@ class DefaultGame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bracket_id = db.Column(db.Integer, db.ForeignKey(DefaultBracket.id), nullable=False)
     game_num = db.Column(db.String(10), nullable=False)
-    home = db.Column(db.String(30), nullable=True)
-    away = db.Column(db.String(30), nullable=True)
-    home_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    away_team = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    home = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+    away = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
 
 
 class Theme(db.Model):
