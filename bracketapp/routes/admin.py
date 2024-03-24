@@ -138,11 +138,26 @@ def update_default():
 
         for i in range(1, 9):
             game_num = f"game{i}"
+
+            home_team_id = request.form.get(f"{game_num}-home")
+            home_team_rank = request.form.get(f"{game_num}-home-rank")
+
+            home_bracket_team = bracket_queries.create_default_bracket_team(
+                team_id=home_team_id, rank=home_team_rank
+            )
+
+            away_team_id = request.form.get(f"{game_num}-away")
+            away_team_rank = request.form.get(f"{game_num}-away-rank")
+
+            away_bracket_team = bracket_queries.create_default_bracket_team(
+                team_id=away_team_id, rank=away_team_rank
+            )
+
             bracket_queries.update_default_game(
                 b_id=d_bracket.id,
                 game_num=game_num,
-                home=request.form.get(f"game{i}-home"),
-                away=request.form.get(f"game{i}-away"),
+                home=home_bracket_team.id,
+                away=away_bracket_team.id,
             )
 
         # create the correct bracket after creating the default
@@ -155,7 +170,8 @@ def update_default():
             default = bracket_utils.DefaultBracketInterface()
         except:
             default = bracket_queries.create_default_bracket()
-        return render_template("default_bracket.html", default=default)
+        teams = bracket_queries.get_all_teams()
+        return render_template("default_bracket.html", default=default, teams=teams)
 
     return redirect(url_for("admin_bp.admin"))
 
