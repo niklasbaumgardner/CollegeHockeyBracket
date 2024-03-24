@@ -16,15 +16,12 @@ class Bracket extends NikElement {
     type: { type: String },
   };
 
-  getImageUrl(teamName) {
-    if (!teamName) {
+  getImageUrl(teamId) {
+    if (!teamId) {
       return "";
     }
 
-    let filename = teamName.substring(2);
-    filename = filename.replaceAll(" ", "");
-    filename = filename.replaceAll(".", "");
-    return `/static/images/${filename}.svg`;
+    return this.default.teams[teamId].icon_path;
   }
 
   getImageElement(team, force = false) {
@@ -56,6 +53,7 @@ class Bracket extends NikElement {
     if (options.type === "default") {
       return html`<nb-matchup
         type="default"
+        .teams=${this.default.teams}
         winner=${options.winner}
         .default=${options.default}
         .correct=${options.correct}
@@ -65,6 +63,7 @@ class Bracket extends NikElement {
     }
 
     return html`<nb-matchup
+      .teams=${this.default.teams}
       winner=${options.winner}
       winnerTop=${options.winnerTop}
       winnerBottom=${options.winnerBottom}

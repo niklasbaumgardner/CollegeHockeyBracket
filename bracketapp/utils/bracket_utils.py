@@ -202,9 +202,8 @@ class BracketWinner:
 def assign_image(bracket):
     if not bracket or not bracket.winner:
         return ""
-    url_list = bracket.winner.split(" ")
-    url = "".join(url_list[1:]).replace(".", "")
-    return url
+    team = bracket_queries.get_team_by_bracket_team_id(id=bracket.winner)
+    return team.icon_path
 
 
 def create_empty_bracket():

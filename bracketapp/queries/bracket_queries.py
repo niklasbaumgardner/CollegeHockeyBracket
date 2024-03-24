@@ -378,6 +378,11 @@ def get_team_by_id(id):
     return Team.query.filter_by(id=id).first()
 
 
+def get_team_by_bracket_team_id(id):
+    b_team = get_bracket_team_by_id(id=id)
+    return get_team_by_id(id=b_team.team_id)
+
+
 def create_bracket_team(team_name, rank, year):
     team = get_team_by_name(name=team_name)
     b_team = BracketTeam(team_id=team.id, rank=rank, year=year)

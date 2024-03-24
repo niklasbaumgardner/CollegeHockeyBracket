@@ -24,6 +24,7 @@ class Matchup extends NikElement {
     winner: { type: String },
     type: { type: String },
     game: { type: String },
+    teams: { type: Object },
   };
 
   static get queries() {
@@ -33,11 +34,46 @@ class Matchup extends NikElement {
     };
   }
 
-  getImageUrl(teamName) {
-    let filename = teamName.substring(2);
-    filename = filename.replaceAll(" ", "");
-    filename = filename.replaceAll(".", "");
-    return `/static/images/${filename}.svg`;
+  get correctWinnerName() {
+    return this.teams[this.correct.winner].name;
+  }
+
+  get defaultHomeName() {
+    let team = this.teams[this.default.home];
+    return `${team.rank} ${team.name}`;
+  }
+
+  get defaultAwayName() {
+    let team = this.teams[this.default.away];
+    return `${team.rank} ${team.name}`;
+  }
+
+  get correctTopName() {
+    let team = this.teams[this.correctTop];
+    return `${team.rank} ${team.name}`;
+  }
+
+  get correctBottomName() {
+    let team = this.teams[this.correctBottom];
+    return `${team.rank} ${team.name}`;
+  }
+
+  get winnerTopName() {
+    let team = this.teams[this.winnerTop];
+    return `${team.rank} ${team.name}`;
+  }
+
+  get winnerBottomName() {
+    let team = this.teams[this.winnerBottom];
+    return `${team.rank} ${team.name}`;
+  }
+
+  getImageUrl(teamId) {
+    if (!teamId) {
+      return "";
+    }
+
+    return this.teams[teamId].icon_path;
   }
 
   getImageElement(team) {
@@ -60,7 +96,7 @@ class Matchup extends NikElement {
           this.correct.winner !== this.default.home
             ? "loser-team"
             : ""}"
-          >${this.default.home}</span
+          >${this.defaultHomeName}</span
         ><span>${this.correct?.hGoals}</span>
       </div>
       <div class="nb-team">
@@ -70,7 +106,7 @@ class Matchup extends NikElement {
           this.correct.winner !== this.default.away
             ? "loser-team"
             : ""}"
-          >${this.default.away}</span
+          >${this.defaultAwayName}</span
         ><span>${this.correct?.aGoals}</span>
       </div>`;
   }
@@ -116,7 +152,7 @@ class Matchup extends NikElement {
       return null;
     }
     return html`<div class="nb-team ${this.getTopClass()}">
-      <span class="team-name">${this.winnerTop}</span>${this.getTopIcon()}
+      <span class="team-name">${this.winnerTopName}</span>${this.getTopIcon()}
     </div>`;
   }
 
@@ -125,7 +161,8 @@ class Matchup extends NikElement {
       return null;
     }
     return html`<div class="nb-team ${this.getBottomClass()}">
-      <span class="team-name">${this.winnerBottom}</span>${this.getBottomIcon()}
+      <span class="team-name">${this.winnerBottomName}</span
+      >${this.getBottomIcon()}
     </div>`;
   }
 
@@ -138,7 +175,7 @@ class Matchup extends NikElement {
           this.correct.winner !== this.correctTop
             ? "loser-team"
             : ""}"
-          >${this.correctTop}</span
+          >${this.correctTopName}</span
         ><span>${this.correct?.hGoals}</span>
       </div>
       <div class="nb-team">
@@ -148,7 +185,7 @@ class Matchup extends NikElement {
           this.correct.winner !== this.correctBottom
             ? "loser-team"
             : ""}"
-          >${this.correctBottom}</span
+          >${this.correctBottomName}</span
         ><span>${this.correct?.aGoals}</span>
       </div>
       ${this.getBottomWinner()}`;
