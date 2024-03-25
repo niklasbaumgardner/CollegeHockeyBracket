@@ -23,13 +23,27 @@ class EditCorrectMatchup extends NikElement {
     };
   }
 
-  topTeamInput(top) {
+  get winnerTopName() {
+    let team = this.teams[this.winnerTop];
+    return team?.name ?? "";
+  }
+
+  get winnerBottomName() {
+    let team = this.teams[this.winnerBottom];
+    return team?.name ?? "";
+  }
+
+  topTeamInput() {
     return html`<input
       type="radio"
       id="${this.game}top"
       name="${this.game}"
-      value="${top}"
-      ?checked="${!!(top && this.winner && this.winner === top)}"
+      value="${this.winnerTop}"
+      ?checked="${!!(
+        this.winnerTop &&
+        this.winner &&
+        this.winner === this.winnerTop
+      )}"
     />`;
   }
 
@@ -41,13 +55,17 @@ class EditCorrectMatchup extends NikElement {
     />`;
   }
 
-  bottomTeamInput(bottom) {
+  bottomTeamInput() {
     return html`<input
       type="radio"
       id="${this.game}bottom"
       name="${this.game}"
-      value="${bottom}"
-      ?checked=${!!(bottom && this.winner && this.winner === bottom)}
+      value="${this.winnerBottom}"
+      ?checked=${!!(
+        this.winnerBottom &&
+        this.winner &&
+        this.winner === this.winnerBottom
+      )}
     />`;
   }
 
@@ -63,15 +81,15 @@ class EditCorrectMatchup extends NikElement {
     return html`<div class="matchup">
       <div class="nb-team">
         <label id="top">
-          ${this.topTeamInput(this.winnerTop)}
-          <span>${this.winnerTop}</span>
+          ${this.topTeamInput()}
+          <span>${this.winnerTopName}</span>
           ${this.topScoreInput()}
         </label>
       </div>
       <div class="nb-team">
         <label id="bottom">
-          ${this.bottomTeamInput(this.winnerBottom)}
-          <span>${this.winnerBottom}</span>
+          ${this.bottomTeamInput()}
+          <span>${this.winnerBottomName}</span>
           ${this.bottomScoreInput()}
         </label>
       </div>

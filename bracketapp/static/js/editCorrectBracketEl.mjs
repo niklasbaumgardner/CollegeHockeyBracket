@@ -69,31 +69,26 @@ class EditCorrectBracket extends NikElement {
     return this.querySelector(`#${id}`);
   }
 
-  getImageUrl(teamName) {
-    if (!teamName) {
-      return "";
-    }
-    let filename = teamName.substring(2);
-    filename = filename.replaceAll(" ", "");
-    filename = filename.replaceAll(".", "");
-    return `/static/images/${filename}.svg`;
-  }
-
-  getImageElement(team) {
-    if (!team) {
+  getImageElement(teamId) {
+    if (!teamId) {
       return null;
     }
-    let isWinnerCorrect = this.correct?.winner && this.correct?.winner === team;
+
+    let team = this.default.teams[teamId];
+
+    let isWinnerCorrect =
+      !this.correct?.winner || this.correct?.winner === team;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
-      src="${this.getImageUrl(team)}"
-      alt="${team}"
+      src="${team.icon_path}"
+      alt="${team.name}"
     />`;
   }
 
   matchupTemplate(options) {
     return html`<nb-edit-correct-matchup
       id=${options.game}
+      .teams=${this.default.teams}
       game=${options.game}
       type="${options.type}"
       winner=${options.winner}
