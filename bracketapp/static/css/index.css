@@ -4,11 +4,10 @@
     "Segoe UI Symbol" !important;
 }
 
-.alert-absolute {
+#alerts {
   position: absolute;
-  z-index: 1;
-  max-width: 500px;
-  margin: -50px -0.25rem 0 -0.25rem;
+  top: 60px;
+  z-index: 99999;
 }
 
 .display-block {
