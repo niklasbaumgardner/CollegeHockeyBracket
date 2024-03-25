@@ -7,14 +7,18 @@ from bracketapp.utils import bracket_utils
 admin_bp = Blueprint("admin_bp", __name__)
 
 
-def isAdmin():
-    return current_user.id == 1
+def is_admin():
+    return (
+        current_user.is_authenticated
+        and current_user.role is not None
+        and current_user.role > 1
+    )
 
 
 @admin_bp.route("/admin", methods=["GET"])
 @login_required
 def admin():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     return render_template("admin.html")
@@ -23,7 +27,7 @@ def admin():
 @admin_bp.route("/update_points")
 @login_required
 def update_points():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     bracket_queries.update_all_bracket_points()
@@ -34,7 +38,7 @@ def update_points():
 @admin_bp.route("/delete_brackets", methods=["GET"])
 @login_required
 def delete_brackets():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     brackets = bracket_queries.get_all_user_brackets()
@@ -49,7 +53,7 @@ def delete_brackets():
 @admin_bp.route("/delete_bracket/<id>", methods=["GET"])
 @login_required
 def delete_bracket(id):
-    if not id or not isAdmin():
+    if not id or not is_admin():
         return redirect(url_for("index_bp.index"))
 
     if id == "all":
@@ -64,7 +68,7 @@ def delete_bracket(id):
 @admin_bp.route("/update_correct", methods=["GET", "POST"])
 @login_required
 def update_correct():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     if request.method == "POST":
@@ -131,7 +135,7 @@ def update_correct():
 @admin_bp.route("/update_default", methods=["GET", "POST"])
 @login_required
 def update_default():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
     if request.method == "POST":
         d_bracket = bracket_queries.get_default_bracket()
@@ -179,7 +183,7 @@ def update_default():
 @admin_bp.route("/delete_default", methods=["GET"])
 @login_required
 def delete_default():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     bracket_queries.delete_default_bracket()
@@ -190,7 +194,7 @@ def delete_default():
 @admin_bp.route("/delete_correct", methods=["GET"])
 @login_required
 def delete_correct():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     bracket_queries.delete_correct_bracket()
@@ -201,7 +205,7 @@ def delete_correct():
 @admin_bp.route("/debugging")
 @login_required
 def debugging():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
     string = ""
     users = user_queries.get_all_users()
@@ -222,7 +226,7 @@ def debugging():
 @admin_bp.get("/create_team")
 @login_required
 def create_team():
-    if not isAdmin():
+    if not is_admin():
         return redirect(url_for("index_bp.index"))
 
     team = request.args.get("team")
