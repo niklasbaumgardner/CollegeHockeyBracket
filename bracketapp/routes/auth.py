@@ -70,11 +70,11 @@ def signup():
                 "Username already exists. Please choose a different username",
                 "danger",
             )
-            return render_template("signup.html")
+            return redirect(url_for("auth_bp.signup"))
 
         if password1 != password2:
             flash("Passwords don't match. Try again", "warning")
-            return render_template("signup.html", email=email)
+            return redirect(url_for("auth_bp.signup"))
 
         user_queries.create_user(email=email, username=username, password=password1)
         flash("Sign up succesful", "success")
