@@ -18,7 +18,13 @@ nb-edit-correct-matchup {
 
   display: inline-flex;
   align-items: center;
-  padding: var(--sl-spacing-2x-small);
+  padding: var(--sl-spacing-3x-small);
+}
+
+.nb-team:has(input:checked) {
+  background-color: var(--sl-color-primary-50);
+  border: 1px solid var(--sl-color-primary-300);
+  border-radius: 5px;
 }
 
 .champion-pick {
@@ -50,8 +56,7 @@ label#bottom {
 }
 
 .team-img {
-  width: 20px;
-  padding-right: var(--sl-spacing-2x-small);
+  width: 18px;
 }
 
 .loser-team {
