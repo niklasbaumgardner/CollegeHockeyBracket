@@ -53,7 +53,7 @@ class Bracket(db.Model):
     r2 = db.Column(db.Integer, nullable=True)
     r3 = db.Column(db.Integer, nullable=True)
     r4 = db.Column(db.Integer, nullable=True)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     rank = db.Column(db.Integer, nullable=True)
