@@ -27,6 +27,10 @@ nb-edit-correct-matchup {
   border-radius: 5px;
 }
 
+input[type="radio"]:checked {
+  accent-color: var(--sl-color-primary-700);
+}
+
 .champion-pick {
   display: inline-flex;
   align-items: center;
