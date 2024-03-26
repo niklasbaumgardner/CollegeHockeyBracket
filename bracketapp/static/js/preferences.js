@@ -3,9 +3,24 @@
 function setColor(color) {
   fetch(COLOR_URL + "?" + new URLSearchParams({ color }));
 }
-
+let timeoutId;
 function setBackgroundColor(backgroundColor) {
-  fetch(BACKGROUND_COLOR_URL + "?" + new URLSearchParams({ backgroundColor }));
+  debounce((color) => {
+    fetch(
+      BACKGROUND_COLOR_URL +
+        "?" +
+        new URLSearchParams({ backgroundColor: color })
+    );
+  }, 300)(backgroundColor);
+}
+
+function debounce(callback, wait) {
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
 }
 
 const BACKGROUND_COLOR_REGEX = /^hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)$/;
