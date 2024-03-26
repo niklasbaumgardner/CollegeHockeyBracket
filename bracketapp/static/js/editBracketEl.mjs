@@ -16,7 +16,26 @@ class EditBracket extends NikElement {
   static get queries() {
     return {
       formEl: "form",
+      nbEditMatchupEls: { all: "nb-edit-matchup" },
+      saveButtonEl: "#save-button",
     };
+  }
+
+  async getUpdateComplete() {
+    await super.getUpdateComplete();
+
+    for (let ele of this.nbEditMatchupEls) {
+      await ele.updateComplete;
+    }
+  }
+
+  async firstUpdated() {
+    super.firstUpdated();
+
+    await this.updateComplete;
+    this.initialFormData = new FormData(this.formEl);
+
+    this.maybeToggleSaveButton();
   }
 
   getNextMatchup(currentGameId) {
@@ -293,7 +312,10 @@ class EditBracket extends NikElement {
   }
 
   buttonsTemplate() {
-    let content = html`<sl-button variant="primary" type="submit"
+    let content = html`<sl-button
+      id="save-button"
+      variant="primary"
+      type="submit"
       >Save bracket</sl-button
     >`;
     // TODO: Fix this
@@ -376,6 +398,23 @@ class EditBracket extends NikElement {
     this.setNext(el);
   }
 
+  handleInput() {
+    this.maybeToggleSaveButton();
+  }
+
+  maybeToggleSaveButton() {
+    let currentFormData = new FormData(this.formEl);
+    let currentEntriesArr = [...currentFormData.entries()];
+    if (currentEntriesArr.length < 18) {
+      this.saveButtonEl.disabled = false;
+      return;
+    }
+
+    this.saveButtonEl.disabled =
+      JSON.stringify([...this.initialFormData.entries()]) ===
+      JSON.stringify(currentEntriesArr);
+  }
+
   resetForm() {
     this.formEl.reset();
   }
@@ -426,7 +465,11 @@ class EditBracket extends NikElement {
 
   render() {
     return html`<div class="w-100">
-      <form action="${BRACKET_FORM_URL}" method="POST">
+      <form
+        action="${BRACKET_FORM_URL}"
+        method="POST"
+        @input=${this.handleInput}
+      >
         ${this.topCardTemplate()}
         <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
           <div class="round-one-left">
