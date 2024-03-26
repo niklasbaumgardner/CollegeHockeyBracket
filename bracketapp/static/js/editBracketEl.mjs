@@ -473,34 +473,34 @@ class EditBracket extends NikElement {
         ${this.topCardTemplate()}
         <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
           <div class="round-one-left">
-            <span class="round-details">Round 1</span>
+            <sl-card class="round-details">Round 1</sl-card>
             ${this.roundOneLeftTemplate()}
           </div>
 
           <div class="round-two-left">
-            <span class="round-details">Round 2</span>
+            <sl-card class="round-details">Round 2</sl-card>
             ${this.roundTwoLeftTemplate()}
           </div>
 
           <div class="round-three-left">
-            <span class="round-details">Round 3</span>
+            <sl-card class="round-details">Round 3</sl-card>
             ${this.roundThreeLeftTemplate()}
           </div>
 
           ${this.championTemplate()}
 
           <div class="round-three-right">
-            <span class="round-details">Round 3</span>
+            <sl-card class="round-details">Round 3</sl-card>
             ${this.roundThreeRightTemplate()}
           </div>
 
           <div class="round-two-right">
-            <span class="round-details">Round 2</span>
+            <sl-card class="round-details">Round 2</sl-card>
             ${this.roundTwoRightTemplate()}
           </div>
 
           <div class="round-one-right round-one">
-            <span class="round-details">Round 1</span>
+            <sl-card class="round-details">Round 1</sl-card>
             ${this.roundOneRightTemplate()}
           </div>
         </div>
