@@ -23,27 +23,32 @@ def set_theme(theme_color=None, background_color=None, color=None):
         if background_color
         else None
     )
-    if background_color_matches is not None or background_color in (
-        "",
-        "niks-favorite",
-        "red",
-        "gray",
-        "orange",
-        "amber",
-        "yellow",
-        "lime",
-        "green",
-        "emerald",
-        "teal",
-        "cyan",
-        "sky",
-        "blue",
-        "indigo",
-        "violet",
-        "purple",
-        "fuchsia",
-        "pink",
-        "rose",
+    if (
+        background_color_matches is not None
+        or background_color is None
+        or background_color
+        in (
+            "",
+            "niks-favorite",
+            "red",
+            "gray",
+            "orange",
+            "amber",
+            "yellow",
+            "lime",
+            "green",
+            "emerald",
+            "teal",
+            "cyan",
+            "sky",
+            "blue",
+            "indigo",
+            "violet",
+            "purple",
+            "fuchsia",
+            "pink",
+            "rose",
+        )
     ):
         pass
     else:
