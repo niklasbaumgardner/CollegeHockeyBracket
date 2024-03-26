@@ -24,7 +24,9 @@ def utility_processor():
             backgroundColor=theme.backgroundColor,
             color=theme.color,
             backgroundColorMatches=(
-                re.search("hsl\(\d+,\s*\d+%,\s*\d+%\)", theme.backgroundColor)
+                re.search(
+                    "hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", theme.backgroundColor
+                )
                 if theme.backgroundColor
                 else None
             ),

@@ -18,8 +18,9 @@ def set_theme(theme_color=None, background_color=None, color=None):
     if theme_color is not None and theme_color not in ("", "dark", "light"):
         return
 
+    print(re.search("hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", background_color))
     background_color_matches = (
-        re.search("hsl\(\d+,\s*\d+%,\s*\d+%\)", background_color)
+        re.search("hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", background_color)
         if background_color
         else None
     )

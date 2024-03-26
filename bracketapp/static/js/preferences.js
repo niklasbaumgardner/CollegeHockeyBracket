@@ -8,6 +8,8 @@ function setBackgroundColor(backgroundColor) {
   fetch(BACKGROUND_COLOR_URL + "?" + new URLSearchParams({ backgroundColor }));
 }
 
+const BACKGROUND_COLOR_REGEX = /^hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)$/;
+
 let themeSelector = document.getElementById("preferences-theme-selector");
 themeSelector.addEventListener("sl-input", () => setTheme(themeSelector.value));
 
@@ -39,8 +41,9 @@ backgroundColorSelector.addEventListener(
 let customColorPicker = document.getElementById("colorPicker");
 function handleBackgroundColorInputEvent(event) {
   let newBackgroundColor;
-  if (event.target === customColorPicker) {
-    newBackgroundColor = customColorPicker.getFormattedValue("hsl");
+  let target = event.target;
+  if (target === customColorPicker || target.value === "custom") {
+    newBackgroundColor = customColorPicker.getFormattedValue("hsla");
   } else {
     newBackgroundColor = backgroundColorSelector.value;
   }
@@ -68,7 +71,7 @@ function removeBackgroundColor() {
 }
 
 function addBackgroundColor(color) {
-  if (color.match(/hsl\(\d+,\s*\d+%,\s*\d+%\)/)) {
+  if (color.match(BACKGROUND_COLOR_REGEX)) {
     document.body.style.backgroundColor = color;
     backgroundPreview.style.backgroundColor = color;
   } else {
@@ -79,9 +82,7 @@ function addBackgroundColor(color) {
 
 function maybeSetCustomBackgroundColor() {
   if (
-    backgroundColorSelector
-      .getAttribute("value")
-      .match(/hsl\(\d+,\s*\d+%,\s*\d+%\)/)
+    backgroundColorSelector.getAttribute("value").match(BACKGROUND_COLOR_REGEX)
   ) {
     backgroundColorSelector.value = "custom";
     customColorPicker.value = document.body.style.backgroundColor;
