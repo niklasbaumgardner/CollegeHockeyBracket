@@ -162,3 +162,21 @@ sl-radio[value="custom"]::part(label) {
   align-items: center;
   gap: var(--sl-spacing-small);
 }
+
+sl-button.neutral::part(base) {
+  color: var(--sl-color-neutral-800);
+}
+sl-button.neutral::part(base):hover {
+  color: var(--sl-color-neutral-700);
+}
+sl-button.neutral::part(base):focus-visible {
+  color: var(--sl-color-neutral-700);
+}
+sl-button.neutral::part(base):active {
+  color: var(--sl-color-neutral-900);
+}
+
+.font-size-medium,
+.font-size-medium::part(base) {
+  font-size: var(--sl-font-size-medium);
+}
