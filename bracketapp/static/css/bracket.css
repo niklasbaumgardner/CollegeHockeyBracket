@@ -272,3 +272,10 @@ nb-edit-correct-matchup input[type="number"] {
     padding: var(--sl-spacing-2x-small);
   }
 }
+
+.sl-theme-light {
+  .team-img[src="/static/images/MichiganSt.svg"] {
+    filter: invert(52%) sepia(73%) saturate(219%) hue-rotate(144deg)
+      brightness(90%) contrast(88%);
+  }
+}
