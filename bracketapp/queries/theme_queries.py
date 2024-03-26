@@ -18,7 +18,11 @@ def set_theme(theme_color=None, background_color=None, color=None):
     if theme_color is not None and theme_color not in ("", "dark", "light"):
         return
 
-    background_color_matches = re.search("hsl\(\d+,\s*\d+%,\s*\d+%\)", background_color)
+    background_color_matches = (
+        re.search("hsl\(\d+,\s*\d+%,\s*\d+%\)", background_color)
+        if background_color
+        else None
+    )
     if background_color_matches is not None or background_color in (
         "",
         "niks-favorite",
