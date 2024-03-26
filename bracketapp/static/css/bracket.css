@@ -274,7 +274,7 @@ nb-edit-correct-matchup input[type="number"] {
 
 .sl-theme-light {
   img[src="/static/images/MichiganSt.svg"] {
-    filter: invert(52%) sepia(73%) saturate(219%) hue-rotate(144deg)
-      brightness(90%) contrast(88%);
+    filter: brightness(0) saturate(100%) invert(19%) sepia(32%) saturate(892%)
+      hue-rotate(104deg) brightness(98%) contrast(93%);
   }
 }
