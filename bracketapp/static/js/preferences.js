@@ -31,23 +31,63 @@ let backgroundColorSelector = document.getElementById(
   "preferences-background-color-selector"
 );
 let backgroundPreview = document.querySelector(".background-preview");
-backgroundColorSelector.addEventListener("sl-input", () => {
-  let newBackgroundColor = backgroundColorSelector.value;
+backgroundColorSelector.addEventListener(
+  "sl-input",
+  handleBackgroundColorInputEvent
+);
+
+let customColorPicker = document.getElementById("colorPicker");
+function handleBackgroundColorInputEvent(event) {
+  let newBackgroundColor;
+  if (event.target === customColorPicker) {
+    newBackgroundColor = customColorPicker.getFormattedValue("hsl");
+  } else {
+    newBackgroundColor = backgroundColorSelector.value;
+  }
+
+  removeBackgroundColor();
+  addBackgroundColor(newBackgroundColor);
+  setBackgroundColor(newBackgroundColor);
+}
+
+function removeBackgroundColor() {
+  document.body.style.backgroundColor = "";
+  backgroundPreview.style.backgroundColor = "";
+
   for (let classString of document.body.classList) {
     if (classString.includes("-background")) {
       document.body.classList.remove(classString);
     }
   }
 
-  document.body.classList.add(`${newBackgroundColor}-background`);
-
   for (let classString of backgroundPreview.classList) {
     if (classString.includes("-background")) {
       backgroundPreview.classList.remove(classString);
     }
   }
+}
 
-  backgroundPreview.classList.add(`${newBackgroundColor}-background`);
+function addBackgroundColor(color) {
+  if (color.match(/hsl\(\d+,\s*\d+%,\s*\d+%\)/)) {
+    document.body.style.backgroundColor = color;
+    backgroundPreview.style.backgroundColor = color;
+  } else {
+    document.body.classList.add(`${color}-background`);
+    backgroundPreview.classList.add(`${color}-background`);
+  }
+}
 
-  setBackgroundColor(newBackgroundColor);
-});
+function maybeSetCustomBackgroundColor() {
+  if (
+    backgroundColorSelector
+      .getAttribute("value")
+      .match(/hsl\(\d+,\s*\d+%,\s*\d+%\)/)
+  ) {
+    backgroundColorSelector.value = "custom";
+    customColorPicker.value = document.body.style.backgroundColor;
+    backgroundPreview.style.backgroundColor =
+      document.body.style.backgroundColor;
+  }
+}
+
+maybeSetCustomBackgroundColor();

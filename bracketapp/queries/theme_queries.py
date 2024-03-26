@@ -1,6 +1,7 @@
 from bracketapp.models import Theme
 from bracketapp import db
 from flask_login import current_user
+import re
 
 
 ##
@@ -17,7 +18,8 @@ def set_theme(theme_color=None, background_color=None, color=None):
     if theme_color is not None and theme_color not in ("", "dark", "light"):
         return
 
-    if background_color is not None and background_color not in (
+    background_color_matches = re.search("hsl\(\d+,\s*\d+%,\s*\d+%\)", background_color)
+    if background_color_matches is not None or background_color in (
         "",
         "niks-favorite",
         "red",
@@ -39,6 +41,8 @@ def set_theme(theme_color=None, background_color=None, color=None):
         "pink",
         "rose",
     ):
+        pass
+    else:
         return
 
     if color is not None and color not in (

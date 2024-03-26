@@ -2,6 +2,7 @@ from flask_login import current_user
 from flask import Blueprint
 from bracketapp.queries import theme_queries
 from bracketapp.config import YEAR
+import re
 
 context_processor_bp = Blueprint("context_processor_bp", __name__)
 
@@ -19,7 +20,12 @@ def utility_processor():
 
     if theme:
         return dict(
-            theme=theme.theme, backgroundColor=theme.backgroundColor, color=theme.color
+            theme=theme.theme,
+            backgroundColor=theme.backgroundColor,
+            color=theme.color,
+            backgroundColorMatches=re.search(
+                "hsl\(\d+,\s*\d+%,\s*\d+%\)", theme.backgroundColor
+            ),
         )
 
     return dict(theme="", backgroundColor="", color="")

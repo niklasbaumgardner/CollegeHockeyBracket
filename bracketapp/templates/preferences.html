@@ -31,6 +31,9 @@
                             <div class="col-6">
                                 <sl-radio-group id="preferences-background-color-selector" label="Select a background" value="{{ backgroundColor }}">
                                     <sl-radio value="">Default</sl-radio>
+                                    <sl-radio value="custom">
+                                        Custom <sl-color-picker id="colorPicker" format="hsl" opacity label="Select a color"></sl-color-picker>
+                                    </sl-radio>
                                     <sl-radio value="niks-favorite">Niklas' favorite</sl-radio>
                                     <sl-radio value="red">Red</sl-radio>
                                     <sl-radio value="gray">Gray</sl-radio>
