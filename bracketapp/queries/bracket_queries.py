@@ -325,7 +325,7 @@ def update_bracket_standings(brackets=None, correct=None):
 def update_all_bracket_points():
     brackets = get_all_user_brackets()
     correct = bracket_utils.CorrectBracketInterface(bracket=get_correct_bracket())
-    teams = get_all_teams()
+    teams = set([t.id for t in get_all_bracket_teams_for_year(year=YEAR)])
 
     for user_bracket in brackets:
         points_dict = bracket_utils.calculate_points_for_bracket(
@@ -338,9 +338,11 @@ def update_all_bracket_points():
         user_bracket.bracket.r4 = points_dict.get("r4")
         user_bracket.bracket.points = points_dict.get("points")
 
-        user_bracket.bracket.max_points = (
-            bracket_utils.calculate_max_points_for_bracket(user_bracket, correct, teams)
+        max_points = bracket_utils.calculate_max_points_for_bracket(
+            user_bracket, correct, teams
         )
+        print(user_bracket.bracket.name, max_points)
+        user_bracket.bracket.max_points = max_points
         db.session.commit()
 
     update_bracket_standings(brackets=brackets, correct=correct)
