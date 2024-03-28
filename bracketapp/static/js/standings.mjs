@@ -52,7 +52,7 @@ class StandingsGridManager {
       { field: "maxPoints", headerName: "Max points", resizable: false },
     ];
 
-    if (rowData.length > 1 && !!rowData[0].r1) {
+    if (rowData.length > 1 && "r1" in rowData[0]) {
       columnDefs.push(
         { field: "r1", resizable: false },
         { field: "r2", resizable: false },
