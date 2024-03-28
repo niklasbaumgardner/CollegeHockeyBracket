@@ -6,12 +6,6 @@
 
 
 {% block content %}
-<script>
-    function goToURL(url) {
-        location.href = url;
-    }
-</script>
-
 <div class="d-flex justify-content-center">
     <sl-card class="mb-5 width-fit-content">
         <div slot="header">
@@ -23,18 +17,20 @@
 
 <div class="archive-grid">
     {% for bracket in archived_years %}
-        <sl-card class="cursor-pointer" onclick="goToURL(`{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}`)">
-            <div class="row mb-2">
-                <div class="col">
-                    <img width="75px" height="75px" src="{{ bracket.img_url }}" alt="{{ bracket.bracket_team.name }}"/>
+        <sl-card style="--padding: 0;">
+            <a class="archive-card" href="{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}">
+                <div class="row pb-2">
+                    <div class="col">
+                        <img width="75px" height="75px" src="{{ bracket.img_url }}" alt="{{ bracket.bracket_team.name }}"/>
+                    </div>
+                    <div class="col">
+                        <h2>{{ bracket.bracket.year }}</h2>
+                    </div>
                 </div>
-                <div class="col">
-                    <h2>{{ bracket.bracket.year }}</h2>
+                <div class="row">
+                    <h3>{{ bracket.bracket_team.name }}</h3>
                 </div>
-            </div>
-            <div class="row">
-                <h3><a href="{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}">{{ bracket.bracket_team.name }}</a></h3>
-            </div>
+            </a>
         </sl-card>
     {% endfor %}
 </div>

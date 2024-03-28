@@ -100,6 +100,13 @@ sl-dialog:not([open]) {
   height: 100px;
 }
 
+.archive-card {
+  padding: var(--sl-spacing-large);
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
 .archive-grid {
   display: grid;
   column-gap: var(--sl-spacing-small);
