@@ -164,16 +164,66 @@ sl-radio[value="custom"]::part(label) {
 }
 
 sl-button.neutral::part(base) {
-  color: var(--sl-color-neutral-800);
+  color: var(--sl-color-neutral-700);
 }
 sl-button.neutral::part(base):hover {
-  color: var(--sl-color-neutral-700);
+  color: var(--sl-color-neutral-800);
 }
 sl-button.neutral::part(base):focus-visible {
   color: var(--sl-color-neutral-700);
 }
 sl-button.neutral::part(base):active {
   color: var(--sl-color-neutral-900);
+}
+
+/* Primary */
+sl-button:not(disabled)[variant="primary"]::part(base):hover {
+  background-color: var(--sl-color-primary-700);
+  border-color: var(--sl-color-primary-700);
+}
+sl-button:not(disabled)[variant="primary"]::part(base):active {
+  background-color: var(--sl-color-primary-800);
+  border-color: var(--sl-color-primary-800);
+}
+
+/* Success */
+sl-button:not(disabled)[variant="success"]::part(base):hover {
+  background-color: var(--sl-color-success-700);
+  border-color: var(--sl-color-success-700);
+}
+sl-button:not(disabled)[variant="success"]::part(base):active {
+  background-color: var(--sl-color-success-800);
+  border-color: var(--sl-color-success-800);
+}
+
+/* Neutral */
+sl-button:not(disabled)[variant="neutral"]::part(base):hover {
+  background-color: var(--sl-color-neutral-700);
+  border-color: var(--sl-color-neutral-700);
+}
+sl-button:not(disabled)[variant="neutral"]::part(base):active {
+  background-color: var(--sl-color-neutral-800);
+  border-color: var(--sl-color-neutral-800);
+}
+
+/* Warning */
+sl-button:not(disabled)[variant="warning"]::part(base):hover {
+  background-color: var(--sl-color-warning-700);
+  border-color: var(--sl-color-warning-700);
+}
+sl-button:not(disabled)[variant="warning"]::part(base):active {
+  background-color: var(--sl-color-warning-800);
+  border-color: var(--sl-color-warning-800);
+}
+
+/* Danger */
+sl-button:not(disabled)[variant="danger"]::part(base):hover {
+  background-color: var(--sl-color-danger-700);
+  border-color: var(--sl-color-danger-700);
+}
+sl-button:not(disabled)[variant="danger"]::part(base):active {
+  background-color: var(--sl-color-danger-800);
+  border-color: var(--sl-color-danger-800);
 }
 
 .font-size-medium,
