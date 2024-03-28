@@ -310,7 +310,7 @@ def get_bracket_standings():
 
         brackets.sort(key=lambda x: x.goal_difference)
 
-    brackets.sort(key=lambda b: b.bracket.name)
+    brackets.sort(key=lambda b: b.bracket.name.casefold())
     if brackets and brackets[0] and brackets[0].bracket.rank:
         brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
         brackets.sort(key=lambda b: b.bracket.rank)
