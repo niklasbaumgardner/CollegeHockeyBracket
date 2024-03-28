@@ -1,5 +1,5 @@
 from bracketapp.queries import bracket_queries
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 from bracketapp.config import CAN_EDIT_BRACKET
@@ -70,5 +70,5 @@ def edit_bracket():
                     game_num=f"game{i}",
                     winner=request.form.get(f"game{i}"),
                 )
-
+    flash("Your bracket has been saved", "success")
     return redirect(url_for("viewbracket_bp.view_bracket"))
