@@ -112,13 +112,6 @@ class Matchup extends NikElement {
       </div>`;
   }
 
-  getTopClass() {
-    if (this.correctTop) {
-      return this.correctTop === this.winnerTop ? "correct" : "incorrect";
-    }
-    return "";
-  }
-
   getTopIcon() {
     if (this.correctTop) {
       return html`<sl-icon
@@ -128,13 +121,6 @@ class Matchup extends NikElement {
       ></sl-icon>`;
     }
     return null;
-  }
-
-  getBottomClass() {
-    if (this.correctBottom) {
-      return this.correctBottom === this.winnerBottom ? "correct" : "incorrect";
-    }
-    return "";
   }
 
   getBottomIcon() {
@@ -152,7 +138,7 @@ class Matchup extends NikElement {
     if (!this.winnerTop) {
       return null;
     }
-    return html`<div class="nb-team ${this.getTopClass()}">
+    return html`<div class="nb-team user-pick">
       <span class="team-name">${this.winnerTopName}</span>${this.getTopIcon()}
     </div>`;
   }
@@ -161,7 +147,7 @@ class Matchup extends NikElement {
     if (!this.winnerBottom) {
       return null;
     }
-    return html`<div class="nb-team ${this.getBottomClass()}">
+    return html`<div class="nb-team user-pick">
       <span class="team-name">${this.winnerBottomName}</span
       >${this.getBottomIcon()}
     </div>`;
