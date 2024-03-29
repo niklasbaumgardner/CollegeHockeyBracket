@@ -1,0 +1,14 @@
+{
+  "background_color": "white",
+  "description": "College hockey bracket app by Niklas Baumgardner ",
+  "display": "minimal-ui",
+  "icons": [
+    {
+      "src": "images/logo.svg",
+      "sizes": "any"
+    }
+  ],
+  "name": "Bracke App",
+  "short_name": "Bracket App",
+  "start_url": "/"
+}
