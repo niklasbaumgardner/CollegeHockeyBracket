@@ -37,7 +37,7 @@ class StandingsGridManager {
       { field: "rank", resizable: false },
       {
         field: "name",
-        headerName: "Bracket, Owner",
+        headerName: "Brackets",
         cellRenderer: (param) => {
           if (param.data.url) {
             return `<div class="standings-row">${this.getImageElement(
