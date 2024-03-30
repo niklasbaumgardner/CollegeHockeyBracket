@@ -21,7 +21,7 @@ class StandingsGridManager {
     }
 
     return `<img
-      class="team-img"
+      class="standings-img"
       src="${this.getImageUrl(team)}"
       alt="${team.name}"
     />`;
@@ -40,16 +40,26 @@ class StandingsGridManager {
         headerName: "Bracket, Owner",
         cellRenderer: (param) => {
           if (param.data.url) {
-            return `${this.getImageElement(param.data.team)}<a href="${
+            return `<div class="standings-row">${this.getImageElement(
+              param.data.team
+            )}<div class="name-cell"><span class="standings-bracket-name"><a href="${
               param.data.url
-            }">${param.value}</a>, ${param.data.username}`;
+            }">${param.value}</a></span><span class="standings-username">${
+              param.data.username
+            }</span></div></div>`;
           }
-          return `${param.value}, ${param.data.username}`;
+
+          return `<div class="standings-row">
+            <div class="name-cell">
+              <span class="standings-bracket-name">${param.value}</span>
+              <span class="standings-username">${param.data.username}</span>
+            </div>
+          </div>`;
         },
         resizable: false,
       },
-      { field: "points", headerName: "Total points", resizable: false },
-      { field: "maxPoints", headerName: "Max points", resizable: false },
+      { field: "points", resizable: false },
+      { field: "maxPoints", headerName: "Max", resizable: false },
     ];
 
     if (rowData.length > 1 && "r1" in rowData[0]) {
@@ -64,22 +74,17 @@ class StandingsGridManager {
     const gridOptions = {
       columnDefs,
       rowData,
+      rowHeight: 50,
       autoSizeStrategy: {
         type: "fitGridWidth",
         defaultMinWidth: 75,
+        defaultMaxWidth: 75,
         columnLimits: [
-          { colId: "rank", maxWidth: 75 },
+          { colId: "rank", minWidth: 56, maxWidth: 56 },
           {
             colId: "name",
-            minWidth: 400,
-          },
-          {
-            colId: "points",
-            minWidth: 125,
-          },
-          {
-            colId: "maxPoints",
-            minWidth: 125,
+            minWidth: 300,
+            maxWidth: 300,
           },
         ],
       },

@@ -247,3 +247,26 @@ sl-button:not(disabled)[variant="danger"]::part(base):active {
   width: 100%;
   padding: var(--sl-spacing-x-small) var(--sl-spacing-medium);
 }
+
+.standings-img {
+  width: 40px;
+}
+
+.standings-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sl-spacing-2x-small);
+}
+
+.name-cell {
+  display: grid;
+}
+
+.standings-bracket-name {
+  line-height: var(--sl-line-height-normal);
+}
+
+.standings-username {
+  font-size: var(--sl-font-size-x-small);
+  line-height: var(--sl-line-height-dense);
+}
