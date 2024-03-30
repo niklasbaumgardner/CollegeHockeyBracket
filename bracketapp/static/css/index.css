@@ -237,3 +237,13 @@ sl-button:not(disabled)[variant="danger"]::part(base):active {
 .font-size-medium::part(base) {
   font-size: var(--sl-font-size-medium);
 }
+
+.nb-dropdown {
+  width: 150px;
+}
+
+.nb-menu-item {
+  display: inline-block;
+  width: 100%;
+  padding: var(--sl-spacing-x-small) var(--sl-spacing-medium);
+}

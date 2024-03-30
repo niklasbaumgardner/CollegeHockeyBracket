@@ -79,13 +79,17 @@
                             <sl-button slot="trigger" variant="text" class="neutral font-size-medium" caret>
                                 {{ current_user.username }}
                             </sl-button>
-                            <sl-menu>
+                            <sl-menu class="nb-dropdown">
                                 {% if current_user.is_authenticated and current_user.role != None and current_user.role > 1 %}
-                                    <sl-menu-item><a href="{{ url_for('admin_bp.admin') }}">Admin</a></sl-menu-item>
+                                    <!-- <sl-menu-item><a href="{{ url_for('admin_bp.admin') }}">Admin</a></sl-menu-item> -->
+                                    <a class="nb-menu-item" href="{{ url_for('admin_bp.admin') }}">Admin</a>
                                 {% endif %}
-                                <sl-menu-item><a href="{{ url_for('preferences_bp.preferences') }}">Preferences</a></sl-menu-item>
-                                <sl-menu-item><a href="{{ url_for('profile_bp.profile') }}">Profile</a></sl-menu-item>
-                                <sl-menu-item><a href="{{ url_for('auth_bp.logout') }}">Logout</a></sl-menu-item>
+                                <!-- <sl-menu-item><a href="{{ url_for('preferences_bp.preferences') }}">Preferences</a></sl-menu-item> -->
+                                <!-- <sl-menu-item><a href="{{ url_for('profile_bp.profile') }}">Profile</a></sl-menu-item> -->
+                                <!-- <sl-menu-item><a href="{{ url_for('auth_bp.logout') }}">Logout</a></sl-menu-item> -->
+                                <a class="nb-menu-item" href="{{ url_for('profile_bp.profile') }}">Profile</a>
+                                <a class="nb-menu-item" href="{{ url_for('auth_bp.logout') }}">Logout</a>
+                                <a class="nb-menu-item" href="{{ url_for('preferences_bp.preferences') }}">Preferences</a>
                             </sl-menu>
                         </sl-dropdown>
                         <!-- <li class="nav-item dropdown">
