@@ -24,6 +24,8 @@
         <script src="/static/js/theme.js" defer></script>
         <script defer src="/static/js/dropdown.js"></script>
         <script defer src="https://analytics.us.umami.is/script.js" data-website-id="76ecc7ea-9cf4-461f-9777-8f4c7feccb54"></script>
+        <script src="https://cdn.jsdelivr.net/npm/stream-chat"></script>
+        <script src="/static/js/chat.mjs" type="module"></script>
     </head>
 
     <style>
@@ -36,6 +38,7 @@
     <script>
         const THEME_URL = "{{ url_for('theme_bp.set_theme') }}";
         const THEME = "{{ theme }}";
+        const CHAT_USER = JSON.parse({{ chat_user|tojson }});
     </script>
 
 
