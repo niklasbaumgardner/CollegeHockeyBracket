@@ -107,6 +107,27 @@ class ChatEl extends NikElement {
     this.messageInputEl.value = "";
   }
 
+  async handleKeyDown(event) {
+    let message = this.messageInputEl.value;
+    if (!message) {
+      return;
+    }
+
+    if (!(event.key === "Enter")) {
+      return;
+    }
+
+    if (event.shiftKey) {
+      return;
+    }
+
+    event.preventDefault();
+
+    await this.channel.sendMessage({ text: message });
+
+    this.messageInputEl.value = "";
+  }
+
   render() {
     return html`<sl-drawer style="--size: 35rem;">
       <sl-card id="messageList"
@@ -115,9 +136,13 @@ class ChatEl extends NikElement {
         </div></sl-card
       >
       <div class="d-flex align-items-center mt-3 gap-1">
-        <sl-textarea id="messageInput" rows="2"></sl-textarea
+        <sl-textarea
+          id="messageInput"
+          rows="2"
+          @keydown=${this.handleKeyDown}
+        ></sl-textarea
         ><sl-icon-button
-          @click=${this.handleSendClick}
+          @mousedown=${this.handleSendClick}
           @touchstart=${this.handleSendClick}
           name="send"
           label="Send message"
