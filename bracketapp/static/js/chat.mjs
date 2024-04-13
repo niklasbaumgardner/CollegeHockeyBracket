@@ -129,7 +129,7 @@ class ChatEl extends NikElement {
   }
 
   render() {
-    return html`<sl-drawer style="--size: 35rem;">
+    return html`<sl-drawer label="Group Message" style="--size: 35rem;">
       <sl-card id="messageList"
         ><div class="d-flex flex-column gap-3">
           ${this.messagesTemplate()}

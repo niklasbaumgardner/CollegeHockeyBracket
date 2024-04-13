@@ -281,9 +281,18 @@ sl-button:not(disabled)[variant="danger"]::part(base):active {
   bottom: 50px;
 }
 
+nb-chat-el > sl-drawer::part(base) {
+  top: 56px;
+  height: calc(100% - 56px);
+}
+
+nb-chat-el > sl-drawer::part(body) {
+  padding-top: 0;
+}
+
 #messageList::part(base) {
   overflow: scroll;
-  max-height: 84vh;
+  max-height: 82vh;
 }
 
 #messageInput {
