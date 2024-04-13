@@ -4,6 +4,9 @@ from bracketapp.queries import user_queries
 from bracketapp.models import User
 from bracketapp import bcrypt
 from bracketapp.utils.send_email import send_reset_email
+import stream_chat
+import os
+import json
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -151,3 +154,23 @@ def email_unique():
     email = request.args.get("email")
 
     return {"isUnique": user_queries.is_email_unique(email)}
+
+
+@auth_bp.get("/create_streamchat_token")
+@login_required
+def create_streamchat_token():
+    server_client = stream_chat.StreamChat(
+        api_key=os.environ.get("STREAM_CHAT_API_KEY"),
+        api_secret=os.environ.get("STREAM_CHAT_SECRET_KEY"),
+    )
+
+    token = server_client.create_token(f"{current_user.id}")
+    user_queries.update_user(id=current_user.id, token=token)
+
+    chat_user = dict(
+        id=current_user.id,
+        name=current_user.username,
+        token=current_user.streamchat_token,
+    )
+
+    return dict(chat_user=json.dumps(chat_user))

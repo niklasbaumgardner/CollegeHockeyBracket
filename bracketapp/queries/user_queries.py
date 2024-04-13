@@ -27,17 +27,20 @@ def get_all_users():
     return User.query.all()
 
 
-def update_user(id, username, email):
+def update_user(id, username=None, email=None, token=None):
     user = get_user_by_id(id=id)
 
     username = username if is_username_unique(username=username) else None
     email = email if is_email_unique(email=email) else None
 
-    if username:
+    if username is not None:
         user.username = username
 
-    if email:
+    if email is not None:
         user.email = email
+
+    if token is not None:
+        user.streamchat_token = token
 
     db.session.commit()
 

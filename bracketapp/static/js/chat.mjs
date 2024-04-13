@@ -1,5 +1,6 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
+import { getRequest } from "./fetch.mjs";
 import "./messageEl.mjs";
 
 class ChatEl extends NikElement {
@@ -21,10 +22,17 @@ class ChatEl extends NikElement {
   async init() {
     this.client = StreamChat.getInstance("w22wdxnm8jwk");
 
+    if (!CHAT_USER.token) {
+      let response = await getRequest(CREATE_STREAMCHAT_TOKEN_URL);
+      let jsonResponse = await response.json();
+      let chatUser = JSON.parse(jsonResponse.chat_user);
+      CHAT_USER.token = chatUser.token;
+    }
+
     await this.client.connectUser(
       {
         id: `${CHAT_USER.id}`,
-        name: CHAT_USER.name,
+        name: CHAT_USER.username,
       },
       CHAT_USER.token
     );
@@ -34,7 +42,7 @@ class ChatEl extends NikElement {
     });
     await this.channel.watch();
     await this.channel.addMembers([`${CHAT_USER.id}`], {
-      text: `${CHAT_USER.name} joined the channel.`,
+      text: `${CHAT_USER.username} joined the channel.`,
     });
 
     console.log(this.channel);

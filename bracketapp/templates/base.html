@@ -38,7 +38,11 @@
     <script>
         const THEME_URL = "{{ url_for('theme_bp.set_theme') }}";
         const THEME = "{{ theme }}";
-        const CHAT_USER = JSON.parse({{ chat_user|tojson }});
+        const CREATE_STREAMCHAT_TOKEN_URL = "{{ url_for('auth_bp.create_streamchat_token') }}";
+        let CHAT_USER;
+        {% if current_user.is_authenticated %}
+            CHAT_USER = JSON.parse(`{{ current_user.to_dict()|tojson }}`);
+        {% endif %}
     </script>
 
 

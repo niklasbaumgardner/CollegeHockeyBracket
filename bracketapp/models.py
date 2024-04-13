@@ -17,6 +17,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     role = db.Column(db.Integer, nullable=True)
+    streamchat_token = db.Column(db.String, nullable=True)
+
+    def to_dict(self):
+        return dict(id=self.id, username=self.username, token=self.streamchat_token)
 
     def get_reset_token(self):
         s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
