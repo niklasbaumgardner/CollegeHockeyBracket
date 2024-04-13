@@ -45,6 +45,8 @@ class ChatEl extends NikElement {
     this.chatButton.hidden = false;
     this.chatButton.addEventListener("click", this);
 
+    this.chatButtonBadge = document.getElementById("message-badge");
+
     this.requestUpdate();
   }
 
@@ -57,6 +59,8 @@ class ChatEl extends NikElement {
 
   handleClick(event) {
     this.toggleChatVisibility();
+    this.chatButtonBadge.textContent = 0;
+    this.chatButtonBadge.hidden = true;
   }
 
   toggleChatVisibility() {
@@ -83,6 +87,13 @@ class ChatEl extends NikElement {
         behavior: "smooth",
       });
     }, 100);
+
+    if (!this.drawerEl.open) {
+      let currentNum = parseInt(this.chatButtonBadge.textContent) ?? 0;
+      console.log(currentNum);
+      this.chatButtonBadge.textContent = currentNum + 1;
+      this.chatButtonBadge.hidden = false;
+    }
   }
 
   messagesTemplate() {
