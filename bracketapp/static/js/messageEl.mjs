@@ -56,7 +56,7 @@ class MessageEl extends NikElement {
           : ""}"
         class="width-fit-content"
       >
-        <p>${this.data.text}</p>
+        <p class="message-text">${this.data.text}</p>
       </sl-card>`;
   }
 }

@@ -314,3 +314,7 @@ nb-message-el[right] {
     align-self: end;
   }
 }
+
+.message-text {
+  white-space: pre;
+}
