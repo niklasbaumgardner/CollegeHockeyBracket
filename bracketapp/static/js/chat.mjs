@@ -95,6 +95,22 @@ class ChatEl extends NikElement {
     );
   }
 
+  get isMobileDevice() {
+    const toMatch = [
+      /Android/i,
+      /webOS/i,
+      /iPhone/i,
+      /iPad/i,
+      /iPod/i,
+      /BlackBerry/i,
+      /Windows Phone/i,
+    ];
+
+    return toMatch.some((toMatchItem) => {
+      return navigator.userAgent.match(toMatchItem);
+    });
+  }
+
   async handleSendClick() {
     let message = this.messageInputEl.value;
 
@@ -113,11 +129,7 @@ class ChatEl extends NikElement {
       return;
     }
 
-    if (!(event.key === "Enter")) {
-      return;
-    }
-
-    if (event.shiftKey) {
+    if (this.isMobileDevice || !(event.key === "Enter") || event.shiftKey) {
       return;
     }
 
@@ -142,8 +154,7 @@ class ChatEl extends NikElement {
           @keydown=${this.handleKeyDown}
         ></sl-textarea
         ><sl-icon-button
-          @mousedown=${this.handleSendClick}
-          @touchstart=${this.handleSendClick}
+          @click=${this.handleSendClick}
           name="send"
           label="Send message"
         ></sl-icon-button></div
