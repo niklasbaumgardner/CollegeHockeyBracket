@@ -7,8 +7,9 @@ class ChatEl extends NikElement {
 
   static get queries() {
     return {
-      messageInputEl: "#message",
+      messageInputEl: "#messageInput",
       messageListEl: "#messageList",
+      drawerEl: "sl-drawer",
     };
   }
 
@@ -40,13 +41,48 @@ class ChatEl extends NikElement {
 
     this.channel.on("message.new", (event) => this.handleNewMessage(event));
 
+    this.chatButton = document.getElementById("chatButton");
+    this.chatButton.hidden = false;
+    this.chatButton.addEventListener("click", this);
+
     this.requestUpdate();
   }
 
-  handleNewMessage(event) {
-    console.log(event);
-    // this.messageListEl.appendChild(docu);
+  handleEvent(event) {
+    switch (event.type) {
+      case "click":
+        this.handleClick(event);
+    }
+  }
+
+  handleClick(event) {
+    this.toggleChatVisibility();
+  }
+
+  toggleChatVisibility() {
+    if (this.drawerEl.open) {
+      this.drawerEl.hide();
+    } else {
+      this.drawerEl.show();
+    }
+  }
+
+  async handleNewMessage(event) {
     this.requestUpdate();
+
+    await this.messageListEl.updateComplete;
+    setTimeout(() => {
+      console.log(
+        `Trying to scroll to ${
+          this.messageListEl.shadowRoot.querySelector("div").scrollHeight
+        }`
+      );
+      this.messageListEl.shadowRoot.querySelector("div").scrollTo({
+        left: 0,
+        top: this.messageListEl.shadowRoot.querySelector("div").scrollHeight,
+        behavior: "smooth",
+      });
+    }, 100);
   }
 
   messagesTemplate() {
@@ -72,10 +108,14 @@ class ChatEl extends NikElement {
   }
 
   render() {
-    return html`<sl-drawer
-      ><div>
-        <div id="messageList">${this.messagesTemplate()}</div>
-        <sl-input id="message"></sl-input
+    return html`<sl-drawer style="--size: 35rem;">
+      <sl-card id="messageList"
+        ><div class="d-flex flex-column gap-3">
+          ${this.messagesTemplate()}
+        </div></sl-card
+      >
+      <div class="d-flex align-items-center mt-3 gap-1">
+        <sl-textarea id="messageInput" rows="2"></sl-textarea
         ><sl-icon-button
           @click=${this.handleSendClick}
           @touchstart=${this.handleSendClick}

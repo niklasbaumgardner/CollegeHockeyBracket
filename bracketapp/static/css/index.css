@@ -238,6 +238,10 @@ sl-button:not(disabled)[variant="danger"]::part(base):active {
   font-size: var(--sl-font-size-medium);
 }
 
+.font-size-2x-small {
+  font-size: var(--sl-font-size-2x-small);
+}
+
 .nb-dropdown {
   width: 150px;
 }
@@ -269,4 +273,35 @@ sl-button:not(disabled)[variant="danger"]::part(base):active {
 .standings-username {
   font-size: var(--sl-font-size-x-small);
   line-height: var(--sl-line-height-dense);
+}
+
+#chatButton {
+  position: sticky;
+  left: 95%;
+  bottom: 50px;
+}
+
+#messageList::part(base) {
+  overflow: scroll;
+  max-height: 84vh;
+}
+
+#messageInput {
+  flex-grow: 1;
+}
+
+nb-message-el {
+  display: inline-flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 90%;
+}
+
+nb-message-el[right] {
+  align-self: end;
+  justify-content: end;
+
+  sl-card {
+    align-self: end;
+  }
 }
