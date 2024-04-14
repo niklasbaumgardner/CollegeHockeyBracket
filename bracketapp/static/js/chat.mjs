@@ -41,9 +41,7 @@ class ChatEl extends NikElement {
       name: "2024 College Hockey Bracket App Live Chat",
     });
     await this.channel.watch();
-    await this.channel.addMembers([`${CHAT_USER.id}`], {
-      text: `${CHAT_USER.username} joined the channel.`,
-    });
+    await this.channel.addMembers([`${CHAT_USER.id}`]);
 
     console.log(this.channel);
 
