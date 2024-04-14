@@ -317,4 +317,5 @@ nb-message-el[right] {
 
 .message-text {
   white-space: pre;
+  text-wrap: wrap;
 }
