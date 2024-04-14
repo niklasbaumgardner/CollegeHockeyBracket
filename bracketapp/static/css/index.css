@@ -290,9 +290,13 @@ nb-chat-el > sl-drawer::part(body) {
   padding-top: 0;
 }
 
+#messageList {
+  height: calc(100% - 81px);
+}
+
 #messageList::part(base) {
   overflow: scroll;
-  max-height: 82vh;
+  max-height: 100%;
 }
 
 #messageInput {
