@@ -323,3 +323,8 @@ nb-message-el[right] {
   white-space: pre;
   text-wrap: wrap;
 }
+
+.disable-scroll {
+  height: 100%;
+  overflow: hidden;
+}
