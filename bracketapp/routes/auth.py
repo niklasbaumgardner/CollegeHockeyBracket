@@ -164,7 +164,7 @@ def create_streamchat_token():
         api_secret=os.environ.get("STREAM_CHAT_SECRET_KEY"),
     )
 
-    token = server_client.create_token(f"{current_user.id}")
+    token = server_client.create_token(f"{current_user.id}{current_user.username}")
     user_queries.update_user(id=current_user.id, token=token)
 
     chat_user = dict(
