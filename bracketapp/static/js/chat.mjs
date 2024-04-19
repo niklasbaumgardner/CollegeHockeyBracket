@@ -72,8 +72,10 @@ class ChatEl extends NikElement {
   toggleChatVisibility() {
     if (this.drawerEl.open) {
       this.drawerEl.hide();
+      document.body.classList.toggle("disable-scroll", false);
     } else {
       this.drawerEl.show();
+      document.body.classList.toggle("disable-scroll", true);
     }
   }
 
