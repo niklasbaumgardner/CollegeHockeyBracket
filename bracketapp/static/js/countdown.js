@@ -37,8 +37,12 @@ function startCountDown() {
   }, 1000);
 }
 
-if (BRACKET_CLOSE - NOW > 0) {
-  document.getElementById("countdown").hidden = false;
-  setTimeCountDown();
-  startCountDown();
+function shouldHideCountDown() {
+  if (BRACKET_CLOSE - NOW > 0) {
+    document.getElementById("countdown").hidden = false;
+    setTimeCountDown();
+    startCountDown();
+  } else {
+    document.getElementById("countdown").hidden = true;
+  }
 }

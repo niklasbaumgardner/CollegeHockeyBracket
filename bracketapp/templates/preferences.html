@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Preferences{% endblock title %}
+{% block preferences %}active{% endblock preferences %}
+
+
+{% block content %}
+    <script>
+        const COLOR_URL = "{{ url_for('preferences_bp.set_primary_color') }}";
+        const BACKGROUND_COLOR_URL = "{{ url_for('preferences_bp.set_background_color') }}";
+    </script>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-7">
+            <sl-card>
+                <div class="fs-4" slot="header">
+                    Customizations
+                </div>
+                <div class="mb-2">
+                    <div class="w-100 pb-3">
+                        <p class="fs-4">Theme</p>
+                        <sl-radio-group id="preferences-theme-selector" label="Select a theme" value="{{ theme }}">
+                            <sl-radio value="light">Light</sl-radio>
+                            <sl-radio value="dark">Dark</sl-radio>
+                        </sl-radio-group>
+                    </div>
+                    <sl-divider></sl-divider>
+                    <div class="w-100 pb-3">
+                        <p class="fs-4">Background color</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <sl-radio-group id="preferences-background-color-selector" label="Select a background color" value="{{ backgroundColor }}">
+                                    <sl-radio value="">Default</sl-radio>
+                                    <sl-radio value="custom">
+                                        Custom <sl-color-picker id="colorPicker" format="hsl" opacity label="Select a color"></sl-color-picker>
+                                    </sl-radio>
+                                    <sl-radio value="niks-favorite">Niklas' favorite</sl-radio>
+                                    <sl-radio value="red">Red</sl-radio>
+                                    <sl-radio value="gray">Gray</sl-radio>
+                                    <sl-radio value="orange">Orange</sl-radio>
+                                    <sl-radio value="amber">Amber</sl-radio>
+                                    <sl-radio value="yellow">Yellow</sl-radio>
+                                    <sl-radio value="lime">Lime</sl-radio>
+                                    <sl-radio value="green">Green</sl-radio>
+                                    <sl-radio value="emerald">Emerald</sl-radio>
+                                    <sl-radio value="teal">Teal</sl-radio>
+                                    <sl-radio value="cyan">Cyan</sl-radio>
+                                    <sl-radio value="sky">Sky</sl-radio>
+                                    <sl-radio value="blue">Blue</sl-radio>
+                                    <sl-radio value="indigo">Indigo</sl-radio>
+                                    <sl-radio value="violet">Violet</sl-radio>
+                                    <sl-radio value="purple">Purple</sl-radio>
+                                    <sl-radio value="fuchsia">Fuchsia</sl-radio>
+                                    <sl-radio value="pink">Pink</sl-radio>
+                                    <sl-radio value="rose">Rose</sl-radio>
+                                </sl-radio-group>
+                            </div>
+                            <div class="col-6">
+                                <label>Preview</label>
+                                <div class="background-preview {{ backgroundColor }}-background"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <sl-divider></sl-divider>
+                    <div class="w-100 pb-3">
+                        <p class="fs-4">Color</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <sl-radio-group id="preferences-primary-color-selector" label="Select a primary color" value="{{ color }}">
+                                    <sl-radio value="">Default</sl-radio>
+                                    <sl-radio value="red">Red</sl-radio>
+                                    <sl-radio value="gray">Gray</sl-radio>
+                                    <sl-radio value="orange">Orange</sl-radio>
+                                    <sl-radio value="amber">Amber</sl-radio>
+                                    <sl-radio value="yellow">Yellow</sl-radio>
+                                    <sl-radio value="lime">Lime</sl-radio>
+                                    <sl-radio value="green">Green</sl-radio>
+                                    <sl-radio value="emerald">Emerald</sl-radio>
+                                    <sl-radio value="teal">Teal</sl-radio>
+                                    <sl-radio value="cyan">Cyan</sl-radio>
+                                    <sl-radio value="sky">Sky</sl-radio>
+                                    <sl-radio value="blue">Blue</sl-radio>
+                                    <sl-radio value="indigo">Indigo</sl-radio>
+                                    <sl-radio value="violet">Violet</sl-radio>
+                                    <sl-radio value="purple">Purple</sl-radio>
+                                    <sl-radio value="fuchsia">Fuchsia</sl-radio>
+                                    <sl-radio value="pink">Pink</sl-radio>
+                                    <sl-radio value="rose">Rose</sl-radio>
+                                </sl-radio-group>
+                            </div>
+                            <div class="col-6">
+                                <sl-button variant="primary">Preview</sl-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </sl-card>
+        </div>
+    </div>
+
+    <script src="/static/js/preferences.js"></script>
+{% endblock content %}

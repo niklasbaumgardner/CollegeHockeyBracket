@@ -1,50 +1,62 @@
 from bracketapp.models import User
-from bracketapp.extensions import db
+from bracketapp import db
 from bracketapp import bcrypt
 
 
-def createUser(email, username, password):
-    hash_ = hashPassword(password=password)
+##
+## user queries
+##
+
+
+def create_user(email, username, password):
+    hash_ = hash_password(password=password)
     new_user = User(email=email, username=username, password=hash_)
     db.session.add(new_user)
     db.session.commit()
 
 
-def getUserById(id):
+def get_user_by_id(id):
     return User.query.filter_by(id=id).first()
 
 
-def getUserByEmail(email):
+def get_user_by_email(email):
     return User.query.filter_by(email=email).first()
 
 
-def updateUser(id, username, email):
-    user = getUserById(id=id)
+def get_all_users():
+    return User.query.all()
+
+
+def update_user(id, username=None, email=None, token=None):
+    user = get_user_by_id(id=id)
 
     username = username if is_username_unique(username=username) else None
     email = email if is_email_unique(email=email) else None
 
-    if username:
+    if username is not None:
         user.username = username
 
-    if email:
+    if email is not None:
         user.email = email
+
+    if token is not None:
+        user.streamchat_token = token
 
     db.session.commit()
 
 
-def updateUserPasswod(id, password):
+def update_user_password(id, password):
     if not password or not id:
         return
 
-    user = getUserById(id=id)
-    hash_ = hashPassword(password=password)
+    user = get_user_by_id(id=id)
+    hash_ = hash_password(password=password)
     user.password = hash_
 
     db.session.commit()
 
 
-def hashPassword(password):
+def hash_password(password):
     return bcrypt.generate_password_hash(password=password).decode("utf-8")
 
 

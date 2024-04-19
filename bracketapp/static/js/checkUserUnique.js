@@ -24,62 +24,96 @@ async function sendEmailRequest(email) {
   return response;
 }
 
-function enableSubmitButton() {
-  let ele = document.querySelector('button[type="submit"]');
-  console.log(ele);
-  ele.disabled = false;
-}
+class UniqueInputHandler {
+  constructor() {
+    this.usernameInput = document.getElementById("username");
+    this.usernameInput.addEventListener("input", this);
 
-function disableSubmitButton() {
-  let ele = document.querySelector('button[type="submit"]');
-  console.log(ele);
-  ele.disabled = true;
-}
+    this.emailInput = document.getElementById("email");
+    this.emailInput.addEventListener("input", this);
+  }
 
-let usernameInput = document.getElementById("username");
-usernameInput.addEventListener("input", async (event) => {
-  let orginalValue = event.target.getAttribute("original-value");
-  let newValue = event.target.value;
-  let invalidMessage = event.target.nextElementSibling;
-
-  if (orginalValue === newValue) {
-    // don't need to send request
-    invalidMessage.classList.remove("display-block");
-    disableSubmitButton();
-  } else {
-    let result = await sendUsernameRequest(newValue);
-    console.log("username is unique", result.isUnique);
-
-    if (result.isUnique) {
-      invalidMessage.classList.remove("display-block");
-      enableSubmitButton();
-    } else {
-      invalidMessage.classList.add("display-block");
-      disableSubmitButton();
+  handleEvent(event) {
+    if (event.target === this.usernameInput) {
+      this.usernameDebouncer((event) => {
+        this.usernameInputHandler(event);
+      }, 300)(event);
+    } else if (event.target === this.emailInput) {
+      this.emailDebouncer((event) => {
+        this.emailInputHandler(event);
+      }, 300)(event);
     }
   }
-});
 
-let emailInput = document.getElementById("email");
-emailInput.addEventListener("input", async (event) => {
-  let orginalValue = event.target.getAttribute("original-value");
-  let newValue = event.target.value;
-  let invalidMessage = event.target.nextElementSibling;
+  async usernameInputHandler(event) {
+    let orginalValue = event.target.getAttribute("original-value");
+    let newValue = event.target.value;
 
-  if (orginalValue === newValue) {
-    // don't need to send request
-    invalidMessage.classList.remove("display-block");
-    disableSubmitButton();
-  } else {
-    let result = await sendEmailRequest(event.target.value);
-    console.log("email is unique", result.isUnique);
-
-    if (result.isUnique) {
-      invalidMessage.classList.remove("display-block");
-      enableSubmitButton();
+    if (orginalValue === newValue) {
+      // don't need to send request
+      this.usernameInput.setAttribute("help-text", "");
     } else {
-      invalidMessage.classList.add("display-block");
-      disableSubmitButton();
+      let result = await sendUsernameRequest(newValue);
+      console.log("username is unique", result.isUnique);
+
+      if (result.isUnique) {
+        this.usernameInput.setAttribute("help-text", "");
+        this.usernameValid = true;
+      } else {
+        this.usernameInput.setAttribute(
+          "help-text",
+          "Username taken. Please choose a different username."
+        );
+        this.usernameValid = false;
+      }
     }
+    this.toggleSubmitButton();
   }
-});
+
+  async emailInputHandler(event) {
+    let orginalValue = event.target.getAttribute("original-value");
+    let newValue = event.target.value;
+
+    if (orginalValue === newValue) {
+      // don't need to send request
+      this.emailInput.setAttribute("help-text", "");
+    } else {
+      let result = await sendEmailRequest(event.target.value);
+      console.log("email is unique", result.isUnique);
+
+      if (result.isUnique) {
+        this.emailInput.setAttribute("help-text", "");
+        this.emailValid = true;
+      } else {
+        this.emailInput.setAttribute("help-text", EMAUL_UNIQUE_HELP_TEXT);
+        this.emailValid = false;
+      }
+    }
+    this.toggleSubmitButton();
+  }
+
+  usernameDebouncer(callback, wait) {
+    return (...args) => {
+      window.clearTimeout(this.timeoutId);
+      this.timeoutId = window.setTimeout(() => {
+        callback(...args);
+      }, wait);
+    };
+  }
+
+  emailDebouncer(callback, wait) {
+    return (...args) => {
+      window.clearTimeout(this.timeoutId);
+      this.timeoutId = window.setTimeout(() => {
+        callback(...args);
+      }, wait);
+    };
+  }
+
+  toggleSubmitButton() {
+    let button = document.querySelector('sl-button[type="submit"]');
+    button.disabled = !(this.emailValid && this.usernameValid);
+  }
+}
+
+new UniqueInputHandler();

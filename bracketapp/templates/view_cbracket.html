@@ -4,61 +4,20 @@
 
 
 {% block content %}
+
 <script>
-    const CORRECT = {{ correct_json|tojson }};
-    const DEFAULT = {{ default_json|tojson }};
+    const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
 </script>
-<script src="/static/js/createElement.js"></script>
 
-    <div class="pb-5 d-flex justify-content-center mx-0">
-        <div class="fs-1">
-            {{ year }} NHL Hockey Bracket Final
-        </div>
+
+<div class="pb-5 d-flex justify-content-center mx-0">
+    <div class="fs-1">
+        {{ year }} NHL Hockey Bracket Final
     </div>
+</div>
 
-    <div id="bracket" class="border border-dark-subtle">
-        <div class="row">
-            <div class="cbracket-grid">
-                <div class="round-one-left round-one">
-                    <div class="round-details">Round 1</div>
-                </div>	<!-- END ROUND ONE -->
+<nb-bracket type="correct" default="{{ default }}" correct="{{ correct }}"></nb-bracket>
 
-
-                <div class="round-two-left round-two">
-                    <div class="round-details">Round 2</div>
-                </div>	<!-- END ROUND TWO -->
-
-
-                <div class="round-three-left round-three">
-                    <div class="round-details">Round 3</div>
-                </div>	<!-- END ROUND THREE -->
-
-
-                <div class="round-final bg-body-nb border border-dark-subtle p-3 my-auto">
-                </div>
-
-
-                <div class="round-three-right round-three">
-                    <div class="round-details">Round 3</div>
-                </div>	<!-- END ROUND THREE -->
-
-
-                <div class="round-two-right round-two">
-                    <div class="round-details">Round 2</div>
-                </div>	<!-- END ROUND TWO -->
-
-
-                <div class="round-one-right round-one">
-                    <div class="round-details">Round 1</div>
-                </div>	<!-- END ROUND ONE -->
-            </div>
-        </div>
-    </div>
-
-    <script src="/static/js/view_cbracket.js"></script>
-    <script>
-        const bracket = new Bracket();
-        bracket.render();
-    </script>
+<script type="module" src="/static/js/bracketEl.mjs"></script>
 
 {% endblock content %}
