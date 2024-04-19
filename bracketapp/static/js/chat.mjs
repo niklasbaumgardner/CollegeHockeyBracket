@@ -31,7 +31,7 @@ class ChatEl extends NikElement {
 
     await this.client.connectUser(
       {
-        id: `${CHAT_USER.id}`,
+        id: `${CHAT_USER.id}${CHAT_USER.username}`,
         name: CHAT_USER.username,
       },
       CHAT_USER.token
@@ -41,7 +41,7 @@ class ChatEl extends NikElement {
       name: "2024 College Hockey Bracket App Live Chat",
     });
     await this.channel.watch();
-    await this.channel.addMembers([`${CHAT_USER.id}`]);
+    await this.channel.addMembers([`${CHAT_USER.id}${CHAT_USER.username}`]);
 
     console.log(this.channel);
 
