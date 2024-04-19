@@ -33,11 +33,13 @@ login_manager.login_view = "auth_bp.login"
 login_manager.login_message_category = "alert-primary"
 mail.init_app(app)
 
-app.wsgi_app = ApitallyMiddleware(
-    app,
-    client_id=os.environ.get("APITALLY_CLIENT_ID"),
-    env=os.environ.get("APITALLY_ENVIRONMENT"),
-)
+APITALLY_CLIENT_ID = os.environ.get("APITALLY_CLIENT_ID")
+if APITALLY_CLIENT_ID:
+    app.wsgi_app = ApitallyMiddleware(
+        app,
+        client_id=APITALLY_CLIENT_ID,
+        env=os.environ.get("APITALLY_ENVIRONMENT"),
+    )
 
 from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
