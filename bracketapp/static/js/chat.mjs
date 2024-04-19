@@ -37,7 +37,7 @@ class ChatEl extends NikElement {
       CHAT_USER.token
     );
 
-    this.channel = this.client.channel("messaging", "BracketApp2024", {
+    this.channel = this.client.channel("messaging", "NHLBracketApp2024", {
       name: "2024 College Hockey Bracket App Live Chat",
     });
     await this.channel.watch();
