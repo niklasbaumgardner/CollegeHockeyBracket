@@ -26,7 +26,10 @@ class MessageEl extends NikElement {
   }
 
   get myMessage() {
-    return CHAT_USER.id == this.data.user.id;
+    return (
+      CHAT_USER.id == this.data.user.id ||
+      CHAT_USER.id + CHAT_USER.username == this.data.user.id
+    );
   }
 
   usernameTemplate() {
@@ -51,7 +54,7 @@ class MessageEl extends NikElement {
     return html`${this.usernameTemplate()}<sl-card
         style="--padding: var(--sl-spacing-x-small);
     --border-radius: var(--sl-border-radius-x-large);
-    ${CHAT_USER.id == this.data.user.id
+    ${this.myMessage
           ? "--sl-panel-background-color: var(--sl-color-primary-200);"
           : ""}"
         class="width-fit-content"
