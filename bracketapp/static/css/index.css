@@ -297,6 +297,7 @@ nb-chat-el > sl-drawer::part(body) {
 #messageList::part(base) {
   overflow: scroll;
   max-height: 100%;
+  height: 100%;
 }
 
 #messageInput {
