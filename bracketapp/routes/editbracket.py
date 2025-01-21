@@ -15,18 +15,14 @@ def edit_bracket():
         return redirect(url_for("viewbracket_bp.view_bracket"))
 
     if request.method == "GET":
-        default = bracket_utils.DefaultBracketInterface()
+        default = bracket_queries.get_default_bracket()
         bracket = bracket_queries.get_bracket_for_user_id(user_id=current_user.get_id())
-        if bracket:
-            bracket = bracket_utils.BracketInterface(
-                bracket_id=bracket.id, bracket=bracket, safe_only=False
-            )
-        else:
+        if not bracket:
             bracket = bracket_utils.EmptyBracket()
         return render_template(
             "edit_bracket.html",
-            bracket=bracket.to_json(),
-            default=default.to_json(),
+            bracket=bracket.to_dict(safe_only=False),
+            default=default.to_dict(),
         )
     elif request.method == "POST":
         existing_bracket = bracket_queries.get_bracket_for_user_id(

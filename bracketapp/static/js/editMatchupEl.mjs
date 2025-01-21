@@ -4,13 +4,12 @@ import { NikElement } from "./customElement.mjs";
 class EditMatchup extends NikElement {
   static properties = {
     winnerTop: {
-      type: Number,
+      type: Object,
     },
     winnerBottom: {
-      type: Number,
+      type: Object,
     },
     winner: { type: Number },
-    type: { type: String },
     game: { type: String },
     teams: { type: Object },
   };
@@ -23,33 +22,31 @@ class EditMatchup extends NikElement {
   }
 
   get winnerTopName() {
-    let team = this.teams[this.winnerTop];
+    let team = this.winnerTop;
     return this.teamTemplate(team);
   }
 
   get winnerBottomName() {
-    let team = this.teams[this.winnerBottom];
+    let team = this.winnerBottom;
     return this.teamTemplate(team);
   }
 
   teamTemplate(team) {
     if (team) {
-      return `${team.rank} ${team.name}`;
+      return `${team.rank} ${team.team.name}`;
     }
     return "";
   }
 
-  getImageElement(teamId) {
-    if (!teamId) {
+  getImageElement(team) {
+    if (!team) {
       return null;
     }
 
-    let team = this.teams[teamId];
-
     return html`<img
       class="team-img"
-      src="${team.icon_path}"
-      alt="${team.name}"
+      src="${team.team.icon_path}"
+      alt="${team.team.name}"
     />`;
   }
 
@@ -82,14 +79,14 @@ class EditMatchup extends NikElement {
     >
       <div class="nb-team">
         <label id="top">
-          ${this.topInput(this.winnerTop)}
+          ${this.topInput(this.winnerTop.id)}
           ${this.getImageElement(this.winnerTop)}
           <span>${this.winnerTopName}</span>
         </label>
       </div>
       <div class="nb-team">
         <label id="bottom">
-          ${this.bottomInput(this.winnerBottom)}
+          ${this.bottomInput(this.winnerBottom.id)}
           ${this.getImageElement(this.winnerBottom)}
           <span>${this.winnerBottomName}</span>
         </label>
