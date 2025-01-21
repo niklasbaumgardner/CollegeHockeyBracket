@@ -35,15 +35,15 @@ def view_bracket(id):
         return redirect(url_for("auth_bp.login"))
 
     if bracket:
-        default = bracket_utils.DefaultBracketInterface(year=bracket.year)
+        default = bracket_queries.get_default_bracket_for_year(year=bracket.year)
         try:
-            correct = bracket_utils.CorrectBracketInterface(year=bracket.year)
+            correct = bracket_queries.get_correct_bracket_for_year(year=bracket.year)
         except:
             correct = None
     else:
-        default = bracket_utils.DefaultBracketInterface()
+        default = bracket_queries.get_default_bracket()
         try:
-            correct = bracket_utils.CorrectBracketInterface()
+            correct = bracket_queries.get_correct_bracket()
         except:
             correct = None
 
@@ -58,21 +58,17 @@ def view_bracket(id):
         else ""
     )
 
-    bracket = bracket_utils.BracketInterface(
-        bracket_id=bracket.id, bracket=bracket, safe_only=False
-    )
-
     return render_template(
         "view_bracket.html",
         CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         mine=mine,
-        correct=correct.to_json(),
-        default=default.to_json(),
-        bracket=bracket.to_json(),
-        bracket_winner_img=bracket.img_url,
-        correct_winner_img=correct.img_url,
-        name=bracket.bracket.name,
-        year=bracket.bracket.year,
+        correct=correct.to_dict(),
+        default=default.to_dict(),
+        bracket=bracket.to_dict(safe_only=False),
+        bracket_winner_img=bracket.winner_team.team.icon_path,
+        correct_winner_img=correct.winner_team.team.icon_path,
+        name=bracket.name,
+        year=bracket.year,
     )
 
 
@@ -81,16 +77,16 @@ def view_cbracket(year):
     if year >= YEAR and not isAdmin():
         return redirect(url_for("archive_bp.archive"))
 
-    correct = bracket_utils.CorrectBracketInterface(year=year)
+    correct = bracket_queries.get_correct_bracket_for_year(year)
 
     if not correct:
         return redirect(url_for("archive_bp.archive"))
 
-    default = bracket_utils.DefaultBracketInterface(year=year)
+    default = bracket_queries.get_default_bracket_for_year(year)
 
     return render_template(
         "view_cbracket.html",
-        correct=correct.to_json(),
-        default=default.to_json(),
-        year=correct.bracket.year,
+        correct=correct.to_dict(),
+        default=default.to_dict(),
+        year=correct.year,
     )

@@ -7,30 +7,30 @@ class StandingsGridManager {
     this.setupThemeWatcher();
   }
 
-  getImageUrl(team) {
-    if (!team) {
+  getImageUrl(winner_team) {
+    if (!winner_team) {
       return "";
     }
 
-    return team.icon_path;
+    return winner_team.team.icon_path;
   }
 
-  getImageElement(team) {
-    if (!team) {
+  getImageElement(winner_team) {
+    if (!winner_team) {
       return null;
     }
 
     return `<img
       class="standings-img"
-      src="${this.getImageUrl(team)}"
-      alt="${team.name}"
+      src="${this.getImageUrl(winner_team)}"
+      alt="${winner_team.team.name}"
     />`;
   }
 
   createDataGrid() {
     const rowData = [];
-    for (let string of GRID_DATA) {
-      rowData.push(JSON.parse(string));
+    for (let data of GRID_DATA) {
+      rowData.push(data);
     }
 
     const columnDefs = [
@@ -39,30 +39,30 @@ class StandingsGridManager {
         field: "name",
         headerName: "Brackets",
         cellRenderer: (param) => {
-          if (param.data.url) {
+          if (param.data.winner) {
             return `<div class="standings-row">${this.getImageElement(
-              param.data.team
+              param.data.winner_team
             )}<div class="name-cell"><span class="standings-bracket-name"><a href="${
               param.data.url
             }">${param.value}</a></span><span class="standings-username">${
-              param.data.username
+              param.data.user.username
             }</span></div></div>`;
           }
 
           return `<div class="standings-row">
             <div class="name-cell">
               <span class="standings-bracket-name">${param.value}</span>
-              <span class="standings-username">${param.data.username}</span>
+              <span class="standings-username">${param.data.user.username}</span>
             </div>
           </div>`;
         },
         resizable: false,
       },
       { field: "points", resizable: false },
-      { field: "maxPoints", headerName: "Max", resizable: false },
+      { field: "max_points", headerName: "Max", resizable: false },
     ];
 
-    if (rowData.length > 1 && "r1" in rowData[0]) {
+    if ("r1" in rowData[0]) {
       columnDefs.push(
         { field: "r1", resizable: false },
         { field: "r2", resizable: false },

@@ -1,38 +1,41 @@
-{% extends "base.html" %}
-
-{% block title %}Archive{% endblock title %}
-{% block archive %}active{% endblock archive %}
-
-
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Archive{% endblock title %} {% block
+archive %}active{% endblock archive %} {% block content %}
 <div class="d-flex justify-content-center">
-    <sl-card class="mb-5 width-fit-content">
-        <div slot="header">
-            <h2>Archive</h2>
-        </div>
-        Click on the cards below to view the standings and brackets of each respective year
-    </sl-card>
+  <sl-card class="mb-5 width-fit-content">
+    <div slot="header">
+      <h2>Archive</h2>
+    </div>
+    Click on the cards below to view the standings and brackets of each
+    respective year
+  </sl-card>
 </div>
 
 <div class="archive-grid">
-    {% for bracket in archived_years %}
-        <sl-card style="--padding: 0;">
-            <a class="archive-card" href="{{ url_for('archive_bp.archive', year=bracket.bracket.year) }}">
-                <div class="row pb-2">
-                    <div class="col">
-                        <img width="75px" height="75px" src="{{ bracket.img_url }}" alt="{{ bracket.bracket_team.name }}"/>
-                    </div>
-                    <div class="col">
-                        <h2>{{ bracket.bracket.year }}</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <h3>{{ bracket.bracket_team.name }}</h3>
-                </div>
-            </a>
-        </sl-card>
-    {% endfor %}
+  {% for bracket in archived_years %}
+  <sl-card style="--padding: 0">
+    <a
+      class="archive-card"
+      href="{{ url_for('archive_bp.archive', year=bracket.year) }}"
+    >
+      <div class="row pb-2">
+        <div class="col">
+          <img
+            width="75px"
+            height="75px"
+            src="{{ bracket.winner_team.team.icon_path }}"
+            alt="{{ bracket.winner_team.team.name }}"
+          />
+        </div>
+        <div class="col">
+          <h2>{{ bracket.year }}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <h3>{{ bracket.winner_team.team.name }}</h3>
+      </div>
+    </a>
+  </sl-card>
+  {% endfor %}
 </div>
 
 {% endblock content %}

@@ -10,7 +10,9 @@ index_bp = Blueprint("index_bp", __name__)
 def index():
     # TODO: return the correct bracket if possible
     standings = bracket_utils.get_bracket_standings()
-    standings_json = [b.to_json() for b in standings]
+    standings_json = [
+        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in standings
+    ]
 
     message = bracket_utils.get_standings_message(standings)
 

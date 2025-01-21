@@ -16,19 +16,25 @@ class Bracket extends NikElement {
     type: { type: String },
   };
 
-  getImageElement(teamId, force = false) {
-    if (!teamId) {
+  get winnerTeam() {
+    if (this.type === "correct") {
+      return this.correct.winner_team.team;
+    }
+
+    return this.bracket.winner_team.team;
+  }
+
+  getImageElement(team, force = false) {
+    if (!team) {
       return null;
     }
 
-    let team = this.default.teams[teamId];
-
     let isWinnerCorrect =
-      force || !this.correct?.winner || this.correct?.winner === team;
+      force || !this.correct?.winner || this.correct?.winner === team.id;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
-      src="${team.icon_path}"
-      alt="${team.name}"
+      src="${team.team.icon_path}"
+      alt="${team.team.name}"
     />`;
   }
 
@@ -47,22 +53,16 @@ class Bracket extends NikElement {
     if (options.type === "default") {
       return html`<nb-matchup
         type="default"
-        .teams=${this.default.teams}
-        winner=${options.winner}
         .default=${options.default}
         .correct=${options.correct}
       ></nb-matchup>`;
-    } else if (options.type === "edit") {
-      return html``;
     }
 
     return html`<nb-matchup
-      .teams=${this.default.teams}
-      winner=${options.winner}
-      winnerTop=${options.winnerTop}
-      winnerBottom=${options.winnerBottom}
-      correctTop=${options.correctTop}
-      correctBottom=${options.correctBottom}
+      .winnerTop=${options.winnerTop}
+      .winnerBottom=${options.winnerBottom}
+      .correctTop=${options.correctTop}
+      .correctBottom=${options.correctBottom}
       .correct=${options.correct}
     ></nb-matchup>`;
   }
@@ -95,17 +95,17 @@ class Bracket extends NikElement {
   roundTwoLeftTemplate() {
     return html`<div class="round-two">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game1.winner,
-        winnerBottom: this.bracket?.games?.game2.winner,
-        correctTop: this.correct?.games?.game1.winner,
-        correctBottom: this.correct?.games?.game2.winner,
+        winnerTop: this.bracket?.games?.game1.winner_team,
+        winnerBottom: this.bracket?.games?.game2.winner_team,
+        correctTop: this.correct?.games?.game1.winner_team,
+        correctBottom: this.correct?.games?.game2.winner_team,
         correct: this.correct?.games.game9,
       })}
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game3.winner,
-        winnerBottom: this.bracket?.games?.game4.winner,
-        correctTop: this.correct?.games?.game3.winner,
-        correctBottom: this.correct?.games?.game4.winner,
+        winnerTop: this.bracket?.games?.game3.winner_team,
+        winnerBottom: this.bracket?.games?.game4.winner_team,
+        correctTop: this.correct?.games?.game3.winner_team,
+        correctBottom: this.correct?.games?.game4.winner_team,
         correct: this.correct?.games.game10,
       })}
     </div>`;
@@ -114,10 +114,10 @@ class Bracket extends NikElement {
   roundThreeLeftTemplate() {
     return html`<div class="round-three">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game9.winner,
-        winnerBottom: this.bracket?.games?.game10.winner,
-        correctTop: this.correct?.games?.game9.winner,
-        correctBottom: this.correct?.games?.game10.winner,
+        winnerTop: this.bracket?.games?.game9.winner_team,
+        winnerBottom: this.bracket?.games?.game10.winner_team,
+        correctTop: this.correct?.games?.game9.winner_team,
+        correctBottom: this.correct?.games?.game10.winner_team,
         correct: this.correct?.games.game13,
       })}
     </div>`;
@@ -130,7 +130,7 @@ class Bracket extends NikElement {
 
     return html`<div class="col text-center">
       <div class="row justify-content-center">
-        ${this.getImageElement(this.correct?.winner)}
+        ${this.getImageElement(this.correct?.winner_team)}
         <p>Champion</p>
       </div>
     </div>`;
@@ -157,7 +157,7 @@ class Bracket extends NikElement {
 
     return html`<div class="col text-center">
       <div class="row justify-content-center">
-        ${this.getImageElement(this.bracket?.winner)}
+        ${this.getImageElement(this.bracket?.winner_team)}
         <p class="champion-pick">
           ${IS_ME ? "Your pick" : "Their pick"}${this.getChampionPickIcon()}
         </p>
@@ -166,7 +166,7 @@ class Bracket extends NikElement {
   }
 
   predictedScoreTemplate() {
-    if (!this.bracket?.wGoals || !this.bracket?.lGoals) {
+    if (!this.bracket?.w_goals || !this.bracket?.l_goals) {
       return null;
     }
 
@@ -174,10 +174,10 @@ class Bracket extends NikElement {
       <p class="fs-6">Predicted Score:</p>
       <p class="fs-6 display-inline-flex">
         <span class="p-2 border border-dark-subtle"
-          >${this.bracket?.wGoals}</span
+          >${this.bracket?.w_goals}</span
         ><span class="p-2"> - </span
         ><span class="p-2 border border-dark-subtle"
-          >${this.bracket?.lGoals}</span
+          >${this.bracket?.l_goals}</span
         >
       </p>
     </div>`;
@@ -195,10 +195,10 @@ class Bracket extends NikElement {
           <div class="row">
             <div class="col">
               ${this.matchupTemplate({
-                winnerTop: this.bracket?.games?.game13.winner,
-                winnerBottom: this.bracket?.games?.game14.winner,
-                correctTop: this.correct?.games?.game13.winner,
-                correctBottom: this.correct?.games?.game14.winner,
+                winnerTop: this.bracket?.games?.game13.winner_team,
+                winnerBottom: this.bracket?.games?.game14.winner_team,
+                correctTop: this.correct?.games?.game13.winner_team,
+                correctBottom: this.correct?.games?.game14.winner_team,
                 correct: this.correct?.games.game15,
               })}
             </div>
@@ -212,10 +212,10 @@ class Bracket extends NikElement {
   roundThreeRightTemplate() {
     return html`<div class="round-three">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game11.winner,
-        winnerBottom: this.bracket?.games?.game12.winner,
-        correctTop: this.correct?.games?.game11.winner,
-        correctBottom: this.correct?.games?.game12.winner,
+        winnerTop: this.bracket?.games?.game11.winner_team,
+        winnerBottom: this.bracket?.games?.game12.winner_team,
+        correctTop: this.correct?.games?.game11.winner_team,
+        correctBottom: this.correct?.games?.game12.winner_team,
         correct: this.correct?.games.game14,
       })}
     </div>`;
@@ -224,17 +224,17 @@ class Bracket extends NikElement {
   roundTwoRightTemplate() {
     return html`<div class="round-two">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game5.winner,
-        winnerBottom: this.bracket?.games?.game6.winner,
-        correctTop: this.correct?.games?.game5.winner,
-        correctBottom: this.correct?.games?.game6.winner,
+        winnerTop: this.bracket?.games?.game5.winner_team,
+        winnerBottom: this.bracket?.games?.game6.winner_team,
+        correctTop: this.correct?.games?.game5.winner_team,
+        correctBottom: this.correct?.games?.game6.winner_team,
         correct: this.correct?.games.game11,
       })}
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game7.winner,
-        winnerBottom: this.bracket?.games?.game8.winner,
-        correctTop: this.correct?.games?.game7.winner,
-        correctBottom: this.correct?.games?.game8.winner,
+        winnerTop: this.bracket?.games?.game7.winner_team,
+        winnerBottom: this.bracket?.games?.game8.winner_team,
+        correctTop: this.correct?.games?.game7.winner_team,
+        correctBottom: this.correct?.games?.game8.winner_team,
         correct: this.correct?.games.game12,
       })}
     </div>`;
@@ -272,7 +272,7 @@ class Bracket extends NikElement {
           <h2>${this.default.year} NCAA College Hockey Bracket</h2>
         </div>
         <div class="d-flex justify-content-center gap-4 flex-wrap">
-          ${this.getImageElement(this.bracket?.winner, true)}
+          ${this.getImageElement(this.bracket?.winner_team, true)}
           <div>
             <h4>${this.bracket?.name}</h4>
             <div class="d-flex justify-content-evenly">

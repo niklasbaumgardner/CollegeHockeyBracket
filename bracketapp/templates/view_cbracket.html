@@ -1,21 +1,15 @@
-{% extends "base.html" %}
-
-{% block title %}{{ year }} Final Bracket{% endblock title %}
-
-
-{% block content %}
-
-<script>
-    const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
-</script>
+{% extends "base.html" %} {% block title %}{{ year }} Final Bracket{% endblock
+title %} {% block content %}
 
 <div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fs-1">
-        {{ year }} NCAA College Hockey Bracket Final
-    </div>
+  <div class="fs-1">{{ year }} NCAA College Hockey Bracket Final</div>
 </div>
 
-<nb-bracket type="correct" default="{{ default }}" correct="{{ correct }}"></nb-bracket>
+<nb-bracket
+  type="correct"
+  default='{{ default|tojson }}'
+  correct='{{ correct|tojson }}'
+></nb-bracket>
 
 <script type="module" src="/static/js/bracketEl.mjs"></script>
 

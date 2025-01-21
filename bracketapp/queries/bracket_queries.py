@@ -112,14 +112,7 @@ def get_all_user_brackets():
 def get_all_user_brackets_for_year(year):
     if not year:
         return []
-    brackets = []
-    bs = Bracket.query.filter_by(year=year).all()
-    for b in bs:
-        brackets.append(
-            bracket_utils.BracketInterface(b.id, bracket=b, safe_only=False)
-        )
-
-    return brackets
+    return Bracket.query.filter_by(year=year).all()
 
 
 def get_all_user_games_for_bracket(bracket_id):

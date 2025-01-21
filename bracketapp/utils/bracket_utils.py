@@ -232,7 +232,7 @@ def get_winner(standings):
     if not correct or not correct.winner:
         return None
 
-    winners = [b for b in standings if b.bracket.rank == 1]
+    winners = [b for b in standings if b.rank == 1]
 
     if len(winners) == 0:
         return None
@@ -242,7 +242,7 @@ def get_winner(standings):
 
     for w in winners:
         w.goal_difference = abs(
-            w.bracket.w_goals + w.bracket.l_goals - (correct.w_goals + correct.l_goals)
+            w.w_goals + w.l_goals - (correct.w_goals + correct.l_goals)
         )
 
     winners.sort(key=lambda x: x.goal_difference)
@@ -263,16 +263,16 @@ def get_standings_message(standings, winner=None, force=False):
 
         if winner:
             if not winner.tie and len(winner.winner) == 1:
-                message = f'<h4>Congratulations to { winner.winner[0].username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].bracket.id) }">{ winner.winner[0].bracket.name }</a>, { winner.winner[0].username } won this year\'s bracket challenge with <b>{ winner.winner[0].bracket.points }</b> points.'
+                message = f'<h4>Congratulations to { winner.winner[0].user.username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].id) }">{ winner.winner[0].name }</a>, { winner.winner[0].user.username } won this year\'s bracket challenge with <b>{ winner.winner[0].points }</b> points.'
             elif winner.tie and len(winner.winner) > 1:
                 message = (
                     f"<h4>We have a tie between {len(winner.winner)} brackets</h4>"
                 )
-                message += f"<div>The following brackets have tied with {winner.winner[0].bracket.points} points after the tiebreak (total goals: {winner.total_correct_goals})</div>"
+                message += f"<div>The following brackets have tied with {winner.winner[0].points} points after the tiebreak (total goals: {winner.total_correct_goals})</div>"
                 for bracket in winner.winner:
-                    message += f'<div><a href="{ url_for("viewbracket_bp.view_bracket", id=bracket.bracket.id) }">{ bracket.bracket.name }</a>, { bracket.username } tied this year\'s bracket challenge with { winner.winner[0].bracket.points } points and { bracket.bracket.w_goals + bracket.bracket.l_goals } total goals</div>'
+                    message += f'<div><a href="{ url_for("viewbracket_bp.view_bracket", id=bracket.id) }">{ bracket.name }</a>, { bracket.user.username } tied this year\'s bracket challenge with { winner.winner[0].points } points and { bracket.w_goals + bracket.l_goals } total goals</div>'
             elif winner.tie and len(winner.winner) == 1:
-                message = f'<h4>Congratulations to { winner.winner[0].username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].bracket.id) }">{ winner.winner[0].bracket.name }</a>, { winner.winner[0].username } won this year\'s bracket challenge by the tiebreak with <b>{ winner.winner[0].bracket.points }</b> points and a goal differential of <b>{ abs((winner.winner[0].bracket.w_goals + winner.winner[0].bracket.l_goals) - (winner.total_correct_goals)) }</b>.'
+                message = f'<h4>Congratulations to { winner.winner[0].user.username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].id) }">{ winner.winner[0].name }</a>, { winner.winner[0].user.username } won this year\'s bracket challenge by the tiebreak with <b>{ winner.winner[0].points }</b> points and a goal differential of <b>{ abs((winner.winner[0].w_goals + winner.winner[0].l_goals) - (winner.total_correct_goals)) }</b>.'
         else:
             message = f"The tournament has started. See the current standings below."
             if current_user.is_authenticated:
@@ -292,28 +292,31 @@ def get_archive_message(standings):
 
 
 def get_bracket_standings():
-    brackets = [
-        BracketInterface(
-            bracket_id=b.id, safe_only=CAN_EDIT_BRACKET, bracket=b, games=[]
-        )
-        for b in bracket_queries.get_all_brackets()
-    ]
+    # brackets = [
+    #     BracketInterface(
+    #         bracket_id=b.id, safe_only=CAN_EDIT_BRACKET, bracket=b, games=[]
+    #     )
+    #     for b in bracket_queries.get_all_brackets()
+    # ]
+    # brackets = [
+    #     b.to_dict(safe_only=CAN_EDIT_BRACKET)
+    #     for b in bracket_queries.get_all_brackets()
+    # ]
+    brackets = bracket_queries.get_all_brackets()
     correct = bracket_queries.get_correct_bracket()
 
     if correct and correct.winner:
         for bracket in brackets:
             bracket.goal_difference = abs(
-                bracket.bracket.w_goals
-                + bracket.bracket.l_goals
-                - (correct.w_goals + correct.l_goals)
+                bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
             )
 
-        brackets.sort(key=lambda x: x.goal_difference)
+        brackets.sort(key=lambda b: b.goal_difference)
 
-    brackets.sort(key=lambda b: b.bracket.name.casefold())
-    if brackets and brackets[0] and brackets[0].bracket.rank:
-        brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
-        brackets.sort(key=lambda b: b.bracket.rank)
+    brackets.sort(key=lambda b: b.name.casefold())
+    if brackets and brackets[0] and brackets[0].rank:
+        brackets.sort(key=lambda b: b.max_points, reverse=True)
+        brackets.sort(key=lambda b: b.rank)
 
     return brackets
 
@@ -324,18 +327,16 @@ def get_bracket_standings_for_year(year):
 
     for bracket in brackets:
         bracket.goal_difference = abs(
-            bracket.bracket.w_goals
-            + bracket.bracket.l_goals
-            - (correct.w_goals + correct.l_goals)
+            bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
         )
 
-        brackets.sort(key=lambda x: x.goal_difference)
+    brackets.sort(key=lambda b: b.goal_difference)
 
-    brackets.sort(key=lambda b: b.bracket.name)
-    brackets.sort(key=lambda b: b.bracket.max_points, reverse=True)
-    brackets.sort(key=lambda b: b.bracket.rank)
+    brackets.sort(key=lambda b: b.name)
+    brackets.sort(key=lambda b: b.max_points, reverse=True)
+    brackets.sort(key=lambda b: b.rank)
 
-    return brackets, CorrectBracketInterface(bracket=correct)
+    return brackets, correct  # CorrectBracketInterface(bracket=correct)
 
 
 def calculate_points_for_bracket(bracket, correct, teams):

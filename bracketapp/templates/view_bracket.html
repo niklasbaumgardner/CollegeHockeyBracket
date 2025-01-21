@@ -1,31 +1,25 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}{{ name }}{% endblock title %} {%
+block mybracket %}{{ mine }}{% endblock mybracket %} {% block content %}
+<script>
+  const BRACKET_WINNER_IMAGE = "{{ bracket_winner_img }}";
+  const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
+  const IS_ME = "{{ mine }}" === "active";
+</script>
 
-{% block title %}{{ name }}{% endblock title %}
-{% block mybracket %}{{ mine }}{% endblock mybracket %}
+{% if mine and CAN_EDIT_BRACKET %}
+<div class="d-flex justify-content-center mb-3">
+  <sl-button href="{{ url_for('editbracket_bp.edit_bracket') }}"
+    >Edit bracket</sl-button
+  >
+</div>
+{% endif %}
 
+<nb-bracket
+  bracket='{{ bracket|tojson }}'
+  default='{{ default|tojson }}'
+  correct='{{ correct|tojson }}'
+></nb-bracket>
 
-
-{% block content %}
-    <script>
-        const BRACKET_WINNER_IMAGE = "{{ bracket_winner_img }}";
-        const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
-        const IS_ME = "{{ mine }}" === "active";
-    </script>
-
-    <!-- <div class="pb-5 d-flex justify-content-center mx-0">
-        <div class="fs-1">
-            {{ year }} NCAA College Hockey Bracket
-        </div>
-    </div> -->
-
-    {% if mine and CAN_EDIT_BRACKET %}
-        <div class="d-flex justify-content-center mb-3">
-            <sl-button href="{{ url_for('editbracket_bp.edit_bracket') }}">Edit bracket</sl-button>
-        </div>
-    {% endif %}
-
-    <nb-bracket bracket="{{ bracket }}" default="{{ default }}" correct="{{ correct }}"></nb-bracket>
-
-    <script type="module" src="/static/js/bracketEl.mjs"></script>
+<script type="module" src="/static/js/bracketEl.mjs"></script>
 
 {% endblock content %}
