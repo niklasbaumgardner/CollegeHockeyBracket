@@ -453,7 +453,7 @@ class EditBracket extends NikElement {
               >.
             </h5>
             <h5>
-              To view stats
+              To view current team stats
               <a href="https://www.collegehockeynews.com/stats/" target="_blank"
                 >click here</a
               >.
