@@ -18,7 +18,7 @@ def edit_bracket():
         default = bracket_queries.get_default_bracket()
         bracket = bracket_queries.get_bracket_for_user_id(user_id=current_user.get_id())
         if not bracket:
-            bracket = bracket_utils.EmptyBracket()
+            bracket = bracket_queries.get_empty_bracket()
         return render_template(
             "edit_bracket.html",
             bracket=bracket.to_dict(safe_only=False),

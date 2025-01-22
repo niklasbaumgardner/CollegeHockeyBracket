@@ -16,6 +16,19 @@ from bracketapp.config import YEAR
 ##
 ## Bracket and Game queries
 ##
+def get_empty_bracket():
+    return Bracket(
+        user_id=None,
+        name="",
+        year=YEAR,
+        winner=None,
+        w_goals=None,
+        l_goals=None,
+        max_points=320,
+        points=0,
+    )
+
+
 def create_user_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
@@ -100,15 +113,6 @@ def get_all_brackets():
     return Bracket.query.filter_by(year=YEAR).all()
 
 
-def get_all_user_brackets():
-    brackets = []
-    bs = Bracket.query.filter_by(year=YEAR).all()
-    for b in bs:
-        brackets.append(bracket_utils.BracketInterface(b.id, bracket=b))
-
-    return brackets
-
-
 def get_all_user_brackets_for_year(year):
     if not year:
         return []
@@ -154,7 +158,7 @@ def create_correct_bracket():
         db.session.add(new_game)
         db.session.commit()
 
-    return bracket_utils.CorrectBracketInterface(bracket=correct)
+    return correct
 
 
 def update_correct_bracket(winner, w_goals, l_goals, bracket=None):
@@ -210,13 +214,13 @@ def get_all_correct_games_for_correct_bracket(bracket_id):
 
 
 def delete_correct_bracket():
-    correct = bracket_utils.CorrectBracketInterface()
+    correct = get_correct_bracket()
 
-    for game in correct.games:
+    for game in correct.games_list:
         db.session.delete(game)
         db.session.commit()
 
-    db.session.delete(correct.bracket)
+    db.session.delete(correct)
     db.session.commit()
 
 
@@ -233,7 +237,7 @@ def create_default_bracket():
         db.session.add(new_game)
         db.session.commit()
 
-    return bracket_utils.DefaultBracketInterface(bracket=default)
+    return default
 
 
 def update_default_game(b_id, game_num, home, away):
@@ -267,13 +271,13 @@ def get_all_default_games_for_default_bracket(bracket_id):
 
 
 def delete_default_bracket():
-    default = bracket_utils.DefaultBracketInterface()
+    default = get_default_bracket()
 
-    for game in default.games:
+    for game in default.games_list:
         db.session.delete(game)
         db.session.commit()
 
-    db.session.delete(default.bracket)
+    db.session.delete(default)
     db.session.commit()
 
 
@@ -316,8 +320,8 @@ def update_bracket_standings(brackets=None, correct=None):
 
 
 def update_all_bracket_points():
-    brackets = get_all_user_brackets()
-    correct = bracket_utils.CorrectBracketInterface(bracket=get_correct_bracket())
+    brackets = get_all_brackets()
+    correct = get_correct_bracket()
     teams = set([t.id for t in get_all_bracket_teams_for_year(year=YEAR)])
 
     for user_bracket in brackets:
@@ -359,7 +363,7 @@ def create_team(teamname):
 
 
 def get_all_teams():
-    return Team.query.all()
+    return Team.query.order_by(Team.name).all()
 
 
 def get_team_by_name(name):

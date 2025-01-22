@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}{{ default.bracket.year }} Default Bracket{% endblock title %}
+{% block title %}{{ default.year }} Default Bracket{% endblock title %}
 
 {% block content %}
 <div class="pb-5 d-flex justify-content-center mx-0">
     <div class="fw-bold fs-1">
-        {{ default.bracket.year }} Default bracket
+        {{ default.year }} Default bracket
     </div>
 </div>
 <div class="container mx-0 p-3 bg-body-secondary-nb">
     <form action="{{ url_for('admin_bp.update_default') }}" method="POST">
         <div class="row">
-            {% for game in default.games %}
+            {% for _, game in default.games.items() %}
                 <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
                     <p class="fs-1">{{ game.game_num }}</p>
                     <div class="form-outline mb-4">
@@ -28,7 +28,7 @@
                         <select name="{{ game.game_num }}-home" class="form-control" value="">
                             <option value="">--Please choose an option--</option>
                             {% for team in teams %}
-                                <option value="{{ team.id }}" {% if default.teams[game.home] and team.id == default.teams[game.home].team.id %}selected="true"{% endif %}>{{ team.name }}</option>
+                                <option value="{{ team.id }}" {% if default.games[game.game_num].home_team and team.id == default.games[game.game_num].home_team.team.id %}selected="true"{% endif %}>{{ team.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -45,7 +45,7 @@
                         <select name="{{ game.game_num }}-away" class="form-control" value="">
                             <option value="">--Please choose an option--</option>
                             {% for team in teams %}
-                                <option value="{{ team.id }}" {% if default.teams[game.away] and team.id == default.teams[game.away].team.id %}selected="true"{% endif %}>{{ team.name }}</option>
+                                <option value="{{ team.id }}" {% if default.games[game.game_num].away_team and team.id == default.games[game.game_num].away_team.team.id %}selected="true"{% endif %}>{{ team.name }}</option>
                             {% endfor %}
                         </select>
                     </div>

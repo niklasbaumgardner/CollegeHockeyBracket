@@ -4,12 +4,12 @@ import { NikElement } from "./customElement.mjs";
 class EditCorrectMatchup extends NikElement {
   static properties = {
     winnerTop: {
-      type: String,
+      type: Object,
     },
     winnerBottom: {
-      type: String,
+      type: Object,
     },
-    winner: { type: String },
+    winner: { type: Number },
     homeGoals: { type: Number },
     awayGoals: { type: Number },
     type: { type: String },
@@ -24,13 +24,13 @@ class EditCorrectMatchup extends NikElement {
   }
 
   get winnerTopName() {
-    let team = this.teams[this.winnerTop];
-    return team?.name ?? "";
+    let team = this.winnerTop;
+    return team?.team.name ?? "";
   }
 
   get winnerBottomName() {
-    let team = this.teams[this.winnerBottom];
-    return team?.name ?? "";
+    let team = this.winnerBottom;
+    return team?.team.name ?? "";
   }
 
   topTeamInput() {
@@ -42,7 +42,7 @@ class EditCorrectMatchup extends NikElement {
       ?checked="${!!(
         this.winnerTop &&
         this.winner &&
-        this.winner === this.winnerTop
+        this.winner === this.winnerTop.id
       )}"
     />`;
   }
@@ -64,7 +64,7 @@ class EditCorrectMatchup extends NikElement {
       ?checked=${!!(
         this.winnerBottom &&
         this.winner &&
-        this.winner === this.winnerBottom
+        this.winner === this.winnerBottom.id
       )}
     />`;
   }

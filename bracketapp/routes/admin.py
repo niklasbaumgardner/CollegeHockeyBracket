@@ -41,8 +41,8 @@ def delete_brackets():
     if not is_admin():
         return redirect(url_for("index_bp.index"))
 
-    brackets = bracket_queries.get_all_user_brackets()
-    db_users = bracket_queries.get_all_users()
+    brackets = bracket_queries.get_all_brackets()
+    db_users = user_queries.get_all_users()
     users = {}
     for u in db_users:
         users[u.id] = u
@@ -113,20 +113,18 @@ def update_correct():
         bracket_queries.update_all_bracket_points()
 
     if request.method == "GET":
-        try:
-            correct = bracket_utils.CorrectBracketInterface()
-        except:
-            correct = bracket_queries.create_correct_bracket()
+        default = bracket_queries.get_default_bracket()
+        if not default:
+            return redirect(url_for("admin_bp.update_default"))
 
-        try:
-            default = bracket_utils.DefaultBracketInterface()
-        except:
-            default = bracket_queries.create_default_bracket()
+        correct = bracket_queries.get_correct_bracket()
+        if not correct:
+            correct = bracket_queries.create_correct_bracket()
 
         return render_template(
             "update_correct.html",
-            bracket=correct.to_json(),
-            default=default.to_json(),
+            bracket=correct.to_dict(),
+            default=default.to_dict(),
         )
 
     return redirect(url_for("admin_bp.admin"))
@@ -137,6 +135,7 @@ def update_correct():
 def update_default():
     if not is_admin():
         return redirect(url_for("index_bp.index"))
+
     if request.method == "POST":
         d_bracket = bracket_queries.get_default_bracket()
 
@@ -170,12 +169,14 @@ def update_default():
             bracket_queries.create_correct_bracket()
 
     if request.method == "GET":
-        try:
-            default = bracket_utils.DefaultBracketInterface()
-        except:
+        default = bracket_queries.get_default_bracket()
+        if not default:
             default = bracket_queries.create_default_bracket()
+
         teams = bracket_queries.get_all_teams()
-        return render_template("default_bracket.html", default=default, teams=teams)
+        return render_template(
+            "default_bracket.html", default=default.to_dict(), teams=teams
+        )
 
     return redirect(url_for("admin_bp.admin"))
 
@@ -210,7 +211,7 @@ def debugging():
     string = ""
     users = user_queries.get_all_users()
 
-    brackets = bracket_queries.get_all_user_brackets()
+    brackets = bracket_queries.get_all_brackets()
 
     for u in users:
         string += f"{u.id} {u.username}<br>"

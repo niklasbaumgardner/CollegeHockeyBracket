@@ -32,14 +32,14 @@ class EditMatchup extends NikElement {
   }
 
   teamTemplate(team) {
-    if (team) {
+    if (team?.team) {
       return `${team.rank} ${team.team.name}`;
     }
     return "";
   }
 
   getImageElement(team) {
-    if (!team) {
+    if (!team?.team) {
       return null;
     }
 

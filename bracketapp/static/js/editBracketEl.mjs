@@ -21,6 +21,22 @@ class EditBracket extends NikElement {
     };
   }
 
+  get teams() {
+    if (this._teams) {
+      return this._teams;
+    }
+
+    let obj = {};
+    for (let game of Object.values(this.default.games)) {
+      let h = game.home_team;
+      let a = game.away_team;
+      obj[h.id] = h;
+      obj[a.id] = a;
+    }
+
+    return (this._teams = obj);
+  }
+
   async getUpdateComplete() {
     await super.getUpdateComplete();
 
@@ -337,21 +353,23 @@ class EditBracket extends NikElement {
     let matchup = el.closest("nb-edit-matchup");
     matchup.winner = el.value;
 
+    let team = this.teams[value];
+
     let gameNum = id.match(/\d/g).join("");
     if (gameNum % 2 === 1) {
-      if (nextMatchup.winner === nextMatchup.winnerTop) {
+      if (nextMatchup.winner === nextMatchup.winnerTop.id) {
         nextMatchup.winner = "";
       }
       let oldTeam = nextMatchup.winnerTop;
-      nextMatchup.winnerTop = value;
+      nextMatchup.winnerTop = team;
       nextMatchup.topInputEl.checked = false;
       this.maybeClearInputs(nextMatchup.id + "top", oldTeam);
     } else {
-      if (nextMatchup.winner === nextMatchup.winnerBottom) {
+      if (nextMatchup.winner === nextMatchup.winnerBottom.id) {
         nextMatchup.winner = "";
       }
       let oldTeam = nextMatchup.winnerBottom;
-      nextMatchup.winnerBottom = value;
+      nextMatchup.winnerBottom = team;
       nextMatchup.bottomInputEl.checked = false;
       this.maybeClearInputs(nextMatchup.id + "bottom", oldTeam);
     }
@@ -365,14 +383,14 @@ class EditBracket extends NikElement {
 
     let gameNum = id.match(/\d/g).join("");
     if (gameNum % 2 === 1) {
-      if (oldTeam === nextMatchup.winnerTop) {
-        nextMatchup.winnerTop = "";
+      if (oldTeam.id === nextMatchup.winnerTop.id) {
+        nextMatchup.winnerTop = {};
         nextMatchup.topInputEl.checked = false;
       }
       this.maybeClearInputs(nextMatchup.id + "top", oldTeam);
     } else {
-      if (oldTeam === nextMatchup.winnerBottom) {
-        nextMatchup.winnerBottom = "";
+      if (oldTeam.id === nextMatchup.winnerBottom.id) {
+        nextMatchup.winnerBottom = {};
         nextMatchup.bottomInputEl.checked = false;
       }
       this.maybeClearInputs(nextMatchup.id + "bottom", oldTeam);
