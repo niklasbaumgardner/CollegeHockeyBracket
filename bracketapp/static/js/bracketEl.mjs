@@ -16,21 +16,13 @@ class Bracket extends NikElement {
     type: { type: String },
   };
 
-  get winnerTeam() {
-    if (this.type === "correct") {
-      return this.correct.winner_team.team;
-    }
-
-    return this.bracket.winner_team.team;
-  }
-
   getImageElement(team, force = false) {
     if (!team) {
       return null;
     }
 
     let isWinnerCorrect =
-      force || !this.correct?.winner || this.correct?.winner === team.id;
+      force || !this.correct.winner || this.correct.winner === team.id;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
       src="${team.team.icon_path}"
@@ -72,22 +64,22 @@ class Bracket extends NikElement {
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game1,
-        correct: this.correct?.games.game1,
+        correct: this.correct.games.game1,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game2,
-        correct: this.correct?.games.game2,
+        correct: this.correct.games.game2,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game3,
-        correct: this.correct?.games.game3,
+        correct: this.correct.games.game3,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game4,
-        correct: this.correct?.games.game4,
+        correct: this.correct.games.game4,
       })}
     </div>`;
   }
@@ -95,18 +87,18 @@ class Bracket extends NikElement {
   roundTwoLeftTemplate() {
     return html`<div class="round-two">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game1.winner_team,
-        winnerBottom: this.bracket?.games?.game2.winner_team,
-        correctTop: this.correct?.games?.game1.winner_team,
-        correctBottom: this.correct?.games?.game2.winner_team,
-        correct: this.correct?.games.game9,
+        winnerTop: this.bracket?.games.game1.winner_team,
+        winnerBottom: this.bracket?.games.game2.winner_team,
+        correctTop: this.correct.games.game1.winner_team,
+        correctBottom: this.correct.games.game2.winner_team,
+        correct: this.correct.games.game9,
       })}
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game3.winner_team,
-        winnerBottom: this.bracket?.games?.game4.winner_team,
-        correctTop: this.correct?.games?.game3.winner_team,
-        correctBottom: this.correct?.games?.game4.winner_team,
-        correct: this.correct?.games.game10,
+        winnerTop: this.bracket?.games.game3.winner_team,
+        winnerBottom: this.bracket?.games.game4.winner_team,
+        correctTop: this.correct.games.game3.winner_team,
+        correctBottom: this.correct.games.game4.winner_team,
+        correct: this.correct.games.game10,
       })}
     </div>`;
   }
@@ -114,23 +106,23 @@ class Bracket extends NikElement {
   roundThreeLeftTemplate() {
     return html`<div class="round-three">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game9.winner_team,
-        winnerBottom: this.bracket?.games?.game10.winner_team,
-        correctTop: this.correct?.games?.game9.winner_team,
-        correctBottom: this.correct?.games?.game10.winner_team,
-        correct: this.correct?.games.game13,
+        winnerTop: this.bracket?.games.game9.winner_team,
+        winnerBottom: this.bracket?.games.game10.winner_team,
+        correctTop: this.correct.games.game9.winner_team,
+        correctBottom: this.correct.games.game10.winner_team,
+        correct: this.correct.games.game13,
       })}
     </div>`;
   }
 
   correctChampionTemplate() {
-    if (!this.correct?.winner) {
+    if (!this.correct.winner) {
       return null;
     }
 
     return html`<div class="col text-center">
       <div class="row justify-content-center">
-        ${this.getImageElement(this.correct?.winner_team)}
+        ${this.getImageElement(this.correct.winner_team)}
         <p>Champion</p>
       </div>
     </div>`;
@@ -195,11 +187,11 @@ class Bracket extends NikElement {
           <div class="row">
             <div class="col">
               ${this.matchupTemplate({
-                winnerTop: this.bracket?.games?.game13.winner_team,
-                winnerBottom: this.bracket?.games?.game14.winner_team,
-                correctTop: this.correct?.games?.game13.winner_team,
-                correctBottom: this.correct?.games?.game14.winner_team,
-                correct: this.correct?.games.game15,
+                winnerTop: this.bracket?.games.game13.winner_team,
+                winnerBottom: this.bracket?.games.game14.winner_team,
+                correctTop: this.correct.games.game13.winner_team,
+                correctBottom: this.correct.games.game14.winner_team,
+                correct: this.correct.games.game15,
               })}
             </div>
             ${this.predictedScoreTemplate()}
@@ -212,11 +204,11 @@ class Bracket extends NikElement {
   roundThreeRightTemplate() {
     return html`<div class="round-three">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game11.winner_team,
-        winnerBottom: this.bracket?.games?.game12.winner_team,
-        correctTop: this.correct?.games?.game11.winner_team,
-        correctBottom: this.correct?.games?.game12.winner_team,
-        correct: this.correct?.games.game14,
+        winnerTop: this.bracket?.games.game11.winner_team,
+        winnerBottom: this.bracket?.games.game12.winner_team,
+        correctTop: this.correct.games.game11.winner_team,
+        correctBottom: this.correct.games.game12.winner_team,
+        correct: this.correct.games.game14,
       })}
     </div>`;
   }
@@ -224,18 +216,18 @@ class Bracket extends NikElement {
   roundTwoRightTemplate() {
     return html`<div class="round-two">
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game5.winner_team,
-        winnerBottom: this.bracket?.games?.game6.winner_team,
-        correctTop: this.correct?.games?.game5.winner_team,
-        correctBottom: this.correct?.games?.game6.winner_team,
-        correct: this.correct?.games.game11,
+        winnerTop: this.bracket?.games.game5.winner_team,
+        winnerBottom: this.bracket?.games.game6.winner_team,
+        correctTop: this.correct.games.game5.winner_team,
+        correctBottom: this.correct.games.game6.winner_team,
+        correct: this.correct.games.game11,
       })}
       ${this.matchupTemplate({
-        winnerTop: this.bracket?.games?.game7.winner_team,
-        winnerBottom: this.bracket?.games?.game8.winner_team,
-        correctTop: this.correct?.games?.game7.winner_team,
-        correctBottom: this.correct?.games?.game8.winner_team,
-        correct: this.correct?.games.game12,
+        winnerTop: this.bracket?.games.game7.winner_team,
+        winnerBottom: this.bracket?.games.game8.winner_team,
+        correctTop: this.correct.games.game7.winner_team,
+        correctBottom: this.correct.games.game8.winner_team,
+        correct: this.correct.games.game12,
       })}
     </div>`;
   }
@@ -245,23 +237,113 @@ class Bracket extends NikElement {
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game5,
-        correct: this.correct?.games.game5,
+        correct: this.correct.games.game5,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game6,
-        correct: this.correct?.games.game6,
+        correct: this.correct.games.game6,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game7,
-        correct: this.correct?.games.game7,
+        correct: this.correct.games.game7,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game8,
-        correct: this.correct?.games.game8,
+        correct: this.correct.games.game8,
       })}
+    </div>`;
+  }
+
+  topCardStats() {
+    if (this.type === "correct") {
+      let loser_team;
+      if (
+        this.correct.winner_team.id === this.correct.games.game13.winner_team.id
+      ) {
+        loser_team = this.correct.games.game14.winner_team;
+      } else {
+        loser_team = this.correct.games.game13.winner_team;
+      }
+      return html`<div class="d-flex justify-content-center gap-4 flex-wrap">
+        ${this.correct.winner_team.team.name} beat ${loser_team.team.name} to
+        win the championship this year
+      </div>`;
+    }
+
+    return html`<div class="d-flex justify-content-center gap-4 flex-wrap">
+      ${this.getImageElement(this.bracket?.winner_team, true)}
+      <div>
+        <h4>${this.bracket?.name}</h4>
+        <div class="d-flex justify-content-evenly">
+          <div class="d-flex">
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.rank ?? "--"}
+              </p>
+              <p class="bracket-details-label">Rank</p></span
+            >
+          </div>
+          <div class="d-flex">
+            <sl-divider vertical></sl-divider>
+            <span
+              ><p class="bracket-details-content">${this.bracket?.points}</p>
+              <p class="bracket-details-label">Points</p></span
+            >
+          </div>
+          <div class="d-flex">
+            <sl-divider vertical></sl-divider>
+            <span
+              ><p class="bracket-details-content">${this.bracket?.maxPoints}</p>
+              <p class="bracket-details-label">Max points</p></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="bracket-sub-details display-inline-grid align-content-center">
+        <div class="d-flex justify-content-center">
+          <p>Points breakdown</p>
+        </div>
+        <div class="d-flex justify-content-evenly">
+          <div class="d-flex">
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.r2 ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Round 1</p></span
+            >
+          </div>
+          <div class="d-flex">
+            <sl-divider vertical></sl-divider>
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.r2 ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Round 2</p></span
+            >
+          </div>
+          <div class="d-flex">
+            <sl-divider vertical></sl-divider>
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.r3 ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Final Four</p></span
+            >
+          </div>
+          <div class="d-flex">
+            <sl-divider vertical></sl-divider>
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.r4 ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Championship</p></span
+            >
+          </div>
+        </div>
+      </div>
     </div>`;
   }
 
@@ -271,84 +353,7 @@ class Bracket extends NikElement {
         <div class="d-flex justify-content-center" slot="header">
           <h2>${this.default.year} NCAA College Hockey Bracket</h2>
         </div>
-        <div class="d-flex justify-content-center gap-4 flex-wrap">
-          ${this.getImageElement(this.bracket?.winner_team, true)}
-          <div>
-            <h4>${this.bracket?.name}</h4>
-            <div class="d-flex justify-content-evenly">
-              <div class="d-flex">
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.rank ?? "--"}
-                  </p>
-                  <p class="bracket-details-label">Rank</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.points}
-                  </p>
-                  <p class="bracket-details-label">Points</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.maxPoints}
-                  </p>
-                  <p class="bracket-details-label">Max points</p></span
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="bracket-sub-details display-inline-grid align-content-center"
-          >
-            <div class="d-flex justify-content-center">
-              <p>Points breakdown</p>
-            </div>
-            <div class="d-flex justify-content-evenly">
-              <div class="d-flex">
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.r2 ?? "--"} / 80
-                  </p>
-                  <p class="bracket-details-label">Round 1</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.r2 ?? "--"} / 80
-                  </p>
-                  <p class="bracket-details-label">Round 2</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.r3 ?? "--"} / 80
-                  </p>
-                  <p class="bracket-details-label">Final Four</p></span
-                >
-              </div>
-              <div class="d-flex">
-                <sl-divider vertical></sl-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.r4 ?? "--"} / 80
-                  </p>
-                  <p class="bracket-details-label">Championship</p></span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
+        ${this.topCardStats()}
       </sl-card>
     </div>`;
   }

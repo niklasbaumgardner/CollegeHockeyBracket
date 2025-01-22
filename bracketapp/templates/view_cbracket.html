@@ -1,10 +1,6 @@
 {% extends "base.html" %} {% block title %}{{ year }} Final Bracket{% endblock
 title %} {% block content %}
 
-<div class="pb-5 d-flex justify-content-center mx-0">
-  <div class="fs-1">{{ year }} NCAA College Hockey Bracket Final</div>
-</div>
-
 <nb-bracket
   type="correct"
   default='{{ default|tojson }}'

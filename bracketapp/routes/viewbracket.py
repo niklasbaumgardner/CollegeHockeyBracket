@@ -66,7 +66,9 @@ def view_bracket(id):
         default=default.to_dict(),
         bracket=bracket.to_dict(safe_only=False),
         bracket_winner_img=bracket.winner_team.team.icon_path,
-        correct_winner_img=correct.winner_team.team.icon_path,
+        correct_winner_img=(
+            correct.winner_team.team.icon_path if correct.winner_team else ""
+        ),
         name=bracket.name,
         year=bracket.year,
     )

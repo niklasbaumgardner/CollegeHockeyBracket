@@ -30,7 +30,7 @@ def edit_bracket():
         )
 
         if existing_bracket:
-            existing_bracket = bracket_queries.update_user_bracket(
+            existing_bracket = bracket_queries.update_bracket(
                 user_id=current_user.get_id(),
                 name=request.form.get("name").strip(),
                 winner=request.form.get("game15"),
@@ -41,7 +41,7 @@ def edit_bracket():
 
             for i in range(1, 16):
                 game_number = f"game{i}"
-                bracket_queries.update_user_game(
+                bracket_queries.update_game(
                     bracket_id=existing_bracket.id,
                     game_num=game_number,
                     winner=request.form.get(game_number),
@@ -51,7 +51,7 @@ def edit_bracket():
             name = request.form.get("name")
             w_goals = request.form.get("w_goals")
             l_goals = request.form.get("l_goals")
-            new_bracket = bracket_queries.create_user_bracket(
+            new_bracket = bracket_queries.create_bracket(
                 user_id=current_user.get_id(),
                 name=name,
                 winner=game15,
@@ -60,7 +60,7 @@ def edit_bracket():
             )
 
             for i in range(1, 16):
-                bracket_queries.create_user_game(
+                bracket_queries.create_game(
                     user_id=current_user.get_id(),
                     bracket_id=new_bracket.id,
                     game_num=f"game{i}",

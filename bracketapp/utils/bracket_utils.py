@@ -108,7 +108,7 @@ def get_bracket_standings():
 
 
 def get_bracket_standings_for_year(year):
-    brackets = bracket_queries.get_all_user_brackets_for_year(year=year)
+    brackets = bracket_queries.get_all_brackets_for_year(year=year)
     correct = bracket_queries.get_correct_bracket_for_year(year=year)
 
     for bracket in brackets:
@@ -125,48 +125,51 @@ def get_bracket_standings_for_year(year):
     return brackets, correct
 
 
-def calculate_points_for_bracket(bracket, correct, teams):
+def calculate_points_for_bracket(bracket, correct):
     r1 = 0
     r2 = 0
     r3 = 0
     r4 = 0
 
+    bracket_games = bracket.games()
+    correct_games = correct.games()
+
     # round 1
-    if bracket.games["game1"].winner == correct.games["game1"].winner:
+    if bracket_games["game1"].winner == correct_games["game1"].winner:
         r1 += 10
-    if bracket.games["game2"].winner == correct.games["game2"].winner:
+    if bracket_games["game2"].winner == correct_games["game2"].winner:
         r1 += 10
-    if bracket.games["game3"].winner == correct.games["game3"].winner:
+    if bracket_games["game3"].winner == correct_games["game3"].winner:
         r1 += 10
-    if bracket.games["game4"].winner == correct.games["game4"].winner:
+    if bracket_games["game4"].winner == correct_games["game4"].winner:
         r1 += 10
-    if bracket.games["game5"].winner == correct.games["game5"].winner:
+    if bracket_games["game5"].winner == correct_games["game5"].winner:
         r1 += 10
-    if bracket.games["game6"].winner == correct.games["game6"].winner:
+    if bracket_games["game6"].winner == correct_games["game6"].winner:
         r1 += 10
-    if bracket.games["game7"].winner == correct.games["game7"].winner:
+    if bracket_games["game7"].winner == correct_games["game7"].winner:
         r1 += 10
-    if bracket.games["game8"].winner == correct.games["game8"].winner:
+    if bracket_games["game8"].winner == correct_games["game8"].winner:
         r1 += 10
 
     # round 2
-    if bracket.games["game9"].winner == correct.games["game9"].winner:
+    if bracket_games["game9"].winner == correct_games["game9"].winner:
         r2 += 20
-    if bracket.games["game10"].winner == correct.games["game10"].winner:
+    if bracket_games["game10"].winner == correct_games["game10"].winner:
         r2 += 20
-    if bracket.games["game11"].winner == correct.games["game11"].winner:
+    if bracket_games["game11"].winner == correct_games["game11"].winner:
         r2 += 20
-    if bracket.games["game12"].winner == correct.games["game12"].winner:
+    if bracket_games["game12"].winner == correct_games["game12"].winner:
         r2 += 20
 
     # round 3
-    if bracket.games["game13"].winner == correct.games["game13"].winner:
+    if bracket_games["game13"].winner == correct_games["game13"].winner:
         r3 += 40
-    if bracket.games["game14"].winner == correct.games["game14"].winner:
+    if bracket_games["game14"].winner == correct_games["game14"].winner:
         r3 += 40
 
     # winner
-    if bracket.games["game15"].winner == correct.games["game15"].winner:
+    if bracket_games["game15"].winner == correct_games["game15"].winner:
         r4 += 80
 
     points = r1 + r2 + r3 + r4
@@ -175,8 +178,11 @@ def calculate_points_for_bracket(bracket, correct, teams):
     return points_dict
 
 
-def calculate_max_points_for_bracket(bracket, correct, teams):
+def calculate_max_points_for_bracket(bracket, correct):
     max_points = 0
+
+    bracket_games = bracket.games()
+    correct_games = correct.games()
 
     # round 1
     game1 = False
@@ -188,50 +194,50 @@ def calculate_max_points_for_bracket(bracket, correct, teams):
     game7 = False
     game8 = False
     if (
-        correct.games["game1"].winner not in teams
-        or bracket.games["game1"].winner == correct.games["game1"].winner
+        correct_games["game1"].winner is None
+        or bracket_games["game1"].winner == correct_games["game1"].winner
     ):
         max_points += 10
         game1 = True
     if (
-        correct.games["game2"].winner not in teams
-        or bracket.games["game2"].winner == correct.games["game2"].winner
+        correct_games["game2"].winner is None
+        or bracket_games["game2"].winner == correct_games["game2"].winner
     ):
         max_points += 10
         game2 = True
     if (
-        correct.games["game3"].winner not in teams
-        or bracket.games["game3"].winner == correct.games["game3"].winner
+        correct_games["game3"].winner is None
+        or bracket_games["game3"].winner == correct_games["game3"].winner
     ):
         max_points += 10
         game3 = True
     if (
-        correct.games["game4"].winner not in teams
-        or bracket.games["game4"].winner == correct.games["game4"].winner
+        correct_games["game4"].winner is None
+        or bracket_games["game4"].winner == correct_games["game4"].winner
     ):
         max_points += 10
         game4 = True
     if (
-        correct.games["game5"].winner not in teams
-        or bracket.games["game5"].winner == correct.games["game5"].winner
+        correct_games["game5"].winner is None
+        or bracket_games["game5"].winner == correct_games["game5"].winner
     ):
         max_points += 10
         game5 = True
     if (
-        correct.games["game6"].winner not in teams
-        or bracket.games["game6"].winner == correct.games["game6"].winner
+        correct_games["game6"].winner is None
+        or bracket_games["game6"].winner == correct_games["game6"].winner
     ):
         max_points += 10
         game6 = True
     if (
-        correct.games["game7"].winner not in teams
-        or bracket.games["game7"].winner == correct.games["game7"].winner
+        correct_games["game7"].winner is None
+        or bracket_games["game7"].winner == correct_games["game7"].winner
     ):
         max_points += 10
         game7 = True
     if (
-        correct.games["game8"].winner not in teams
-        or bracket.games["game8"].winner == correct.games["game8"].winner
+        correct_games["game8"].winner is None
+        or bracket_games["game8"].winner == correct_games["game8"].winner
     ):
         max_points += 10
         game8 = True
@@ -242,96 +248,96 @@ def calculate_max_points_for_bracket(bracket, correct, teams):
     game11 = False
     game12 = False
 
-    if (bracket.games["game9"].winner == correct.games["game9"].winner) or (
-        correct.games["game9"].winner not in teams
+    if (bracket_games["game9"].winner == correct_games["game9"].winner) or (
+        correct_games["game9"].winner is None
         and (
             (
-                correct.games["game1"].winner not in teams
-                and bracket.games["game9"].winner == bracket.games["game1"].winner
+                correct_games["game1"].winner is None
+                and bracket_games["game9"].winner == bracket_games["game1"].winner
             )
             or (
-                correct.games["game2"].winner not in teams
-                and bracket.games["game9"].winner == bracket.games["game2"].winner
+                correct_games["game2"].winner is None
+                and bracket_games["game9"].winner == bracket_games["game2"].winner
             )
             or (
-                correct.games["game1"].winner in teams
-                and correct.games["game1"].winner == bracket.games["game9"].winner
+                correct_games["game1"].winner is not None
+                and correct_games["game1"].winner == bracket_games["game9"].winner
             )
             or (
-                correct.games["game2"].winner in teams
-                and correct.games["game2"].winner == bracket.games["game9"].winner
+                correct_games["game2"].winner is not None
+                and correct_games["game2"].winner == bracket_games["game9"].winner
             )
         )
     ):
         max_points += 20
         game9 = True
 
-    if (bracket.games["game10"].winner == correct.games["game10"].winner) or (
-        correct.games["game10"].winner not in teams
+    if (bracket_games["game10"].winner == correct_games["game10"].winner) or (
+        correct_games["game10"].winner is None
         and (
             (
-                correct.games["game3"].winner not in teams
-                and bracket.games["game10"].winner == bracket.games["game3"].winner
+                correct_games["game3"].winner is None
+                and bracket_games["game10"].winner == bracket_games["game3"].winner
             )
             or (
-                correct.games["game4"].winner not in teams
-                and bracket.games["game10"].winner == bracket.games["game4"].winner
+                correct_games["game4"].winner is None
+                and bracket_games["game10"].winner == bracket_games["game4"].winner
             )
             or (
-                correct.games["game3"].winner in teams
-                and correct.games["game3"].winner == bracket.games["game10"].winner
+                correct_games["game3"].winner is not None
+                and correct_games["game3"].winner == bracket_games["game10"].winner
             )
             or (
-                correct.games["game4"].winner in teams
-                and correct.games["game4"].winner == bracket.games["game10"].winner
+                correct_games["game4"].winner is not None
+                and correct_games["game4"].winner == bracket_games["game10"].winner
             )
         )
     ):
         max_points += 20
         game10 = True
 
-    if (bracket.games["game11"].winner == correct.games["game11"].winner) or (
-        correct.games["game11"].winner not in teams
+    if (bracket_games["game11"].winner == correct_games["game11"].winner) or (
+        correct_games["game11"].winner is None
         and (
             (
-                correct.games["game5"].winner not in teams
-                and bracket.games["game11"].winner == bracket.games["game5"].winner
+                correct_games["game5"].winner is None
+                and bracket_games["game11"].winner == bracket_games["game5"].winner
             )
             or (
-                correct.games["game6"].winner not in teams
-                and bracket.games["game11"].winner == bracket.games["game6"].winner
+                correct_games["game6"].winner is None
+                and bracket_games["game11"].winner == bracket_games["game6"].winner
             )
             or (
-                correct.games["game5"].winner in teams
-                and correct.games["game5"].winner == bracket.games["game11"].winner
+                correct_games["game5"].winner is not None
+                and correct_games["game5"].winner == bracket_games["game11"].winner
             )
             or (
-                correct.games["game6"].winner in teams
-                and correct.games["game6"].winner == bracket.games["game11"].winner
+                correct_games["game6"].winner is not None
+                and correct_games["game6"].winner == bracket_games["game11"].winner
             )
         )
     ):
         max_points += 20
         game11 = True
 
-    if (bracket.games["game12"].winner == correct.games["game12"].winner) or (
-        correct.games["game12"].winner not in teams
+    if (bracket_games["game12"].winner == correct_games["game12"].winner) or (
+        correct_games["game12"].winner is None
         and (
             (
-                correct.games["game7"].winner not in teams
-                and bracket.games["game12"].winner == bracket.games["game7"].winner
+                correct_games["game7"].winner is None
+                and bracket_games["game12"].winner == bracket_games["game7"].winner
             )
             or (
-                correct.games["game8"].winner not in teams
-                and bracket.games["game12"].winner == bracket.games["game8"].winner
+                correct_games["game8"].winner is None
+                and bracket_games["game12"].winner == bracket_games["game8"].winner
             )
             or (
-                correct.games["game7"].winner in teams
-                and correct.games["game7"].winner == bracket.games["game12"].winner
+                correct_games["game7"].winner is not None
+                and correct_games["game7"].winner == bracket_games["game12"].winner
             )
             or (
-                correct.games["game8"].winner in teams
-                and correct.games["game8"].winner == bracket.games["game12"].winner
+                correct_games["game8"].winner is not None
+                and correct_games["game8"].winner == bracket_games["game12"].winner
             )
         )
     ):
@@ -342,28 +348,28 @@ def calculate_max_points_for_bracket(bracket, correct, teams):
     game13 = False
     game14 = False
 
-    if (bracket.games["game13"].winner == correct.games["game13"].winner) or (
-        correct.games["game13"].winner not in teams
+    if (bracket_games["game13"].winner == correct_games["game13"].winner) or (
+        correct_games["game13"].winner is None
         and (
             game9
-            and bracket.games["game9"].winner == bracket.games["game13"].winner
+            and bracket_games["game9"].winner == bracket_games["game13"].winner
             or game10
-            and bracket.games["game10"].winner == bracket.games["game13"].winner
+            and bracket_games["game10"].winner == bracket_games["game13"].winner
         )
     ):
         max_points += 40
         game13 = True
 
-    if (bracket.games["game14"].winner == correct.games["game14"].winner) or (
-        correct.games["game14"].winner not in teams
+    if (bracket_games["game14"].winner == correct_games["game14"].winner) or (
+        correct_games["game14"].winner is None
         and (
             (
                 game11
-                and bracket.games["game11"].winner == bracket.games["game14"].winner
+                and bracket_games["game11"].winner == bracket_games["game14"].winner
             )
             or (
                 game12
-                and bracket.games["game12"].winner == bracket.games["game14"].winner
+                and bracket_games["game12"].winner == bracket_games["game14"].winner
             )
         )
     ):
@@ -371,16 +377,16 @@ def calculate_max_points_for_bracket(bracket, correct, teams):
         game14 = True
 
     # winner
-    if (bracket.games["game15"].winner == correct.games["game15"].winner) or (
-        correct.games["game15"].winner not in teams
+    if (bracket_games["game15"].winner == correct_games["game15"].winner) or (
+        correct_games["game15"].winner is None
         and (
             (
                 game13
-                and bracket.games["game13"].winner == bracket.games["game15"].winner
+                and bracket_games["game13"].winner == bracket_games["game15"].winner
             )
             or (
                 game14
-                and bracket.games["game14"].winner == bracket.games["game15"].winner
+                and bracket_games["game14"].winner == bracket_games["game15"].winner
             )
         )
     ):

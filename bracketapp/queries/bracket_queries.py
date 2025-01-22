@@ -29,7 +29,7 @@ def get_empty_bracket():
     )
 
 
-def create_user_bracket(user_id, name, winner, w_goals, l_goals):
+def create_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
         name=name,
@@ -47,7 +47,7 @@ def create_user_bracket(user_id, name, winner, w_goals, l_goals):
     return new_bracket
 
 
-def create_user_game(user_id, bracket_id, game_num, winner):
+def create_game(user_id, bracket_id, game_num, winner):
     new_game = Game(
         user_id=user_id, bracket_id=bracket_id, game_num=game_num, winner=winner
     )
@@ -58,7 +58,7 @@ def create_user_game(user_id, bracket_id, game_num, winner):
     return new_game
 
 
-def update_user_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
+def update_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
     bracket = bracket if bracket else get_bracket_for_user_id(user_id=user_id)
 
     bracket.name = name
@@ -71,13 +71,13 @@ def update_user_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
     return bracket
 
 
-def update_user_bracket_rank(bracket, rank):
+def update_bracket_rank(bracket, rank):
     bracket.rank = rank
     db.session.commit()
 
 
-def update_user_game(bracket_id, game_num, winner):
-    game = get_user_game(bracket_id=bracket_id, game_num=game_num)
+def update_game(bracket_id, game_num, winner):
+    game = get_game(bracket_id=bracket_id, game_num=game_num)
     game.winner = winner
 
     db.session.commit()
@@ -91,7 +91,7 @@ def get_bracket_for_bracket_id(bracket_id):
     return Bracket.query.filter_by(id=bracket_id).first()
 
 
-def get_user_bracket_for_bracket_id_and_year(bracket_id, year):
+def get_bracket_for_bracket_id_and_year(bracket_id, year):
     if not bracket_id or not year:
         return
     return Bracket.query.filter_by(id=bracket_id, year=year).first()
@@ -103,7 +103,7 @@ def get_bracket_for_user_id(user_id):
     return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
 
 
-def get_user_game(bracket_id, game_num):
+def get_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
     return Game.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
@@ -113,29 +113,29 @@ def get_all_brackets():
     return Bracket.query.filter_by(year=YEAR).all()
 
 
-def get_all_user_brackets_for_year(year):
+def get_all_brackets_for_year(year):
     if not year:
         return []
     return Bracket.query.filter_by(year=year).all()
 
 
-def get_all_user_games_for_bracket(bracket_id):
+def get_all_games_for_bracket(bracket_id):
     if not bracket_id:
         return []
     return Game.query.filter_by(bracket_id=bracket_id).all()
 
 
-def delete_all_user_brackets():
+def delete_all_brackets():
     # return  # i don't want to accidentally delete the brackets
     brackets = Bracket.query.filter_by(year=YEAR).all()
     for b in brackets:
-        delete_user_bracket(b.id)
+        delete_bracket(b.id)
 
 
-def delete_user_bracket(bracket_id):
+def delete_bracket(bracket_id):
     # return  # i don't want to accidentally delete the brackets
     bracket = get_bracket_for_bracket_id(bracket_id=bracket_id)
-    games = get_all_user_games_for_bracket(bracket_id=bracket.id)
+    games = get_all_games_for_bracket(bracket_id=bracket.id)
 
     for game in games:
         db.session.delete(game)
@@ -286,63 +286,58 @@ def delete_default_bracket():
 ##
 
 
-def update_bracket_standings(brackets=None, correct=None):
-    brackets = brackets if brackets else get_all_user_brackets()
+def update_standings(brackets=None, correct=None):
+    brackets = brackets if brackets else get_all_brackets()
     correct = correct if correct else get_correct_bracket()
 
-    if correct and correct.bracket.winner:
+    if correct and correct.winner:
         for bracket in brackets:
             bracket.goal_difference = abs(
-                bracket.bracket.w_goals
-                + bracket.bracket.l_goals
-                - (correct.bracket.w_goals + correct.bracket.l_goals)
+                bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
             )
 
         brackets.sort(key=lambda x: x.goal_difference)
 
-    brackets.sort(key=lambda b: b.bracket.points, reverse=True)
+    brackets.sort(key=lambda b: b.points, reverse=True)
 
     rank = 1
     standings = []
     for i, bracket in enumerate(brackets):
         if i == 0:
-            bracket.bracket.rank = rank
+            bracket.rank = rank
             standings.append(bracket)
-        elif bracket.bracket.points == brackets[i - 1].bracket.points:
-            bracket.bracket.rank = rank
+        elif bracket.points == brackets[i - 1].points:
+            bracket.rank = rank
             standings.append(bracket)
         else:
             rank = i + 1
-            bracket.bracket.rank = rank
+            bracket.rank = rank
             standings.append(bracket)
 
-        update_user_bracket_rank(bracket=bracket.bracket, rank=rank)
+        update_bracket_rank(bracket=bracket, rank=rank)
 
 
-def update_all_bracket_points():
+def update_points():
     brackets = get_all_brackets()
     correct = get_correct_bracket()
-    teams = set([t.id for t in get_all_bracket_teams_for_year(year=YEAR)])
 
     for user_bracket in brackets:
-        points_dict = bracket_utils.calculate_points_for_bracket(
-            user_bracket, correct, teams
-        )
+        points_dict = bracket_utils.calculate_points_for_bracket(user_bracket, correct)
 
-        user_bracket.bracket.r1 = points_dict.get("r1")
-        user_bracket.bracket.r2 = points_dict.get("r2")
-        user_bracket.bracket.r3 = points_dict.get("r3")
-        user_bracket.bracket.r4 = points_dict.get("r4")
-        user_bracket.bracket.points = points_dict.get("points")
+        user_bracket.r1 = points_dict.get("r1")
+        user_bracket.r2 = points_dict.get("r2")
+        user_bracket.r3 = points_dict.get("r3")
+        user_bracket.r4 = points_dict.get("r4")
+        user_bracket.points = points_dict.get("points")
 
         max_points = bracket_utils.calculate_max_points_for_bracket(
-            user_bracket, correct, teams
+            user_bracket, correct
         )
-        print(user_bracket.bracket.name, max_points)
-        user_bracket.bracket.max_points = max_points
+
+        user_bracket.max_points = max_points
         db.session.commit()
 
-    update_bracket_standings(brackets=brackets, correct=correct)
+    update_standings(brackets=brackets, correct=correct)
 
 
 ##
@@ -400,6 +395,10 @@ def get_bracket_team_by_name_and_year(team_name, year):
 
 def get_bracket_team_by_id(id):
     return BracketTeam.query.filter_by(id=id).first()
+
+
+def get_all_bracket_teams():
+    return BracketTeam.query.filter_by(year=YEAR).all()
 
 
 def get_all_bracket_teams_for_year(year):

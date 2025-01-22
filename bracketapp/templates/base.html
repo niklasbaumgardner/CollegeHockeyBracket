@@ -65,7 +65,7 @@
   </script>
 
   <body
-    class="pt-5 {% if not backgroundColorMatches %}{{ backgroundColor }}-background{% endif %}"
+    class="{% if not backgroundColorMatches %}{{ backgroundColor }}-background{% endif %}"
     {%
     if
     backgroundColorMatches
@@ -155,7 +155,9 @@
                 {% if current_user.is_authenticated and current_user.role !=
                 None and current_user.role > 1 %}
                 <sl-menu-item
-                  ><a href="{{ url_for('admin_bp.admin') }}"
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('admin_bp.admin') }}"
                     >Admin</a
                   ></sl-menu-item
                 >
@@ -166,17 +168,23 @@
                   > -->
                 {% endif %}
                 <sl-menu-item
-                  ><a href="{{ url_for('preferences_bp.preferences') }}"
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('preferences_bp.preferences') }}"
                     >Preferences</a
                   ></sl-menu-item
                 >
                 <sl-menu-item
-                  ><a href="{{ url_for('profile_bp.profile') }}"
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('profile_bp.profile') }}"
                     >Profile</a
                   ></sl-menu-item
                 >
                 <sl-menu-item
-                  ><a href="{{ url_for('auth_bp.logout') }}"
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('auth_bp.logout') }}"
                     >Logout</a
                   ></sl-menu-item
                 >
@@ -223,7 +231,7 @@
       </div>
     </nav>
 
-    <div class="container py-5 mb-5 h-100">
+    <div class="container py-5 my-5 h-100">
       {% with messages = get_flashed_messages(with_categories=true) %}
       <div id="alerts" class="container d-flex justify-content-center">
         {% if messages %} {% for category, message in messages %}

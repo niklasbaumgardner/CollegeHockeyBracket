@@ -50,25 +50,25 @@ class EditMatchup extends NikElement {
     />`;
   }
 
-  topInput(top) {
+  topInput(topTeam) {
     return html`<input
       type="radio"
       id="${this.game}top"
       name="${this.game}"
-      value="${top}"
+      value="${topTeam?.id}"
       required=""
-      ?checked="${!!(top && this.winner && this.winner === top)}"
+      ?checked="${!!(topTeam && this.winner && this.winner === topTeam.id)}"
     />`;
   }
 
-  bottomInput(bottom) {
+  bottomInput(bottomTeam) {
     return html`<input
       type="radio"
       id="${this.game}bottom"
       name="${this.game}"
-      value="${bottom}"
+      value="${bottomTeam?.id}"
       required=""
-      ?checked=${!!(bottom && this.winner && this.winner === bottom)}
+      ?checked=${!!(bottomTeam && this.winner && this.winner === bottomTeam.id)}
     />`;
   }
 
@@ -79,14 +79,14 @@ class EditMatchup extends NikElement {
     >
       <div class="nb-team">
         <label id="top">
-          ${this.topInput(this.winnerTop.id)}
+          ${this.topInput(this.winnerTop)}
           ${this.getImageElement(this.winnerTop)}
           <span>${this.winnerTopName}</span>
         </label>
       </div>
       <div class="nb-team">
         <label id="bottom">
-          ${this.bottomInput(this.winnerBottom.id)}
+          ${this.bottomInput(this.winnerBottom)}
           ${this.getImageElement(this.winnerBottom)}
           <span>${this.winnerBottomName}</span>
         </label>

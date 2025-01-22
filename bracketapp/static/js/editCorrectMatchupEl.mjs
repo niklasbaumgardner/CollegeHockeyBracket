@@ -10,11 +10,19 @@ class EditCorrectMatchup extends NikElement {
       type: Object,
     },
     winner: { type: Number },
-    homeGoals: { type: Number },
-    awayGoals: { type: Number },
+    homeGoals: { type: Number, converter: EditCorrectMatchup.goalConverter },
+    awayGoals: { type: Number, converter: EditCorrectMatchup.goalConverter },
     type: { type: String },
     game: { type: String },
   };
+
+  static goalConverter(value, type) {
+    if (!value.length) {
+      return null;
+    }
+
+    return Number(value);
+  }
 
   static get queries() {
     return {
@@ -25,12 +33,12 @@ class EditCorrectMatchup extends NikElement {
 
   get winnerTopName() {
     let team = this.winnerTop;
-    return team?.team.name ?? "";
+    return team?.team?.name ?? "";
   }
 
   get winnerBottomName() {
     let team = this.winnerBottom;
-    return team?.team.name ?? "";
+    return team?.team?.name ?? "";
   }
 
   topTeamInput() {
@@ -38,7 +46,7 @@ class EditCorrectMatchup extends NikElement {
       type="radio"
       id="${this.game}top"
       name="${this.game}"
-      value="${this.winnerTop}"
+      value="${this.winnerTop?.id}"
       ?checked="${!!(
         this.winnerTop &&
         this.winner &&
@@ -60,7 +68,7 @@ class EditCorrectMatchup extends NikElement {
       type="radio"
       id="${this.game}bottom"
       name="${this.game}"
-      value="${this.winnerBottom}"
+      value="${this.winnerBottom?.id}"
       ?checked=${!!(
         this.winnerBottom &&
         this.winner &&

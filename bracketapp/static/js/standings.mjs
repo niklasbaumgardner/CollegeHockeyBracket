@@ -33,6 +33,10 @@ class StandingsGridManager {
       rowData.push(data);
     }
 
+    if (!rowData.length) {
+      return;
+    }
+
     const columnDefs = [
       { field: "rank", resizable: false },
       {

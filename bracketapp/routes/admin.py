@@ -30,7 +30,7 @@ def update_points():
     if not is_admin():
         return redirect(url_for("index_bp.index"))
 
-    bracket_queries.update_all_bracket_points()
+    bracket_queries.update_points()
 
     return redirect(url_for("index_bp.index"))
 
@@ -58,9 +58,9 @@ def delete_bracket(id):
 
     if id == "all":
         # delete all brackets
-        bracket_queries.delete_all_user_brackets()
+        bracket_queries.delete_all_brackets()
     else:
-        bracket_queries.delete_user_bracket(id)
+        bracket_queries.delete_bracket(id)
 
     return redirect(url_for("index_bp.index"))
 
@@ -110,7 +110,7 @@ def update_correct():
                     bracket=c_bracket,
                 )
 
-        bracket_queries.update_all_bracket_points()
+        bracket_queries.update_points()
 
     if request.method == "GET":
         default = bracket_queries.get_default_bracket()
