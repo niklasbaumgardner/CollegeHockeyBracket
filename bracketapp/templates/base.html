@@ -25,6 +25,18 @@
       crossorigin="anonymous"
     />
 
+    <script
+      src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      Sentry.onLoad(function () {
+        Sentry.init({
+          // You can add any additional configuration here
+        });
+      });
+    </script>
+
     <link href="/static/css/index.css" rel="stylesheet" />
     <link href="/static/css/bracket.css" rel="stylesheet" />
     <link href="/static/css/light.css" rel="stylesheet" />
@@ -38,11 +50,11 @@
     <title>{% block title %}{% endblock title %}</title>
     <script src="/static/js/theme.js" defer></script>
     <!-- <script defer src="/static/js/dropdown.js"></script> -->
-    <script
+    <!-- <script
       defer
       src="https://analytics.us.umami.is/script.js"
       data-website-id="76ecc7ea-9cf4-461f-9777-8f4c7feccb54"
-    ></script>
+    ></script> -->
     <script src="https://cdn.jsdelivr.net/npm/stream-chat"></script>
     <script src="/static/js/chat.mjs" type="module"></script>
   </head>
