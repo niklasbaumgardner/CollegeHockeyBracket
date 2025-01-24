@@ -52,12 +52,11 @@ def get_winner(standings):
 
 
 def get_standings_message(standings, winner=None, force=False):
-    message = f'Welcome to this years bracket challenge! The tournament starts on Thursday, March 28 at 2:00PM ET.<br/>Make sure to <a href="{ url_for("editbracket_bp.edit_bracket") }">create your bracket</a> before then!<br/>To view or edit your bracket <a href="{ url_for("editbracket_bp.edit_bracket") }">click here</a>.'
-
     if force or not CAN_EDIT_BRACKET:
         winner = get_winner(standings=standings) if not winner else winner
 
         if winner:
+            # Post tournament message
             if not winner.tie and len(winner.winner) == 1:
                 message = f'<h4>Congratulations to { winner.winner[0].user.username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].id) }">{ winner.winner[0].name }</a>, { winner.winner[0].user.username } won this year\'s bracket challenge with <b>{ winner.winner[0].points }</b> points.'
             elif winner.tie and len(winner.winner) > 1:
@@ -70,9 +69,24 @@ def get_standings_message(standings, winner=None, force=False):
             elif winner.tie and len(winner.winner) == 1:
                 message = f'<h4>Congratulations to { winner.winner[0].user.username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].id) }">{ winner.winner[0].name }</a>, { winner.winner[0].user.username } won this year\'s bracket challenge by the tiebreak with <b>{ winner.winner[0].points }</b> points and a goal differential of <b>{ abs((winner.winner[0].w_goals + winner.winner[0].l_goals) - (winner.total_correct_goals)) }</b>.'
         else:
+            # Active tournament message
             message = f"The tournament has started. See the current standings below."
             if current_user.is_authenticated:
-                message += f' To view your bracket <a href="{ url_for("viewbracket_bp.view_bracket") }">click here</a>.'
+                message += f' To view your brackets <a href="{ url_for("mybrackets_bp.my_brackets") }">click here</a>.'
+
+    else:
+        # Pre tournament message
+        start_date_time = "Thursday, March 28 at 2:00PM ET"
+        create_bracket_message = ""
+        if current_user.is_authenticated:
+            if bracket_queries.my_bracket_count() < 5:
+                create_bracket_message += f'Make sure to <a href="{ url_for("editbracket_bp.edit_bracket") }">create your bracket</a> before the tournament starts!<br/>'
+
+            create_bracket_message += f'To view or edit your brackets <a href="{ url_for("mybrackets_bp.my_brackets") }">click here</a>.'
+        else:
+            create_bracket_message = f'<a href="{ url_for("auth_bp.login") }">Login</a> or <a href="{ url_for("auth_bp.signup") }">signup</a> to create your bracket now!'
+
+        message = f"Welcome to this years bracket challenge! The tournament starts on {start_date_time}.<br/>{create_bracket_message}"
 
     return message
 
@@ -100,7 +114,7 @@ def get_bracket_standings():
         brackets.sort(key=lambda b: b.goal_difference)
 
     brackets.sort(key=lambda b: b.name.casefold())
-    if brackets and brackets[0] and brackets[0].rank:
+    if not CAN_EDIT_BRACKET and brackets and brackets[0].rank:
         brackets.sort(key=lambda b: b.max_points, reverse=True)
         brackets.sort(key=lambda b: b.rank)
 

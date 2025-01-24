@@ -1,8 +1,13 @@
 {% extends "base.html" %} {% block title %}My Bracket{% endblock title %} {%
 block mybracket %}active{% endblock mybracket %} {% block content %}
 <script>
+  {% if bracket.id %}
+  const BRACKET_FORM_URL = "{{ url_for('editbracket_bp.edit_bracket', id=bracket.id) }}";
+  {% else %}
   const BRACKET_FORM_URL = "{{ url_for('editbracket_bp.edit_bracket') }}";
-  const CANCEL_BRACKET_URL = "{{ url_for('viewbracket_bp.view_bracket') }}";
+  {% endif %}
+
+  const CANCEL_BRACKET_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
   const STANDINGS_URL = "{{ url_for('index_bp.index') }}";
   const ARCHIVE_URL = "{{ url_for('archive_bp.archive') }}";
 </script>
@@ -10,7 +15,7 @@ block mybracket %}active{% endblock mybracket %} {% block content %}
 <nb-edit-bracket
   bracket='{{ bracket|tojson }}'
   default='{{ default|tojson }}'
-></nb-edit-bracket>
+></nb-edit-bracke>
 
 <script type="module" src="/static/js/editBracketEl.mjs"></script>
 

@@ -185,51 +185,51 @@ sl-button.neutral::part(base):active {
 }
 
 /* Primary */
-sl-button:not(disabled)[variant="primary"]::part(base):hover {
+sl-button:not([disabled])[variant="primary"]::part(base):hover {
   background-color: var(--sl-color-primary-700);
   border-color: var(--sl-color-primary-700);
 }
-sl-button:not(disabled)[variant="primary"]::part(base):active {
+sl-button:not([disabled])[variant="primary"]::part(base):active {
   background-color: var(--sl-color-primary-800);
   border-color: var(--sl-color-primary-800);
 }
 
 /* Success */
-sl-button:not(disabled)[variant="success"]::part(base):hover {
+sl-button:not([disabled])[variant="success"]::part(base):hover {
   background-color: var(--sl-color-success-700);
   border-color: var(--sl-color-success-700);
 }
-sl-button:not(disabled)[variant="success"]::part(base):active {
+sl-button:not([disabled])[variant="success"]::part(base):active {
   background-color: var(--sl-color-success-800);
   border-color: var(--sl-color-success-800);
 }
 
 /* Neutral */
-sl-button:not(disabled)[variant="neutral"]::part(base):hover {
+sl-button:not([disabled])[variant="neutral"]::part(base):hover {
   background-color: var(--sl-color-neutral-700);
   border-color: var(--sl-color-neutral-700);
 }
-sl-button:not(disabled)[variant="neutral"]::part(base):active {
+sl-button:not([disabled])[variant="neutral"]::part(base):active {
   background-color: var(--sl-color-neutral-800);
   border-color: var(--sl-color-neutral-800);
 }
 
 /* Warning */
-sl-button:not(disabled)[variant="warning"]::part(base):hover {
+sl-button:not([disabled])[variant="warning"]::part(base):hover {
   background-color: var(--sl-color-warning-700);
   border-color: var(--sl-color-warning-700);
 }
-sl-button:not(disabled)[variant="warning"]::part(base):active {
+sl-button:not([disabled])[variant="warning"]::part(base):active {
   background-color: var(--sl-color-warning-800);
   border-color: var(--sl-color-warning-800);
 }
 
 /* Danger */
-sl-button:not(disabled)[variant="danger"]::part(base):hover {
+sl-button:not([disabled])[variant="danger"]::part(base):hover {
   background-color: var(--sl-color-danger-700);
   border-color: var(--sl-color-danger-700);
 }
-sl-button:not(disabled)[variant="danger"]::part(base):active {
+sl-button:not([disabled])[variant="danger"]::part(base):active {
   background-color: var(--sl-color-danger-800);
   border-color: var(--sl-color-danger-800);
 }
@@ -250,7 +250,7 @@ sl-button:not(disabled)[variant="danger"]::part(base):active {
 .nb-menu-item {
   display: inline-block;
   width: 100%;
-  padding: var(--sl-spacing-x-small) var(--sl-spacing-medium);
+  /* padding: var(--sl-spacing-x-small) var(--sl-spacing-medium); */
 }
 
 .standings-img {
@@ -329,4 +329,10 @@ nb-message-el[right] {
 .disable-scroll {
   height: 100%;
   overflow: hidden;
+}
+
+.nb-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }

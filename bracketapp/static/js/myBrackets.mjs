@@ -1,6 +1,6 @@
-class StandingsGridManager {
+class MyBracketsGridManager {
   constructor() {
-    this.standingsGridEl = document.getElementById("standingsGrid");
+    this.myBracketsGridEl = document.getElementById("myBracketsGrid");
 
     this.createDataGrid();
 
@@ -29,8 +29,16 @@ class StandingsGridManager {
 
   createDataGrid() {
     const rowData = [];
-    for (let data of GRID_DATA) {
+    for (let data of BRACKETS) {
       rowData.push(data);
+    }
+
+    console.log(rowData);
+
+    if (CAN_EDIT_BRACKET && rowData.length < 5) {
+      rowData.push({
+        id: -1,
+      });
     }
 
     if (!rowData.length) {
@@ -38,7 +46,34 @@ class StandingsGridManager {
     }
 
     const columnDefs = [
-      { field: "rank", resizable: false },
+      {
+        field: "rank",
+        resizable: false,
+        colSpan: (params) => {
+          let id = params.data.id;
+          if (id === -1) {
+            return 8;
+          } else {
+            return 1;
+          }
+        },
+        cellRenderer: (params) => {
+          let id = params.data.id;
+          if (id === -1) {
+            return `<sl-button href="${NEW_BRACKET_LINK}" variant="primary">Create new bracket</sl-button>`;
+          } else {
+            return params.value;
+          }
+        },
+        cellClass: (params) => {
+          let id = params.data.id;
+          if (id === -1) {
+            return "nb-center";
+          } else {
+            return null;
+          }
+        },
+      },
       {
         field: "name",
         headerName: "Brackets",
@@ -64,16 +99,11 @@ class StandingsGridManager {
       },
       { field: "points", resizable: false },
       { field: "max_points", headerName: "Max", resizable: false },
+      { field: "r1", resizable: false },
+      { field: "r2", resizable: false },
+      { field: "r3", resizable: false },
+      { field: "r4", resizable: false },
     ];
-
-    if ("r1" in rowData[0]) {
-      columnDefs.push(
-        { field: "r1", resizable: false },
-        { field: "r2", resizable: false },
-        { field: "r3", resizable: false },
-        { field: "r4", resizable: false }
-      );
-    }
 
     const gridOptions = {
       columnDefs,
@@ -101,10 +131,10 @@ class StandingsGridManager {
           height = 192;
         }
 
-        this.standingsGridEl.style.height = `${height + 3}px`;
+        this.myBracketsGridEl.style.height = `${height + 3}px`;
       },
     };
-    this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
+    this.dataGrid = agGrid.createGrid(this.myBracketsGridEl, gridOptions);
   }
 
   setupThemeWatcher() {
@@ -121,12 +151,15 @@ class StandingsGridManager {
 
   handleThemeChange() {
     let theme = document.documentElement.getAttribute("data-bs-theme");
-    this.standingsGridEl.classList.toggle(
+    this.myBracketsGridEl.classList.toggle(
       "ag-theme-alpine-dark",
       theme === "dark"
     );
-    this.standingsGridEl.classList.toggle("ag-theme-alpine", theme === "light");
+    this.myBracketsGridEl.classList.toggle(
+      "ag-theme-alpine",
+      theme === "light"
+    );
   }
 }
 
-new StandingsGridManager();
+new MyBracketsGridManager();

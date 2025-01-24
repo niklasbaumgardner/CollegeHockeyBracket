@@ -11,6 +11,8 @@ from bracketapp.models import (
 from bracketapp import db
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
+from flask_login import current_user
+from sqlalchemy.sql import collate
 
 
 ##
@@ -32,7 +34,7 @@ def get_empty_bracket():
 def create_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
-        name=name,
+        name=name[:60],
         year=YEAR,
         winner=winner,
         w_goals=w_goals,
@@ -61,7 +63,7 @@ def create_game(user_id, bracket_id, game_num, winner):
 def update_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
     bracket = bracket if bracket else get_bracket_for_user_id(user_id=user_id)
 
-    bracket.name = name
+    bracket.name = name[:60]
     bracket.winner = winner
     bracket.w_goals = w_goals
     bracket.l_goals = l_goals
@@ -85,10 +87,23 @@ def update_game(bracket_id, game_num, winner):
     return game
 
 
+def my_bracket_count():
+    return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).count()
+
+
 def get_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
     return Bracket.query.filter_by(id=bracket_id).first()
+
+
+def get_my_bracket_for_bracket_id(bracket_id):
+    if not bracket_id:
+        return
+
+    return Bracket.query.filter_by(
+        id=bracket_id, user_id=current_user.id, year=YEAR
+    ).first()
 
 
 def get_bracket_for_bracket_id_and_year(bracket_id, year):
@@ -101,6 +116,20 @@ def get_bracket_for_user_id(user_id):
     if not user_id:
         return
     return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
+
+
+def get_all_brackets_for_user(sort=False):
+    if not current_user.is_authenticated:
+        return []
+
+    if sort:
+        return (
+            Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
+            .order_by(collate(Bracket.name, "NOCASE"))
+            .all()
+        )
+
+    return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).all()
 
 
 def get_game(bracket_id, game_num):

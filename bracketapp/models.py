@@ -14,7 +14,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin, SerializerMixin):
-    serialize_only = ("id", "username", "email", "streamchat_token")
+    serialize_only = ("id", "username", "streamchat_token")
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -23,8 +23,8 @@ class User(db.Model, UserMixin, SerializerMixin):
     role = db.Column(db.Integer, nullable=True)
     streamchat_token = db.Column(db.String, nullable=True)
 
-    def to_dict(self):
-        return dict(id=self.id, username=self.username, token=self.streamchat_token)
+    # def to_dict(self):
+    #     return dict(id=self.id, username=self.username, token=self.streamchat_token)
 
     def get_reset_token(self):
         s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
@@ -94,7 +94,8 @@ class Bracket(db.Model, SerializerMixin):
         return d
 
     def url(self):
-        return url_for("viewbracket_bp.view_bracket", id=self.id)
+        if self.id:
+            return url_for("viewbracket_bp.view_bracket", id=self.id)
 
     def to_dict(self, safe_only=True, include_games=True):
         if safe_only:

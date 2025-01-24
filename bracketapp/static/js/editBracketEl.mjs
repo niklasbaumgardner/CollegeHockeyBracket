@@ -340,7 +340,8 @@ class EditBracket extends NikElement {
     //     >`;
     // }
 
-    return html`<sl-button href=${STANDINGS_URL}>Cancel</sl-button>${content}`;
+    return html`<sl-button href=${CANCEL_BRACKET_URL}>Cancel</sl-button
+      >${content}`;
   }
 
   setNext(el) {
@@ -467,8 +468,9 @@ class EditBracket extends NikElement {
         <div class="d-flex justify-content-center mb-5">
           <sl-input
             name="name"
+            maxlength="60"
             label="Bracket name"
-            placeholder="mybracket"
+            placeholder="My bracket name"
             value=${this.bracket.name}
             required=""
           ></sl-input>

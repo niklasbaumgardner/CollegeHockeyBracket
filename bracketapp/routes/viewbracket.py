@@ -8,13 +8,50 @@ from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 viewbracket_bp = Blueprint("viewbracket_bp", __name__)
 
 
-def isAdmin():
-    return current_user.id == 1
+def is_admin():
+    return (
+        current_user.is_authenticated
+        and current_user.role is not None
+        and current_user.role > 1
+    )
 
 
-@viewbracket_bp.route("/view_bracket", defaults={"id": None}, methods=["GET"])
-@viewbracket_bp.route("/view_bracket/<int:id>", methods=["GET"])
+@viewbracket_bp.get("/view_bracket/<int:id>")
 def view_bracket(id):
+    bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=id)
+    if not bracket:
+        return redirect(url_for("index_bp.index"))
+
+    my_bracket = current_user.is_authenticated and bracket.user_id == current_user.id
+
+    if CAN_EDIT_BRACKET and my_bracket and bracket.year == YEAR:
+        return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
+
+    if CAN_EDIT_BRACKET and not my_bracket and bracket.year == YEAR:
+        return redirect(url_for("index_bp.index"))
+
+    default = bracket_queries.get_default_bracket_for_year(year=bracket.year)
+    correct = bracket_queries.get_correct_bracket_for_year(year=bracket.year)
+
+    return render_template(
+        "view_bracket.html",
+        CAN_EDIT_BRACKET=False,
+        correct=correct.to_dict(),
+        default=default.to_dict(),
+        bracket=bracket.to_dict(safe_only=False),
+        bracket_winner_img=bracket.winner_team.team.icon_path,
+        correct_winner_img=(
+            correct.winner_team.team.icon_path if correct.winner_team else ""
+        ),
+        name=bracket.name,
+        year=bracket.year,
+    )
+
+    if not (my_bracket or not CAN_EDIT_BRACKET or bracket.year < YEAR):
+        return redirect(url_for("index_bp.index"))
+
+    ########################################################## old below
+
     bracket = None
 
     if id:
@@ -76,7 +113,7 @@ def view_bracket(id):
 
 @viewbracket_bp.route("/view_cbracket/<int:year>", methods=["GET"])
 def view_cbracket(year):
-    if year >= YEAR and not isAdmin():
+    if year >= YEAR and not is_admin():
         return redirect(url_for("archive_bp.archive"))
 
     correct = bracket_queries.get_correct_bracket_for_year(year)

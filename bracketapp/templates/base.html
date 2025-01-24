@@ -95,9 +95,9 @@
             {% if current_user.is_authenticated %}
             <li class="nav-item">
               <a
-                class="nav-link {% block mybracket %}{% endblock mybracket %}"
-                href="{{ url_for('viewbracket_bp.view_bracket') }}"
-                >My Bracket</a
+                class="nav-link {% block mybrackets %}{% endblock mybrackets %}"
+                href="{{ url_for('mybrackets_bp.my_brackets') }}"
+                >My Brackets</a
               >
             </li>
             {% endif %}

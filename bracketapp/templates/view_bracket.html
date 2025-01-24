@@ -1,18 +1,11 @@
 {% extends "base.html" %} {% block title %}{{ name }}{% endblock title %} {%
-block mybracket %}{{ mine }}{% endblock mybracket %} {% block content %}
+block mybracket %}{{ active }}{% endblock mybracket %} {% block content %}
 <script>
   const BRACKET_WINNER_IMAGE = "{{ bracket_winner_img }}";
   const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
-  const IS_ME = "{{ mine }}" === "active";
+  const IS_ME = "{{ my_bracket }}" === "True";
 </script>
 
-{% if mine and CAN_EDIT_BRACKET %}
-<div class="d-flex justify-content-center mb-3">
-  <sl-button href="{{ url_for('editbracket_bp.edit_bracket') }}"
-    >Edit bracket</sl-button
-  >
-</div>
-{% endif %}
 
 <nb-bracket
   bracket='{{ bracket|tojson }}'

@@ -9,8 +9,8 @@ from bracketapp import bcrypt
 
 
 def create_user(email, username, password):
-    hash_ = hash_password(password=password)
-    new_user = User(email=email, username=username, password=hash_)
+    hash_ = hash_password(password=password[:60])
+    new_user = User(email=email[:60], username=username[:60], password=hash_)
     db.session.add(new_user)
     db.session.commit()
 
@@ -34,10 +34,10 @@ def update_user(id, username=None, email=None, token=None):
     email = email if is_email_unique(email=email) else None
 
     if username is not None:
-        user.username = username
+        user.username = username[:60]
 
     if email is not None:
-        user.email = email
+        user.email = email[:60]
 
     if token is not None:
         user.streamchat_token = token
@@ -50,7 +50,7 @@ def update_user_password(id, password):
         return
 
     user = get_user_by_id(id=id)
-    hash_ = hash_password(password=password)
+    hash_ = hash_password(password=password[:60])
     user.password = hash_
 
     db.session.commit()

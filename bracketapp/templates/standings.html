@@ -1,26 +1,27 @@
-{% extends "base.html" %}
-
-{% block title %}{% if year == current_year %}Standings{% else %}Archive {{ year }}{% endif %}{% endblock title %}
-
-
-{% block content %}
+{% extends "base.html" %} {% block title %}{% if year == current_year
+%}Standings{% else %}Archive {{ year }}{% endif %}{% endblock title %} {% block
+standings %}active{% endblock standings %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
-    const GRID_DATA = {{ standings|tojson }};
-    const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
+  const GRID_DATA = {{ standings|tojson }};
+  const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
 </script>
 
 <div class="d-flex justify-content-center">
-    <sl-card class="mb-5 width-fit-content">
-        <div slot="header">
-            <h2>{{ year }} Standings</h2>
-        </div>
-        <div>{{ message|safe }}</div>
-    </sl-card>
+  <sl-card class="mb-5 width-fit-content">
+    <div slot="header">
+      <h2>{{ year }} Standings</h2>
+    </div>
+    <div>{{ message|safe }}</div>
+  </sl-card>
 </div>
 
 <div class="d-flex justify-content-center">
-    <div id="standingsGrid" style="height: 200px; width: 807px; --ag-grid-size: 4px;" class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"></div>
+  <div
+    id="standingsGrid"
+    style="height: 200px; width: 807px; --ag-grid-size: 4px"
+    class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"
+  ></div>
 </div>
 
 <script src="/static/js/standings.mjs" type="module"></script>

@@ -296,7 +296,9 @@ class Bracket extends NikElement {
           <div class="d-flex">
             <sl-divider vertical></sl-divider>
             <span
-              ><p class="bracket-details-content">${this.bracket?.maxPoints}</p>
+              ><p class="bracket-details-content">
+                ${this.bracket?.max_points}
+              </p>
               <p class="bracket-details-label">Max points</p></span
             >
           </div>

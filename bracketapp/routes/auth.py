@@ -32,7 +32,7 @@ def login():
     if email and password:
         user = user_queries.get_user_by_email(email=email)
 
-        if user and bcrypt.check_password_hash(user.password, password):
+        if user and bcrypt.check_password_hash(user.password, password[:60]):
             remember = True if remember == "True" else False
             login_user(user, remember=remember)
             print(email, "next", request.args.get("next"))
