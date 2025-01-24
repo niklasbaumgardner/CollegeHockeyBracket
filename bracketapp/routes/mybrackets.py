@@ -28,4 +28,5 @@ def my_brackets():
         "my_brackets.html",
         CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         brackets=brackets,
+        number_of_brackets=len(brackets),
     )

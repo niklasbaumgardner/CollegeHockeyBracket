@@ -9,15 +9,22 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
 
 <div class="d-flex justify-content-center">
   <sl-card class="mb-5 width-fit-content">
-    <!-- <div slot="header">
+    <div slot="header">
       <h2>My brackets</h2>
-    </div> -->
-    <h2>My brackets</h2>
+    </div>
+    <!-- <h2>My brackets</h2> -->
     <!-- <div
       id="myBracketsGrid"
       style="height: 200px; width: 807px; --ag-grid-size: 4px"
       class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"
     ></div> -->
+    <div>You have created {{ number_of_brackets }}/5 brackets</div>
+    {% if number_of_brackets < 5 and CAN_EDIT_BRACKET %}
+    <div>
+      To create a new bracket
+      <a href="{{ url_for('editbracket_bp.edit_bracket') }}">click here</a>
+    </div>
+    {% endif %}
   </sl-card>
 </div>
 
