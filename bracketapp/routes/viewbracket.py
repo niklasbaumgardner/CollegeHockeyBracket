@@ -24,11 +24,11 @@ def view_bracket(id):
 
     my_bracket = current_user.is_authenticated and bracket.user_id == current_user.id
 
-    if CAN_EDIT_BRACKET and my_bracket and bracket.year == YEAR:
-        return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
-
-    if CAN_EDIT_BRACKET and not my_bracket and bracket.year == YEAR:
-        return redirect(url_for("index_bp.index"))
+    if CAN_EDIT_BRACKET and bracket.year == YEAR:
+        if my_bracket:
+            return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
+        else:
+            return redirect(url_for("index_bp.index"))
 
     default = bracket_queries.get_default_bracket_for_year(year=bracket.year)
     correct = bracket_queries.get_correct_bracket_for_year(year=bracket.year)
@@ -36,69 +36,6 @@ def view_bracket(id):
     return render_template(
         "view_bracket.html",
         CAN_EDIT_BRACKET=False,
-        correct=correct.to_dict(),
-        default=default.to_dict(),
-        bracket=bracket.to_dict(safe_only=False),
-        bracket_winner_img=bracket.winner_team.team.icon_path,
-        correct_winner_img=(
-            correct.winner_team.team.icon_path if correct.winner_team else ""
-        ),
-        name=bracket.name,
-        year=bracket.year,
-    )
-
-    if not (my_bracket or not CAN_EDIT_BRACKET or bracket.year < YEAR):
-        return redirect(url_for("index_bp.index"))
-
-    ########################################################## old below
-
-    bracket = None
-
-    if id:
-        bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=id)
-        if not (
-            (current_user.is_authenticated and bracket.user_id == current_user.id)
-            or not CAN_EDIT_BRACKET
-            or bracket.year < YEAR
-        ):
-            return redirect(url_for("index_bp.index"))
-
-    elif current_user.is_authenticated:
-        if CAN_EDIT_BRACKET:
-            return redirect(url_for("editbracket_bp.edit_bracket"))
-        else:
-            bracket = bracket_queries.get_bracket_for_user_id(user_id=current_user.id)
-    else:
-        return redirect(url_for("auth_bp.login"))
-
-    if bracket:
-        default = bracket_queries.get_default_bracket_for_year(year=bracket.year)
-        try:
-            correct = bracket_queries.get_correct_bracket_for_year(year=bracket.year)
-        except:
-            correct = None
-    else:
-        default = bracket_queries.get_default_bracket()
-        try:
-            correct = bracket_queries.get_correct_bracket()
-        except:
-            correct = None
-
-    if not bracket and CAN_EDIT_BRACKET and current_user.is_authenticated:
-        return redirect(url_for("editbracket_bp.edit_bracket"))
-    elif not bracket:
-        return redirect(url_for("index_bp.index"))
-
-    mine = (
-        "active"
-        if current_user.is_authenticated and current_user.id == bracket.user_id
-        else ""
-    )
-
-    return render_template(
-        "view_bracket.html",
-        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
-        mine=mine,
         correct=correct.to_dict(),
         default=default.to_dict(),
         bracket=bracket.to_dict(safe_only=False),
