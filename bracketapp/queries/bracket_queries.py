@@ -12,7 +12,7 @@ from bracketapp import db
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
 from flask_login import current_user
-from sqlalchemy.sql import func, asc
+from sqlalchemy.sql import func, asc, collate
 
 
 ##
@@ -125,7 +125,7 @@ def get_all_brackets_for_user(sort=False):
     if sort:
         return (
             Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
-            .order_by(asc(func.lower(Bracket.name)))
+            .order_by(collate(Bracket.name, "NOCASE"))
             .all()
         )
 

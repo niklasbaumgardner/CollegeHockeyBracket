@@ -5,8 +5,8 @@ from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from apitally.flask import ApitallyMiddleware
 import os
+import sentry_sdk
 
 
 bcrypt = Bcrypt()
@@ -19,6 +19,18 @@ db = SQLAlchemy(
         pool_size=10,
         max_overflow=20,
     )
+)
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN"),
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+    },
 )
 
 
@@ -33,11 +45,6 @@ login_manager.login_view = "auth_bp.login"
 login_manager.login_message_category = "alert-primary"
 mail.init_app(app)
 
-# app.wsgi_app = ApitallyMiddleware(
-#     app,
-#     client_id=os.environ.get("APITALLY_CLIENT_ID"),
-#     env=os.environ.get("APITALLY_ENVIRONMENT"),
-# )
 
 from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
