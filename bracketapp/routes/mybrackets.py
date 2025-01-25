@@ -24,6 +24,9 @@ def my_brackets():
         for b in bracket_queries.get_all_brackets_for_user(sort=True)
     ]
 
+    if len(brackets) == 1 and not CAN_EDIT_BRACKET:
+        return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0].id))
+
     return render_template(
         "my_brackets.html",
         CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
