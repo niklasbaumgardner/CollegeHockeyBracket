@@ -25,7 +25,7 @@ def my_brackets():
     ]
 
     if len(brackets) == 1 and not CAN_EDIT_BRACKET:
-        return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0].id))
+        return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0]["id"]))
 
     return render_template(
         "my_brackets.html",
