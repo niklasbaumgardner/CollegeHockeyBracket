@@ -1,6 +1,11 @@
 from bracketapp.models import User
-from bracketapp import db
+from bracketapp import db, login_manager
 from bracketapp import bcrypt
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return get_user_by_id(id=user_id)
 
 
 ##

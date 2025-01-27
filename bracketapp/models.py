@@ -1,4 +1,4 @@
-from bracketapp import db, login_manager
+from bracketapp import db
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
 from bracketapp.config import CAN_EDIT_BRACKET
@@ -6,11 +6,6 @@ import os
 import json
 from sqlalchemy_serializer import SerializerMixin
 from flask import url_for
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin, SerializerMixin):
