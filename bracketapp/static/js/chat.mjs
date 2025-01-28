@@ -22,22 +22,22 @@ class ChatEl extends NikElement {
   async init() {
     this.client = StreamChat.getInstance("w22wdxnm8jwk");
 
-    if (!CHAT_USER.token) {
+    if (!CHAT_USER.streamchat_token) {
       let response = await getRequest(CREATE_STREAMCHAT_TOKEN_URL);
-      let jsonResponse = await response.json();
-      let chatUser = JSON.parse(jsonResponse.chat_user);
-      CHAT_USER.token = chatUser.token;
+      let chatUser = await response.json();
+      CHAT_USER.streamchat_token = chatUser.streamchat_token;
     }
 
     try {
       await this.client.connectUser(
         {
-          id: `${CHAT_USER.id}${CHAT_USER.username}`,
+          id: `${CHAT_USER.id}`,
           name: CHAT_USER.username,
         },
-        CHAT_USER.token
+        CHAT_USER.streamchat_token
       );
-    } catch {
+    } catch (e) {
+      console.error(e);
       return;
     }
 
@@ -45,7 +45,7 @@ class ChatEl extends NikElement {
       name: "2024 College Hockey Bracket App Live Chat",
     });
     await this.channel.watch();
-    await this.channel.addMembers([`${CHAT_USER.id}${CHAT_USER.username}`]);
+    await this.channel.addMembers([`${CHAT_USER.id}`]);
 
     console.log(this.channel);
 

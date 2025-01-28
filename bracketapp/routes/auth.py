@@ -6,7 +6,6 @@ from bracketapp import bcrypt
 from bracketapp.utils.send_email import send_reset_email
 import stream_chat
 import os
-import json
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -164,13 +163,7 @@ def create_streamchat_token():
         api_secret=os.environ.get("STREAM_CHAT_SECRET_KEY"),
     )
 
-    token = server_client.create_token(f"{current_user.id}{current_user.username}")
+    token = server_client.create_token(f"{current_user.id}")
     user_queries.update_user(id=current_user.id, token=token)
 
-    chat_user = dict(
-        id=current_user.id,
-        name=current_user.username,
-        token=current_user.streamchat_token,
-    )
-
-    return dict(chat_user=json.dumps(chat_user))
+    return current_user.to_dict()
