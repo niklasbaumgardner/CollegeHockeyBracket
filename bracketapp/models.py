@@ -47,7 +47,7 @@ class BracketTeam(db.Model, SerializerMixin):
     rank = db.Column(db.Integer, nullable=False)
     year = db.Column(db.Integer, nullable=False)
 
-    team = db.relationship("Team")
+    team = db.relationship("Team", lazy="joined")
 
 
 # class Group(db.Model):
@@ -77,9 +77,9 @@ class Bracket(db.Model, SerializerMixin):
     l_goals = db.Column(db.Integer)
     # group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=True)
 
-    winner_team = db.relationship("BracketTeam")
-    games_list = db.relationship("Game")
-    user = db.relationship("User")
+    winner_team = db.relationship("BracketTeam", lazy="joined")
+    games_list = db.relationship("Game", lazy="joined")
+    user = db.relationship("User", lazy="joined")
 
     def games(self):
         d = {}
@@ -124,7 +124,7 @@ class Game(db.Model, SerializerMixin):
     game_num = db.Column(db.String(10), nullable=False)
     winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
 
-    winner_team = db.relationship("BracketTeam")
+    winner_team = db.relationship("BracketTeam", lazy="joined")
 
 
 class CorrectBracket(db.Model, SerializerMixin):
@@ -148,8 +148,8 @@ class CorrectBracket(db.Model, SerializerMixin):
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
 
-    winner_team = db.relationship("BracketTeam")
-    games_list = db.relationship("CorrectGame")
+    winner_team = db.relationship("BracketTeam", lazy="joined")
+    games_list = db.relationship("CorrectGame", lazy="joined")
 
     points = 320
     max_points = 320
@@ -189,8 +189,12 @@ class CorrectGame(db.Model, SerializerMixin):
     h_goals = db.Column(db.Integer, nullable=True)
     a_goals = db.Column(db.Integer, nullable=True)
 
-    winner_team = db.relationship("BracketTeam", foreign_keys="CorrectGame.winner")
-    loser_team = db.relationship("BracketTeam", foreign_keys="CorrectGame.loser")
+    winner_team = db.relationship(
+        "BracketTeam", foreign_keys="CorrectGame.winner", lazy="joined"
+    )
+    loser_team = db.relationship(
+        "BracketTeam", foreign_keys="CorrectGame.loser", lazy="joined"
+    )
 
 
 class DefaultBracket(db.Model, SerializerMixin):
@@ -202,7 +206,7 @@ class DefaultBracket(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
 
-    games_list = db.relationship("DefaultGame")
+    games_list = db.relationship("DefaultGame", lazy="joined")
 
     def games(self):
         d = {}
@@ -219,8 +223,12 @@ class DefaultGame(db.Model, SerializerMixin):
     home = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
     away = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
 
-    home_team = db.relationship("BracketTeam", foreign_keys="DefaultGame.home")
-    away_team = db.relationship("BracketTeam", foreign_keys="DefaultGame.away")
+    home_team = db.relationship(
+        "BracketTeam", foreign_keys="DefaultGame.home", lazy="joined"
+    )
+    away_team = db.relationship(
+        "BracketTeam", foreign_keys="DefaultGame.away", lazy="joined"
+    )
 
 
 class Theme(db.Model):
