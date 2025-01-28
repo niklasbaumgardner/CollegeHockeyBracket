@@ -1,4 +1,3 @@
-from flask import Flask
 from flask import Flask, got_request_exception
 from flask_bcrypt import Bcrypt
 from bracketapp.config import Config
@@ -34,6 +33,7 @@ sentry_sdk.init(
         # possible.
         "continuous_profiling_auto_start": True,
     },
+    release="nbbracketchallenge@1.0.0",
 )
 
 
