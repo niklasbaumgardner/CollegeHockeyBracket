@@ -5,20 +5,19 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.edit_bracket') }}";
   const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
   const BRACKETS = {{ brackets|tojson }};
+  const YEAR = {{ year }};
 </script>
 
 <div class="d-flex justify-content-center">
   <sl-card class="mb-5 width-fit-content">
     <div slot="header">
-      <h2>My brackets</h2>
+      <h2>My brackets {{ year }}</h2>
     </div>
-    <!-- <h2>My brackets</h2> -->
-    <!-- <div
-      id="myBracketsGrid"
-      style="height: 200px; width: 807px; --ag-grid-size: 4px"
-      class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"
-    ></div> -->
-    <div>You have created {{ number_of_brackets }}/5 brackets</div>
+    <div>You have created {{ number_of_brackets }}/5 brackets.</div>
+    <div>
+      View your {{ year }} NCAA hockey brackets here. Track your rank, points,
+      and progress across all rounds.
+    </div>
     {% if number_of_brackets < 5 and CAN_EDIT_BRACKET %}
     <div>
       To create a new bracket

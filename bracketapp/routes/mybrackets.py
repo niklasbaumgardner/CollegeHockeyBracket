@@ -32,4 +32,5 @@ def my_brackets():
         CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         brackets=brackets,
         number_of_brackets=len(brackets),
+        year=YEAR,
     )
