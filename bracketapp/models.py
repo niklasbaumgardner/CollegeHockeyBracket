@@ -1,9 +1,7 @@
 from bracketapp import db
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
-from bracketapp.config import CAN_EDIT_BRACKET
 import os
-import json
 from sqlalchemy_serializer import SerializerMixin
 from flask import url_for
 
@@ -17,9 +15,6 @@ class User(db.Model, UserMixin, SerializerMixin):
     password = db.Column(db.String, nullable=False)
     role = db.Column(db.Integer, nullable=True)
     streamchat_token = db.Column(db.String, nullable=True)
-
-    # def to_dict(self):
-    #     return dict(id=self.id, username=self.username, token=self.streamchat_token)
 
     def get_reset_token(self):
         s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
@@ -50,14 +45,6 @@ class BracketTeam(db.Model, SerializerMixin):
     team = db.relationship("Team", lazy="joined")
 
 
-# class Group(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     year = db.Column(db.Integer, nullable=False)
-#     name = db.Column(db.String, nullable=False)
-#     is_private = db.Column(db.Boolean, nullable=False)
-#     password = db.Column(db.String, nullable=True)
-
-
 class Bracket(db.Model, SerializerMixin):
     serialize_rules = ("-games_list",)
 
@@ -75,7 +62,6 @@ class Bracket(db.Model, SerializerMixin):
     rank = db.Column(db.Integer, nullable=True)
     w_goals = db.Column(db.Integer)
     l_goals = db.Column(db.Integer)
-    # group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=True)
 
     winner_team = db.relationship("BracketTeam", lazy="joined")
     games_list = db.relationship("Game", lazy="joined")
@@ -112,9 +98,6 @@ class Bracket(db.Model, SerializerMixin):
                 rules += ("games",)
 
             return super().to_dict(rules=rules)
-
-    # def to_json(self, safe_only=True):
-    #     return json.dumps(self.to_dict(safe_only=safe_only))
 
 
 class Game(db.Model, SerializerMixin):
@@ -237,3 +220,32 @@ class Theme(db.Model):
     theme = db.Column(db.String, nullable=True)
     backgroundColor = db.Column(db.String, nullable=True)
     color = db.Column(db.String, nullable=True)
+
+
+class Group(db.Model, SerializerMixin):
+    __table_args__ = (db.UniqueConstraint("year", "name"),)
+
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    is_private = db.Column(db.Boolean, nullable=False)
+    password = db.Column(db.String, nullable=True)
+    created_by = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+
+
+class GroupMember(db.Model, SerializerMixin):
+    __table_args__ = (db.UniqueConstraint("group_id", "user_id"),)
+
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+
+
+class GroupBracket(db.Model, SerializerMixin):
+    __table_args__ = (db.UniqueConstraint("group_id", "bracket_id"),)
+
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=False)
+    bracket_id = db.Column(db.Integer, db.ForeignKey(Bracket.id), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    group_rank = db.Column(db.Integer, nullable=True)
