@@ -53,6 +53,7 @@ from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
 from bracketapp.routes.auth import auth_bp
 from bracketapp.routes.editbracket import editbracket_bp
+from bracketapp.routes.groups import groups_bp
 from bracketapp.routes.index import index_bp
 from bracketapp.routes.mybrackets import mybrackets_bp
 from bracketapp.routes.preferences import preferences_bp
@@ -65,6 +66,7 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(archive_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(editbracket_bp)
+app.register_blueprint(groups_bp)
 app.register_blueprint(index_bp)
 app.register_blueprint(mybrackets_bp)
 app.register_blueprint(preferences_bp)

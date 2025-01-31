@@ -112,7 +112,7 @@ class UniqueInputHandler {
 
   toggleSubmitButton() {
     let button = document.querySelector('sl-button[type="submit"]');
-    button.disabled = !(this.emailValid && this.usernameValid);
+    button.disabled = !(this.emailValid || this.usernameValid);
   }
 }
 

@@ -1,4 +1,4 @@
-from bracketapp.queries import bracket_queries
+from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
@@ -12,6 +12,8 @@ editbracket_bp = Blueprint("editbracket_bp", __name__)
 @editbracket_bp.get("/edit_bracket/<int:id>")
 @login_required
 def edit_bracket(id):
+    group_id = request.args.get("group_id")
+
     my_bracket_count = bracket_queries.my_bracket_count()
     if not id and my_bracket_count >= 5:
         # if we don't have a bracket id and we are already at the max number of
@@ -38,6 +40,7 @@ def edit_bracket(id):
         "edit_bracket.html",
         bracket=bracket.to_dict(safe_only=False),
         default=default.to_dict(),
+        group_id=group_id,
     )
 
 
@@ -45,6 +48,8 @@ def edit_bracket(id):
 @editbracket_bp.post("/edit_bracket/<int:id>")
 @login_required
 def edit_bracket_post(id):
+    group_id = request.args.get("group_id")
+
     my_bracket_count = bracket_queries.my_bracket_count()
     if not id and my_bracket_count >= 5:
         # if we don't have a bracket id and we are already at the max number of
@@ -98,6 +103,14 @@ def edit_bracket_post(id):
                 game_num=f"game{i}",
                 winner=request.form.get(f"game{i}"),
             )
+
+        if group_id:
+            group_queries.create_group_bracket(
+                group_id=group_id, bracket_id=new_bracket.id
+            )
+
+            flash("Your bracket has been saved", "success")
+            return redirect(url_for("groups_bp.view_group", id=group_id))
 
     flash("Your bracket has been saved", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))

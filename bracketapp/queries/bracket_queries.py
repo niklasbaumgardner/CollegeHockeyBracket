@@ -3,6 +3,7 @@ from bracketapp.models import (
     CorrectGame,
     Bracket,
     Game,
+    GroupBracket,
     DefaultBracket,
     DefaultGame,
     Team,
@@ -146,6 +147,10 @@ def get_all_brackets_for_year(year):
     if not year:
         return []
     return Bracket.query.filter_by(year=year).all()
+
+
+def get_group_brackets_for_group(group_id):
+    return GroupBracket.query.filter_by(group_id=group_id).all()
 
 
 def get_all_games_for_bracket(bracket_id):

@@ -70,7 +70,7 @@ def get_standings_message(standings, winner=None, force=False):
                 message = f'<h4>Congratulations to { winner.winner[0].user.username }</h4><a href="{ url_for("viewbracket_bp.view_bracket", id=winner.winner[0].id) }">{ winner.winner[0].name }</a>, { winner.winner[0].user.username } won this year\'s bracket challenge by the tiebreak with <b>{ winner.winner[0].points }</b> points and a goal differential of <b>{ abs((winner.winner[0].w_goals + winner.winner[0].l_goals) - (winner.total_correct_goals)) }</b>.'
         else:
             # Active tournament message
-            message = f"The tournament has started. See the current standings below."
+            message = "The tournament has started. See the current standings below."
             if current_user.is_authenticated:
                 message += f' To view your brackets <a href="{ url_for("mybrackets_bp.my_brackets") }">click here</a>.'
 
@@ -99,6 +99,49 @@ def get_archive_message(standings):
         message = get_standings_message(standings=standings, winner=winner, force=True)
 
     return message
+
+
+def get_group_message(group_brackets, group_id, is_member, is_private):
+    message = ""
+    if CAN_EDIT_BRACKET:
+        # Pre tournament message
+        start_date_time = "Thursday, March 28 at 2:00PM ET"
+        create_bracket_message = ""
+        if current_user.is_authenticated:
+            if bracket_queries.my_bracket_count() < 5:
+                create_bracket_message += f'Make sure to <a href="{ url_for("editbracket_bp.edit_bracket", group_id=group_id) }">create your bracket</a> before the tournament starts!<br/>'
+
+            create_bracket_message += f'To view or edit your brackets <a href="{ url_for("mybrackets_bp.my_brackets") }">click here</a>.'
+        else:
+            create_bracket_message = f'<a href="{ url_for("auth_bp.login") }">Login</a> or <a href="{ url_for("auth_bp.signup") }">signup</a> to create your bracket now!'
+
+        message = f"Welcome to this years bracket challenge! The tournament starts on {start_date_time}.<br/>{create_bracket_message}"
+    else:
+        pass
+
+    return message
+
+
+def get_group_standings(group_id):
+    group_brackets = bracket_queries.get_group_brackets_for_group(group_id=group_id)
+    correct = bracket_queries.get_correct_bracket()
+
+    if correct and correct.winner:
+        for group_bracket in group_brackets:
+            group_bracket.bracket.goal_difference = abs(
+                group_bracket.bracket.w_goals
+                + group_bracket.bracket.l_goals
+                - (correct.w_goals + correct.l_goals)
+            )
+
+        group_brackets.sort(key=lambda gb: gb.bracket.goal_difference)
+
+    group_brackets.sort(key=lambda gb: gb.bracket.name.casefold())
+    if not CAN_EDIT_BRACKET and group_brackets and group_brackets[0].group_rank:
+        group_brackets.sort(key=lambda gb: gb.bracket.max_points, reverse=True)
+        group_brackets.sort(key=lambda gb: gb.group_rank)
+
+    return group_brackets
 
 
 def get_bracket_standings():

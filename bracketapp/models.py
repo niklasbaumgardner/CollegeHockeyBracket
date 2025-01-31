@@ -229,6 +229,7 @@ class Group(db.Model, SerializerMixin):
     year = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String, nullable=False)
     is_private = db.Column(db.Boolean, nullable=False)
+    locked = db.Column(db.Boolean, nullable=False)
     password = db.Column(db.String, nullable=True)
     created_by = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
@@ -240,6 +241,8 @@ class GroupMember(db.Model, SerializerMixin):
     group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
+    user = db.relationship("User", lazy="joined")
+
 
 class GroupBracket(db.Model, SerializerMixin):
     __table_args__ = (db.UniqueConstraint("group_id", "bracket_id"),)
@@ -249,3 +252,29 @@ class GroupBracket(db.Model, SerializerMixin):
     bracket_id = db.Column(db.Integer, db.ForeignKey(Bracket.id), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     group_rank = db.Column(db.Integer, nullable=True)
+
+    bracket = db.relationship("Bracket", lazy="joined")
+
+    def to_dict(self, safe_only=True):
+        if safe_only:
+            return super().to_dict(
+                only=(
+                    "id",
+                    "group_id",
+                    "bracket_id",
+                    "user_id",
+                    "group_rank",
+                    "bracket.id",
+                    "bracket.name",
+                    "bracket.year",
+                    "bracket.points",
+                    "bracket.max_points",
+                    "bracket.rank",
+                    "bracket.user",
+                )
+            )
+
+        else:
+            rules = ("bracket.url",)
+
+            return super().to_dict(rules=rules)

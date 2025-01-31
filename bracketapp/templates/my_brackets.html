@@ -18,10 +18,15 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
       View your {{ year }} NCAA hockey brackets here. Track your rank, points,
       and progress across all rounds.
     </div>
-    {% if number_of_brackets < 5 and CAN_EDIT_BRACKET %}
+    {% if CAN_EDIT_BRACKET %} {% if number_of_brackets < 5 %}
     <div>
       To create a new bracket
       <a href="{{ url_for('editbracket_bp.edit_bracket') }}">click here</a>
+    </div>
+    {% endif %}
+    <div>
+      To create a new group
+      <a href="{{ url_for('groups_bp.create_group') }}">click here</a>
     </div>
     {% endif %}
   </sl-card>
