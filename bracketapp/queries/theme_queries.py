@@ -19,7 +19,7 @@ def set_theme(theme_color=None, background_color=None, color=None):
         return
 
     background_color_matches = (
-        re.search("hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", background_color)
+        re.search(r"hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", background_color)
         if background_color
         else None
     )

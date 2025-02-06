@@ -8,7 +8,7 @@ context_processor_bp = Blueprint("context_processor_bp", __name__)
 
 
 @context_processor_bp.app_context_processor
-def utility_processor():
+def theme():
     def get_theme():
         if not current_user.is_authenticated:
             return None
@@ -25,7 +25,7 @@ def utility_processor():
             color=theme.color,
             backgroundColorMatches=(
                 re.search(
-                    "hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", theme.backgroundColor
+                    r"hsla\(\d+,\s?\d+%,\s?\d+%\,\s?\d{1}\.\d+\)", theme.backgroundColor
                 )
                 if theme.backgroundColor
                 else None
@@ -36,5 +36,5 @@ def utility_processor():
 
 
 @context_processor_bp.app_context_processor
-def utility_processor():
+def current_year():
     return dict(current_year=YEAR)
