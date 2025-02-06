@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
+from bracketapp import app
 
 
 mybrackets_bp = Blueprint("mybrackets_bp", __name__)
@@ -24,7 +25,7 @@ def my_brackets():
         for b in bracket_queries.get_all_brackets_for_user(sort=True)
     ]
 
-    if len(brackets) == 1 and not CAN_EDIT_BRACKET:
+    if len(brackets) == 1 and not CAN_EDIT_BRACKET and not app.debug:
         return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0]["id"]))
 
     return render_template(

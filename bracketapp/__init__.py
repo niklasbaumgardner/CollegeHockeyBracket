@@ -33,7 +33,7 @@ sentry_sdk.init(
         # possible.
         "continuous_profiling_auto_start": True,
     },
-    release="nbbracketchallenge@1.0.3",
+    release="nbbracketchallenge@1.1.0",
 )
 
 
@@ -52,6 +52,7 @@ mail.init_app(app)
 from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
 from bracketapp.routes.auth import auth_bp
+from bracketapp.routes.deletebracket import deletebracket_bp
 from bracketapp.routes.editbracket import editbracket_bp
 from bracketapp.routes.index import index_bp
 from bracketapp.routes.mybrackets import mybrackets_bp
@@ -64,6 +65,7 @@ from bracketapp.utils.context_processor import context_processor_bp
 app.register_blueprint(admin_bp)
 app.register_blueprint(archive_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(deletebracket_bp)
 app.register_blueprint(editbracket_bp)
 app.register_blueprint(index_bp)
 app.register_blueprint(mybrackets_bp)
