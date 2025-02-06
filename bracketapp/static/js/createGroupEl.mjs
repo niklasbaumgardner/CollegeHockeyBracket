@@ -16,10 +16,10 @@ class CreateGroup extends NikElement {
     }
 
     return html`<sl-input
-      type="password"
+      type="text"
       label="Password"
-      id="password1"
-      name="password1"
+      id="password"
+      name="password"
       placeholder="Password"
       maxlength="60"
       required

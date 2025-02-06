@@ -13,6 +13,9 @@ editbracket_bp = Blueprint("editbracket_bp", __name__)
 @login_required
 def edit_bracket(id):
     group_id = request.args.get("group_id")
+    if group_id and not group_queries.get_group_member(group_id=group_id):
+        flash("You must join this group to submit a bracket", "danger")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
 
     my_bracket_count = bracket_queries.my_bracket_count()
     if not id and my_bracket_count >= 5:
@@ -49,6 +52,9 @@ def edit_bracket(id):
 @login_required
 def edit_bracket_post(id):
     group_id = request.args.get("group_id")
+    if group_id and not group_queries.get_group_member(group_id=group_id):
+        flash("You must join this group to submit a bracket")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
 
     my_bracket_count = bracket_queries.my_bracket_count()
     if not id and my_bracket_count >= 5:

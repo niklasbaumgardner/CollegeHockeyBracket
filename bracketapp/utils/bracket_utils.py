@@ -101,7 +101,7 @@ def get_archive_message(standings):
     return message
 
 
-def get_group_message(group_brackets, group_id, is_member, is_private):
+def get_group_message(brackets, group_id, is_member, is_private):
     message = ""
     if CAN_EDIT_BRACKET:
         # Pre tournament message
@@ -123,25 +123,23 @@ def get_group_message(group_brackets, group_id, is_member, is_private):
 
 
 def get_group_standings(group_id):
-    group_brackets = bracket_queries.get_group_brackets_for_group(group_id=group_id)
+    brackets = bracket_queries.get_brackets_for_group(group_id=group_id)
     correct = bracket_queries.get_correct_bracket()
 
     if correct and correct.winner:
-        for group_bracket in group_brackets:
-            group_bracket.bracket.goal_difference = abs(
-                group_bracket.bracket.w_goals
-                + group_bracket.bracket.l_goals
-                - (correct.w_goals + correct.l_goals)
+        for bracket in brackets:
+            bracket.goal_difference = abs(
+                bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
             )
 
-        group_brackets.sort(key=lambda gb: gb.bracket.goal_difference)
+        brackets.sort(key=lambda b: b.goal_difference)
 
-    group_brackets.sort(key=lambda gb: gb.bracket.name.casefold())
-    if not CAN_EDIT_BRACKET and group_brackets and group_brackets[0].group_rank:
-        group_brackets.sort(key=lambda gb: gb.bracket.max_points, reverse=True)
-        group_brackets.sort(key=lambda gb: gb.group_rank)
+    brackets.sort(key=lambda b: b.name.casefold())
+    if not CAN_EDIT_BRACKET and brackets and brackets[0].group_bracket.group_rank:
+        brackets.sort(key=lambda b: b.max_points, reverse=True)
+        brackets.sort(key=lambda b: b.group_bracket.group_rank)
 
-    return group_brackets
+    return brackets
 
 
 def get_bracket_standings():

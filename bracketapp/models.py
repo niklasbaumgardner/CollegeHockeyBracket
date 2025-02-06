@@ -66,6 +66,7 @@ class Bracket(db.Model, SerializerMixin):
     winner_team = db.relationship("BracketTeam", lazy="joined")
     games_list = db.relationship("Game", lazy="joined")
     user = db.relationship("User", lazy="joined")
+    # group_bracket = db.relationship("GroupBracket", lazy="joined")
 
     def games(self):
         d = {}
@@ -224,6 +225,10 @@ class Theme(db.Model):
 
 class Group(db.Model, SerializerMixin):
     __table_args__ = (db.UniqueConstraint("year", "name"),)
+    serialize_rules = (
+        "url",
+        "join_url",
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
@@ -232,6 +237,12 @@ class Group(db.Model, SerializerMixin):
     locked = db.Column(db.Boolean, nullable=False)
     password = db.Column(db.String, nullable=True)
     created_by = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+
+    def url(self):
+        return url_for("groups_bp.view_group", id=self.id)
+
+    def join_url(self):
+        return url_for("groups_bp.join_group", id=self.id, password=self.password)
 
 
 class GroupMember(db.Model, SerializerMixin):
@@ -242,6 +253,7 @@ class GroupMember(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     user = db.relationship("User", lazy="joined")
+    group = db.relationship("Group", lazy="joined")
 
 
 class GroupBracket(db.Model, SerializerMixin):
@@ -253,28 +265,4 @@ class GroupBracket(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     group_rank = db.Column(db.Integer, nullable=True)
 
-    bracket = db.relationship("Bracket", lazy="joined")
-
-    def to_dict(self, safe_only=True):
-        if safe_only:
-            return super().to_dict(
-                only=(
-                    "id",
-                    "group_id",
-                    "bracket_id",
-                    "user_id",
-                    "group_rank",
-                    "bracket.id",
-                    "bracket.name",
-                    "bracket.year",
-                    "bracket.points",
-                    "bracket.max_points",
-                    "bracket.rank",
-                    "bracket.user",
-                )
-            )
-
-        else:
-            rules = ("bracket.url",)
-
-            return super().to_dict(rules=rules)
+    group = db.relationship("Group", lazy="joined")

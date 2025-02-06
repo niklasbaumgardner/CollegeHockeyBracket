@@ -2,18 +2,13 @@
 {% block standings %}active{% endblock standings %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
-  const GRID_DATA = {{ group_brackets|tojson }};
+  const GRID_DATA = {{ brackets|tojson }};
   const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
+  const CREATE_BRACKET_URL = "{{ url_for('editbracket_bp.edit_bracket', group_id=group.id) }}";
+  const JOIN_GROUP_URL = "{{ url_for('groups_bp.join_group', id=group.id) }}";
 </script>
 
-<div class="d-flex justify-content-center">
-  <sl-card class="mb-5 width-fit-content">
-    <div slot="header">
-      <h2>{{ group.name }} standings</h2>
-    </div>
-    <div>{{ message|safe }}</div>
-  </sl-card>
-</div>
+<nb-group group='{{ group|tojson }}' isMember="{{ is_member }}"></nb-group>
 
 <div class="d-flex justify-content-center">
   <div
@@ -23,6 +18,7 @@
   ></div>
 </div>
 
+<script src="/static/js/groupCardEl.mjs" type="module"></script>
 <script src="/static/js/groupStandings.mjs" type="module"></script>
 
 {% endblock content %}

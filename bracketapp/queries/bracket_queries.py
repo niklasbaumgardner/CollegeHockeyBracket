@@ -149,8 +149,17 @@ def get_all_brackets_for_year(year):
     return Bracket.query.filter_by(year=year).all()
 
 
-def get_group_brackets_for_group(group_id):
-    return GroupBracket.query.filter_by(group_id=group_id).all()
+def get_brackets_for_group(group_id):
+    brackets = (
+        db.session.query(Bracket, GroupBracket)
+        .join(GroupBracket, Bracket.id == GroupBracket.bracket_id)
+        .filter(GroupBracket.group_id == group_id)
+        .all()
+    )
+    for bracket, group_bracket in brackets:
+        bracket.group_bracket = group_bracket
+
+    return [b for b, _ in brackets]
 
 
 def get_all_games_for_bracket(bracket_id):

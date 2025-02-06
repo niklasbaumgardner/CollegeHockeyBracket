@@ -29,9 +29,9 @@ class StandingsGridManager {
 
   createDataGrid() {
     const rowData = [];
-    for (let groupBracket of GRID_DATA) {
-      groupBracket.bracket.rank = groupBracket.group_rank;
-      rowData.push(groupBracket.bracket);
+    for (let bracket of GRID_DATA) {
+      bracket.group_rank = bracket.group_bracket.group_rank;
+      rowData.push(bracket);
     }
 
     console.log(rowData);
@@ -41,7 +41,7 @@ class StandingsGridManager {
     }
 
     const columnDefs = [
-      { field: "rank", resizable: false },
+      { field: "group_rank", headerName: "Rank", resizable: false },
       {
         field: "name",
         headerName: "Brackets",

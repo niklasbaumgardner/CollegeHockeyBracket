@@ -43,23 +43,21 @@ def view_group(id):
     member = group_queries.get_group_member(group_id=id)
     is_member = member is not None
 
-    group_brackets = []
+    brackets = []
     print(member, group.is_private)
     if member or not group.is_private:
-        group_brackets = bracket_utils.get_group_standings(group_id=id)
-    elif group.is_private and not is_member:
-        return redirect(url_for("groups_bp.join_group", id=id))
-
-    print(group_brackets)
+        brackets = bracket_utils.get_group_standings(group_id=id)
+    # elif group.is_private and not is_member:
+    #     return redirect(url_for("groups_bp.join_group", id=id))
 
     message = bracket_utils.get_group_message(
-        group_brackets=group_brackets,
+        brackets=brackets,
         group_id=group.id,
         is_member=is_member,
         is_private=group.is_private,
     )
 
-    group_brackets = [gb.to_dict(safe_only=CAN_EDIT_BRACKET) for gb in group_brackets]
+    brackets = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
 
     # If we are a memeber of the group, we can view it normally
     # If the group is public, we can view it normally and there will be a button to join
@@ -68,7 +66,7 @@ def view_group(id):
         "view_group.html",
         is_member=is_member,
         group=group.to_dict(),
-        group_brackets=group_brackets,
+        brackets=brackets,
         message=message,
     )
 
@@ -94,33 +92,28 @@ def create_group_post():
     return redirect(url_for("groups_bp.view_group", id=group.id))
 
 
+@groups_bp.post("/join_group/<int:id>")
 @groups_bp.get("/join_group/<int:id>")
 @login_required
 def join_group(id):
     group = group_queries.get_group(group_id=id)
-    if group.locked:
-        flash("Sorry. This group is locked.")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
+    if not group:
+        flash("Sorry. This group doesn't exist", "danger")
+        return redirect(url_for("index_bp.index"))
 
     member = group_queries.get_group_member(group_id=id)
-    is_member = member is not None
-
-    if is_member:
+    if member:
+        flash("You are already a member of this group")
         return redirect(url_for("groups_bp.view_group", id=id))
 
-    return render_template("join_group.html", group=group.to_dict())
-
-
-@groups_bp.post("/join_group/<int:id>")
-@login_required
-def join_group_post(id):
-    group = group_queries.get_group(group_id=id)
     if group.locked:
         flash("Sorry. This group is locked.")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     if group.is_private:
-        password = request.form.get("password")
+        password_get = request.args.get("password")
+        password_post = request.form.get("password")
+        password = password_get or password_post
         if password != group.password:
             flash("Incorrect password. Please try again.")
             # Go pass to viewing private group password page
