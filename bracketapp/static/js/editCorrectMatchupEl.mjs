@@ -24,12 +24,10 @@ class EditCorrectMatchup extends NikElement {
     return Number(value);
   }
 
-  static get queries() {
-    return {
-      topInputEl: "#top > input",
-      bottomInputEl: "#bottom > input",
-    };
-  }
+  static queries = {
+    topInputEl: "#top > input",
+    bottomInputEl: "#bottom > input",
+  };
 
   get winnerTopName() {
     let team = this.winnerTop;

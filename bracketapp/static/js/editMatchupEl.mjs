@@ -14,12 +14,10 @@ class EditMatchup extends NikElement {
     teams: { type: Object },
   };
 
-  static get queries() {
-    return {
-      topInputEl: "#top > input",
-      bottomInputEl: "#bottom > input",
-    };
-  }
+  static queries = {
+    topInputEl: "#top > input",
+    bottomInputEl: "#bottom > input",
+  };
 
   get winnerTopName() {
     let team = this.winnerTop;

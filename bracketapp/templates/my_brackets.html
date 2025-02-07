@@ -24,18 +24,21 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
       <a href="{{ url_for('editbracket_bp.edit_bracket') }}">click here</a>
     </div>
     {% endif %}
+    <nb-my-brackets
+    brackets='{{ brackets|tojson }}'
+    theme="{{ theme }}"
+  ></nb-my-brackets>
   </sl-card>
 </div>
 
-<div class="d-flex justify-content-center">
-  <div
-    id="myBracketsGrid"
-    style="height: 200px; width: 807px; --ag-grid-size: 4px"
-    class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"
-  ></div>
-</div>
+<!-- <div class="d-flex justify-content-center">
+  <nb-my-brackets
+    brackets='{{ brackets|tojson }}'
+    theme="{{ theme }}"
+  ></nb-my-brackets>
+</div> -->
 
-<script type="module" src="/static/js/myBrackets.mjs"></script>
+<script type="module" src="/static/js/my-brackets.mjs"></script>
 <script type="module" src="/static/js/delete-bracket.mjs"></script>
 
 {% endblock content %}

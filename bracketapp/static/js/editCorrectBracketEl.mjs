@@ -13,11 +13,9 @@ class EditCorrectBracket extends NikElement {
     type: { type: String },
   };
 
-  static get queries() {
-    return {
-      formEl: "form",
-    };
-  }
+  static queries = {
+    formEl: "form",
+  };
 
   getNextMatchup(currentGameId) {
     let id = "null";

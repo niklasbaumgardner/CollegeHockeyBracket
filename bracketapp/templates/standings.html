@@ -13,16 +13,20 @@ standings %}active{% endblock standings %} {% block content %}
       <h2>{{ year }} Standings</h2>
     </div>
     <div>{{ message|safe }}</div>
+
+    <nb-standings
+    brackets='{{ standings|tojson }}'
+    theme='{{ theme }}'
+  ></nb-standings>
   </sl-card>
 </div>
 
-<div class="d-flex justify-content-center">
-  <div
-    id="standingsGrid"
-    style="height: 200px; width: 807px; --ag-grid-size: 4px"
-    class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"
-  ></div>
-</div>
+<!-- <div class="d-flex justify-content-center">
+  <nb-standings
+    brackets='{{ standings|tojson }}'
+    theme='{{ theme }}'
+  ></nb-standings>
+</div> -->
 
 <script src="/static/js/standings.mjs" type="module"></script>
 

@@ -336,3 +336,8 @@ nb-message-el[right] {
   justify-content: center;
   align-items: center;
 }
+
+nb-standings,
+nb-my-brackets {
+  display: block;
+}

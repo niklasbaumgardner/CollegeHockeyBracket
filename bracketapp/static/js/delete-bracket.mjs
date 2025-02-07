@@ -6,12 +6,10 @@ class DeleteBracket extends NikElement {
     bracket: { type: Object },
   };
 
-  static get queries() {
-    return {
-      dialogEl: "sl-dialog",
-      deleteButton: "#delete-button",
-    };
-  }
+  static queries = {
+    dialogEl: "sl-dialog",
+    deleteButton: "#delete-button",
+  };
 
   show() {
     this.updateComplete.then(() => {

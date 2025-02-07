@@ -1,9 +1,28 @@
-class StandingsGridManager {
-  constructor() {
-    this.standingsGridEl = document.getElementById("standingsGrid");
+import { html } from "./imports.mjs";
+import { NikElement } from "./customElement.mjs";
+
+export class Standings extends NikElement {
+  static properties = {
+    brackets: {
+      type: Object,
+    },
+    theme: {
+      type: String,
+    },
+  };
+
+  static queries = {
+    standingsGridEl: "#standingsGrid",
+  };
+
+  firstUpdated() {
+    this.init();
+  }
+
+  async init() {
+    await this.updateComplete;
 
     this.createDataGrid();
-
     this.setupThemeWatcher();
   }
 
@@ -28,20 +47,33 @@ class StandingsGridManager {
   }
 
   createDataGrid() {
-    const rowData = [];
-    for (let data of GRID_DATA) {
-      rowData.push(data);
-    }
-
-    if (!rowData.length) {
+    if (!this.brackets.length) {
       return;
     }
 
-    const columnDefs = [
-      { field: "rank", resizable: false },
+    const columnDefs = [];
+
+    columnDefs.push(
+      {
+        field: "rank",
+        resizable: false,
+      },
       {
         field: "name",
         headerName: "Brackets",
+        onCellClicked: (params) => {
+          if (CAN_EDIT_BRACKET) {
+            return;
+          }
+
+          params.event.target.querySelector("a")?.click();
+        },
+        cellClass: () => {
+          if (CAN_EDIT_BRACKET) {
+            return "cursor-pointer";
+          }
+          return "cursor-pointer";
+        },
         cellRenderer: (param) => {
           if (param.data.winner) {
             return `<div class="standings-row">${this.getImageElement(
@@ -63,46 +95,57 @@ class StandingsGridManager {
         resizable: false,
       },
       { field: "points", resizable: false },
-      { field: "max_points", headerName: "Max", resizable: false },
-    ];
+      { field: "max_points", headerName: "Max", resizable: false }
+    );
 
-    if ("r1" in rowData[0]) {
-      columnDefs.push(
-        { field: "r1", resizable: false },
-        { field: "r2", resizable: false },
-        { field: "r3", resizable: false },
-        { field: "r4", resizable: false }
-      );
+    if (!CAN_EDIT_BRACKET) {
+      {
+        columnDefs.push(
+          { field: "r1", resizable: false },
+          { field: "r2", resizable: false },
+          { field: "r3", resizable: false },
+          { field: "r4", resizable: false }
+        );
+      }
     }
 
     const gridOptions = {
       columnDefs,
-      rowData,
+      rowData: this.brackets,
       rowHeight: 50,
+      domLayout: "autoHeight",
+      suppressCellFocus: true,
       autoSizeStrategy: {
         type: "fitGridWidth",
-        defaultMinWidth: 75,
-        defaultMaxWidth: 75,
+        // defaultMinWidth: 75,
+        // defaultMaxWidth: 75,
         columnLimits: [
           { colId: "rank", minWidth: 57, maxWidth: 57 },
           {
             colId: "name",
             minWidth: 300,
-            maxWidth: 300,
+            // maxWidth: 300,
+            flex: 1,
           },
+          { colId: "points", minWidth: 75, maxWidth: 75 },
+          { colId: "max_points", minWidth: 75, maxWidth: 75 },
+          { colId: "r1", minWidth: 57, maxWidth: 57 },
+          { colId: "r2", minWidth: 57, maxWidth: 57 },
+          { colId: "r3", minWidth: 57, maxWidth: 57 },
+          { colId: "r4", minWidth: 57, maxWidth: 57 },
         ],
       },
-      onRowDataUpdated: (event) => {
-        let height =
-          document.querySelector(".ag-center-cols-container").scrollHeight +
-          document.querySelector(".ag-header-row").scrollHeight;
+      // onRowDataUpdated: (event) => {
+      //   let height =
+      //     document.querySelector(".ag-center-cols-container").scrollHeight +
+      //     document.querySelector(".ag-header-row").scrollHeight;
 
-        if (height < 192) {
-          height = 192;
-        }
+      //   if (height < 192) {
+      //     height = 192;
+      //   }
 
-        this.standingsGridEl.style.height = `${height + 3}px`;
-      },
+      //   this.standingsGridEl.style.height = `${height + 3}px`;
+      // },
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }
@@ -127,6 +170,16 @@ class StandingsGridManager {
     );
     this.standingsGridEl.classList.toggle("ag-theme-alpine", theme === "light");
   }
+
+  render() {
+    return html`<div
+      id="standingsGrid"
+      style="--ag-grid-size: 4px"
+      class=${this.theme === "dark"
+        ? "ag-theme-alpine-dark"
+        : "ag-theme-alpine"}
+    ></div>`;
+  }
 }
 
-new StandingsGridManager();
+customElements.define("nb-standings", Standings);
