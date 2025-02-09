@@ -13,10 +13,10 @@ standings %}active{% endblock standings %} {% block content %}
     </div>
     <div>{{ message|safe }}</div>
 
-    <nb-standings
-    brackets='{{ standings|tojson }}'
-    theme='{{ theme }}'
-  ></nb-standings>
+    <nb-standings-grid
+      brackets='{{ standings|tojson }}'
+      theme="{{ theme }}"
+    ></nb-standings-grid>
   </sl-card>
 </div>
 
@@ -27,6 +27,6 @@ standings %}active{% endblock standings %} {% block content %}
   ></nb-standings>
 </div> -->
 
-<script src="/static/js/standings.mjs" type="module"></script>
+<script src="/static/js/nb-standings-grid.mjs" type="module"></script>
 
 {% endblock content %}

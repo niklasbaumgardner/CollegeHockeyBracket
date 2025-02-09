@@ -101,6 +101,26 @@ def get_archive_message(standings):
     return message
 
 
+def get_winners(standings, correct):
+    if not standings:
+        return []
+
+    if not correct or not correct.winner:
+        return []
+
+    winners = [b for b in standings if b.rank == 1]
+
+    if len(winners) == 1:
+        return winners
+
+    winners.sort(key=lambda x: x.goal_difference)
+
+    min_goal_diff = winners[0].goal_difference
+    winners = [w for w in winners if w.goal_difference <= min_goal_diff]
+
+    return winners
+
+
 def get_bracket_standings():
     brackets = bracket_queries.get_all_brackets()
     correct = bracket_queries.get_correct_bracket()
@@ -118,7 +138,9 @@ def get_bracket_standings():
         brackets.sort(key=lambda b: b.max_points, reverse=True)
         brackets.sort(key=lambda b: b.rank)
 
-    return brackets
+    winners = get_winners(standings=brackets, correct=correct)
+
+    return brackets, winners, correct
 
 
 def get_bracket_standings_for_year(year):

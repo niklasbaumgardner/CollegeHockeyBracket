@@ -1,7 +1,7 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 
-export class Standings extends NikElement {
+export class StandingsGrid extends NikElement {
   static properties = {
     brackets: {
       type: Object,
@@ -182,4 +182,4 @@ export class Standings extends NikElement {
   }
 }
 
-customElements.define("nb-standings", Standings);
+customElements.define("nb-standings-grid", StandingsGrid);
