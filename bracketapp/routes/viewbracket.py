@@ -36,7 +36,6 @@ def view_bracket(id):
 
     return render_template(
         "view_bracket.html",
-        CAN_EDIT_BRACKET=False,
         correct=correct.to_dict(),
         default=default.to_dict(),
         bracket=bracket.to_dict(safe_only=False),

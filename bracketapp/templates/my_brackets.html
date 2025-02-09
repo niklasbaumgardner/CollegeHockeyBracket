@@ -3,7 +3,6 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.edit_bracket') }}";
-  const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
   const BRACKETS = {{ brackets|tojson }};
   const YEAR = {{ year }};
 </script>
@@ -25,9 +24,9 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
     </div>
     {% endif %}
     <nb-my-brackets
-    brackets='{{ brackets|tojson }}'
-    theme="{{ theme }}"
-  ></nb-my-brackets>
+      brackets='{{ brackets|tojson }}'
+      theme="{{ theme }}"
+    ></nb-my-brackets>
   </sl-card>
 </div>
 

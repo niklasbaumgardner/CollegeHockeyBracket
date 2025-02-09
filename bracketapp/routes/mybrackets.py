@@ -30,7 +30,6 @@ def my_brackets():
 
     return render_template(
         "my_brackets.html",
-        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         brackets=brackets,
         number_of_brackets=len(brackets),
         year=YEAR,

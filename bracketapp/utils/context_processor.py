@@ -1,7 +1,7 @@
 from flask_login import current_user
 from flask import Blueprint
 from bracketapp.queries import theme_queries
-from bracketapp.config import YEAR
+from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 import re
 
 context_processor_bp = Blueprint("context_processor_bp", __name__)
@@ -38,3 +38,8 @@ def theme():
 @context_processor_bp.app_context_processor
 def current_year():
     return dict(current_year=YEAR)
+
+
+@context_processor_bp.app_context_processor
+def can_edit_bracket():
+    return dict(CAN_EDIT_BRACKET=CAN_EDIT_BRACKET)

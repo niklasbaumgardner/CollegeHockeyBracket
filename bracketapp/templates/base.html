@@ -64,6 +64,7 @@
   <script>
     const THEME_URL = "{{ url_for('theme_bp.set_theme') }}";
     const THEME = "{{ theme }}";
+    const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" == "True";
     const CREATE_STREAMCHAT_TOKEN_URL = "{{ url_for('auth_bp.create_streamchat_token') }}";
     let CHAT_USER;
     {% if current_user.is_authenticated %}

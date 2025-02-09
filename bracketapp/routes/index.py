@@ -19,7 +19,6 @@ def index():
     return render_template(
         "standings.html",
         standings=standings_json,
-        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
         message=message,
         year=YEAR,
     )
