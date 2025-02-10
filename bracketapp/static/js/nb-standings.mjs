@@ -18,12 +18,32 @@ export class Standings extends NikElement {
     return this.winners.length;
   }
 
+  getWinningMessage() {
+    let winnerTitle = "Winner" + (this.numWinners > 1 ? "s" : "");
+    let winners = this.winners.map((w) => w.user.username).join(", ");
+
+    return html`<sl-card
+      style="--sl-panel-background-color:var(--sl-color-neutral-100);"
+      ><div
+        class="d-flex flex-column gap-1 justify-content-center align-items-center"
+      >
+        <sl-icon
+          style="color:var(--sl-color-amber-500);font-size:var(--sl-font-size-3x-large);"
+          name="trophy"
+        ></sl-icon>
+        <p>${winnerTitle}</p>
+        <b>${winners}</b>
+      </div></sl-card
+    >`;
+  }
+
   getMessage() {
-    if (this.numWinners === 1) {
-      let winner = this.winners[0];
-      return `Congrats to ${winner.user.username} for winning this years bracket challenge!`;
+    if (this.numWinners > 0) {
+      return this.getWinningMessage();
+    } else if (CAN_EDIT_BRACKET) {
+      return "Create a bracket before time runs out!";
     }
-    return "Hello world";
+    return "No brackets were created this year. View the final bracket below.";
   }
 
   render() {
@@ -32,12 +52,15 @@ export class Standings extends NikElement {
         <div slot="header">
           <h2>${this.year} Standings</h2>
         </div>
-        <div class="mb-3">${this.getMessage()}</div>
 
-        <nb-standings-grid
-          .brackets=${this.brackets}
-          theme=${this.theme}
-        ></nb-standings-grid>
+        <div class="d-flex flex-column gap-4">
+          <div>${this.getMessage()}</div>
+
+          <nb-standings-grid
+            .brackets=${this.brackets}
+            theme=${this.theme}
+          ></nb-standings-grid>
+        </div>
       </sl-card>
     </div>`;
   }

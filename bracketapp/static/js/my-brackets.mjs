@@ -1,8 +1,8 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import { Standings } from "./standings.mjs";
+import { StandingsGrid } from "./nb-standings-grid.mjs";
 
-class MyBrackets extends Standings {
+class MyBrackets extends StandingsGrid {
   handleDeleteClick(bracket) {
     let deleteBracketEl = this.deleteBracketModals[bracket.id];
     if (!deleteBracketEl) {

@@ -153,12 +153,13 @@ def get_bracket_standings_for_year(year):
         )
 
     brackets.sort(key=lambda b: b.goal_difference)
-
     brackets.sort(key=lambda b: b.name)
     brackets.sort(key=lambda b: b.max_points, reverse=True)
     brackets.sort(key=lambda b: b.rank)
 
-    return brackets, correct
+    winners = get_winners(standings=brackets, correct=correct)
+
+    return brackets, winners, correct
 
 
 def calculate_points_for_bracket(bracket, correct):

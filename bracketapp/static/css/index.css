@@ -109,32 +109,19 @@ sl-dialog:not([open]) {
 
 .archive-grid {
   display: grid;
-  column-gap: var(--sl-spacing-small);
-  row-gap: var(--sl-spacing-small);
+  gap: var(--sl-spacing-large);
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
   .archive-grid {
-    grid-template-columns: repeat(2, 342px);
-  }
-}
-
-@media (min-width: 992px) {
-  .archive-grid {
-    grid-template-columns: repeat(3, 304px);
+    grid-template-columns: repeat(2, 310px);
   }
 }
 
 @media (min-width: 1200px) {
   .archive-grid {
-    grid-template-columns: repeat(3, 364px);
-  }
-}
-
-@media (min-width: 1400px) {
-  .archive-grid {
-    grid-template-columns: repeat(4, 315px);
+    grid-template-columns: repeat(3, 304px);
   }
 }
 
