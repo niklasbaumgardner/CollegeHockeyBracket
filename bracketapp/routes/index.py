@@ -13,11 +13,15 @@ def index():
     standings_json = [
         b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in standings
     ]
+    winners_dict = [
+        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners
+    ]
 
     # message = bracket_utils.get_standings_message(standings)
 
     return render_template(
         "standings.html",
         standings=standings_json,
+        winners=winners_dict,
         year=YEAR,
     )
