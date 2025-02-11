@@ -87,7 +87,7 @@
         {% block backButton %}{% endblock backButton %}
         <a class="navbar-brand" href="/">NB Bracket Challenge</a>
         <button
-          class="navbar-toggler"
+          class="navbar-toggler border-0 p-1 shadow-none"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarsExample07"
@@ -279,8 +279,8 @@
           </ul>
         </div>
         <div>
-          <a href="{{ url_for('editbracket_bp.edit_bracket') }}"
-            >Create or edit your bracket now!</a
+          <a href="{{ url_for('editbracket_bp.new_bracket') }}"
+            >Create your bracket now!</a
           >
         </div>
       </div>
