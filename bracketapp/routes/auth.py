@@ -31,7 +31,7 @@ def login():
             login_user(user, remember=remember)
             next_url = request.args.get("next")
             if not next_url:
-                next_url = url_for("my_brackets_bp.my_brackets")
+                next_url = url_for("mybrackets_bp.my_brackets")
             return redirect(next_url)
 
         elif user:
