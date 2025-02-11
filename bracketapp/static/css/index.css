@@ -226,8 +226,16 @@ sl-button:not([disabled])[variant="danger"]::part(base):active {
   font-size: var(--sl-font-size-medium);
 }
 
+.font-size-x-small {
+  font-size: var(--sl-font-size-x-small);
+}
+
 .font-size-2x-small {
   font-size: var(--sl-font-size-2x-small);
+}
+
+.color-neutral-700 {
+  color: var(--sl-color-neutral-700);
 }
 
 .nb-dropdown {
@@ -325,7 +333,7 @@ nb-message-el[right] {
 }
 
 nb-standings-grid,
-nb-my-brackets {
+nb-my-brackets-grid {
   display: block;
 
   @media (min-width: 576px) {

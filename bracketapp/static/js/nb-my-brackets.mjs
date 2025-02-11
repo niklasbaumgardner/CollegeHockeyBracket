@@ -4,15 +4,21 @@ import { html } from "./imports.mjs";
 
 export class MyBrackets extends Standings {
   titleTemplate() {
-    return html`<div slot="header"><h2>My Brackets ${this.year}</h2></div>`;
+    return html`<div>
+      <h2 class="mb-0">My Brackets ${this.year}</h2>
+      <small class="font-size-x-small color-neutral-700"
+        >You created 4/5 brackets</small
+      >
+    </div>`;
   }
 
   messageTemplate() {
-    return html`<p>You have created 4/5 brackets.</p>
-      <p>
-        Track your rank, points, and performance across all rounds of the
-        ${this.year} NCAA College Hockey Tournament.
-      </p>`;
+    if (!CAN_EDIT_BRACKET) {
+      return null;
+    }
+
+    // TODO
+    return html`<a href=${NEW_BRACKET_LINK}>Create a bracket</a>`;
   }
 
   bracketsTemplate() {
