@@ -1,8 +1,6 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 
-class MyBrackets extends StandingsGrid {
+export class MyBracketsGrid extends StandingsGrid {
   handleDeleteClick(bracket) {
     let deleteBracketEl = this.deleteBracketModals[bracket.id];
     if (!deleteBracketEl) {
@@ -22,8 +20,6 @@ class MyBrackets extends StandingsGrid {
       rowData.push(data);
     }
 
-    console.log(rowData);
-
     if (CAN_EDIT_BRACKET && rowData.length < 5) {
       rowData.push({
         id: -1,
@@ -39,7 +35,6 @@ class MyBrackets extends StandingsGrid {
     if (!CAN_EDIT_BRACKET) {
       columnDefs.push({
         field: "rank",
-        resizable: false,
       });
     }
 
@@ -86,13 +81,11 @@ class MyBrackets extends StandingsGrid {
             </div>
           </div>`;
       },
-      resizable: false,
     });
 
     if (CAN_EDIT_BRACKET) {
       columnDefs.push({
         field: "actions",
-        resizable: false,
         cellRenderer: (params) => {
           let button = document.createElement("sl-button");
           button.variant = "danger";
@@ -108,58 +101,22 @@ class MyBrackets extends StandingsGrid {
       });
     } else {
       columnDefs.push(
-        { field: "points", resizable: false },
-        { field: "max_points", headerName: "Max", resizable: false },
-        { field: "r1", resizable: false },
-        { field: "r2", resizable: false },
-        { field: "r3", resizable: false },
-        { field: "r4", resizable: false }
+        { field: "points" },
+        { field: "max_points", headerName: "Max" },
+        { field: "r1" },
+        { field: "r2" },
+        { field: "r3" },
+        { field: "r4" }
       );
     }
 
     const gridOptions = {
       columnDefs,
       rowData,
-      rowHeight: 50,
-      domLayout: "autoHeight",
-      suppressCellFocus: true,
-      autoSizeStrategy: {
-        type: "fitGridWidth",
-        // defaultMinWidth: 75,
-        // defaultMaxWidth: 75,
-        columnLimits: [
-          { colId: "rank", minWidth: 57, maxWidth: 57 },
-          {
-            colId: "name",
-            minWidth: 300,
-            // maxWidth: 300,
-            flex: 1,
-          },
-          { colId: "points", minWidth: 75, maxWidth: 75 },
-          { colId: "max_points", minWidth: 75, maxWidth: 75 },
-          { colId: "r1", minWidth: 57, maxWidth: 57 },
-          { colId: "r2", minWidth: 57, maxWidth: 57 },
-          { colId: "r3", minWidth: 57, maxWidth: 57 },
-          { colId: "r4", minWidth: 57, maxWidth: 57 },
-          // { colId: "actions" },
-        ],
-      },
-      // onRowDataUpdated: (event) => {
-      //   let height =
-      //     document.querySelector(".ag-center-cols-container").scrollHeight +
-      //     document.querySelector(".ag-header-row").scrollHeight;
-
-      //   if (height < 192) {
-      //     height = 192;
-      //   }
-
-      //   this.myBracketsGridEl.style.height = `${height + 3}px`;
-      // },
+      ...this.defaultGridOptions,
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }
 }
 
-export default MyBrackets;
-
-customElements.define("nb-my-brackets", MyBrackets);
+customElements.define("nb-my-brackets-grid", MyBracketsGrid);

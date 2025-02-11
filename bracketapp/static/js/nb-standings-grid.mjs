@@ -15,6 +15,35 @@ export class StandingsGrid extends NikElement {
     standingsGridEl: "#standingsGrid",
   };
 
+  get defaultGridOptions() {
+    return {
+      rowHeight: 50,
+      domLayout: "autoHeight",
+      suppressCellFocus: true,
+      suppressMovableColumns: true,
+      autoSizeStrategy: {
+        type: "fitGridWidth",
+        columnLimits: [
+          { colId: "rank", minWidth: 57, maxWidth: 57 },
+          {
+            colId: "name",
+            minWidth: 300,
+            flex: 1,
+          },
+          { colId: "points", minWidth: 75, maxWidth: 75 },
+          { colId: "max_points", minWidth: 75, maxWidth: 75 },
+          { colId: "r1", minWidth: 57, maxWidth: 57 },
+          { colId: "r2", minWidth: 57, maxWidth: 57 },
+          { colId: "r3", minWidth: 57, maxWidth: 57 },
+          { colId: "r4", minWidth: 57, maxWidth: 57 },
+        ],
+      },
+      defaultColDef: {
+        resizable: false,
+      },
+    };
+  }
+
   firstUpdated() {
     this.init();
   }
@@ -56,7 +85,6 @@ export class StandingsGrid extends NikElement {
     columnDefs.push(
       {
         field: "rank",
-        resizable: false,
       },
       {
         field: "name",
@@ -92,19 +120,18 @@ export class StandingsGrid extends NikElement {
             </div>
           </div>`;
         },
-        resizable: false,
       },
-      { field: "points", resizable: false },
-      { field: "max_points", headerName: "Max", resizable: false }
+      { field: "points" },
+      { field: "max_points", headerName: "Max" }
     );
 
     if (!CAN_EDIT_BRACKET) {
       {
         columnDefs.push(
-          { field: "r1", resizable: false },
-          { field: "r2", resizable: false },
-          { field: "r3", resizable: false },
-          { field: "r4", resizable: false }
+          { field: "r1" },
+          { field: "r2" },
+          { field: "r3" },
+          { field: "r4" }
         );
       }
     }
@@ -112,40 +139,7 @@ export class StandingsGrid extends NikElement {
     const gridOptions = {
       columnDefs,
       rowData: this.brackets,
-      rowHeight: 50,
-      domLayout: "autoHeight",
-      suppressCellFocus: true,
-      autoSizeStrategy: {
-        type: "fitGridWidth",
-        // defaultMinWidth: 75,
-        // defaultMaxWidth: 75,
-        columnLimits: [
-          { colId: "rank", minWidth: 57, maxWidth: 57 },
-          {
-            colId: "name",
-            minWidth: 300,
-            // maxWidth: 300,
-            flex: 1,
-          },
-          { colId: "points", minWidth: 75, maxWidth: 75 },
-          { colId: "max_points", minWidth: 75, maxWidth: 75 },
-          { colId: "r1", minWidth: 57, maxWidth: 57 },
-          { colId: "r2", minWidth: 57, maxWidth: 57 },
-          { colId: "r3", minWidth: 57, maxWidth: 57 },
-          { colId: "r4", minWidth: 57, maxWidth: 57 },
-        ],
-      },
-      // onRowDataUpdated: (event) => {
-      //   let height =
-      //     document.querySelector(".ag-center-cols-container").scrollHeight +
-      //     document.querySelector(".ag-header-row").scrollHeight;
-
-      //   if (height < 192) {
-      //     height = 192;
-      //   }
-
-      //   this.standingsGridEl.style.height = `${height + 3}px`;
-      // },
+      ...this.defaultGridOptions,
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }

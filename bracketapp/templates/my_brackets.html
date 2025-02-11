@@ -3,41 +3,15 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.edit_bracket') }}";
-  const BRACKETS = {{ brackets|tojson }};
-  const YEAR = {{ year }};
 </script>
 
-<div class="d-flex justify-content-center">
-  <sl-card class="mb-5 width-fit-content">
-    <div slot="header">
-      <h2>My brackets {{ year }}</h2>
-    </div>
-    <div>You have created {{ number_of_brackets }}/5 brackets.</div>
-    <div>
-      View your {{ year }} NCAA hockey brackets here. Track your rank, points,
-      and progress across all rounds.
-    </div>
-    {% if number_of_brackets < 5 and CAN_EDIT_BRACKET %}
-    <div>
-      To create a new bracket
-      <a href="{{ url_for('editbracket_bp.edit_bracket') }}">click here</a>
-    </div>
-    {% endif %}
-    <nb-my-brackets
-      brackets='{{ brackets|tojson }}'
-      theme="{{ theme }}"
-    ></nb-my-brackets>
-  </sl-card>
-</div>
+<nb-my-bracekts
+  brackets='{{ brackets|tojson }}'
+  theme="{{ theme }}"
+  year="{{ year }}"
+></nb-my-bracekts>
 
-<!-- <div class="d-flex justify-content-center">
-  <nb-my-brackets
-    brackets='{{ brackets|tojson }}'
-    theme="{{ theme }}"
-  ></nb-my-brackets>
-</div> -->
-
-<script type="module" src="/static/js/my-brackets.mjs"></script>
+<script type="module" src="/static/js/nb-my-brackets.mjs"></script>
 <script type="module" src="/static/js/delete-bracket.mjs"></script>
 
 {% endblock content %}

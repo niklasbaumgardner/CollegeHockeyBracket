@@ -37,7 +37,11 @@ export class Standings extends NikElement {
     >`;
   }
 
-  getMessage() {
+  titleTemplate() {
+    return html`<div slot="header"><h2>${this.year} Standings</h2></div>`;
+  }
+
+  messageTemplate() {
     if (this.numWinners > 0) {
       return this.getWinningMessage();
     } else if (CAN_EDIT_BRACKET) {
@@ -46,20 +50,21 @@ export class Standings extends NikElement {
     return "No brackets were created this year. View the final bracket below.";
   }
 
+  bracketsTemplate() {
+    return html`<nb-standings-grid
+      .brackets=${this.brackets}
+      theme=${this.theme}
+    ></nb-standings-grid>`;
+  }
+
   render() {
     return html`<div class="d-flex justify-content-center">
       <sl-card class="mb-5 width-fit-content">
-        <div slot="header">
-          <h2>${this.year} Standings</h2>
-        </div>
+        ${this.titleTemplate()}
 
         <div class="d-flex flex-column gap-4">
-          <div>${this.getMessage()}</div>
-
-          <nb-standings-grid
-            .brackets=${this.brackets}
-            theme=${this.theme}
-          ></nb-standings-grid>
+          <div>${this.messageTemplate()}</div>
+          ${this.bracketsTemplate()}
         </div>
       </sl-card>
     </div>`;
