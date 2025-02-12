@@ -5,11 +5,11 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.new_bracket') }}";
 </script>
 
-<nb-my-bracekts
+<nb-my-brackets
   brackets='{{ brackets|tojson }}'
   theme="{{ theme }}"
   year="{{ year }}"
-></nb-my-bracekts>
+></nb-my-brackets>
 
 <script type="module" src="/static/js/nb-my-brackets.mjs"></script>
 <script type="module" src="/static/js/delete-bracket.mjs"></script>

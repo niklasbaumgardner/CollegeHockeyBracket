@@ -332,6 +332,15 @@ nb-message-el[right] {
   align-items: center;
 }
 
+nb-standings > div > sl-card,
+nb-my-brackets > div > sl-card {
+  width: 100%;
+
+  @media (min-width: 992px) {
+    width: fit-content;
+  }
+}
+
 nb-standings-grid,
 nb-my-brackets-grid {
   display: block;

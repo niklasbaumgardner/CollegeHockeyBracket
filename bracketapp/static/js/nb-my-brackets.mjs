@@ -29,4 +29,4 @@ export class MyBrackets extends Standings {
   }
 }
 
-customElements.define("nb-my-bracekts", MyBrackets);
+customElements.define("nb-my-brackets", MyBrackets);
