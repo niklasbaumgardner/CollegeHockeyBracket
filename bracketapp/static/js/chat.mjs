@@ -20,6 +20,7 @@ class ChatEl extends NikElement {
   }
 
   async init() {
+    return;
     this.client = StreamChat.getInstance("w22wdxnm8jwk");
 
     if (!CHAT_USER.streamchat_token) {

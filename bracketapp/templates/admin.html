@@ -1,37 +1,44 @@
+{% extends "base.html" %} {% block title %}Admin{% endblock title %} {% block
+admin %}active{% endblock admin %} {% block content %}
+<div class="flex justify-center flex-col">
+  <h1 class="font-bold mb-10">Admin page.</h1>
 
-{% extends "base.html" %}
-
-{% block title %}Admin{% endblock title %}
-{% block admin %}active{% endblock admin %}
-
-{% block content %}
-<div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fw-bold fs-1">
-        Admin page.
+  <div>
+    <div class="mb-5">
+      <sl-button
+        variant="primary"
+        href="{{ url_for('admin_bp.update_points') }}"
+        >Update bracket points</sl-button
+      >
     </div>
-</div>
-<div class="container mx-0 p-3">
-    <div class="row mb-5">
-        <div class="col-12">
-            <a class="btn btn-primary m-3" href="{{ url_for('admin_bp.update_points') }}">Update bracket points</a>
-        </div>
+    <div class="mb-5">
+      <sl-button href="{{ url_for('admin_bp.update_correct') }}"
+        >Correct bracket page</sl-button
+      >
+      <sl-button href="{{ url_for('admin_bp.update_default') }}"
+        >Default bracket page</sl-button
+      >
     </div>
-    <div class="row mb-5">
-        <div class="col-12">
-            <a class="btn btn-outline-primary m-3" href="{{ url_for('admin_bp.update_correct') }}">Correct bracket page</a>
-            <a class="btn btn-outline-primary m-3" href="{{ url_for('admin_bp.update_default') }}">Default bracket page</a>
-        </div>
+    <div class="mb-5">
+      <sl-button
+        variant="danger"
+        outline
+        href="{{ url_for('admin_bp.delete_brackets') }}"
+        >Delete brackets page</sl-button
+      >
     </div>
-    <div class="row mb-5">
-        <div class="col-12">
-            <a class="btn btn-outline-danger m-3" href="{{ url_for('admin_bp.delete_brackets') }}">Delete brackets page</a>
-        </div>
+    <div class="mb-5">
+      <sl-button
+        variant="danger"
+        href="{{ url_for('admin_bp.delete_default') }}"
+        >Delete Default Bracket</sl-button
+      >
+      <sl-button
+        variant="danger"
+        href="{{ url_for('admin_bp.delete_correct') }}"
+        >Delete Correct Bracket</sl-button
+      >
     </div>
-    <div class="row mb-5">
-        <div class="col-12">
-            <a class="btn btn-danger m-3" href="{{ url_for('admin_bp.delete_default') }}">Delete Default Bracket</a>
-            <a class="btn btn-danger m-3" href="{{ url_for('admin_bp.delete_correct') }}">Delete Correct Bracket</a>
-        </div>
-    </div>
+  </div>
 </div>
 {% endblock content %}
