@@ -12,9 +12,6 @@ editbracket_bp = Blueprint("editbracket_bp", __name__)
 @login_required
 def edit_bracket(id):
     group_id = request.args.get("group_id")
-    if group_id and not group_queries.get_group_member(group_id=group_id):
-        flash("You must join this group to submit a bracket", "danger")
-        return redirect(url_for("groups_bp.view_group", id=group_id))
 
     my_bracket_count = bracket_queries.my_bracket_count()
     if my_bracket_count >= 5:
@@ -32,6 +29,10 @@ def edit_bracket(id):
     if not bracket:
         # is this really what i want to do?
         return redirect(url_for("viewbracket_bp.view_bracket", id=id))
+
+    if group_id and not group_queries.get_group_member(group_id=group_id):
+        flash("You must join this group to submit a bracket", "danger")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
 
     default = bracket_queries.get_default_bracket()
 
@@ -59,6 +60,10 @@ def new_bracket():
         flash("Editing is disabled", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
+    if group_id and not group_queries.get_group_member(group_id=group_id):
+        flash("You must join this group to submit a bracket", "danger")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
+
     bracket = bracket_queries.get_empty_bracket()
     default = bracket_queries.get_default_bracket()
 
@@ -84,6 +89,10 @@ def edit_bracket_post(id):
         # if we have a bracket id and we can't edit, go to viewing the bracket
         return redirect(url_for("viewbracket_bp.view_bracket", id=id))
 
+    if group_id and not group_queries.get_group_member(group_id=group_id):
+        flash("You must join this group to submit a bracket", "danger")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
+
     existing_bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=id)
 
     if existing_bracket:
@@ -105,6 +114,8 @@ def edit_bracket_post(id):
             )
 
         flash("Your bracket has been saved", "success")
+        if group_id:
+            return redirect(url_for("groups_bp.view_group", id=group_id))
 
     else:
         flash("No bracket was found for that id. Please try again", "danger")
@@ -127,6 +138,10 @@ def new_bracket_post():
         # if we can't edit, go to viewing my brackets
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
+    if group_id and not group_queries.get_group_member(group_id=group_id):
+        flash("You must join this group to submit a bracket", "danger")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
+
     game15 = request.form.get("game15")
     name = request.form.get("name")
     w_goals = request.form.get("w_goals")
@@ -147,13 +162,11 @@ def new_bracket_post():
             winner=request.form.get(f"game{i}"),
         )
 
-        if group_id:
-            group_queries.create_group_bracket(
-                group_id=group_id, bracket_id=new_bracket.id
-            )
+    if group_id:
+        group_queries.create_group_bracket(group_id=group_id, bracket_id=new_bracket.id)
 
-            flash("Your bracket has been saved", "success")
-            return redirect(url_for("groups_bp.view_group", id=group_id))
+        flash("Your bracket has been saved", "success")
+        return redirect(url_for("groups_bp.view_group", id=group_id))
 
     flash("Your bracket has been saved", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))
