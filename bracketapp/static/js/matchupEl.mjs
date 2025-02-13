@@ -24,12 +24,10 @@ class Matchup extends NikElement {
     type: { type: String },
   };
 
-  static get queries() {
-    return {
-      topInputEl: "#top > input",
-      bottomInputEl: "#bottom > input",
-    };
-  }
+  static queries = {
+    topInputEl: "#top > input",
+    bottomInputEl: "#bottom > input",
+  };
 
   get correctWinnerName() {
     return this.correct.winner_team.team.name;

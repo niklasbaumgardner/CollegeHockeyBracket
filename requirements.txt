@@ -42,7 +42,6 @@ pycares==4.4.0
 pycparser==2.21
 PyJWT==2.8.0
 requests==2.31.0
-rollbar==1.1.2
 sentry-sdk==2.20.0
 six==1.16.0
 SQLAlchemy==2.0.25

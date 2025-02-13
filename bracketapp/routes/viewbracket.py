@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
+from bracketapp import app
 
 
 viewbracket_bp = Blueprint("viewbracket_bp", __name__)
@@ -25,7 +26,7 @@ def view_bracket(id):
     my_bracket = current_user.is_authenticated and bracket.user_id == current_user.id
 
     if CAN_EDIT_BRACKET and bracket.year == YEAR:
-        if my_bracket:
+        if not app.debug and my_bracket:
             return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
         else:
             return redirect(url_for("index_bp.index"))
@@ -35,7 +36,6 @@ def view_bracket(id):
 
     return render_template(
         "view_bracket.html",
-        CAN_EDIT_BRACKET=False,
         correct=correct.to_dict(),
         default=default.to_dict(),
         bracket=bracket.to_dict(safe_only=False),
@@ -50,12 +50,12 @@ def view_bracket(id):
 
 @viewbracket_bp.route("/view_cbracket/<int:year>", methods=["GET"])
 def view_cbracket(year):
-    if year >= YEAR and not is_admin():
+    if (CAN_EDIT_BRACKET and year == YEAR) and not is_admin():
         return redirect(url_for("archive_bp.archive"))
 
     correct = bracket_queries.get_correct_bracket_for_year(year)
 
-    if not correct:
+    if not correct or (correct and not correct.winner):
         return redirect(url_for("archive_bp.archive"))
 
     default = bracket_queries.get_default_bracket_for_year(year)

@@ -9,17 +9,17 @@ index_bp = Blueprint("index_bp", __name__)
 @index_bp.route("/", methods=["GET"])
 def index():
     # TODO: return the correct bracket if possible
-    standings = bracket_utils.get_bracket_standings()
-    standings_json = [
+    standings, winners, correct = bracket_utils.get_bracket_standings()
+    standings_dict = [
         b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in standings
     ]
-
-    message = bracket_utils.get_standings_message(standings)
+    winners_dict = [
+        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners
+    ]
 
     return render_template(
         "standings.html",
-        standings=standings_json,
-        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
-        message=message,
+        standings=standings_dict,
+        winners=winners_dict,
         year=YEAR,
     )

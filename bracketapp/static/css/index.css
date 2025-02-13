@@ -109,32 +109,19 @@ sl-dialog:not([open]) {
 
 .archive-grid {
   display: grid;
-  column-gap: var(--sl-spacing-small);
-  row-gap: var(--sl-spacing-small);
+  gap: var(--sl-spacing-large);
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
   .archive-grid {
-    grid-template-columns: repeat(2, 342px);
-  }
-}
-
-@media (min-width: 992px) {
-  .archive-grid {
-    grid-template-columns: repeat(3, 304px);
+    grid-template-columns: repeat(2, 310px);
   }
 }
 
 @media (min-width: 1200px) {
   .archive-grid {
-    grid-template-columns: repeat(3, 364px);
-  }
-}
-
-@media (min-width: 1400px) {
-  .archive-grid {
-    grid-template-columns: repeat(4, 315px);
+    grid-template-columns: repeat(3, 304px);
   }
 }
 
@@ -239,8 +226,16 @@ sl-button:not([disabled])[variant="danger"]::part(base):active {
   font-size: var(--sl-font-size-medium);
 }
 
+.font-size-x-small {
+  font-size: var(--sl-font-size-x-small);
+}
+
 .font-size-2x-small {
   font-size: var(--sl-font-size-2x-small);
+}
+
+.color-neutral-700 {
+  color: var(--sl-color-neutral-700);
 }
 
 .nb-dropdown {
@@ -335,4 +330,26 @@ nb-message-el[right] {
   display: flex !important;
   justify-content: center;
   align-items: center;
+}
+
+nb-standings > div > sl-card,
+nb-my-brackets > div > sl-card {
+  width: 100%;
+
+  @media (min-width: 992px) {
+    width: fit-content;
+  }
+}
+
+nb-standings-grid,
+nb-my-brackets-grid {
+  display: block;
+
+  @media (min-width: 576px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) {
+    width: 807px;
+  }
 }

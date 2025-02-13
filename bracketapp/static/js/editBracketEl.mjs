@@ -13,13 +13,11 @@ class EditBracket extends NikElement {
     type: { type: String },
   };
 
-  static get queries() {
-    return {
-      formEl: "form",
-      nbEditMatchupEls: { all: "nb-edit-matchup" },
-      saveButtonEl: "#save-button",
-    };
-  }
+  static queries = {
+    formEl: "form",
+    nbEditMatchupEls: { all: "nb-edit-matchup" },
+    saveButtonEl: "#save-button",
+  };
 
   get teams() {
     if (this._teams) {

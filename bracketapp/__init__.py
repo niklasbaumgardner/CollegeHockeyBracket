@@ -1,4 +1,4 @@
-from flask import Flask, got_request_exception
+from flask import Flask
 from flask_bcrypt import Bcrypt
 from bracketapp.config import Config
 from flask_migrate import Migrate
@@ -7,8 +7,6 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import os
 import sentry_sdk
-import rollbar
-import rollbar.contrib.flask
 
 
 bcrypt = Bcrypt()
@@ -33,7 +31,7 @@ sentry_sdk.init(
         # possible.
         "continuous_profiling_auto_start": True,
     },
-    release="nbbracketchallenge@1.0.3",
+    release="nbbracketchallenge@1.1.9",
 )
 
 
@@ -52,6 +50,7 @@ mail.init_app(app)
 from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
 from bracketapp.routes.auth import auth_bp
+from bracketapp.routes.deletebracket import deletebracket_bp
 from bracketapp.routes.editbracket import editbracket_bp
 from bracketapp.routes.groups import groups_bp
 from bracketapp.routes.index import index_bp
@@ -65,6 +64,7 @@ from bracketapp.utils.context_processor import context_processor_bp
 app.register_blueprint(admin_bp)
 app.register_blueprint(archive_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(deletebracket_bp)
 app.register_blueprint(editbracket_bp)
 app.register_blueprint(groups_bp)
 app.register_blueprint(index_bp)
@@ -78,15 +78,6 @@ app.register_blueprint(context_processor_bp)
 with app.app_context():
     db.create_all()
 
-    rollbar.init(
-        os.environ.get("ROLLBAR_ACCESS_TOKEN"),
-        "production",
-        root=os.path.dirname(os.path.realpath(__file__)),
-        allow_logging_basic_config=False,
-    )
-
-    # send exceptions from `app` to rollbar, using flask's signal system.
-    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
 migrate.init_app(app, db)
 
