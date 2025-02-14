@@ -269,6 +269,7 @@ sl-button:not([disabled])[variant="danger"]::part(base):active {
 .standings-username {
   font-size: var(--sl-font-size-x-small);
   line-height: var(--sl-line-height-dense);
+  color: var(--ag-data-color);
 }
 
 #chatButton {
@@ -333,7 +334,8 @@ nb-message-el[right] {
 }
 
 nb-standings > div > sl-card,
-nb-my-brackets > div > sl-card {
+nb-my-brackets > div > sl-card,
+nb-group-standings > div > sl-card {
   width: 100%;
 
   @media (min-width: 992px) {

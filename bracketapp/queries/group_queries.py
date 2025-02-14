@@ -26,6 +26,9 @@ def create_group_member(group_id):
 
 
 def get_group_member(group_id):
+    if not current_user.is_authenticated:
+        return None
+
     return GroupMember.query.filter_by(
         group_id=group_id, user_id=current_user.id
     ).first()

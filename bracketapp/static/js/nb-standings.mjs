@@ -38,7 +38,7 @@ export class Standings extends NikElement {
   }
 
   titleTemplate() {
-    return html`<div slot="header"><h2>${this.year} Standings</h2></div>`;
+    return html`<div><h2>${this.year} Standings</h2></div>`;
   }
 
   messageTemplate() {
@@ -46,6 +46,8 @@ export class Standings extends NikElement {
       return this.getWinningMessage();
     } else if (CAN_EDIT_BRACKET) {
       return "Create a bracket before time runs out!";
+    } else if (this.brackets.length) {
+      return "View the current standings below.";
     }
     return "No brackets were created this year. View the final bracket below.";
   }
@@ -61,7 +63,6 @@ export class Standings extends NikElement {
     return html`<div class="d-flex justify-content-center">
       <sl-card class="mb-5">
         ${this.titleTemplate()}
-
         <div class="d-flex flex-column gap-4">
           <div>${this.messageTemplate()}</div>
           ${this.bracketsTemplate()}

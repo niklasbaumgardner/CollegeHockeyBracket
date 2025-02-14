@@ -26,8 +26,9 @@ def view_bracket(id):
     my_bracket = current_user.is_authenticated and bracket.user_id == current_user.id
 
     if CAN_EDIT_BRACKET and bracket.year == YEAR:
-        if not app.debug and my_bracket:
-            return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
+        if my_bracket:
+            if not app.debug:
+                return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
         else:
             return redirect(url_for("index_bp.index"))
 

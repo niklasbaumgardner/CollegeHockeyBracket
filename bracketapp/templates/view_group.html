@@ -2,23 +2,19 @@
 {% block standings %}active{% endblock standings %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
-  const GRID_DATA = {{ brackets|tojson }};
-  const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" === "True";
-  const CREATE_BRACKET_URL = "{{ url_for('editbracket_bp.edit_bracket', group_id=group.id) }}";
+  const CREATE_BRACKET_URL =
+    "{{ url_for('editbracket_bp.new_bracket', group_id=group.id) }}";
   const JOIN_GROUP_URL = "{{ url_for('groups_bp.join_group', id=group.id) }}";
 </script>
 
-<nb-group group='{{ group|tojson }}' isMember="{{ is_member }}"></nb-group>
+<nb-group-standings
+  brackets='{{ brackets|tojson }}'
+  winners='{{ winners|tojson }}'
+  theme="{{ theme }}"
+  group='{{ group|tojson }}'
+  isMember="{{ is_member }}"
+></nb-group-standings>
 
-<div class="d-flex justify-content-center">
-  <div
-    id="standingsGrid"
-    style="height: 200px; width: 807px; --ag-grid-size: 4px"
-    class="{% if theme == 'dark' %}ag-theme-alpine-dark{% else %}ag-theme-alpine{% endif %}"
-  ></div>
-</div>
-
-<script src="/static/js/groupCardEl.mjs" type="module"></script>
-<script src="/static/js/groupStandings.mjs" type="module"></script>
+<script src="/static/js/nb-group-standings.mjs" type="module"></script>
 
 {% endblock content %}

@@ -109,7 +109,7 @@ def get_group_message(brackets, group_id, is_member, is_private):
         create_bracket_message = ""
         if current_user.is_authenticated:
             if bracket_queries.my_bracket_count() < 5:
-                create_bracket_message += f'Make sure to <a href="{ url_for("editbracket_bp.edit_bracket", group_id=group_id) }">create your bracket</a> before the tournament starts!<br/>'
+                create_bracket_message += f'Make sure to <a href="{ url_for("editbracket_bp.new_bracket", group_id=group_id) }">create your bracket</a> before the tournament starts!<br/>'
 
             create_bracket_message += f'To view or edit your brackets <a href="{ url_for("mybrackets_bp.my_brackets") }">click here</a>.'
         else:
@@ -120,26 +120,6 @@ def get_group_message(brackets, group_id, is_member, is_private):
         pass
 
     return message
-
-
-def get_group_standings(group_id):
-    brackets = bracket_queries.get_brackets_for_group(group_id=group_id)
-    correct = bracket_queries.get_correct_bracket()
-
-    if correct and correct.winner:
-        for bracket in brackets:
-            bracket.goal_difference = abs(
-                bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
-            )
-
-        brackets.sort(key=lambda b: b.goal_difference)
-
-    brackets.sort(key=lambda b: b.name.casefold())
-    if not CAN_EDIT_BRACKET and brackets and brackets[0].group_bracket.group_rank:
-        brackets.sort(key=lambda b: b.max_points, reverse=True)
-        brackets.sort(key=lambda b: b.group_bracket.group_rank)
-
-    return brackets
 
 
 def get_winners(standings, correct):
@@ -160,6 +140,28 @@ def get_winners(standings, correct):
     winners = [w for w in winners if w.goal_difference <= min_goal_diff]
 
     return winners
+
+
+def get_group_standings(group_id):
+    brackets = bracket_queries.get_brackets_for_group(group_id=group_id)
+    correct = bracket_queries.get_correct_bracket()
+
+    if correct and correct.winner:
+        for bracket in brackets:
+            bracket.goal_difference = abs(
+                bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
+            )
+
+        brackets.sort(key=lambda b: b.goal_difference)
+
+    brackets.sort(key=lambda b: b.name.casefold())
+    if not CAN_EDIT_BRACKET and brackets and brackets[0].group_bracket.group_rank:
+        brackets.sort(key=lambda b: b.max_points, reverse=True)
+        brackets.sort(key=lambda b: b.group_bracket.group_rank)
+
+    winners = get_winners(standings=brackets, correct=correct)
+
+    return brackets, winners, correct
 
 
 def get_bracket_standings():

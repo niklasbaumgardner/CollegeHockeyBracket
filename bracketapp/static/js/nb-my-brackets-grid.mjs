@@ -42,9 +42,6 @@ export class MyBracketsGrid extends StandingsGrid {
       field: "name",
       headerName: "Brackets",
       autoHeight: true,
-      onCellClicked: (params) => {
-        params.event.target.querySelector("a")?.click();
-      },
       colSpan: (params) => {
         let id = params.data.id;
         if (id === -1) {
@@ -56,30 +53,27 @@ export class MyBracketsGrid extends StandingsGrid {
       cellClass: (params) => {
         let id = params.data.id;
         if (id === -1) {
-          return "nb-center cursor-pointer";
-        } else {
-          return "cursor-pointer";
+          return "nb-center";
         }
       },
       cellRenderer: (param) => {
         if (param.data.id === -1) {
-          return `<sl-button href="${NEW_BRACKET_LINK}" variant="primary">Create new bracket</sl-button>`;
-        } else if (param.data.winner) {
-          return `<div class="standings-row">${this.getImageElement(
-            param.data.winner_team
-          )}<div class="name-cell"><span class="standings-bracket-name"><a href=${
-            param.data.url
-          }>${param.value}</a></span><span class="standings-username">${
-            param.data.user.username
-          }</span></div></div>`;
+          return `<sl-button href="${NEW_BRACKET_LINK}" variant="primary"
+            >Create new bracket</sl-button
+          >`;
         }
-
-        return `<div class="standings-row">
+        return `<a class="d-block w-100 h-100" href=${param.data.url}
+          ><div class="standings-row">
+            ${this.getImageElement(param.data.winner_team)}
             <div class="name-cell">
-              <span class="standings-bracket-name">${param.value}</span>
-              <span class="standings-username">${param.data.user.username}</span>
+              <span class="standings-bracket-name"
+                ><span>${param.value}</span></span
+              ><span class="standings-username"
+                >${param.data.user.username}</span
+              >
             </div>
-          </div>`;
+          </div></a
+        >`;
       },
     });
 

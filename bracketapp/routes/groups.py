@@ -28,7 +28,7 @@ def groups():
 
 
 @groups_bp.get("/view_group/<int:id>")
-@login_required
+# @login_required
 def view_group(id):
     group = group_queries.get_group(group_id=id)
 
@@ -44,20 +44,24 @@ def view_group(id):
     is_member = member is not None
 
     brackets = []
-    print(member, group.is_private)
+    winners = []
+
     if member or not group.is_private:
-        brackets = bracket_utils.get_group_standings(group_id=id)
-    # elif group.is_private and not is_member:
-    #     return redirect(url_for("groups_bp.join_group", id=id))
+        brackets, winners, correct = bracket_utils.get_group_standings(group_id=id)
 
-    message = bracket_utils.get_group_message(
-        brackets=brackets,
-        group_id=group.id,
-        is_member=is_member,
-        is_private=group.is_private,
-    )
+    brackets_dict = [
+        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in brackets
+    ]
+    winners_dict = [
+        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners
+    ]
 
-    brackets = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
+    # return render_template(
+    #     "standings.html",
+    #     standings=standings_dict,
+    #     winners=winners_dict,
+    #     year=YEAR,
+    # )
 
     # If we are a memeber of the group, we can view it normally
     # If the group is public, we can view it normally and there will be a button to join
@@ -66,8 +70,8 @@ def view_group(id):
         "view_group.html",
         is_member=is_member,
         group=group.to_dict(),
-        brackets=brackets,
-        message=message,
+        brackets=brackets_dict,
+        winners=winners_dict,
     )
 
 
@@ -96,6 +100,10 @@ def create_group_post():
 @groups_bp.get("/join_group/<int:id>")
 @login_required
 def join_group(id):
+    password_get = request.args.get("password")
+    password_post = request.form.get("password")
+    print(f"p_get: {password_get}. p_post: {password_post}")
+
     group = group_queries.get_group(group_id=id)
     if not group:
         flash("Sorry. This group doesn't exist", "danger")

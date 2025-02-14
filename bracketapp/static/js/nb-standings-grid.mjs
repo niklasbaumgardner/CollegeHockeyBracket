@@ -89,34 +89,30 @@ export class StandingsGrid extends NikElement {
       {
         field: "name",
         headerName: "Brackets",
-        onCellClicked: (params) => {
-          if (CAN_EDIT_BRACKET) {
-            return;
-          }
-
-          params.event.target.querySelector("a")?.click();
-        },
-        cellClass: () => {
-          if (CAN_EDIT_BRACKET) {
-            return "cursor-pointer";
-          }
-          return "cursor-pointer";
-        },
         cellRenderer: (param) => {
           if (param.data.winner) {
-            return `<div class="standings-row">${this.getImageElement(
-              param.data.winner_team
-            )}<div class="name-cell"><span class="standings-bracket-name"><a href="${
+            return `<a class="d-block w-100 h-100 px-3 text-decoration-none" href=${
               param.data.url
-            }">${param.value}</a></span><span class="standings-username">${
-              param.data.user.username
-            }</span></div></div>`;
+            }
+              ><div class="standings-row">
+                ${this.getImageElement(param.data.winner_team)}
+                <div class="name-cell">
+                  <span class="standings-bracket-name text-decoration-underline"
+                    ><span>${param.value}</span></span
+                  ><span class="standings-username"
+                    >${param.data.user.username}</span
+                  >
+                </div>
+              </div></a
+            >`;
           }
 
           return `<div class="standings-row">
             <div class="name-cell">
               <span class="standings-bracket-name">${param.value}</span>
-              <span class="standings-username">${param.data.user.username}</span>
+              <p class="standings-username"
+                >${param.data.user.username}</p
+              >
             </div>
           </div>`;
         },
@@ -168,7 +164,7 @@ export class StandingsGrid extends NikElement {
   render() {
     return html`<div
       id="standingsGrid"
-      style="--ag-grid-size: 4px"
+      style="--ag-grid-size: 4px;"
       class=${this.theme === "dark"
         ? "ag-theme-alpine-dark"
         : "ag-theme-alpine"}
