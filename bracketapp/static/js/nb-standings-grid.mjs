@@ -91,20 +91,16 @@ export class StandingsGrid extends NikElement {
         headerName: "Brackets",
         cellRenderer: (param) => {
           if (param.data.winner) {
-            return `<a class="d-block w-100 h-100 px-3 text-decoration-none" href=${
-              param.data.url
-            }
-              ><div class="standings-row">
-                ${this.getImageElement(param.data.winner_team)}
-                <div class="name-cell">
-                  <span class="standings-bracket-name text-decoration-underline"
-                    ><span>${param.value}</span></span
-                  ><span class="standings-username"
-                    >${param.data.user.username}</span
-                  >
-                </div>
-              </div></a
-            >`;
+            return `<div class="standings-row">
+              ${this.getImageElement(param.data.winner_team)}
+              <div class="name-cell">
+                <a class="standings-bracket-name " href=${param.data.url}
+                  ><span>${param.value}</span></a
+                ><span class="standings-username"
+                  >${param.data.user.username}</span
+                >
+              </div>
+            </div>`;
           }
 
           return `<div class="standings-row">

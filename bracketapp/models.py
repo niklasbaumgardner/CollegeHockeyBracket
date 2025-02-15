@@ -66,7 +66,7 @@ class Bracket(db.Model, SerializerMixin):
     winner_team = db.relationship("BracketTeam", lazy="joined")
     games_list = db.relationship("Game", lazy="joined")
     user = db.relationship("User", lazy="joined")
-    # group_bracket = db.relationship("GroupBracket", lazy="joined")
+    group_brackets = db.relationship("GroupBracket", lazy="noload")
 
     def games(self):
         d = {}

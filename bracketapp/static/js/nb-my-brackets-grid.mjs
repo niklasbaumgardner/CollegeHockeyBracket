@@ -62,11 +62,13 @@ export class MyBracketsGrid extends StandingsGrid {
             >Create new bracket</sl-button
           >`;
         }
-        return `<a class="d-block w-100 h-100" href=${param.data.url}
+        return `<a class="d-block w-100 h-100 text-decoration-none" href=${
+          param.data.url
+        }
           ><div class="standings-row">
             ${this.getImageElement(param.data.winner_team)}
             <div class="name-cell">
-              <span class="standings-bracket-name"
+              <span class="standings-bracket-name text-decoration-underline"
                 ><span>${param.value}</span></span
               ><span class="standings-username"
                 >${param.data.user.username}</span

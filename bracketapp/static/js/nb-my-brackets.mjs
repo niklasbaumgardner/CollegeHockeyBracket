@@ -7,7 +7,7 @@ export class MyBrackets extends Standings {
     return html`<div>
       <h2 class="mb-0">My Brackets ${this.year}</h2>
       <small class="font-size-x-small color-neutral-700"
-        >You created 4/5 brackets</small
+        >You created ${this.brackets.length}/5 brackets</small
       >
     </div>`;
   }

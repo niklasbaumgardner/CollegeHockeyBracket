@@ -14,6 +14,7 @@ from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
 from flask_login import current_user
 from sqlalchemy.sql import func, asc
+from sqlalchemy.orm import joinedload
 
 
 ##
@@ -123,14 +124,15 @@ def get_all_brackets_for_user(sort=False):
     if not current_user.is_authenticated:
         return []
 
+    bracket_query = Bracket.query.filter_by(user_id=current_user.id, year=YEAR).options(
+        joinedload(Bracket.group_brackets)
+    )
     if sort:
-        return (
-            Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
-            .order_by(asc(func.lower(Bracket.name)))
-            .all()
-        )
+        bracket_query = bracket_query.order_by(asc(func.lower(Bracket.name)))
 
-    return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).all()
+    brackets = bracket_query.all()
+
+    return brackets
 
 
 def get_game(bracket_id, game_num):
