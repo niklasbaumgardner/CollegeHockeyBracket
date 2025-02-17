@@ -368,4 +368,27 @@ nb-group-standings-grid {
 .group-card {
   --padding: var(--sl-spacing-x-small);
   width: fit-content;
+  max-width: 120px;
+
+  .group-name {
+    font-size: var(--sl-font-size-x-small);
+    line-height: var(--sl-line-height-dense);
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .trophy {
+    font-size: var(--sl-font-size-large);
+    min-width: var(--sl-font-size-medium);
+  }
+
+  .rank,
+  .trophy {
+    color: var(--ag-data-color);
+  }
 }

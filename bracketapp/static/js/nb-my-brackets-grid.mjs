@@ -23,9 +23,19 @@ class MyBracketElement extends NikElement {
     />`;
   }
 
-  groupTemplate(group) {
+  groupTemplate(groupBracket) {
     return html`<sl-card class="group-card"
-      ><a href="${group.url}">${group.name}</a></sl-card
+      ><a
+        class="d-flex align-items-center gap-2 text-decoration-none"
+        href="${groupBracket.group.url}"
+      >
+        <sl-icon class="trophy" name="trophy"></sl-icon>
+        <div class="d-flex flex-column group-name">
+          <span class="text-decoration-underline"
+            >${groupBracket.group.name}</span
+          ><span class="rank">Rank: ${groupBracket.group_rank}</span>
+        </div>
+      </a></sl-card
     >`;
   }
 
@@ -38,7 +48,7 @@ class MyBracketElement extends NikElement {
       class="my-brackets-groups my-1"
       summary="Groups (${this.bracket.group_brackets.length})"
       ><div class="d-flex flex-wrap gap-2">
-        ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb.group))}
+        ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
       </div></sl-details
     >`;
   }
