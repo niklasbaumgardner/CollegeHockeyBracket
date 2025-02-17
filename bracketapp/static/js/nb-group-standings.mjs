@@ -44,6 +44,8 @@ export class GroupStandings extends Standings {
           >
         </p>`;
       return "Create a bracket before time runs out!";
+    } else if (this.brackets.length) {
+      return "View the current standings below.";
     }
     return "No brackets were created for this group.";
   }
@@ -66,9 +68,20 @@ export class GroupStandings extends Standings {
       ${joinTemplate}`;
   }
 
+  groupInfoTemplate() {
+    return html`<div class="d-flex">
+      <p>
+        Members <b>${this.group.members.length}</b> Brackets
+        <b>${this.brackets.length}</b> Group type
+        ${this.group.is_private ? "private" : "public"} Password
+        <b>${this.group.password}</b>
+      </p>
+    </div>`;
+  }
+
   messageTemplate() {
     if (this.isMember) {
-      return this.memeberTemplate();
+      return html`${this.groupInfoTemplate()}${this.memeberTemplate()}`;
     } else {
       return this.nonMemberTemplate();
     }

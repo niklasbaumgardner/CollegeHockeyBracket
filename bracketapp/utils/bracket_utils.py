@@ -131,8 +131,10 @@ def get_winners(standings, correct):
 
     winners = [b for b in standings if b.rank == 1]
 
-    if len(winners) == 1:
+    if w_len := len(winners) == 1:
         return winners
+    elif w_len == 0:
+        return []
 
     winners.sort(key=lambda x: x.goal_difference)
 

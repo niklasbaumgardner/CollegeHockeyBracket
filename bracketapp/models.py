@@ -4,6 +4,9 @@ from itsdangerous import URLSafeTimedSerializer
 import os
 from sqlalchemy_serializer import SerializerMixin
 from flask import url_for
+from sqlalchemy.orm import object_session
+from sqlalchemy import select, func
+from sqlalchemy.sql import text
 
 
 class User(db.Model, UserMixin, SerializerMixin):
@@ -235,6 +238,7 @@ class Group(db.Model, SerializerMixin):
     serialize_rules = (
         "url",
         "join_url",
+        "members",
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -244,6 +248,14 @@ class Group(db.Model, SerializerMixin):
     locked = db.Column(db.Boolean, nullable=False)
     password = db.Column(db.String, nullable=True)
     created_by = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+
+    members = db.relationship("GroupMember", lazy="joined")
+
+    # @property
+    # def member_count(self):
+    #     return object_session(self).scalar(
+    #         select(func.count(1)).where(GroupMember.group_id == self.id)
+    #     )
 
     def url(self):
         return url_for("groups_bp.view_group", id=self.id)
@@ -260,7 +272,7 @@ class GroupMember(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     user = db.relationship("User", lazy="joined")
-    group = db.relationship("Group", lazy="joined")
+    # group = db.relationship("Group", lazy="joined")
 
 
 class GroupBracket(db.Model, SerializerMixin):
@@ -273,3 +285,21 @@ class GroupBracket(db.Model, SerializerMixin):
     group_rank = db.Column(db.Integer, nullable=True)
 
     group = db.relationship("Group", lazy="joined")
+
+
+# from sqlalchemy import inspect
+
+# inspect(Group).add_property(
+#     column_property(
+#         select(func.count(GroupMember.id))
+#         .where(GroupMember.group_id == Group.id)
+#         .scalar_subquery()
+#     )
+# )
+
+# member_count = column_property(
+#     select(func.count(text("GroupMember.id")))
+#     .where("groupmember.user_id" == id)
+#     .correlate_except(text("GroupMember"))
+#     .scalar_subquery()
+# )

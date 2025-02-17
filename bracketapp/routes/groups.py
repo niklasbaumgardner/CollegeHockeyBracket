@@ -96,10 +96,9 @@ def create_group_post():
     return redirect(url_for("groups_bp.view_group", id=group.id))
 
 
-@groups_bp.post("/join_group/<int:id>")
-@groups_bp.get("/join_group/<int:id>")
+@groups_bp.route("/join_group/<int:id>", methods=["GET", "POST"])
 @login_required
-def join_group(id):
+def join_group(id, password):
     password_get = request.args.get("password")
     password_post = request.form.get("password")
     print(f"p_get: {password_get}. p_post: {password_post}")
