@@ -44,12 +44,12 @@ export class Standings extends NikElement {
   messageTemplate() {
     if (this.numWinners > 0) {
       return this.getWinningMessage();
-    } else if (CAN_EDIT_BRACKET) {
+    } else if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
       return "Create a bracket before time runs out!";
-    } else if (this.brackets.length) {
+    } else if (this.brackets.length && this.year === CURRENT_YEAR) {
       return "View the current standings below.";
     }
-    return "No brackets were created this year. View the final bracket below.";
+    return "View the final standings below.";
   }
 
   bracketsTemplate() {
@@ -64,8 +64,7 @@ export class Standings extends NikElement {
       <sl-card class="mb-5">
         ${this.titleTemplate()}
         <div class="d-flex flex-column gap-4">
-          <div>${this.messageTemplate()}</div>
-          ${this.bracketsTemplate()}
+          ${this.messageTemplate()}${this.bracketsTemplate()}
         </div>
       </sl-card>
     </div>`;

@@ -4,9 +4,6 @@ from itsdangerous import URLSafeTimedSerializer
 import os
 from sqlalchemy_serializer import SerializerMixin
 from flask import url_for
-from sqlalchemy.orm import object_session
-from sqlalchemy import select, func
-from sqlalchemy.sql import text
 
 
 class User(db.Model, UserMixin, SerializerMixin):
@@ -70,6 +67,15 @@ class Bracket(db.Model, SerializerMixin):
     games_list = db.relationship("Game", lazy="joined")
     user = db.relationship("User", lazy="joined")
     group_brackets = db.relationship("GroupBracket", lazy="noload")
+    __group_bracket__ = None
+
+    @property
+    def group_bracket(self):
+        return self.__group_bracket__
+
+    @group_bracket.setter
+    def group_bracket(self, gb):
+        self.__group_bracket__ = gb
 
     def games(self):
         d = {}
@@ -86,7 +92,7 @@ class Bracket(db.Model, SerializerMixin):
         if self.id:
             return url_for("deletebracket_bp.delete_bracket", id=self.id)
 
-    def to_dict(self, safe_only=True, include_games=True):
+    def to_dict(self, safe_only=True, include_games=True, include_group_bracket=False):
         if safe_only:
             return super().to_dict(
                 only=(
@@ -107,6 +113,8 @@ class Bracket(db.Model, SerializerMixin):
             )
             if include_games:
                 rules += ("games",)
+            if include_group_bracket:
+                rules += ("group_bracket",)
 
             return super().to_dict(rules=rules)
 
@@ -238,6 +246,7 @@ class Group(db.Model, SerializerMixin):
     serialize_rules = (
         "url",
         "join_url",
+        "share_url",
         "members",
     )
 
@@ -251,17 +260,16 @@ class Group(db.Model, SerializerMixin):
 
     members = db.relationship("GroupMember", lazy="joined")
 
-    # @property
-    # def member_count(self):
-    #     return object_session(self).scalar(
-    #         select(func.count(1)).where(GroupMember.group_id == self.id)
-    #     )
-
     def url(self):
         return url_for("groups_bp.view_group", id=self.id)
 
     def join_url(self):
         return url_for("groups_bp.join_group", id=self.id, password=self.password)
+
+    def share_url(self):
+        return url_for(
+            "groups_bp.join_group", id=self.id, password=self.password, _external=True
+        )
 
 
 class GroupMember(db.Model, SerializerMixin):
@@ -285,21 +293,3 @@ class GroupBracket(db.Model, SerializerMixin):
     group_rank = db.Column(db.Integer, nullable=True)
 
     group = db.relationship("Group", lazy="joined")
-
-
-# from sqlalchemy import inspect
-
-# inspect(Group).add_property(
-#     column_property(
-#         select(func.count(GroupMember.id))
-#         .where(GroupMember.group_id == Group.id)
-#         .scalar_subquery()
-#     )
-# )
-
-# member_count = column_property(
-#     select(func.count(text("GroupMember.id")))
-#     .where("groupmember.user_id" == id)
-#     .correlate_except(text("GroupMember"))
-#     .scalar_subquery()
-# )

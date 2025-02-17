@@ -3,8 +3,32 @@ import { NikElement } from "./customElement.mjs";
 
 class CreateGroup extends NikElement {
   static properties = {
-    private: { type: Boolean, default: false },
+    private: { type: Boolean },
   };
+
+  static queries = {
+    dialog: "sl-dialog",
+  };
+
+  constructor() {
+    super();
+
+    this.private = true;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    document.addEventListener("CreateNewGroup", this);
+  }
+
+  handleEvent(event) {
+    switch (event.type) {
+      case "CreateNewGroup": {
+        this.dialog.show();
+      }
+    }
+  }
 
   handlePrivateChange() {
     this.private = !this.private;
@@ -27,12 +51,9 @@ class CreateGroup extends NikElement {
   }
 
   render() {
-    return html`<sl-card>
-      <div class="row" slot="header">
-        <h4>Create a group</h4>
-      </div>
+    return html`<sl-dialog label="Create a group">
       <div class="mb-2">
-        <form action="${CREATE_GROUP_URL}" method="POST">
+        <form id="new-group-form" action="${CREATE_GROUP_URL}" method="POST">
           <div class="nb-row">
             <sl-input
               placeholder="Group name"
@@ -46,20 +67,23 @@ class CreateGroup extends NikElement {
               id="is_private"
               name="is_private"
               @sl-input=${this.handlePrivateChange}
+              checked
               >Make group private</sl-checkbox
             >
             ${this.passwordTemplate()}
-            <sl-button
-              id="submitButton"
-              class="w-100"
-              variant="primary"
-              type="submit"
-              >Create group</sl-button
-            >
           </div>
         </form>
       </div>
-    </sl-card>`;
+      <sl-button
+        id="submitButton"
+        class="w-100"
+        variant="primary"
+        type="submit"
+        form="new-group-form"
+        slot="footer"
+        >Create group</sl-button
+      >
+    </sl-dialog>`;
   }
 }
 

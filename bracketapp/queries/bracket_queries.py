@@ -12,6 +12,7 @@ from bracketapp.models import (
 from bracketapp import db
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
+from bracketapp.queries import group_queries
 from flask_login import current_user
 from sqlalchemy.sql import func, asc
 from sqlalchemy.orm import joinedload
@@ -80,6 +81,11 @@ def update_bracket_rank(bracket, rank):
     db.session.commit()
 
 
+def update_group_bracket_rank(group_bracket, rank):
+    group_bracket.group_rank = rank
+    db.session.commit()
+
+
 def update_game(bracket_id, game_num, winner):
     game = get_game(bracket_id=bracket_id, game_num=game_num)
     game.winner = winner
@@ -143,6 +149,14 @@ def get_game(bracket_id, game_num):
 
 def get_all_brackets():
     return Bracket.query.filter_by(year=YEAR).all()
+
+
+def get_all_brackets_joined():
+    return (
+        Bracket.query.filter_by(year=YEAR)
+        .options(joinedload(Bracket.group_brackets))
+        .all()
+    )
 
 
 def get_all_brackets_for_year(year):
@@ -346,24 +360,54 @@ def update_standings(brackets=None, correct=None):
     brackets.sort(key=lambda b: b.points, reverse=True)
 
     rank = 1
-    standings = []
     for i, bracket in enumerate(brackets):
         if i == 0:
             bracket.rank = rank
-            standings.append(bracket)
         elif bracket.points == brackets[i - 1].points:
             bracket.rank = rank
-            standings.append(bracket)
         else:
             rank = i + 1
             bracket.rank = rank
-            standings.append(bracket)
 
         update_bracket_rank(bracket=bracket, rank=rank)
 
 
+def update_all_groups(brackets, correct):
+    groups = group_queries.get_all_groups()
+    groups_dict = {g.id: [] for g in groups}
+    for b in brackets:
+        for gb in b.group_brackets:
+            groups_dict[gb.group_id].append((gb, b))
+
+    for _, group_brackets in groups_dict.items():
+
+        if correct and correct.winner:
+            for _, bracket in group_brackets:
+                bracket.goal_difference = abs(
+                    bracket.w_goals
+                    + bracket.l_goals
+                    - (correct.w_goals + correct.l_goals)
+                )
+
+            group_brackets.sort(key=lambda tup: tup[1].goal_difference)
+
+        group_brackets.sort(key=lambda tup: tup[1].points, reverse=True)
+
+        rank = 1
+        for i, [group_bracket, bracket] in enumerate(group_brackets):
+            if i == 0:
+                group_bracket.group_rank = rank
+            elif bracket.points == group_brackets[i - 1][1].points:
+                group_bracket.group_rank = rank
+            else:
+                rank = i + 1
+                group_bracket.group_rank = rank
+
+            update_group_bracket_rank(group_bracket=group_bracket, rank=rank)
+
+
 def update_points():
-    brackets = get_all_brackets()
+    brackets = get_all_brackets_joined()
     correct = get_correct_bracket()
 
     for user_bracket in brackets:
@@ -383,6 +427,14 @@ def update_points():
         db.session.commit()
 
     update_standings(brackets=brackets, correct=correct)
+
+    update_all_groups(brackets=brackets, correct=correct)
+
+
+def update_group_points():
+    brackets = get_all_brackets_joined()
+    correct = get_correct_bracket()
+    update_all_groups(brackets=brackets, correct=correct)
 
 
 ##

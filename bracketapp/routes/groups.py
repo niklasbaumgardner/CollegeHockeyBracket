@@ -50,7 +50,10 @@ def view_group(id):
         brackets, winners, correct = bracket_utils.get_group_standings(group_id=id)
 
     brackets_dict = [
-        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in brackets
+        b.to_dict(
+            safe_only=CAN_EDIT_BRACKET, include_games=False, include_group_bracket=True
+        )
+        for b in brackets
     ]
     winners_dict = [
         b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners
@@ -75,18 +78,13 @@ def view_group(id):
     )
 
 
-@groups_bp.get("/create_group")
-@login_required
-def create_group():
-    return render_template("create_group.html")
-
-
 @groups_bp.post("/create_group")
 @login_required
-def create_group_post():
+def create_group():
     group_name = request.form.get("name")
     is_private = request.form.get("is_private", type=bool, default=False)
     password = request.form.get("password")
+
     group = group_queries.create_group(
         name=group_name, is_private=is_private, password=password
     )

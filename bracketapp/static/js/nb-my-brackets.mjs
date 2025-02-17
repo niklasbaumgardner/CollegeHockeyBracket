@@ -6,19 +6,21 @@ export class MyBrackets extends Standings {
   titleTemplate() {
     return html`<div>
       <h2 class="mb-0">My Brackets ${this.year}</h2>
-      <small class="font-size-x-small color-neutral-700"
-        >You created ${this.brackets.length}/5 brackets</small
-      >
     </div>`;
   }
 
   messageTemplate() {
+    let message = html`<small class="font-size-x-small color-neutral-700"
+      >You created ${this.brackets.length}/5 brackets</small
+    >`;
     if (!CAN_EDIT_BRACKET) {
-      return null;
+      return message;
     }
 
     // TODO
-    return html`<a href=${NEW_BRACKET_LINK}>Create a bracket</a>`;
+    return html`${message}<sl-button variant="primary" href=${NEW_BRACKET_LINK}
+        >Create a bracket</sl-button
+      >`;
   }
 
   bracketsTemplate() {

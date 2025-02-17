@@ -37,7 +37,7 @@ def theme():
 
 @context_processor_bp.app_context_processor
 def current_year():
-    return dict(current_year=YEAR)
+    return dict(CURRENT_YEAR=YEAR)
 
 
 @context_processor_bp.app_context_processor

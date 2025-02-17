@@ -60,6 +60,10 @@ def get_group(group_id):
     return Group.query.filter_by(id=group_id).first()
 
 
+def get_all_groups():
+    return Group.query.filter_by(year=YEAR).all()
+
+
 def lock_group(group_id):
     group = get_group(group_id=group_id)
     group.locked = True

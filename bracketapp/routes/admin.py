@@ -35,6 +35,17 @@ def update_points():
     return redirect(url_for("index_bp.index"))
 
 
+@admin_bp.route("/update_group_points")
+@login_required
+def update_group_points():
+    if not is_admin():
+        return redirect(url_for("index_bp.index"))
+
+    bracket_queries.update_group_points()
+
+    return redirect(url_for("index_bp.index"))
+
+
 @admin_bp.route("/delete_brackets", methods=["GET"])
 @login_required
 def delete_brackets():

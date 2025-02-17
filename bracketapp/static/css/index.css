@@ -344,7 +344,8 @@ nb-group-standings > div > sl-card {
 }
 
 nb-standings-grid,
-nb-my-brackets-grid {
+nb-my-brackets-grid,
+nb-group-standings-grid {
   display: block;
 
   @media (min-width: 576px) {
@@ -354,4 +355,17 @@ nb-my-brackets-grid {
   @media (min-width: 992px) {
     width: 807px;
   }
+}
+
+.my-brackets-groups::part(header) {
+  padding: var(--sl-spacing-2x-small) var(--sl-spacing-x-small);
+}
+
+.my-brackets-groups::part(content) {
+  padding: var(--sl-spacing-x-small);
+}
+
+.group-card {
+  --padding: var(--sl-spacing-x-small);
+  width: fit-content;
 }

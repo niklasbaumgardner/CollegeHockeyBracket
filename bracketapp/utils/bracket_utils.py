@@ -122,16 +122,16 @@ def get_group_message(brackets, group_id, is_member, is_private):
     return message
 
 
-def get_winners(standings, correct):
+def get_group_winners(standings, correct):
     if not standings:
         return []
 
     if not correct or not correct.winner:
         return []
 
-    winners = [b for b in standings if b.rank == 1]
+    winners = [b for b in standings if b.group_bracket.group_rank == 1]
 
-    if w_len := len(winners) == 1:
+    if (w_len := len(winners)) == 1:
         return winners
     elif w_len == 0:
         return []
@@ -161,9 +161,31 @@ def get_group_standings(group_id):
         brackets.sort(key=lambda b: b.max_points, reverse=True)
         brackets.sort(key=lambda b: b.group_bracket.group_rank)
 
-    winners = get_winners(standings=brackets, correct=correct)
+    winners = get_group_winners(standings=brackets, correct=correct)
 
     return brackets, winners, correct
+
+
+def get_winners(standings, correct):
+    if not standings:
+        return []
+
+    if not correct or not correct.winner:
+        return []
+
+    winners = [b for b in standings if b.rank == 1]
+
+    if w_len := len(winners) == 1:
+        return winners
+    elif w_len == 0:
+        return []
+
+    winners.sort(key=lambda x: x.goal_difference)
+
+    min_goal_diff = winners[0].goal_difference
+    winners = [w for w in winners if w.goal_difference <= min_goal_diff]
+
+    return winners
 
 
 def get_bracket_standings():
