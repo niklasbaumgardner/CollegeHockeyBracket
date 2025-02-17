@@ -5,117 +5,141 @@
     <button
       class="navbar-toggler border-0 p-1 shadow-none"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbar"
-      aria-controls="navbar"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {% if current_user.is_authenticated %}
-        <li class="nav-item">
-          <a
-            class="nav-link {% block mybrackets %}{% endblock mybrackets %}"
-            href="{{ url_for('mybrackets_bp.my_brackets') }}"
-            >My Brackets</a
-          >
-        </li>
-        {% endif %}
-        <li class="nav-item">
-          <a
-            class="nav-link {% block standings %}{% endblock standings %}"
-            href="{{ url_for('index_bp.index') }}"
-            >Standings</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link {% block archive %}{% endblock archive %}"
-            href="{{ url_for('archive_bp.archive') }}"
-            >Archive</a
-          >
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <sl-dropdown>
-          <sl-button id="theme-button" variant="text" slot="trigger" caret>
-            <sl-icon
-              id="light-icon"
-              name="sun-fill"
-              library="default"
-              hidden
-            ></sl-icon>
-            <sl-icon
-              id="dark-icon"
-              name="moon-fill"
-              library="default"
-              hidden
-            ></sl-icon>
-          </sl-button>
-          <sl-menu id="theme-selector">
-            <sl-menu-item id="light" type="checkbox" value="light"
-              >Light</sl-menu-item
-            >
-            <sl-menu-item id="dark" type="checkbox" value="dark"
-              >Dark</sl-menu-item
-            >
-          </sl-menu>
-        </sl-dropdown>
-        {% if current_user.is_authenticated %}
-        <sl-dropdown placement="bottom">
-          <sl-button
-            slot="trigger"
-            variant="text"
-            class="neutral font-size-medium"
-            caret
-          >
-            {{ current_user.username }}
-          </sl-button>
-          <sl-menu class="nb-dropdown">
-            {% if current_user.is_authenticated and current_user.role != None
-            and current_user.role > 1 %}
-            <sl-menu-item
-              ><a class="nb-menu-item" href="{{ url_for('admin_bp.admin') }}"
-                >Admin</a
-              ></sl-menu-item
-            >
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+          NB Bracket Challenge
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="d-flex flex-grow-1">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% block mybrackets %}{% endblock mybrackets %}"
+                href="{{ url_for('mybrackets_bp.my_brackets') }}"
+                >My Brackets</a
+              >
+            </li>
             {% endif %}
-            <sl-menu-item
-              ><a
-                class="nb-menu-item"
-                href="{{ url_for('preferences_bp.preferences') }}"
-                >Preferences</a
-              ></sl-menu-item
-            >
-            <sl-menu-item
-              ><a
-                class="nb-menu-item"
-                href="{{ url_for('profile_bp.profile') }}"
-                >Profile</a
-              ></sl-menu-item
-            >
-            <sl-menu-item
-              ><a class="nb-menu-item" href="{{ url_for('auth_bp.logout') }}"
-                >Logout</a
-              ></sl-menu-item
-            >
-          </sl-menu>
-        </sl-dropdown>
+            <li class="nav-item">
+              <a
+                class="nav-link {% block standings %}{% endblock standings %}"
+                href="{{ url_for('index_bp.index') }}"
+                >Standings</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% block archive %}{% endblock archive %}"
+                href="{{ url_for('archive_bp.archive') }}"
+                >Archive</a
+              >
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <sl-dropdown>
+              <sl-button id="theme-button" variant="text" slot="trigger" caret>
+                <sl-icon
+                  id="light-icon"
+                  name="sun-fill"
+                  library="default"
+                  hidden
+                ></sl-icon>
+                <sl-icon
+                  id="dark-icon"
+                  name="moon-fill"
+                  library="default"
+                  hidden
+                ></sl-icon>
+              </sl-button>
+              <sl-menu id="theme-selector">
+                <sl-menu-item id="light" type="checkbox" value="light"
+                  >Light</sl-menu-item
+                >
+                <sl-menu-item id="dark" type="checkbox" value="dark"
+                  >Dark</sl-menu-item
+                >
+              </sl-menu>
+            </sl-dropdown>
+            {% if current_user.is_authenticated %}
+            <sl-dropdown placement="bottom">
+              <sl-button
+                slot="trigger"
+                variant="text"
+                class="neutral font-size-medium"
+                caret
+              >
+                {{ current_user.username }}
+              </sl-button>
+              <sl-menu class="nb-dropdown">
+                {% if current_user.is_authenticated and current_user.role !=
+                None and current_user.role > 1 %}
+                <sl-menu-item
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('admin_bp.admin') }}"
+                    >Admin</a
+                  ></sl-menu-item
+                >
+                {% endif %}
+                <sl-menu-item
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('preferences_bp.preferences') }}"
+                    >Preferences</a
+                  ></sl-menu-item
+                >
+                <sl-menu-item
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('profile_bp.profile') }}"
+                    >Profile</a
+                  ></sl-menu-item
+                >
+                <sl-menu-item
+                  ><a
+                    class="nb-menu-item"
+                    href="{{ url_for('auth_bp.logout') }}"
+                    >Logout</a
+                  ></sl-menu-item
+                >
+              </sl-menu>
+            </sl-dropdown>
 
-        {% else %}
-        <li class="nav-item">
-          <a
-            class="nav-link {% block login %}{% endblock login %}"
-            href="{{ url_for('auth_bp.login') }}"
-            >Login</a
-          >
-        </li>
-        {% endif %}
-      </ul>
+            {% else %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% block login %}{% endblock login %}"
+                href="{{ url_for('auth_bp.login') }}"
+                >Login</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
