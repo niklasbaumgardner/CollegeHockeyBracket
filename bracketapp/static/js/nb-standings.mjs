@@ -61,7 +61,7 @@ export class Standings extends NikElement {
 
   render() {
     return html`<div class="d-flex justify-content-center">
-      <sl-card class="mb-5">
+      <sl-card>
         ${this.titleTemplate()}
         <div class="d-flex flex-column gap-4">
           ${this.messageTemplate()}${this.bracketsTemplate()}
