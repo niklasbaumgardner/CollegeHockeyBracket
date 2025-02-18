@@ -49,25 +49,21 @@ export class GroupStandings extends Standings {
 
   nonMemberTemplate() {
     if (this.group.is_private) {
-      return html`<p>This is a private group. Click below to join.</p>
-        <p>
-          <sl-button @click=${this.handleJoinButtonClick}
-            ><sl-icon slot="prefix" name="lock"></sl-icon> Join group</sl-button
-          >
-        </p>`;
+      return html`<sl-button
+        variant="primary"
+        @click=${this.handleJoinButtonClick}
+        ><sl-icon slot="prefix" name="lock"></sl-icon> Join group</sl-button
+      >`;
     } else {
-      return html`<p>
-          You must be a member to create a bracket. Click below to join.
-        </p>
-        <p>
-          <sl-button href="${JOIN_GROUP_URL}">Join group</sl-button>
-        </p>`;
+      return html`<sl-button variant="primary" href="${JOIN_GROUP_URL}"
+        >Join group</sl-button
+      >`;
     }
   }
 
   groupInfoTemplate() {
     let passwordTemplate = null;
-    if (this.group.is_private) {
+    if (this.group.is_private && this.isMember) {
       passwordTemplate = html`<small
         ><b>Password</b> ${this.group.password}</small
       >`;
@@ -84,16 +80,17 @@ export class GroupStandings extends Standings {
   }
 
   messageTemplate() {
+    let template = this.groupInfoTemplate();
     if (this.isMember) {
-      return html`${this.groupInfoTemplate()}${this.memeberTemplate()}`;
+      return html`${template}${this.memeberTemplate()}`;
     } else {
-      return this.nonMemberTemplate();
+      return html`${template}${this.nonMemberTemplate()}`;
     }
   }
 
   joinPrivateGroupTemplate() {
     return html`<sl-dialog id="join-dialog" label="Join ${this.group.name}">
-      <form id="join-private-group" action="${JOIN_GROUP_URL}" method="POST">
+      <form id="join-private-group" action="${JOIN_GROUP_URL}" method="GET">
         <p class="mb-3">
           This group is private. Please enter the password to join.
         </p>
@@ -126,17 +123,18 @@ export class GroupStandings extends Standings {
   }
 
   titleTemplate() {
+    const inviteTemplate = html`<div>
+      Invite friends
+      <sl-copy-button
+        value="${this.group.share_url}"
+        copy-label="Copy link to join"
+      >
+        <sl-icon slot="copy-icon" name="share"></sl-icon>
+      </sl-copy-button>
+    </div>`;
     return html`<div class="d-flex justify-content-between">
       <h2>${this.group.name}</h2>
-      <div>
-        Invite friends
-        <sl-copy-button
-          value="${this.group.share_url}"
-          copy-label="Copy link to join"
-        >
-          <sl-icon slot="copy-icon" name="share"></sl-icon>
-        </sl-copy-button>
-      </div>
+      ${this.isMember ? inviteTemplate : null}
     </div>`;
   }
 

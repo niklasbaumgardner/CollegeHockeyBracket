@@ -43,11 +43,7 @@ def view_group(id):
     member = group_queries.get_group_member(group_id=id)
     is_member = member is not None
 
-    brackets = []
-    winners = []
-
-    if member or not group.is_private:
-        brackets, winners, correct = bracket_utils.get_group_standings(group_id=id)
+    brackets, winners, correct = bracket_utils.get_group_standings(group_id=id)
 
     brackets_dict = [
         b.to_dict(
@@ -96,11 +92,7 @@ def create_group():
 
 @groups_bp.route("/join_group/<int:id>", methods=["GET", "POST"])
 @login_required
-def join_group(id, password):
-    password_get = request.args.get("password")
-    password_post = request.form.get("password")
-    print(f"p_get: {password_get}. p_post: {password_post}")
-
+def join_group(id):
     group = group_queries.get_group(group_id=id)
     if not group:
         flash("Sorry. This group doesn't exist", "danger")
