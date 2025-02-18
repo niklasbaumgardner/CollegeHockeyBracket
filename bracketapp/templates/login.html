@@ -25,6 +25,13 @@ login %}active{% endblock login %} {% block content %}
                   label="Email"
                   placeholder="Your email"
                   maxlength="60"
+                  {%
+                  if
+                  email
+                  %}value="{{ email }}"
+                  {%
+                  endif
+                  %}
                   required
                 />
               </div>
@@ -39,7 +46,6 @@ login %}active{% endblock login %} {% block content %}
                     name="password"
                     label="Password"
                     placeholder="Your password"
-                    maxlength="60"
                     required
                   />
                 </div>

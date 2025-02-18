@@ -26,7 +26,7 @@ def login():
     if email and password:
         user = user_queries.get_user_by_email(email=email)
 
-        if user and bcrypt.check_password_hash(user.password, password[:60]):
+        if user and bcrypt.check_password_hash(user.password, password):
             remember = True if remember == "True" else False
             login_user(user, remember=remember)
             next_url = request.args.get("next")
@@ -60,6 +60,10 @@ def signup():
                 "Username already exists. Please choose a different username",
                 "danger",
             )
+            return redirect(url_for("auth_bp.signup"))
+
+        if len(password1) < 6:
+            flash("Password must be longer than 6 characters. Try again", "warning")
             return redirect(url_for("auth_bp.signup"))
 
         if password1 != password2:

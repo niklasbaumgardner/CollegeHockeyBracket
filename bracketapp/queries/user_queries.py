@@ -14,7 +14,7 @@ def load_user(user_id):
 
 
 def create_user(email, username, password):
-    hash_ = hash_password(password=password[:60])
+    hash_ = hash_password(password=password)
     new_user = User(email=email[:60], username=username[:60], password=hash_)
     db.session.add(new_user)
     db.session.commit()
@@ -55,7 +55,7 @@ def update_user_password(id, password):
         return
 
     user = get_user_by_id(id=id)
-    hash_ = hash_password(password=password[:60])
+    hash_ = hash_password(password=password)
     user.password = hash_
 
     db.session.commit()
