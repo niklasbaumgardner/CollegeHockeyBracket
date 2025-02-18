@@ -345,7 +345,8 @@ nb-group-standings > div > sl-card {
 
 nb-standings-grid,
 nb-my-brackets-grid,
-nb-group-standings-grid {
+nb-group-standings-grid,
+nb-my-brackets > div > sl-card > sl-tab-group {
   display: block;
 
   @media (min-width: 576px) {

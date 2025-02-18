@@ -129,7 +129,7 @@ export class GroupStandings extends Standings {
     return html`<div class="d-flex justify-content-between">
       <h2>${this.group.name}</h2>
       <div>
-        Invite others
+        Invite friends
         <sl-copy-button
           value="${this.group.share_url}"
           copy-label="Copy link to join"

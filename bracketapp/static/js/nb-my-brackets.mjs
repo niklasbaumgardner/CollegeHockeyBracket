@@ -29,6 +29,23 @@ export class MyBrackets extends Standings {
       theme=${this.theme}
     ></nb-my-brackets-grid>`;
   }
+
+  render() {
+    return html`<div class="d-flex justify-content-center">
+      <sl-card>
+        ${this.titleTemplate()}${this.messageTemplate()}
+        <sl-tab-group>
+          <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>
+          <sl-tab slot="nav" panel="groups">Groups</sl-tab>
+
+          <sl-tab-panel name="my-brackets"
+            >${this.bracketsTemplate()}</sl-tab-panel
+          >
+          <sl-tab-panel name="groups">Groups coming soon...</sl-tab-panel>
+        </sl-tab-group>
+      </sl-card>
+    </div>`;
+  }
 }
 
 customElements.define("nb-my-brackets", MyBrackets);
