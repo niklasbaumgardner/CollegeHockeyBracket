@@ -21,7 +21,7 @@ def is_admin():
 def view_bracket(id):
     bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=id)
     if not bracket:
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     my_bracket = current_user.is_authenticated and bracket.user_id == current_user.id
 
@@ -30,7 +30,7 @@ def view_bracket(id):
             # if not app.debug:
             return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
         else:
-            return redirect(url_for("index_bp.index"))
+            return redirect(url_for("leaderboard_bp.index"))
 
     default = bracket_queries.get_default_bracket_for_year(year=bracket.year)
     correct = bracket_queries.get_correct_bracket_for_year(year=bracket.year)

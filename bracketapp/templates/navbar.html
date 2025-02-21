@@ -21,7 +21,11 @@
       aria-labelledby="offcanvasNavbarLabel"
     >
       <div class="offcanvas-header">
-        <a class="offcanvas-title navbar-brand" id="offcanvasNavbarLabel">
+        <a
+          class="offcanvas-title navbar-brand"
+          id="offcanvasNavbarLabel"
+          href="/"
+        >
           NB Bracket Challenge
         </a>
         <button
@@ -46,7 +50,7 @@
             <li class="nav-item">
               <a
                 class="nav-link {% block standings %}{% endblock standings %}"
-                href="{{ url_for('index_bp.index') }}"
+                href="{{ url_for('leaderboard_bp.leaderboard') }}"
                 >Leaderboard</a
               >
             </li>

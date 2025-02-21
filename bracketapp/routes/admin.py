@@ -19,7 +19,7 @@ def is_admin():
 @login_required
 def admin():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     return render_template("admin.html")
 
@@ -28,29 +28,29 @@ def admin():
 @login_required
 def update_points():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     bracket_queries.update_points()
 
-    return redirect(url_for("index_bp.index"))
+    return redirect(url_for("leaderboard_bp.index"))
 
 
 @admin_bp.route("/update_group_points")
 @login_required
 def update_group_points():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     bracket_queries.update_group_points()
 
-    return redirect(url_for("index_bp.index"))
+    return redirect(url_for("leaderboard_bp.index"))
 
 
 @admin_bp.route("/delete_brackets", methods=["GET"])
 @login_required
 def delete_brackets():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     brackets = bracket_queries.get_all_brackets()
     db_users = user_queries.get_all_users()
@@ -65,7 +65,7 @@ def delete_brackets():
 @login_required
 def delete_bracket(id):
     if not id or not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     if id == "all":
         # delete all brackets
@@ -73,14 +73,14 @@ def delete_bracket(id):
     else:
         bracket_queries.delete_bracket(id)
 
-    return redirect(url_for("index_bp.index"))
+    return redirect(url_for("leaderboard_bp.index"))
 
 
 @admin_bp.route("/update_correct", methods=["GET", "POST"])
 @login_required
 def update_correct():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     if request.method == "POST":
         c_bracket = bracket_queries.get_correct_bracket()
@@ -145,7 +145,7 @@ def update_correct():
 @login_required
 def update_default():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     if request.method == "POST":
         d_bracket = bracket_queries.get_default_bracket()
@@ -196,29 +196,29 @@ def update_default():
 @login_required
 def delete_default():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     bracket_queries.delete_default_bracket()
 
-    return redirect(url_for("index_bp.index"))
+    return redirect(url_for("leaderboard_bp.index"))
 
 
 @admin_bp.route("/delete_correct", methods=["GET"])
 @login_required
 def delete_correct():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     bracket_queries.delete_correct_bracket()
 
-    return redirect(url_for("index_bp.index"))
+    return redirect(url_for("leaderboard_bp.index"))
 
 
 @admin_bp.route("/debugging")
 @login_required
 def debugging():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
     string = ""
     users = user_queries.get_all_users()
 
@@ -239,7 +239,7 @@ def debugging():
 @login_required
 def create_team():
     if not is_admin():
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     team = request.args.get("team")
 

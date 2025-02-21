@@ -38,7 +38,7 @@ def view_group(id):
 
     if not group:
         flash("Sorry. This group doesn't exist")
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     member = group_queries.get_group_member(group_id=id)
     is_member = member is not None
@@ -68,7 +68,6 @@ def view_group(id):
         group=group.to_dict(),
         brackets=brackets_dict,
         winners=winners_dict,
-        my_bracket_count=bracket_queries.my_bracket_count(),
     )
 
 
@@ -94,7 +93,7 @@ def join_group(id):
     group = group_queries.get_group(group_id=id)
     if not group:
         flash("Sorry. This group doesn't exist", "danger")
-        return redirect(url_for("index_bp.index"))
+        return redirect(url_for("leaderboard_bp.index"))
 
     member = group_queries.get_group_member(group_id=id)
     if member:

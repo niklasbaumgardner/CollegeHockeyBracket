@@ -8,7 +8,7 @@ block mybracket %}active{% endblock mybracket %} {% block content %}
   {% endif %}
 
   const CANCEL_BRACKET_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
-  const STANDINGS_URL = "{{ url_for('index_bp.index') }}";
+  const STANDINGS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
   const ARCHIVE_URL = "{{ url_for('archive_bp.archive') }}";
 </script>
 
