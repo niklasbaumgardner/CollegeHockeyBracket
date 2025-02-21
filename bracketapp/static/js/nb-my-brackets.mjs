@@ -22,16 +22,19 @@ export class MyBrackets extends Standings {
     >`;
   }
 
-  bracketsTemplate() {
-    let buttonTmeplate =
-      this.brackets.length < 5
-        ? html`<sl-button variant="primary" href=${NEW_BRACKET_LINK} outline
-            >Create Bracket</sl-button
-          >`
-        : null;
+  newBracketButtonTemplate() {
+    if (this.brackets.length < 5 && CAN_EDIT_BRACKET) {
+      return html`<sl-button variant="primary" href=${NEW_BRACKET_LINK} outline
+        >Create Bracket</sl-button
+      >`;
+    }
 
+    return null;
+  }
+
+  bracketsTemplate() {
     return html`<div class="d-flex flex-column gap-3">
-      ${buttonTmeplate}
+      ${this.newBracketButtonTemplate()}
       <nb-my-brackets-grid
         .brackets=${this.brackets}
         .groups=${this.groups}
@@ -40,15 +43,32 @@ export class MyBrackets extends Standings {
     </div>`;
   }
 
-  groupsTemplate() {
-    let groupCards = this.groups.map(
-      (g) => html`<nb-group-card .group=${g}></nb-group-card>`
-    );
-
-    return html`<div class="d-flex flex-column gap-3">
-      <sl-button variant="primary" @click=${this.handleCreateGroupClick} outline
+  newGroupButtonTemplate() {
+    if (CAN_EDIT_BRACKET) {
+      return html`<sl-button
+        variant="primary"
+        @click=${this.handleCreateGroupClick}
+        outline
         >Create Group</sl-button
-      >${groupCards}
+      >`;
+    }
+
+    return null;
+  }
+
+  groupCardsTemplate() {
+    if (this.groups.length) {
+      return this.groups.map(
+        (g) => html`<nb-group-card .group=${g}></nb-group-card>`
+      );
+    }
+
+    return "Coming soon...";
+  }
+
+  groupsTemplate() {
+    return html`<div class="d-flex flex-column gap-3">
+      ${this.newGroupButtonTemplate()}${this.groupCardsTemplate()}
     </div>`;
   }
 

@@ -49,6 +49,7 @@ class Bracket(db.Model, SerializerMixin):
     serialize_rules = (
         "-games_list",
         "group_bracket",
+        "url",
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -115,7 +116,6 @@ class Bracket(db.Model, SerializerMixin):
 
         else:
             rules = (
-                "url",
                 "delete_url",
                 "bracket_join_group_url",
             )
