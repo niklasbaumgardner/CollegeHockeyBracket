@@ -96,7 +96,10 @@ def update_game(bracket_id, game_num, winner):
 
 
 def my_bracket_count():
-    return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).count()
+    if current_user.is_authenticated:
+        return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).count()
+
+    return 0
 
 
 def get_bracket_for_bracket_id(bracket_id):
@@ -384,7 +387,6 @@ def update_all_groups(brackets, correct):
             groups_dict[gb.group_id].append((gb, b))
 
     for _, group_brackets in groups_dict.items():
-
         if correct and correct.winner:
             for _, bracket in group_brackets:
                 bracket.goal_difference = abs(

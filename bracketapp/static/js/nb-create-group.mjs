@@ -51,7 +51,7 @@ class CreateGroup extends NikElement {
   }
 
   render() {
-    return html`<sl-dialog label="Create a group">
+    return html`<sl-dialog label="Create A Group">
       <div class="mb-2">
         <form id="new-group-form" action="${CREATE_GROUP_URL}" method="POST">
           <div class="nb-row">
@@ -68,7 +68,7 @@ class CreateGroup extends NikElement {
               name="is_private"
               @sl-input=${this.handlePrivateChange}
               checked
-              >Make group private</sl-checkbox
+              >Require Password To Join</sl-checkbox
             >
             ${this.passwordTemplate()}
           </div>
@@ -81,7 +81,7 @@ class CreateGroup extends NikElement {
         type="submit"
         form="new-group-form"
         slot="footer"
-        >Create group</sl-button
+        >Create</sl-button
       >
     </sl-dialog>`;
   }

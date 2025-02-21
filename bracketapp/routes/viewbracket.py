@@ -27,8 +27,8 @@ def view_bracket(id):
 
     if CAN_EDIT_BRACKET and bracket.year == YEAR:
         if my_bracket:
-            if not app.debug:
-                return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
+            # if not app.debug:
+            return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
         else:
             return redirect(url_for("index_bp.index"))
 

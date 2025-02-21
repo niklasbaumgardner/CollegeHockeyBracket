@@ -33,12 +33,13 @@ export class GroupStandings extends Standings {
   }
 
   memeberTemplate() {
-    if (CAN_EDIT_BRACKET) {
-      return html`<p>
-        <sl-button variant="primary" outline href=${CREATE_BRACKET_URL}
-          >Create a bracket before time runs out!</sl-button
-        >
-      </p>`;
+    if (CAN_EDIT_BRACKET && MY_BRACKET_COUNT < 5) {
+      return html`<sl-button
+        variant="primary"
+        outline
+        href=${CREATE_BRACKET_URL}
+        >Add a bracket</sl-button
+      >`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
     } else if (this.brackets.length) {

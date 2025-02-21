@@ -1,22 +1,23 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
 
-class DeleteBracket extends NikElement {
+export class JoinGroupModal extends NikElement {
   static properties = {
     bracket: { type: Object },
+    groups: { type: Object },
   };
 
   static queries = {
     dialogEl: "sl-dialog",
-    deleteButton: "#delete-button",
   };
 
   show() {
-    this.updateComplete.then(() => {
-      this.dialogEl.updateComplete.then(() => {
-        this.dialogEl.show();
-      });
-    });
+    this.dialogEl.show();
+    // this.updateComplete.then(() => {
+    //   this.dialogEl.updateComplete.then(() => {
+    //     this.dialogEl.show();
+    //   });
+    // });
   }
 
   hide() {
@@ -24,12 +25,8 @@ class DeleteBracket extends NikElement {
   }
 
   render() {
-    return html`<sl-dialog label='Delete bracket named "${this.bracket.name}"?'>
-      <form
-        id="delete-bracket-form"
-        action="${this.bracket.delete_url}"
-        method="POST"
-      ></form>
+    return html`<sl-dialog label="Join Group">
+      <form id="join-group-form" action="" method="POST"></form>
       <div
         style="display:flex;flex-direction:column;gap:var(--sl-spacing-small);"
       >
@@ -58,6 +55,4 @@ class DeleteBracket extends NikElement {
   }
 }
 
-export default DeleteBracket;
-
-customElements.define("delete-bracket-modal", DeleteBracket);
+customElements.define("nb-join-group-modal", JoinGroupModal);

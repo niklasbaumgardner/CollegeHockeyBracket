@@ -6,6 +6,10 @@ import { GroupCard } from "./nb-group-card.mjs";
 export class MyBrackets extends Standings {
   static properties = { groups: { type: Object } };
 
+  handleCreateGroupClick() {
+    document.dispatchEvent(new CustomEvent("CreateNewGroup"));
+  }
+
   titleTemplate() {
     return html`<div>
       <h2 class="mb-0">My Brackets ${this.year}</h2>
@@ -13,24 +17,26 @@ export class MyBrackets extends Standings {
   }
 
   messageTemplate() {
-    let message = html`<small class="font-size-x-small color-neutral-700"
+    return html`<small class="font-size-small color-neutral-700"
       >You created ${this.brackets.length}/5 brackets</small
     >`;
-    if (!CAN_EDIT_BRACKET) {
-      return message;
-    }
-
-    // TODO
-    return html`${message}<sl-button variant="primary" href=${NEW_BRACKET_LINK}
-        >Create a bracket</sl-button
-      >`;
   }
 
   bracketsTemplate() {
-    return html`<nb-my-brackets-grid
-      .brackets=${this.brackets}
-      theme=${this.theme}
-    ></nb-my-brackets-grid>`;
+    let buttonTmeplate =
+      this.brackets.length < 5
+        ? html`<sl-button variant="primary" href=${NEW_BRACKET_LINK} outline
+            >Create Bracket</sl-button
+          >`
+        : null;
+
+    return html`<div class="d-flex flex-column gap-3">
+      ${buttonTmeplate}
+      <nb-my-brackets-grid
+        .brackets=${this.brackets}
+        theme=${this.theme}
+      ></nb-my-brackets-grid>
+    </div>`;
   }
 
   groupsTemplate() {
@@ -38,14 +44,18 @@ export class MyBrackets extends Standings {
       (g) => html`<nb-group-card .group=${g}></nb-group-card>`
     );
 
-    return html`<div class="d-flex flex-column gap-3">${groupCards}</div>`;
+    return html`<div class="d-flex flex-column gap-3">
+      <sl-button variant="primary" @click=${this.handleCreateGroupClick} outline
+        >Create Group</sl-button
+      >${groupCards}
+    </div>`;
   }
 
   render() {
     return html`<div class="d-flex justify-content-center">
       <sl-card>
         ${this.titleTemplate()}
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column gap-3">
           ${this.messageTemplate()}
           <sl-tab-group>
             <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>

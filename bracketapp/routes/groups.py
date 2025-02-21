@@ -68,6 +68,7 @@ def view_group(id):
         group=group.to_dict(),
         brackets=brackets_dict,
         winners=winners_dict,
+        my_bracket_count=bracket_queries.my_bracket_count(),
     )
 
 

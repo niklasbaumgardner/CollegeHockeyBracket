@@ -1,6 +1,8 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
+import { DeleteBracketModal } from "./nb-delete-bracket-modal.mjs";
+import { JoinGroupModal } from "./nb-join-group-modal.mjs";
 
 class MyBracketElement extends NikElement {
   static properties = {
@@ -45,24 +47,12 @@ class MyBracketElement extends NikElement {
     }
 
     return html`<sl-details
-      class="my-brackets-groups my-2"
+      class="my-brackets-groups"
       summary="Groups (${this.bracket.group_brackets.length})"
       ><div class="d-flex flex-wrap gap-2">
         ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
       </div></sl-details
     >`;
-  }
-
-  groupButtonsTemplate() {
-    if (!CAN_EDIT_BRACKET) {
-      return null;
-    }
-
-    return html`<div class="d-flex w-100 justify-content-evenly my-2">
-      <sl-button size="small" @click=${this.handleCreateGroupClick}
-        >Create group</sl-button
-      ><sl-button size="small">Join group</sl-button>
-    </div>`;
   }
 
   render() {
@@ -71,8 +61,9 @@ class MyBracketElement extends NikElement {
         >Create new bracket</sl-button
       >`;
     }
-    return html`<a
-        class="d-block w-100 h-100 text-decoration-none py-2"
+    return html`<div class="d-flex flex-column gap-2 my-2">
+      <a
+        class="d-block w-100 h-100 text-decoration-none"
         href=${this.bracket.url}
         ><div class="standings-row">
           ${this.getImageElement(this.bracket.winner_team)}
@@ -85,47 +76,62 @@ class MyBracketElement extends NikElement {
           </div>
         </div></a
       >
-      ${this.groupsTemplate()}${this.groupButtonsTemplate()}`;
+      ${this.groupsTemplate()}
+    </div>`;
   }
 }
 customElements.define("nb-my-bracket-element", MyBracketElement);
 
+class MyBracketActions extends NikElement {
+  static properties = {
+    bracket: { type: Object },
+  };
+
+  handleJoinGroupClick() {
+    // show groups?
+    if (!this.joinGroupModal) {
+      this.joinGroupModal = document.createElement("nb-join-group-modal");
+      this.joinGroupModal.bracket = this.bracket;
+      document.body.appendChild(this.joinGroupModal);
+    }
+
+    this.joinGroupModal.show();
+  }
+
+  handleDeleteClick() {
+    if (!this.deleteBracketModal) {
+      this.deleteBracketModal = document.createElement(
+        "nb-delete-bracket-modal"
+      );
+      this.deleteBracketModal.bracket = this.bracket;
+      document.body.appendChild(this.deleteBracketModal);
+    }
+
+    this.deleteBracketModal.show();
+  }
+
+  render() {
+    return html`<div class="d-flex gap-3">
+      <sl-button size="small" @click=${this.handleJoinGroupClick}
+        >Join Group</sl-button
+      ><sl-button
+        size="small"
+        variant="danger"
+        outline
+        @click=${this.handleDeleteClick}
+        >Delete</sl-button
+      >
+    </div>`;
+  }
+}
+customElements.define("nb-my-bracket-actions", MyBracketActions);
+
 export class MyBracketsGrid extends StandingsGrid {
-  handleDeleteClick(bracket) {
-    let deleteBracketEl = this.deleteBracketModals[bracket.id];
-    if (!deleteBracketEl) {
-      deleteBracketEl = document.createElement("delete-bracket-modal");
-      deleteBracketEl.bracket = bracket;
-      document.body.appendChild(deleteBracketEl);
-
-      this.deleteBracketModals[bracket.id] = deleteBracketEl;
-    }
-
-    deleteBracketEl.show();
-  }
-
-  createButton(options) {
-    let button = document.createElement("sl-button");
-    for (let [optionName, value] of Object.entries(options)) {
-      if (optionName === "click") {
-        button.addEventListener("click", value);
-      }
-      button[optionName] = value;
-    }
-    return button;
-  }
-
   createDataGrid() {
     const rowData = [];
     for (let data of this.brackets) {
       rowData.push(data);
     }
-
-    // if (CAN_EDIT_BRACKET && rowData.length < 5) {
-    //   rowData.push({
-    //     id: -1,
-    //   });
-    // }
 
     if (!rowData.length) {
       return;
@@ -167,16 +173,10 @@ export class MyBracketsGrid extends StandingsGrid {
     if (CAN_EDIT_BRACKET) {
       columnDefs.push({
         field: "actions",
-        cellRenderer: (params) => {
-          let button = this.createButton({
-            variant: "danger",
-            size: "small",
-            outline: true,
-            textContent: "Delete",
-            click: () => this.handleDeleteClick(params.data),
-          });
-
-          return button;
+        cellRenderer: (param) => {
+          let ele = document.createElement("nb-my-bracket-actions");
+          ele.bracket = param.data;
+          return ele;
         },
         cellClass: "nb-center justify-content-start",
       });
