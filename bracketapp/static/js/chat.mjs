@@ -36,16 +36,16 @@ class ChatEl extends NikElement {
         },
         CHAT_USER.streamchat_token
       );
+
+      this.channel = this.client.channel("messaging", "BracketApp2024", {
+        name: "2024 College Hockey Bracket App Live Chat",
+      });
+      await this.channel.watch();
+      await this.channel.addMembers([`${CHAT_USER.id}`]);
     } catch (e) {
       console.error(e);
       return;
     }
-
-    this.channel = this.client.channel("messaging", "BracketApp2024", {
-      name: "2024 College Hockey Bracket App Live Chat",
-    });
-    await this.channel.watch();
-    await this.channel.addMembers([`${CHAT_USER.id}`]);
 
     console.log(this.channel);
 

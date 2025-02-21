@@ -31,11 +31,13 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      Sentry.onLoad(function () {
-        Sentry.init({
-          // You can add any additional configuration here
+      if (window.Sentry) {
+        Sentry.onLoad(function () {
+          Sentry.init({
+            // You can add any additional configuration here
+          });
         });
-      });
+      }
     </script>
 
     <link href="/static/css/index.css" rel="stylesheet" />

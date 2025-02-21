@@ -46,6 +46,7 @@ def view_bracket(id):
         ),
         name=bracket.name,
         year=bracket.year,
+        my_bracket=my_bracket,
     )
 
 

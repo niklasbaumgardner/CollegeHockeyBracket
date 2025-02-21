@@ -182,7 +182,7 @@ class CorrectBracket(db.Model, SerializerMixin):
         return d
 
     def name(self):
-        return f"{self.year} final bracket"
+        return f"{self.year} Final Bracket"
 
     def url(self):
         return url_for("viewbracket_bp.view_cbracket", year=self.year)

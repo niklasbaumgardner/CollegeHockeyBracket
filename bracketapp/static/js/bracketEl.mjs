@@ -179,7 +179,7 @@ class Bracket extends NikElement {
     return html`<div class="round-final my-auto">
       <sl-card>
         <div class="champion-card">
-          <span class="champion-top">Championship</span>
+          <span class="champion-top">${this.default.year} Championship</span>
           <div class="row justify-content-center">
             ${this.pickedChampionTemplate()} ${this.correctChampionTemplate()}
           </div>
@@ -278,7 +278,6 @@ class Bracket extends NikElement {
     >
       ${this.getImageElement(this.bracket?.winner_team, true)}
       <div>
-        <h4 class="m-0">${this.bracket?.name}</h4>
         <div class="d-flex justify-content-evenly">
           <div class="d-flex">
             <span
@@ -354,8 +353,8 @@ class Bracket extends NikElement {
   topCardTemplate() {
     return html`<div class="d-flex justify-content-center">
       <sl-card class="width-fit-content mb-3">
-        <div class="d-flex justify-content-center mb-4">
-          <h2>${this.default.year} NCAA College Hockey Bracket</h2>
+        <div class="d-flex justify-content-center">
+          <h2>${this.bracket?.name ?? this.correct.name}</h2>
         </div>
         ${this.topCardStats()}
       </sl-card>
