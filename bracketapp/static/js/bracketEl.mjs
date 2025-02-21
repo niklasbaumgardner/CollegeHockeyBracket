@@ -273,10 +273,12 @@ class Bracket extends NikElement {
       </div>`;
     }
 
-    return html`<div class="d-flex justify-content-center gap-4 flex-wrap">
+    return html`<div
+      class="d-flex justify-content-center align-items-center gap-4 flex-wrap"
+    >
       ${this.getImageElement(this.bracket?.winner_team, true)}
       <div>
-        <h4>${this.bracket?.name}</h4>
+        <h4 class="m-0">${this.bracket?.name}</h4>
         <div class="d-flex justify-content-evenly">
           <div class="d-flex">
             <span
@@ -352,7 +354,7 @@ class Bracket extends NikElement {
   topCardTemplate() {
     return html`<div class="d-flex justify-content-center">
       <sl-card class="width-fit-content mb-3">
-        <div class="d-flex justify-content-center" slot="header">
+        <div class="d-flex justify-content-center mb-4">
           <h2>${this.default.year} NCAA College Hockey Bracket</h2>
         </div>
         ${this.topCardStats()}

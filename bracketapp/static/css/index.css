@@ -135,14 +135,19 @@ sl-dialog:not([open]) {
 
 :not(:defined) {
   visibility: hidden;
-  /* opacity: 0; */
-  /* display: none; */
+  opacity: 0;
 }
 
-/* :defined {
+.navbar-nav {
+  :not(:defined) {
+    display: none;
+  }
+}
+
+:defined {
   opacity: 1;
   transition: 0.2s opacity;
-} */
+}
 
 .display-inline-grid {
   display: inline-grid;
