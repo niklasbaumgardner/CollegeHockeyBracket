@@ -8,6 +8,7 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
 
 <nb-my-brackets
   brackets='{{ brackets|tojson }}'
+  groups='{{ groups|tojson }}'
   theme="{{ theme }}"
   year="{{ year }}"
 ></nb-my-brackets>

@@ -16,6 +16,7 @@ from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
 from flask_login import current_user
 from sqlalchemy.sql import func, asc
+from sqlalchemy.orm import joinedload
 
 
 def create_group_member(group_id):
@@ -62,6 +63,41 @@ def get_group(group_id):
 
 def get_all_groups():
     return Group.query.filter_by(year=YEAR).all()
+
+
+def get_all_groups_for_user(sort=False):
+    groups_query = (
+        db.session.query(Group, Bracket, GroupBracket)
+        .join(GroupBracket, Group.id == GroupBracket.group_id)
+        .join(Bracket, Bracket.id == GroupBracket.bracket_id)
+        .where(
+            Group.year == YEAR,
+            GroupBracket.user_id == current_user.id,
+            GroupBracket.group_id == Group.id,
+        )
+    )
+
+    if sort:
+        groups_query = groups_query.order_by(asc(func.lower(Group.name)))
+
+    groups = groups_query.all()
+
+    return_groups = []
+    seen_groups = {}
+    for index, [g, b, gb] in enumerate(groups):
+        b.group_bracket = gb
+
+        if g.id not in seen_groups:
+            seen_groups[g.id] = [g, index]
+
+        return_group, _ = seen_groups[g.id]
+        return_group.brackets.append(b)
+
+    for value in seen_groups.values():
+        group, index = value
+        return_groups.insert(index, group)
+
+    return return_groups
 
 
 def lock_group(group_id):

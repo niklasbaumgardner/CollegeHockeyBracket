@@ -45,7 +45,7 @@ class MyBracketElement extends NikElement {
     }
 
     return html`<sl-details
-      class="my-brackets-groups my-1"
+      class="my-brackets-groups my-2"
       summary="Groups (${this.bracket.group_brackets.length})"
       ><div class="d-flex flex-wrap gap-2">
         ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
@@ -58,7 +58,7 @@ class MyBracketElement extends NikElement {
       return null;
     }
 
-    return html`<div class="d-flex w-100 justify-content-evenly my-1">
+    return html`<div class="d-flex w-100 justify-content-evenly my-2">
       <sl-button size="small" @click=${this.handleCreateGroupClick}
         >Create group</sl-button
       ><sl-button size="small">Join group</sl-button>
@@ -72,7 +72,7 @@ class MyBracketElement extends NikElement {
       >`;
     }
     return html`<a
-        class="d-block w-100 h-100 text-decoration-none py-1"
+        class="d-block w-100 h-100 text-decoration-none py-2"
         href=${this.bracket.url}
         ><div class="standings-row">
           ${this.getImageElement(this.bracket.winner_team)}

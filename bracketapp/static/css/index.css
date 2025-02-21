@@ -345,8 +345,8 @@ nb-group-standings > div > sl-card {
 
 nb-standings-grid,
 nb-my-brackets-grid,
-nb-group-standings-grid,
-nb-my-brackets > div > sl-card > sl-tab-group {
+nb-group-standings-grid:not(.w-100),
+nb-my-brackets > div > sl-card > div > sl-tab-group {
   display: block;
 
   @media (min-width: 576px) {
@@ -374,22 +374,52 @@ nb-my-brackets > div > sl-card > sl-tab-group {
   .group-name {
     font-size: var(--sl-font-size-x-small);
     line-height: var(--sl-line-height-dense);
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
 
   .trophy {
     font-size: var(--sl-font-size-large);
     min-width: var(--sl-font-size-medium);
   }
+}
 
-  .rank,
-  .trophy {
-    color: var(--ag-data-color);
+.nb-group-card {
+  font-size: var(--sl-font-size-large);
+
+  .group-name {
+    font-size: var(--sl-font-size-large);
+    line-height: var(--sl-line-height-dense);
   }
+
+  .trophy {
+    font-size: var(--sl-font-size-2x-large);
+    min-width: var(--sl-font-size-2x-large);
+  }
+
+  .rank {
+    font-size: var(--sl-font-size-small);
+  }
+
+  .invite-others {
+    font-size: var(--sl-font-size-medium);
+  }
+
+  .ag-center-cols-viewport,
+  .ag-center-cols-container {
+    min-height: 0 !important;
+  }
+}
+
+.group-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.rank,
+.trophy {
+  color: var(--sl-color-neutral-950);
 }

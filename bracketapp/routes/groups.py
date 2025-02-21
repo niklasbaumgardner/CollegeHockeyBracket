@@ -46,10 +46,7 @@ def view_group(id):
     brackets, winners, correct = bracket_utils.get_group_standings(group_id=id)
 
     brackets_dict = [
-        b.to_dict(
-            safe_only=CAN_EDIT_BRACKET, include_games=False, include_group_bracket=True
-        )
-        for b in brackets
+        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in brackets
     ]
     winners_dict = [
         b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners

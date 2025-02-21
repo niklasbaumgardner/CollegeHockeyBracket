@@ -1,4 +1,4 @@
-from bracketapp.queries import bracket_queries
+from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
@@ -25,12 +25,15 @@ def my_brackets():
         for b in bracket_queries.get_all_brackets_for_user(sort=True)
     ]
 
+    groups = [g.to_dict() for g in group_queries.get_all_groups_for_user(sort=True)]
+
     if len(brackets) == 1 and not CAN_EDIT_BRACKET and not app.debug:
         return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0]["id"]))
 
     return render_template(
         "my_brackets.html",
         brackets=brackets,
+        groups=groups,
         number_of_brackets=len(brackets),
         year=YEAR,
     )

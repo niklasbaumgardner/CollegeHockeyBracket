@@ -33,14 +33,14 @@ export class GroupStandings extends Standings {
   }
 
   memeberTemplate() {
-    if (this.numWinners > 0) {
-      return this.getWinningMessage();
-    } else if (CAN_EDIT_BRACKET) {
+    if (CAN_EDIT_BRACKET) {
       return html`<p>
         <sl-button variant="primary" outline href=${CREATE_BRACKET_URL}
           >Create a bracket before time runs out!</sl-button
         >
       </p>`;
+    } else if (this.numWinners > 0) {
+      return this.getWinningMessage();
     } else if (this.brackets.length) {
       return "View the current standings below.";
     }
@@ -132,6 +132,7 @@ export class GroupStandings extends Standings {
         <sl-icon slot="copy-icon" name="share"></sl-icon>
       </sl-copy-button>
     </div>`;
+
     return html`<div class="d-flex justify-content-between">
       <h2>${this.group.name}</h2>
       ${this.isMember ? inviteTemplate : null}

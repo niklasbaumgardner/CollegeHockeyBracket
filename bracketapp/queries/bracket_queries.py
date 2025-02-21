@@ -11,7 +11,7 @@ from bracketapp.models import (
 )
 from bracketapp import db
 from bracketapp.utils import bracket_utils
-from bracketapp.config import YEAR
+from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
 from flask_login import current_user
 from sqlalchemy.sql import func, asc
@@ -130,13 +130,17 @@ def get_all_brackets_for_user(sort=False):
     if not current_user.is_authenticated:
         return []
 
-    bracket_query = Bracket.query.filter_by(user_id=current_user.id, year=YEAR).options(
-        joinedload(Bracket.group_brackets)
+    brackets = (
+        Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
+        .options(joinedload(Bracket.group_brackets))
+        .all()
     )
-    if sort:
-        bracket_query = bracket_query.order_by(asc(func.lower(Bracket.name)))
 
-    brackets = bracket_query.all()
+    if sort:
+        brackets.sort(key=lambda b: b.name.casefold())
+        if not CAN_EDIT_BRACKET and brackets and brackets[0].rank:
+            brackets.sort(key=lambda b: b.max_points, reverse=True)
+            brackets.sort(key=lambda b: b.rank)
 
     return brackets
 

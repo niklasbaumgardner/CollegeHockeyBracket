@@ -46,7 +46,10 @@ class BracketTeam(db.Model, SerializerMixin):
 
 
 class Bracket(db.Model, SerializerMixin):
-    serialize_rules = ("-games_list",)
+    serialize_rules = (
+        "-games_list",
+        "group_bracket",
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -92,7 +95,7 @@ class Bracket(db.Model, SerializerMixin):
         if self.id:
             return url_for("deletebracket_bp.delete_bracket", id=self.id)
 
-    def to_dict(self, safe_only=True, include_games=True, include_group_bracket=False):
+    def to_dict(self, safe_only=True, include_games=True):
         if safe_only:
             return super().to_dict(
                 only=(
@@ -113,8 +116,6 @@ class Bracket(db.Model, SerializerMixin):
             )
             if include_games:
                 rules += ("games",)
-            if include_group_bracket:
-                rules += ("group_bracket",)
 
             return super().to_dict(rules=rules)
 
@@ -248,6 +249,7 @@ class Group(db.Model, SerializerMixin):
         "join_url",
         "share_url",
         "members",
+        "brackets",
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -259,6 +261,18 @@ class Group(db.Model, SerializerMixin):
     created_by = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     members = db.relationship("GroupMember", lazy="joined")
+    __brackets__ = None
+
+    @property
+    def brackets(self):
+        if self.__brackets__ is None:
+            self.brackets = []
+
+        return self.__brackets__
+
+    @brackets.setter
+    def brackets(self, brackets):
+        self.__brackets__ = brackets
 
     def url(self):
         return url_for("groups_bp.view_group", id=self.id)
@@ -285,6 +299,7 @@ class GroupMember(db.Model, SerializerMixin):
 
 class GroupBracket(db.Model, SerializerMixin):
     __table_args__ = (db.UniqueConstraint("group_id", "bracket_id"),)
+    serialize_rules = ("-group.brackets",)
 
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=False)

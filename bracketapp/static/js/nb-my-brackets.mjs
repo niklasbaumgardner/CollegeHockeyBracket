@@ -1,8 +1,11 @@
 import { Standings } from "./nb-standings.mjs";
-import { MyBracketsGrid } from "./nb-my-brackets-grid.mjs";
 import { html } from "./imports.mjs";
+import { MyBracketsGrid } from "./nb-my-brackets-grid.mjs";
+import { GroupCard } from "./nb-group-card.mjs";
 
 export class MyBrackets extends Standings {
+  static properties = { groups: { type: Object } };
+
   titleTemplate() {
     return html`<div>
       <h2 class="mb-0">My Brackets ${this.year}</h2>
@@ -30,19 +33,30 @@ export class MyBrackets extends Standings {
     ></nb-my-brackets-grid>`;
   }
 
+  groupsTemplate() {
+    let groupCards = this.groups.map(
+      (g) => html`<nb-group-card .group=${g}></nb-group-card>`
+    );
+
+    return html`<div class="d-flex flex-column gap-3">${groupCards}</div>`;
+  }
+
   render() {
     return html`<div class="d-flex justify-content-center">
       <sl-card>
-        ${this.titleTemplate()}${this.messageTemplate()}
-        <sl-tab-group>
-          <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>
-          <sl-tab slot="nav" panel="groups">Groups</sl-tab>
+        ${this.titleTemplate()}
+        <div class="d-flex flex-column gap-4">
+          ${this.messageTemplate()}
+          <sl-tab-group>
+            <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>
+            <sl-tab slot="nav" panel="groups">Groups</sl-tab>
 
-          <sl-tab-panel name="my-brackets"
-            >${this.bracketsTemplate()}</sl-tab-panel
-          >
-          <sl-tab-panel name="groups">Groups coming soon...</sl-tab-panel>
-        </sl-tab-group>
+            <sl-tab-panel name="my-brackets"
+              >${this.bracketsTemplate()}</sl-tab-panel
+            >
+            <sl-tab-panel name="groups">${this.groupsTemplate()}</sl-tab-panel>
+          </sl-tab-group>
+        </div>
       </sl-card>
     </div>`;
   }

@@ -11,7 +11,7 @@ export class Standings extends NikElement {
     theme: {
       type: String,
     },
-    year: { type: String },
+    year: { type: Number },
   };
 
   get numWinners() {
@@ -42,10 +42,10 @@ export class Standings extends NikElement {
   }
 
   messageTemplate() {
-    if (this.numWinners > 0) {
-      return this.getWinningMessage();
-    } else if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
+    if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
       return "Create a bracket before time runs out!";
+    } else if (this.numWinners > 0) {
+      return this.getWinningMessage();
     } else if (this.brackets.length && this.year === CURRENT_YEAR) {
       return "View the current standings below.";
     }
