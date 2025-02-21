@@ -53,7 +53,7 @@ class CreateGroup extends NikElement {
   render() {
     return html`<sl-dialog label="Create A Group">
       <div class="mb-2">
-        <form id="new-group-form" action="${CREATE_GROUP_URL}" method="POST">
+        <form id="new-group-form" action=${CREATE_GROUP_URL} method="POST">
           <div class="nb-row">
             <sl-input
               placeholder="Group name"
@@ -75,7 +75,6 @@ class CreateGroup extends NikElement {
         </form>
       </div>
       <sl-button
-        id="submitButton"
         class="w-100"
         variant="primary"
         type="submit"

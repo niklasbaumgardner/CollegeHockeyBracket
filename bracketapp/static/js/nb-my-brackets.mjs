@@ -62,6 +62,9 @@ export class MyBrackets extends Standings {
         (g) => html`<nb-group-card .group=${g}></nb-group-card>`
       );
     }
+    if (CAN_EDIT_BRACKET) {
+      return null;
+    }
 
     return "Coming soon...";
   }
