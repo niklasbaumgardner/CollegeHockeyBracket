@@ -66,14 +66,19 @@ export class GroupStandings extends Standings {
     let passwordTemplate = null;
     if (this.group.is_private && this.isMember) {
       passwordTemplate = html`<small
-        ><b>Password</b> ${this.group.password}</small
+        ><span class="fw-semibold">Password</span> ${this.group.password}</small
       >`;
     }
     return html`<div class="d-flex gap-4">
-      <small><b>Members</b> ${this.group.members.length}</small
-      ><small><b>Brackets</b> ${this.brackets.length}</small>
       <small
-        ><b>Group type</b> ${this.group.is_private
+        ><span class="fw-semibold">Members</span> ${this.group.members
+          .length}</small
+      ><small
+        ><span class="fw-semibold">Brackets</span> ${this.brackets
+          .length}</small
+      >
+      <small
+        ><span class="fw-semibold">Group type</span> ${this.group.is_private
           ? "Private"
           : "Public"}</small
       >${passwordTemplate}

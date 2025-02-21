@@ -35,7 +35,7 @@ class MyBracketElement extends NikElement {
         <div class="d-flex flex-column group-name">
           <span class="text-decoration-underline"
             >${groupBracket.group.name}</span
-          ><span class="rank">Rank: ${groupBracket.group_rank}</span>
+          ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
         </div>
       </a></sl-card
     >`;
@@ -85,6 +85,7 @@ customElements.define("nb-my-bracket-element", MyBracketElement);
 class MyBracketActions extends NikElement {
   static properties = {
     bracket: { type: Object },
+    groups: { type: Object },
   };
 
   handleJoinGroupClick() {
@@ -92,6 +93,7 @@ class MyBracketActions extends NikElement {
     if (!this.joinGroupModal) {
       this.joinGroupModal = document.createElement("nb-join-group-modal");
       this.joinGroupModal.bracket = this.bracket;
+      this.joinGroupModal.groups = this.groups;
       document.body.appendChild(this.joinGroupModal);
     }
 
@@ -113,7 +115,7 @@ class MyBracketActions extends NikElement {
   render() {
     return html`<div class="d-flex gap-3">
       <sl-button size="small" @click=${this.handleJoinGroupClick}
-        >Join Group</sl-button
+        >Add To Group</sl-button
       ><sl-button
         size="small"
         variant="danger"
@@ -127,6 +129,8 @@ class MyBracketActions extends NikElement {
 customElements.define("nb-my-bracket-actions", MyBracketActions);
 
 export class MyBracketsGrid extends StandingsGrid {
+  static properties = { groups: { type: Object } };
+
   createDataGrid() {
     const rowData = [];
     for (let data of this.brackets) {
@@ -176,6 +180,7 @@ export class MyBracketsGrid extends StandingsGrid {
         cellRenderer: (param) => {
           let ele = document.createElement("nb-my-bracket-actions");
           ele.bracket = param.data;
+          ele.groups = this.groups;
           return ele;
         },
         cellClass: "nb-center justify-content-start",

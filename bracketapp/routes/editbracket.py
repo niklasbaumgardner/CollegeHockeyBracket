@@ -170,3 +170,24 @@ def new_bracket_post():
 
     flash("Your bracket has been saved", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))
+
+
+@editbracket_bp.post("/bracket_join_group/<int:id>")
+@login_required
+def bracket_join_group(id):
+    group_id = request.form.get("group_id")
+
+    group = group_queries.get_group(group_id=group_id)
+    if not group:
+        flash("Sorry, this group could not be found", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets"))
+
+    bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=id)
+    if not bracket:
+        flash("Sorry, this bracket could not be found", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets"))
+
+    group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
+
+    flash(f"Your bracket has been added to {group.name}", "success")
+    return redirect(url_for("groups_bp.view_group", id=group.id))

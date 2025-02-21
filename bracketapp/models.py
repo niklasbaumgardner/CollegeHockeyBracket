@@ -95,6 +95,10 @@ class Bracket(db.Model, SerializerMixin):
         if self.id:
             return url_for("deletebracket_bp.delete_bracket", id=self.id)
 
+    def bracket_join_group_url(self):
+        if self.id:
+            return url_for("editbracket_bp.bracket_join_group", id=self.id)
+
     def to_dict(self, safe_only=True, include_games=True):
         if safe_only:
             return super().to_dict(
@@ -113,6 +117,7 @@ class Bracket(db.Model, SerializerMixin):
             rules = (
                 "url",
                 "delete_url",
+                "bracket_join_group_url",
             )
             if include_games:
                 rules += ("games",)

@@ -17,7 +17,7 @@ export class MyBrackets extends Standings {
   }
 
   messageTemplate() {
-    return html`<small class="font-size-small color-neutral-700"
+    return html`<small class="color-neutral-700"
       >You created ${this.brackets.length}/5 brackets</small
     >`;
   }
@@ -34,6 +34,7 @@ export class MyBrackets extends Standings {
       ${buttonTmeplate}
       <nb-my-brackets-grid
         .brackets=${this.brackets}
+        .groups=${this.groups}
         theme=${this.theme}
       ></nb-my-brackets-grid>
     </div>`;

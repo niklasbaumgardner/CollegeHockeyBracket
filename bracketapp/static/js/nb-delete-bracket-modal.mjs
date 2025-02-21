@@ -30,13 +30,9 @@ export class DeleteBracketModal extends NikElement {
         action="${this.bracket.delete_url}"
         method="POST"
       ></form>
-      <div
-        style="display:flex;flex-direction:column;gap:var(--sl-spacing-small);"
-      >
-        <div class="row">
-          <p>Are you sure you want to delete this bracket?</p>
-          <strong>This action cannot be undone.</strong>
-        </div>
+      <div class="d-flex flex-column">
+        <p>Are you sure you want to delete this bracket?</p>
+        <strong>This action cannot be undone.</strong>
       </div>
       <sl-button
         slot="footer"
