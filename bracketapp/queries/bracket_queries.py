@@ -148,6 +148,15 @@ def get_all_brackets_for_user(sort=False):
     return brackets
 
 
+def get_my_group_brackets_for_bracket(bracket_id):
+    if not current_user.is_authenticated:
+        return []
+
+    return GroupBracket.query.filter_by(
+        user_id=current_user.id, bracket_id=bracket_id
+    ).all()
+
+
 def get_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
@@ -200,8 +209,13 @@ def delete_all_brackets():
 
 def delete_bracket(bracket_id):
     # return  # i don't want to accidentally delete the brackets
-    bracket = get_bracket_for_bracket_id(bracket_id=bracket_id)
+    bracket = get_my_bracket_for_bracket_id(bracket_id=bracket_id)
     games = get_all_games_for_bracket(bracket_id=bracket.id)
+    group_brackets = get_my_group_brackets_for_bracket(bracket_id=bracket.id)
+
+    for group_bracket in group_brackets:
+        db.session.delete(group_bracket)
+        db.session.commit()
 
     for game in games:
         db.session.delete(game)
