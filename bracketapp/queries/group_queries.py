@@ -66,14 +66,15 @@ def get_all_groups():
 
 
 def get_all_groups_for_user(sort=False):
+    db.session.query(Group).where(Group.year == YEAR)
     groups_query = (
         db.session.query(Group, Bracket, GroupBracket)
-        .join(GroupBracket, Group.id == GroupBracket.group_id)
-        .join(Bracket, Bracket.id == GroupBracket.bracket_id)
+        .join(GroupMember, Group.id == GroupMember.group_id, isouter=True)
+        .join(GroupBracket, Group.id == GroupBracket.group_id, isouter=True)
+        .join(Bracket, Bracket.id == GroupBracket.bracket_id, isouter=True)
         .where(
             Group.year == YEAR,
-            GroupBracket.user_id == current_user.id,
-            GroupBracket.group_id == Group.id,
+            GroupMember.user_id == current_user.id,
         )
     )
 
@@ -85,13 +86,14 @@ def get_all_groups_for_user(sort=False):
     return_groups = []
     seen_groups = {}
     for index, [g, b, gb] in enumerate(groups):
-        b.group_bracket = gb
-
         if g.id not in seen_groups:
             seen_groups[g.id] = [g, index]
 
-        return_group, _ = seen_groups[g.id]
-        return_group.brackets.append(b)
+        if b and gb:
+            b.group_bracket = gb
+
+            return_group, _ = seen_groups[g.id]
+            return_group.brackets.append(b)
 
     for value in seen_groups.values():
         group, index = value
