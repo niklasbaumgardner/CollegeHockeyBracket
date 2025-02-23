@@ -407,11 +407,6 @@ nb-my-brackets > div > sl-card > div > sl-tab-group {
   .invite-others {
     font-size: var(--sl-font-size-medium);
   }
-
-  .ag-center-cols-viewport,
-  .ag-center-cols-container {
-    min-height: 0 !important;
-  }
 }
 
 .group-name {
@@ -466,4 +461,10 @@ nb-radio-item {
     --border-color: var(--sl-color-primary-300);
     border-radius: var(--sl-border-radius-medium);
   }
+}
+
+/* Min height for ag grids */
+.ag-center-cols-viewport,
+.ag-center-cols-container {
+  min-height: 0 !important;
 }
