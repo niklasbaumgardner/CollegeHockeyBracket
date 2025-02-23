@@ -71,6 +71,7 @@ def new_bracket():
         "edit_bracket.html",
         bracket=bracket.to_dict(safe_only=False),
         default=default.to_dict(),
+        group_id=group_id,
     )
 
 

@@ -4,7 +4,7 @@ block mybracket %}active{% endblock mybracket %} {% block content %}
   {% if bracket.id %}
   const BRACKET_FORM_URL = "{{ url_for('editbracket_bp.edit_bracket', id=bracket.id) }}";
   {% else %}
-  const BRACKET_FORM_URL = "{{ url_for('editbracket_bp.edit_bracket', group_id=group_id) }}";
+  const BRACKET_FORM_URL = "{{ url_for('editbracket_bp.new_bracket', group_id=group_id) }}";
   {% endif %}
 
   const CANCEL_BRACKET_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
