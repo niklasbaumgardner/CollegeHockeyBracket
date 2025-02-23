@@ -437,43 +437,42 @@ class EditBracket extends NikElement {
 
   topCardTemplate() {
     return html` <div class="d-flex justify-content-center">
-      <sl-card class="width-fit-content mb-3">
-        <div class="d-flex justify-content-center" slot="header">
-          <h2>${this.bracket?.year} NCAA College Hockey Bracket</h2>
-        </div>
-        <div class="d-flex justify-content-center mb-5">
+      <sl-card class="width-fit-content mb-4">
+        <h2 class="mb-2">${this.bracket?.year} Bracket Challenge</h2>
+        <div class="d-flex mb-4">
           <div>
-            <h5>
+            <p>
               To view current conference standings
               <a
                 href="https://www.collegehockeynews.com/reports/standings.php"
                 target="_blank"
                 >click here</a
               >.
-            </h5>
-            <h5>
+            </p>
+            <p>
               To view current team stats
               <a href="https://www.collegehockeynews.com/stats/" target="_blank"
                 >click here</a
               >.
-            </h5>
-            <h5>
+            </p>
+            <p>
               To view previous years brackets
               <a href="${ARCHIVE_URL}" target="_blank">click here</a>.
-            </h5>
+            </p>
           </div>
         </div>
-        <div class="d-flex justify-content-center mb-5">
+        <div class="d-flex justify-content-center mb-3">
           <sl-input
             name="name"
             maxlength="60"
             label="Bracket name"
             placeholder="My bracket name"
             value=${this.bracket.name}
+            class="w-100"
             required=""
           ></sl-input>
         </div>
-        <div class="d-flex justify-content-center" style="gap:1rem;">
+        <div class="d-flex justify-content-center gap-3">
           ${this.buttonsTemplate()}
         </div>
       </sl-card>
