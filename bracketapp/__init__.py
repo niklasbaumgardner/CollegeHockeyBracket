@@ -31,7 +31,7 @@ sentry_sdk.init(
         # possible.
         "continuous_profiling_auto_start": True,
     },
-    release="nbbracketchallenge@1.1.9",
+    release="nbbracketchallenge@2.0.0",
 )
 
 
