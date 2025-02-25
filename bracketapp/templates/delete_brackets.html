@@ -1,21 +1,24 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Delete brackets{% endblock title %}
+{% block delete %}active{% endblock delete %} {% block content %}
 
-{% block title %}Delete brackets{% endblock title %}
-{% block delete %}active{% endblock delete %}
+<div class="row">
+  {% for b in brackets %}
+  <div class="col-3 m-5">
+    <a
+      class="text-danger"
+      href="{{ url_for('admin_bp.delete_bracket', id=b.id) }}"
+      ><h3>Delete {{ users[b.user_id].username }}'s {{ b.name }}</h3></a
+    >
+  </div>
+  {% endfor %}
 
-{% block content %}
-
-    <div class="row">
-        {% for b in brackets %}
-            <div class="col-3 m-5">
-                <a class="btn btn-outline-danger" href="{{ url_for('admin_bp.delete_bracket', id=b.bracket.id) }}">Delete {{ users[b.user_id].username }}'s<br>{{ b.name }}</a>
-            </div>
-        {% endfor %}
-
-        <div class="col-3 m-5">
-            <a class="btn btn-danger" href="{{ url_for('admin_bp.delete_bracket', id='all') }}">Delete all brackets</a>
-        </div>
-
-    </div>
+  <div class="col-3 m-5">
+    <a
+      class="btn btn-danger btn-lg"
+      href="{{ url_for('admin_bp.delete_bracket', id='all') }}"
+      >Delete all brackets</a
+    >
+  </div>
+</div>
 
 {% endblock content %}

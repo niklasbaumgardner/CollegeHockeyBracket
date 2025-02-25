@@ -38,7 +38,7 @@ export class Standings extends NikElement {
   }
 
   titleTemplate() {
-    return html`<div><h2>${this.year} Standings</h2></div>`;
+    return html`<div><h2>${this.year} Leaderboard</h2></div>`;
   }
 
   messageTemplate() {

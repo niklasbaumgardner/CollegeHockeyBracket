@@ -38,7 +38,7 @@ export class GroupStandings extends Standings {
         variant="primary"
         outline
         href=${CREATE_BRACKET_URL}
-        >Add a bracket</sl-button
+        >Create Bracket</sl-button
       >`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();

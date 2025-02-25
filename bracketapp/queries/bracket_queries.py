@@ -18,6 +18,14 @@ from sqlalchemy.sql import func, asc
 from sqlalchemy.orm import joinedload
 
 
+def is_admin():
+    return (
+        current_user.is_authenticated
+        and current_user.role is not None
+        and current_user.role > 1
+    )
+
+
 ##
 ## Bracket and Game queries
 ##
@@ -148,6 +156,13 @@ def get_all_brackets_for_user(sort=False):
     return brackets
 
 
+def get_group_brackets_for_bracket(bracket_id):
+    if not current_user.is_authenticated:
+        return []
+
+    return GroupBracket.query.filter_by(bracket_id=bracket_id).all()
+
+
 def get_my_group_brackets_for_bracket(bracket_id):
     if not current_user.is_authenticated:
         return []
@@ -201,14 +216,36 @@ def get_all_games_for_bracket(bracket_id):
 
 
 def delete_all_brackets():
-    # return  # i don't want to accidentally delete the brackets
+    if not is_admin():
+        return
+
     brackets = Bracket.query.filter_by(year=YEAR).all()
     for b in brackets:
-        delete_bracket(b.id)
+        __admin_delete_bracket__(b.id)
+
+
+def __admin_delete_bracket__(bracket_id):
+    if not is_admin():
+        return
+
+    bracket = get_bracket_for_bracket_id(bracket_id=bracket_id)
+    games = get_all_games_for_bracket(bracket_id=bracket.id)
+    group_brackets = get_group_brackets_for_bracket(bracket_id=bracket.id)
+
+    for group_bracket in group_brackets:
+        db.session.delete(group_bracket)
+        db.session.commit()
+
+    for game in games:
+        db.session.delete(game)
+        db.session.commit()
+
+    db.session.delete(bracket)
+    db.session.commit()
 
 
 def delete_bracket(bracket_id):
-    # return  # i don't want to accidentally delete the brackets
+    # You can only delete your own brackets here
     bracket = get_my_bracket_for_bracket_id(bracket_id=bracket_id)
     games = get_all_games_for_bracket(bracket_id=bracket.id)
     group_brackets = get_my_group_brackets_for_bracket(bracket_id=bracket.id)

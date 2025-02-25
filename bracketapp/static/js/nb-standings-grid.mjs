@@ -158,6 +158,10 @@ export class StandingsGrid extends NikElement {
   }
 
   render() {
+    if (!this.brackets.length) {
+      return null;
+    }
+
     return html`<div
       id="standingsGrid"
       style="--ag-grid-size: 4px;"
