@@ -278,8 +278,8 @@ sl-button:not([disabled])[variant="danger"]::part(base):active {
 }
 
 #chatButton {
-  position: sticky;
-  left: 95%;
+  position: fixed;
+  right: max(3%, 16px);
   bottom: 50px;
 }
 

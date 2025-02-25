@@ -88,7 +88,7 @@
   >
     {% include "navbar.html" %}
 
-    <div class="container my-5 h-100">
+    <div class="container my-4 h-100">
       {% with messages = get_flashed_messages(with_categories=true) %}
       <div id="alerts" class="container d-flex justify-content-center">
         {% if messages %} {% for category, message in messages %}
