@@ -5,8 +5,14 @@
     {% if current_user.is_authenticated %}
     <a href="{{ url_for('mybrackets_bp.my_brackets') }}">My Brackets</a>
     {% endif %}
-    <a href="#" class="wa-desktop-only">Leaderboard</a>
-    <a href="#" class="wa-desktop-only">Archive</a>
+    <a
+      href="{{ url_for('leaderboard_bp.leaderboard') }}"
+      class="wa-desktop-only"
+      >Leaderboard</a
+    >
+    <a href="{{ url_for('archive_bp.archive') }}" class="wa-desktop-only"
+      >Archive</a
+    >
   </div>
   <div class="wa-cluster wa-gap-xs">
     <nb-theme-selector></nb-theme-selector>
@@ -61,8 +67,14 @@
     {% if current_user.is_authenticated %}
     <a href="{{ url_for('mybrackets_bp.my_brackets') }}">My Brackets</a>
     {% endif %}
-    <a href="#" class="wa-desktop-only">Leaderboard</a>
-    <a href="#" class="wa-desktop-only">Archive</a>
+    <a
+      href="{{ url_for('leaderboard_bp.leaderboard') }}"
+      class="wa-desktop-only"
+      >Leaderboard</a
+    >
+    <a href="{{ url_for('archive_bp.archive') }}" class="wa-desktop-only"
+      >Archive</a
+    >
     <nb-theme-selector></nb-theme-selector>
     {% if current_user.is_authenticated %}
     <wa-dropdown placement="bottom">
