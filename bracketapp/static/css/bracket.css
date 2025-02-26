@@ -5,10 +5,10 @@ nb-edit-correct-matchup {
 }
 
 .matchup {
-  background-color: var(--sl-color-neutral-100);
+  background-color: var(--wa-color-neutral-100);
   border-radius: var(--border-radius);
-  font-size: var(--sl-font-size-x-small);
-  box-shadow: var(--sl-shadow-large);
+  font-size: var(--wa-font-size-x-small);
+  box-shadow: var(--wa-shadow-large);
 }
 
 .nb-team {
@@ -18,18 +18,18 @@ nb-edit-correct-matchup {
 
   display: inline-flex;
   align-items: center;
-  padding: var(--sl-spacing-3x-small);
-  gap: var(--sl-spacing-3x-small);
+  padding: var(--wa-spacing-3x-small);
+  gap: var(--wa-spacing-3x-small);
 }
 
 .nb-team:has(input:checked) {
-  background-color: var(--sl-color-primary-50);
-  border: 1px solid var(--sl-color-primary-300);
+  background-color: var(--wa-color-primary-50);
+  border: 1px solid var(--wa-color-primary-300);
   border-radius: 5px;
 }
 
 input[type="radio"]:checked {
-  accent-color: var(--sl-color-primary-700);
+  accent-color: var(--wa-color-primary-700);
 }
 
 .champion-pick {
@@ -44,19 +44,19 @@ input[type="radio"]:checked {
   height: 22px;
 }
 
-sl-icon[name="check-circle-fill"] {
-  color: var(--sl-color-success-500);
+wa-icon[name="check-circle-fill"] {
+  color: var(--wa-color-success-500);
 }
 
-sl-icon[name="x-circle-fill"] {
-  color: var(--sl-color-danger-500);
+wa-icon[name="x-circle-fill"] {
+  color: var(--wa-color-danger-500);
 }
 
 label#top,
 label#bottom {
   display: inline-flex;
   justify-content: center;
-  gap: var(--sl-spacing-3x-small);
+  gap: var(--wa-spacing-3x-small);
 }
 
 .team-img {
@@ -64,7 +64,7 @@ label#bottom {
 }
 
 .loser-team {
-  color: var(--sl-color-neutral-700);
+  color: var(--wa-color-neutral-700);
 }
 
 .team-name {
@@ -203,8 +203,8 @@ label#bottom {
   .bracket-grid-edit,
   .cbracket-grid-edit {
     overflow-x: scroll;
-    box-shadow: var(--sl-shadow-x-large);
-    padding: var(--sl-spacing-small);
+    box-shadow: var(--wa-shadow-x-large);
+    padding: var(--wa-spacing-small);
   }
 }
 
@@ -243,36 +243,36 @@ nb-edit-correct-matchup input[type="number"] {
 }
 
 .round-details {
-  --padding: var(--sl-spacing-3x-small);
+  --padding: var(--wa-spacing-3x-small);
   text-align: center;
 }
 
 .bracket-details-content {
-  font-weight: var(--sl-font-weight-bold);
-  padding: var(--sl-spacing-x-small);
+  font-weight: var(--wa-font-weight-bold);
+  padding: var(--wa-spacing-x-small);
 }
 
 .bracket-details-label {
   white-space: nowrap;
   text-transform: uppercase;
-  color: var(--sl-color-neutral-700);
-  font-size: var(--sl-font-size-x-small);
-  padding: var(--sl-spacing-x-small);
+  color: var(--wa-color-neutral-700);
+  font-size: var(--wa-font-size-x-small);
+  padding: var(--wa-spacing-x-small);
 }
 
 .bracket-sub-details {
   .bracket-details-content {
-    font-size: var(--sl-font-size-x-small);
-    padding: var(--sl-spacing-2x-small);
+    font-size: var(--wa-font-size-x-small);
+    padding: var(--wa-spacing-2x-small);
   }
 
   .bracket-details-label {
-    font-size: var(--sl-font-size-2x-small);
-    padding: var(--sl-spacing-2x-small);
+    font-size: var(--wa-font-size-2x-small);
+    padding: var(--wa-spacing-2x-small);
   }
 }
 
-.sl-theme-light {
+.wa-theme-light {
   img[src="/static/images/MichiganSt.svg"] {
     filter: brightness(0) saturate(100%) invert(19%) sepia(32%) saturate(892%)
       hue-rotate(104deg) brightness(98%) contrast(93%);

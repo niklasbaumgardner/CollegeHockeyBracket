@@ -24,8 +24,8 @@ export class MyBrackets extends Standings {
 
   newBracketButtonTemplate() {
     if (this.brackets.length < 5 && CAN_EDIT_BRACKET) {
-      return html`<sl-button variant="primary" href=${NEW_BRACKET_LINK} outline
-        >Create Bracket</sl-button
+      return html`<wa-button variant="primary" href=${NEW_BRACKET_LINK} outline
+        >Create Bracket</wa-button
       >`;
     }
 
@@ -45,11 +45,11 @@ export class MyBrackets extends Standings {
 
   newGroupButtonTemplate() {
     if (CAN_EDIT_BRACKET) {
-      return html`<sl-button
+      return html`<wa-button
         variant="primary"
         @click=${this.handleCreateGroupClick}
         outline
-        >Create Group</sl-button
+        >Create Group</wa-button
       >`;
     }
 
@@ -77,21 +77,21 @@ export class MyBrackets extends Standings {
 
   render() {
     return html`<div class="d-flex justify-content-center">
-      <sl-card>
+      <wa-card>
         ${this.titleTemplate()}
         <div class="d-flex flex-column gap-3">
           ${this.messageTemplate()}
-          <sl-tab-group>
-            <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>
-            <sl-tab slot="nav" panel="groups">Groups</sl-tab>
+          <wa-tab-group>
+            <wa-tab slot="nav" panel="my-brackets">My Brackets</wa-tab>
+            <wa-tab slot="nav" panel="groups">Groups</wa-tab>
 
-            <sl-tab-panel name="my-brackets"
-              >${this.bracketsTemplate()}</sl-tab-panel
+            <wa-tab-panel name="my-brackets"
+              >${this.bracketsTemplate()}</wa-tab-panel
             >
-            <sl-tab-panel name="groups">${this.groupsTemplate()}</sl-tab-panel>
-          </sl-tab-group>
+            <wa-tab-panel name="groups">${this.groupsTemplate()}</wa-tab-panel>
+          </wa-tab-group>
         </div>
-      </sl-card>
+      </wa-card>
     </div>`;
   }
 }

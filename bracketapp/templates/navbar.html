@@ -1,149 +1,110 @@
-<nav class="navbar navbar-expand-lg bg-primary-subtle sticky-top">
-  <div class="container">
+<header slot="header" class="wa-split">
+  <div class="wa-cluster">
     {% block backButton %}{% endblock backButton %}
-    <a class="navbar-brand" href="/">NB Bracket Challenge</a>
-    <button
-      class="navbar-toggler border-0 p-1 shadow-none"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div
-      class="offcanvas offcanvas-end"
-      tabindex="-1"
-      id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel"
-    >
-      <div class="offcanvas-header">
-        <a
-          class="offcanvas-title navbar-brand"
-          id="offcanvasNavbarLabel"
-          href="/"
-        >
-          NB Bracket Challenge
-        </a>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <div class="d-flex flex-grow-1">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a
-                class="nav-link {% block mybrackets %}{% endblock mybrackets %}"
-                href="{{ url_for('mybrackets_bp.my_brackets') }}"
-                >My Brackets</a
-              >
-            </li>
-            {% endif %}
-            <li class="nav-item">
-              <a
-                class="nav-link {% block standings %}{% endblock standings %}"
-                href="{{ url_for('leaderboard_bp.leaderboard') }}"
-                >Leaderboard</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link {% block archive %}{% endblock archive %}"
-                href="{{ url_for('archive_bp.archive') }}"
-                >Archive</a
-              >
-            </li>
-          </ul>
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <sl-dropdown>
-              <sl-button id="theme-button" variant="text" slot="trigger" caret>
-                <sl-icon
-                  id="light-icon"
-                  name="sun-fill"
-                  library="default"
-                  hidden
-                ></sl-icon>
-                <sl-icon
-                  id="dark-icon"
-                  name="moon-fill"
-                  library="default"
-                  hidden
-                ></sl-icon>
-              </sl-button>
-              <sl-menu id="theme-selector">
-                <sl-menu-item id="light" type="checkbox" value="light"
-                  >Light</sl-menu-item
-                >
-                <sl-menu-item id="dark" type="checkbox" value="dark"
-                  >Dark</sl-menu-item
-                >
-              </sl-menu>
-            </sl-dropdown>
-            {% if current_user.is_authenticated %}
-            <sl-dropdown placement="bottom">
-              <sl-button
-                slot="trigger"
-                variant="text"
-                class="neutral font-size-medium"
-                caret
-              >
-                {{ current_user.username }}
-              </sl-button>
-              <sl-menu class="nb-dropdown">
-                {% if current_user.is_authenticated and current_user.role !=
-                None and current_user.role > 1 %}
-                <sl-menu-item
-                  ><a
-                    class="nb-menu-item"
-                    href="{{ url_for('admin_bp.admin') }}"
-                    >Admin</a
-                  ></sl-menu-item
-                >
-                {% endif %}
-                <sl-menu-item
-                  ><a
-                    class="nb-menu-item"
-                    href="{{ url_for('preferences_bp.preferences') }}"
-                    >Preferences</a
-                  ></sl-menu-item
-                >
-                <sl-menu-item
-                  ><a
-                    class="nb-menu-item"
-                    href="{{ url_for('profile_bp.profile') }}"
-                    >Profile</a
-                  ></sl-menu-item
-                >
-                <sl-menu-item
-                  ><a
-                    class="nb-menu-item"
-                    href="{{ url_for('auth_bp.logout') }}"
-                    >Logout</a
-                  ></sl-menu-item
-                >
-              </sl-menu>
-            </sl-dropdown>
-
-            {% else %}
-            <li class="nav-item">
-              <a
-                class="nav-link {% block login %}{% endblock login %}"
-                href="{{ url_for('auth_bp.login') }}"
-                >Login</a
-              >
-            </li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </div>
+    <a class="wa-heading" href="/">NB Bracket Challenge</a>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('mybrackets_bp.my_brackets') }}">My Brackets</a>
+    {% endif %}
+    <a href="#" class="wa-desktop-only">Leaderboard</a>
+    <a href="#" class="wa-desktop-only">Archive</a>
   </div>
-</nav>
+  <div class="wa-cluster wa-gap-xs">
+    <nb-theme-selector></nb-theme-selector>
+    {% if current_user.is_authenticated %}
+    <wa-dropdown placement="bottom">
+      <wa-button
+        slot="trigger"
+        variant="text"
+        class="neutral font-size-medium"
+        caret
+      >
+        {{ current_user.username }}
+      </wa-button>
+      <wa-menu class="nb-dropdown">
+        {% if current_user.is_authenticated and current_user.role != None and
+        current_user.role > 1 %}
+        <wa-menu-item
+          ><a class="nb-menu-item" href="{{ url_for('admin_bp.admin') }}"
+            >Admin</a
+          ></wa-menu-item
+        >
+        {% endif %}
+        <wa-menu-item
+          ><a
+            class="nb-menu-item"
+            href="{{ url_for('preferences_bp.preferences') }}"
+            >Preferences</a
+          ></wa-menu-item
+        >
+        <wa-menu-item
+          ><a class="nb-menu-item" href="{{ url_for('profile_bp.profile') }}"
+            >Profile</a
+          ></wa-menu-item
+        >
+        <wa-menu-item
+          ><a class="nb-menu-item" href="{{ url_for('auth_bp.logout') }}"
+            >Logout</a
+          ></wa-menu-item
+        >
+      </wa-menu>
+    </wa-dropdown>
+
+    {% else %}
+    <a href="{{ url_for('auth_bp.login') }}">Login</a>
+    {% endif %}
+    <wa-icon-button data-toggle-nav name="bars" label="Menu"></wa-icon-button>
+  </div>
+</header>
+<div class="wa-mobile-only" slot="navigation-header">
+  <div class="wa-stack">
+    <a class="wa-heading" href="/">NB Bracket Challenge</a>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('mybrackets_bp.my_brackets') }}">My Brackets</a>
+    {% endif %}
+    <a href="#" class="wa-desktop-only">Leaderboard</a>
+    <a href="#" class="wa-desktop-only">Archive</a>
+    <nb-theme-selector></nb-theme-selector>
+    {% if current_user.is_authenticated %}
+    <wa-dropdown placement="bottom">
+      <wa-button
+        slot="trigger"
+        variant="text"
+        class="neutral font-size-medium"
+        caret
+      >
+        {{ current_user.username }}
+      </wa-button>
+      <wa-menu class="nb-dropdown">
+        {% if current_user.is_authenticated and current_user.role != None and
+        current_user.role > 1 %}
+        <wa-menu-item
+          ><a class="nb-menu-item" href="{{ url_for('admin_bp.admin') }}"
+            >Admin</a
+          ></wa-menu-item
+        >
+        {% endif %}
+        <wa-menu-item
+          ><a
+            class="nb-menu-item"
+            href="{{ url_for('preferences_bp.preferences') }}"
+            >Preferences</a
+          ></wa-menu-item
+        >
+        <wa-menu-item
+          ><a class="nb-menu-item" href="{{ url_for('profile_bp.profile') }}"
+            >Profile</a
+          ></wa-menu-item
+        >
+        <wa-menu-item
+          ><a class="nb-menu-item" href="{{ url_for('auth_bp.logout') }}"
+            >Logout</a
+          ></wa-menu-item
+        >
+      </wa-menu>
+    </wa-dropdown>
+
+    {% else %}
+    <a href="{{ url_for('auth_bp.login') }}">Login</a>
+    {% endif %}
+  </div>
+</div>

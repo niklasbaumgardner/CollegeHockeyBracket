@@ -1,3 +1,5 @@
+@import url("https://early.webawesome.com/webawesome@3.0.0-alpha.11/dist/styles/themes/classic.css");
+
 .sl-theme-light {
   .nb-nav-bg {
     background-color: var(--sl-color-neutral-100);

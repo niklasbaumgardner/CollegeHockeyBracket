@@ -26,18 +26,18 @@ class MyBracketElement extends NikElement {
   }
 
   groupTemplate(groupBracket) {
-    return html`<sl-card class="group-card"
+    return html`<wa-card class="group-card"
       ><a
         class="d-flex align-items-center gap-2 text-decoration-none"
         href="${groupBracket.group.url}"
       >
-        <sl-icon class="trophy" name="trophy"></sl-icon>
+        <wa-icon class="trophy" name="trophy"></wa-icon>
         <div class="d-flex flex-column group-name">
           <span class="text-decoration-underline"
             >${groupBracket.group.name}</span
           ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
         </div>
-      </a></sl-card
+      </a></wa-card
     >`;
   }
 
@@ -46,19 +46,19 @@ class MyBracketElement extends NikElement {
       return null;
     }
 
-    return html`<sl-details
+    return html`<wa-details
       class="my-brackets-groups"
       summary="Groups (${this.bracket.group_brackets.length})"
       ><div class="d-flex flex-wrap gap-2">
         ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
-      </div></sl-details
+      </div></wa-details
     >`;
   }
 
   render() {
     if (this.bracket.id === -1) {
-      return html`<sl-button href="${NEW_BRACKET_LINK}" variant="primary"
-        >Create new bracket</sl-button
+      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="primary"
+        >Create new bracket</wa-button
       >`;
     }
     return html`<div class="d-flex flex-column gap-2 my-2">
@@ -114,14 +114,14 @@ class MyBracketActions extends NikElement {
 
   render() {
     return html`<div class="d-flex gap-3">
-      <sl-button size="small" @click=${this.handleJoinGroupClick}
-        >Add To Group</sl-button
-      ><sl-button
+      <wa-button size="small" @click=${this.handleJoinGroupClick}
+        >Add To Group</wa-button
+      ><wa-button
         size="small"
         variant="danger"
         outline
         @click=${this.handleDeleteClick}
-        >Delete</sl-button
+        >Delete</wa-button
       >
     </div>`;
   }

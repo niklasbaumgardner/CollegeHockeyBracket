@@ -2,7 +2,7 @@
 <html
   lang="en"
   data-bs-theme="{{ theme }}"
-  class="sl-theme-{{ theme }} {{ color }}-primary"
+  class="sl-theme-{{ theme }} {{ color }}-primary wa-{{ theme }}"
 >
   <head>
     <!-- Required meta tags -->
@@ -11,19 +11,19 @@
 
     <link rel="manifest" href="/static/manifest.webmanifest" />
 
-    <!-- Shoelace components -->
+    <!-- Web Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://early.webawesome.com/webawesome@3.0.0-alpha.11/dist/styles/themes/default.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://early.webawesome.com/webawesome@3.0.0-alpha.11/dist/styles/webawesome.css"
+    />
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/shoelace.js"
+      src="https://early.webawesome.com/webawesome@3.0.0-alpha.11/dist/webawesome.loader.js"
     ></script>
-
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
 
     <!-- This is only for error monitoring -->
     <script
@@ -52,6 +52,7 @@
     />
     <title>{% block title %}{% endblock title %}</title>
     <script src="/static/js/theme.js" defer></script>
+    <scrip scr="/static/js/nb-theme-selector.mjs" type="module"></scrip>
     <script src="https://cdn.jsdelivr.net/npm/stream-chat"></script>
     <script src="/static/js/chat.mjs" type="module"></script>
   </head>
@@ -86,9 +87,12 @@
     endif
     %}
   >
-    {% include "navbar.html" %}
+    <wa-page mobile-breakpoint="920" navigation-placement="end">
+      {% include "navbar.html" %}
+      <main class="wa-body">{% block content %}{% endblock content %}</main>
+    </wa-page>
 
-    <div class="container my-4 h-100">
+    <!-- <div class="container my-4 h-100">
       {% with messages = get_flashed_messages(with_categories=true) %}
       <div id="alerts" class="container d-flex justify-content-center">
         {% if messages %} {% for category, message in messages %}
@@ -133,21 +137,13 @@
           >
         </div>
       </div>
+    </div> -->
 
-      {% block content %}{% endblock content %}
-    </div>
-
-    <sl-button id="chatButton" variant="primary" hidden
+    <!-- <sl-button id="chatButton" variant="primary" hidden
       ><sl-icon name="wechat" label="Chat"></sl-icon
       ><sl-badge id="message-badge" pill hidden>0</sl-badge></sl-button
-    >
+    > -->
 
     <script src="/static/js/countdown.js"></script>
-    <!-- Optional JavaScript -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>
