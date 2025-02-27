@@ -2,6 +2,7 @@ import { Standings } from "./nb-standings.mjs";
 import { html } from "./imports.mjs";
 import { MyBracketsGrid } from "./nb-my-brackets-grid.mjs";
 import { GroupCard } from "./nb-group-card.mjs";
+import { SearchGroups } from "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
   static properties = { groups: { type: Object } };
@@ -56,6 +57,14 @@ export class MyBrackets extends Standings {
     return null;
   }
 
+  searchGroupsTemplate() {
+    if (CAN_EDIT_BRACKET) {
+      return html`<nb-search-groups></nb-search-groups>`;
+    }
+
+    return null;
+  }
+
   groupCardsTemplate() {
     if (this.groups.length) {
       return this.groups.map(
@@ -71,7 +80,7 @@ export class MyBrackets extends Standings {
 
   groupsTemplate() {
     return html`<div class="d-flex flex-column gap-3">
-      ${this.newGroupButtonTemplate()}${this.groupCardsTemplate()}
+      ${this.searchGroupsTemplate()}${this.newGroupButtonTemplate()}${this.groupCardsTemplate()}
     </div>`;
   }
 

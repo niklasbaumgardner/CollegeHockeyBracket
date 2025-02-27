@@ -468,3 +468,13 @@ nb-radio-item {
 .ag-center-cols-container {
   min-height: 0 !important;
 }
+
+nb-search-groups {
+  sl-popup::part(popup) {
+    z-index: var(--sl-z-index-drawer);
+
+    sl-menu {
+      box-shadow: var(--sl-shadow-x-large);
+    }
+  }
+}

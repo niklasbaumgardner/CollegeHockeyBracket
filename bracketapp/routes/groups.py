@@ -129,3 +129,13 @@ def lock_group(id):
     group_queries.lock_group(group_id=id)
 
     return redirect(url_for("groups_bp.view_group", id=id))
+
+
+@groups_bp.get("/search_groups")
+@login_required
+def search_groups():
+    group_name = request.args.get("name")
+
+    groups = group_queries.search_groups(group_name=group_name)
+
+    return [g.to_dict() for g in groups]

@@ -116,3 +116,15 @@ def create_group_bracket(group_id, bracket_id):
     db.session.add(group_bracket)
     db.session.commit()
     return group_bracket
+
+
+def search_groups(group_name):
+    if not group_name:
+        return []
+
+    return (
+        Group.query.filter_by(year=YEAR)
+        .where(Group.name.ilike(f"%{group_name}%"))
+        .limit(10)
+        .all()
+    )

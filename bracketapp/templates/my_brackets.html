@@ -4,6 +4,7 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
 <script>
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.new_bracket') }}";
   const CREATE_GROUP_URL = "{{ url_for('groups_bp.create_group') }}";
+  const SEARCH_URL = "{{ url_for('groups_bp.search_groups') }}";
 </script>
 
 <nb-my-brackets
