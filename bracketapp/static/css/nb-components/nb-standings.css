@@ -1,0 +1,24 @@
+nb-standings > div > sl-card,
+nb-my-brackets > div > sl-card,
+nb-group-standings > div > sl-card {
+  width: 100%;
+
+  @media (min-width: 992px) {
+    width: fit-content;
+  }
+}
+
+nb-standings-grid,
+nb-my-brackets-grid,
+nb-group-standings-grid:not(.w-100),
+nb-my-brackets > div > sl-card > div > sl-tab-group {
+  display: block;
+
+  @media (min-width: 576px) {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) {
+    width: 807px;
+  }
+}
