@@ -44,14 +44,6 @@ input[type="radio"]:checked {
   height: 22px;
 }
 
-sl-icon[name="check-circle-fill"] {
-  color: var(--sl-color-success-500);
-}
-
-sl-icon[name="x-circle-fill"] {
-  color: var(--sl-color-danger-500);
-}
-
 label#top,
 label#bottom {
   display: inline-flex;

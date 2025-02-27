@@ -1,0 +1,113 @@
+sl-icon[name="check-circle-fill"] {
+  color: var(--sl-color-success-500);
+}
+
+sl-icon[name="x-circle-fill"] {
+  color: var(--sl-color-danger-500);
+}
+
+sl-card {
+  width: 100%;
+}
+
+sl-dialog[open] {
+  position: fixed;
+  z-index: 9999;
+}
+
+sl-dialog:not([open]) {
+  display: none;
+}
+
+:host,
+:root {
+  .button--medium {
+    --sl-button-font-size-medium: var(--sl-font-size-medium);
+  }
+}
+
+sl-radio[value="custom"]::part(base) {
+  align-items: center;
+}
+
+sl-radio[value="custom"]::part(label) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sl-spacing-small);
+}
+
+sl-button.neutral::part(base) {
+  color: var(--sl-color-neutral-700);
+}
+sl-button.neutral::part(base):hover {
+  color: var(--sl-color-neutral-800);
+}
+sl-button.neutral::part(base):focus-visible {
+  color: var(--sl-color-neutral-700);
+}
+sl-button.neutral::part(base):active {
+  color: var(--sl-color-neutral-900);
+}
+
+/* Primary */
+sl-button:not([disabled])[variant="primary"]::part(base):hover {
+  background-color: var(--sl-color-primary-700);
+  border-color: var(--sl-color-primary-700);
+}
+sl-button:not([disabled])[variant="primary"]::part(base):active {
+  background-color: var(--sl-color-primary-800);
+  border-color: var(--sl-color-primary-800);
+}
+
+/* Success */
+sl-button:not([disabled])[variant="success"]::part(base):hover {
+  background-color: var(--sl-color-success-700);
+  border-color: var(--sl-color-success-700);
+}
+sl-button:not([disabled])[variant="success"]::part(base):active {
+  background-color: var(--sl-color-success-800);
+  border-color: var(--sl-color-success-800);
+}
+
+/* Neutral */
+sl-button:not([disabled])[variant="neutral"]::part(base):hover {
+  background-color: var(--sl-color-neutral-700);
+  border-color: var(--sl-color-neutral-700);
+}
+sl-button:not([disabled])[variant="neutral"]::part(base):active {
+  background-color: var(--sl-color-neutral-800);
+  border-color: var(--sl-color-neutral-800);
+}
+
+/* Warning */
+sl-button:not([disabled])[variant="warning"]::part(base):hover {
+  background-color: var(--sl-color-warning-700);
+  border-color: var(--sl-color-warning-700);
+}
+sl-button:not([disabled])[variant="warning"]::part(base):active {
+  background-color: var(--sl-color-warning-800);
+  border-color: var(--sl-color-warning-800);
+}
+
+/* Danger */
+sl-button:not([disabled])[variant="danger"]::part(base):hover {
+  background-color: var(--sl-color-danger-700);
+  border-color: var(--sl-color-danger-700);
+}
+sl-button:not([disabled])[variant="danger"]::part(base):active {
+  background-color: var(--sl-color-danger-800);
+  border-color: var(--sl-color-danger-800);
+}
+
+.font-size-medium,
+.font-size-medium::part(base) {
+  font-size: var(--sl-font-size-medium);
+}
+
+.font-size-x-small {
+  font-size: var(--sl-font-size-x-small);
+}
+
+.font-size-2x-small {
+  font-size: var(--sl-font-size-2x-small);
+}
