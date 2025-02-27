@@ -1,5 +1,5 @@
 from bracketapp.queries import bracket_queries, user_queries
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.config import CAN_EDIT_BRACKET
 from flask_login import current_user
 from flask import url_for
 import os.path

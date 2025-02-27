@@ -2,8 +2,7 @@ from bracketapp.queries import bracket_queries
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
 from bracketapp.utils import bracket_utils
-from bracketapp.config import YEAR, CAN_EDIT_BRACKET
-from bracketapp import app
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 
 
 viewbracket_bp = Blueprint("viewbracket_bp", __name__)
