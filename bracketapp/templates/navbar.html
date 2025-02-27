@@ -63,30 +63,7 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <sl-dropdown>
-              <sl-button id="theme-button" variant="text" slot="trigger" caret>
-                <sl-icon
-                  id="light-icon"
-                  name="sun-fill"
-                  library="default"
-                  hidden
-                ></sl-icon>
-                <sl-icon
-                  id="dark-icon"
-                  name="moon-fill"
-                  library="default"
-                  hidden
-                ></sl-icon>
-              </sl-button>
-              <sl-menu id="theme-selector">
-                <sl-menu-item id="light" type="checkbox" value="light"
-                  >Light</sl-menu-item
-                >
-                <sl-menu-item id="dark" type="checkbox" value="dark"
-                  >Dark</sl-menu-item
-                >
-              </sl-menu>
-            </sl-dropdown>
+            <nb-theme-selector></nb-theme-selector>
             {% if current_user.is_authenticated %}
             <sl-dropdown placement="bottom">
               <sl-button
