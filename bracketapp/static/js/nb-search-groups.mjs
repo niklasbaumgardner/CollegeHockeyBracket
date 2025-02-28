@@ -31,6 +31,8 @@ export class SearchGroups extends NikElement {
     console.log(res);
     this.results = await res.json();
     console.log(this.results);
+
+    this.lastSearchValue = name;
   }
 
   debounce(callback, wait) {
@@ -48,11 +50,13 @@ export class SearchGroups extends NikElement {
       return;
     }
 
+    if (this.input.value.length < 3) {
+      return;
+    }
+
     this.debounce(async () => {
       await this.search();
     }, 300)();
-
-    this.lastSearchValues = this.searchValues;
   }
 
   groupTemplate(group) {
