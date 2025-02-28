@@ -2,6 +2,7 @@
 @import url("index.css");
 @import url("shoelaceOverrides.css");
 
+@import url("./nb-components/nb-auth.css");
 @import url("./nb-components/my-brackets.css");
 @import url("./nb-components/nb-bracket.css");
 @import url("./nb-components/nb-chat-el.css");

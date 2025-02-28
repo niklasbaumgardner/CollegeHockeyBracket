@@ -51,6 +51,14 @@
     />
     <title>{% block title %}{% endblock title %}</title>
     <script src="/static/js/nb-theme-selector.mjs" type="module"></script>
+    <script src="/static/js/nb-login.mjs" type="module"></script>
+    <script src="/static/js/nb-signup.mjs" type="module"></script>
+    <script
+      src="/static/js/nb-password-reset-request.mjs"
+      type="module"
+    ></script>
+    <script src="/static/js/nb-reset-password.mjs" type="module"></script>
+    <script src="/static/js/nb-profile.mjs" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/stream-chat"></script>
     <script src="/static/js/chat.mjs" type="module"></script>
   </head>
@@ -63,6 +71,12 @@
   </style>
 
   <script>
+    const LOGIN_URL = "{{ url_for('auth_bp.login') }}";
+    const SINGUP_URL = "{{ url_for('auth_bp.signup') }}";
+    const PASSWORD_RESET_REQUEST_URL = "{{ url_for('auth_bp.password_request') }}";
+    const PROFILE_URL = "{{ url_for('profile_bp.profile') }}";
+    const USERNAME_UNIQUE_URL = "{{ url_for('auth_bp.username_unique') }}";
+    const EMAIL_UNIQUE_URL = "{{ url_for('auth_bp.email_unique') }}";
     const THEME_URL = "{{ url_for('theme_bp.set_theme') }}";
     const THEME = "{{ theme }}";
     const CAN_EDIT_BRACKET = "{{ CAN_EDIT_BRACKET }}" == "True";
@@ -87,7 +101,9 @@
   >
     {% include "navbar.html" %}
 
-    <div class="container my-4 h-100">
+    <div
+      class="container my-4 h-100 d-flex flex-column justify-content-center align-items-center"
+    >
       {% with messages = get_flashed_messages(with_categories=true) %}
       <div id="alerts" class="container d-flex justify-content-center">
         {% if messages %} {% for category, message in messages %}
