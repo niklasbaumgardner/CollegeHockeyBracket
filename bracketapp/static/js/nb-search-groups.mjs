@@ -56,7 +56,17 @@ export class SearchGroups extends NikElement {
   }
 
   groupTemplate(group) {
-    return html`<nb-group-card .group=${group}></nb-group-card>`;
+    return html`<a
+      style="color:unset;"
+      class="d-flex flex-grow-1 align-items-center text-decoration-none gap-3"
+      href="${group.url}"
+    >
+      <sl-icon class="" name="trophy"></sl-icon>
+      <div class="d-flex flex-column group-name">
+        <span class="text-decoration-underline">${group.name}</span>
+        <small>Group size: ${group.members.length}</small>
+      </div>
+    </a>`;
   }
 
   resultsTemplate() {
@@ -65,9 +75,13 @@ export class SearchGroups extends NikElement {
     }
 
     return html`<sl-menu
-      >${this.results.map(
-        (g) => html`<sl-menu-item>${this.groupTemplate(g)}</sl-menu-item>`
-      )}
+      >${this.results
+        .map((g) => [
+          html`<sl-menu-item>${this.groupTemplate(g)}</sl-menu-item>`,
+          html`<sl-divider></sl-divider>`,
+        ])
+        .flat()
+        .slice(0, -1)}</sl-menu-item>
     </sl-menu>`;
   }
 

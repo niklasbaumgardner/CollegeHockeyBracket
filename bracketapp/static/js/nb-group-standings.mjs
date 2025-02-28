@@ -53,11 +53,11 @@ export class GroupStandings extends Standings {
       return html`<sl-button
         variant="primary"
         @click=${this.handleJoinButtonClick}
-        ><sl-icon slot="prefix" name="lock"></sl-icon> Join group</sl-button
+        >Join Group</sl-button
       >`;
     } else {
       return html`<sl-button variant="primary" href="${JOIN_GROUP_URL}"
-        >Join group</sl-button
+        >Join Group</sl-button
       >`;
     }
   }

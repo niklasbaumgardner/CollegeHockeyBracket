@@ -47,6 +47,7 @@ export class MyBrackets extends Standings {
   newGroupButtonTemplate() {
     if (CAN_EDIT_BRACKET) {
       return html`<sl-button
+        class="w-100"
         variant="primary"
         @click=${this.handleCreateGroupClick}
         outline
@@ -78,9 +79,16 @@ export class MyBrackets extends Standings {
     return "Coming soon...";
   }
 
+  groupSearchAndButtonTemplate() {
+    return html`<div class="d-flex gap-3">
+      <div class="flex-grow-1">${this.newGroupButtonTemplate()}</div>
+      <div class="flex-grow-1">${this.searchGroupsTemplate()}</div>
+    </div>`;
+  }
+
   groupsTemplate() {
     return html`<div class="d-flex flex-column gap-3">
-      ${this.searchGroupsTemplate()}${this.newGroupButtonTemplate()}${this.groupCardsTemplate()}
+      ${this.groupSearchAndButtonTemplate()}${this.groupCardsTemplate()}
     </div>`;
   }
 
