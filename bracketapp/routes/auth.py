@@ -49,7 +49,6 @@ def signup():
         email = request.form.get("email")
         username = request.form.get("username")
         password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
 
         if not user_queries.is_email_unique(email):
             flash("Email already exists. Please log in", "primary")
@@ -64,10 +63,6 @@ def signup():
 
         if len(password1) < 6:
             flash("Password must be longer than 6 characters. Try again", "warning")
-            return redirect(url_for("auth_bp.signup"))
-
-        if password1 != password2:
-            flash("Passwords don't match. Try again", "warning")
             return redirect(url_for("auth_bp.signup"))
 
         user_queries.create_user(email=email, username=username, password=password1)
