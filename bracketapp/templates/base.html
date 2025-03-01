@@ -102,7 +102,7 @@
     {% include "navbar.html" %}
 
     <div
-      class="container my-4 h-100 d-flex flex-column justify-content-center align-items-center"
+      class="container my-4 h-100 d-flex justify-content-center align-items-center"
     >
       {% with messages = get_flashed_messages(with_categories=true) %}
       <div id="alerts" class="container d-flex justify-content-center">
@@ -149,7 +149,7 @@
         </div>
       </div>
 
-      {% block content %}{% endblock content %}
+      <div class="flex-grow-1">{% block content %}{% endblock content %}</div>
     </div>
 
     <sl-button id="chatButton" variant="primary" hidden
