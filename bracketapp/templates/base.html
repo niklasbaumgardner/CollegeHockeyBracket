@@ -149,7 +149,9 @@
         </div>
       </div>
 
-      <div class="flex-grow-1">{% block content %}{% endblock content %}</div>
+      <div class="flex-grow-1 d-flex justify-content-center">
+        {% block content %}{% endblock content %}
+      </div>
     </div>
 
     <sl-button id="chatButton" variant="primary" hidden
