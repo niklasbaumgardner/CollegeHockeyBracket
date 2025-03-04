@@ -20,6 +20,10 @@ export class GroupStandings extends Standings {
     bracketDialog: "#create-bracket-dialog",
   };
 
+  get canEditGroupBracket() {
+    return CAN_EDIT_BRACKET && CURRENT_YEAR === this.group.year;
+  }
+
   handleJoinButtonClick() {
     this.joinDialog.show();
   }
@@ -33,7 +37,7 @@ export class GroupStandings extends Standings {
   }
 
   memeberTemplate() {
-    if (CAN_EDIT_BRACKET && MY_BRACKET_COUNT < 5) {
+    if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
       return html`<sl-button
         variant="primary"
         outline
@@ -70,19 +74,24 @@ export class GroupStandings extends Standings {
       >`;
     }
     return html`<div class="d-flex gap-4">
-      <small
-        ><span class="fw-semibold">Members</span> ${this.group.members
-          .length}</small
-      ><small
-        ><span class="fw-semibold">Brackets</span> ${this.brackets
-          .length}</small
-      >
-      <small
-        ><span class="fw-semibold">Group type</span> ${this.group.is_private
-          ? "Private"
-          : "Public"}</small
-      >${passwordTemplate}
-    </div>`;
+        <small
+          ><span class="fw-semibold">Members</span> ${this.group.members
+            .length}</small
+        ><small
+          ><span class="fw-semibold">Brackets</span> ${this.brackets
+            .length}</small
+        >
+        <small
+          ><span class="fw-semibold">Group type</span> ${this.group.is_private
+            ? "Private"
+            : "Public"}</small
+        >${passwordTemplate}
+      </div>
+      ${this.group.year !== CURRENT_YEAR
+        ? html`<sl-alert open>
+            You are viewing a group from ${this.group.year}</sl-alert
+          >`
+        : null}`;
   }
 
   messageTemplate() {
@@ -120,14 +129,6 @@ export class GroupStandings extends Standings {
     </sl-dialog>`;
   }
 
-  createBracketDialogTemplate() {
-    return html`<sl-dialog id="create-bracket-dialog" label="Create a bracket">
-      This group is private. Please enter the password to join.
-      <sl-button @click=${this.closeDialog} slot="footer">Close</sl-button>
-      <sl-button slot="footer" variant="primary">Join</sl-button>
-    </sl-dialog>`;
-  }
-
   titleTemplate() {
     const inviteTemplate = html`<div>
       Invite friends
@@ -153,7 +154,7 @@ export class GroupStandings extends Standings {
   }
 
   render() {
-    return html`${super.render()}${this.joinPrivateGroupTemplate()}${this.createBracketDialogTemplate()}`;
+    return html`${super.render()}${this.joinPrivateGroupTemplate()}`;
   }
 }
 

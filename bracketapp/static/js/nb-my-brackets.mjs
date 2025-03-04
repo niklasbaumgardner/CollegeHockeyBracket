@@ -36,6 +36,9 @@ export class MyBrackets extends Standings {
   bracketsTemplate() {
     return html`<div class="d-flex flex-column gap-3">
       ${this.newBracketButtonTemplate()}
+      ${this.brackets.length === 0
+        ? "Create a bracket before time runs out!"
+        : null}
       <nb-my-brackets-grid
         .brackets=${this.brackets}
         .groups=${this.groups}

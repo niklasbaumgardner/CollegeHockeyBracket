@@ -150,11 +150,14 @@ export class StandingsGrid extends NikElement {
 
   handleThemeChange() {
     let theme = document.documentElement.getAttribute("data-bs-theme");
-    this.standingsGridEl.classList.toggle(
+    this.standingsGridEl?.classList.toggle(
       "ag-theme-alpine-dark",
       theme === "dark"
     );
-    this.standingsGridEl.classList.toggle("ag-theme-alpine", theme === "light");
+    this.standingsGridEl?.classList.toggle(
+      "ag-theme-alpine",
+      theme === "light"
+    );
   }
 
   render() {

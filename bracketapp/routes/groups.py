@@ -43,13 +43,16 @@ def view_group(id):
     member = group_queries.get_group_member(group_id=id)
     is_member = member is not None
 
-    brackets, winners, correct = bracket_utils.get_group_standings(group_id=id)
+    brackets, winners, correct = bracket_utils.get_group_standings(
+        group_id=id, year=group.year
+    )
 
+    safe_only = group.year == YEAR and CAN_EDIT_BRACKET
     brackets_dict = [
-        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in brackets
+        b.to_dict(safe_only=safe_only, include_games=False) for b in brackets
     ]
     winners_dict = [
-        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners
+        b.to_dict(safe_only=safe_only, include_games=False) for b in winners
     ]
 
     # return render_template(

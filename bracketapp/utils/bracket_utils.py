@@ -1,5 +1,5 @@
 from bracketapp.queries import bracket_queries, user_queries
-from bracketapp.config import CAN_EDIT_BRACKET
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from flask_login import current_user
 from flask import url_for
 import os.path
@@ -144,9 +144,9 @@ def get_group_winners(standings, correct):
     return winners
 
 
-def get_group_standings(group_id):
+def get_group_standings(group_id, year):
     brackets = bracket_queries.get_brackets_for_group(group_id=group_id)
-    correct = bracket_queries.get_correct_bracket()
+    correct = bracket_queries.get_correct_bracket_for_year(year=year)
 
     if correct and correct.winner:
         for bracket in brackets:
@@ -157,7 +157,11 @@ def get_group_standings(group_id):
         brackets.sort(key=lambda b: b.goal_difference)
 
     brackets.sort(key=lambda b: b.name.casefold())
-    if not CAN_EDIT_BRACKET and brackets and brackets[0].group_bracket.group_rank:
+    if (
+        (YEAR != year or not CAN_EDIT_BRACKET)
+        and brackets
+        and brackets[0].group_bracket.group_rank
+    ):
         brackets.sort(key=lambda b: b.max_points, reverse=True)
         brackets.sort(key=lambda b: b.group_bracket.group_rank)
 
