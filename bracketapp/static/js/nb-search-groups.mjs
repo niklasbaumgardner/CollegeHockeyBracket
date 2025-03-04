@@ -25,12 +25,8 @@ export class SearchGroups extends NikElement {
       return;
     }
 
-    this.popup.active = true;
-
     let res = await fetch(SEARCH_URL + "?" + new URLSearchParams({ name }));
-    console.log(res);
     this.results = await res.json();
-    console.log(this.results);
 
     this.lastSearchValue = name;
   }
@@ -57,6 +53,14 @@ export class SearchGroups extends NikElement {
     this.debounce(async () => {
       await this.search();
     }, 300)();
+  }
+
+  handleFocus() {
+    this.popup.active = true;
+  }
+
+  handleBlur() {
+    this.popup.active = false;
   }
 
   groupTemplate(group) {
@@ -93,6 +97,8 @@ export class SearchGroups extends NikElement {
     return html`
       <sl-popup placement="bottom" sync="width" strategy="fixed">
         <sl-input
+          @sl-focus=${this.handleFocus}
+          @sl-blur=${this.handleBlur}
           slot="anchor"
           placeholder="Search for groups"
           clearable
