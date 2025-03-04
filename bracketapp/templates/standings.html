@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block title %}{% if year == CURRENT_YEAR
-%}Leaderboard{% else %}Archive {{ year }}{% endif %}{% endblock title %} {%
-block standings %}active{% endblock standings %} {% block content %}
+%}Leaderboard{% else %}Archive {{ year }}{% endif %}{% endblock title %} {% block
+standings %}active{% endblock standings %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 
 <nb-standings
-  brackets="{{ standings|tojson }}"
-  winners="{{ winners|tojson }}"
+  brackets='{{ standings|tojson }}'
+  winners='{{ winners|tojson }}'
   theme="{{ theme }}"
   year="{{ year }}"
 ></nb-standings>
