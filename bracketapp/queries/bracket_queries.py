@@ -234,11 +234,9 @@ def __admin_delete_bracket__(bracket_id):
 
     for group_bracket in group_brackets:
         db.session.delete(group_bracket)
-        db.session.commit()
 
     for game in games:
         db.session.delete(game)
-        db.session.commit()
 
     db.session.delete(bracket)
     db.session.commit()
@@ -252,11 +250,9 @@ def delete_bracket(bracket_id):
 
     for group_bracket in group_brackets:
         db.session.delete(group_bracket)
-        db.session.commit()
 
     for game in games:
         db.session.delete(game)
-        db.session.commit()
 
     db.session.delete(bracket)
     db.session.commit()
@@ -268,12 +264,12 @@ def delete_bracket(bracket_id):
 def create_correct_bracket():
     correct = CorrectBracket(year=YEAR)
     db.session.add(correct)
-    db.session.commit()
 
     for i in range(1, 16):
         new_game = CorrectGame(bracket_id=correct.id, game_num=f"game{i}")
         db.session.add(new_game)
-        db.session.commit()
+
+    db.session.commit()
 
     return correct
 
@@ -335,7 +331,6 @@ def delete_correct_bracket():
 
     for game in correct.games_list:
         db.session.delete(game)
-        db.session.commit()
 
     db.session.delete(correct)
     db.session.commit()
@@ -347,12 +342,12 @@ def delete_correct_bracket():
 def create_default_bracket():
     default = DefaultBracket(year=YEAR)
     db.session.add(default)
-    db.session.commit()
 
     for i in range(1, 9):
         new_game = DefaultGame(bracket_id=default.id, game_num=f"game{i}")
         db.session.add(new_game)
-        db.session.commit()
+
+    db.session.commit()
 
     return default
 
@@ -392,7 +387,6 @@ def delete_default_bracket():
 
     for game in default.games_list:
         db.session.delete(game)
-        db.session.commit()
 
     db.session.delete(default)
     db.session.commit()
@@ -481,7 +475,8 @@ def update_points():
         )
 
         user_bracket.max_points = max_points
-        db.session.commit()
+
+    db.session.commit()
 
     update_standings(brackets=brackets, correct=correct)
 
