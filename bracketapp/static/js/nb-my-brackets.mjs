@@ -5,7 +5,10 @@ import { GroupCard } from "./nb-group-card.mjs";
 import { SearchGroups } from "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
-  static properties = { groups: { type: Object } };
+  static properties = {
+    groups: { type: Object },
+    shouldShowBrackets: { type: Boolean },
+  };
 
   static queries = {
     tabGroup: "sl-tab-group",
@@ -18,6 +21,23 @@ export class MyBrackets extends Standings {
 
     this.initialTabPanel =
       this.url.hash === "#groups" ? "groups" : "my-brackets";
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    document.addEventListener("sl-tab-show", this);
+  }
+
+  handleEvent(event) {
+    switch (event.type) {
+      case "sl-tab-show": {
+        if (event.detail.name === "my-brackets") {
+          this.shouldShowBrackets = true;
+          document.removeEventListener("sl-tab-show", this);
+        }
+      }
+    }
   }
 
   async firstUpdated() {
@@ -55,6 +75,10 @@ export class MyBrackets extends Standings {
   }
 
   bracketsTemplate() {
+    if (this.initialTabPanel === "groups" && !this.shouldShowBrackets) {
+      return;
+    }
+
     return html`<div class="d-flex flex-column gap-3">
       ${this.newBracketButtonTemplate()}
       ${this.brackets.length === 0
@@ -126,7 +150,7 @@ export class MyBrackets extends Standings {
         ${this.titleTemplate()}
         <div class="d-flex flex-column gap-3">
           ${this.messageTemplate()}
-          <sl-tab-group>
+          <sl-tab-group @sl-tab-show=${this.handleTabShow}>
             <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>
             <sl-tab slot="nav" panel="groups">Groups</sl-tab>
 
