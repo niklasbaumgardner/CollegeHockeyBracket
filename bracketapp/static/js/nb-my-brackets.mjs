@@ -26,7 +26,9 @@ export class MyBrackets extends Standings {
   connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener("sl-tab-show", this);
+    if (this.initialTabPanel === "groups") {
+      document.addEventListener("sl-tab-show", this);
+    }
   }
 
   handleEvent(event) {
