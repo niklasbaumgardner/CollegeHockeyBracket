@@ -105,6 +105,7 @@ class Bracket(db.Model, SerializerMixin):
             return super().to_dict(
                 only=(
                     "id",
+                    "user_id",
                     "name",
                     "year",
                     "points",
@@ -253,6 +254,7 @@ class Group(db.Model, SerializerMixin):
         "url",
         "join_url",
         "share_url",
+        "add_bracket_url",
         "members",
         "brackets",
     )
@@ -289,6 +291,9 @@ class Group(db.Model, SerializerMixin):
         return url_for(
             "groups_bp.join_group", id=self.id, password=self.password, _external=True
         )
+
+    def add_bracket_url(self):
+        return url_for("editbracket_bp.add_bracket_to_group", id=self.id)
 
 
 class GroupMember(db.Model, SerializerMixin):

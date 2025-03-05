@@ -55,16 +55,6 @@ def view_group(id):
         b.to_dict(safe_only=safe_only, include_games=False) for b in winners
     ]
 
-    # return render_template(
-    #     "standings.html",
-    #     standings=standings_dict,
-    #     winners=winners_dict,
-    #     year=YEAR,
-    # )
-
-    # If we are a memeber of the group, we can view it normally
-    # If the group is public, we can view it normally and there will be a button to join
-    # If the group is private, we will show a card with a password input to join the group
     return render_template(
         "view_group.html",
         is_member=is_member,

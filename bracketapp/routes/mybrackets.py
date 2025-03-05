@@ -22,7 +22,9 @@ def is_admin():
 def my_brackets():
     brackets = [
         b.to_dict(safe_only=False)
-        for b in bracket_queries.get_all_brackets_for_user(sort=True)
+        for b in bracket_queries.get_all_my_brackets(
+            sort=True, include_group_brackets=True
+        )
     ]
 
     groups = [g.to_dict() for g in group_queries.get_all_groups_for_user(sort=True)]

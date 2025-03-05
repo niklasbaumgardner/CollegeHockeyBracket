@@ -1,11 +1,14 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
+import { MyBrackets } from "./nb-my-brackets.mjs";
+import { AddBracketModal } from "./nb-add-bracket.mjs";
 
 export class GroupCard extends NikElement {
   static properties = {
     group: { type: Object },
-    shouldShowBracket: { type: Boolean },
+    myBrackets: { type: Object },
+    shouldShowBrackets: { type: Boolean },
   };
 
   static queries = {
@@ -22,15 +25,26 @@ export class GroupCard extends NikElement {
     switch (event.type) {
       case "sl-tab-show": {
         if (event.detail.name === "groups") {
-          this.shouldShowBracket = true;
+          this.shouldShowBrackets = true;
           document.removeEventListener("sl-tab-show", this);
         }
       }
     }
   }
 
+  handleAddBracketClick() {
+    if (!this.addBracketModal) {
+      this.addBracketModal = document.createElement("nb-add-bracket-modal");
+      this.addBracketModal.group = this.group;
+      this.addBracketModal.myBrackets = this.myBrackets;
+      document.body.appendChild(this.addBracketModal);
+    }
+
+    this.addBracketModal.show();
+  }
+
   bracketsTemplate() {
-    if (!this.shouldShowBracket) {
+    if (!this.shouldShowBrackets) {
       return null;
     }
 
@@ -39,6 +53,27 @@ export class GroupCard extends NikElement {
       .brackets=${this.group.brackets}
       theme=${THEME}
     ></nb-group-standings-grid>`;
+  }
+
+  buttonsTemplate() {
+    if (!CAN_EDIT_BRACKET) {
+      return null;
+    }
+
+    return html`<div class="d-flex gap-2">
+      <sl-button size="small" @click=${this.handleAddBracketClick}
+        >Add Bracket</sl-button
+      >
+      <div class="invite-others">
+        Invite friends
+        <sl-copy-button
+          value="${this.group.share_url}"
+          copy-label="Copy link to join"
+        >
+          <sl-icon slot="copy-icon" name="share"></sl-icon>
+        </sl-copy-button>
+      </div>
+    </div>`;
   }
 
   render() {
@@ -59,17 +94,7 @@ export class GroupCard extends NikElement {
               <span class="rank">Group size: ${this.group.members.length}</span>
             </div>
           </a>
-          ${CAN_EDIT_BRACKET
-            ? html`<div class="invite-others">
-                Invite friends
-                <sl-copy-button
-                  value="${this.group.share_url}"
-                  copy-label="Copy link to join"
-                >
-                  <sl-icon slot="copy-icon" name="share"></sl-icon>
-                </sl-copy-button>
-              </div>`
-            : null}
+          ${this.buttonsTemplate()}
         </div>
         ${this.bracketsTemplate()}
       </div>

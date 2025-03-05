@@ -15,6 +15,7 @@ from bracketapp import db
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
 from flask_login import current_user
+from sqlalchemy import and_, or_
 from sqlalchemy.sql import func, asc
 from sqlalchemy.orm import joinedload
 
@@ -71,7 +72,14 @@ def get_all_groups_for_user(sort=False):
         db.session.query(Group, Bracket, GroupBracket)
         .join(GroupMember, Group.id == GroupMember.group_id, isouter=True)
         .join(GroupBracket, Group.id == GroupBracket.group_id, isouter=True)
-        .join(Bracket, Bracket.id == GroupBracket.bracket_id, isouter=True)
+        .join(
+            Bracket,
+            and_(
+                Bracket.id == GroupBracket.bracket_id,
+                or_(Bracket.user_id is None, Bracket.user_id == current_user.id),
+            ),
+            isouter=True,
+        )
         .where(
             Group.year == YEAR,
             GroupMember.user_id == current_user.id,
@@ -128,7 +136,18 @@ def edit_group(group_id, name, is_private, password, locked):
     return group
 
 
+def get_group_bracket_for_group_and_bracket(group_id, bracket_id):
+    return GroupBracket.query.filter_by(
+        group_id=group_id, bracket_id=bracket_id, user_id=current_user.id
+    ).first()
+
+
 def create_group_bracket(group_id, bracket_id):
+    if get_group_bracket_for_group_and_bracket(
+        group_id=group_id, bracket_id=bracket_id
+    ):
+        return
+
     group_bracket = GroupBracket(
         group_id=group_id, bracket_id=bracket_id, user_id=current_user.id
     )

@@ -57,7 +57,10 @@ export class GroupStandings extends Standings {
         >Create New Bracket</sl-button
       >`;
     } else if (this.canEditGroupBracket) {
-      return html`<sl-button variant="primary" outline href=${MY_BRACKETS_URL}
+      return html`<sl-button
+        variant="primary"
+        outline
+        href=${MY_BRACKETS_URL + "#groups"}
         >Add Bracket</sl-button
       >`;
     } else if (this.numWinners > 0) {

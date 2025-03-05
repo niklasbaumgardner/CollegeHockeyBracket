@@ -7,6 +7,27 @@ import { SearchGroups } from "./nb-search-groups.mjs";
 export class MyBrackets extends Standings {
   static properties = { groups: { type: Object } };
 
+  static queries = {
+    tabGroup: "sl-tab-group",
+  };
+
+  constructor() {
+    super();
+
+    this.url = new URL(window.location);
+
+    this.initialTabPanel =
+      this.url.hash === "#groups" ? "groups" : "my-brackets";
+  }
+
+  async firstUpdated() {
+    await this.updateComplete;
+    if (this.initialTabPanel === "groups") {
+      await this.tabGroup.updateComplete;
+      this.tabGroup.show("groups");
+    }
+  }
+
   handleCreateGroupClick() {
     document.dispatchEvent(new CustomEvent("CreateNewGroup"));
   }
@@ -72,7 +93,11 @@ export class MyBrackets extends Standings {
   groupCardsTemplate() {
     if (this.groups.length) {
       return this.groups.map(
-        (g) => html`<nb-group-card .group=${g}></nb-group-card>`
+        (g) =>
+          html`<nb-group-card
+            .group=${g}
+            .myBrackets=${this.brackets}
+          ></nb-group-card>`
       );
     }
     if (CAN_EDIT_BRACKET) {

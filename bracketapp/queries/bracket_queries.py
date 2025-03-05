@@ -137,15 +137,16 @@ def get_bracket_for_user_id(user_id):
     return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
 
 
-def get_all_brackets_for_user(sort=False):
+def get_all_my_brackets(sort=False, include_group_brackets=False):
     if not current_user.is_authenticated:
         return []
 
-    brackets = (
-        Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
-        .options(joinedload(Bracket.group_brackets))
-        .all()
-    )
+    brackets_query = Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
+
+    if include_group_brackets:
+        brackets_query = brackets_query.options(joinedload(Bracket.group_brackets))
+
+    brackets = brackets_query.all()
 
     if sort:
         brackets.sort(key=lambda b: b.name.casefold())
