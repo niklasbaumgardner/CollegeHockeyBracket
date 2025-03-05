@@ -59,8 +59,6 @@
     ></script>
     <script src="/static/js/nb-reset-password.mjs" type="module"></script>
     <script src="/static/js/nb-profile.mjs" type="module"></script>
-    <script src="https://cdn.jsdelivr.net/npm/stream-chat"></script>
-    <script src="/static/js/chat.mjs" type="module"></script>
   </head>
 
   <style>
@@ -83,9 +81,10 @@
     const MY_BRACKET_COUNT = {{ MY_BRACKET_COUNT }};
     const CURRENT_YEAR = {{ CURRENT_YEAR }};
     const CREATE_STREAMCHAT_TOKEN_URL = "{{ url_for('auth_bp.create_streamchat_token') }}";
-    let CHAT_USER;
     {% if current_user.is_authenticated %}
-        CHAT_USER = JSON.parse(`{{ current_user.to_dict()|tojson }}`);
+    const CURRENT_USER = {{ current_user.to_dict()|tojson }};
+    {% else %}
+    const CURRENT_USER = {};
     {% endif %}
   </script>
 
@@ -149,11 +148,6 @@
 
       {% block content %}{% endblock content %}
     </div>
-
-    <sl-button id="chatButton" variant="primary" hidden
-      ><sl-icon name="wechat" label="Chat"></sl-icon
-      ><sl-badge id="message-badge" pill hidden>0</sl-badge></sl-button
-    >
 
     <script src="/static/js/countdown.js"></script>
     <!-- Optional JavaScript -->
