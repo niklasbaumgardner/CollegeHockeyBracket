@@ -109,6 +109,25 @@ def lock_group(group_id):
     return group
 
 
+def edit_group(group_id, name, is_private, password, locked):
+    group = get_group(group_id=group_id)
+
+    if group.name != name:
+        group.name = name
+
+    if group.is_private != is_private:
+        group.is_private = is_private
+
+    if group.password != password:
+        group.password = password
+
+    if group.locked != locked:
+        group.locked = locked
+
+    db.session.commit()
+    return group
+
+
 def create_group_bracket(group_id, bracket_id):
     group_bracket = GroupBracket(
         group_id=group_id, bracket_id=bracket_id, user_id=current_user.id
@@ -128,3 +147,26 @@ def search_groups(group_name):
         .limit(10)
         .all()
     )
+
+
+def delete_group(group_id):
+    group = get_group(group_id=group_id)
+
+    if not group:
+        return
+
+    if current_user.is_authenticated and group.created_by != current_user.id:
+        return
+
+    # Have to delete group members and group brackets first
+    group_members = GroupMember.query.filter_by(group_id=group_id).all()
+    group_brackets = GroupBracket.query.filter_by(group_id=group_id).all()
+
+    for group_member in group_members:
+        db.session.delete(group_member)
+
+    for group_bracket in group_brackets:
+        db.session.delete(group_bracket)
+
+    db.session.delete(group)
+    db.session.commit()

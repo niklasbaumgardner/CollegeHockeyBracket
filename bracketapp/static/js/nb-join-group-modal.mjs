@@ -17,7 +17,7 @@ export class JoinGroupModal extends NikElement {
     return this.bracket.group_brackets.map((gb) => gb.group);
   }
 
-  get joinsCanJoin() {
+  get groupsCanJoin() {
     return this.groups.filter(
       (g) => !this.joinedGroups.find((jg) => jg.id === g.id)
     );
@@ -85,7 +85,7 @@ export class JoinGroupModal extends NikElement {
   }
 
   groupsTemplate() {
-    let groupCards = this.joinsCanJoin.map((g) => this.groupTemplate(g));
+    let groupCards = this.groupsCanJoin.map((g) => this.groupTemplate(g));
 
     return html`<div class="d-flex flex-column gap-2">
       <p>Available groups to join:</p>

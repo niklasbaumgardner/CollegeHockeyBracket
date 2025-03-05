@@ -1,6 +1,7 @@
 import { html } from "./imports.mjs";
 import { Standings } from "./nb-standings.mjs";
 import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
+import { EditGroup } from "./nb-edit-group.mjs";
 
 export class GroupStandings extends Standings {
   static properties = {
@@ -32,6 +33,17 @@ export class GroupStandings extends Standings {
     this.bracketDialog.show();
   }
 
+  handleEditGroupClick() {
+    if (!this.editGroup) {
+      this.editGroup = document.createElement("nb-edit-group");
+      this.editGroup.group = this.group;
+      this.editGroup.private = this.group.is_private;
+      document.body.appendChild(this.editGroup);
+    }
+
+    this.editGroup.show();
+  }
+
   closeDialog(event) {
     event.target.closest("sl-dialog").hide();
   }
@@ -42,7 +54,11 @@ export class GroupStandings extends Standings {
         variant="primary"
         outline
         href=${CREATE_BRACKET_URL}
-        >Create Bracket</sl-button
+        >Create New Bracket</sl-button
+      >`;
+    } else if (this.canEditGroupBracket) {
+      return html`<sl-button variant="primary" outline href=${MY_BRACKETS_URL}
+        >Add Bracket</sl-button
       >`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
@@ -53,6 +69,10 @@ export class GroupStandings extends Standings {
   }
 
   nonMemberTemplate() {
+    if (this.group.locked) {
+      return;
+    }
+
     if (this.group.is_private) {
       return html`<sl-button
         variant="primary"
@@ -73,6 +93,7 @@ export class GroupStandings extends Standings {
         ><span class="fw-semibold">Password</span> ${this.group.password}</small
       >`;
     }
+
     return html`<div class="d-flex gap-4">
         <small
           ><span class="fw-semibold">Members</span> ${this.group.members
@@ -140,9 +161,22 @@ export class GroupStandings extends Standings {
       </sl-copy-button>
     </div>`;
 
+    let editGroupTemplate = null;
+    if (CURRENT_USER.id === this.group.created_by && this.canEditGroupBracket) {
+      editGroupTemplate = html`<sl-button
+        style="--sl-button-font-size-medium: var(--sl-font-size-x-large);"
+        variant="text"
+        @click=${this.handleEditGroupClick}
+        ><sl-icon name="gear">Edit Group</sl-icon></sl-button
+      >`;
+    }
+
     return html`<div class="d-flex justify-content-between">
-      <h2>${this.group.name}</h2>
-      ${this.isMember ? inviteTemplate : null}
+      <div class="d-flex">
+        <h2>${this.group.name}</h2>
+        ${editGroupTemplate}
+      </div>
+      ${this.isMember && !this.group.locked ? inviteTemplate : null}
     </div>`;
   }
 

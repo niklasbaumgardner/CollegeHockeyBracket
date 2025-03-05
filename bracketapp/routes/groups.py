@@ -74,6 +74,44 @@ def view_group(id):
     )
 
 
+@groups_bp.post("/edit_group/<int:id>")
+@login_required
+def edit_group(id):
+    group = group_queries.get_group(group_id=id)
+    if group.created_by != current_user.id:
+        flash("You can't edit a group you didn't create")
+
+    group_name = request.form.get("name")
+    is_private = request.form.get("is_private") == "true"
+    password = request.form.get("password")
+    locked = request.form.get("locked") == "true"
+
+    group_queries.edit_group(
+        group_id=id,
+        name=group_name,
+        is_private=is_private,
+        password=password,
+        locked=locked,
+    )
+
+    flash("Group updated", "success")
+    return redirect(url_for("groups_bp.view_group", id=id))
+
+
+@groups_bp.post("/delete_group/<int:id>")
+@login_required
+def delete_group(id):
+    group = group_queries.get_group(group_id=id)
+    if group.created_by != current_user.id:
+        flash("You can't delete a group you didn't create")
+        return redirect(url_for("groups_bp.view_group", id=id))
+
+    group_queries.delete_group(group_id=id)
+
+    flash("Group deleted", "success")
+    return redirect(url_for("groups_bp.my_brackets"))
+
+
 @groups_bp.post("/create_group")
 @login_required
 def create_group():

@@ -5,6 +5,10 @@
   const CREATE_BRACKET_URL =
     "{{ url_for('editbracket_bp.new_bracket', group_id=group.id) }}";
   const JOIN_GROUP_URL = "{{ url_for('groups_bp.join_group', id=group.id) }}";
+  const EDIT_GROUP_URL = "{{ url_for('groups_bp.edit_group', id=group.id) }}";
+  const DELETE_GROUP_URL =
+    "{{ url_for('groups_bp.delete_group', id=group.id) }}";
+  const MY_BRACKETS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
 </script>
 
 <nb-group-standings

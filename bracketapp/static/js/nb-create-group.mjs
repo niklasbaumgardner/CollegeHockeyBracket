@@ -1,7 +1,7 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 
-class CreateGroup extends NikElement {
+export class CreateGroup extends NikElement {
   static properties = {
     private: { type: Boolean },
   };
@@ -34,46 +34,43 @@ class CreateGroup extends NikElement {
     this.private = !this.private;
   }
 
-  passwordTemplate() {
-    if (!this.private) {
-      return null;
-    }
-
-    return html`<sl-input
-      type="text"
-      label="Password"
-      id="password"
-      name="password"
-      placeholder="Password"
-      maxlength="60"
-      required
-    ></sl-input>`;
-  }
-
   render() {
     return html`<sl-dialog label="Create A Group">
-      <div class="mb-2">
-        <form id="new-group-form" action=${CREATE_GROUP_URL} method="POST">
-          <div class="nb-row">
-            <sl-input
-              placeholder="Group name"
-              label="Group name"
-              id="name"
-              name="name"
-              maxlength="60"
-              required
-            ></sl-input>
-            <sl-checkbox
-              id="is_private"
-              name="is_private"
-              @sl-input=${this.handlePrivateChange}
-              checked
-              >Require Password To Join</sl-checkbox
-            >
-            ${this.passwordTemplate()}
-          </div>
-        </form>
+      <form id="new-group-form" action=${CREATE_GROUP_URL} method="POST"></form>
+
+      <div class="d-flex flex-column gap-4">
+        <sl-input
+          form="new-group-form"
+          placeholder="Group name"
+          label="Group name"
+          id="name"
+          name="name"
+          maxlength="60"
+          required
+        ></sl-input>
+
+        <sl-checkbox
+          form="new-group-form"
+          id="is_private"
+          name="is_private"
+          @sl-input=${this.handlePrivateChange}
+          checked
+          >Require Password To Join</sl-checkbox
+        >
+
+        <sl-input
+          form="new-group-form"
+          type="text"
+          label="Password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          maxlength="60"
+          ?hidden=${!this.private}
+          ?required=${this.private}
+        ></sl-input>
       </div>
+
       <sl-button
         class="w-100"
         variant="primary"
@@ -85,7 +82,5 @@ class CreateGroup extends NikElement {
     </sl-dialog>`;
   }
 }
-
-export default CreateGroup;
 
 customElements.define("nb-create-group", CreateGroup);
