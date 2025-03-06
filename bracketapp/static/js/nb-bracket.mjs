@@ -120,11 +120,9 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<div class="col text-center">
-      <div class="row justify-content-center">
-        ${this.getImageElement(this.correct.winner_team)}
-        <p>Champion</p>
-      </div>
+    return html`<div class="d-flex flex-column align-items-center">
+      ${this.getImageElement(this.correct.winner_team)}
+      <p>Champion</p>
     </div>`;
   }
 
@@ -147,13 +145,11 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<div class="col text-center">
-      <div class="row justify-content-center">
-        ${this.getImageElement(this.bracket?.winner_team)}
-        <p class="champion-pick">
-          ${IS_ME ? "Your pick" : "Their pick"}${this.getChampionPickIcon()}
-        </p>
-      </div>
+    return html` <div class="d-flex flex-column align-items-center">
+      ${this.getImageElement(this.bracket?.winner_team)}
+      <p class="champion-pick">
+        ${IS_ME ? "Your pick" : "Their pick"}${this.getChampionPickIcon()}
+      </p>
     </div>`;
   }
 
@@ -162,7 +158,7 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<div class="col">
+    return html`<div>
       <p class="fs-6">Predicted Score:</p>
       <p class="fs-6 display-inline-flex">
         <span class="p-2 border border-dark-subtle"
@@ -180,12 +176,12 @@ class Bracket extends NikElement {
       <sl-card>
         <div class="champion-card">
           <span class="champion-top">${this.default.year} Championship</span>
-          <div class="row justify-content-center">
+          <div class="d-flex justify-content-center gap-4">
             ${this.pickedChampionTemplate()} ${this.correctChampionTemplate()}
           </div>
           <sl-divider class="w-100"></sl-divider>
-          <div class="row">
-            <div class="col">
+          <div class="d-flex gap-4">
+            <div>
               ${this.matchupTemplate({
                 winnerTop: this.bracket?.games.game13.winner_team,
                 winnerBottom: this.bracket?.games.game14.winner_team,

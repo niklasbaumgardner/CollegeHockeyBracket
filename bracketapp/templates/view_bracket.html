@@ -6,13 +6,12 @@ block mybracket %}{{ active }}{% endblock mybracket %} {% block content %}
   const IS_ME = "{{ my_bracket }}" === "True";
 </script>
 
-
 <nb-bracket
   bracket='{{ bracket|tojson }}'
   default='{{ default|tojson }}'
   correct='{{ correct|tojson }}'
 ></nb-bracket>
 
-<script type="module" src="/static/js/bracketEl.mjs"></script>
+<script type="module" src="/static/js/nb-bracket.mjs"></script>
 
 {% endblock content %}
