@@ -13,13 +13,6 @@ editbracket_bp = Blueprint("editbracket_bp", __name__)
 def edit_bracket(id):
     group_id = request.args.get("group_id")
 
-    my_bracket_count = bracket_queries.my_bracket_count()
-    if my_bracket_count >= 5:
-        # if we don't have a bracket id and we are already at the max number of
-        # # brackets, flash a message and go to viewing my brackets
-        flash("You have already created 5/5 brackets for this year", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
     if not CAN_EDIT_BRACKET:
         # if we have a bracket id and we can't edit, go to viewing the bracket
         return redirect(url_for("viewbracket_bp.view_bracket", id=id))
@@ -79,12 +72,6 @@ def new_bracket():
 @login_required
 def edit_bracket_post(id):
     group_id = request.args.get("group_id")
-    my_bracket_count = bracket_queries.my_bracket_count()
-    if my_bracket_count >= 5:
-        # if we don't have a bracket id and we are already at the max number of
-        # # brackets, flash a message and go to viewing my brackets
-        flash("You have already created 5/5 brackets for this year", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
 
     if not CAN_EDIT_BRACKET:
         # if we have a bracket id and we can't edit, go to viewing the bracket
