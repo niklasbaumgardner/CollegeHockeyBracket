@@ -96,7 +96,7 @@ export class BracketPointsChart extends NikElement {
   }
 
   render() {
-    return html`<div style="width:300px;height:300px;">
+    return html`<div style="width:250px;height:250px;">
       <canvas id="points-chart"></canvas>
     </div>`;
   }
