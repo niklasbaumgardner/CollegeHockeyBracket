@@ -1,6 +1,7 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import "./matchupEl.mjs";
+import { BracketPointsChart } from "./nb-bracket-points-charts.mjs";
 
 class Bracket extends NikElement {
   static properties = {
@@ -253,6 +254,18 @@ class Bracket extends NikElement {
     </div>`;
   }
 
+  chartTemplate() {
+    const points = {
+      gained: this.bracket.points,
+      lost: 320 - this.bracket.max_points,
+      unplayed: this.bracket.max_points - this.bracket.points,
+    };
+    return html`<nb-bracket-points-chart
+      class="mx-auto"
+      .points=${points}
+    ></nb-bracket-points-chart>`;
+  }
+
   topCardStats() {
     if (this.type === "correct") {
       let loser_team;
@@ -263,98 +276,103 @@ class Bracket extends NikElement {
       } else {
         loser_team = this.correct.games.game13.winner_team;
       }
-      return html`<div class="d-flex justify-content-center gap-4 flex-wrap">
-        ${this.correct.winner_team.team.name} beat ${loser_team.team.name} to
-        win the championship this year
-      </div>`;
+      return html`<div class="d-flex justify-content-center">
+          <h2>${this.correct.name}</h2>
+        </div>
+        <div class="d-flex justify-content-center gap-4 flex-wrap">
+          ${this.correct.winner_team.team.name} beat ${loser_team.team.name} to
+          win the championship this year
+        </div>`;
     }
 
-    return html`<div
-        class="d-flex justify-content-center align-items-center gap-4 flex-wrap mb-3"
-      >
-        ${this.getImageElement(this.bracket?.winner_team, true)}
-        <div class="d-flex flex-column">
-          <h2>${this.bracket.name}</h2>
-          <div class="d-flex justify-content-evenly">
+    return html`<div class="d-flex flex-wrap gap-4">
+      <div>
+        <div
+          class="d-flex justify-content-center align-items-center gap-4 flex-wrap mb-3"
+        >
+          ${this.getImageElement(this.bracket?.winner_team, true)}
+          <div class="d-flex flex-column">
+            <h2>${this.bracket.name}</h2>
+            <div class="d-flex justify-content-evenly">
+              <div class="d-flex">
+                <span
+                  ><p class="bracket-details-content">
+                    ${this.bracket?.rank ?? "--"}
+                  </p>
+                  <p class="bracket-details-label">Rank</p></span
+                >
+              </div>
+              <div class="d-flex">
+                <sl-divider vertical></sl-divider>
+                <span
+                  ><p class="bracket-details-content">
+                    ${this.bracket?.points}
+                  </p>
+                  <p class="bracket-details-label">Points</p></span
+                >
+              </div>
+              <div class="d-flex">
+                <sl-divider vertical></sl-divider>
+                <span
+                  ><p class="bracket-details-content">
+                    ${this.bracket?.max_points}
+                  </p>
+                  <p class="bracket-details-label">Max points</p></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bracket-sub-details d-flex flex-column align-content-center"
+        >
+          <div class="d-flex justify-content-evenly flex-wrap">
             <div class="d-flex">
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.rank ?? "--"}
+                  ${this.bracket?.r2 ?? "--"} / 80
                 </p>
-                <p class="bracket-details-label">Rank</p></span
+                <p class="bracket-details-label">Round 1</p></span
               >
             </div>
             <div class="d-flex">
               <sl-divider vertical></sl-divider>
               <span
-                ><p class="bracket-details-content">${this.bracket?.points}</p>
-                <p class="bracket-details-label">Points</p></span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.r2 ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Round 2</p></span
               >
             </div>
             <div class="d-flex">
               <sl-divider vertical></sl-divider>
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.max_points}
+                  ${this.bracket?.r3 ?? "--"} / 80
                 </p>
-                <p class="bracket-details-label">Max points</p></span
+                <p class="bracket-details-label">Final Four</p></span
+              >
+            </div>
+            <div class="d-flex">
+              <sl-divider vertical></sl-divider>
+              <span
+                ><p class="bracket-details-content">
+                  ${this.bracket?.r4 ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Championship</p></span
               >
             </div>
           </div>
         </div>
       </div>
-
-      <div class="bracket-sub-details d-flex flex-column align-content-center">
-        <div class="d-flex justify-content-evenly flex-wrap">
-          <div class="d-flex">
-            <span
-              ><p class="bracket-details-content">
-                ${this.bracket?.r2 ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Round 1</p></span
-            >
-          </div>
-          <div class="d-flex">
-            <sl-divider vertical></sl-divider>
-            <span
-              ><p class="bracket-details-content">
-                ${this.bracket?.r2 ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Round 2</p></span
-            >
-          </div>
-          <div class="d-flex">
-            <sl-divider vertical></sl-divider>
-            <span
-              ><p class="bracket-details-content">
-                ${this.bracket?.r3 ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Final Four</p></span
-            >
-          </div>
-          <div class="d-flex">
-            <sl-divider vertical></sl-divider>
-            <span
-              ><p class="bracket-details-content">
-                ${this.bracket?.r4 ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Championship</p></span
-            >
-          </div>
-        </div>
-      </div>`;
+      ${this.chartTemplate()}
+    </div>`;
   }
 
   topCardTemplate() {
     return html`<div class="d-flex justify-content-center">
-      <sl-card class="width-fit-content mb-3">
-        ${this.type === "correct"
-          ? html`<div class="d-flex justify-content-center">
-              <h2>${this.correct.name}</h2>
-            </div>`
-          : null}
-        ${this.topCardStats()}
-      </sl-card>
+      <sl-card class="width-fit-content mb-3">${this.topCardStats()}</sl-card>
     </div>`;
   }
 
