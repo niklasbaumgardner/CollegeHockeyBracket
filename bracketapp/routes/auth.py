@@ -66,7 +66,12 @@ def signup():
             return redirect(url_for("auth_bp.signup"))
 
         user_queries.create_user(email=email, username=username, password=password1)
-        send_email.send_signup_notification_email()
+
+        try:
+            send_email.send_signup_notification_email()
+        except Exception:
+            pass
+
         flash("Sign up succesful", "success")
         return redirect(url_for("auth_bp.login"))
 
