@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from bracketapp.queries import user_queries
 from bracketapp.models import User
 from bracketapp import bcrypt
-from bracketapp.utils.send_email import send_reset_email
+from bracketapp.utils import send_email
 import stream_chat
 import os
 
@@ -66,6 +66,7 @@ def signup():
             return redirect(url_for("auth_bp.signup"))
 
         user_queries.create_user(email=email, username=username, password=password1)
+        send_email.send_signup_notification_email()
         flash("Sign up succesful", "success")
         return redirect(url_for("auth_bp.login"))
 
@@ -82,7 +83,7 @@ def password_request():
     if request.method == "POST":
         email = request.form.get("email")
         user = user_queries.get_user_by_email(email=email)
-        send_reset_email(user)
+        send_email.send_reset_email(user)
         flash(
             "An email has been sent with instructions to reset your password. (Check spam folder)",
             "primary",
