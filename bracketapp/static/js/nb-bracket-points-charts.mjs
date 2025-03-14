@@ -24,7 +24,7 @@ export class BracketPointsChart extends NikElement {
     let danger = this.computedStyle.getPropertyValue("--sl-color-danger-400");
     let neutral = this.computedStyle.getPropertyValue("--sl-color-neutral-400");
     let borderColor = this.computedStyle.getPropertyValue(
-      "--sl-color-neutral-0"
+      "--sl-panel-background-color"
     );
     let color = this.computedStyle.getPropertyValue("--sl-color-neutral-950");
 
@@ -63,7 +63,7 @@ export class BracketPointsChart extends NikElement {
     let danger = this.computedStyle.getPropertyValue("--sl-color-danger-400");
     let neutral = this.computedStyle.getPropertyValue("--sl-color-neutral-400");
     let borderColor = this.computedStyle.getPropertyValue(
-      "--sl-color-neutral-0"
+      "--sl-panel-background-color"
     );
     let color = this.computedStyle.getPropertyValue("--sl-color-neutral-950");
 
@@ -75,28 +75,15 @@ export class BracketPointsChart extends NikElement {
   }
 
   setupThemeWatcher() {
-    this.mutationObserver = new MutationObserver(() =>
-      this.handleThemeChange()
-    );
+    this.mutationObserver = new MutationObserver(() => this.updateColors());
 
     this.mutationObserver.observe(document.documentElement, {
       attributes: true,
     });
-
-    this.handleThemeChange();
-  }
-
-  handleThemeChange() {
-    let theme =
-      document.documentElement.getAttribute("data-bs-theme") === "dark"
-        ? "dark"
-        : "light";
-
-    this.updateColors();
   }
 
   render() {
-    return html`<div style="width:250px;height:250px;">
+    return html`<div style="width:200px;height:200px;">
       <canvas id="points-chart"></canvas>
     </div>`;
   }
