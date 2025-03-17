@@ -1,6 +1,6 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import "./matchupEl.mjs";
+import "./nb-matchup.mjs";
 import { BracketPointsChart } from "./nb-bracket-points-charts.mjs";
 
 class Bracket extends NikElement {
