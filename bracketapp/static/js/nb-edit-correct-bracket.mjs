@@ -1,84 +1,13 @@
 import { html, nothing } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import "./editCorrectMatchupEl.mjs";
+import "./nb-edit-correct-matchup.mjs";
+import { EditBracket } from "./nb-edit-bracket.mjs";
 
-class EditCorrectBracket extends NikElement {
-  static properties = {
-    bracket: {
-      type: Object,
-    },
-    default: {
-      type: Object,
-    },
-    type: { type: String },
-  };
+class EditCorrectBracket extends EditBracket {
+  matchupTagName = "nb-edit-correct-matchup";
 
-  static queries = {
-    formEl: "form",
-  };
-
-  getNextMatchup(currentGameId) {
-    let id = "null";
-    switch (currentGameId) {
-      case "game1top":
-      case "game1bottom":
-      case "game2top":
-      case "game2bottom":
-        id = "game9";
-        break;
-      case "game3top":
-      case "game3bottom":
-      case "game4top":
-      case "game4bottom":
-        id = "game10";
-        break;
-      case "game5top":
-      case "game5bottom":
-      case "game6top":
-      case "game6bottom":
-        id = "game11";
-        break;
-      case "game7top":
-      case "game7bottom":
-      case "game8top":
-      case "game8bottom":
-        id = "game12";
-        break;
-      case "game9top":
-      case "game9bottom":
-      case "game10top":
-      case "game10bottom":
-        id = "game13";
-        break;
-      case "game11top":
-      case "game11bottom":
-      case "game12top":
-      case "game12bottom":
-        id = "game14";
-        break;
-      case "game13top":
-      case "game13bottom":
-      case "game14top":
-      case "game14bottom":
-        id = "game15";
-        break;
-    }
-
-    return this.querySelector(`#${id}`);
-  }
-
-  getImageElement(team) {
-    if (!team) {
-      return null;
-    }
-
-    let isWinnerCorrect =
-      !this.correct?.winner || this.correct?.winner === team;
-    return html`<img
-      class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
-      src="${team.icon_path}"
-      alt="${team.name}"
-    />`;
+  maybeToggleSaveButton() {
+    // do nothing
   }
 
   matchupTemplate(options) {
@@ -182,19 +111,15 @@ class EditCorrectBracket extends NikElement {
       <sl-card>
         <div class="championship-grid">
           <p class="round-details champion-top m-0">National Champion</p>
-          <div class="row mb-2">
-            <div class="col">
-              ${this.matchupTemplate({
-                game: "game15",
-                type: "edit",
-                winnerTop: this.bracket?.games?.game13.winner_team,
-                winnerBottom: this.bracket?.games?.game14.winner_team,
-                winner: this.bracket?.games?.game15.winner,
-                homeGoals: this.bracket?.games?.game15.h_goals,
-                awayGoals: this.bracket?.games?.game15.a_goals,
-              })}
-            </div>
-          </div>
+          ${this.matchupTemplate({
+            game: "game15",
+            type: "edit",
+            winnerTop: this.bracket?.games?.game13.winner_team,
+            winnerBottom: this.bracket?.games?.game14.winner_team,
+            winner: this.bracket?.games?.game15.winner,
+            homeGoals: this.bracket?.games?.game15.h_goals,
+            awayGoals: this.bracket?.games?.game15.a_goals,
+          })}
         </div>
       </sl-card>
     </div>`;
@@ -286,145 +211,77 @@ class EditCorrectBracket extends NikElement {
     let content = html`<sl-button variant="primary" type="submit"
       >Save bracket</sl-button
     >`;
-    if (!this.bracket.name) {
-      return html`${content}<sl-button @click=${this.resetForm}
-          >Reset bracket</sl-button
-        >`;
-    }
 
     return html`${content}<sl-button href=${CANCEL_BRACKET_URL}
         >Cancel</sl-button
       >`;
   }
 
-  setNext(el) {
-    let { id, value } = el;
-    let nextMatchup = this.getNextMatchup(id);
-    if (!nextMatchup) {
-      return;
-    }
-
-    let matchup = el.closest("nb-edit-correct-matchup");
-    matchup.winner = el.value;
-
-    let gameNum = id.match(/\d/g).join("");
-    if (gameNum % 2 === 1) {
-      if (nextMatchup.winner === nextMatchup.winnerTop) {
-        nextMatchup.winner = "";
-      }
-      let oldTeam = nextMatchup.winnerTop;
-      nextMatchup.winnerTop = value;
-      nextMatchup.topInputEl.checked = false;
-      this.maybeClearInputs(nextMatchup.id + "top", oldTeam);
-    } else {
-      if (nextMatchup.winner === nextMatchup.winnerBottom) {
-        nextMatchup.winner = "";
-      }
-      let oldTeam = nextMatchup.winnerBottom;
-      nextMatchup.winnerBottom = value;
-      nextMatchup.bottomInputEl.checked = false;
-      this.maybeClearInputs(nextMatchup.id + "bottom", oldTeam);
-    }
-  }
-
-  maybeClearInputs(id, oldTeam) {
-    let nextMatchup = this.getNextMatchup(id);
-    if (!nextMatchup) {
-      return;
-    }
-
-    let gameNum = id.match(/\d/g).join("");
-    if (gameNum % 2 === 1) {
-      if (oldTeam === nextMatchup.winnerTop) {
-        nextMatchup.winnerTop = "";
-        nextMatchup.topInputEl.checked = false;
-      }
-      this.maybeClearInputs(nextMatchup.id + "top", oldTeam);
-    } else {
-      if (oldTeam === nextMatchup.winnerBottom) {
-        nextMatchup.winnerBottom = "";
-        nextMatchup.bottomInputEl.checked = false;
-      }
-      this.maybeClearInputs(nextMatchup.id + "bottom", oldTeam);
-    }
-  }
-
-  /**
-   * Prevent and empty input from being selected
-   * @param {Event} event Click event
-   */
-  handleClick(event) {
-    let el = event.target;
-    if (!(el instanceof HTMLInputElement)) {
-      return;
-    }
-
-    if (!el.value) {
-      event.preventDefault();
-      return;
-    }
-
-    this.setNext(el);
-  }
-
-  resetForm() {
-    this.formEl.reset();
+  topCardTemplate() {
+    return html` <div class="d-flex justify-content-center">
+      <sl-card class="width-fit-content mb-4">
+        <h2 class="mb-2">${this.bracket?.year} Correct Bracket</h2>
+        <div class="d-flex justify-content-center mb-3">
+          <sl-input
+            name="name"
+            maxlength="60"
+            label="Bracket name"
+            placeholder="My bracket name"
+            value=${this.bracket?.name}
+            class="w-100"
+            required=""
+          ></sl-input>
+        </div>
+        <div class="d-flex justify-content-center gap-3">
+          ${this.buttonsTemplate()}
+        </div>
+      </sl-card>
+    </div>`;
   }
 
   render() {
-    return html`<sl-card
-      class="w-100"
-      style="--sl-panel-background-color: var(--sl-color-neutral-0)"
-      ><form action="${BRACKET_FORM_URL}" method="POST">
-        <div class="row justify-content-center">
-          <div class="col-auto">
-            <sl-input
-              label="Bracket name"
-              placeholder="mybracket"
-              value=${this.bracket.name}
-            ></sl-input>
+    return html`<div class="w-100">
+      <form
+        action="${BRACKET_FORM_URL}"
+        method="POST"
+        @input=${this.handleInput}
+      >
+        ${this.topCardTemplate()}
+        <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
+          <div class="round-one-left">
+            <sl-card class="round-details">Round 1</sl-card>
+            ${this.roundOneLeftTemplate()}
+          </div>
+
+          <div class="round-two-left">
+            <sl-card class="round-details">Round 2</sl-card>
+            ${this.roundTwoLeftTemplate()}
+          </div>
+
+          <div class="round-three-left">
+            <sl-card class="round-details">Round 3</sl-card>
+            ${this.roundThreeLeftTemplate()}
+          </div>
+
+          ${this.championTemplate()}
+
+          <div class="round-three-right">
+            <sl-card class="round-details">Round 3</sl-card>
+            ${this.roundThreeRightTemplate()}
+          </div>
+
+          <div class="round-two-right">
+            <sl-card class="round-details">Round 2</sl-card>
+            ${this.roundTwoRightTemplate()}
+          </div>
+
+          <div class="round-one-right round-one">
+            <sl-card class="round-details">Round 1</sl-card>
+            ${this.roundOneRightTemplate()}
           </div>
         </div>
-        <div class="row">
-          <div class="bracket-grid-edit" @click=${this.handleClick}>
-            <div class="round-one-left">
-              <span class="round-details">Round 1</span>
-              ${this.roundOneLeftTemplate()}
-            </div>
-
-            <div class="round-two-left">
-              <span class="round-details">Round 2</span>
-              ${this.roundTwoLeftTemplate()}
-            </div>
-
-            <div class="round-three-left">
-              <span class="round-details">Round 3</span>
-              ${this.roundThreeLeftTemplate()}
-            </div>
-
-            ${this.championTemplate()}
-
-            <div class="round-three-right">
-              <span class="round-details">Round 3</span>
-              ${this.roundThreeRightTemplate()}
-            </div>
-
-            <div class="round-two-right">
-              <span class="round-details">Round 2</span>
-              ${this.roundTwoRightTemplate()}
-            </div>
-
-            <div class="round-one-right round-one">
-              <span class="round-details">Round 1</span>
-              ${this.roundOneRightTemplate()}
-            </div>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center" style="gap:1rem;">
-          ${this.buttonsTemplate()}
-        </div>
-      </form></sl-card
-    >`;
+      </form>
+    </div>`;
   }
 }
 

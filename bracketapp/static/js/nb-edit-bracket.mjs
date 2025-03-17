@@ -2,7 +2,9 @@ import { html, nothing } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import "./nb-edit-matchup.mjs";
 
-class EditBracket extends NikElement {
+export class EditBracket extends NikElement {
+  matchupTagName = "nb-edit-matchup";
+
   static properties = {
     bracket: {
       type: Object,
@@ -343,7 +345,7 @@ class EditBracket extends NikElement {
       return;
     }
 
-    let matchup = el.closest("nb-edit-matchup");
+    let matchup = el.closest(this.matchupTagName);
     matchup.winner = el.value;
 
     let team = this.teams[value];
@@ -518,7 +520,5 @@ class EditBracket extends NikElement {
     </div>`;
   }
 }
-
-export default EditBracket;
 
 customElements.define("nb-edit-bracket", EditBracket);

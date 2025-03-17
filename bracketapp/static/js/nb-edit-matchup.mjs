@@ -1,7 +1,7 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 
-class EditMatchup extends NikElement {
+export class EditMatchup extends NikElement {
   static properties = {
     winnerTop: {
       type: Object,
@@ -48,25 +48,33 @@ class EditMatchup extends NikElement {
     />`;
   }
 
-  topInput(topTeam) {
+  topInput() {
     return html`<input
       type="radio"
       id="${this.game}top"
       name="${this.game}"
-      value="${topTeam?.id}"
+      value="${this.winnerTop?.id}"
       required=""
-      ?checked="${!!(topTeam && this.winner && this.winner === topTeam.id)}"
+      ?checked="${!!(
+        this.winnerTop &&
+        this.winner &&
+        this.winner === this.winnerTop.id
+      )}"
     />`;
   }
 
-  bottomInput(bottomTeam) {
+  bottomInput() {
     return html`<input
       type="radio"
       id="${this.game}bottom"
       name="${this.game}"
-      value="${bottomTeam?.id}"
+      value="${this.winnerBottom?.id}"
       required=""
-      ?checked=${!!(bottomTeam && this.winner && this.winner === bottomTeam.id)}
+      ?checked=${!!(
+        this.winnerBottom &&
+        this.winner &&
+        this.winner === this.winnerBottom.id
+      )}
     />`;
   }
 
@@ -76,18 +84,15 @@ class EditMatchup extends NikElement {
       style="--padding: var(--sl-spacing-2x-small);"
     >
       <label class="nb-team" id="top">
-        ${this.topInput(this.winnerTop)} ${this.getImageElement(this.winnerTop)}
+        ${this.topInput()} ${this.getImageElement(this.winnerTop)}
         <span>${this.winnerTopName}</span>
       </label>
       <label class="nb-team" id="bottom">
-        ${this.bottomInput(this.winnerBottom)}
-        ${this.getImageElement(this.winnerBottom)}
+        ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
         <span>${this.winnerBottomName}</span>
       </label>
     </sl-card>`;
   }
 }
-
-export default EditMatchup;
 
 customElements.define("nb-edit-matchup", EditMatchup);

@@ -133,7 +133,7 @@ def update_correct():
             correct = bracket_queries.create_correct_bracket()
 
         return render_template(
-            "update_correct.html",
+            "edit_cbracket.html",
             bracket=correct.to_dict(),
             default=default.to_dict(),
         )

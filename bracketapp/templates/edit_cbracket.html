@@ -6,15 +6,11 @@ endblock title %} {% block content %}
   const CANCEL_BRACKET_URL = "{{ url_for('admin_bp.update_correct') }}";
 </script>
 
-<div class="pb-5 d-flex justify-content-center mx-0">
-  <div class="fs-1">{{ year }} NCAA College Hockey Bracket</div>
-</div>
-
 <nb-edit-correct-bracket
   bracket='{{ bracket|tojson }}'
   default='{{ default|tojson }}'
 ></nb-edit-correct-bracket>
 
-<script type="module" src="/static/js/editCorrectBracketEl.mjs"></script>
+<script type="module" src="/static/js/nb-edit-correct-bracket.mjs"></script>
 
 {% endblock content %}
