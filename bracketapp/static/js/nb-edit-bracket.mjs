@@ -1,6 +1,6 @@
 import { html, nothing } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import "./editMatchupEl.mjs";
+import "./nb-edit-matchup.mjs";
 
 class EditBracket extends NikElement {
   static properties = {
