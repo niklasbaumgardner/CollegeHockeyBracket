@@ -9,7 +9,7 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("EMAIL_USER")
     MAIL_PASSWORD = os.environ.get("EMAIL_PASS")
-    MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    MAIL_DEFAULT_SENDER = ("NB Bracket Challenge", "hockey@niklasb.com")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
