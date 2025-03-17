@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.pool import NullPool
 import os
 import sentry_sdk
 
@@ -13,13 +14,8 @@ bcrypt = Bcrypt()
 migrate = Migrate()
 mail = Mail()
 login_manager = LoginManager()
-db = SQLAlchemy(
-    # engine_options=dict(
-    #     pool_pre_ping=True,
-    #     pool_size=10,
-    #     max_overflow=20,
-    # )
-)
+db = SQLAlchemy(engine_options=dict(poolclass=NullPool))
+
 if not os.environ.get("FLASK_DEBUG"):
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_DSN"),
@@ -32,7 +28,7 @@ if not os.environ.get("FLASK_DEBUG"):
             # possible.
             "continuous_profiling_auto_start": True,
         },
-        release="nbbracketchallenge@2.0.14",
+        release="nbbracketchallenge@2.0.15",
     )
 
 
