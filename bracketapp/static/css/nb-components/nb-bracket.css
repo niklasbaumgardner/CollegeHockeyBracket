@@ -20,6 +20,8 @@ nb-edit-correct-matchup {
   align-items: center;
   padding: var(--sl-spacing-3x-small);
   gap: var(--sl-spacing-3x-small);
+
+  border: 1px solid transparent;
 }
 
 .nb-team:has(input:checked) {
@@ -47,8 +49,8 @@ input[type="radio"]:checked {
 label#top,
 label#bottom {
   display: inline-flex;
-  justify-content: center;
   gap: var(--sl-spacing-3x-small);
+  width: 100%;
 }
 
 .team-img {
