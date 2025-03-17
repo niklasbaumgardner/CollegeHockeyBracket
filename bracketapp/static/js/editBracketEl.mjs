@@ -204,32 +204,30 @@ class EditBracket extends NikElement {
   }
 
   predictedScoreTemplate() {
-    return html`<div class="row">
-      <div class="championship-grid">
-        <p class="m-0 fs-6">Final Game Score</p>
-        <div class="d-flex justify-content-center align-items-center">
-          <sl-input
-            class="goals"
-            name="w_goals"
-            type="number"
-            min="0"
-            max="99"
-            step="1"
-            required=""
-            value="${this.bracket.w_goals}"
-          ></sl-input>
-          <span class="px-2">-</span>
-          <sl-input
-            class="goals"
-            name="l_goals"
-            type="number"
-            min="0"
-            max="99"
-            step="1"
-            required=""
-            value="${this.bracket.l_goals}"
-          ></sl-input>
-        </div>
+    return html`<div class="championship-grid">
+      <p class="m-0 fs-6">Final Game Score</p>
+      <div class="d-flex justify-content-center align-items-center">
+        <sl-input
+          class="goals"
+          name="w_goals"
+          type="number"
+          min="0"
+          max="99"
+          step="1"
+          required=""
+          value="${this.bracket.w_goals}"
+        ></sl-input>
+        <span class="px-2">-</span>
+        <sl-input
+          class="goals"
+          name="l_goals"
+          type="number"
+          min="0"
+          max="99"
+          step="1"
+          required=""
+          value="${this.bracket.l_goals}"
+        ></sl-input>
       </div>
     </div>`;
   }
@@ -239,17 +237,13 @@ class EditBracket extends NikElement {
       <sl-card>
         <div class="championship-grid">
           <p class="round-details champion-top m-0">National Champion</p>
-          <div class="row mb-2">
-            <div class="col">
-              ${this.matchupTemplate({
-                game: "game15",
-                type: "edit",
-                winnerTop: this.bracket.games.game13?.winner_team,
-                winnerBottom: this.bracket.games.game14?.winner_team,
-                winner: this.bracket.games.game15?.winner,
-              })}
-            </div>
-          </div>
+          ${this.matchupTemplate({
+            game: "game15",
+            type: "edit",
+            winnerTop: this.bracket.games.game13?.winner_team,
+            winnerBottom: this.bracket.games.game14?.winner_team,
+            winner: this.bracket.games.game15?.winner,
+          })}
           ${this.predictedScoreTemplate()}
         </div>
       </sl-card>
