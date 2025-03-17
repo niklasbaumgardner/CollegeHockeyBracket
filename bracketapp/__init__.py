@@ -14,11 +14,11 @@ migrate = Migrate()
 mail = Mail()
 login_manager = LoginManager()
 db = SQLAlchemy(
-    engine_options=dict(
-        pool_pre_ping=True,
-        pool_size=10,
-        max_overflow=20,
-    )
+    # engine_options=dict(
+    #     pool_pre_ping=True,
+    #     pool_size=10,
+    #     max_overflow=20,
+    # )
 )
 if not os.environ.get("FLASK_DEBUG"):
     sentry_sdk.init(
@@ -32,7 +32,7 @@ if not os.environ.get("FLASK_DEBUG"):
             # possible.
             "continuous_profiling_auto_start": True,
         },
-        release="nbbracketchallenge@2.0.13",
+        release="nbbracketchallenge@2.0.14",
     )
 
 
