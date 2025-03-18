@@ -62,8 +62,8 @@ export class MyBrackets extends Standings {
 
   messageTemplate() {
     return html`<small class="color-neutral-700"
-      >You created ${this.brackets.length}/5 brackets</small
-    >`;
+        >You created ${this.brackets.length}/5 brackets</small
+      >${CAN_EDIT_BRACKET ? html`<nb-countdown></nb-countdown>` : null}`;
   }
 
   newBracketButtonTemplate() {
@@ -83,9 +83,6 @@ export class MyBrackets extends Standings {
 
     return html`<div class="d-flex flex-column gap-3">
       ${this.newBracketButtonTemplate()}
-      ${this.brackets.length === 0
-        ? "Create a bracket before time runs out!"
-        : null}
       <nb-my-brackets-grid
         .brackets=${this.brackets}
         .groups=${this.groups}

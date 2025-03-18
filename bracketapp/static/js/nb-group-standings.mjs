@@ -50,19 +50,18 @@ export class GroupStandings extends Standings {
 
   memeberTemplate() {
     if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
-      return html`<sl-button
-        variant="primary"
-        outline
-        href=${CREATE_BRACKET_URL}
-        >Create New Bracket</sl-button
-      >`;
+      return html`<nb-countdown></nb-countdown
+        ><sl-button variant="primary" outline href=${CREATE_BRACKET_URL}
+          >Create New Bracket</sl-button
+        >`;
     } else if (this.canEditGroupBracket) {
-      return html`<sl-button
-        variant="primary"
-        outline
-        href=${MY_BRACKETS_URL + "#groups"}
-        >Add Bracket</sl-button
-      >`;
+      return html`<nb-countdown></nb-countdown
+        ><sl-button
+          variant="primary"
+          outline
+          href=${MY_BRACKETS_URL + "#groups"}
+          >Add Bracket</sl-button
+        >`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
     } else if (this.brackets.length) {
