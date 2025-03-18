@@ -207,7 +207,10 @@ def get_bracket_standings():
     brackets.sort(key=lambda b: b.name.casefold())
     if not CAN_EDIT_BRACKET and brackets and brackets[0].rank:
         brackets.sort(key=lambda b: b.max_points, reverse=True)
-        brackets.sort(key=lambda b: b.rank)
+        try:
+            brackets.sort(key=lambda b: b.rank)
+        except Exception:
+            pass
 
     winners = get_winners(standings=brackets, correct=correct)
 
