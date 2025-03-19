@@ -50,6 +50,7 @@ export class GroupCard extends NikElement {
 
     return html`<nb-group-standings-grid
       class="w-100"
+      headerName="My Brackets"
       .brackets=${this.group.brackets}
       theme=${THEME}
     ></nb-group-standings-grid>`;
@@ -60,11 +61,11 @@ export class GroupCard extends NikElement {
       return null;
     }
 
-    return html`<div class="d-flex gap-2">
+    return html`<div class="d-flex align-items-center gap-2">
       <sl-button size="small" @click=${this.handleAddBracketClick}
-        >Add Bracket</sl-button
+        >Add A Bracket</sl-button
       >
-      <div class="invite-others">
+      <div class="invite-others d-flex align-items-center">
         Invite friends
         <sl-copy-button
           value="${this.group.share_url}"

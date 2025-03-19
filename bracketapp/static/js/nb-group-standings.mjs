@@ -60,7 +60,7 @@ export class GroupStandings extends Standings {
           variant="primary"
           outline
           href=${MY_BRACKETS_URL + "#groups"}
-          >Add Bracket</sl-button
+          >Add A Bracket</sl-button
         >`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
@@ -153,7 +153,7 @@ export class GroupStandings extends Standings {
   }
 
   titleTemplate() {
-    const inviteTemplate = html`<div>
+    const inviteTemplate = html`<div class="d-flex align-items-center">
       Invite friends
       <sl-copy-button
         value="${this.group.share_url}"

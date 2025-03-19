@@ -84,6 +84,7 @@ export class MyBrackets extends Standings {
     return html`<div class="d-flex flex-column gap-3">
       ${this.newBracketButtonTemplate()}
       <nb-my-brackets-grid
+        headerName="My Brackets"
         .brackets=${this.brackets}
         .groups=${this.groups}
         theme=${this.theme}

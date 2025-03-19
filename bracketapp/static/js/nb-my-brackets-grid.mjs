@@ -151,7 +151,7 @@ export class MyBracketsGrid extends StandingsGrid {
 
     columnDefs.push({
       field: "name",
-      headerName: "Brackets",
+      headerName: this.headerName,
       autoHeight: true,
       colSpan: (params) => {
         let id = params.data.id;

@@ -9,7 +9,14 @@ export class StandingsGrid extends NikElement {
     theme: {
       type: String,
     },
+    headerName: { type: String },
   };
+
+  constructor() {
+    super();
+
+    this.headerName = "Brackets";
+  }
 
   static queries = {
     standingsGridEl: "#standingsGrid",
@@ -88,7 +95,7 @@ export class StandingsGrid extends NikElement {
       },
       {
         field: "name",
-        headerName: "Brackets",
+        headerName: this.headerName,
         autoHeight: true,
         cellRenderer: (param) => {
           let bracket = param.data;
