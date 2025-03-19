@@ -4,8 +4,25 @@ import { NikElement } from "./customElement.mjs";
 const BRACKET_CLOSE = new Date("2025-03-27T18:00:00.000Z");
 
 export class Countdown extends NikElement {
-  get countdown() {
+  static properties = { bracketsOpen: Boolean };
+
+  constructor() {
+    super();
+  }
+
+  get msToClose() {
     const ms = BRACKET_CLOSE - Date.now();
+    if (ms > 0) {
+      this.bracketsOpen = true;
+    } else {
+      this.bracketsOpen = false;
+    }
+
+    return ms;
+  }
+
+  get countdown() {
+    const ms = this.msToClose;
     let seconds = ms / 1000;
     let newDate = new Date(ms);
 
@@ -37,7 +54,7 @@ export class Countdown extends NikElement {
   }
 
   maybeDestroy() {
-    const ms = BRACKET_CLOSE - Date.now();
+    const ms = this.msToClose;
     if (!CAN_EDIT_BRACKET || ms < 0) {
       clearInterval(this.intervalID);
       this.remove();
@@ -50,7 +67,7 @@ export class Countdown extends NikElement {
   timeCardTemplate(value, unit) {
     return html`<sl-card
       class="width-fit-content"
-      style="--sl-panel-background-color:var(--sl-color-danger-300);--padding:var(--sl-spacing-small);--border-radius:var(--sl-border-radius-large);"
+      style="--sl-panel-background-color:var(--sl-color-danger-300); --border-color:var(--sl-color-danger-300); --padding:var(--sl-spacing-small); --border-radius:var(--sl-border-radius-large);"
       ><div class="d-flex flex-column align-items-center">
         <h5>${value}</h5>
         <span>${unit + (value == 1 ? "" : "s")}</span>
@@ -70,9 +87,9 @@ export class Countdown extends NikElement {
     </div>`;
   }
 
-  render() {
-    return html`<sl-card>
-      <div class="d-flex flex-column align-items-center">
+  contentTemplate() {
+    if (this.bracketsOpen) {
+      return html`<div class="d-flex flex-column align-items-center">
         <h6>
           Brackets will close on
           <sl-format-date
@@ -88,8 +105,18 @@ export class Countdown extends NikElement {
           ></sl-format-date>
         </h6>
         ${this.countdownTemplate()}
-      </div>
-    </sl-card>`;
+      </div>`;
+    } else {
+      return html``;
+    }
+  }
+
+  render() {
+    const content = this.contentTemplate();
+    return html`<sl-card
+      style="--sl-panel-background-color:var(--sl-color-danger-50);"
+      >${content}</sl-card
+    >`;
   }
 }
 

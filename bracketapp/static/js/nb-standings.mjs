@@ -43,8 +43,7 @@ export class Standings extends NikElement {
 
   messageTemplate() {
     if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
-      return html`<div>Create a bracket before time runs out!</div>
-        <nb-countdown></nb-countdown>`;
+      return html`<nb-countdown></nb-countdown>`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
     } else if (this.brackets.length && this.year === CURRENT_YEAR) {
