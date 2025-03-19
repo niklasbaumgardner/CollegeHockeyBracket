@@ -19,8 +19,9 @@ export class MyBrackets extends Standings {
 
     this.url = new URL(window.location);
 
-    this.initialTabPanel =
-      this.url.hash === "#groups" ? "groups" : "my-brackets";
+    this.initialTabPanel = this.url.hash.includes("group")
+      ? "groups"
+      : "my-brackets";
   }
 
   connectedCallback() {
@@ -47,6 +48,8 @@ export class MyBrackets extends Standings {
     if (this.initialTabPanel === "groups") {
       await this.tabGroup.updateComplete;
       this.tabGroup.show("groups");
+      const groupCard = document.querySelector(this.url.hash);
+      groupCard.addABracket();
     }
   }
 
@@ -119,6 +122,7 @@ export class MyBrackets extends Standings {
       return this.groups.map(
         (g) =>
           html`<nb-group-card
+            id="group_${g.id}"
             .group=${g}
             .myBrackets=${this.brackets}
           ></nb-group-card>`

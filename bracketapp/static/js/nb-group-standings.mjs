@@ -59,7 +59,7 @@ export class GroupStandings extends Standings {
         ><sl-button
           variant="primary"
           outline
-          href=${MY_BRACKETS_URL + "#groups"}
+          href=${MY_BRACKETS_URL + "#group_" + this.group.id}
           >Add A Bracket</sl-button
         >`;
     } else if (this.numWinners > 0) {

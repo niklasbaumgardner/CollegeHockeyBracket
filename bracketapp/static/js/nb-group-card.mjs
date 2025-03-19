@@ -32,6 +32,10 @@ export class GroupCard extends NikElement {
     }
   }
 
+  addABracket() {
+    this.handleAddBracketClick();
+  }
+
   handleAddBracketClick() {
     if (!this.addBracketModal) {
       this.addBracketModal = document.createElement("nb-add-bracket-modal");
