@@ -12,12 +12,10 @@ from bracketapp.models import (
     BracketTeam,
 )
 from bracketapp import db
-from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR
 from flask_login import current_user
 from sqlalchemy import and_, or_
 from sqlalchemy.sql import func, asc
-from sqlalchemy.orm import joinedload
 
 
 def create_group_member(group_id):
@@ -154,6 +152,22 @@ def create_group_bracket(group_id, bracket_id):
     db.session.add(group_bracket)
     db.session.commit()
     return group_bracket
+
+
+def get_my_group_bracket_for_id(group_bracket_id):
+    if not current_user.is_authenticated:
+        return None
+
+    return GroupBracket.query.filter_by(
+        user_id=current_user.id, id=group_bracket_id
+    ).first()
+
+
+def delete_group_bracket(group_bracket_id):
+    gb = get_my_group_bracket_for_id(group_bracket_id=group_bracket_id)
+    if gb:
+        db.session.delete(gb)
+        db.session.commit()
 
 
 def search_groups(group_name):

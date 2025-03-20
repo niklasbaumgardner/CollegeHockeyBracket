@@ -1,6 +1,6 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import { DeleteGroup } from "./nb-delete-bracket.mjs";
+import { DeleteGroup } from "./nb-delete-group.mjs";
 
 export class EditGroup extends NikElement {
   static properties = {

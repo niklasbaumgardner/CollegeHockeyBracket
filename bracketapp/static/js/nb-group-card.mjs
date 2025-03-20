@@ -3,6 +3,7 @@ import { NikElement } from "./customElement.mjs";
 import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
 import { MyBrackets } from "./nb-my-brackets.mjs";
 import { AddBracketModal } from "./nb-add-bracket.mjs";
+import "./nb-my-group-bracket-grid.mjs";
 
 export class GroupCard extends NikElement {
   static properties = {
@@ -52,12 +53,13 @@ export class GroupCard extends NikElement {
       return null;
     }
 
-    return html`<nb-group-standings-grid
+    return html`<nb-my-group-brackets-grid
       class="w-100"
       headerName="My Brackets"
+      .group=${this.group}
       .brackets=${this.group.brackets}
       theme=${THEME}
-    ></nb-group-standings-grid>`;
+    ></nb-my-group-brackets-grid>`;
   }
 
   buttonsTemplate() {

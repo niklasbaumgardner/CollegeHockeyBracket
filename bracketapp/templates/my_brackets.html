@@ -5,6 +5,8 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.new_bracket') }}";
   const CREATE_GROUP_URL = "{{ url_for('groups_bp.create_group') }}";
   const SEARCH_URL = "{{ url_for('groups_bp.search_groups') }}";
+  const DELETE_GROUP_BRACKET_URL =
+    "{{ url_for('deletebracket_bp.delete_group_bracket', id=0) }}";
 </script>
 
 <nb-my-brackets

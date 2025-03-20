@@ -153,20 +153,6 @@ export class MyBracketsGrid extends StandingsGrid {
       field: "name",
       headerName: this.headerName,
       autoHeight: true,
-      colSpan: (params) => {
-        let id = params.data.id;
-        if (id === -1) {
-          return 2;
-        } else {
-          return 1;
-        }
-      },
-      cellClass: (params) => {
-        let id = params.data.id;
-        if (id === -1) {
-          return "nb-center";
-        }
-      },
       cellRenderer: (param) => {
         let ele = document.createElement("nb-my-bracket-element");
         ele.bracket = param.data;
