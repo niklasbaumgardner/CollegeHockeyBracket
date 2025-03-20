@@ -6,23 +6,8 @@ const BRACKET_CLOSE = new Date("2025-03-27T18:00:00.000Z");
 export class Countdown extends NikElement {
   static properties = { bracketsOpen: Boolean };
 
-  constructor() {
-    super();
-  }
-
-  get msToClose() {
-    const ms = BRACKET_CLOSE - Date.now();
-    if (ms > 0) {
-      this.bracketsOpen = true;
-    } else {
-      this.bracketsOpen = false;
-    }
-
-    return ms;
-  }
-
   get countdown() {
-    const ms = this.msToClose;
+    const ms = BRACKET_CLOSE - Date.now();
     let seconds = ms / 1000;
     let newDate = new Date(ms);
 
@@ -53,11 +38,15 @@ export class Countdown extends NikElement {
     this.requestUpdate();
   }
 
+  destroy() {
+    clearInterval(this.intervalID);
+    this.remove();
+  }
+
   maybeDestroy() {
-    const ms = this.msToClose;
+    const ms = BRACKET_CLOSE - Date.now();
     if (!CAN_EDIT_BRACKET || ms < 0) {
-      clearInterval(this.intervalID);
-      this.remove();
+      this.destroy();
       return true;
     }
 
@@ -87,9 +76,10 @@ export class Countdown extends NikElement {
     </div>`;
   }
 
-  contentTemplate() {
-    if (this.bracketsOpen) {
-      return html`<div class="d-flex flex-column align-items-center">
+  render() {
+    return html`<sl-card
+      style="--sl-panel-background-color:var(--sl-color-danger-50);"
+      ><div class="d-flex flex-column align-items-center">
         <h6>
           Brackets will close on
           <sl-format-date
@@ -105,17 +95,7 @@ export class Countdown extends NikElement {
           ></sl-format-date>
         </h6>
         ${this.countdownTemplate()}
-      </div>`;
-    } else {
-      return html``;
-    }
-  }
-
-  render() {
-    const content = this.contentTemplate();
-    return html`<sl-card
-      style="--sl-panel-background-color:var(--sl-color-danger-50);"
-      >${content}</sl-card
+      </div></sl-card
     >`;
   }
 }
