@@ -1,5 +1,6 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
+import "./nb-bracket-card.mjs";
 
 export class RadioItem extends NikElement {
   static properties = {
@@ -22,6 +23,10 @@ export class RadioItem extends NikElement {
     return html`<sl-icon name=${this.icon}></sl-icon>`;
   }
 
+  labelTemplate() {
+    return html`<span>${this.label}</span>`;
+  }
+
   render() {
     return html`<sl-card class="nb-radio-item">
       <label class="d-flex align-items-center gap-2">
@@ -31,8 +36,7 @@ export class RadioItem extends NikElement {
           value=${this.value}
           form=${this.form}
           required=""
-        />${this.iconTemplate()}
-        <span>${this.label}</span>
+        />${this.iconTemplate()}${this.labelTemplate()}
       </label>
     </sl-card>`;
   }
@@ -40,18 +44,14 @@ export class RadioItem extends NikElement {
 
 customElements.define("nb-radio-item", RadioItem);
 
-export class BracketRadioItem extends NikElement {
-  static properties = {
-    name: { type: String },
-    form: { type: String },
-    bracket: { type: Object },
-  };
+export class BracketRadioItem extends RadioItem {
+  connectedCallback() {
+    super.connectedCallback();
 
-  static queries = {
-    input: "input",
-  };
+    this.value = this.bracket.id;
+  }
 
-  imageTemplate() {
+  iconTemplate() {
     if (!this.bracket.winner_team?.team.icon_path) {
       return null;
     }
@@ -62,50 +62,34 @@ export class BracketRadioItem extends NikElement {
     />`;
   }
 
-  render() {
-    return html`<sl-card class="nb-radio-item">
-      <label class="d-flex gap-2">
-        <input
-          type="radio"
-          name=${this.name}
-          value=${this.bracket.id}
-          form=${this.form}
-          required=""
-        />
-        ${this.imageTemplate()}
-        <div class="d-flex flex-column gap-2">
-          <div class="d-flex align-items-center gap-2">
-            <span>${this.bracket.name}</span>
-          </div>
-
-          <div class="d-flex align-items-center gap-2 join-group-bracket">
-            <div class="d-flex">
-              <span
-                ><p class="bracket-details-content">
-                  ${this.bracket?.rank ?? "--"}
-                </p>
-                <p class="bracket-details-label">Rank</p></span
-              >
-            </div>
-            <div class="d-flex">
-              <span
-                ><p class="bracket-details-content">${this.bracket?.points}</p>
-                <p class="bracket-details-label">Points</p></span
-              >
-            </div>
-            <div class="d-flex">
-              <span
-                ><p class="bracket-details-content">
-                  ${this.bracket?.max_points}
-                </p>
-                <p class="bracket-details-label">Max points</p></span
-              >
-            </div>
-          </div>
-        </div>
-      </label>
-    </sl-card>`;
+  labelTemplate() {
+    return html`<nb-bracket-card .bracket=${this.bracket}></nb-bracket-card>`;
   }
 }
 
 customElements.define("nb-bracket-radio-item", BracketRadioItem);
+
+export class GroupRadioItem extends RadioItem {
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.value = this.group.id;
+  }
+
+  iconTemplate() {
+    if (!this.bracket.winner_team?.team.icon_path) {
+      return null;
+    }
+
+    return html`<img
+      class="standings-img"
+      src=${this.bracket.winner_team.team.icon_path}
+    />`;
+  }
+
+  labelTemplate() {
+    return html`<nb-bracket-card .bracket=${this.bracket}></nb-bracket-card>`;
+  }
+}
+
+customElements.define("nb-group-radio-item", GroupRadioItem);

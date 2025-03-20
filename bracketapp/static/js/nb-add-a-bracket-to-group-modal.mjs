@@ -1,6 +1,6 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
-import { GroupCard } from "./nb-group-card.mjs";
+import { GroupCard } from "./nb-my-brackets-group-card.mjs";
 import { RadioItem } from "./nb-radio-item.mjs";
 
 export class AddBracketModal extends NikElement {
@@ -70,8 +70,8 @@ export class AddBracketModal extends NikElement {
   bracketTemplate(bracket) {
     return html`<nb-bracket-radio-item
       name="bracket_id"
-      .bracket=${bracket}
       form="join-group-form"
+      .bracket=${bracket}
     ></nb-bracket-radio-item>`;
   }
 

@@ -2,7 +2,7 @@ import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
 import { MyBrackets } from "./nb-my-brackets.mjs";
-import { AddBracketModal } from "./nb-add-bracket.mjs";
+import { AddBracketModal } from "./nb-add-a-bracket-to-group-modal.mjs";
 import "./nb-my-group-bracket-grid.mjs";
 
 export class GroupCard extends NikElement {

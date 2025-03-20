@@ -1,6 +1,6 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
-import { GroupCard } from "./nb-group-card.mjs";
+import { GroupCard } from "./nb-my-brackets-group-card.mjs";
 import { RadioItem } from "./nb-radio-item.mjs";
 
 export class JoinGroupModal extends NikElement {
@@ -80,13 +80,13 @@ export class JoinGroupModal extends NikElement {
   }
 
   groupTemplate(group) {
-    return html`<nb-radio-item
+    return html`<nb-group-radio-item
       name="group_id"
       icon="trophy"
       label=${group.name}
       value=${group.id}
       form="join-group-form"
-    ></nb-radio-item>`;
+    ></nb-group-radio-item>`;
   }
 
   groupsTemplate() {
