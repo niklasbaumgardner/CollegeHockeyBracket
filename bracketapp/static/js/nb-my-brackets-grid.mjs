@@ -2,7 +2,7 @@ import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import { DeleteBracketModal } from "./nb-delete-bracket-modal.mjs";
-import { JoinGroupModal } from "./nb-join-group-modal.mjs";
+import { JoinGroupModal } from "./nb-add-bracket-to-group-modal.mjs";
 
 class MyBracketElement extends NikElement {
   static properties = {
