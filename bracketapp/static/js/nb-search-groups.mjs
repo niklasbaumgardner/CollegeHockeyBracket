@@ -1,6 +1,5 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import { GroupCard } from "./nb-my-brackets-group-card.mjs";
 
 export class SearchGroups extends NikElement {
   static properties = {

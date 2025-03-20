@@ -1,7 +1,7 @@
 import { Standings } from "./nb-standings.mjs";
 import { html } from "./imports.mjs";
 import { MyBracketsGrid } from "./nb-my-brackets-grid.mjs";
-import { GroupCard } from "./nb-my-brackets-group-card.mjs";
+import "./nb-my-brackets-group-card.mjs";
 import { SearchGroups } from "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
@@ -121,11 +121,11 @@ export class MyBrackets extends Standings {
     if (this.groups.length) {
       return this.groups.map(
         (g) =>
-          html`<nb-group-card
+          html`<nb-my-brackets-group-standings
             id="group_${g.id}"
             .group=${g}
             .myBrackets=${this.brackets}
-          ></nb-group-card>`
+          ></nb-my-brackets-group-standings>`
       );
     }
     if (CAN_EDIT_BRACKET) {

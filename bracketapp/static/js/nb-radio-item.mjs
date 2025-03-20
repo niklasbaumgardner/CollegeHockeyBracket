@@ -1,6 +1,7 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import "./nb-bracket-card.mjs";
+import "./nb-group-card.mjs";
 
 export class RadioItem extends NikElement {
   static properties = {
@@ -45,6 +46,10 @@ export class RadioItem extends NikElement {
 customElements.define("nb-radio-item", RadioItem);
 
 export class BracketRadioItem extends RadioItem {
+  static properties = {
+    bracket: { type: Object },
+  };
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -52,24 +57,23 @@ export class BracketRadioItem extends RadioItem {
   }
 
   iconTemplate() {
-    if (!this.bracket.winner_team?.team.icon_path) {
-      return null;
-    }
-
-    return html`<img
-      class="standings-img"
-      src=${this.bracket.winner_team.team.icon_path}
-    />`;
+    return null;
   }
 
   labelTemplate() {
-    return html`<nb-bracket-card .bracket=${this.bracket}></nb-bracket-card>`;
+    return html`<nb-bracket-card-content
+      .bracket=${this.bracket}
+    ></nb-bracket-card-content>`;
   }
 }
 
 customElements.define("nb-bracket-radio-item", BracketRadioItem);
 
 export class GroupRadioItem extends RadioItem {
+  static properties = {
+    group: { type: Object },
+  };
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -77,18 +81,13 @@ export class GroupRadioItem extends RadioItem {
   }
 
   iconTemplate() {
-    if (!this.bracket.winner_team?.team.icon_path) {
-      return null;
-    }
-
-    return html`<img
-      class="standings-img"
-      src=${this.bracket.winner_team.team.icon_path}
-    />`;
+    return null;
   }
 
   labelTemplate() {
-    return html`<nb-bracket-card .bracket=${this.bracket}></nb-bracket-card>`;
+    return html`<nb-group-card-content
+      .group=${this.group}
+    ></nb-group-card-content>`;
   }
 }
 

@@ -1,7 +1,8 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
-import { GroupCard } from "./nb-my-brackets-group-card.mjs";
-import { RadioItem } from "./nb-radio-item.mjs";
+import "./nb-my-brackets-group-card.mjs";
+import "./nb-radio-item.mjs";
+import "./nb-group-card.mjs";
 
 export class AddBracketModal extends NikElement {
   static properties = {
@@ -38,32 +39,7 @@ export class AddBracketModal extends NikElement {
   groupTemplate() {
     return html`<div class="mb-4">
       <p>Joining group:</p>
-      <sl-card style="--padding:var(--sl-spacing-small);"
-        ><div class="d-flex align-items-center gap-2">
-          <sl-icon
-            style="font-size:var(--sl-font-size-2x-large);"
-            name="trophy"
-          ></sl-icon>
-          <div>
-            <div>${this.group.name}</div>
-            <div class="d-flex gap-4">
-              <small
-                ><span class="fw-semibold">Members</span> ${this.group.members
-                  .length}</small
-              ><small
-                ><span class="fw-semibold">Brackets</span> ${this.group.brackets
-                  .length}</small
-              >
-              <small
-                ><span class="fw-semibold">Group type</span> ${this.group
-                  .is_private
-                  ? "Private"
-                  : "Public"}</small
-              >
-            </div>
-          </div>
-        </div>
-      </sl-card>
+      <nb-group-card .group=${this.group}></nb-group-card>
     </div> `;
   }
 

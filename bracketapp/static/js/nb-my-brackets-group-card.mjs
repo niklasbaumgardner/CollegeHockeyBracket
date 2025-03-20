@@ -5,7 +5,7 @@ import { MyBrackets } from "./nb-my-brackets.mjs";
 import { AddBracketModal } from "./nb-add-a-bracket-to-group-modal.mjs";
 import "./nb-my-group-bracket-grid.mjs";
 
-export class GroupCard extends NikElement {
+export class MyBracketsGroupStandings extends NikElement {
   static properties = {
     group: { type: Object },
     myBrackets: { type: Object },
@@ -109,4 +109,7 @@ export class GroupCard extends NikElement {
   }
 }
 
-customElements.define("nb-group-card", GroupCard);
+customElements.define(
+  "nb-my-brackets-group-standings",
+  MyBracketsGroupStandings
+);
