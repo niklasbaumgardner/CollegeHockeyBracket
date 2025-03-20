@@ -67,7 +67,7 @@ export class Countdown extends NikElement {
   timeCardTemplate(value, unit) {
     return html`<sl-card
       class="width-fit-content"
-      style="--sl-panel-background-color:var(--sl-color-danger-300); --border-color:var(--sl-color-danger-300); --padding:var(--sl-spacing-small); --border-radius:var(--sl-border-radius-large);"
+      style="--sl-panel-background-color:var(--sl-color-danger-300); --border-color:var(--sl-color-danger-300); --padding:var(--sl-spacing-x-small); --border-radius:var(--sl-border-radius-large);"
       ><div class="d-flex flex-column align-items-center">
         <h5>${value}</h5>
         <span>${unit + (value == 1 ? "" : "s")}</span>
