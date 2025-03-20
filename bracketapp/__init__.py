@@ -28,7 +28,7 @@ if not os.environ.get("FLASK_DEBUG"):
             # possible.
             "continuous_profiling_auto_start": True,
         },
-        release="nbbracketchallenge@2.0.23",
+        release="nbbracketchallenge@2.0.24",
     )
 
 
