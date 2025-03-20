@@ -44,6 +44,10 @@ input[type="radio"]:checked {
 .user-pick {
   padding-block: 0;
   height: 22px;
+
+  .team-name {
+    font-size: var(--sl-font-size-2x-small);
+  }
 }
 
 label#top,
