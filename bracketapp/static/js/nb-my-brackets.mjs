@@ -48,8 +48,10 @@ export class MyBrackets extends Standings {
     if (this.initialTabPanel === "groups") {
       await this.tabGroup.updateComplete;
       this.tabGroup.show("groups");
-      const groupCard = document.querySelector(this.url.hash);
-      groupCard.addABracket();
+      if (this.url.hash.includes("group_")) {
+        const groupCard = document.querySelector(this.url.hash);
+        groupCard.addABracket();
+      }
     }
   }
 
