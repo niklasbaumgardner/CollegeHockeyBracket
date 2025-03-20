@@ -62,7 +62,11 @@ class MyGroupBracketActions extends NikElement {
 
   render() {
     return html`<div class="d-flex gap-3">
-      <sl-button size="small" @click=${this.handleRemoveFromGroupClick}
+      <sl-button
+        size="small"
+        variant="danger"
+        outline
+        @click=${this.handleRemoveFromGroupClick}
         >Remove From Group</sl-button
       >
     </div>`;
