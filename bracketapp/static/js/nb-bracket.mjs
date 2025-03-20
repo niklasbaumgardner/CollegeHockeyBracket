@@ -1,7 +1,7 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import "./nb-matchup.mjs";
-import { BracketPointsChart } from "./nb-bracket-points-charts.mjs";
+import "./nb-bracket-points-charts.mjs";
 
 class Bracket extends NikElement {
   static properties = {
@@ -255,6 +255,7 @@ class Bracket extends NikElement {
   }
 
   chartTemplate() {
+    return null;
     const points = {
       gained: this.bracket.points,
       lost: 320 - this.bracket.max_points,
