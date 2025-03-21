@@ -54,13 +54,11 @@ class Matchup extends NikElement {
   }
 
   get winnerTopName() {
-    let team = this.winnerTop;
-    return this.teamTemplate(team);
+    return this.winnerTop.team.name;
   }
 
   get winnerBottomName() {
-    let team = this.winnerBottom;
-    return this.teamTemplate(team);
+    return this.winnerBottom.team.name;
   }
 
   teamTemplate(team) {
@@ -82,30 +80,7 @@ class Matchup extends NikElement {
     />`;
   }
 
-  defaultMatchupTemplate() {
-    return html`<div class="nb-team">
-        ${this.getImageElement(this.default.home_team)}
-        <span
-          class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.default.home
-            ? "loser-team"
-            : ""}"
-          >${this.defaultHomeName}</span
-        ><span>${this.correct?.h_goals}</span>
-      </div>
-      <div class="nb-team">
-        ${this.getImageElement(this.default.away_team)}
-        <span
-          class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.default.away
-            ? "loser-team"
-            : ""}"
-          >${this.defaultAwayName}</span
-        ><span>${this.correct?.a_goals}</span>
-      </div>`;
-  }
-
-  getTopIcon() {
+  topIconTemplate() {
     if (this.correctTop) {
       return html`<sl-icon
         name="${this.correctTop?.id === this.winnerTop.id
@@ -116,7 +91,7 @@ class Matchup extends NikElement {
     return null;
   }
 
-  getBottomIcon() {
+  bottomIconTemplate() {
     if (this.correctBottom) {
       return html`<sl-icon
         name="${this.correctBottom?.id === this.winnerBottom.id
@@ -127,27 +102,61 @@ class Matchup extends NikElement {
     return null;
   }
 
-  getTopWinner() {
+  topGameTemplate() {
+    return html`<div class="nb-team user-pick p-0">
+      <span class="team-name ms-auto">Final</span>
+    </div>`;
+  }
+
+  topPickTemplate() {
     if (!this.winnerTop) {
       return null;
     }
     return html`<div class="nb-team user-pick">
-      <span class="team-name">${this.winnerTopName}</span>${this.getTopIcon()}
+      ${this.topIconTemplate()}<span class="team-name"
+        >${this.winnerTopName}</span
+      >
     </div>`;
   }
 
-  getBottomWinner() {
+  bottomPickTemplate() {
     if (!this.winnerBottom) {
       return null;
     }
     return html`<div class="nb-team user-pick">
-      <span class="team-name">${this.winnerBottomName}</span
-      >${this.getBottomIcon()}
+      ${this.bottomIconTemplate()}<span class="team-name"
+        >${this.winnerBottomName}</span
+      >
     </div>`;
   }
 
+  correctGameTemplate() {}
+
+  defaultMatchupTemplate() {
+    return html`<div class="nb-team">
+        ${this.getImageElement(this.default.home_team)}
+        <span
+          class="team-name ${this.correct.winner &&
+          this.correct.winner !== this.default.home
+            ? "loser-team"
+            : ""}"
+          >${this.defaultHomeName}</span
+        ><span class="ms-auto">${this.correct?.h_goals}</span>
+      </div>
+      <div class="nb-team">
+        ${this.getImageElement(this.default.away_team)}
+        <span
+          class="team-name ${this.correct.winner &&
+          this.correct.winner !== this.default.away
+            ? "loser-team"
+            : ""}"
+          >${this.defaultAwayName}</span
+        ><span class="ms-auto">${this.correct?.a_goals}</span>
+      </div>`;
+  }
+
   matchupTemplate() {
-    return html`${this.getTopWinner()}
+    return html`${this.topPickTemplate()}
       <div class="nb-team">
         ${this.getImageElement(this.correctTop)}
         <span
@@ -156,7 +165,7 @@ class Matchup extends NikElement {
             ? "loser-team"
             : ""}"
           >${this.correctTopName}</span
-        ><span>${this.correct?.h_goals}</span>
+        ><span class="ms-auto">${this.correct?.h_goals}</span>
       </div>
       <div class="nb-team">
         ${this.getImageElement(this.correctBottom)}
@@ -166,9 +175,9 @@ class Matchup extends NikElement {
             ? "loser-team"
             : ""}"
           >${this.correctBottomName}</span
-        ><span>${this.correct?.a_goals}</span>
+        ><span class="ms-auto">${this.correct?.a_goals}</span>
       </div>
-      ${this.getBottomWinner()}`;
+      ${this.bottomPickTemplate()}`;
   }
 
   render() {

@@ -21,7 +21,15 @@ nb-edit-correct-matchup {
   padding: var(--sl-spacing-3x-small);
   gap: var(--sl-spacing-3x-small);
 
-  border: 1px solid transparent;
+  &.user-pick {
+    height: 15px;
+    padding-block: 0;
+    gap: var(--sl-spacing-2x-small);
+
+    .team-name {
+      font-size: var(--sl-font-size-2x-small);
+    }
+  }
 }
 
 .nb-team:has(input:checked) {
@@ -41,15 +49,6 @@ input[type="radio"]:checked {
   width: 100%;
 }
 
-.user-pick {
-  padding-block: 0;
-  height: 22px;
-
-  .team-name {
-    font-size: var(--sl-font-size-2x-small);
-  }
-}
-
 label#top,
 label#bottom {
   display: inline-flex;
@@ -61,12 +60,12 @@ label#bottom {
   width: 18px;
 }
 
-.loser-team {
-  color: var(--sl-color-neutral-700);
+.team-img-sm {
+  width: 14px;
 }
 
-.team-name {
-  margin-right: auto;
+.loser-team {
+  color: var(--sl-color-neutral-500);
 }
 
 .winner-img {
@@ -84,11 +83,11 @@ label#bottom {
 }
 
 .round-two > nb-matchup {
-  padding: 73px 0;
+  padding: 77px 0;
 }
 
 .round-three > nb-matchup {
-  padding: 201px 0;
+  padding: 205px 0;
 }
 
 .bracket-grid-edit .round-two > nb-matchup,

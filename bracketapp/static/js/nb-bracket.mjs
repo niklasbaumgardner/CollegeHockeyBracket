@@ -160,13 +160,15 @@ class Bracket extends NikElement {
     }
 
     return html`<div>
-      <p class="fs-6">Predicted Score:</p>
+      <span>Predicted Score:</span>
       <p class="fs-6 display-inline-flex">
-        <span class="p-2 border border-dark-subtle"
-          >${this.bracket?.w_goals}</span
+        <sl-card
+          style="--padding:var(--sl-spacing-x-small);--border-color: var(--sl-color-neutral-300);"
+          >${this.bracket?.w_goals}</sl-card
         ><span class="p-2"> - </span
-        ><span class="p-2 border border-dark-subtle"
-          >${this.bracket?.l_goals}</span
+        ><sl-card
+          style="--padding:var(--sl-spacing-x-small);--border-color: var(--sl-color-neutral-300);"
+          >${this.bracket?.l_goals}</sl-card
         >
       </p>
     </div>`;
