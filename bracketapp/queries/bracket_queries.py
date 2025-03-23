@@ -265,6 +265,7 @@ def delete_bracket(bracket_id):
 def create_correct_bracket():
     correct = CorrectBracket(year=YEAR)
     db.session.add(correct)
+    db.session.commit()
 
     for i in range(1, 16):
         new_game = CorrectGame(bracket_id=correct.id, game_num=f"game{i}")
@@ -343,6 +344,7 @@ def delete_correct_bracket():
 def create_default_bracket():
     default = DefaultBracket(year=YEAR)
     db.session.add(default)
+    db.session.commit()
 
     for i in range(1, 9):
         new_game = DefaultGame(bracket_id=default.id, game_num=f"game{i}")
