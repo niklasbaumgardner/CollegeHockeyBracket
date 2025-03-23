@@ -45,7 +45,7 @@ def get_empty_bracket():
 def create_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
-        name=name[:60],
+        name=name[:60].strip(),
         year=YEAR,
         winner=winner,
         w_goals=w_goals,
