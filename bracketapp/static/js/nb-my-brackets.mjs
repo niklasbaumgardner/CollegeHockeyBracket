@@ -138,7 +138,7 @@ export class MyBrackets extends Standings {
   }
 
   groupSearchAndButtonTemplate() {
-    return html`<div class="d-flex gap-3">
+    return html`<div class="d-flex flex-wrap gap-3">
       <div class="flex-grow-1">${this.newGroupButtonTemplate()}</div>
       <div class="flex-grow-1">${this.searchGroupsTemplate()}</div>
     </div>`;
