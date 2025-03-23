@@ -288,9 +288,15 @@ class Group(db.Model, SerializerMixin):
         return url_for("groups_bp.join_group", id=self.id, password=self.password)
 
     def share_url(self):
-        return url_for(
-            "groups_bp.join_group", id=self.id, password=self.password, _external=True
-        )
+        if self.is_private:
+            return url_for(
+                "groups_bp.join_group",
+                id=self.id,
+                password=self.password,
+                _external=True,
+            )
+
+        return url_for("groups_bp.join_group", id=self.id, _external=True)
 
     def add_bracket_url(self):
         return url_for("editbracket_bp.add_bracket_to_group", id=self.id)
