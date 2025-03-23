@@ -85,8 +85,19 @@
     {% if current_user.is_authenticated %}
     const CURRENT_USER = {{ current_user.to_dict()|tojson }};
     {% else %}
-    const CURRENT_USER = {};
+    const CURRENT_USER = null;
     {% endif %}
+
+    // redirect to next if user logged in and next exists
+    if (CURRENT_USER) {
+      let nextURL = window.localStorage.getItem("next");
+      window.localStorage.removeItem("next");
+      if (nextURL) {
+        if (window.location.pathname !== nextURL) {
+          window.location.href = nextURL;
+        }
+      }
+    }
   </script>
 
   <body

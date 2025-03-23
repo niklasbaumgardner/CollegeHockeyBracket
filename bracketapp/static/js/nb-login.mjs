@@ -6,7 +6,17 @@ export class LoginCard extends NikElement {
     email: { type: String },
   };
 
-  static queries = {};
+  connectedCallback() {
+    super.connectedCallback();
+
+    const params = new URLSearchParams(window.location.search);
+    const nextURL = params.get("next");
+
+    if (nextURL) {
+      const localStorage = window.localStorage;
+      localStorage.setItem("next", nextURL);
+    }
+  }
 
   render() {
     return html`<sl-card>
