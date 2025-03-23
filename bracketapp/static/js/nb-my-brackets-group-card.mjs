@@ -90,7 +90,7 @@ export class MyBracketsGroupStandings extends NikElement {
         "
     >
       <div class="d-flex flex-column align-items-center gap-3 nb-group-card">
-        <div class="d-flex justify-content-between w-100">
+        <div class="d-flex justify-content-between w-100 flex-wrap">
           <a
             class="d-flex flex-grow-1 align-items-center text-decoration-none gap-3"
             href="${this.group.url}"
