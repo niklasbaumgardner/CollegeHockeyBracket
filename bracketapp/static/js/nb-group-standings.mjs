@@ -49,11 +49,23 @@ export class GroupStandings extends Standings {
   }
 
   memeberTemplate() {
-    if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
-      return html`<nb-countdown></nb-countdown
-        ><sl-button variant="primary" outline href=${CREATE_BRACKET_URL}
-          >Create New Bracket</sl-button
-        >`;
+    if (this.canEditGroupBracket && MY_BRACKET_COUNT < 6) {
+      return html`<nb-countdown></nb-countdown>
+        <div class="d-flex gap-3">
+          <sl-button
+            class="flex-grow-1"
+            variant="primary"
+            outline
+            href=${CREATE_BRACKET_URL}
+            >Create New Bracket</sl-button
+          ><sl-button
+            class="flex-grow-1"
+            variant="primary"
+            outline
+            href=${MY_BRACKETS_URL + "#group_" + this.group.id}
+            >Add Existing Bracket</sl-button
+          >
+        </div>`;
     } else if (this.canEditGroupBracket) {
       return html`<nb-countdown></nb-countdown
         ><sl-button
