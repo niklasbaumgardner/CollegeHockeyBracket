@@ -1,5 +1,5 @@
 from bracketapp.queries import bracket_queries, user_queries
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 
@@ -248,5 +248,6 @@ def create_team():
 
     if bracket_utils.does_team_image_exist(team):
         bracket_queries.create_team(teamname=team)
+        flash("Team successfully added", "success")
 
     return redirect(url_for("admin_bp.admin"))
