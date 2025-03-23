@@ -77,6 +77,10 @@ customElements.define("nb-my-group-bracket-actions", MyGroupBracketActions);
 export class MyGroupBracketsGrid extends StandingsGrid {
   static properties = { group: { type: Object } };
 
+  get defaultBracketColumnWidth() {
+    return 250;
+  }
+
   createDataGrid() {
     const rowData = [];
     for (let data of this.brackets) {

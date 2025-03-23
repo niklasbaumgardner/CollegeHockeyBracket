@@ -22,6 +22,10 @@ export class StandingsGrid extends NikElement {
     standingsGridEl: "#standingsGrid",
   };
 
+  get defaultBracketColumnWidth() {
+    return 300;
+  }
+
   get defaultGridOptions() {
     return {
       rowHeight: 50,
@@ -34,9 +38,10 @@ export class StandingsGrid extends NikElement {
           { colId: "rank", minWidth: 57, maxWidth: 57 },
           {
             colId: "name",
-            minWidth: 300,
+            minWidth: this.defaultBracketColumnWidth,
             flex: 1,
           },
+          { colId: "actions", minWidth: 208 },
           { colId: "points", minWidth: 75, maxWidth: 75 },
           { colId: "max_points", minWidth: 75, maxWidth: 75 },
           { colId: "r1", minWidth: 57, maxWidth: 57 },

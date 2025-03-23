@@ -98,3 +98,8 @@ nb-search-groups {
     }
   }
 }
+
+nb-my-bracket-actions,
+nb-my-group-bracket-actions {
+  display: block;
+}
