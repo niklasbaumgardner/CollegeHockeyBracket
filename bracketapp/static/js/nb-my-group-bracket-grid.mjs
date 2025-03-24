@@ -77,17 +77,23 @@ customElements.define("nb-my-group-bracket-actions", MyGroupBracketActions);
 export class MyGroupBracketsGrid extends StandingsGrid {
   static properties = { group: { type: Object } };
 
+  constructor() {
+    super();
+
+    this.useSafeName = false;
+  }
+
+  /**
+   * It doesn't matter if bad names appear on my_brackets page
+   */
+  cleanBracketNames() {} // Do nothing
+
   get defaultBracketColumnWidth() {
     return 250;
   }
 
   createDataGrid() {
-    const rowData = [];
-    for (let data of this.brackets) {
-      rowData.push(data);
-    }
-
-    if (!rowData.length) {
+    if (!this.brackets.length) {
       return;
     }
 
@@ -134,7 +140,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
 
     const gridOptions = {
       columnDefs,
-      rowData,
+      rowData: this.brackets,
       ...this.defaultGridOptions,
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);

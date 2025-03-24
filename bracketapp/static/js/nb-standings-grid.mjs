@@ -1,5 +1,6 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
+import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 
 export class StandingsGrid extends NikElement {
   static properties = {
@@ -16,6 +17,7 @@ export class StandingsGrid extends NikElement {
     super();
 
     this.headerName = "Brackets";
+    this.useSafeName = true;
   }
 
   static queries = {
@@ -56,6 +58,14 @@ export class StandingsGrid extends NikElement {
     };
   }
 
+  cleanBracketNames() {
+    for (let bracket of this.brackets) {
+      bracket.safeName = profanityCleaner.clean(bracket.name, {
+        keepFirstAndLastChar: true,
+      });
+    }
+  }
+
   firstUpdated() {
     this.init();
   }
@@ -63,6 +73,7 @@ export class StandingsGrid extends NikElement {
   async init() {
     await this.updateComplete;
 
+    this.cleanBracketNames();
     this.createDataGrid();
     this.setupThemeWatcher();
   }
@@ -102,6 +113,9 @@ export class StandingsGrid extends NikElement {
         field: "name",
         headerName: this.headerName,
         autoHeight: true,
+        valueGetter: (param) => {
+          return param.data.safeName;
+        },
         cellRenderer: (param) => {
           let bracket = param.data;
           if (bracket.winner) {
