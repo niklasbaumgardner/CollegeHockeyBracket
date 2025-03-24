@@ -167,6 +167,8 @@ export class StandingsGrid extends NikElement {
       columnDefs,
       rowData: this.brackets,
       ...this.defaultGridOptions,
+      pagination: true,
+      paginationPageSize: 20,
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }

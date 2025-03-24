@@ -1,0 +1,14 @@
+.ag-paging-panel {
+  height: auto !important;
+  flex-wrap: wrap-reverse;
+  row-gap: 1rem;
+  padding: 0.25rem;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+@media (max-width: 768px) {
+  .ag-paging-panel {
+    justify-content: center !important;
+  }
+}
