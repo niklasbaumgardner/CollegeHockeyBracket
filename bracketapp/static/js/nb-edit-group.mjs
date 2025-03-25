@@ -111,7 +111,7 @@ export class EditGroup extends NikElement {
             maxlength="60"
             value=${this.group.password}
             ?hidden=${!this.private}
-            required
+            ?required=${this.private}
           ></sl-input>
         </div>
       </form>
