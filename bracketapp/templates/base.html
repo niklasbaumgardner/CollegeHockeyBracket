@@ -34,7 +34,7 @@
       if (window.Sentry) {
         Sentry.onLoad(function () {
           Sentry.init({
-            release: "nbbracketchallengefront@1.0.2",
+            release: "nbbracketchallengefront@1.0.3",
             environment: "production",
           });
         });
@@ -86,11 +86,11 @@
     {% if current_user.is_authenticated %}
     const CURRENT_USER = {{ current_user.to_dict()|tojson }};
     {% else %}
-    const CURRENT_USER = null;
+    const CURRENT_USER = {};
     {% endif %}
 
     // redirect to next if user logged in and next exists
-    if (CURRENT_USER) {
+    if (CURRENT_USER.id) {
       let nextURL = window.localStorage.getItem("next");
       window.localStorage.removeItem("next");
       if (nextURL) {
