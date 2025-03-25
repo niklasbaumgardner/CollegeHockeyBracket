@@ -124,16 +124,6 @@ def update_bracket_from_form(id, form_data):
     return existing_bracket
 
 
-def update_bracket_rank(bracket, rank):
-    bracket.rank = rank
-    db.session.commit()
-
-
-def update_group_bracket_rank(group_bracket, rank):
-    group_bracket.group_rank = rank
-    db.session.commit()
-
-
 def my_bracket_count():
     if current_user.is_authenticated:
         return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).count()
@@ -455,7 +445,7 @@ def update_standings(brackets=None, correct=None):
             rank = i + 1
             bracket.rank = rank
 
-        update_bracket_rank(bracket=bracket, rank=rank)
+    db.session.commit()
 
 
 def update_all_groups(brackets, correct):
@@ -488,7 +478,7 @@ def update_all_groups(brackets, correct):
                 rank = i + 1
                 group_bracket.group_rank = rank
 
-            update_group_bracket_rank(group_bracket=group_bracket, rank=rank)
+    db.session.commit()
 
 
 def update_points():
