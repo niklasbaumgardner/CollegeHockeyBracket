@@ -45,8 +45,15 @@
             <li class="nav-item">
               <a
                 class="nav-link {% block mybrackets %}{% endblock mybrackets %}"
-                href="{{ url_for('mybrackets_bp.my_brackets') }}"
+                href="{{ url_for('mybrackets_bp.my_brackets') }}#"
                 >My Brackets</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
+                >Groups</a
               >
             </li>
             {% endif %}

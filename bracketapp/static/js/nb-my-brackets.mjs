@@ -30,16 +30,36 @@ export class MyBrackets extends Standings {
     if (this.initialTabPanel === "groups") {
       document.addEventListener("sl-tab-show", this);
     }
+
+    window.addEventListener("hashchange", this);
   }
 
   handleEvent(event) {
     switch (event.type) {
       case "sl-tab-show": {
-        if (event.detail.name === "my-brackets") {
-          this.shouldShowBrackets = true;
-          document.removeEventListener("sl-tab-show", this);
-        }
+        this.handleTabShow(event);
+        break;
       }
+      case "hashchange": {
+        this.handleHashChange(event);
+        break;
+      }
+    }
+  }
+
+  handleTabShow(event) {
+    if (event.detail.name === "my-brackets") {
+      this.shouldShowBrackets = true;
+      document.removeEventListener("sl-tab-show", this);
+    }
+  }
+
+  handleHashChange(event) {
+    const hash = new URL(event.newURL).hash;
+    if (hash === "#groups") {
+      this.tabGroup.show("groups");
+    } else {
+      this.tabGroup.show("my-brackets");
     }
   }
 
