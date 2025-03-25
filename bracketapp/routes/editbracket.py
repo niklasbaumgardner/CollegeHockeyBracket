@@ -81,27 +81,10 @@ def edit_bracket_post(id):
         flash("You must join this group to submit a bracket", "danger")
         return redirect(url_for("groups_bp.view_group", id=group_id))
 
-    existing_bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=id)
+    existing_bracket = bracket_queries.update_bracket_from_form(id, request.form)
 
     if existing_bracket:
-        existing_bracket = bracket_queries.update_bracket(
-            user_id=current_user.id,
-            name=request.form.get("name").strip(),
-            winner=request.form.get("game15"),
-            w_goals=request.form.get("w_goals"),
-            l_goals=request.form.get("l_goals"),
-            bracket=existing_bracket,
-        )
-
-        for i in range(1, 16):
-            game_number = f"game{i}"
-            bracket_queries.update_game(
-                bracket_id=existing_bracket.id,
-                game_num=game_number,
-                winner=request.form.get(game_number),
-            )
-
-        flash("Your bracket has been saved", "success")
+        flash("Bracket saved", "success")
         if group_id:
             return redirect(url_for("groups_bp.view_group", id=group_id))
 
@@ -130,33 +113,15 @@ def new_bracket_post():
         flash("You must join this group to submit a bracket", "danger")
         return redirect(url_for("groups_bp.view_group", id=group_id))
 
-    game15 = request.form.get("game15")
-    name = request.form.get("name")
-    w_goals = request.form.get("w_goals")
-    l_goals = request.form.get("l_goals")
-    new_bracket = bracket_queries.create_bracket(
-        user_id=current_user.id,
-        name=name,
-        winner=game15,
-        w_goals=w_goals,
-        l_goals=l_goals,
-    )
-
-    for i in range(1, 16):
-        bracket_queries.create_game(
-            user_id=current_user.id,
-            bracket_id=new_bracket.id,
-            game_num=f"game{i}",
-            winner=request.form.get(f"game{i}"),
-        )
+    new_bracket = bracket_queries.create_bracket_from_form(request.form)
 
     if group_id:
         group_queries.create_group_bracket(group_id=group_id, bracket_id=new_bracket.id)
 
-        flash("Your bracket has been saved", "success")
+        flash("Bracket saved", "success")
         return redirect(url_for("groups_bp.view_group", id=group_id))
 
-    flash("Your bracket has been saved", "success")
+    flash("Bracket saved", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))
 
 

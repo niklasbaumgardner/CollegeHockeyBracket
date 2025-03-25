@@ -42,6 +42,35 @@ def get_empty_bracket():
     )
 
 
+def create_bracket_from_form(form_data):
+    game15 = form_data.get("game15")
+    name = form_data.get("name")
+    w_goals = form_data.get("w_goals")
+    l_goals = form_data.get("l_goals")
+
+    new_bracket = create_bracket(
+        user_id=current_user.id,
+        name=name,
+        winner=game15,
+        w_goals=w_goals,
+        l_goals=l_goals,
+    )
+
+    games = [
+        dict(
+            user_id=current_user.id,
+            bracket_id=new_bracket.id,
+            game_num=f"game{i}",
+            winner=form_data.get(f"game{i}"),
+        )
+        for i in range(1, 16)
+    ]
+
+    create_games(games)
+
+    return new_bracket
+
+
 def create_bracket(user_id, name, winner, w_goals, l_goals):
     new_bracket = Bracket(
         user_id=user_id,
@@ -60,28 +89,39 @@ def create_bracket(user_id, name, winner, w_goals, l_goals):
     return new_bracket
 
 
-def create_game(user_id, bracket_id, game_num, winner):
-    new_game = Game(
-        user_id=user_id, bracket_id=bracket_id, game_num=game_num, winner=winner
-    )
+def create_games(games_list):
+    games = [
+        Game(
+            user_id=g["user_id"],
+            bracket_id=g["bracket_id"],
+            game_num=g["game_num"],
+            winner=g["winner"],
+        )
+        for g in games_list
+    ]
 
-    db.session.add(new_game)
+    db.session.add_all(games)
     db.session.commit()
 
-    return new_game
 
+def update_bracket_from_form(id, form_data):
+    existing_bracket = get_my_bracket_for_bracket_id(bracket_id=id)
+    if existing_bracket is None:
+        return None
 
-def update_bracket(user_id, name, winner, w_goals, l_goals, bracket=None):
-    bracket = bracket if bracket else get_bracket_for_user_id(user_id=user_id)
+    existing_bracket.name = form_data.get("name").strip()
+    existing_bracket.winner = form_data.get("game15")
+    existing_bracket.w_goals = form_data.get("w_goals")
+    existing_bracket.l_goals = form_data.get("l_goals")
 
-    bracket.name = name[:60]
-    bracket.winner = winner
-    bracket.w_goals = w_goals
-    bracket.l_goals = l_goals
+    for i in range(1, 16):
+        game_number = f"game{i}"
+        game = get_game(bracket_id=existing_bracket.id, game_num=game_number)
+        game.winner = form_data.get(game_number)
 
     db.session.commit()
 
-    return bracket
+    return existing_bracket
 
 
 def update_bracket_rank(bracket, rank):
@@ -92,15 +132,6 @@ def update_bracket_rank(bracket, rank):
 def update_group_bracket_rank(group_bracket, rank):
     group_bracket.group_rank = rank
     db.session.commit()
-
-
-def update_game(bracket_id, game_num, winner):
-    game = get_game(bracket_id=bracket_id, game_num=game_num)
-    game.winner = winner
-
-    db.session.commit()
-
-    return game
 
 
 def my_bracket_count():
