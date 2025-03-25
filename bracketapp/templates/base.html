@@ -34,7 +34,8 @@
       if (window.Sentry) {
         Sentry.onLoad(function () {
           Sentry.init({
-            // You can add any additional configuration here
+            release: "nbbracketchallengefront@1.0.0",
+            environment: "production",
           });
         });
       }
