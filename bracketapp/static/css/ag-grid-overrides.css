@@ -5,6 +5,8 @@
   padding: 0.25rem;
   align-items: center !important;
   justify-content: flex-end !important;
+
+  --ag-icon-size: var(--sl-font-size-x-large);
 }
 
 @media (max-width: 768px) {
