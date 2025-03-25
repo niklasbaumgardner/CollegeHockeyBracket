@@ -54,10 +54,22 @@ export class AddBracketModal extends NikElement {
   bracketsTemplate() {
     let bracketCards = this.bracketsCanJoin.map((g) => this.bracketTemplate(g));
 
-    return html`<div class="d-flex flex-column gap-2">
-      <p>Available brackets to add:</p>
-      ${bracketCards}
-    </div>`;
+    let newBracket = null;
+    if (MY_BRACKET_COUNT < 5) {
+      newBracket = html`<sl-button
+        class="w-100"
+        variant="text"
+        outline
+        href=${NEW_BRACKET_LINK + `?group_id=${this.group.id}`}
+        >Create New Bracket</sl-button
+      >`;
+    }
+
+    return html`<div class="d-flex flex-column gap-2 mb-2">
+        <p>Available brackets to add:</p>
+        ${bracketCards}
+      </div>
+      ${newBracket}`;
   }
 
   render() {

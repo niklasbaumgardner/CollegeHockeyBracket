@@ -49,7 +49,7 @@ export class GroupStandings extends Standings {
   }
 
   memeberTemplate() {
-    if (this.canEditGroupBracket && MY_BRACKET_COUNT < 6) {
+    if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
       return html`<nb-countdown></nb-countdown>
         <div class="d-flex gap-3">
           <sl-button
