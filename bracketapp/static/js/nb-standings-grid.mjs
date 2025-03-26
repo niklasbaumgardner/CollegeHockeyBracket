@@ -3,6 +3,8 @@ import { NikElement } from "./customElement.mjs";
 import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 
 export class StandingsGrid extends NikElement {
+  #pageSizeKey = "agGridPaginationPageSize";
+
   static properties = {
     brackets: {
       type: Object,
@@ -24,8 +26,20 @@ export class StandingsGrid extends NikElement {
     standingsGridEl: "#standingsGrid",
   };
 
+  get localStorage() {
+    if (!this._localStorage) {
+      this._localStorage = window.localStorage;
+    }
+
+    return this._localStorage;
+  }
+
+  get storedPageSize() {
+    return this.localStorage.getItem(this.#pageSizeKey) ?? 25;
+  }
+
   get defaultBracketColumnWidth() {
-    return 300;
+    return 256;
   }
 
   get defaultGridOptions() {
@@ -168,9 +182,20 @@ export class StandingsGrid extends NikElement {
       rowData: this.brackets,
       ...this.defaultGridOptions,
       pagination: true,
-      paginationPageSize: 20,
+      paginationPageSize: this.storedPageSize,
+      paginationPageSizeSelector: [25, 50, 75, 100],
+      onPaginationChanged: (event) => this.handlePaginationChangedEvent(event),
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
+  }
+
+  handlePaginationChangedEvent(event) {
+    if (event.newPageSize) {
+      this.localStorage.setItem(
+        this.#pageSizeKey,
+        this.dataGrid.paginationGetPageSize()
+      );
+    }
   }
 
   setupThemeWatcher() {
