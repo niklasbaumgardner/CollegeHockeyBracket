@@ -20,6 +20,17 @@ def is_admin():
 @mybrackets_bp.get("/my_brackets")
 @login_required
 def my_brackets():
+    brackets = bracket_queries.get_all_my_brackets(sort=True)
+
+    if len(brackets) == 1 and not CAN_EDIT_BRACKET and not app.debug:
+        return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0].id))
+
+    return render_template("my_brackets.html")
+
+
+@mybrackets_bp.get("/api/my_brackets")
+@login_required
+def api_my_brackets():
     brackets = [
         b.to_dict(safe_only=False)
         for b in bracket_queries.get_all_my_brackets(
@@ -29,13 +40,8 @@ def my_brackets():
 
     groups = [g.to_dict() for g in group_queries.get_all_groups_for_user(sort=True)]
 
-    if len(brackets) == 1 and not CAN_EDIT_BRACKET and not app.debug:
-        return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0]["id"]))
-
-    return render_template(
-        "my_brackets.html",
+    return dict(
         brackets=brackets,
         groups=groups,
-        number_of_brackets=len(brackets),
         year=YEAR,
     )

@@ -7,14 +7,11 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   const SEARCH_URL = "{{ url_for('groups_bp.search_groups') }}";
   const DELETE_GROUP_BRACKET_URL =
     "{{ url_for('deletebracket_bp.delete_group_bracket', id=0) }}";
+  const MY_BRACKETS_CONTENT_URL =
+    "{{ url_for('mybrackets_bp.api_my_brackets') }}";
 </script>
 
-<nb-my-brackets
-  brackets='{{ brackets|tojson }}'
-  groups='{{ groups|tojson }}'
-  theme="{{ theme }}"
-  year="{{ year }}"
-></nb-my-brackets>
+<nb-my-brackets theme="{{ theme }}"></nb-my-brackets>
 
 <nb-create-group></nb-create-group>
 

@@ -27,6 +27,8 @@ export class MyBrackets extends Standings {
   connectedCallback() {
     super.connectedCallback();
 
+    this.requestContent();
+
     if (this.initialTabPanel === "groups") {
       document.addEventListener("sl-tab-show", this);
     }
@@ -63,11 +65,26 @@ export class MyBrackets extends Standings {
     }
   }
 
-  async firstUpdated() {
-    await this.updateComplete;
-    if (this.initialTabPanel === "groups") {
+  async requestContent() {
+    let response = await fetch(MY_BRACKETS_CONTENT_URL);
+    console.log(response);
+    let data = await response.json();
+    console.log(data);
+    let { brackets, groups, year } = data;
+    this.brackets = brackets;
+    this.groups = groups;
+    this.year = year;
+  }
+
+  async updated() {
+    if (
+      !this.openedToGroups &&
+      this.tabGroup &&
+      this.initialTabPanel === "groups"
+    ) {
       await this.tabGroup.updateComplete;
       this.tabGroup.show("groups");
+      this.openedToGroups = true;
       if (this.url.hash.includes("group_")) {
         const groupCard = document.querySelector(this.url.hash);
         groupCard.addABracket();
@@ -171,6 +188,10 @@ export class MyBrackets extends Standings {
   }
 
   render() {
+    if (!this.year) {
+      return null;
+    }
+
     return html`<div class="d-flex justify-content-center">
       <sl-card>
         ${this.titleTemplate()}
