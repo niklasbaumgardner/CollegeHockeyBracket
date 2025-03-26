@@ -1,6 +1,6 @@
 {
-  "background_color": "white",
-  "description": "College hockey bracket app by Niklas Baumgardner ",
+  "background_color": "#009cde",
+  "description": "NCAA college hockey bracket challenge app by Niklas Baumgardner ",
   "display": "minimal-ui",
   "icons": [
     {
@@ -8,7 +8,7 @@
       "sizes": "any"
     }
   ],
-  "name": "Bracke App",
-  "short_name": "Bracket App",
-  "start_url": "/"
+  "name": "NB Bracket Challenge",
+  "short_name": "NB Bracket Challenge",
+  "start_url": "https://bracket.niklasb.com/"
 }
