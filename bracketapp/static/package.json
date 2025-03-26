@@ -1,0 +1,17 @@
+{
+  "name": "nb-bracket-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "/js/index.js",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.2",
+    "webpack-cli": "^6.0.1"
+  },
+  "scripts": {
+    "build": "webpack --progress --config webpack.config.js",
+    "watch": "webpack --progress --config webpack.config.js --watch"
+  },
+  "author": "Niklas Baumgardner",
+  "license": "ISC"
+}

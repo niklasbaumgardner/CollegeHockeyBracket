@@ -33,21 +33,21 @@
     <script
       src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"
       crossorigin="anonymous"
-    ></script>
-    <script>
+      defer
+    >
       if (window.Sentry) {
-        Sentry.onLoad(function () {
-          Sentry.init({
-            release: "nbbracketchallengefront@1.0.6",
-            environment: "production",
-            replaysSessionSampleRate: 0,
-            replaysOnErrorSampleRate: 0,
-          });
-        });
-      }
+            Sentry.onLoad(function () {
+              Sentry.init({
+                release: "nbbracketchallengefront@1.0.6",
+                environment: "production",
+                replaysSessionSampleRate: 0,
+                replaysOnErrorSampleRate: 0,
+              });
+            });
+          }
     </script>
 
-    <link href="/static/css/all.css" rel="stylesheet" />
+    <link href="/static/css/output.css" rel="stylesheet" />
     <link href="/static/css/light.css" rel="stylesheet" />
     <link href="/static/css/dark.css" rel="stylesheet" />
     <link href="/static/css/themes.css" rel="stylesheet" />
