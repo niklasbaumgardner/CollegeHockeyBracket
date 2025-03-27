@@ -20,11 +20,6 @@ def is_admin():
 @mybrackets_bp.get("/my_brackets")
 @login_required
 def my_brackets():
-    brackets = bracket_queries.get_all_my_brackets(sort=True)
-
-    if len(brackets) == 1 and not CAN_EDIT_BRACKET and not app.debug:
-        return redirect(url_for("viewbracket_bp.view_bracket", id=brackets[0].id))
-
     return render_template("my_brackets.html")
 
 
