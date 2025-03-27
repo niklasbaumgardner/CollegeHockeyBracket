@@ -1,14 +1,21 @@
 {% extends "base.html" %} {% block title %}{% if year == CURRENT_YEAR
-%}Leaderboard{% else %}Archive {{ year }}{% endif %}{% endblock title %} {% block
-standings %}active{% endblock standings %} {% block content %}
-<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
+%}Leaderboard{% else %}Archive {{ year }}{% endif %}{% endblock title %} {%
+block standings %}active{% endblock standings %} {% block content %}
+<script
+  src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"
+  async
+></script>
+<script>
+  const LEADERBOARD_CONTENT_URL = "{{ content_url }}";
+</script>
+<link
+  rel="preload"
+  href="{{ content_url }}"
+  as="fetch"
+  crossorigin="anonymous"
+/>
 
-<nb-standings
-  brackets='{{ standings|tojson }}'
-  winners='{{ winners|tojson }}'
-  theme="{{ theme }}"
-  year="{{ year }}"
-></nb-standings>
+<nb-standings theme="{{ theme }}"></nb-standings>
 
 <script src="/static/js/nb-standings.mjs" type="module"></script>
 

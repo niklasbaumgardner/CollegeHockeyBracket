@@ -9,15 +9,17 @@
   const DELETE_GROUP_URL =
     "{{ url_for('groups_bp.delete_group', id=group.id) }}";
   const MY_BRACKETS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
+  const VIEW_GROUP_CONTENT_URL =
+    "{{ url_for('groups_bp.api_view_group', id=group.id) }}";
 </script>
+<link
+  rel="preload"
+  href="{{ url_for('groups_bp.api_view_group', id=group.id) }}"
+  as="fetch"
+  crossorigin="anonymous"
+/>
 
-<nb-group-standings
-  brackets='{{ brackets|tojson }}'
-  winners='{{ winners|tojson }}'
-  theme="{{ theme }}"
-  group='{{ group|tojson }}'
-  isMember="{{ is_member }}"
-></nb-group-standings>
+<nb-group-standings theme="{{ theme }}"></nb-group-standings>
 
 <script src="/static/js/nb-group-standings.mjs" type="module"></script>
 

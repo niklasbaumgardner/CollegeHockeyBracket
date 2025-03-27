@@ -25,6 +25,18 @@ export class GroupStandings extends Standings {
     return CAN_EDIT_BRACKET && CURRENT_YEAR === this.group.year;
   }
 
+  async requestContent() {
+    let response = await fetch(VIEW_GROUP_CONTENT_URL);
+    let data = await response.json();
+
+    let { brackets, winners, group, is_member } = data;
+    this.brackets = brackets;
+    this.winners = winners;
+    this.group = group;
+    this.year = this.group.year;
+    this.isMember = is_member;
+  }
+
   handleJoinButtonClick() {
     this.joinDialog.show();
   }
@@ -202,6 +214,10 @@ export class GroupStandings extends Standings {
   }
 
   render() {
+    if (!this.year) {
+      return null;
+    }
+
     return html`${super.render()}${this.joinPrivateGroupTemplate()}`;
   }
 }

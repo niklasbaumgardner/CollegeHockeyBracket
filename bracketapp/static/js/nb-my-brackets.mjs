@@ -67,9 +67,8 @@ export class MyBrackets extends Standings {
 
   async requestContent() {
     let response = await fetch(MY_BRACKETS_CONTENT_URL);
-    console.log(response);
     let data = await response.json();
-    console.log(data);
+
     let { brackets, groups, year } = data;
     this.brackets = brackets;
     this.groups = groups;

@@ -28,7 +28,6 @@ def groups():
 
 
 @groups_bp.get("/view_group/<int:id>")
-# @login_required
 def view_group(id):
     group = group_queries.get_group(group_id=id)
 
@@ -39,6 +38,13 @@ def view_group(id):
     if not group:
         flash("Sorry. This group doesn't exist")
         return redirect(url_for("leaderboard_bp.index"))
+
+    return render_template("view_group.html", group=group)
+
+
+@groups_bp.get("/api/view_group/<int:id>")
+def api_view_group(id):
+    group = group_queries.get_group(group_id=id)
 
     member = group_queries.get_group_member(group_id=id)
     is_member = member is not None
@@ -55,8 +61,7 @@ def view_group(id):
         b.to_dict(safe_only=safe_only, include_games=False) for b in winners
     ]
 
-    return render_template(
-        "view_group.html",
+    return dict(
         is_member=is_member,
         group=group.to_dict(),
         brackets=brackets_dict,

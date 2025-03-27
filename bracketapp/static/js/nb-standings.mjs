@@ -18,6 +18,21 @@ export class Standings extends NikElement {
     return this.winners.length;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.requestContent();
+  }
+
+  async requestContent() {
+    let response = await fetch(LEADERBOARD_CONTENT_URL);
+    let data = await response.json();
+    let { standings, winners, year } = data;
+    this.brackets = standings;
+    this.winners = winners;
+    this.year = year;
+  }
+
   getWinningMessage() {
     let winnerTitle = "Winner" + (this.numWinners > 1 ? "s" : "");
     let winners = this.winners.map((w) => w.user.username).join(", ");
@@ -60,6 +75,10 @@ export class Standings extends NikElement {
   }
 
   render() {
+    if (!this.year) {
+      return null;
+    }
+
     return html`<div class="d-flex justify-content-center">
       <sl-card>
         ${this.titleTemplate()}
