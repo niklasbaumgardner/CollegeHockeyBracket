@@ -46,7 +46,7 @@
               <a
                 class="nav-link {% block mybrackets %}{% endblock mybrackets %}"
                 href="{{ url_for('mybrackets_bp.my_brackets') }}#"
-                onclick='document.querySelector(".offcanvas-backdrop").dispatchEvent(new MouseEvent("mousedown"))'
+                onclick='document.querySelector(".offcanvas-backdrop")?.dispatchEvent(new MouseEvent("mousedown"))'
                 >My Brackets</a
               >
             </li>
@@ -54,7 +54,7 @@
               <a
                 class="nav-link"
                 href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
-                onclick='document.querySelector(".offcanvas-backdrop").dispatchEvent(new MouseEvent("mousedown"))'
+                onclick='document.querySelector(".offcanvas-backdrop")?.dispatchEvent(new MouseEvent("mousedown"))'
                 >Groups</a
               >
             </li>
