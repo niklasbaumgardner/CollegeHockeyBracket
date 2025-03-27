@@ -15,7 +15,7 @@ def load_user(user_id):
 
 def create_user(email, username, password):
     hash_ = hash_password(password=password)
-    new_user = User(email=email[:60], username=username[:60], password=hash_)
+    new_user = User(email=email[:60].lower(), username=username[:60], password=hash_)
     db.session.add(new_user)
     db.session.commit()
 
@@ -25,7 +25,7 @@ def get_user_by_id(id):
 
 
 def get_user_by_email(email):
-    return User.query.filter_by(email=email).first()
+    return User.query.filter_by(email=email.lower()).first()
 
 
 def get_all_users():
@@ -42,7 +42,7 @@ def update_user(id, username=None, email=None, token=None):
         user.username = username[:60]
 
     if email is not None:
-        user.email = email[:60]
+        user.email = email[:60].lower()
 
     if token is not None:
         user.streamchat_token = token
@@ -66,7 +66,7 @@ def hash_password(password):
 
 
 def is_email_unique(email):
-    return not User.query.filter_by(email=email).first()
+    return not User.query.filter_by(email=email.lower()).first()
 
 
 def is_username_unique(username):
