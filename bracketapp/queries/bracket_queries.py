@@ -134,7 +134,12 @@ def my_bracket_count():
 def get_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
-    return Bracket.query.filter_by(id=bracket_id).first()
+
+    return (
+        Bracket.query.filter_by(id=bracket_id)
+        .options(joinedload(Bracket.group_brackets))
+        .first()
+    )
 
 
 def get_my_bracket_for_bracket_id(bracket_id):

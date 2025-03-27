@@ -98,7 +98,9 @@ export class MyBracketsGroupStandings extends NikElement {
             <sl-icon class="trophy" name="trophy"></sl-icon>
             <div class="d-flex flex-column group-name">
               <span class="text-decoration-underline">${this.group.name}</span>
-              <span class="rank">Group size: ${this.group.members.length}</span>
+              <span class="group-size"
+                >Group size: ${this.group.members.length}</span
+              >
             </div>
           </a>
           ${this.buttonsTemplate()}

@@ -269,6 +269,36 @@ class Bracket extends NikElement {
     ></nb-bracket-points-chart>`;
   }
 
+  groupTemplate(groupBracket) {
+    return html`<sl-card class="group-card medium"
+      ><a
+        class="d-flex align-items-center gap-2 text-decoration-none"
+        href="${groupBracket.group.url}"
+      >
+        <sl-icon class="trophy" name="trophy"></sl-icon>
+        <div class="d-flex flex-column group-name">
+          <span class="text-decoration-underline"
+            >${groupBracket.group.name}</span
+          ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
+        </div>
+      </a></sl-card
+    >`;
+  }
+
+  groupsTemplate() {
+    if (!this.bracket.group_brackets.length) {
+      return null;
+    }
+
+    return html`<sl-details
+      class="my-brackets-groups"
+      summary="Groups (${this.bracket.group_brackets.length})"
+      ><div class="d-flex flex-wrap gap-2">
+        ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
+      </div></sl-details
+    >`;
+  }
+
   topCardStats() {
     if (this.type === "correct") {
       let loser_team;
@@ -328,7 +358,7 @@ class Bracket extends NikElement {
         </div>
 
         <div
-          class="bracket-sub-details d-flex flex-column align-content-center"
+          class="bracket-sub-details d-flex flex-column align-content-center mb-3"
         >
           <div class="d-flex justify-content-evenly flex-wrap">
             <div class="d-flex">
@@ -368,8 +398,8 @@ class Bracket extends NikElement {
             </div>
           </div>
         </div>
+        ${this.groupsTemplate()}
       </div>
-      ${this.chartTemplate()}
     </div>`;
   }
 

@@ -6,10 +6,30 @@
   padding: var(--sl-spacing-x-small);
 }
 
+.group-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.rank,
+.trophy,
+.group-size {
+  color: var(--sl-color-neutral-950);
+}
+
 .group-card {
   --padding: var(--sl-spacing-x-small);
   width: fit-content;
   max-width: 120px;
+
+  &.medium {
+    --padding: var(--sl-spacing-x-small) var(--sl-spacing-small);
+  }
 
   .group-name {
     font-size: var(--sl-font-size-x-small);
@@ -19,6 +39,11 @@
   .trophy {
     font-size: var(--sl-font-size-large);
     min-width: var(--sl-font-size-medium);
+  }
+
+  .rank {
+    font-size: var(--sl-font-size-2x-small);
+    color: var(--sl-color-neutral-800);
   }
 }
 
@@ -35,28 +60,13 @@
     min-width: var(--sl-font-size-2x-large);
   }
 
-  .rank {
+  .group-size {
     font-size: var(--sl-font-size-small);
   }
 
   .invite-others {
     font-size: var(--sl-font-size-medium);
   }
-}
-
-.group-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.rank,
-.trophy {
-  color: var(--sl-color-neutral-950);
 }
 
 .join-group-bracket {
