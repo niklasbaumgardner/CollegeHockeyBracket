@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 import datetime
+from bracketapp.config import CAN_EDIT_BRACKET
 
 
 admin_bp = Blueprint("admin_bp", __name__)
@@ -258,10 +259,13 @@ def create_team():
 def go_live():
     current_time = datetime.datetime.now(datetime.UTC)
     bracket_close_time = datetime.datetime.strptime(
-        "2025-03-27 14:34:00", "%Y-%m-%d %H:%M:%S"
+        "2025-03-27 18:00:00", "%Y-%m-%d %H:%M:%S"
     ).replace(tzinfo=datetime.UTC)
 
-    if current_time >= bracket_close_time:
-        return "", 200
+    if CAN_EDIT_BRACKET and current_time < bracket_close_time:
+        return "ok", 200
+
+    elif not CAN_EDIT_BRACKET and current_time >= bracket_close_time:
+        return "ok", 200
 
     return "", 503
