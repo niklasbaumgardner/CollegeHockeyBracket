@@ -29,7 +29,7 @@ export class MyBrackets extends Standings {
 
     this.requestContent();
 
-    this.addEventListener("sl-tab-show", this);
+    document.addEventListener("sl-tab-show", this);
 
     window.addEventListener("hashchange", this);
   }
@@ -48,7 +48,6 @@ export class MyBrackets extends Standings {
   }
 
   handleTabShow(event) {
-    event.stopPropagation();
     let tabName = event.detail.name;
     if (tabName === "my-brackets") {
       this.shouldShowBrackets = true;
