@@ -142,7 +142,7 @@ export class StandingsGrid extends NikElement {
                   <div class="name-cell">
                     <span
                       class="standings-bracket-name text-decoration-underline"
-                      ><span>${bracket.name}</span></span
+                      ><span>${bracket.safeName}</span></span
                     ><span class="standings-username"
                       >${bracket.user.username}</span
                     >
