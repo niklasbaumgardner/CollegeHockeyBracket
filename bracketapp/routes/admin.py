@@ -2,6 +2,7 @@ from bracketapp.queries import bracket_queries, user_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
+import datetime
 
 
 admin_bp = Blueprint("admin_bp", __name__)
@@ -251,3 +252,16 @@ def create_team():
         flash("Team successfully added", "success")
 
     return redirect(url_for("admin_bp.admin"))
+
+
+@admin_bp.get("/go_live")
+def go_live():
+    current_time = datetime.datetime.now(datetime.UTC)
+    bracket_close_time = datetime.datetime.strptime(
+        "2025-03-27 14:25:00", "%Y-%m-%d %H:%M:%S"
+    )
+
+    if current_time >= bracket_close_time:
+        return "", 200
+
+    return "", 503
