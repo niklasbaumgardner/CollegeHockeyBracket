@@ -258,8 +258,8 @@ def create_team():
 def go_live():
     current_time = datetime.datetime.now(datetime.UTC)
     bracket_close_time = datetime.datetime.strptime(
-        "2025-03-27 14:25:00", "%Y-%m-%d %H:%M:%S"
-    )
+        "2025-03-27 14:34:00", "%Y-%m-%d %H:%M:%S"
+    ).replace(tzinfo=datetime.UTC)
 
     if current_time >= bracket_close_time:
         return "", 200
