@@ -38,6 +38,34 @@ class EditCorrectMatchup extends EditMatchup {
     />`;
   }
 
+  topInput() {
+    return html`<input
+      type="radio"
+      id="${this.game}top"
+      name="${this.game}"
+      value="${this.winnerTop?.id}"
+      ?checked="${!!(
+        this.winnerTop &&
+        this.winner &&
+        this.winner === this.winnerTop.id
+      )}"
+    />`;
+  }
+
+  bottomInput() {
+    return html`<input
+      type="radio"
+      id="${this.game}bottom"
+      name="${this.game}"
+      value="${this.winnerBottom?.id}"
+      ?checked=${!!(
+        this.winnerBottom &&
+        this.winner &&
+        this.winner === this.winnerBottom.id
+      )}
+    />`;
+  }
+
   render() {
     return html`<sl-card
       class="matchup"
