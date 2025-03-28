@@ -364,7 +364,7 @@ class Bracket extends NikElement {
             <div class="d-flex">
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.r2 ?? "--"} / 80
+                  ${this.bracket?.r1 ?? "--"} / 80
                 </p>
                 <p class="bracket-details-label">Round 1</p></span
               >
