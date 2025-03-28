@@ -16,6 +16,7 @@ from bracketapp.config import YEAR
 from flask_login import current_user
 from sqlalchemy import and_, or_
 from sqlalchemy.sql import func, asc
+from copy import deepcopy
 
 
 def create_group_member(group_id):
@@ -95,11 +96,13 @@ def get_all_groups_for_user(sort=False):
         if g.id not in seen_groups:
             seen_groups[g.id] = [g, index]
 
-        if b and gb:
-            b.group_bracket = gb
+        if b and gb and g.id == gb.group_id:
+            b_copied = deepcopy(b)
+
+            b_copied.group_bracket = gb
 
             return_group, _ = seen_groups[g.id]
-            return_group.brackets.append(b)
+            return_group.brackets.append(b_copied)
 
     for value in seen_groups.values():
         group, index = value

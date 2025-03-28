@@ -97,6 +97,10 @@ export class MyGroupBracketsGrid extends StandingsGrid {
       return;
     }
 
+    for (let bracket of this.brackets) {
+      bracket.rank = bracket.group_bracket?.group_rank;
+    }
+
     const columnDefs = [];
 
     if (!CAN_EDIT_BRACKET) {
