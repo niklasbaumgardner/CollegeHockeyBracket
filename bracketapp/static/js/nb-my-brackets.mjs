@@ -68,7 +68,10 @@ export class MyBrackets extends Standings {
   }
 
   async requestContent() {
-    let response = await fetch(MY_BRACKETS_CONTENT_URL);
+    let response = await fetch(MY_BRACKETS_CONTENT_URL, {
+      credentials: "include",
+      mode: "no-cors",
+    });
     let data = await response.json();
 
     let { brackets, groups, year } = data;

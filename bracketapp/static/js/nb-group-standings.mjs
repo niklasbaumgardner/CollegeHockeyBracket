@@ -26,7 +26,10 @@ export class GroupStandings extends Standings {
   }
 
   async requestContent() {
-    let response = await fetch(VIEW_GROUP_CONTENT_URL);
+    let response = await fetch(VIEW_GROUP_CONTENT_URL, {
+      credentials: "include",
+      mode: "no-cors",
+    });
     let data = await response.json();
 
     let { brackets, winners, group, is_member } = data;

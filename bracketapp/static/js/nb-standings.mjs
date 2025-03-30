@@ -25,7 +25,10 @@ export class Standings extends NikElement {
   }
 
   async requestContent() {
-    let response = await fetch(LEADERBOARD_CONTENT_URL);
+    let response = await fetch(LEADERBOARD_CONTENT_URL, {
+      credentials: "include",
+      mode: "no-cors",
+    });
     let data = await response.json();
     let { standings, winners, year } = data;
     this.brackets = standings;

@@ -8,12 +8,7 @@ block standings %}active{% endblock standings %} {% block content %}
 <script>
   const LEADERBOARD_CONTENT_URL = "{{ content_url }}";
 </script>
-<link
-  rel="preload"
-  href="{{ content_url }}"
-  as="fetch"
-  crossorigin="anonymous"
-/>
+<link rel="preload" href="{{ content_url }}" as="fetch" />
 
 <nb-standings theme="{{ theme }}"></nb-standings>
 

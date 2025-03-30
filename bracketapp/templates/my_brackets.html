@@ -14,7 +14,6 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   rel="preload"
   href="{{ url_for('mybrackets_bp.api_my_brackets') }}"
   as="fetch"
-  crossorigin="anonymous"
 />
 
 <nb-my-brackets theme="{{ theme }}"></nb-my-brackets>
