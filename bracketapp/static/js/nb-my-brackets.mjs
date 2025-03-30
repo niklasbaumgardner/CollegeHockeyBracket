@@ -27,8 +27,6 @@ export class MyBrackets extends Standings {
   connectedCallback() {
     super.connectedCallback();
 
-    this.requestContent();
-
     document.addEventListener("sl-tab-show", this);
 
     window.addEventListener("hashchange", this);
