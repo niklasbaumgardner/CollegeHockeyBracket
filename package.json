@@ -1,0 +1,26 @@
+{
+  "name": "NB Brackets",
+  "author": "Niklas Baumgardner",
+  "version": "0.0.0",
+  "scripts": {
+    "tw-watch": "npx @tailwindcss/cli -i ./bracketapp/static/css/src/tailwind.css -o ./bracketapp/static/css/src/tw-out.css --watch",
+    "tw-build": "npx @tailwindcss/cli -i ./bracketapp/static/css/src/tailwind.css -o ./bracketapp/static/css/src/tw-out.css",
+    "wp-build": "webpack --progress --config ./bracketapp/static/webpack.config.js --mode=production",
+    "wp-watch": "webpack --progress --config ./bracketapp/static/webpack.config.js --watch --mode=development",
+    "build": "npm run tw-build && npm run wp-build"
+  },
+  "dependencies": {
+    "@awesome.me/webawesome-pro": "^3.1.0",
+    "@tailwindcss/cli": "^4.1.18",
+    "lit": "^3.3.2",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^13.0.1",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.4",
+    "mini-css-extract-plugin": "^2.9.4",
+    "webpack": "^5.104.1",
+    "webpack-cli": "^6.0.1"
+  }
+}
