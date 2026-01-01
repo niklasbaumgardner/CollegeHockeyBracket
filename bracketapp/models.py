@@ -1,20 +1,64 @@
+from typing import Annotated, Optional
 from bracketapp import db
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
 import os
 from sqlalchemy_serializer import SerializerMixin
 from flask import url_for
+from itsdangerous import URLSafeTimedSerializer
+from bracketapp import db, login_manager
+from sqlalchemy.orm import mapped_column, Mapped, relationship
+from sqlalchemy import ForeignKey, BigInteger, Identity
+from typing import Any
+from typing_extensions import Annotated
+from bracketapp.utils.Serializer import SerializerMixin
+from enum import IntFlag
+from sqlalchemy.dialects.postgresql import JSONB
+from bracketapp.utils.Sqids import sqids
+
+
+int_pk = Annotated[
+    int, mapped_column(BigInteger, Identity(always=True), primary_key=True)
+]
+str_pk = Annotated[str, mapped_column(primary_key=True)]
+user_fk = Annotated[int, mapped_column(ForeignKey("user.id"))]
+
+
+class Role(IntFlag):
+    USER = 1
+    ADMIN = 2
+
+
+class SqidSerializerMixin(SerializerMixin):
+    custom_mappings = {"id": "sqid_id", "user_id": "sqid_user_id"}
+
+    def sqid_id(self):
+        return sqids.encode_one(getattr(self, "id"))
+
+    def sqid_user_id(self):
+        return sqids.encode_one(getattr(self, "user_id"))
+
+
+@login_manager.user_loader
+def load_user(id):
+    return db.session.get(User, int(id))
 
 
 class User(db.Model, UserMixin, SerializerMixin):
-    serialize_only = ("id", "username", "streamchat_token")
+    __tablename__ = "user"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, nullable=False)
-    role = db.Column(db.Integer, nullable=True)
-    streamchat_token = db.Column(db.String, nullable=True)
+    serialize_only = ("id", "username", "email", "role", "streamchat_token")
+    custom_mappings = {"id": "sqid_id"}
+
+    id: Mapped[int_pk]
+    username: Mapped[str] = mapped_column(unique=True)
+    email: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str]
+    role: Mapped[int] = mapped_column(default=1)
+    streamchat_token: Mapped[Optional[str]]
+
+    def is_admin(self):
+        return Role.ADMIN in Role(self.role)
 
     def get_reset_token(self):
         s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
@@ -27,50 +71,78 @@ class User(db.Model, UserMixin, SerializerMixin):
             user_id = s.loads(token, max_age=expire_sec).get("user_id")
         except:
             return None
-        return User.query.get(user_id)
+        return db.session.get(User, user_id)
+
+    def sqid_id(self):
+        return sqids.encode_one(self.id)
+
+
+class UserSettings(db.Model, SqidSerializerMixin):
+    __tablename__ = "user_settings"
+
+    id: Mapped[int_pk]
+    user_id: Mapped[user_fk]
+    settings: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, default=dict, nullable=False
+    )
 
 
 class Team(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
-    icon_path = db.Column(db.String, nullable=False)
+    __tablename__ = "team"
+
+    custom_mappings = {"id": "sqid_id"}
+
+    id: Mapped[int_pk]
+    name: Mapped[str] = mapped_column(
+        unique=True,
+    )
+    icon_path: Mapped[str] = mapped_column(unique=True)
+
+    def sqid_id(self):
+        return sqids.encode_one(self.id)
 
 
 class BracketTeam(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    team_id = db.Column(db.Integer, db.ForeignKey(Team.id), nullable=False)
-    rank = db.Column(db.Integer, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
+    __tablename__ = "bracket_team"
 
-    team = db.relationship("Team", lazy="joined")
+    custom_mappings = {"id": "sqid_id"}
+
+    id: Mapped[int_pk]
+    team_id: Mapped[int] = mapped_column(ForeignKey("team.id"))
+    rank: Mapped[int]
+    year: Mapped[int]
+
+    team: Mapped["Team"] = relationship(lazy="joined", viewonly=True)
 
 
-class Bracket(db.Model, SerializerMixin):
+class Bracket(db.Model, SqidSerializerMixin):
+    __tablename__ = "bracket"
+
     serialize_rules = (
         "-games_list",
         "group_bracket",
         "url",
     )
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    points = db.Column(db.Integer, nullable=False)
-    max_points = db.Column(db.Integer, nullable=False)
-    r1 = db.Column(db.Integer, nullable=True)
-    r2 = db.Column(db.Integer, nullable=True)
-    r3 = db.Column(db.Integer, nullable=True)
-    r4 = db.Column(db.Integer, nullable=True)
-    name = db.Column(db.String, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
-    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    rank = db.Column(db.Integer, nullable=True)
-    w_goals = db.Column(db.Integer)
-    l_goals = db.Column(db.Integer)
+    id: Mapped[int_pk]
+    user_id: Mapped[user_fk]
+    points: Mapped[int]
+    max_points: Mapped[int]
+    r1: Mapped[Optional[int]]
+    r2: Mapped[Optional[int]]
+    r3: Mapped[Optional[int]]
+    r4: Mapped[Optional[int]]
+    name: Mapped[str]
+    year: Mapped[int]
+    winner: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+    rank: Mapped[Optional[int]]
+    w_goals: Mapped[int]
+    l_goals: Mapped[int]
 
-    winner_team = db.relationship("BracketTeam", lazy="joined")
-    games_list = db.relationship("Game", lazy="joined")
-    user = db.relationship("User", lazy="joined")
-    group_brackets = db.relationship("GroupBracket", lazy="noload")
+    winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
+    games_list: Mapped["Game"] = relationship(lazy="joined", viewonly=True)
+    user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
+    group_brackets: Mapped["GroupBracket"] = relationship(lazy="noload")
     __group_bracket__ = None
 
     @property
@@ -100,6 +172,7 @@ class Bracket(db.Model, SerializerMixin):
         if self.id:
             return url_for("editbracket_bp.bracket_join_group", id=self.id)
 
+    # TODO: fix override
     def to_dict(self, safe_only=True, include_games=True):
         if safe_only:
             return super().to_dict(
@@ -126,6 +199,7 @@ class Bracket(db.Model, SerializerMixin):
             return super().to_dict(rules=rules)
 
 
+# TODO: Stopped here
 class Game(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
@@ -238,14 +312,6 @@ class DefaultGame(db.Model, SerializerMixin):
     away_team = db.relationship(
         "BracketTeam", foreign_keys="DefaultGame.away", lazy="joined"
     )
-
-
-class Theme(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-    theme = db.Column(db.String, nullable=True)
-    backgroundColor = db.Column(db.String, nullable=True)
-    color = db.Column(db.String, nullable=True)
 
 
 class Group(db.Model, SerializerMixin):

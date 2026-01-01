@@ -1,7 +1,17 @@
 from flask import url_for
 from flask_mail import Message
-from bracketapp import mail
+from bracketapp import app, mail
+from threading import Thread
 import os
+
+
+def async_email_sender(a_app, msg):
+    with a_app.app_context():
+        mail.send(msg)
+
+
+def send_async_email(msg):
+    Thread(target=send_async_email, args=(app, msg)).start()
 
 
 def send_reset_email(user):
@@ -14,7 +24,8 @@ def send_reset_email(user):
 {url_for("auth_bp.password_reset", token=token, _external=True)}
 If you did not make this request then please ignore this email and no changes will be made.
 """
-    mail.send(msg)
+
+    send_async_email(msg)
 
 
 def send_signup_notification_email():

@@ -1,52 +1,43 @@
 from bracketapp.models import User
-from bracketapp import db, login_manager
-from bracketapp import bcrypt
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return get_user_by_id(id=user_id)
+from flask_login import current_user
+from bracketapp import bcrypt, db
+from sqlalchemy import func, insert, select, update
 
 
 ##
-## user queries
+## User queries
 ##
 
 
 def create_user(email, username, password):
     hash_ = hash_password(password=password)
-    new_user = User(email=email[:60].lower(), username=username[:60], password=hash_)
-    db.session.add(new_user)
+    stmt = insert(User).values(email=email, username=username, password=hash_)
+    result = db.session.execute(stmt)
+    user_id = result.inserted_primary_key.id
     db.session.commit()
+    return user_id
 
 
 def get_user_by_id(id):
-    return User.query.filter_by(id=id).first()
+    stmt = select(User).where(User.id == id)
+    return db.session.scalars(stmt.limit(1)).first()
 
 
 def get_user_by_email(email):
-    return User.query.filter_by(email=email.lower()).first()
+    stmt = select(User).where(User.email == email)
+    return db.session.scalars(stmt.limit(1)).first()
 
 
-def get_all_users():
-    return User.query.all()
-
-
-def update_user(id, username=None, email=None, token=None):
-    user = get_user_by_id(id=id)
-
-    username = username if is_username_unique(username=username) else None
-    email = email if is_email_unique(email=email) else None
-
+def update_user(username, email):
+    update_dict = dict()
     if username is not None:
-        user.username = username[:60]
-
+        update_dict["username"] = username.strip()
     if email is not None:
-        user.email = email[:60].lower()
+        update_dict["email"] = email.strip()
 
-    if token is not None:
-        user.streamchat_token = token
+    stmt = update(User).where(User.id == current_user.id).values(update_dict)
 
+    db.session.execute(stmt)
     db.session.commit()
 
 
@@ -55,9 +46,13 @@ def update_user_password(id, password):
         return
 
     user = get_user_by_id(id=id)
+    if not user:
+        return
     hash_ = hash_password(password=password)
-    user.password = hash_
 
+    stmt = update(User).where(User.id == user.id).values(password=hash_)
+
+    db.session.execute(stmt)
     db.session.commit()
 
 
@@ -66,8 +61,12 @@ def hash_password(password):
 
 
 def is_email_unique(email):
-    return not User.query.filter_by(email=email.lower()).first()
+    stmt = select(func.count()).where(User.email == email)
+    count = db.session.execute(stmt).scalar_one()
+    return count == 0
 
 
 def is_username_unique(username):
-    return not User.query.filter_by(username=username).first()
+    stmt = select(func.count()).where(User.username == username)
+    count = db.session.execute(stmt).scalar_one()
+    return count == 0

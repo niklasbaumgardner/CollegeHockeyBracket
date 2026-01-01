@@ -1,20 +1,25 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from bracketapp.config import Config
-from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.pool import NullPool
+from sqlalchemy.orm import DeclarativeBase
 import os
 import sentry_sdk
+from werkzeug.middleware.proxy_fix import ProxyFix
+from scout_apm.flask import ScoutApm
+from scout_apm.flask.sqlalchemy import instrument_sqlalchemy
 
 
-bcrypt = Bcrypt()
-migrate = Migrate()
-mail = Mail()
-login_manager = LoginManager()
-db = SQLAlchemy(engine_options=dict(poolclass=NullPool))
+class Base(DeclarativeBase):
+    pass
+
+
+app = Flask(__name__)
+
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 if not os.environ.get("FLASK_DEBUG"):
     sentry_sdk.init(
@@ -32,18 +37,27 @@ if not os.environ.get("FLASK_DEBUG"):
     )
 
 
-app = Flask(__name__)
-
 app.config.from_object(Config)
 
+db = SQLAlchemy(engine_options=dict(poolclass=NullPool, future=True), model_class=Base)
 db.init_app(app)
+
+bcrypt = Bcrypt()
 bcrypt.init_app(app)
+
+login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth_bp.login"
 login_manager.login_message_category = "alert-primary"
+
+mail = Mail()
 mail.init_app(app)
 
+ScoutApm(app)
+instrument_sqlalchemy(db)
 
+
+# ruff: noqa: E402
 from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
 from bracketapp.routes.auth import auth_bp
@@ -74,6 +88,3 @@ app.register_blueprint(context_processor_bp)
 
 with app.app_context():
     db.create_all()
-
-
-migrate.init_app(app, db)
