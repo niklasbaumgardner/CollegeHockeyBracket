@@ -7,13 +7,14 @@ from bracketapp.utils import send_email
 import stream_chat
 import os
 
+
 auth_bp = Blueprint("auth_bp", __name__)
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("leaderboard_bp.index"))
+        return redirect(url_for("mybrackets_bp.my_brackets"))
 
     email = request.args.get("email")
     if email:
@@ -29,6 +30,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, password):
             remember = True if remember == "True" else False
             login_user(user, remember=remember)
+
             next_url = request.args.get("next")
             if not next_url:
                 next_url = url_for("mybrackets_bp.my_brackets")
@@ -36,9 +38,10 @@ def login():
 
         elif user:
             flash("Password was incorrect. Try again", "danger")
-            return render_template("login.html", email=email)
+            return redirect(url_for("auth_bp.login", email=email))
 
         flash("User not found. Please create an acount", "neutral")
+        return redirect(url_for("auth_bp.login"))
 
     return render_template("login.html", email=email)
 
@@ -66,7 +69,6 @@ def signup():
             return redirect(url_for("auth_bp.signup"))
 
         user_queries.create_user(email=email, username=username, password=password1)
-
         try:
             send_email.send_signup_notification_email()
         except Exception:
@@ -127,21 +129,21 @@ def password_reset():
     return render_template("password_reset.html")
 
 
-@auth_bp.route("/logout")
+@auth_bp.get("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("auth_bp.login"))
 
 
-@auth_bp.route("/username_unique", methods=["GET"])
+@auth_bp.get("/username_unique")
 def username_unique():
     username = request.args.get("username")
 
     return {"isUnique": user_queries.is_username_unique(username)}
 
 
-@auth_bp.route("/email_unique", methods=["GET"])
+@auth_bp.get("/email_unique")
 def email_unique():
     email = request.args.get("email")
 
