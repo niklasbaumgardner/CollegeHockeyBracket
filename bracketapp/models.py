@@ -1,16 +1,11 @@
-from typing import Annotated, Optional
-from bracketapp import db
+from typing import Any, Annotated, Optional
+from bracketapp import db, login_manager
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
 import os
-from sqlalchemy_serializer import SerializerMixin
 from flask import url_for
-from itsdangerous import URLSafeTimedSerializer
-from bracketapp import db, login_manager
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from sqlalchemy import ForeignKey, BigInteger, Identity
-from typing import Any
-from typing_extensions import Annotated
+from sqlalchemy import ForeignKey, BigInteger, Identity, UniqueConstraint
 from bracketapp.utils.Serializer import SerializerMixin
 from enum import IntFlag
 from sqlalchemy.dialects.postgresql import JSONB
@@ -30,10 +25,14 @@ class Role(IntFlag):
 
 
 class SqidSerializerMixin(SerializerMixin):
-    custom_mappings = {"id": "sqid_id", "user_id": "sqid_user_id"}
+    custom_mappings: dict[str, str] = {"id": "sqid_id"}
 
     def sqid_id(self):
         return sqids.encode_one(getattr(self, "id"))
+
+
+class UserSqidSerializerMixin(SqidSerializerMixin):
+    custom_mappings: dict[str, str] = {"id": "sqid_id", "user_id": "sqid_user_id"}
 
     def sqid_user_id(self):
         return sqids.encode_one(getattr(self, "user_id"))
@@ -44,11 +43,10 @@ def load_user(id):
     return db.session.get(User, int(id))
 
 
-class User(db.Model, UserMixin, SerializerMixin):
+class User(db.Model, UserMixin, SqidSerializerMixin):
     __tablename__ = "user"
 
     serialize_only = ("id", "username", "email", "role", "streamchat_token")
-    custom_mappings = {"id": "sqid_id"}
 
     id: Mapped[int_pk]
     username: Mapped[str] = mapped_column(unique=True)
@@ -73,11 +71,8 @@ class User(db.Model, UserMixin, SerializerMixin):
             return None
         return db.session.get(User, user_id)
 
-    def sqid_id(self):
-        return sqids.encode_one(self.id)
 
-
-class UserSettings(db.Model, SqidSerializerMixin):
+class UserSettings(db.Model, UserSqidSerializerMixin):
     __tablename__ = "user_settings"
 
     id: Mapped[int_pk]
@@ -87,10 +82,8 @@ class UserSettings(db.Model, SqidSerializerMixin):
     )
 
 
-class Team(db.Model, SerializerMixin):
+class Team(db.Model, SqidSerializerMixin):
     __tablename__ = "team"
-
-    custom_mappings = {"id": "sqid_id"}
 
     id: Mapped[int_pk]
     name: Mapped[str] = mapped_column(
@@ -98,14 +91,14 @@ class Team(db.Model, SerializerMixin):
     )
     icon_path: Mapped[str] = mapped_column(unique=True)
 
-    def sqid_id(self):
-        return sqids.encode_one(self.id)
 
-
-class BracketTeam(db.Model, SerializerMixin):
+class BracketTeam(db.Model, SqidSerializerMixin):
     __tablename__ = "bracket_team"
 
-    custom_mappings = {"id": "sqid_id"}
+    custom_mappings = SqidSerializerMixin.custom_mappings | {"team_id": "sqid_team_id"}
+
+    def sqid_team_id(self):
+        return sqids.encode_one(getattr(self, "team_id"))
 
     id: Mapped[int_pk]
     team_id: Mapped[int] = mapped_column(ForeignKey("team.id"))
@@ -115,7 +108,7 @@ class BracketTeam(db.Model, SerializerMixin):
     team: Mapped["Team"] = relationship(lazy="joined", viewonly=True)
 
 
-class Bracket(db.Model, SqidSerializerMixin):
+class Bracket(db.Model, UserSqidSerializerMixin):
     __tablename__ = "bracket"
 
     serialize_rules = (
@@ -123,25 +116,37 @@ class Bracket(db.Model, SqidSerializerMixin):
         "group_bracket",
         "url",
     )
+    custom_mappings = UserSqidSerializerMixin.custom_mappings | {
+        "winner_id": "sqid_winner_id"
+    }
+
+    def sqid_winner_id(self):
+        return sqids.encode_one(getattr(self, "winner_id"))
 
     id: Mapped[int_pk]
     user_id: Mapped[user_fk]
+    winner_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+
     points: Mapped[int]
     max_points: Mapped[int]
-    r1: Mapped[Optional[int]]
-    r2: Mapped[Optional[int]]
-    r3: Mapped[Optional[int]]
-    r4: Mapped[Optional[int]]
+    round_one_points: Mapped[Optional[int]]
+    round_two_points: Mapped[Optional[int]]
+    round_three_points: Mapped[Optional[int]]
+    round_four_points: Mapped[Optional[int]]
+
     name: Mapped[str]
     year: Mapped[int]
-    winner: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
     rank: Mapped[Optional[int]]
-    w_goals: Mapped[int]
-    l_goals: Mapped[int]
+
+    winner_goals: Mapped[int]
+    loser_goals: Mapped[int]
 
     winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
-    games_list: Mapped["Game"] = relationship(lazy="joined", viewonly=True)
+    games_list: Mapped["Game"] = relationship(
+        lazy="joined", viewonly=True, passive_deletes=True
+    )
     user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
+    # TODO: below relationship
     group_brackets: Mapped["GroupBracket"] = relationship(lazy="noload")
     __group_bracket__ = None
 
@@ -161,19 +166,18 @@ class Bracket(db.Model, SqidSerializerMixin):
         return d
 
     def url(self):
-        if self.id:
-            return url_for("viewbracket_bp.view_bracket", id=self.id)
+        return url_for("viewbracket_bp.view_bracket", sqid=self.sqid_id())
 
     def delete_url(self):
-        if self.id:
-            return url_for("deletebracket_bp.delete_bracket", id=self.id)
+        return url_for("deletebracket_bp.delete_bracket", sqid=self.sqid_id())
 
     def bracket_join_group_url(self):
-        if self.id:
-            return url_for("editbracket_bp.bracket_join_group", id=self.id)
+        return url_for("editbracket_bp.bracket_join_group", sqid=self.sqid_id())
 
     # TODO: fix override
-    def to_dict(self, safe_only=True, include_games=True):
+    def to_dict(
+        self, rules=None, only=None, mappings=None, safe_only=True, include_games=True
+    ):
         if safe_only:
             return super().to_dict(
                 only=(
@@ -200,17 +204,30 @@ class Bracket(db.Model, SqidSerializerMixin):
 
 
 # TODO: Stopped here
-class Game(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-    bracket_id = db.Column(db.Integer, db.ForeignKey(Bracket.id), nullable=False)
-    game_num = db.Column(db.String(10), nullable=False)
-    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+class Game(db.Model, UserSqidSerializerMixin):
+    __tablename__ = "game"
 
-    winner_team = db.relationship("BracketTeam", lazy="joined")
+    custom_mappings = UserSqidSerializerMixin.custom_mappings | {
+        "bracket_id": "sqid_bracket_id"
+    }
+
+    def sqid_bracket_id(self):
+        return sqids.encode_one(getattr(self, "bracket_id"))
+
+    id: Mapped[int_pk]
+    user_id = Mapped[user_fk]
+    bracket_id: Mapped[int] = mapped_column(
+        ForeignKey("bracket.id", ondelete="CASCADE")
+    )
+    winner_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+    game_number: Mapped[str]
+
+    winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
 
 
-class CorrectBracket(db.Model, SerializerMixin):
+class CorrectBracket(db.Model, SqidSerializerMixin):
+    __tablename__ = "correct_bracket"
+
     serialize_rules = (
         "points",
         "max_points",
@@ -224,26 +241,34 @@ class CorrectBracket(db.Model, SerializerMixin):
         "url",
         "-games_list",
     )
+    custom_mappings = SqidSerializerMixin.custom_mappings | {
+        "winner_id": "sqid_winner_id"
+    }
 
-    id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.Integer, nullable=False)
-    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    w_goals = db.Column(db.Integer)
-    l_goals = db.Column(db.Integer)
+    def sqid_winner_id(self):
+        return sqids.encode_one(getattr(self, "winner_id"))
 
-    winner_team = db.relationship("BracketTeam", lazy="joined")
-    games_list = db.relationship("CorrectGame", lazy="joined")
+    id: Mapped[int_pk]
+    winner_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+    year: Mapped[int]
+    winner_goals: Mapped[int]
+    loser_goals: Mapped[int]
+
+    winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
+    games_list: Mapped["CorrectGame"] = relationship(
+        lazy="joined", viewonly=True, passive_deletes=True
+    )
 
     points = 320
     max_points = 320
-    r1 = 80
-    r2 = 80
-    r3 = 80
-    r4 = 80
+    round_one_points = 80
+    round_two_points = 80
+    round_three_points = 80
+    round_four_points = 80
     rank = "-"
     user = {"username": "NB Bracket App"}
 
-    def to_dict(self, include_games=True):
+    def to_dict(self, rules=None, only=None, mappings=None, include_games=True):
         if include_games:
             return super().to_dict(rules=("games",))
 
@@ -263,33 +288,53 @@ class CorrectBracket(db.Model, SerializerMixin):
         return url_for("viewbracket_bp.view_cbracket", year=self.year)
 
 
-class CorrectGame(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    bracket_id = db.Column(db.Integer, db.ForeignKey(CorrectBracket.id), nullable=False)
-    game_num = db.Column(db.String(10), nullable=False)
-    winner = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    loser = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    h_goals = db.Column(db.Integer, nullable=True)
-    a_goals = db.Column(db.Integer, nullable=True)
+class CorrectGame(db.Model, SqidSerializerMixin):
+    __tablename__ = "correct_game"
 
-    winner_team = db.relationship(
-        "BracketTeam", foreign_keys="CorrectGame.winner", lazy="joined"
+    custom_mappings = UserSqidSerializerMixin.custom_mappings | {
+        "bracket_id": "sqid_bracket_id",
+        "winner_id": "sqid_winner_id",
+        "loser_id": "sqid_loser_id",
+    }
+
+    def sqid_bracket_id(self):
+        return sqids.encode_one(getattr(self, "bracket_id"))
+
+    def sqid_winner_id(self):
+        return sqids.encode_one(getattr(self, "winner_id"))
+
+    def sqid_loser_id(self):
+        return sqids.encode_one(getattr(self, "loser_id"))
+
+    id: Mapped[int_pk]
+    bracket_id: Mapped[int] = mapped_column(ForeignKey("correct_game.id"))
+    winner_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+    loser_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+
+    game_number: Mapped[str]
+    top_team_goals: Mapped[int]
+    bottom_team_goals: Mapped[int]
+
+    winner_team: Mapped["BracketTeam"] = relationship(
+        foreign_keys=[winner_id], lazy="joined", viewonly=True
     )
-    loser_team = db.relationship(
-        "BracketTeam", foreign_keys="CorrectGame.loser", lazy="joined"
+    loser_team: Mapped["BracketTeam"] = relationship(
+        foreign_keys=[loser_id], lazy="joined", viewonly=True
     )
 
 
-class DefaultBracket(db.Model, SerializerMixin):
+class DefaultBracket(db.Model, SqidSerializerMixin):
+    __tablename__ = "default_bracket"
+
     serialize_rules = (
         "-games_list",
         "games",
     )
 
-    id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.Integer, nullable=False)
+    id: Mapped[int_pk]
+    year: Mapped[int]
 
-    games_list = db.relationship("DefaultGame", lazy="joined")
+    games_list: Mapped["DefaultGame"] = relationship(lazy="joined", viewonly=True)
 
     def games(self):
         d = {}
@@ -299,23 +344,36 @@ class DefaultBracket(db.Model, SerializerMixin):
         return d
 
 
-class DefaultGame(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    bracket_id = db.Column(db.Integer, db.ForeignKey(DefaultBracket.id), nullable=False)
-    game_num = db.Column(db.String(10), nullable=False)
-    home = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
-    away = db.Column(db.Integer, db.ForeignKey(BracketTeam.id), nullable=True)
+class DefaultGame(db.Model, SqidSerializerMixin):
+    __tablename__ = "default_game"
 
-    home_team = db.relationship(
-        "BracketTeam", foreign_keys="DefaultGame.home", lazy="joined"
+    custom_mappings = SqidSerializerMixin.custom_mappings | {
+        "bracket_id": "sqid_bracket_id",
+    }
+
+    def sqid_bracket_id(self):
+        return sqids.encode_one(getattr(self, "bracket_id"))
+
+    id: Mapped[int_pk]
+    bracket_id: Mapped[int] = mapped_column(ForeignKey("default_bracket.id"))
+    game_number: Mapped[str]
+
+    # Top and bottom refer to the position of the team in the bracket
+    top_team_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+    bottom_team_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
+
+    top_team: Mapped["BracketTeam"] = relationship(
+        foreign_keys=[top_team_id], lazy="joined", viewonly=True
     )
-    away_team = db.relationship(
-        "BracketTeam", foreign_keys="DefaultGame.away", lazy="joined"
+    bottom_team: Mapped["BracketTeam"] = relationship(
+        foreign_keys=[bottom_team_id], lazy="joined", viewonly=True
     )
 
 
-class Group(db.Model, SerializerMixin):
-    __table_args__ = (db.UniqueConstraint("year", "name"),)
+class Group(db.Model, SqidSerializerMixin):
+    __tablename__ = "group"
+    __table_args__ = (UniqueConstraint("year", "name"),)
+
     serialize_rules = (
         "url",
         "join_url",
@@ -324,16 +382,23 @@ class Group(db.Model, SerializerMixin):
         "members",
         "brackets",
     )
+    custom_mappings = SqidSerializerMixin.custom_mappings | {
+        "creator_id": "sqid_creator_id",
+    }
 
-    id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.Integer, nullable=False)
-    name = db.Column(db.String, nullable=False)
-    is_private = db.Column(db.Boolean, nullable=False)
-    locked = db.Column(db.Boolean, nullable=False)
-    password = db.Column(db.String, nullable=True)
-    created_by = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    def sqid_creator_id(self):
+        return sqids.encode_one(getattr(self, "creator_id"))
 
-    members = db.relationship("GroupMember", lazy="joined")
+    id: Mapped[int_pk]
+    year: Mapped[int]
+    name: Mapped[str]
+    is_private: Mapped[bool]
+    locked: Mapped[bool]
+    password: Mapped[Optional[str]]
+    creator_id: Mapped[user_fk]
+
+    members: Mapped["GroupMember"] = relationship(lazy="joined", viewonly=True)
+    # creator: Mapped["User"] = relationship("User", lazy="joined")
     __brackets__ = None
 
     @property
@@ -348,16 +413,18 @@ class Group(db.Model, SerializerMixin):
         self.__brackets__ = brackets
 
     def url(self):
-        return url_for("groups_bp.view_group", id=self.id)
+        return url_for("groups_bp.view_group", sqid=self.sqid_id())
 
     def join_url(self):
-        return url_for("groups_bp.join_group", id=self.id, password=self.password)
+        return url_for(
+            "groups_bp.join_group", sqid=self.sqid_id(), password=self.password
+        )
 
     def share_url(self):
         if self.is_private:
             return url_for(
                 "groups_bp.join_group",
-                id=self.id,
+                sqid=self.sqid_id(),
                 password=self.password,
                 _external=True,
                 _scheme="https",
@@ -365,34 +432,54 @@ class Group(db.Model, SerializerMixin):
 
         return url_for(
             "groups_bp.join_group",
-            id=self.id,
+            sqid=self.sqid_id(),
             _external=True,
             _scheme="https",
         )
 
     def add_bracket_url(self):
-        return url_for("editbracket_bp.add_bracket_to_group", id=self.id)
+        return url_for("editbracket_bp.add_bracket_to_group", sqid=self.sqid_id())
 
 
-class GroupMember(db.Model, SerializerMixin):
-    __table_args__ = (db.UniqueConstraint("group_id", "user_id"),)
+class GroupMember(db.Model, UserSqidSerializerMixin):
+    __tablename__ = "group_member"
+    __table_args__ = (UniqueConstraint("group_id", "user_id"),)
 
-    id = db.Column(db.Integer, primary_key=True)
-    group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    custom_mappings = UserSqidSerializerMixin.custom_mappings | {
+        "group_id": "sqid_group_id",
+    }
 
-    user = db.relationship("User", lazy="joined")
+    def sqid_group_id(self):
+        return sqids.encode_one(getattr(self, "group_id"))
+
+    id: Mapped[int_pk]
+    group_id: Mapped[int] = mapped_column(ForeignKey("group.id"))
+    user_id: Mapped[user_fk]
+
+    user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
     # group = db.relationship("Group", lazy="joined")
 
 
-class GroupBracket(db.Model, SerializerMixin):
-    __table_args__ = (db.UniqueConstraint("group_id", "bracket_id"),)
+class GroupBracket(db.Model, UserSqidSerializerMixin):
+    __tablename__ = "group_bracket"
+    __table_args__ = (UniqueConstraint("group_id", "bracket_id"),)
+
     serialize_rules = ("-group.brackets",)
+    custom_mappings = UserSqidSerializerMixin.custom_mappings | {
+        "bracket_id": "sqid_bracket_id",
+        "group_id": "sqid_group_id",
+    }
 
-    id = db.Column(db.Integer, primary_key=True)
-    group_id = db.Column(db.Integer, db.ForeignKey(Group.id), nullable=False)
-    bracket_id = db.Column(db.Integer, db.ForeignKey(Bracket.id), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-    group_rank = db.Column(db.Integer, nullable=True)
+    def sqid_bracket_id(self):
+        return sqids.encode_one(getattr(self, "bracket_id"))
 
-    group = db.relationship("Group", lazy="joined")
+    def sqid_group_id(self):
+        return sqids.encode_one(getattr(self, "group_id"))
+
+    id: Mapped[int_pk]
+    group_id: Mapped[int] = mapped_column(ForeignKey("group.id"))
+    bracket_id: Mapped[int] = mapped_column(ForeignKey("bracket.id"))
+    user_id: Mapped[user_fk]
+    group_rank: Mapped[Optional[int]]
+
+    group: Mapped["Group"] = relationship(lazy="joined", viewonly=True)
