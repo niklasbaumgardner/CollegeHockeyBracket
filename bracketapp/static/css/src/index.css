@@ -1,0 +1,66 @@
+.small-card {
+  display: flex;
+  justify-content: center;
+
+  wa-card {
+    max-width: 100%;
+    width: 27rem;
+  }
+}
+
+.main-card {
+  display: flex;
+  justify-content: center;
+
+  wa-card {
+    max-width: 100%;
+    width: 60rem;
+  }
+}
+
+wa-page > main {
+  padding: var(--wa-space-2xl) var(--wa-space-m) var(--wa-space-4xl);
+}
+
+wa-card.wa-card-p-0::part(body) {
+  padding: 0;
+}
+
+wa-button.icon-button {
+  line-height: normal;
+
+  &::part(base) {
+    padding: var(--wa-space-xs);
+    width: auto;
+    height: auto;
+  }
+
+  &.no-border::part(base) {
+    border-width: 0;
+  }
+}
+
+#alerts {
+  position: absolute;
+  width: 100%;
+  top: var(--wa-space-4xl);
+  z-index: 999999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nb-tab-group-dialog {
+  wa-tab-group::part(nav),
+  wa-tab-panel::part(base) {
+    padding-inline: var(--spacing);
+  }
+
+  &::part(body) {
+    padding-inline: 0;
+  }
+}
+
+wa-page {
+  transition: all 0.001ms step-start;
+}
