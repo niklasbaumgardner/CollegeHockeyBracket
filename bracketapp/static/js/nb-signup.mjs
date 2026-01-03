@@ -1,5 +1,6 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
+import { DeferredTask } from "./DeferredTask.mjs";
 
 const EMAUL_UNIQUE_HELP_TEXT =
   "Email taken. Please choose a different email or login.";
@@ -18,24 +19,6 @@ export class SignupCard extends NikElement {
     usernameInput: "#username",
     submitButton: "#submitButtn",
   };
-
-  usernameDebouncer(callback, wait) {
-    return (...args) => {
-      window.clearTimeout(this.emailTimeoutId);
-      this.emailTimeoutId = window.setTimeout(() => {
-        callback(...args);
-      }, wait);
-    };
-  }
-
-  emailDebouncer(callback, wait) {
-    return (...args) => {
-      window.clearTimeout(this.usernameTimeoutId);
-      this.usernameTimeoutId = window.setTimeout(() => {
-        callback(...args);
-      }, wait);
-    };
-  }
 
   async checkEmailUnique(email) {
     let response = await fetch(
@@ -62,45 +45,53 @@ export class SignupCard extends NikElement {
   }
 
   async handleEmailInput() {
-    this.emailDebouncer(async () => {
-      let email = this.emailInput.value;
-      let result = await this.checkEmailUnique(email);
-      console.log("email is unique", result.isUnique);
+    if (!this.emailTask) {
+      this.emailTask = new DeferredTask(async () => {
+        let email = this.emailInput.value;
+        let result = await this.checkEmailUnique(email);
+        console.log("email is unique", result.isUnique);
 
-      if (result.isUnique) {
-        this.emailInput.setAttribute("help-text", "");
-        this.emailValid = true;
-      } else {
-        this.emailInput.setAttribute("help-text", EMAUL_UNIQUE_HELP_TEXT);
-        this.emailValid = false;
-      }
-    }, 300)();
+        if (result.isUnique) {
+          this.emailInput.hint = "";
+          this.emailValid = true;
+        } else {
+          this.emailInput.hint = EMAUL_UNIQUE_HELP_TEXT;
+          this.emailValid = false;
+        }
+      }, 300);
+    }
+
+    this.emailTask.arm();
   }
 
   async handleUsernameInput() {
-    this.usernameDebouncer(async () => {
-      let username = this.usernameInput.value;
-      let result = await this.checkUsernameUnique(username);
-      console.log("username is unique", result.isUnique);
+    if (!this.usernameTask) {
+      this.usernameTask = new DeferredTask(async () => {
+        let username = this.usernameInput.value;
+        let result = await this.checkUsernameUnique(username);
+        console.log("username is unique", result.isUnique);
 
-      if (result.isUnique) {
-        this.usernameInput.setAttribute("help-text", "");
-        this.usernameValid = true;
-      } else {
-        this.usernameInput.setAttribute("help-text", USERNAME_UNIQUE_HELP_TEXT);
-        this.usernameValid = false;
-      }
-    }, 300)();
+        if (result.isUnique) {
+          this.usernameInput.hint = "";
+          this.usernameValid = true;
+        } else {
+          this.usernameInput.hint = USERNAME_UNIQUE_HELP_TEXT;
+          this.usernameValid = false;
+        }
+      }, 300);
+    }
+
+    this.usernameTask.arm();
   }
 
   render() {
-    return html`<sl-card>
-      <form id="signup-form" action="${SINGUP_URL}" method="POST"></form>
-      <div class="d-flex flex-column gap-4">
+    return html`<wa-card>
+      <form id="signup-form" action="${SIGNUP_URL}" method="POST"></form>
+      <div class="wa-stack">
         <h2>Sign Up</h2>
 
-        <sl-input
-          @sl-input=${this.handleEmailInput}
+        <wa-input
+          @input=${this.handleEmailInput}
           form="signup-form"
           placeholder="Your email"
           type="email"
@@ -109,10 +100,10 @@ export class SignupCard extends NikElement {
           name="email"
           maxlength="60"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-input
-          @sl-input=${this.handleUsernameInput}
+        <wa-input
+          @input=${this.handleUsernameInput}
           form="signup-form"
           placeholder="Your username"
           label="Username"
@@ -120,9 +111,9 @@ export class SignupCard extends NikElement {
           name="username"
           maxlength="60"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-input
+        <wa-input
           form="signup-form"
           type="password"
           label="Password"
@@ -131,19 +122,19 @@ export class SignupCard extends NikElement {
           placeholder="Password"
           minlength="6"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-button
+        <wa-button
           form="signup-form"
           id="submitButton"
-          class="w-100"
-          variant="primary"
+          class="w-full"
+          variant="brand"
           type="submit"
           ?disabled=${!(this.emailValid && this.usernameValid)}
-          >Sign Up</sl-button
+          >Sign Up</wa-button
         >
       </div>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

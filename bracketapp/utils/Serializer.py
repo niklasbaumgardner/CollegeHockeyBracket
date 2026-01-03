@@ -7,6 +7,11 @@ class SerializerMixin:
     serialize_rules: Optional[tuple[str, ...]] = None
     custom_mappings: Optional[dict[str, str]] = None
 
+    def get_self_attributes(self):
+        inspector = sa_inspect(self)
+        attributes = {a.key for a in inspector.mapper.attrs}
+        return attributes
+
     def get_serialize_only(self, only):
         only = only or tuple()
         only = self.serialize_only or tuple() + only
@@ -23,8 +28,7 @@ class SerializerMixin:
         return mappings
 
     def to_dict(self, rules=None, only=None, mappings=None) -> dict:
-        inspector = sa_inspect(self)
-        sa_keys = {a.key for a in inspector.mapper.attrs}
+        attributes = self.get_self_attributes()
 
         include = set()
         exclude = set()
@@ -37,7 +41,7 @@ class SerializerMixin:
             keys = only
 
         else:
-            keys = tuple(sa_keys)
+            keys = tuple(attributes)
             for rule in rules:
                 if rule.startswith("-"):
                     exclude.add(rule[1:])

@@ -1,23 +1,19 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
-
-const themeStorage = window["localStorage"];
+import { html } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 
 export class ThemeSelector extends NikElement {
   static properties = {
-    theme: { type: String, reflect: true },
+    theme: { type: Object },
   };
 
   static queries = {
-    dropdown: "sl-dropdown",
-    lightIcon: "#light-icon",
-    darkIcon: "#dark-icon",
-    icons: { all: "sl-icon" },
-    themeItems: { all: "sl-menu-item" },
+    dropdown: "wa-dropdown",
+    icon: "#icon",
+    themeItems: { all: "wa-dropdown-item" },
   };
 
   get currentThemeIcon() {
-    if (this.theme === "dark") {
+    if (this.theme?.mode === "dark") {
       return this.darkIcon;
     }
     return this.lightIcon;
@@ -32,44 +28,41 @@ export class ThemeSelector extends NikElement {
   async init() {
     await this.updateComplete;
 
-    if (THEME === "") {
-      let storedTheme = themeStorage.getItem("theme");
-      this.setTheme(storedTheme);
-    } else {
-      this.setTheme(THEME, { dontSend: true });
-    }
+    this.theme = THEME;
+
+    this.setupThemeWatcher();
   }
 
-  setTheme(theme, options) {
-    this.theme = theme === "dark" ? "dark" : "light";
-
-    console.log("setting theme", this.theme);
-
-    themeStorage.setItem("theme", this.theme);
-    // Set theme on document
-    document.documentElement.setAttribute("data-bs-theme", this.theme);
-    document.documentElement.classList.toggle(
-      "sl-theme-dark",
-      this.theme === "dark"
+  setupThemeWatcher() {
+    this.mutationObserver = new MutationObserver((params) =>
+      this.handleThemeChange(params)
     );
-    document.documentElement.classList.toggle(
-      "sl-theme-light",
-      this.theme === "light"
-    );
+
+    this.mutationObserver.observe(document.documentElement, {
+      attributes: true,
+    });
+
+    this.handleThemeChange();
+  }
+
+  handleThemeChange() {
+    for (let button of this.themeItems) {
+      button.checked = button.id === this.theme.mode;
+    }
+
+    this.icon.name = this.getThemeIconName();
+  }
+
+  setTheme(themeMode) {
+    this.theme.mode = themeMode;
 
     for (let button of this.themeItems) {
-      button.checked = button.value === this.theme;
+      button.checked = button.id === this.theme.mode;
     }
 
-    for (let icon of this.icons) {
-      icon.hidden = true;
-    }
+    this.icon.name = this.getThemeIconName();
 
-    this.currentThemeIcon.hidden = false;
-
-    if (!(options?.dontSend === true)) {
-      fetch(THEME_URL + "?" + new URLSearchParams({ theme: this.theme }));
-    }
+    console.log("setting theme mode", this.theme.mode);
   }
 
   handleThemeSelect(event) {
@@ -77,20 +70,34 @@ export class ThemeSelector extends NikElement {
     this.setTheme(selectedTheme.value);
   }
 
-  render() {
-    return html`<sl-dropdown @sl-select=${this.handleThemeSelect}>
-      <sl-button id="theme-button" variant="text" slot="trigger" caret>
-        <sl-icon id="light-icon" name="sun-fill" hidden></sl-icon>
-        <sl-icon id="dark-icon" name="moon-fill" hidden></sl-icon>
-      </sl-button>
+  getThemeIconName() {
+    return this.theme?.mode === "dark" ? "moon-outline" : "sunny-outline";
+  }
 
-      <sl-menu id="theme-selector">
-        <sl-menu-item id="light" type="checkbox" value="light"
-          >Light</sl-menu-item
-        >
-        <sl-menu-item id="dark" type="checkbox" value="dark">Dark</sl-menu-item>
-      </sl-menu>
-    </sl-dropdown>`;
+  render() {
+    return html`<wa-dropdown @wa-select=${this.handleThemeSelect}>
+      <wa-button
+        id="theme-button"
+        variant="brand"
+        appearance="plain"
+        slot="trigger"
+        with-caret
+      >
+        <wa-icon
+          slot="start"
+          id="icon"
+          library="ion"
+          name="${this.getThemeIconName()}"
+        ></wa-icon>
+      </wa-button>
+
+      <wa-dropdown-item id="light" type="checkbox" value="light"
+        >Light</wa-dropdown-item
+      >
+      <wa-dropdown-item id="dark" type="checkbox" value="dark"
+        >Dark</wa-dropdown-item
+      >
+    </wa-dropdown>`;
   }
 }
 

@@ -1,5 +1,4 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html } from "./lit.bundle.mjs";
 import { SignupCard } from "./nb-signup.mjs";
 
 export class ProfileCard extends SignupCard {
@@ -8,7 +7,6 @@ export class ProfileCard extends SignupCard {
   };
 
   async handleEmailInput() {
-    console.log(this.emailInput.value, this.email);
     if (this.emailInput.value === this.email) {
       this.emailInput.helpText = "";
       this.emailValid = false;
@@ -29,14 +27,14 @@ export class ProfileCard extends SignupCard {
   }
 
   render() {
-    return html`<sl-card>
+    return html`<wa-card>
       <form id="profile-form" action="" method="POST" autocomplete="off"></form>
-      <div class="d-flex flex-column gap-4">
+      <div class="wa-stack">
         <h2>Profile</h2>
 
-        <sl-input
+        <wa-input
           form="profile-form"
-          @sl-input=${this.handleEmailInput}
+          @input=${this.handleEmailInput}
           value=${this.email}
           original-value=${this.email}
           type="email"
@@ -45,11 +43,11 @@ export class ProfileCard extends SignupCard {
           name="email"
           maxlength="60"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-input
+        <wa-input
           form="profile-form"
-          @sl-input=${this.handleUsernameInput}
+          @input=${this.handleUsernameInput}
           value=${this.username}
           original-value=${this.username}
           label="Username"
@@ -57,22 +55,22 @@ export class ProfileCard extends SignupCard {
           name="username"
           maxlength="60"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-button
+        <wa-button
           form="profile-form"
           id="submitButton"
-          class="w-100"
-          variant="primary"
+          class="w-full"
+          variant="brand"
           type="submit"
           ?disabled=${!(this.emailValid || this.usernameValid)}
-          >Update</sl-button
+          >Update</wa-button
         >
         <small>
           <a href="${PASSWORD_RESET_REQUEST_URL}">Reset password</a>
         </small>
       </div>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

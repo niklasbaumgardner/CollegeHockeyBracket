@@ -1,5 +1,5 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
 
 const EMAUL_UNIQUE_HELP_TEXT =
   "This email already exists. Please login or reset the password.";
@@ -12,28 +12,29 @@ export class PasswordResetRequestCard extends NikElement {
   static queries = {};
 
   render() {
-    return html`<sl-card>
+    return html`<wa-card>
       <form id="password-reset-request-form" action="" method="POST"></form>
-      <div class="d-flex flex-column gap-4">
+      <div class="wa-stack">
         <h2>Reset Password</h2>
 
-        <sl-input
+        <wa-input
           form="password-reset-request-form"
           type="email"
           name="email"
           label="Email"
           placeholder="Your email"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-button
+        <wa-button
           form="password-reset-request-form"
           type="submit"
-          variant="primary"
-          >Request Link To Reset Password</sl-button
+          variant="brand"
+          class="w-full"
+          >Request Link To Reset Password</wa-button
         >
       </div>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

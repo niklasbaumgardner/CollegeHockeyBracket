@@ -1,5 +1,5 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
 
 const PASSWORD_MATCH_HELP_TEXT = "Passwords do not match.";
 
@@ -30,12 +30,12 @@ export class ResetPasswordCard extends NikElement {
   }
 
   render() {
-    return html`<sl-card @sl-input=${this.checkPasswordsMatch}>
+    return html`<wa-card @input=${this.checkPasswordsMatch}>
       <form id="password-reset-form" action="" method="POST"></form>
-      <div class="d-flex flex-column gap-4">
+      <div class="wa-stack">
         <h2>Reset Password</h2>
 
-        <sl-input
+        <wa-input
           form="password-reset-form"
           type="password"
           label="New Password"
@@ -43,9 +43,9 @@ export class ResetPasswordCard extends NikElement {
           name="password1"
           placeholder="Password"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-input
+        <wa-input
           form="password-reset-form"
           type="password"
           label="Confirm New Password"
@@ -53,18 +53,18 @@ export class ResetPasswordCard extends NikElement {
           name="password2"
           placeholder="Password"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-button
+        <wa-button
           form="password-reset-form"
-          class="w-100"
+          class="w-full"
           type="submit"
-          variant="primary"
+          variant="brand"
           ?disabled=${!this.passwordsMatch}
-          >Reset Password</sl-button
+          >Reset Password</wa-button
         >
       </div>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

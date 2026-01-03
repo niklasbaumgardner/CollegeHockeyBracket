@@ -1,8 +1,16 @@
 {% extends "base.html" %} {% block title %}Profile{% endblock title %} {% block
-profile %}active{% endblock profile %} {% block content %}
+profile %}active{% endblock profile %} {% block backButton %}
+
+<nb-back-button></nb-back-button>
+
+{% endblock backButton %} {% block head %}
+
+<script src="/static/js/nb-profile.mjs" type="module"></script>
+
+{% endblock head %} {% block content %}
 
 <nb-profile
-  class="auth-card"
+  class="small-card"
   username="{{ username }}"
   email="{{ email }}"
 ></nb-profile>

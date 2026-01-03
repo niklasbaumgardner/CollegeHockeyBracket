@@ -1,6 +1,10 @@
 {% extends "base.html" %} {% block title %}Sign Up{% endblock title %} {% block
-content %}
+head %}
 
-<nb-signup class="auth-card" email="{{ email }}"></nb-signup>
+<script src="/static/js/nb-signup.mjs" type="module"></script>
+
+{% endblock head %} {% block content %}
+
+<nb-signup class="small-card" email="{{ email }}"></nb-signup>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html, ifDefined } from "./lit.bundle.mjs";
 
 export class LoginCard extends NikElement {
   static properties = {
@@ -18,23 +18,22 @@ export class LoginCard extends NikElement {
     }
   }
 
-  render() {
-    return html`<sl-card>
+  nativeTemplate() {
+    return html`<wa-card>
       <form id="login-form" action="${LOGIN_URL}" method="POST"></form>
-      <div class="d-flex flex-column gap-4">
+      <div class="wa-stack">
         <h2>Login</h2>
 
         <label
           >Email *
           <input
             form="login-form"
-            class="nb-input"
             type="email"
             name="email"
             label="Email"
             placeholder="Your email"
             maxlength="60"
-            ?value=${this.email}
+            value=${ifDefined(this.email)}
             required
         /></label>
 
@@ -42,7 +41,6 @@ export class LoginCard extends NikElement {
           >Password *
           <input
             form="login-form"
-            class="nb-input"
             type="password"
             name="password"
             label="Password"
@@ -54,28 +52,87 @@ export class LoginCard extends NikElement {
           ><a href="${PASSWORD_RESET_REQUEST_URL}">Forgot password?</a></small
         >
 
-        <sl-checkbox form="login-form" name="remember" value="True" checked
-          >Remember me?</sl-checkbox
+        <wa-checkbox form="login-form" name="remember" value="True" checked
+          >Remember me?</wa-checkbox
         >
 
         <div>
           <!-- This submit button is hidden so "Enter" will submit the form -->
           <button form="login-form" type="submit" hidden></button>
-          <sl-button
-            class="w-100"
+          <wa-button
+            class="w-full"
             type="submit"
-            variant="primary"
+            variant="brand"
             form="login-form"
-            >Login</sl-button
+            >Login</wa-button
           >
         </div>
 
         <p>
           Don't have an account?
-          <a href="${SINGUP_URL}">Sign Up</a>
+          <a href="${SIGNUP_URL}">Sign Up</a>
         </p>
       </div>
-    </sl-card>`;
+    </wa-card>`;
+  }
+
+  waTmeplate() {
+    return html`<wa-card>
+      <form id="login-form" action="${LOGIN_URL}" method="POST"></form>
+      <div class="wa-stack">
+        <h2>Login</h2>
+
+        <wa-input
+          label="Email"
+          form="login-form"
+          type="email"
+          name="email"
+          label="Email"
+          placeholder="Your email"
+          maxlength="60"
+          value=${ifDefined(this.email)}
+          required
+        ></wa-input>
+
+        <wa-input
+          label="Password"
+          form="login-form"
+          type="password"
+          name="password"
+          placeholder="Your password"
+          required
+        ></wa-input>
+
+        <small
+          ><a href="${PASSWORD_RESET_REQUEST_URL}">Forgot password?</a></small
+        >
+
+        <wa-checkbox form="login-form" name="remember" value="True" checked
+          >Remember me?</wa-checkbox
+        >
+
+        <div>
+          <!-- This submit button is hidden so "Enter" will submit the form -->
+          <button form="login-form" type="submit" class="hidden!"></button>
+          <wa-button
+            class="w-full"
+            type="submit"
+            variant="brand"
+            form="login-form"
+            >Login</wa-button
+          >
+        </div>
+
+        <p>
+          Don't have an account?
+          <a href="${SIGNUP_URL}">Sign Up</a>
+        </p>
+      </div>
+    </wa-card>`;
+  }
+
+  render() {
+    return this.waTmeplate();
   }
 }
 
