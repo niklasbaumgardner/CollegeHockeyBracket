@@ -1,5 +1,5 @@
 from typing import Any, Annotated, Optional
-from bracketapp import db, login_manager
+from bracketapp import db, login_manager, BaseModel
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
 import os
@@ -50,7 +50,7 @@ class SqidSerializerMixin(SerializerMixin):
         return super().to_dict(rules, only, mappings)
 
 
-class User(db.Model, UserMixin, SqidSerializerMixin):
+class User(BaseModel, UserMixin, SqidSerializerMixin):
     __tablename__ = "user"
 
     serialize_only = ("id", "username", "email", "role", "streamchat_token")
@@ -79,7 +79,7 @@ class User(db.Model, UserMixin, SqidSerializerMixin):
         return db.session.get(User, user_id)
 
 
-class UserSettings(db.Model, SqidSerializerMixin):
+class UserSettings(BaseModel, SqidSerializerMixin):
     __tablename__ = "user_settings"
 
     id: Mapped[int_pk]
@@ -89,7 +89,7 @@ class UserSettings(db.Model, SqidSerializerMixin):
     )
 
 
-class Team(db.Model, SqidSerializerMixin):
+class Team(BaseModel, SqidSerializerMixin):
     __tablename__ = "team"
 
     id: Mapped[int_pk]
@@ -99,7 +99,7 @@ class Team(db.Model, SqidSerializerMixin):
     icon_path: Mapped[str] = mapped_column(unique=True)
 
 
-class BracketTeam(db.Model, SqidSerializerMixin):
+class BracketTeam(BaseModel, SqidSerializerMixin):
     __tablename__ = "bracket_team"
 
     id: Mapped[int_pk]
@@ -110,7 +110,7 @@ class BracketTeam(db.Model, SqidSerializerMixin):
     team: Mapped["Team"] = relationship(lazy="joined", viewonly=True)
 
 
-class Bracket(db.Model, SqidSerializerMixin):
+class Bracket(BaseModel, SqidSerializerMixin):
     __tablename__ = "bracket"
 
     serialize_rules = (
@@ -200,7 +200,7 @@ class Bracket(db.Model, SqidSerializerMixin):
 
 
 # TODO: Stopped here
-class Game(db.Model, SqidSerializerMixin):
+class Game(BaseModel, SqidSerializerMixin):
     __tablename__ = "game"
 
     id: Mapped[int_pk]
@@ -214,7 +214,7 @@ class Game(db.Model, SqidSerializerMixin):
     winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
 
 
-class CorrectBracket(db.Model, SqidSerializerMixin):
+class CorrectBracket(BaseModel, SqidSerializerMixin):
     __tablename__ = "correct_bracket"
 
     serialize_rules = (
@@ -272,7 +272,7 @@ class CorrectBracket(db.Model, SqidSerializerMixin):
         return url_for("viewbracket_bp.view_cbracket", year=self.year)
 
 
-class CorrectGame(db.Model, SqidSerializerMixin):
+class CorrectGame(BaseModel, SqidSerializerMixin):
     __tablename__ = "correct_game"
 
     id: Mapped[int_pk]
@@ -294,7 +294,7 @@ class CorrectGame(db.Model, SqidSerializerMixin):
     )
 
 
-class DefaultBracket(db.Model, SqidSerializerMixin):
+class DefaultBracket(BaseModel, SqidSerializerMixin):
     __tablename__ = "default_bracket"
 
     serialize_rules = (
@@ -315,7 +315,7 @@ class DefaultBracket(db.Model, SqidSerializerMixin):
         return d
 
 
-class DefaultGame(db.Model, SqidSerializerMixin):
+class DefaultGame(BaseModel, SqidSerializerMixin):
     __tablename__ = "default_game"
 
     id: Mapped[int_pk]
@@ -334,7 +334,7 @@ class DefaultGame(db.Model, SqidSerializerMixin):
     )
 
 
-class Group(db.Model, SqidSerializerMixin):
+class Group(BaseModel, SqidSerializerMixin):
     __tablename__ = "group"
     __table_args__ = (UniqueConstraint("year", "name"),)
 
@@ -399,7 +399,7 @@ class Group(db.Model, SqidSerializerMixin):
         return url_for("editbracket_bp.add_bracket_to_group", sqid=self.sqid_id())
 
 
-class GroupMember(db.Model, SqidSerializerMixin):
+class GroupMember(BaseModel, SqidSerializerMixin):
     __tablename__ = "group_member"
     __table_args__ = (UniqueConstraint("group_id", "user_id"),)
 
@@ -411,7 +411,7 @@ class GroupMember(db.Model, SqidSerializerMixin):
     # group = db.relationship("Group", lazy="joined")
 
 
-class GroupBracket(db.Model, SqidSerializerMixin):
+class GroupBracket(BaseModel, SqidSerializerMixin):
     __tablename__ = "group_bracket"
     __table_args__ = (UniqueConstraint("group_id", "bracket_id"),)
 

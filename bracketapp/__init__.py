@@ -3,17 +3,17 @@ from flask_bcrypt import Bcrypt
 from bracketapp.config import Config
 from flask_mail import Mail
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy_lite import SQLAlchemy
 from sqlalchemy.pool import NullPool
 from sqlalchemy.orm import DeclarativeBase
 import os
 import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
 from scout_apm.flask import ScoutApm
-from scout_apm.flask.sqlalchemy import instrument_sqlalchemy
+from scout_apm.sqlalchemy import instrument_sqlalchemy
 
 
-class Base(DeclarativeBase):
+class BaseModel(DeclarativeBase):
     pass
 
 
@@ -39,7 +39,7 @@ if not os.environ.get("FLASK_DEBUG"):
 
 app.config.from_object(Config)
 
-db = SQLAlchemy(engine_options=dict(poolclass=NullPool, future=True), model_class=Base)
+db = SQLAlchemy(engine_options=dict(poolclass=NullPool, future=True))
 db.init_app(app)
 
 bcrypt = Bcrypt()
@@ -54,7 +54,8 @@ mail = Mail()
 mail.init_app(app)
 
 ScoutApm(app)
-instrument_sqlalchemy(db)
+with app.app_context():
+    instrument_sqlalchemy(db.engine)
 
 
 # ruff: noqa: E402
@@ -85,4 +86,4 @@ app.register_blueprint(viewbracket_bp)
 app.register_blueprint(context_processor_bp)
 
 with app.app_context():
-    db.create_all()
+    BaseModel.metadata.create_all(db.engine)
