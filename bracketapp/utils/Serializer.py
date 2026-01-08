@@ -14,21 +14,38 @@ class SerializerMixin:
 
     def get_serialize_only(self, only):
         only = only or tuple()
-        only = self.serialize_only or tuple() + only
+        only = (self.serialize_only or tuple()) + only
         return only
 
     def get_serialize_rules(self, rules):
         rules = rules or tuple()
-        rules = self.serialize_rules or tuple() + rules
+        rules = (self.serialize_rules or tuple()) + rules
         return rules
 
     def get_custom_mappings(self, mappings):
         mappings = mappings or {}
-        mappings = self.custom_mappings or {} | mappings
+        mappings = (self.custom_mappings or {}) | mappings
         return mappings
 
-    def to_dict(self, rules=None, only=None, mappings=None) -> dict:
+    def is_excluded(self, key, path, excludes):
+        if key in excludes:
+            return True
+
+        for exclusion in excludes:
+            if path.endswith(exclusion):
+                return True
+
+        return False
+
+    def to_dict(self, rules=None, only=None, mappings=None, path=None, depth=0) -> dict:
+        print(path, depth)
+        if depth > 5:
+            return {}
+
         attributes = self.get_self_attributes()
+
+        if path is None:
+            path = ""
 
         include = set()
         exclude = set()
@@ -57,31 +74,59 @@ class SerializerMixin:
         custom_mappings = self.get_custom_mappings(mappings)
 
         for key in keys:
-            if key in exclude:
+            if not hasattr(self, key):
+                continue
+            current_path = path
+            if len(current_path):
+                current_path += "."
+            current_path += key
+            print(f"CURRENT PATH: {current_path}, KEY: {key}, EXCLUDE: {exclude}")
+
+            if self.is_excluded(key, current_path, exclude):
                 continue
 
             if key in custom_mappings:
-                data[key] = serialize(getattr(self, custom_mappings[key]))
+                data[key] = self.serialize(
+                    key, getattr(self, custom_mappings[key]), current_path, depth, rules
+                )
             else:
-                data[key] = serialize(getattr(self, key))
+                data[key] = self.serialize(
+                    key, getattr(self, key), current_path, depth, rules
+                )
 
         return data
 
-
-def serialize(value):
-    KEEP_DEFAULT_TYPES = [int, float, str, bool]
-    value_type = type(value)
-    if value is None:
-        return None
-    elif value_type in KEEP_DEFAULT_TYPES:
-        return value
-    elif isinstance(value, list):
-        return [serialize(v) for v in value]
-    elif isinstance(value, dict):
-        return {serialize(k): serialize(v) for k, v in value.items()}
-    elif callable(value):
-        return serialize(value())
-    elif hasattr(value, "to_dict"):
-        return value.to_dict()
-    else:
-        return str(value)
+    def serialize(self, key, value, path, depth, rules):
+        KEEP_DEFAULT_TYPES = [int, float, str, bool]
+        value_type = type(value)
+        if value is None:
+            return None
+        elif value_type in KEEP_DEFAULT_TYPES:
+            return value
+        elif isinstance(value, list):
+            # if len(path):
+            #     path += "."
+            # path += key
+            return [self.serialize(key, v, path, depth, rules) for v in value]
+        elif isinstance(value, dict):
+            print(
+                "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
+                value,
+            )
+            if len(path):
+                path += "."
+            path += key
+            return {
+                self.serialize(key, k, path, depth + 1, rules): self.serialize(
+                    k, v, path, depth + 1, rules
+                )
+                for k, v in value.items()
+            }
+        elif callable(value):
+            return self.serialize(key, value(), path, depth, rules)
+        elif isinstance(value, SerializerMixin):
+            return value.to_dict(depth=depth + 1, path=path, rules=rules)
+        elif hasattr(value, "to_dict"):
+            return value.to_dict()
+        else:
+            return str(value)

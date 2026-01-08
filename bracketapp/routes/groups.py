@@ -4,6 +4,7 @@ from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
+from bracketapp.utils.Sqids import sqids
 
 
 groups_bp = Blueprint("groups_bp", __name__)
@@ -27,9 +28,10 @@ def groups():
     )
 
 
-@groups_bp.get("/view_group/<int:id>")
-def view_group(id):
-    group = group_queries.get_group(group_id=id)
+@groups_bp.get("/view_group/<string:sqid>")
+def view_group(sqid):
+    group_id = sqids.decode_one(sqid)
+    group = group_queries.get_group(group_id=group_id)
 
     # if group.is_private and not group_queries.get_group_member(group_id=id):
     #     flash("You must join this group to view it")
@@ -39,18 +41,19 @@ def view_group(id):
         flash("Sorry. This group doesn't exist")
         return redirect(url_for("leaderboard_bp.index"))
 
-    return render_template("view_group.html", group=group)
+    return render_template("view_group.html", group=group.to_dict())
 
 
-@groups_bp.get("/api/view_group/<int:id>")
-def api_view_group(id):
-    group = group_queries.get_group(group_id=id)
+@groups_bp.get("/api/view_group/<string:sqid>")
+def api_view_group(sqid):
+    group_id = sqids.decode_one(sqid)
+    group = group_queries.get_group(group_id=group_id)
 
-    member = group_queries.get_group_member(group_id=id)
+    member = group_queries.get_group_member(group_id=group_id)
     is_member = member is not None
 
     brackets, winners, correct = bracket_utils.get_group_standings(
-        group_id=id, year=group.year
+        group_id=group_id, year=group.year
     )
 
     safe_only = group.year == YEAR and CAN_EDIT_BRACKET
@@ -69,10 +72,12 @@ def api_view_group(id):
     )
 
 
-@groups_bp.post("/edit_group/<int:id>")
+@groups_bp.post("/edit_group/<string:sqid>")
 @login_required
-def edit_group(id):
-    group = group_queries.get_group(group_id=id)
+def edit_group(sqid):
+    group_id = sqids.decode_one(sqid)
+
+    group = group_queries.get_group(group_id=group_id)
     if group.created_by != current_user.id:
         flash("You can't edit a group you didn't create")
 
@@ -82,7 +87,7 @@ def edit_group(id):
     locked = request.form.get("locked") == "true"
 
     group_queries.edit_group(
-        group_id=id,
+        group_id=group_id,
         name=group_name,
         is_private=is_private,
         password=password,
@@ -93,15 +98,17 @@ def edit_group(id):
     return redirect(url_for("groups_bp.view_group", id=id))
 
 
-@groups_bp.post("/delete_group/<int:id>")
+@groups_bp.post("/delete_group/<string:sqid>")
 @login_required
-def delete_group(id):
-    group = group_queries.get_group(group_id=id)
-    if group.created_by != current_user.id:
-        flash("You can't delete a group you didn't create")
-        return redirect(url_for("groups_bp.view_group", id=id))
+def delete_group(sqid):
+    group_id = sqids.decode_one(sqid)
 
-    group_queries.delete_group(group_id=id)
+    group = group_queries.get_group(group_id=group_id)
+    if group.creator_id != current_user.id:
+        flash("You can't delete a group you didn't create")
+        return redirect(url_for("groups_bp.view_group", sqid=sqid))
+
+    group_queries.delete_group(group_id=group_id)
 
     flash("Group deleted", "success")
     return redirect(url_for("groups_bp.my_brackets"))
@@ -123,18 +130,20 @@ def create_group():
     return redirect(url_for("groups_bp.view_group", id=group.id))
 
 
-@groups_bp.route("/join_group/<int:id>", methods=["GET", "POST"])
+@groups_bp.route("/join_group/<string:sqid>", methods=["GET", "POST"])
 @login_required
-def join_group(id):
-    group = group_queries.get_group(group_id=id)
+def join_group(sqid):
+    print("Am i here????????????????????????????????????????")
+    group_id = sqids.decode_one(sqid)
+    group = group_queries.get_group(group_id=group_id)
     if not group:
         flash("Sorry. This group doesn't exist", "danger")
         return redirect(url_for("leaderboard_bp.index"))
 
-    member = group_queries.get_group_member(group_id=id)
+    member = group_queries.get_group_member(group_id=group_id)
     if member:
         flash("You are already a member of this group")
-        return redirect(url_for("groups_bp.view_group", id=id))
+        return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
     if group.locked:
         flash("Sorry. This group is locked.")
@@ -147,24 +156,25 @@ def join_group(id):
         if password != group.password:
             flash("Incorrect password. Please try again.")
             # Go pass to viewing private group password page
-            return redirect(url_for("groups_bp.view_group", id=id))
+            return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
-    group_queries.maybe_create_group_member(group_id=id)
+    group_queries.maybe_create_group_member(group_id=group_id)
 
-    return redirect(url_for("groups_bp.view_group", id=id))
+    return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
 
-@groups_bp.post("/lock_group/<int:id>")
+@groups_bp.post("/lock_group/<string:sqid>")
 @login_required
-def lock_group(id):
-    group = group_queries.get_group(group_id=id)
-    if group.created_by != current_user.id:
+def lock_group(sqid):
+    group_id = sqids.decode_one(sqid)
+    group = group_queries.get_group(group_id=group_id)
+    if group.creator_id != current_user.id:
         flash("You can't lock a group you didn't create")
-        return redirect(url_for("groups_bp.view_group", id=id))
+        return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
-    group_queries.lock_group(group_id=id)
+    group_queries.lock_group(group_id=group_id)
 
-    return redirect(url_for("groups_bp.view_group", id=id))
+    return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
 
 @groups_bp.get("/search_groups")

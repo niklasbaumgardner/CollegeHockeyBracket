@@ -69,6 +69,7 @@ from bracketapp.routes.leaderboard import leaderboard_bp
 from bracketapp.routes.mybrackets import mybrackets_bp
 from bracketapp.routes.preferences import preferences_bp
 from bracketapp.routes.profile import profile_bp
+from bracketapp.routes.user_settings import user_settings_bp
 from bracketapp.routes.viewbracket import viewbracket_bp
 from bracketapp.utils.context_processor import context_processor_bp
 
@@ -82,8 +83,9 @@ app.register_blueprint(leaderboard_bp)
 app.register_blueprint(mybrackets_bp)
 app.register_blueprint(preferences_bp)
 app.register_blueprint(profile_bp)
+app.register_blueprint(user_settings_bp)
 app.register_blueprint(viewbracket_bp)
 app.register_blueprint(context_processor_bp)
 
-with app.app_context():
-    BaseModel.metadata.create_all(db.engine)
+# with app.app_context():
+#     BaseModel.metadata.create_all(db.engine)

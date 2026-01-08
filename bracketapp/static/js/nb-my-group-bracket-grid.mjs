@@ -135,10 +135,10 @@ export class MyGroupBracketsGrid extends StandingsGrid {
       columnDefs.push(
         { field: "points" },
         { field: "max_points", headerName: "Max" },
-        { field: "r1" },
-        { field: "r2" },
-        { field: "r3" },
-        { field: "r4" }
+        { field: "round_one_points", headerName: "R1" },
+        { field: "round_two_points", headerName: "R2" },
+        { field: "round_three_points", headerName: "R3" },
+        { field: "round_four_points", headerName: "R4" }
       );
     }
 

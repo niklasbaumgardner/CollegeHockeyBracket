@@ -28,8 +28,8 @@ export class EditBracket extends NikElement {
 
     let obj = {};
     for (let game of Object.values(this.default.games)) {
-      let h = game.home_team;
-      let a = game.away_team;
+      let h = game.top_team;
+      let a = game.bottom_team;
       obj[h.id] = h;
       obj[a.id] = a;
     }
@@ -114,24 +114,12 @@ export class EditBracket extends NikElement {
     return `/static/images/${filename}.svg`;
   }
 
-  getImageElement(team) {
-    if (!team) {
-      return null;
-    }
-    let isWinnerCorrect = this.correct?.winner && this.correct?.winner === team;
-    return html`<img
-      class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
-      src="${this.getImageUrl(team)}"
-      alt="${team}"
-    />`;
-  }
-
   matchupTemplate(options) {
     return html`<nb-edit-matchup
       id=${options.game}
       game=${options.game}
       type="${options.type}"
-      winner=${options.winner}
+      winner_id=${options.winner_id}
       .winnerTop=${options.winnerTop}
       .winnerBottom=${options.winnerBottom}
     ></nb-edit-matchup>`;
@@ -143,33 +131,33 @@ export class EditBracket extends NikElement {
         game: "game1",
         type: "default-edit",
         default: this.default.games.game1,
-        winnerTop: this.default.games.game1.home_team,
-        winnerBottom: this.default.games.game1.away_team,
-        winner: this.bracket.games.game1?.winner,
+        winnerTop: this.default.games.game1.top_team,
+        winnerBottom: this.default.games.game1.bottom_team,
+        winner_id: this.bracket.games.game1?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game2",
         type: "default-edit",
         default: this.default.games.game2,
-        winnerTop: this.default.games.game2.home_team,
-        winnerBottom: this.default.games.game2.away_team,
-        winner: this.bracket.games.game2?.winner,
+        winnerTop: this.default.games.game2.top_team,
+        winnerBottom: this.default.games.game2.bottom_team,
+        winner_id: this.bracket.games.game2?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game3",
         type: "default-edit",
         default: this.default.games.game3,
-        winnerTop: this.default.games.game3.home_team,
-        winnerBottom: this.default.games.game3.away_team,
-        winner: this.bracket.games.game3?.winner,
+        winnerTop: this.default.games.game3.top_team,
+        winnerBottom: this.default.games.game3.bottom_team,
+        winner_id: this.bracket.games.game3?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game4",
         type: "default-edit",
         default: this.default.games.game4,
-        winnerTop: this.default.games.game4.home_team,
-        winnerBottom: this.default.games.game4.away_team,
-        winner: this.bracket.games.game4?.winner,
+        winnerTop: this.default.games.game4.top_team,
+        winnerBottom: this.default.games.game4.bottom_team,
+        winner_id: this.bracket.games.game4?.winner_id,
       })}
     </div>`;
   }
@@ -181,14 +169,14 @@ export class EditBracket extends NikElement {
         type: "edit",
         winnerTop: this.bracket.games.game1?.winner_team,
         winnerBottom: this.bracket.games.game2?.winner_team,
-        winner: this.bracket.games.game9?.winner,
+        winner_id: this.bracket.games.game9?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game10",
         type: "edit",
         winnerTop: this.bracket.games.game3?.winner_team,
         winnerBottom: this.bracket.games.game4?.winner_team,
-        winner: this.bracket.games.game10?.winner,
+        winner_id: this.bracket.games.game10?.winner_id,
       })}
     </div>`;
   }
@@ -200,7 +188,7 @@ export class EditBracket extends NikElement {
         type: "edit",
         winnerTop: this.bracket.games.game9?.winner_team,
         winnerBottom: this.bracket.games.game10?.winner_team,
-        winner: this.bracket.games.game13?.winner,
+        winner_id: this.bracket.games.game13?.winner_id,
       })}
     </div>`;
   }
@@ -211,24 +199,24 @@ export class EditBracket extends NikElement {
       <div class="d-flex justify-content-center align-items-center">
         <sl-input
           class="goals"
-          name="w_goals"
+          name="winner_goals"
           type="number"
           min="0"
           max="99"
           step="1"
           required=""
-          value="${this.bracket.w_goals}"
+          value="${this.bracket.winner_goals}"
         ></sl-input>
         <span class="px-2">-</span>
         <sl-input
           class="goals"
-          name="l_goals"
+          name="loser_goals"
           type="number"
           min="0"
           max="99"
           step="1"
           required=""
-          value="${this.bracket.l_goals}"
+          value="${this.bracket.loser_goals}"
         ></sl-input>
       </div>
     </div>`;
@@ -244,7 +232,7 @@ export class EditBracket extends NikElement {
             type: "edit",
             winnerTop: this.bracket.games.game13?.winner_team,
             winnerBottom: this.bracket.games.game14?.winner_team,
-            winner: this.bracket.games.game15?.winner,
+            winner_id: this.bracket.games.game15?.winner_id,
           })}
           ${this.predictedScoreTemplate()}
         </div>
@@ -259,7 +247,7 @@ export class EditBracket extends NikElement {
         type: "edit",
         winnerTop: this.bracket.games.game11?.winner_team,
         winnerBottom: this.bracket.games.game12?.winner_team,
-        winner: this.bracket.games.game14?.winner,
+        winner_id: this.bracket.games.game14?.winner_id,
       })}
     </div>`;
   }
@@ -271,14 +259,14 @@ export class EditBracket extends NikElement {
         type: "edit",
         winnerTop: this.bracket.games.game5?.winner_team,
         winnerBottom: this.bracket.games.game6?.winner_team,
-        winner: this.bracket.games.game11?.winner,
+        winner_id: this.bracket.games.game11?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game12",
         type: "edit",
         winnerTop: this.bracket.games.game7?.winner_team,
         winnerBottom: this.bracket.games.game8?.winner_team,
-        winner: this.bracket.games.game12?.winner,
+        winner_id: this.bracket.games.game12?.winner_id,
       })}
     </div>`;
   }
@@ -289,33 +277,33 @@ export class EditBracket extends NikElement {
         game: "game5",
         type: "default-edit",
         default: this.default.games.game5,
-        winnerTop: this.default.games.game5.home_team,
-        winnerBottom: this.default.games.game5.away_team,
-        winner: this.bracket.games.game5?.winner,
+        winnerTop: this.default.games.game5.top_team,
+        winnerBottom: this.default.games.game5.bottom_team,
+        winner_id: this.bracket.games.game5?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game6",
         type: "default-edit",
         default: this.default.games.game6,
-        winnerTop: this.default.games.game6.home_team,
-        winnerBottom: this.default.games.game6.away_team,
-        winner: this.bracket.games.game6?.winner,
+        winnerTop: this.default.games.game6.top_team,
+        winnerBottom: this.default.games.game6.bottom_team,
+        winner_id: this.bracket.games.game6?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game7",
         type: "default-edit",
         default: this.default.games.game7,
-        winnerTop: this.default.games.game7.home_team,
-        winnerBottom: this.default.games.game7.away_team,
-        winner: this.bracket.games.game7?.winner,
+        winnerTop: this.default.games.game7.top_team,
+        winnerBottom: this.default.games.game7.bottom_team,
+        winner_id: this.bracket.games.game7?.winner_id,
       })}
       ${this.matchupTemplate({
         game: "game8",
         type: "default-edit",
         default: this.default.games.game8,
-        winnerTop: this.default.games.game8.home_team,
-        winnerBottom: this.default.games.game8.away_team,
-        winner: this.bracket.games.game8?.winner,
+        winnerTop: this.default.games.game8.top_team,
+        winnerBottom: this.default.games.game8.bottom_team,
+        winner_id: this.bracket.games.game8?.winner_id,
       })}
     </div>`;
   }
@@ -346,22 +334,22 @@ export class EditBracket extends NikElement {
     }
 
     let matchup = el.closest(this.matchupTagName);
-    matchup.winner = el.value;
+    matchup.winner_id = el.value;
 
     let team = this.teams[value];
 
     let gameNum = id.match(/\d/g).join("");
     if (gameNum % 2 === 1) {
-      if (nextMatchup.winner === nextMatchup.winnerTop?.id) {
-        nextMatchup.winner = "";
+      if (nextMatchup.winner_id === nextMatchup.winnerTop?.id) {
+        nextMatchup.winner_id = "";
       }
       let oldTeam = nextMatchup.winnerTop;
       nextMatchup.winnerTop = team;
       nextMatchup.topInputEl.checked = false;
       this.maybeClearInputs(nextMatchup.id + "top", oldTeam);
     } else {
-      if (nextMatchup.winner === nextMatchup.winnerBottom?.id) {
-        nextMatchup.winner = "";
+      if (nextMatchup.winner_id === nextMatchup.winnerBottom?.id) {
+        nextMatchup.winner_id = "";
       }
       let oldTeam = nextMatchup.winnerBottom;
       nextMatchup.winnerBottom = team;

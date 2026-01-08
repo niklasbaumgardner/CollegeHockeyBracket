@@ -27,10 +27,7 @@ export class RemoveGroupBracketModal extends NikElement {
     return html`<sl-dialog label="Remove Bracket?">
       <form
         id="delete-group-bracket-form"
-        action=${DELETE_GROUP_BRACKET_URL.replace(
-          "0",
-          this.bracket.group_bracket.id
-        )}
+        action=${this.bracket.group_bracket.delete_url}
         method="POST"
       >
         <p>

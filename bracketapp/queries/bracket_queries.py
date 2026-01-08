@@ -16,6 +16,152 @@ from bracketapp.queries import group_queries
 from flask_login import current_user
 from sqlalchemy.sql import func, asc
 from sqlalchemy.orm import joinedload
+from sqlalchemy import func, insert, select, update
+from sqlalchemy.sql import or_, and_
+from bracketapp.utils.Sqids import sqids
+from sqlalchemy.dialects.postgresql import insert as pg_insert
+
+
+##
+## Bracket and Game queries
+##
+
+
+def get_empty_bracket():
+    return Bracket(
+        user_id=None,
+        name="",
+        year=YEAR,
+        winner=None,
+        winner_goals=None,
+        loser_goals=None,
+        max_points=320,
+        points=0,
+    )
+
+
+def create_bracket_from_form(form_data):
+    game15 = form_data.get("game15")
+    name = form_data.get("name")
+    winner_goals = form_data.get("winner_goals")
+    loser_goals = form_data.get("loser_goals")
+
+    stmt = insert(Bracket).values(
+        user_id=current_user.id,
+        name=name[:60].strip(),
+        year=YEAR,
+        winner_id=sqids.decode_one(game15),
+        winner_goals=winner_goals,
+        loser_goals=loser_goals,
+        max_points=320,
+        points=0,
+    )
+
+    result = db.session.execute(stmt)
+
+    new_bracket_id = result.inserted_primary_key[0]
+
+    games = [
+        dict(
+            user_id=current_user.id,
+            bracket_id=new_bracket_id,
+            game_number=f"game{i}",
+            winner_id=sqids.decode_one(form_data.get(f"game{i}")),
+        )
+        for i in range(1, 16)
+    ]
+
+    stmt = insert(Game).values(games)
+    db.session.execute(stmt)
+    db.session.commit()
+
+
+def update_bracket_from_form(bracket_id, form_data):
+    update_dict = {}
+    update_dict["name"] = form_data.get("name")[:60].strip()
+    update_dict["winner_id"] = sqids.decode_one(form_data.get("game15"))
+    update_dict["winner_goals"] = form_data.get("winner_goals")
+    update_dict["loser_goals"] = form_data.get("loser_goals")
+
+    bracket_stmt = (
+        update(Bracket)
+        .where(
+            Bracket.id == bracket_id,
+            Bracket.user_id == current_user.id,
+            Bracket.year == YEAR,
+        )
+        .values(update_dict)
+    )
+
+    db.session.execute(bracket_stmt)
+
+    games = [
+        dict(
+            user_id=current_user.id,
+            bracket_id=bracket_id,
+            game_number=f"game{i}",
+            winner_id=sqids.decode_one(form_data.get(f"game{i}")),
+        )
+        for i in range(1, 16)
+    ]
+
+    stmt = pg_insert(Game).values(games)
+    upsert_stmt = stmt.on_conflict_do_update(
+        constraint="game_bracket_id_game_number_unique",
+        set_={
+            "winner_id": stmt.excluded.winner_id,
+        },
+    )
+
+    db.session.execute(upsert_stmt)
+
+    db.session.commit()
+
+
+def get_my_bracket_for_bracket_id(bracket_id, include_games=False):
+    if not bracket_id:
+        return
+
+    stmt = select(Bracket).where(
+        and_(
+            Bracket.id == bracket_id,
+            Bracket.user_id == current_user.id,
+            Bracket.year == YEAR,
+        )
+    )
+    if include_games:
+        stmt = stmt.options(joinedload(Bracket.games_list))
+    return db.session.scalars(stmt.limit(1)).first()
+
+
+def my_bracket_count():
+    if current_user.is_authenticated:
+        stmt = select(func.count(Bracket.id)).where(
+            and_(Bracket.user_id == current_user.id, Bracket.year == YEAR)
+        )
+        return db.session.execute(stmt).scalar_one()
+
+    return 0
+
+
+def get_my_brackets(include_group_brackets=False):
+    if not current_user.is_authenticated:
+        return []
+
+    stmt = select(Bracket).where(
+        and_(Bracket.user_id == current_user.id, Bracket.year == YEAR)
+    )
+    if include_group_brackets:
+        stmt = stmt.options(joinedload(Bracket.group_brackets))
+
+    brackets = db.session.scalars(stmt).unique().all()
+
+    # sort in js
+
+    return brackets
+
+
+#####################################################################################
 
 
 def is_admin():
@@ -29,198 +175,103 @@ def is_admin():
 ##
 ## Bracket and Game queries
 ##
-def get_empty_bracket():
-    return Bracket(
-        user_id=None,
-        name="",
-        year=YEAR,
-        winner=None,
-        w_goals=None,
-        l_goals=None,
-        max_points=320,
-        points=0,
-    )
-
-
-def create_bracket_from_form(form_data):
-    game15 = form_data.get("game15")
-    name = form_data.get("name")
-    w_goals = form_data.get("w_goals")
-    l_goals = form_data.get("l_goals")
-
-    new_bracket = create_bracket(
-        user_id=current_user.id,
-        name=name,
-        winner=game15,
-        w_goals=w_goals,
-        l_goals=l_goals,
-    )
-
-    games = [
-        dict(
-            user_id=current_user.id,
-            bracket_id=new_bracket.id,
-            game_num=f"game{i}",
-            winner=form_data.get(f"game{i}"),
-        )
-        for i in range(1, 16)
-    ]
-
-    create_games(games)
-
-    return new_bracket
-
-
-def create_bracket(user_id, name, winner, w_goals, l_goals):
-    new_bracket = Bracket(
-        user_id=user_id,
-        name=name[:60].strip(),
-        year=YEAR,
-        winner=winner,
-        w_goals=w_goals,
-        l_goals=l_goals,
-        max_points=320,
-        points=0,
-    )
-
-    db.session.add(new_bracket)
-    db.session.commit()
-
-    return new_bracket
-
-
-def create_games(games_list):
-    games = [
-        Game(
-            user_id=g["user_id"],
-            bracket_id=g["bracket_id"],
-            game_num=g["game_num"],
-            winner=g["winner"],
-        )
-        for g in games_list
-    ]
-
-    db.session.add_all(games)
-    db.session.commit()
-
-
-def update_bracket_from_form(id, form_data):
-    existing_bracket = get_my_bracket_for_bracket_id(bracket_id=id)
-    if existing_bracket is None:
-        return None
-
-    existing_bracket.name = form_data.get("name").strip()
-    existing_bracket.winner = form_data.get("game15")
-    existing_bracket.w_goals = form_data.get("w_goals")
-    existing_bracket.l_goals = form_data.get("l_goals")
-
-    for i in range(1, 16):
-        game_number = f"game{i}"
-        game = get_game(bracket_id=existing_bracket.id, game_num=game_number)
-        game.winner = form_data.get(game_number)
-
-    db.session.commit()
-
-    return existing_bracket
-
-
-def my_bracket_count():
-    if current_user.is_authenticated:
-        return Bracket.query.filter_by(user_id=current_user.id, year=YEAR).count()
-
-    return 0
 
 
 def get_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
 
-    return (
-        Bracket.query.filter_by(id=bracket_id)
-        .options(joinedload(Bracket.group_brackets))
-        .first()
+    stmt = (
+        select(Bracket)
+        .where(Bracket.id == bracket_id)
+        .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
     )
+    return db.session.scalars(stmt.limit(1)).first()
 
-
-def get_my_bracket_for_bracket_id(bracket_id):
-    if not bracket_id:
-        return
-
-    return Bracket.query.filter_by(
-        id=bracket_id, user_id=current_user.id, year=YEAR
-    ).first()
+    # return (
+    #     Bracket.query.filter_by(id=bracket_id)
+    #     .options(joinedload(Bracket.group_brackets))
+    #     .first()
+    # )
 
 
 def get_bracket_for_bracket_id_and_year(bracket_id, year):
     if not bracket_id or not year:
         return
-    return Bracket.query.filter_by(id=bracket_id, year=year).first()
-
-
-def get_bracket_for_user_id(user_id):
-    if not user_id:
-        return
-    return Bracket.query.filter_by(user_id=user_id, year=YEAR).first()
-
-
-def get_all_my_brackets(sort=False, include_group_brackets=False):
-    if not current_user.is_authenticated:
-        return []
-
-    brackets_query = Bracket.query.filter_by(user_id=current_user.id, year=YEAR)
-
-    if include_group_brackets:
-        brackets_query = brackets_query.options(joinedload(Bracket.group_brackets))
-
-    brackets = brackets_query.all()
-
-    if sort:
-        brackets.sort(key=lambda b: b.name.casefold())
-        if not CAN_EDIT_BRACKET and brackets and brackets[0].rank:
-            brackets.sort(key=lambda b: b.max_points, reverse=True)
-            brackets.sort(key=lambda b: b.rank)
-
-    return brackets
+    stmt = select(Bracket).where(and_(Bracket.id == bracket_id, year=year))
+    return db.session.scalars(stmt.limit(1)).first()
+    # return Bracket.query.filter_by(id=bracket_id, year=year).first()
 
 
 def get_group_brackets_for_bracket(bracket_id):
     if not current_user.is_authenticated:
         return []
 
-    return GroupBracket.query.filter_by(bracket_id=bracket_id).all()
+    stmt = select(GroupBracket).where(
+        and_(
+            GroupBracket.user_id == current_user.id,
+            GroupBracket.bracket_id == bracket_id,
+        )
+    )
+
+    return db.session.scalars(stmt).all()
+    # return GroupBracket.query.filter_by(bracket_id=bracket_id).all()
 
 
 def get_my_group_brackets_for_bracket(bracket_id):
     if not current_user.is_authenticated:
         return []
 
-    return GroupBracket.query.filter_by(
-        user_id=current_user.id, bracket_id=bracket_id
-    ).all()
+    stmt = select(GroupBracket).where(
+        and_(
+            GroupBracket.user_id == current_user.id,
+            GroupBracket.bracket_id == bracket_id,
+        )
+    )
+
+    return db.session.scalars(stmt).all()
+
+    # return GroupBracket.query.filter_by(
+    #     user_id=current_user.id, bracket_id=bracket_id
+    # ).all()
 
 
 def get_game(bracket_id, game_num):
     if not bracket_id or not game_num:
         return
+
     return Game.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
 
 
-def get_all_brackets():
-    return Bracket.query.filter_by(year=YEAR).all()
+def get_all_brackets(year=YEAR):
+    stmt = select(Bracket).where(Bracket.year == year)
+
+    # return db.session.scalars(stmt).all()
+    return db.session.scalars(stmt).unique().all()
+
+    # return Bracket.query.filter_by(year=YEAR).all()
 
 
 def get_all_brackets_joined():
-    return (
-        Bracket.query.filter_by(year=YEAR)
+    stmt = (
+        select(Bracket)
+        .where(Bracket.year == YEAR)
         .options(joinedload(Bracket.group_brackets))
-        .all()
     )
 
+    return db.session.scalars(stmt).all()
 
-def get_all_brackets_for_year(year):
-    if not year:
-        return []
-    return Bracket.query.filter_by(year=year).all()
+    # return (
+    #     Bracket.query.filter_by(year=YEAR)
+    #     .options(joinedload(Bracket.group_brackets))
+    #     .all()
+    # )
+
+
+# def get_all_brackets_for_year(year):
+#     if not year:
+#         return []
+#     return Bracket.query.filter_by(year=year).all()
 
 
 def get_brackets_for_group(group_id):
@@ -288,137 +339,11 @@ def delete_bracket(bracket_id):
 ##
 ## CorrectBracket and CorrectGame queries
 ##
-def create_correct_bracket():
-    correct = CorrectBracket(year=YEAR)
-    db.session.add(correct)
-    db.session.commit()
-
-    for i in range(1, 16):
-        new_game = CorrectGame(bracket_id=correct.id, game_num=f"game{i}")
-        db.session.add(new_game)
-
-    db.session.commit()
-
-    return correct
-
-
-def update_correct_bracket(winner, w_goals, l_goals, bracket=None):
-    bracket = bracket if bracket else get_correct_bracket()
-
-    bracket.winner = winner
-    bracket.w_goals = w_goals
-    bracket.l_goals = l_goals
-
-    db.session.commit()
-
-    return bracket
-
-
-def update_correct_game(b_id, game_num, winner, h_goals, loser, a_goals):
-    game = get_correct_game(bracket_id=b_id, game_num=game_num)
-    game.winner = winner
-    game.loser = loser
-    game.h_goals = h_goals
-    game.a_goals = a_goals
-
-    db.session.commit()
-
-
-def get_correct_bracket():
-    return CorrectBracket.query.filter_by(year=YEAR).first()
-
-
-def get_correct_bracket_for_year(year):
-    if not year:
-        return
-    return CorrectBracket.query.filter_by(year=year).first()
-
-
-def get_all_completed_correct_brackets():
-    return (
-        CorrectBracket.query.filter(CorrectBracket.winner != None)
-        .order_by(CorrectBracket.year.desc())
-        .all()
-    )
-
-
-def get_correct_game(bracket_id, game_num):
-    if not bracket_id or not game_num:
-        return
-    return CorrectGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
-
-
-def get_all_correct_games_for_correct_bracket(bracket_id):
-    if not bracket_id:
-        return
-    return CorrectGame.query.filter_by(bracket_id=bracket_id).all()
-
-
-def delete_correct_bracket():
-    correct = get_correct_bracket()
-
-    for game in correct.games_list:
-        db.session.delete(game)
-
-    db.session.delete(correct)
-    db.session.commit()
 
 
 ##
 ## DefaultBracket and DefaultGame queries
 ##
-def create_default_bracket():
-    default = DefaultBracket(year=YEAR)
-    db.session.add(default)
-    db.session.commit()
-
-    for i in range(1, 9):
-        new_game = DefaultGame(bracket_id=default.id, game_num=f"game{i}")
-        db.session.add(new_game)
-
-    db.session.commit()
-
-    return default
-
-
-def update_default_game(b_id, game_num, home, away):
-    game = get_default_game(bracket_id=b_id, game_num=game_num)
-    game.home = home
-    game.away = away
-
-    db.session.commit()
-
-
-def get_default_bracket():
-    return DefaultBracket.query.filter_by(year=YEAR).first()
-
-
-def get_default_bracket_for_year(year):
-    if not year:
-        return
-    return DefaultBracket.query.filter_by(year=year).first()
-
-
-def get_default_game(bracket_id, game_num):
-    if not bracket_id or not game_num:
-        return
-    return DefaultGame.query.filter_by(bracket_id=bracket_id, game_num=game_num).first()
-
-
-def get_all_default_games_for_default_bracket(bracket_id):
-    if not bracket_id:
-        return []
-    return DefaultGame.query.filter_by(bracket_id=bracket_id).all()
-
-
-def delete_default_bracket():
-    default = get_default_bracket()
-
-    for game in default.games_list:
-        db.session.delete(game)
-
-    db.session.delete(default)
-    db.session.commit()
 
 
 ##
@@ -433,7 +358,9 @@ def update_standings(brackets=None, correct=None):
     if correct and correct.winner:
         for bracket in brackets:
             bracket.goal_difference = abs(
-                bracket.w_goals + bracket.l_goals - (correct.w_goals + correct.l_goals)
+                bracket.winner_goals
+                + bracket.loser_goals
+                - (correct.winner_goals + correct.loser_goals)
             )
 
         brackets.sort(key=lambda x: x.goal_difference)
@@ -464,9 +391,9 @@ def update_all_groups(brackets, correct):
         if correct and correct.winner:
             for _, bracket in group_brackets:
                 bracket.goal_difference = abs(
-                    bracket.w_goals
-                    + bracket.l_goals
-                    - (correct.w_goals + correct.l_goals)
+                    bracket.winner_goals
+                    + bracket.loser_goals
+                    - (correct.winner_goals + correct.loser_goals)
                 )
 
             group_brackets.sort(key=lambda tup: tup[1].goal_difference)
@@ -516,68 +443,3 @@ def update_group_points():
     brackets = get_all_brackets_joined()
     correct = get_correct_bracket()
     update_all_groups(brackets=brackets, correct=correct)
-
-
-##
-## Team and BracketTeam queries
-##
-
-
-def get_icon_path(name):
-    name_stripped = name.replace(" ", "").replace(".", "")
-    return f"/static/images/{name_stripped}.svg"
-
-
-def create_team(teamname):
-    icon_path = get_icon_path(teamname)
-    team = Team(name=teamname, icon_path=icon_path)
-    db.session.add(team)
-    db.session.commit()
-
-
-def get_all_teams():
-    return Team.query.order_by(Team.name).all()
-
-
-def get_team_by_name(name):
-    return Team.query.filter_by(name=name).first()
-
-
-def get_team_by_id(id):
-    return Team.query.filter_by(id=id).first()
-
-
-def get_team_by_bracket_team_id(id):
-    b_team = get_bracket_team_by_id(id=id)
-    return get_team_by_id(id=b_team.team_id)
-
-
-def create_default_bracket_team(team_id, rank):
-    b_team = BracketTeam(team_id=team_id, rank=rank, year=YEAR)
-    db.session.add(b_team)
-    db.session.commit()
-    return b_team
-
-
-def create_bracket_team(team_name, rank, year):
-    team = get_team_by_name(name=team_name)
-    b_team = BracketTeam(team_id=team.id, rank=rank, year=year)
-    db.session.add(b_team)
-    db.session.commit()
-
-
-def get_bracket_team_by_name_and_year(team_name, year):
-    team = get_team_by_name(name=team_name)
-    return BracketTeam.query.filter_by(team_id=team.id, year=year).first()
-
-
-def get_bracket_team_by_id(id):
-    return BracketTeam.query.filter_by(id=id).first()
-
-
-def get_all_bracket_teams():
-    return BracketTeam.query.filter_by(year=YEAR).all()
-
-
-def get_all_bracket_teams_for_year(year):
-    return BracketTeam.query.filter_by(year=year).all()

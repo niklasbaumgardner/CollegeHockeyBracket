@@ -16,11 +16,11 @@ class EditCorrectBracket extends EditBracket {
       .teams=${this.default.teams}
       game=${options.game}
       type="${options.type}"
-      winner=${options.winner}
+      winner_id=${options.winner_id}
       .winnerTop=${options.winnerTop}
       .winnerBottom=${options.winnerBottom}
-      homeGoals=${options.homeGoals}
-      awayGoals=${options.awayGoals}
+      topTeamGoals=${options.topTeamGoals}
+      bottomTeamGoals=${options.bottomTeamGoals}
     ></nb-edit-correct-matchup>`;
   }
 
@@ -30,41 +30,41 @@ class EditCorrectBracket extends EditBracket {
         game: "game1",
         type: "default-edit",
         default: this.default.games.game1,
-        winnerTop: this.default.games.game1.home_team,
-        winnerBottom: this.default.games.game1.away_team,
-        winner: this.bracket?.games?.game1.winner,
-        homeGoals: this.bracket?.games?.game1.h_goals,
-        awayGoals: this.bracket?.games?.game1.a_goals,
+        winnerTop: this.default.games.game1.top_team,
+        winnerBottom: this.default.games.game1.bottom_team,
+        winner_id: this.bracket?.games?.game1.winner_id,
+        topTeamGoals: this.bracket?.games?.game1.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game1.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game2",
         type: "default-edit",
         default: this.default.games.game2,
-        winnerTop: this.default.games.game2.home_team,
-        winnerBottom: this.default.games.game2.away_team,
-        winner: this.bracket?.games?.game2.winner,
-        homeGoals: this.bracket?.games?.game2.h_goals,
-        awayGoals: this.bracket?.games?.game2.a_goals,
+        winnerTop: this.default.games.game2.top_team,
+        winnerBottom: this.default.games.game2.bottom_team,
+        winner_id: this.bracket?.games?.game2.winner_id,
+        topTeamGoals: this.bracket?.games?.game2.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game2.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game3",
         type: "default-edit",
         default: this.default.games.game3,
-        winnerTop: this.default.games.game3.home_team,
-        winnerBottom: this.default.games.game3.away_team,
-        winner: this.bracket?.games?.game3.winner,
-        homeGoals: this.bracket?.games?.game3.h_goals,
-        awayGoals: this.bracket?.games?.game3.a_goals,
+        winnerTop: this.default.games.game3.top_team,
+        winnerBottom: this.default.games.game3.bottom_team,
+        winner_id: this.bracket?.games?.game3.winner_id,
+        topTeamGoals: this.bracket?.games?.game3.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game3.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game4",
         type: "default-edit",
         default: this.default.games.game4,
-        winnerTop: this.default.games.game4.home_team,
-        winnerBottom: this.default.games.game4.away_team,
-        winner: this.bracket?.games?.game4.winner,
-        homeGoals: this.bracket?.games?.game4.h_goals,
-        awayGoals: this.bracket?.games?.game4.a_goals,
+        winnerTop: this.default.games.game4.top_team,
+        winnerBottom: this.default.games.game4.bottom_team,
+        winner_id: this.bracket?.games?.game4.winner_id,
+        topTeamGoals: this.bracket?.games?.game4.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game4.bottom_team_goals,
       })}
     </div>`;
   }
@@ -76,18 +76,18 @@ class EditCorrectBracket extends EditBracket {
         type: "edit",
         winnerTop: this.bracket?.games?.game1.winner_team,
         winnerBottom: this.bracket?.games?.game2.winner_team,
-        winner: this.bracket?.games?.game9.winner,
-        homeGoals: this.bracket?.games?.game9.h_goals,
-        awayGoals: this.bracket?.games?.game9.a_goals,
+        winner_id: this.bracket?.games?.game9.winner_id,
+        topTeamGoals: this.bracket?.games?.game9.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game9.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game10",
         type: "edit",
         winnerTop: this.bracket?.games?.game3.winner_team,
         winnerBottom: this.bracket?.games?.game4.winner_team,
-        winner: this.bracket?.games?.game10.winner,
-        homeGoals: this.bracket?.games?.game10.h_goals,
-        awayGoals: this.bracket?.games?.game10.a_goals,
+        winner_id: this.bracket?.games?.game10.winner_id,
+        topTeamGoals: this.bracket?.games?.game10.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game10.bottom_team_goals,
       })}
     </div>`;
   }
@@ -99,9 +99,9 @@ class EditCorrectBracket extends EditBracket {
         type: "edit",
         winnerTop: this.bracket?.games?.game9.winner_team,
         winnerBottom: this.bracket?.games?.game10.winner_team,
-        winner: this.bracket?.games?.game13.winner,
-        homeGoals: this.bracket?.games?.game13.h_goals,
-        awayGoals: this.bracket?.games?.game13.a_goals,
+        winner_id: this.bracket?.games?.game13.winner_id,
+        topTeamGoals: this.bracket?.games?.game13.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game13.bottom_team_goals,
       })}
     </div>`;
   }
@@ -116,9 +116,9 @@ class EditCorrectBracket extends EditBracket {
             type: "edit",
             winnerTop: this.bracket?.games?.game13.winner_team,
             winnerBottom: this.bracket?.games?.game14.winner_team,
-            winner: this.bracket?.games?.game15.winner,
-            homeGoals: this.bracket?.games?.game15.h_goals,
-            awayGoals: this.bracket?.games?.game15.a_goals,
+            winner_id: this.bracket?.games?.game15.winner_id,
+            topTeamGoals: this.bracket?.games?.game15.top_team_goals,
+            bottomTeamGoals: this.bracket?.games?.game15.bottom_team_goals,
           })}
         </div>
       </sl-card>
@@ -132,9 +132,9 @@ class EditCorrectBracket extends EditBracket {
         type: "edit",
         winnerTop: this.bracket?.games?.game11.winner_team,
         winnerBottom: this.bracket?.games?.game12.winner_team,
-        winner: this.bracket?.games?.game14.winner,
-        homeGoals: this.bracket?.games?.game14.h_goals,
-        awayGoals: this.bracket?.games?.game14.a_goals,
+        winner_id: this.bracket?.games?.game14.winner_id,
+        topTeamGoals: this.bracket?.games?.game14.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game14.bottom_team_goals,
       })}
     </div>`;
   }
@@ -146,18 +146,18 @@ class EditCorrectBracket extends EditBracket {
         type: "edit",
         winnerTop: this.bracket?.games?.game5.winner_team,
         winnerBottom: this.bracket?.games?.game6.winner_team,
-        winner: this.bracket?.games?.game11.winner,
-        homeGoals: this.bracket?.games?.game11.h_goals,
-        awayGoals: this.bracket?.games?.game11.a_goals,
+        winner_id: this.bracket?.games?.game11.winner_id,
+        topTeamGoals: this.bracket?.games?.game11.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game11.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game12",
         type: "edit",
         winnerTop: this.bracket?.games?.game7.winner_team,
         winnerBottom: this.bracket?.games?.game8.winner_team,
-        winner: this.bracket?.games?.game12.winner,
-        homeGoals: this.bracket?.games?.game12.h_goals,
-        awayGoals: this.bracket?.games?.game12.a_goals,
+        winner_id: this.bracket?.games?.game12.winner_id,
+        topTeamGoals: this.bracket?.games?.game12.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game12.bottom_team_goals,
       })}
     </div>`;
   }
@@ -168,41 +168,41 @@ class EditCorrectBracket extends EditBracket {
         game: "game5",
         type: "default-edit",
         default: this.default.games.game5,
-        winnerTop: this.default.games.game5.home_team,
-        winnerBottom: this.default.games.game5.away_team,
-        winner: this.bracket?.games?.game5.winner,
-        homeGoals: this.bracket?.games?.game5.h_goals,
-        awayGoals: this.bracket?.games?.game5.a_goals,
+        winnerTop: this.default.games.game5.top_team,
+        winnerBottom: this.default.games.game5.bottom_team,
+        winner_id: this.bracket?.games?.game5.winner_id,
+        topTeamGoals: this.bracket?.games?.game5.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game5.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game6",
         type: "default-edit",
         default: this.default.games.game6,
-        winnerTop: this.default.games.game6.home_team,
-        winnerBottom: this.default.games.game6.away_team,
-        winner: this.bracket?.games?.game6.winner,
-        homeGoals: this.bracket?.games?.game6.h_goals,
-        awayGoals: this.bracket?.games?.game6.a_goals,
+        winnerTop: this.default.games.game6.top_team,
+        winnerBottom: this.default.games.game6.bottom_team,
+        winner_id: this.bracket?.games?.game6.winner_id,
+        topTeamGoals: this.bracket?.games?.game6.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game6.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game7",
         type: "default-edit",
         default: this.default.games.game7,
-        winnerTop: this.default.games.game7.home_team,
-        winnerBottom: this.default.games.game7.away_team,
-        winner: this.bracket?.games?.game7.winner,
-        homeGoals: this.bracket?.games?.game7.h_goals,
-        awayGoals: this.bracket?.games?.game7.a_goals,
+        winnerTop: this.default.games.game7.top_team,
+        winnerBottom: this.default.games.game7.bottom_team,
+        winner_id: this.bracket?.games?.game7.winner_id,
+        topTeamGoals: this.bracket?.games?.game7.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game7.bottom_team_goals,
       })}
       ${this.matchupTemplate({
         game: "game8",
         type: "default-edit",
         default: this.default.games.game8,
-        winnerTop: this.default.games.game8.home_team,
-        winnerBottom: this.default.games.game8.away_team,
-        winner: this.bracket?.games?.game8.winner,
-        homeGoals: this.bracket?.games?.game8.h_goals,
-        awayGoals: this.bracket?.games?.game8.a_goals,
+        winnerTop: this.default.games.game8.top_team,
+        winnerBottom: this.default.games.game8.bottom_team,
+        winner_id: this.bracket?.games?.game8.winner_id,
+        topTeamGoals: this.bracket?.games?.game8.top_team_goals,
+        bottomTeamGoals: this.bracket?.games?.game8.bottom_team_goals,
       })}
     </div>`;
   }

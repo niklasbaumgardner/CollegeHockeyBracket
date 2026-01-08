@@ -71,7 +71,7 @@ export class GroupStandings extends Standings {
             class="flex-grow-1"
             variant="primary"
             outline
-            href=${CREATE_BRACKET_URL}
+            href=${this.group.new_bracket_url}
             >Create New Bracket</sl-button
           ><sl-button
             class="flex-grow-1"
@@ -109,7 +109,7 @@ export class GroupStandings extends Standings {
         >Join Group</sl-button
       >`;
     } else {
-      return html`<sl-button variant="primary" href="${JOIN_GROUP_URL}"
+      return html`<sl-button variant="primary" href="${this.group.join_url}"
         >Join Group</sl-button
       >`;
     }
@@ -155,7 +155,11 @@ export class GroupStandings extends Standings {
 
   joinPrivateGroupTemplate() {
     return html`<sl-dialog id="join-dialog" label="Join ${this.group.name}">
-      <form id="join-private-group" action="${JOIN_GROUP_URL}" method="GET">
+      <form
+        id="join-private-group"
+        action="${this.group.join_url}"
+        method="GET"
+      >
         <p class="mb-3">
           This group is private. Please enter the password to join.
         </p>
@@ -191,7 +195,7 @@ export class GroupStandings extends Standings {
     </div>`;
 
     let editGroupTemplate = null;
-    if (CURRENT_USER.id === this.group.created_by && this.canEditGroupBracket) {
+    if (CURRENT_USER.id === this.group.creator_id && this.canEditGroupBracket) {
       editGroupTemplate = html`<sl-button
         style="--sl-button-font-size-medium: var(--sl-font-size-x-large);"
         variant="text"
@@ -205,7 +209,9 @@ export class GroupStandings extends Standings {
         <h2>${this.group.name}</h2>
         ${editGroupTemplate}
       </div>
-      ${this.isMember && !this.group.locked ? inviteTemplate : null}
+      ${this.isMember && !this.group.locked && this.canEditGroupBracket
+        ? inviteTemplate
+        : null}
     </div>`;
   }
 

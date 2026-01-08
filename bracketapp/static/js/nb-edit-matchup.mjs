@@ -9,7 +9,7 @@ export class EditMatchup extends NikElement {
     winnerBottom: {
       type: Object,
     },
-    winner: { type: Number },
+    winner_id: { type: String },
     game: { type: String },
     teams: { type: Object },
   };
@@ -57,8 +57,8 @@ export class EditMatchup extends NikElement {
       required=""
       ?checked="${!!(
         this.winnerTop &&
-        this.winner &&
-        this.winner === this.winnerTop.id
+        this.winner_id &&
+        this.winner_id === this.winnerTop.id
       )}"
     />`;
   }
@@ -72,8 +72,8 @@ export class EditMatchup extends NikElement {
       required=""
       ?checked=${!!(
         this.winnerBottom &&
-        this.winner &&
-        this.winner === this.winnerBottom.id
+        this.winner_id &&
+        this.winner_id === this.winnerBottom.id
       )}
     />`;
   }

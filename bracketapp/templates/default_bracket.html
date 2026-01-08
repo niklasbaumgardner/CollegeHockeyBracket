@@ -1,54 +1,15 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Default Bracket{% endblock title %}
+{% block head %}
 
-{% block title %}{{ default.year }} Default Bracket{% endblock title %}
+<script src="/static/js/nb-default-bracket.mjs" type="module"></script>
 
+{% endblock head %}
 {% block content %}
-<div class="pb-5 d-flex justify-content-center mx-0">
-    <div class="fw-bold fs-1">
-        {{ default.year }} Default bracket
-    </div>
-</div>
-<div class="container mx-0 p-3 bg-body-secondary-nb">
-    <form action="{{ url_for('admin_bp.update_default') }}" method="POST">
-        <div class="row">
-            {% for _, game in default.games.items() %}
-                <div class="mb-5 col-12 col-sm-6 col-md-4 col-lg-3">
-                    <p class="fs-1">{{ game.game_num }}</p>
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="{{ game.game_num }}-home-rank">{{ game.game_num }} Home team rank</label>
-                        <select name="{{ game.game_num }}-home-rank" class="form-control" value="{{ game.home }}">
-                            <option value="">--Please choose an option--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
 
-                        <label class="form-label" for="{{ game.game_num }}-home">{{ game.game_num }} Home</label>
-                        <select name="{{ game.game_num }}-home" class="form-control" value="">
-                            <option value="">--Please choose an option--</option>
-                            {% for team in teams %}
-                                <option value="{{ team.id }}" {% if default.games[game.game_num].home_team and team.id == default.games[game.game_num].home_team.team.id %}selected="true"{% endif %}>{{ team.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="{{ game.game_num }}-away-rank">{{ game.game_num }} Away team rank</label>
-                        <select name="{{ game.game_num }}-away-rank" class="form-control" value="">
-                            <option value="">--Please choose an option--</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                        <label class="form-label" for="{{ game.game_num }}-away">{{ game.game_num }} Away</label>
-                        <select name="{{ game.game_num }}-away" class="form-control" value="">
-                            <option value="">--Please choose an option--</option>
-                            {% for team in teams %}
-                                <option value="{{ team.id }}" {% if default.games[game.game_num].away_team and team.id == default.games[game.game_num].away_team.team.id %}selected="true"{% endif %}>{{ team.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <input type="submit" />
-    </form>
-</div>
+<nb-default-bracket
+  default='{{ default|tojson }}'
+  teams='{{ teams|tojson }}'
+></nb-edit-bracke>
+
+
 {% endblock content %}

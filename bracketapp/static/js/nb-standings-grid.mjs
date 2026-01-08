@@ -60,10 +60,10 @@ export class StandingsGrid extends NikElement {
           { colId: "actions", minWidth: 208 },
           { colId: "points", minWidth: 75, maxWidth: 75 },
           { colId: "max_points", minWidth: 75, maxWidth: 75 },
-          { colId: "r1", minWidth: 57, maxWidth: 57 },
-          { colId: "r2", minWidth: 57, maxWidth: 57 },
-          { colId: "r3", minWidth: 57, maxWidth: 57 },
-          { colId: "r4", minWidth: 57, maxWidth: 57 },
+          { colId: "round_one_points", minWidth: 57, maxWidth: 57 },
+          { colId: "round_two_points", minWidth: 57, maxWidth: 57 },
+          { colId: "round_three_points", minWidth: 57, maxWidth: 57 },
+          { colId: "round_four_points", minWidth: 57, maxWidth: 57 },
         ],
       },
       defaultColDef: {
@@ -132,7 +132,7 @@ export class StandingsGrid extends NikElement {
         },
         cellRenderer: (param) => {
           let bracket = param.data;
-          if (bracket.winner) {
+          if (bracket.winner_team) {
             return `<div class="d-flex flex-column gap-2 my-1">
               <a
                 class="d-block w-100 h-100 text-decoration-none"
@@ -169,10 +169,10 @@ export class StandingsGrid extends NikElement {
     if (!CAN_EDIT_BRACKET) {
       {
         columnDefs.push(
-          { field: "r1" },
-          { field: "r2" },
-          { field: "r3" },
-          { field: "r4" }
+          { field: "round_one_points", headerName: "R1" },
+          { field: "round_two_points", headerName: "R2" },
+          { field: "round_three_points", headerName: "R3" },
+          { field: "round_four_points", headerName: "R4" }
         );
       }
     }

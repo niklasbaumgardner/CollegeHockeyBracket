@@ -155,7 +155,7 @@ class Bracket extends NikElement {
   }
 
   predictedScoreTemplate() {
-    if (!this.bracket?.w_goals || !this.bracket?.l_goals) {
+    if (!this.bracket?.winner_goals || !this.bracket?.loser_goals) {
       return null;
     }
 
@@ -164,11 +164,11 @@ class Bracket extends NikElement {
       <p class="fs-6 display-inline-flex">
         <sl-card
           style="--padding:var(--sl-spacing-x-small);--border-color: var(--sl-color-neutral-300);"
-          >${this.bracket?.w_goals}</sl-card
+          >${this.bracket?.winner_goals}</sl-card
         ><span class="p-2"> - </span
         ><sl-card
           style="--padding:var(--sl-spacing-x-small);--border-color: var(--sl-color-neutral-300);"
-          >${this.bracket?.l_goals}</sl-card
+          >${this.bracket?.loser_goals}</sl-card
         >
       </p>
     </div>`;
@@ -364,7 +364,7 @@ class Bracket extends NikElement {
             <div class="d-flex">
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.r1 ?? "--"} / 80
+                  ${this.bracket?.round_one_points ?? "--"} / 80
                 </p>
                 <p class="bracket-details-label">Round 1</p></span
               >
@@ -373,7 +373,7 @@ class Bracket extends NikElement {
               <sl-divider vertical></sl-divider>
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.r2 ?? "--"} / 80
+                  ${this.bracket?.round_two_points ?? "--"} / 80
                 </p>
                 <p class="bracket-details-label">Round 2</p></span
               >
@@ -382,7 +382,7 @@ class Bracket extends NikElement {
               <sl-divider vertical></sl-divider>
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.r3 ?? "--"} / 80
+                  ${this.bracket?.round_three_points ?? "--"} / 80
                 </p>
                 <p class="bracket-details-label">Final Four</p></span
               >
@@ -391,7 +391,7 @@ class Bracket extends NikElement {
               <sl-divider vertical></sl-divider>
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.r4 ?? "--"} / 80
+                  ${this.bracket?.round_four_points ?? "--"} / 80
                 </p>
                 <p class="bracket-details-label">Championship</p></span
               >

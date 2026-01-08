@@ -1,24 +1,22 @@
-from bracketapp.queries import bracket_queries
+from bracketapp.queries import (
+    bracket_queries,
+    correct_bracket_queries,
+    default_bracket_queries,
+)
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
 from bracketapp.utils import bracket_utils
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.utils.Sqids import sqids
 
 
 viewbracket_bp = Blueprint("viewbracket_bp", __name__)
 
 
-def is_admin():
-    return (
-        current_user.is_authenticated
-        and current_user.role is not None
-        and current_user.role > 1
-    )
-
-
-@viewbracket_bp.get("/view_bracket/<int:id>")
-def view_bracket(id):
-    bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=id)
+@viewbracket_bp.get("/view_bracket/<string:sqid>")
+def view_bracket(sqid):
+    bracket_id = sqids.decode_one(sqid)
+    bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=bracket_id)
     if not bracket:
         return redirect(url_for("leaderboard_bp.index"))
 
@@ -27,12 +25,12 @@ def view_bracket(id):
     if CAN_EDIT_BRACKET and bracket.year == YEAR:
         if my_bracket:
             # if not app.debug:
-            return redirect(url_for("editbracket_bp.edit_bracket", id=bracket.id))
+            return redirect(url_for("editbracket_bp.edit_bracket", sqid=sqid))
         else:
             return redirect(url_for("leaderboard_bp.index"))
 
-    default = bracket_queries.get_default_bracket_for_year(year=bracket.year)
-    correct = bracket_queries.get_correct_bracket_for_year(year=bracket.year)
+    default = default_bracket_queries.get_default_bracket(year=bracket.year)
+    correct = correct_bracket_queries.get_correct_bracket(year=bracket.year)
 
     return render_template(
         "view_bracket.html",
@@ -49,17 +47,17 @@ def view_bracket(id):
     )
 
 
-@viewbracket_bp.route("/view_cbracket/<int:year>", methods=["GET"])
+@viewbracket_bp.get("/view_cbracket/<int:year>")
 def view_cbracket(year):
-    if (CAN_EDIT_BRACKET and year == YEAR) and not is_admin():
+    if (CAN_EDIT_BRACKET and year == YEAR) and not current_user.is_admin():
         return redirect(url_for("archive_bp.archive"))
 
-    correct = bracket_queries.get_correct_bracket_for_year(year)
+    correct = correct_bracket_queries.get_correct_bracket(year)
 
     if not correct or (correct and not correct.winner):
         return redirect(url_for("archive_bp.archive"))
 
-    default = bracket_queries.get_default_bracket_for_year(year)
+    default = default_bracket_queries.get_default_bracket(year)
 
     return render_template(
         "view_cbracket.html",

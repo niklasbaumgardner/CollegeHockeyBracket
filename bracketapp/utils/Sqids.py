@@ -3,9 +3,15 @@ from sqids import Sqids as BaseSqids
 
 class SqidsClass(BaseSqids):
     def encode_one(self, id):
+        if id is None:
+            return None
+
         return self.encode([id])
 
     def decode_one(self, sqid):
+        if sqid is None:
+            return None
+
         seq = self.decode(sqid)
         return seq[0]
 

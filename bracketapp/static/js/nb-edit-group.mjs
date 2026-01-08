@@ -66,7 +66,7 @@ export class EditGroup extends NikElement {
 
   render() {
     return html`<sl-dialog label="Edit Group" @sl-input=${this.handleInput}>
-      <form id="edit-group-form" action=${EDIT_GROUP_URL} method="POST">
+      <form id="edit-group-form" action=${this.group.edit_url} method="POST">
         <div class="d-flex flex-column gap-4">
           <sl-input
             form="edit-group-form"

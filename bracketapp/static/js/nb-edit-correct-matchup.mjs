@@ -3,8 +3,11 @@ import { EditMatchup } from "./nb-edit-matchup.mjs";
 
 class EditCorrectMatchup extends EditMatchup {
   static properties = {
-    homeGoals: { type: Number, converter: EditCorrectMatchup.goalConverter },
-    awayGoals: { type: Number, converter: EditCorrectMatchup.goalConverter },
+    topTeamGoals: { type: Number, converter: EditCorrectMatchup.goalConverter },
+    bottomTeamGoals: {
+      type: Number,
+      converter: EditCorrectMatchup.goalConverter,
+    },
   };
 
   static goalConverter(value, type) {
@@ -26,7 +29,7 @@ class EditCorrectMatchup extends EditMatchup {
     return html`<input
       type="number"
       name="${this.game}-h_goals"
-      value="${this.homeGoals >= 0 ? this.homeGoals : null}"
+      value="${this.topTeamGoals >= 0 ? this.topTeamGoals : null}"
     />`;
   }
 
@@ -34,7 +37,7 @@ class EditCorrectMatchup extends EditMatchup {
     return html`<input
       type="number"
       name="${this.game}-a_goals"
-      value="${this.awayGoals >= 0 ? this.awayGoals : null}"
+      value="${this.bottomTeamGoals >= 0 ? this.bottomTeamGoals : null}"
     />`;
   }
 
@@ -46,8 +49,8 @@ class EditCorrectMatchup extends EditMatchup {
       value="${this.winnerTop?.id}"
       ?checked="${!!(
         this.winnerTop &&
-        this.winner &&
-        this.winner === this.winnerTop.id
+        this.winner_id &&
+        this.winner_id === this.winnerTop.id
       )}"
     />`;
   }
@@ -60,8 +63,8 @@ class EditCorrectMatchup extends EditMatchup {
       value="${this.winnerBottom?.id}"
       ?checked=${!!(
         this.winnerBottom &&
-        this.winner &&
-        this.winner === this.winnerBottom.id
+        this.winner_id &&
+        this.winner_id === this.winnerBottom.id
       )}
     />`;
   }

@@ -32,7 +32,11 @@ export class DeleteGroup extends NikElement {
       label="Delete this group?"
       @sl-hide=${this.handleHide}
     >
-      <form id="delete-group-form" action=${DELETE_GROUP_URL} method="POST">
+      <form
+        id="delete-group-form"
+        action=${this.group.delete_url}
+        method="POST"
+      >
         <p>Are you sure want to delete <strong>${this.group.name}</strong>?</p>
       </form>
       <div slot="footer" class="d-flex gap-3">

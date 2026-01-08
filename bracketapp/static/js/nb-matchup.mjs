@@ -33,13 +33,13 @@ class Matchup extends NikElement {
     return this.correct.winner_team.team.name;
   }
 
-  get defaultHomeName() {
-    let team = this.default.home_team;
+  get defaultTopTeamName() {
+    let team = this.default.top_team;
     return this.teamTemplate(team);
   }
 
-  get defaultAwayName() {
-    let team = this.default.away_team;
+  get defaultBottomTeamName() {
+    let team = this.default.bottom_team;
     return this.teamTemplate(team);
   }
 
@@ -134,24 +134,24 @@ class Matchup extends NikElement {
 
   defaultMatchupTemplate() {
     return html`<div class="nb-team">
-        ${this.getImageElement(this.default.home_team)}
+        ${this.getImageElement(this.default.top_team)}
         <span
-          class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.default.home
+          class="team-name ${this.correct.winner_id &&
+          this.correct.winner_id !== this.default.top_team_id
             ? "loser-team"
             : ""}"
-          >${this.defaultHomeName}</span
-        ><span class="ms-auto">${this.correct?.h_goals}</span>
+          >${this.defaultTopTeamName}</span
+        ><span class="ms-auto">${this.correct?.top_team_goals}</span>
       </div>
       <div class="nb-team">
-        ${this.getImageElement(this.default.away_team)}
+        ${this.getImageElement(this.default.bottom_team)}
         <span
-          class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.default.away
+          class="team-name ${this.correct.winner_id &&
+          this.correct.winner_id !== this.default.bottom_team_id
             ? "loser-team"
             : ""}"
-          >${this.defaultAwayName}</span
-        ><span class="ms-auto">${this.correct?.a_goals}</span>
+          >${this.defaultBottomTeamName}</span
+        ><span class="ms-auto">${this.correct?.bottom_team_goals}</span>
       </div>`;
   }
 
@@ -160,22 +160,22 @@ class Matchup extends NikElement {
       <div class="nb-team">
         ${this.getImageElement(this.correctTop)}
         <span
-          class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.correctTop?.id
+          class="team-name ${this.correct.winner_id &&
+          this.correct.winner_id !== this.correctTop?.id
             ? "loser-team"
             : ""}"
           >${this.correctTopName}</span
-        ><span class="ms-auto">${this.correct?.h_goals}</span>
+        ><span class="ms-auto">${this.correct?.top_team_goals}</span>
       </div>
       <div class="nb-team">
         ${this.getImageElement(this.correctBottom)}
         <span
-          class="team-name ${this.correct.winner &&
-          this.correct.winner !== this.correctBottom?.id
+          class="team-name ${this.correct.winner_id &&
+          this.correct.winner_id !== this.correctBottom?.id
             ? "loser-team"
             : ""}"
           >${this.correctBottomName}</span
-        ><span class="ms-auto">${this.correct?.a_goals}</span>
+        ><span class="ms-auto">${this.correct?.bottom_team_goals}</span>
       </div>
       ${this.bottomPickTemplate()}`;
   }

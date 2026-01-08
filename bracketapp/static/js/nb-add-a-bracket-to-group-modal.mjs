@@ -1,6 +1,6 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
-import "./nb-my-brackets-group-card.mjs";
+import "./nb-my-brackets-group-standings.mjs";
 import "./nb-radio-item.mjs";
 import "./nb-group-card.mjs";
 

@@ -17,22 +17,79 @@ from flask_login import current_user
 from sqlalchemy import and_, or_
 from sqlalchemy.sql import func, asc
 from copy import deepcopy
+from sqlalchemy import func, insert, select, update
+from sqlalchemy.sql import or_, and_
+from bracketapp.utils.Sqids import sqids
 
 
-def create_group_member(group_id):
-    group_member = GroupMember(group_id=group_id, user_id=current_user.id)
-    db.session.add(group_member)
-    db.session.commit()
-    return group_member
+def get_all_groups_for_user(sort=False):
+    stmt = (
+        select(Group, Bracket, GroupBracket)
+        .outerjoin(GroupMember, Group.id == GroupMember.group_id)
+        .outerjoin(GroupBracket, Group.id == GroupBracket.group_id)
+        .outerjoin(
+            Bracket,
+            and_(
+                Bracket.id == GroupBracket.bracket_id,
+                Bracket.user_id == current_user.id,
+            ),
+        )
+        .where(
+            Group.year == YEAR,
+            GroupMember.user_id == current_user.id,
+        )
+    )
+
+    groups = db.session.execute(stmt).unique().all()
+
+    return_groups = []
+    seen_groups = {}
+    for index, [g, b, gb] in enumerate(groups):
+        if g.id not in seen_groups:
+            seen_groups[g.id] = [g, index]
+
+        if b and gb and g.id == gb.group_id:
+            b_copied = deepcopy(b)
+
+            b_copied.group_bracket = gb
+
+            return_group, _ = seen_groups[g.id]
+            return_group.brackets.append(b_copied)
+
+    for value in seen_groups.values():
+        group, index = value
+        return_groups.insert(index, group)
+
+    return return_groups
+
+
+def get_group(group_id):
+    stmt = select(Group).where(Group.id == group_id)
+    return db.session.scalars(stmt.limit(1)).first()
+
+
+def get_all_groups(year=YEAR):
+    stmt = select(Group).where(Group.year == year)
+    return db.session.scalars(stmt).all()
 
 
 def get_group_member(group_id):
     if not current_user.is_authenticated:
         return None
 
-    return GroupMember.query.filter_by(
-        group_id=group_id, user_id=current_user.id
-    ).first()
+    stmt = select(GroupMember).where(
+        and_(GroupMember.user_id == current_user.id, GroupMember.group_id == group_id)
+    )
+
+    return db.session.scalars(stmt.limit(1)).first()
+
+
+#############################################################################
+def create_group_member(group_id):
+    group_member = GroupMember(group_id=group_id, user_id=current_user.id)
+    db.session.add(group_member)
+    db.session.commit()
+    return group_member
 
 
 def maybe_create_group_member(group_id):
@@ -55,60 +112,6 @@ def create_group(name, is_private, password):
     db.session.add(group)
     db.session.commit()
     return group
-
-
-def get_group(group_id):
-    return Group.query.filter_by(id=group_id).first()
-
-
-def get_all_groups():
-    return Group.query.filter_by(year=YEAR).all()
-
-
-def get_all_groups_for_user(sort=False):
-    db.session.query(Group).where(Group.year == YEAR)
-    groups_query = (
-        db.session.query(Group, Bracket, GroupBracket)
-        .join(GroupMember, Group.id == GroupMember.group_id, isouter=True)
-        .join(GroupBracket, Group.id == GroupBracket.group_id, isouter=True)
-        .join(
-            Bracket,
-            and_(
-                Bracket.id == GroupBracket.bracket_id,
-                or_(Bracket.user_id is None, Bracket.user_id == current_user.id),
-            ),
-            isouter=True,
-        )
-        .where(
-            Group.year == YEAR,
-            GroupMember.user_id == current_user.id,
-        )
-    )
-
-    if sort:
-        groups_query = groups_query.order_by(asc(func.lower(Group.name)))
-
-    groups = groups_query.all()
-
-    return_groups = []
-    seen_groups = {}
-    for index, [g, b, gb] in enumerate(groups):
-        if g.id not in seen_groups:
-            seen_groups[g.id] = [g, index]
-
-        if b and gb and g.id == gb.group_id:
-            b_copied = deepcopy(b)
-
-            b_copied.group_bracket = gb
-
-            return_group, _ = seen_groups[g.id]
-            return_group.brackets.append(b_copied)
-
-    for value in seen_groups.values():
-        group, index = value
-        return_groups.insert(index, group)
-
-    return return_groups
 
 
 def lock_group(group_id):

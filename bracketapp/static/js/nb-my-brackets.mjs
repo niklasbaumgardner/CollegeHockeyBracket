@@ -1,7 +1,7 @@
 import { Standings } from "./nb-standings.mjs";
 import { html } from "./imports.mjs";
 import { MyBracketsGrid } from "./nb-my-brackets-grid.mjs";
-import "./nb-my-brackets-group-card.mjs";
+import "./nb-my-brackets-group-standings.mjs";
 import { SearchGroups } from "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
