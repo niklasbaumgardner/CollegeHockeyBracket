@@ -1,5 +1,5 @@
-import { html, nothing } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html, nothing } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 import "./nb-edit-correct-matchup.mjs";
 import { EditBracket } from "./nb-edit-bracket.mjs";
 

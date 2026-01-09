@@ -1,5 +1,5 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 
 class Matchup extends NikElement {
   static properties = {

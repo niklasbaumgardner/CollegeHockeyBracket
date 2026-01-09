@@ -1,5 +1,5 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 import { BaseGrid } from "./nb-base-grid.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";

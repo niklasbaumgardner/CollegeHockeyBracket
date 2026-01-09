@@ -1,6 +1,6 @@
 // import chartJs from "https://cdn.jsdelivr.net/npm/chart.js@4.4.8/+esm";
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 
 export class BracketPointsChart extends NikElement {
   static properties = {

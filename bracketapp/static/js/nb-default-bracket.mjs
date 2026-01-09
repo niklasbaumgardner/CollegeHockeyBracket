@@ -1,5 +1,5 @@
-import { html, nothing } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html, nothing } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 import "./nb-edit-matchup.mjs";
 
 export class DefaultBracket extends NikElement {

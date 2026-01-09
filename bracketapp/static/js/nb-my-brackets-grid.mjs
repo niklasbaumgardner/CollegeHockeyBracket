@@ -1,5 +1,5 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import { DeleteBracketModal } from "./nb-delete-bracket-modal.mjs";
 import { JoinGroupModal } from "./nb-add-bracket-to-group-modal.mjs";

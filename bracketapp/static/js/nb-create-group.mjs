@@ -1,5 +1,4 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html } from "./lit.bundle.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
 export class CreateGroup extends BaseDialog {
@@ -35,7 +34,7 @@ export class CreateGroup extends BaseDialog {
     return html`<wa-dialog label="Create A Group">
       <form id="new-group-form" action=${CREATE_GROUP_URL} method="POST"></form>
 
-      <div class="d-flex flex-column gap-4">
+      <div class="wa-stack">
         <wa-input
           form="new-group-form"
           placeholder="Group name"
@@ -69,8 +68,8 @@ export class CreateGroup extends BaseDialog {
       </div>
 
       <wa-button
-        class="w-100"
-        variant="primary"
+        class="w-full"
+        variant="brand"
         type="submit"
         form="new-group-form"
         slot="footer"

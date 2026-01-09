@@ -1,5 +1,5 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
 
 export class MyBracketColumn extends NikElement {
   static properties = {

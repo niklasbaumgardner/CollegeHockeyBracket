@@ -1,5 +1,5 @@
-import { html } from "./imports.mjs";
-import { NikElement } from "./customElement.mjs";
+import { html } from "./lit.bundle.mjs";
+import { NikElement } from "./nik-element.mjs";
 import "./nb-group-standings-grid.mjs";
 import "./nb-my-brackets.mjs";
 import "./nb-add-a-bracket-to-group-modal.mjs";

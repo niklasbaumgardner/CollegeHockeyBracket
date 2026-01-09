@@ -1,5 +1,5 @@
-import { NikElement } from "./customElement.mjs";
-import { html } from "./imports.mjs";
+import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import "./nb-remove-group-bracket-modal.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";

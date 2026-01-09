@@ -1,4 +1,4 @@
-import { html } from "./imports.mjs";
+import { html } from "./lit.bundle.mjs";
 import { EditMatchup } from "./nb-edit-matchup.mjs";
 
 class EditCorrectMatchup extends EditMatchup {

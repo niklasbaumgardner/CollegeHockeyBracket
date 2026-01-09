@@ -1,4 +1,4 @@
-import { html } from "./imports.mjs";
+import { html } from "./lit.bundle.mjs";
 import { Standings } from "./nb-standings.mjs";
 import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
 import { EditGroup } from "./nb-edit-group.mjs";
