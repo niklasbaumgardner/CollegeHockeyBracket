@@ -1,9 +1,9 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
-import { MyBrackets } from "./nb-my-brackets.mjs";
-import { AddBracketModal } from "./nb-add-a-bracket-to-group-modal.mjs";
-import "./nb-my-group-bracket-grid.mjs";
+import "./nb-group-standings-grid.mjs";
+import "./nb-my-brackets.mjs";
+import "./nb-add-a-bracket-to-group-modal.mjs";
+import "./nb-my-group-brackets-grid.mjs";
 
 export class MyBracketsGroupStandings extends NikElement {
   static properties = {
@@ -54,11 +54,10 @@ export class MyBracketsGroupStandings extends NikElement {
     }
 
     return html`<nb-my-group-brackets-grid
-      class="w-100"
+      class="w-full"
       headerName="My Brackets"
       .group=${this.group}
       .brackets=${this.group.brackets}
-      theme=${THEME}
     ></nb-my-group-brackets-grid>`;
   }
 
@@ -67,14 +66,17 @@ export class MyBracketsGroupStandings extends NikElement {
       return null;
     }
 
-    return html`<div class="d-flex align-items-center gap-2">
-      <wa-button size="small" @click=${this.handleAddBracketClick}
+    return html`<div class="wa-cluster">
+      <wa-button
+        size="small"
+        appearance="filled-outlined"
+        @click=${this.handleAddBracketClick}
         >Add A Bracket</wa-button
       >
-      <div class="invite-others d-flex align-items-center">
+      <div class="invite-others flex items-center">
         Invite friends
         <wa-copy-button
-          value="${this.group.share_url}"
+          value=${this.group.share_url}
           copy-label="Copy link to join"
         >
           <wa-icon slot="copy-icon" name="share"></wa-icon>
@@ -89,15 +91,15 @@ export class MyBracketsGroupStandings extends NikElement {
           --wa-panel-background-color: var(--wa-color-neutral-100);
         "
     >
-      <div class="d-flex flex-column align-items-center gap-3 nb-group-card">
-        <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="flex flex-col items-center gap-3 nb-group-card">
+        <div class="flex justify-content-between w-full flex-wrap">
           <a
-            class="d-flex flex-grow-1 align-items-center text-decoration-none gap-3"
+            class="flex grow items-center no-underline"
             href="${this.group.url}"
           >
             <wa-icon class="trophy" name="trophy"></wa-icon>
-            <div class="d-flex flex-column group-name">
-              <span class="text-decoration-underline">${this.group.name}</span>
+            <div class="flex flex-col group-name">
+              <span class="underline">${this.group.name}</span>
               <span class="group-size"
                 >Group size: ${this.group.members.length}</span
               >

@@ -433,7 +433,7 @@ class GroupBracket(BaseModel, SqidSerializerMixin):
 
     # TODO: I don't know if this will work anymore
     serialize_rules = (
-        "-group.brackets",
+        # "-group.brackets",
         "delete_url",
     )
 

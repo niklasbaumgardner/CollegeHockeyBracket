@@ -1,46 +1,9 @@
 import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
-import { RemoveGroupBracketModal } from "./nb-remove-group-bracket-modal.mjs";
+import "./nb-remove-group-bracket-modal.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
-
-class MyGroupBracketElement extends NikElement {
-  static properties = {
-    bracket: { type: Object },
-  };
-
-  getImageElement(winner_team) {
-    if (!winner_team) {
-      return null;
-    }
-
-    return html`<img
-      class="standings-img"
-      src="${winner_team.team.icon_path}"
-      alt="${winner_team.team.name}"
-    />`;
-  }
-
-  render() {
-    return html`<div class="d-flex flex-column gap-2 my-2">
-      <a
-        class="d-block w-100 h-100 text-decoration-none"
-        href=${this.bracket.url}
-        ><div class="standings-row">
-          ${this.getImageElement(this.bracket.winner_team)}
-          <div class="name-cell">
-            <span class="standings-bracket-name text-decoration-underline"
-              ><span>${this.bracket.name}</span></span
-            ><span class="standings-username"
-              >${this.bracket.user.username}</span
-            >
-          </div>
-        </div></a
-      >
-    </div>`;
-  }
-}
-customElements.define("nb-my-group-bracket-element", MyGroupBracketElement);
+import "./nb-my-bracket-column.mjs";
 
 class MyGroupBracketActions extends NikElement {
   static properties = {
@@ -62,11 +25,11 @@ class MyGroupBracketActions extends NikElement {
   }
 
   render() {
-    return html`<div class="d-flex gap-3">
+    return html`<div class="flex">
       <wa-button
         size="small"
         variant="danger"
-        outline
+        appearance="outlined"
         @click=${this.handleRemoveFromGroupClick}
         >Remove From Group</wa-button
       >
@@ -76,7 +39,12 @@ class MyGroupBracketActions extends NikElement {
 customElements.define("nb-my-group-bracket-actions", MyGroupBracketActions);
 
 export class MyGroupBracketsGrid extends StandingsGrid {
-  static properties = { group: { type: Object } };
+  static properties = {
+    group: { type: Object },
+    brackets: {
+      type: Object,
+    },
+  };
 
   constructor() {
     super();
@@ -115,7 +83,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
       headerName: this.headerName,
       autoHeight: true,
       cellRenderer: (param) => {
-        let ele = document.createElement("nb-my-group-bracket-element");
+        let ele = document.createElement("nb-my-bracket-column");
         ele.bracket = param.data;
         return ele;
       },
@@ -146,7 +114,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
     const gridOptions = {
       columnDefs,
       rowData: this.brackets,
-      ...this.defaultGridOptions,
+      ...this.gridOptions,
     };
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }

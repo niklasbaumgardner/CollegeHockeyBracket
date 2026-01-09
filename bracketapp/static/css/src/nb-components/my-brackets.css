@@ -32,7 +32,7 @@
 .rank,
 .trophy,
 .group-size {
-  color: var(--wa-color-neutral-950);
+  color: var(--wa-color-text-normal);
 }
 
 .group-card {

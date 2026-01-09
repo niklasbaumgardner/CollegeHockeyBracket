@@ -50,6 +50,8 @@ import "@awesome.me/webawesome-pro/dist/components/textarea/textarea.js";
 
 import "@awesome.me/webawesome-pro/dist/components/slider/slider.js";
 
+import "@awesome.me/webawesome-pro/dist/components/copy-button/copy-button.js";
+
 // // Option 2: the setBasePath()
 // import { setBasePath } from "@awesome.me/webawesome-pro/dist/webawesome.js";
 // setBasePath("");

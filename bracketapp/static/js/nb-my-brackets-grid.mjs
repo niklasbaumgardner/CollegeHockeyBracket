@@ -4,26 +4,12 @@ import { StandingsGrid } from "./nb-standings-grid.mjs";
 import { DeleteBracketModal } from "./nb-delete-bracket-modal.mjs";
 import { JoinGroupModal } from "./nb-add-bracket-to-group-modal.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
+import { MyBracketColumn } from "./nb-my-bracket-column.mjs";
+import "./nb-my-bracket-column.mjs";
 
-class MyBracketElement extends NikElement {
-  static properties = {
-    bracket: { type: Object },
-  };
-
+class MyBracketElement extends MyBracketColumn {
   handleCreateGroupClick() {
     document.dispatchEvent(new CustomEvent("CreateNewGroup"));
-  }
-
-  getImageElement(winner_team) {
-    if (!winner_team) {
-      return null;
-    }
-
-    return html`<img
-      class="standings-img"
-      src="${winner_team.team.icon_path}"
-      alt="${winner_team.team.name}"
-    />`;
   }
 
   groupTemplate(groupBracket) {
@@ -61,21 +47,7 @@ class MyBracketElement extends NikElement {
         >Create new bracket</wa-button
       >`;
     }
-    return html`<div class="wa-stack py-(--wa-space-xs) gap-(--wa-space-xs)">
-      <a class="block w-full h-full no-underline" href=${this.bracket.url}
-        ><div class="flex gap-(--wa-space-xs)">
-          ${this.getImageElement(this.bracket.winner_team)}
-          <div class="name-cell">
-            <span class="standings-bracket-name underline"
-              ><span>${this.bracket.name}</span></span
-            ><span class="standings-username"
-              >${this.bracket.user.username}</span
-            >
-          </div>
-        </div></a
-      >
-      ${this.groupsTemplate()}
-    </div>`;
+    return super.render();
   }
 }
 customElements.define("nb-my-bracket-element", MyBracketElement);
