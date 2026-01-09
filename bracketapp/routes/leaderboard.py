@@ -28,12 +28,8 @@ def api_leaderboard():
     # I forgot what I meant by this. Maybe bring correct to the
     # page to show correct winners on brackets table?
     standings, winners, correct = bracket_utils.get_bracket_standings()
-    standings_dict = [
-        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in standings
-    ]
-    winners_dict = [
-        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in winners
-    ]
+    standings_dict = [b.to_dict() for b in standings]
+    winners_dict = [b.to_dict() for b in winners]
 
     return dict(
         standings=standings_dict,

@@ -13,21 +13,21 @@ export class MyBracketsGroupStandings extends NikElement {
   };
 
   static queries = {
-    card: "sl-card",
+    card: "wa-card",
   };
 
   connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener("sl-tab-show", this);
+    document.addEventListener("wa-tab-show", this);
   }
 
   handleEvent(event) {
     switch (event.type) {
-      case "sl-tab-show": {
+      case "wa-tab-show": {
         if (event.detail.name === "groups") {
           this.shouldShowBrackets = true;
-          document.removeEventListener("sl-tab-show", this);
+          document.removeEventListener("wa-tab-show", this);
         }
       }
     }
@@ -68,25 +68,25 @@ export class MyBracketsGroupStandings extends NikElement {
     }
 
     return html`<div class="d-flex align-items-center gap-2">
-      <sl-button size="small" @click=${this.handleAddBracketClick}
-        >Add A Bracket</sl-button
+      <wa-button size="small" @click=${this.handleAddBracketClick}
+        >Add A Bracket</wa-button
       >
       <div class="invite-others d-flex align-items-center">
         Invite friends
-        <sl-copy-button
+        <wa-copy-button
           value="${this.group.share_url}"
           copy-label="Copy link to join"
         >
-          <sl-icon slot="copy-icon" name="share"></sl-icon>
-        </sl-copy-button>
+          <wa-icon slot="copy-icon" name="share"></wa-icon>
+        </wa-copy-button>
       </div>
     </div>`;
   }
 
   render() {
-    return html`<sl-card
+    return html`<wa-card
       style="
-          --sl-panel-background-color: var(--sl-color-neutral-100);
+          --wa-panel-background-color: var(--wa-color-neutral-100);
         "
     >
       <div class="d-flex flex-column align-items-center gap-3 nb-group-card">
@@ -95,7 +95,7 @@ export class MyBracketsGroupStandings extends NikElement {
             class="d-flex flex-grow-1 align-items-center text-decoration-none gap-3"
             href="${this.group.url}"
           >
-            <sl-icon class="trophy" name="trophy"></sl-icon>
+            <wa-icon class="trophy" name="trophy"></wa-icon>
             <div class="d-flex flex-column group-name">
               <span class="text-decoration-underline">${this.group.name}</span>
               <span class="group-size"
@@ -107,7 +107,7 @@ export class MyBracketsGroupStandings extends NikElement {
         </div>
         ${this.bracketsTemplate()}
       </div>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

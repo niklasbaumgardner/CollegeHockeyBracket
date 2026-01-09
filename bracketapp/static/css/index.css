@@ -103,12 +103,6 @@ p {
   width: 40px;
 }
 
-.standings-row {
-  display: flex;
-  align-items: start;
-  gap: var(--sl-spacing-2x-small);
-}
-
 .name-cell {
   display: grid;
 }

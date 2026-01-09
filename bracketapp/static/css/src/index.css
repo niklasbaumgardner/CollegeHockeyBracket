@@ -1,20 +1,36 @@
+@import url("./nb-components/my-brackets.css");
+@import url("./nb-components/nb-bracket.css");
+@import url("./nb-components/nb-chat-el.css");
+@import url("./nb-components/nb-radio-items.css");
+@import url("./nb-components/nb-standings.css");
+
 .small-card {
   display: flex;
   justify-content: center;
 
-  wa-card {
+  > wa-card {
     max-width: 100%;
     width: 27rem;
   }
 }
 
-.main-card {
+.medium-card {
   display: flex;
   justify-content: center;
 
-  wa-card {
+  > wa-card {
     max-width: 100%;
     width: 60rem;
+  }
+}
+
+.large-card {
+  display: flex;
+  justify-content: center;
+
+  > wa-card {
+    max-width: 100%;
+    width: 100%;
   }
 }
 
@@ -63,4 +79,8 @@ wa-button.icon-button {
 
 wa-page {
   transition: all 0.001ms step-start;
+}
+
+.standings-img {
+  width: 40px;
 }

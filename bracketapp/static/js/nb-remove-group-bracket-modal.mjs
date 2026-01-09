@@ -1,30 +1,15 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
+import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class RemoveGroupBracketModal extends NikElement {
+export class RemoveGroupBracketModal extends BaseDialog {
   static properties = {
     bracket: { type: Object },
     group: { type: Object },
   };
 
-  static queries = {
-    dialog: "sl-dialog",
-  };
-
-  show() {
-    this.updateComplete.then(() => {
-      this.dialog.updateComplete.then(() => {
-        this.dialog.show();
-      });
-    });
-  }
-
-  hide() {
-    this.dialog.hide();
-  }
-
   render() {
-    return html`<sl-dialog label="Remove Bracket?">
+    return html`<wa-dialog label="Remove Bracket?">
       <form
         id="delete-group-bracket-form"
         action=${this.bracket.group_bracket.delete_url}
@@ -36,18 +21,18 @@ export class RemoveGroupBracketModal extends NikElement {
         </p>
       </form>
       <div slot="footer" class="d-flex gap-3">
-        <sl-button class="w-50" variant="neutral" outline @click=${this.hide}
-          >Cancel</sl-button
+        <wa-button class="w-50" variant="neutral" outline @click=${this.hide}
+          >Cancel</wa-button
         >
-        <sl-button
+        <wa-button
           class="w-50"
           variant="danger"
           type="submit"
           form="delete-group-bracket-form"
-          >Remove Bracket</sl-button
+          >Remove Bracket</wa-button
         >
       </div>
-    </sl-dialog>`;
+    </wa-dialog>`;
   }
 }
 

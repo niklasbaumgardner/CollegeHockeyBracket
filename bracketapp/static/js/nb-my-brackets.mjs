@@ -1,8 +1,8 @@
 import { Standings } from "./nb-standings.mjs";
 import { html } from "./imports.mjs";
-import { MyBracketsGrid } from "./nb-my-brackets-grid.mjs";
+import "./nb-my-brackets-grid.mjs";
 import "./nb-my-brackets-group-standings.mjs";
-import { SearchGroups } from "./nb-search-groups.mjs";
+import "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
   static properties = {
@@ -11,7 +11,7 @@ export class MyBrackets extends Standings {
   };
 
   static queries = {
-    tabGroup: "sl-tab-group",
+    tabGroup: "wa-tab-group",
   };
 
   constructor() {
@@ -27,14 +27,14 @@ export class MyBrackets extends Standings {
   connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener("sl-tab-show", this);
+    document.addEventListener("wa-tab-show", this);
 
     window.addEventListener("hashchange", this);
   }
 
   handleEvent(event) {
     switch (event.type) {
-      case "sl-tab-show": {
+      case "wa-tab-show": {
         this.handleTabShow(event);
         break;
       }
@@ -61,24 +61,26 @@ export class MyBrackets extends Standings {
   handleHashChange(event) {
     const hash = new URL(event.newURL).hash;
     if (hash === "#groups") {
-      this.tabGroup.show("groups");
+      this.tabGroup.active = "groups";
     } else {
-      this.tabGroup.show("my-brackets");
+      this.tabGroup.active = "my-brackets";
     }
   }
 
-  async requestContent() {
-    let response = await fetch(MY_BRACKETS_CONTENT_URL, {
-      credentials: "include",
-      mode: "no-cors",
-    });
-    let data = await response.json();
+  async requestContent() {}
 
-    let { brackets, groups, year } = data;
-    this.brackets = brackets;
-    this.groups = groups;
-    this.year = year;
-  }
+  // async requestContent() {
+  //   let response = await fetch(MY_BRACKETS_CONTENT_URL, {
+  //     credentials: "include",
+  //     mode: "no-cors",
+  //   });
+  //   let data = await response.json();
+
+  //   let { brackets, groups, year } = data;
+  //   this.brackets = brackets;
+  //   this.groups = groups;
+  //   this.year = year;
+  // }
 
   async updated() {
     if (
@@ -87,7 +89,7 @@ export class MyBrackets extends Standings {
       this.initialTabPanel === "groups"
     ) {
       await this.tabGroup.updateComplete;
-      this.tabGroup.show("groups");
+      this.tabGroup.active = "groups";
       this.openedToGroups = true;
       if (this.url.hash.includes("group_")) {
         const groupCard = document.querySelector(this.url.hash);
@@ -102,20 +104,23 @@ export class MyBrackets extends Standings {
 
   titleTemplate() {
     return html`<div>
-      <h2 class="mb-0">My Brackets ${this.year}</h2>
+      <h2>My Brackets ${this.year}</h2>
     </div>`;
   }
 
   messageTemplate() {
-    return html`<small class="color-neutral-700"
+    return html`<small class="text-(--wa-color-text-quiet)"
         >You created ${this.brackets.length}/5 brackets</small
       >${CAN_EDIT_BRACKET ? html`<nb-countdown></nb-countdown>` : null}`;
   }
 
   newBracketButtonTemplate() {
     if (this.brackets.length < 5 && CAN_EDIT_BRACKET) {
-      return html`<sl-button variant="primary" href=${NEW_BRACKET_LINK} outline
-        >Create Bracket</sl-button
+      return html`<wa-button
+        variant="brand"
+        appearance="outlined"
+        href=${NEW_BRACKET_LINK}
+        >Create Bracket</wa-button
       >`;
     }
 
@@ -127,7 +132,7 @@ export class MyBrackets extends Standings {
       return;
     }
 
-    return html`<div class="d-flex flex-column gap-3">
+    return html`<div class="wa-stack">
       ${this.newBracketButtonTemplate()}
       <nb-my-brackets-grid
         headerName="My Brackets"
@@ -140,12 +145,12 @@ export class MyBrackets extends Standings {
 
   newGroupButtonTemplate() {
     if (CAN_EDIT_BRACKET) {
-      return html`<sl-button
-        class="w-100"
-        variant="primary"
+      return html`<wa-button
+        class="w-full"
+        variant="brand"
+        appearance="outlined"
         @click=${this.handleCreateGroupClick}
-        outline
-        >Create Group</sl-button
+        >Create Group</wa-button
       >`;
     }
 
@@ -179,14 +184,14 @@ export class MyBrackets extends Standings {
   }
 
   groupSearchAndButtonTemplate() {
-    return html`<div class="d-flex flex-wrap gap-3">
-      <div class="flex-grow-1 mw-100">${this.newGroupButtonTemplate()}</div>
-      <div class="flex-grow-1 mw-100">${this.searchGroupsTemplate()}</div>
+    return html`<div class="wa-cluster">
+      <div class="grow">${this.newGroupButtonTemplate()}</div>
+      <div class="grow">${this.searchGroupsTemplate()}</div>
     </div>`;
   }
 
   groupsTemplate() {
-    return html`<div class="d-flex flex-column gap-3">
+    return html`<div class="wa-stack">
       ${this.groupSearchAndButtonTemplate()}${this.groupCardsTemplate()}
     </div>`;
   }
@@ -196,23 +201,21 @@ export class MyBrackets extends Standings {
       return null;
     }
 
-    return html`<div class="d-flex justify-content-center">
-      <sl-card>
-        ${this.titleTemplate()}
-        <div class="d-flex flex-column gap-3">
-          ${this.messageTemplate()}
-          <sl-tab-group @sl-tab-show=${this.handleTabShow}>
-            <sl-tab slot="nav" panel="my-brackets">My Brackets</sl-tab>
-            <sl-tab slot="nav" panel="groups">Groups</sl-tab>
+    return html`<wa-card>
+      ${this.titleTemplate()}
+      <div class="wa-stack">
+        ${this.messageTemplate()}
+        <wa-tab-group @wa-tab-show=${this.handleTabShow}>
+          <wa-tab slot="nav" panel="my-brackets">My Brackets</wa-tab>
+          <wa-tab slot="nav" panel="groups">Groups</wa-tab>
 
-            <sl-tab-panel name="my-brackets"
-              >${this.bracketsTemplate()}</sl-tab-panel
-            >
-            <sl-tab-panel name="groups">${this.groupsTemplate()}</sl-tab-panel>
-          </sl-tab-group>
-        </div>
-      </sl-card>
-    </div>`;
+          <wa-tab-panel name="my-brackets"
+            >${this.bracketsTemplate()}</wa-tab-panel
+          >
+          <wa-tab-panel name="groups">${this.groupsTemplate()}</wa-tab-panel>
+        </wa-tab-group>
+      </div>
+    </wa-card>`;
   }
 }
 

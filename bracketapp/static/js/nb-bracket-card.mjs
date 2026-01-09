@@ -48,11 +48,11 @@ export class BracketeCard extends NikElement {
   static properties = { bracket: { type: Object } };
 
   render() {
-    return html`<sl-card style="--padding:var(--sl-spacing-small);"
+    return html`<wa-card style="--padding:var(--wa-spacing-small);"
       ><nb-bracket-card-content
         .bracket=${this.bracket}
       ></nb-bracket-card-content
-    ></sl-card>`;
+    ></wa-card>`;
   }
 }
 

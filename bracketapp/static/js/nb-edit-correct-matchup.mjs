@@ -70,9 +70,9 @@ class EditCorrectMatchup extends EditMatchup {
   }
 
   render() {
-    return html`<sl-card
+    return html`<wa-card
       class="matchup"
-      style="--padding: var(--sl-spacing-2x-small);"
+      style="--padding: var(--wa-spacing-2x-small);"
     >
       <label class="nb-team" id="top">
         ${this.topInput()}<span>${this.winnerTopName}</span>
@@ -82,7 +82,7 @@ class EditCorrectMatchup extends EditMatchup {
         ${this.bottomInput()}<span>${this.winnerBottomName}</span>
         ${this.bottomScoreInput()}
       </label>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

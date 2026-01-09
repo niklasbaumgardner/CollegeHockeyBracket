@@ -134,47 +134,47 @@ def update_default():
     return redirect(url_for("admin_bp.admin"))
 
 
-# @admin_bp.route("/delete_default", methods=["GET"])
-# @login_required
-# def delete_default():
-#     if not current_user.is_admin():
-#         return redirect(url_for("leaderboard_bp.index"))
+@admin_bp.route("/delete_default", methods=["GET"])
+@login_required
+def delete_default():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
 
-#     bracket_queries.delete_default_bracket()
+    bracket_queries.delete_default_bracket()
 
-#     return redirect(url_for("leaderboard_bp.index"))
-
-
-# @admin_bp.route("/delete_correct", methods=["GET"])
-# @login_required
-# def delete_correct():
-#     if not current_user.is_admin():
-#         return redirect(url_for("leaderboard_bp.index"))
-
-#     correct_bracket_queries.delete_correct_bracket()
-
-#     return redirect(url_for("leaderboard_bp.index"))
+    return redirect(url_for("leaderboard_bp.index"))
 
 
-# @admin_bp.route("/debugging")
-# @login_required
-# def debugging():
-#     if not current_user.is_admin():
-#         return redirect(url_for("leaderboard_bp.index"))
-#     string = ""
-#     users = user_queries.get_all_users()
+@admin_bp.route("/delete_correct", methods=["GET"])
+@login_required
+def delete_correct():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
 
-#     brackets = bracket_queries.get_all_brackets()
+    correct_bracket_queries.delete_correct_bracket()
 
-#     for u in users:
-#         string += f"{u.id} {u.username}<br>"
+    return redirect(url_for("leaderboard_bp.index"))
 
-#     string += "<br>"
 
-#     for b in brackets:
-#         string += f"{b.id} {b.user_id} {b.name}<br>"
+@admin_bp.route("/debugging")
+@login_required
+def debugging():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
+    string = ""
+    users = user_queries.get_all_users()
 
-#     return string
+    brackets = bracket_queries.get_all_brackets()
+
+    for u in users:
+        string += f"{u.id} {u.username}<br>"
+
+    string += "<br>"
+
+    for b in brackets:
+        string += f"{b.id} {b.user_id} {b.name}<br>"
+
+    return string
 
 
 @admin_bp.get("/create_team")

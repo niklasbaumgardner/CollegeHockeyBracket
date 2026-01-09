@@ -1,15 +1,16 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
-import { DeleteGroup } from "./nb-delete-group.mjs";
+import "./nb-delete-group.mjs";
+import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class EditGroup extends NikElement {
+export class EditGroup extends BaseDialog {
   static properties = {
     private: { type: Boolean },
     group: { type: Object },
   };
 
   static queries = {
-    dialog: "sl-dialog",
+    ...BaseDialog.queries,
     form: "#edit-group-form",
     saveButton: "#save-button",
   };
@@ -25,18 +26,6 @@ export class EditGroup extends NikElement {
 
     await this.updateComplete;
     this.initialFormData = new FormData(this.form);
-  }
-
-  show() {
-    this.updateComplete.then(() => {
-      this.dialog.updateComplete.then(() => {
-        this.dialog.show();
-      });
-    });
-  }
-
-  hide() {
-    this.dialog.hide();
   }
 
   handlePrivateChange() {
@@ -65,10 +54,10 @@ export class EditGroup extends NikElement {
   }
 
   render() {
-    return html`<sl-dialog label="Edit Group" @sl-input=${this.handleInput}>
+    return html`<wa-dialog label="Edit Group" @input=${this.handleInput}>
       <form id="edit-group-form" action=${this.group.edit_url} method="POST">
         <div class="d-flex flex-column gap-4">
-          <sl-input
+          <wa-input
             form="edit-group-form"
             placeholder="Group name"
             label="Group name"
@@ -77,8 +66,8 @@ export class EditGroup extends NikElement {
             maxlength="60"
             value=${this.group.name}
             required
-          ></sl-input>
-          <sl-radio-group
+          ></wa-input>
+          <wa-radio-group
             form="edit-group-form"
             label="Lock Group"
             name="locked"
@@ -86,22 +75,22 @@ export class EditGroup extends NikElement {
             help-text="Locked groups prevent new members from joining."
             required
           >
-            <sl-radio-button value="true">Locked</sl-radio-button>
-            <sl-radio-button value="false">Unlocked</sl-radio-button>
-          </sl-radio-group>
-          <sl-radio-group
+            <wa-radio-button value="true">Locked</wa-radio-button>
+            <wa-radio-button value="false">Unlocked</wa-radio-button>
+          </wa-radio-group>
+          <wa-radio-group
             form="edit-group-form"
             label="Group Type"
             name="is_private"
             value=${this.group.is_private}
-            @sl-input=${this.handlePrivateChange}
+            @input=${this.handlePrivateChange}
             help-text="Private groups require a password to join."
             required
           >
-            <sl-radio-button value="true">Private</sl-radio-button>
-            <sl-radio-button value="false">Public</sl-radio-button>
-          </sl-radio-group>
-          <sl-input
+            <wa-radio-button value="true">Private</wa-radio-button>
+            <wa-radio-button value="false">Public</wa-radio-button>
+          </wa-radio-group>
+          <wa-input
             form="edit-group-form"
             type="text"
             label="Password"
@@ -112,28 +101,28 @@ export class EditGroup extends NikElement {
             value=${this.group.password}
             ?hidden=${!this.private}
             ?required=${this.private}
-          ></sl-input>
+          ></wa-input>
         </div>
       </form>
       <div slot="footer" class="d-flex gap-3">
-        <sl-button
+        <wa-button
           class="w-50"
           variant="danger"
           outline
           @click=${this.handleDeleteClick}
-          >Delete Group</sl-button
+          >Delete Group</wa-button
         >
-        <sl-button
+        <wa-button
           class="w-50"
           id="save-button"
           variant="primary"
           type="submit"
           form="edit-group-form"
           disabled
-          >Save</sl-button
+          >Save</wa-button
         >
       </div>
-    </sl-dialog>`;
+    </wa-dialog>`;
   }
 }
 

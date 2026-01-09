@@ -54,13 +54,13 @@ export class Countdown extends NikElement {
   }
 
   timeCardTemplate(value, unit) {
-    return html`<sl-card
+    return html`<wa-card
       class="width-fit-content"
-      style="--sl-panel-background-color:var(--sl-color-danger-300); --border-color:var(--sl-color-danger-300); --padding:var(--sl-spacing-x-small); --border-radius:var(--sl-border-radius-large);"
+      style="--wa-panel-background-color:var(--wa-color-danger-300); --border-color:var(--wa-color-danger-300); --padding:var(--wa-spacing-x-small); --border-radius:var(--wa-border-radius-large);"
       ><div class="d-flex flex-column align-items-center">
         <h5>${value}</h5>
         <span>${unit + (value == 1 ? "" : "s")}</span>
-      </div></sl-card
+      </div></wa-card
     >`;
   }
 
@@ -77,25 +77,25 @@ export class Countdown extends NikElement {
   }
 
   render() {
-    return html`<sl-card
-      style="--sl-panel-background-color:var(--sl-color-danger-50);"
+    return html`<wa-card
+      style="--wa-panel-background-color:var(--wa-color-danger-50);"
       ><div class="d-flex flex-column align-items-center">
         <h6>
           Brackets will close on
-          <sl-format-date
+          <wa-format-date
             date=${BRACKET_CLOSE}
             month="long"
             day="numeric"
-          ></sl-format-date>
+          ></wa-format-date>
           at
-          <sl-format-date
+          <wa-format-date
             date=${BRACKET_CLOSE}
             hour="numeric"
             minute="numeric"
-          ></sl-format-date>
+          ></wa-format-date>
         </h6>
         ${this.countdownTemplate()}
-      </div></sl-card
+      </div></wa-card
     >`;
   }
 }

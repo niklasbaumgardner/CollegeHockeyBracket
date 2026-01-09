@@ -8,10 +8,10 @@ export class GroupCardContent extends NikElement {
 
   render() {
     return html`<div class="d-flex align-items-center gap-2">
-      <sl-icon
-        style="font-size:var(--sl-font-size-2x-large);"
+      <wa-icon
+        style="font-size:var(--wa-font-size-2x-large);"
         name="trophy"
-      ></sl-icon>
+      ></wa-icon>
       <div>
         <div>${this.group.name}</div>
         <div class="d-flex gap-4">
@@ -41,9 +41,9 @@ export class GroupCard extends NikElement {
   };
 
   render() {
-    return html`<sl-card style="--padding:var(--sl-spacing-small);"
+    return html`<wa-card style="--padding:var(--wa-spacing-small);"
       ><nb-group-card-content .group=${this.group}></nb-group-card-content
-    ></sl-card>`;
+    ></wa-card>`;
   }
 }
 

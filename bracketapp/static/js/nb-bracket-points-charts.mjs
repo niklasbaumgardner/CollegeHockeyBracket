@@ -20,13 +20,13 @@ export class BracketPointsChart extends NikElement {
 
   initChart() {
     this.computedStyle = getComputedStyle(document.body);
-    let success = this.computedStyle.getPropertyValue("--sl-color-success-400");
-    let danger = this.computedStyle.getPropertyValue("--sl-color-danger-400");
-    let neutral = this.computedStyle.getPropertyValue("--sl-color-neutral-400");
+    let success = this.computedStyle.getPropertyValue("--wa-color-success-400");
+    let danger = this.computedStyle.getPropertyValue("--wa-color-danger-400");
+    let neutral = this.computedStyle.getPropertyValue("--wa-color-neutral-400");
     let borderColor = this.computedStyle.getPropertyValue(
-      "--sl-panel-background-color"
+      "--wa-panel-background-color"
     );
-    let color = this.computedStyle.getPropertyValue("--sl-color-neutral-950");
+    let color = this.computedStyle.getPropertyValue("--wa-color-neutral-950");
 
     const data = {
       labels: ["Points Gained", "Points Lost", "Points Unplayed"],
@@ -59,13 +59,13 @@ export class BracketPointsChart extends NikElement {
   }
 
   updateColors() {
-    let success = this.computedStyle.getPropertyValue("--sl-color-success-400");
-    let danger = this.computedStyle.getPropertyValue("--sl-color-danger-400");
-    let neutral = this.computedStyle.getPropertyValue("--sl-color-neutral-400");
+    let success = this.computedStyle.getPropertyValue("--wa-color-success-400");
+    let danger = this.computedStyle.getPropertyValue("--wa-color-danger-400");
+    let neutral = this.computedStyle.getPropertyValue("--wa-color-neutral-400");
     let borderColor = this.computedStyle.getPropertyValue(
-      "--sl-panel-background-color"
+      "--wa-panel-background-color"
     );
-    let color = this.computedStyle.getPropertyValue("--sl-color-neutral-950");
+    let color = this.computedStyle.getPropertyValue("--wa-color-neutral-950");
 
     this.chart.data.datasets[0].backgroundColor = [success, danger, neutral];
     this.chart.data.datasets[0].borderColor = borderColor;

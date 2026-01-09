@@ -6,6 +6,7 @@ const config = {
   entry: {
     main: { import: __dirname + "/js/main.mjs", dependOn: "lit" },
     css: __dirname + "/js/css.mjs",
+    agGrid: __dirname + "/js/agGrid.mjs",
     lit: { import: __dirname + "/js/lit.mjs" },
   },
   output: {

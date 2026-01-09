@@ -38,7 +38,7 @@ class SerializerMixin:
         return False
 
     def to_dict(self, rules=None, only=None, mappings=None, path=None, depth=0) -> dict:
-        print(path, depth)
+        # print(path, depth)
         if depth > 5:
             return {}
 
@@ -80,7 +80,7 @@ class SerializerMixin:
             if len(current_path):
                 current_path += "."
             current_path += key
-            print(f"CURRENT PATH: {current_path}, KEY: {key}, EXCLUDE: {exclude}")
+            # print(f"CURRENT PATH: {current_path}, KEY: {key}, EXCLUDE: {exclude}")
 
             if self.is_excluded(key, current_path, exclude):
                 continue
@@ -109,10 +109,6 @@ class SerializerMixin:
             # path += key
             return [self.serialize(key, v, path, depth, rules) for v in value]
         elif isinstance(value, dict):
-            print(
-                "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
-                value,
-            )
             if len(path):
                 path += "."
             path += key

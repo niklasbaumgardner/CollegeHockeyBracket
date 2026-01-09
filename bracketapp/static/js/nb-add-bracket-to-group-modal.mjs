@@ -2,15 +2,12 @@ import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
 import "./nb-my-brackets-group-standings.mjs";
 import "./nb-radio-item.mjs";
+import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class JoinGroupModal extends NikElement {
+export class JoinGroupModal extends BaseDialog {
   static properties = {
     bracket: { type: Object },
     groups: { type: Object },
-  };
-
-  static queries = {
-    dialogEl: "sl-dialog",
   };
 
   get joinedGroups() {
@@ -21,18 +18,6 @@ export class JoinGroupModal extends NikElement {
     return this.groups.filter(
       (g) => !this.joinedGroups.find((jg) => jg.id === g.id)
     );
-  }
-
-  show() {
-    this.updateComplete.then(() => {
-      this.dialogEl.updateComplete.then(() => {
-        this.dialogEl.show();
-      });
-    });
-  }
-
-  hide() {
-    this.dialogEl.hide();
   }
 
   bracketTemplate() {
@@ -61,7 +46,7 @@ export class JoinGroupModal extends NikElement {
   }
 
   render() {
-    return html`<sl-dialog label="Add Bracket To Group">
+    return html`<wa-dialog label="Add Bracket To Group">
       <form
         id="join-group-form"
         action="${this.bracket.bracket_join_group_url}"
@@ -69,15 +54,15 @@ export class JoinGroupModal extends NikElement {
       ></form>
 
       ${this.bracketTemplate()} ${this.groupsTemplate()}
-      <sl-button
+      <wa-button
         id="join-button"
         class="w-100"
         type="submit"
         form="join-group-form"
         slot="footer"
         variant="primary"
-        >Add Bracket</sl-button
-      ></sl-dialog
+        >Add Bracket</wa-button
+      ></wa-dialog
     >`;
   }
 }

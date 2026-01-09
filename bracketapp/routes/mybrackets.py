@@ -12,12 +12,6 @@ mybrackets_bp = Blueprint("mybrackets_bp", __name__)
 @mybrackets_bp.get("/my_brackets")
 @login_required
 def my_brackets():
-    return render_template("my_brackets.html")
-
-
-@mybrackets_bp.get("/api/my_brackets")
-@login_required
-def api_my_brackets():
     brackets = [
         b.to_dict()
         for b in bracket_queries.get_my_brackets(include_group_brackets=True)
@@ -25,8 +19,24 @@ def api_my_brackets():
 
     groups = [g.to_dict() for g in group_queries.get_all_groups_for_user(sort=True)]
 
-    return dict(
-        brackets=brackets,
-        groups=groups,
-        year=YEAR,
+    # return dict(
+    #     brackets=brackets,
+    #     groups=groups,
+    #     year=YEAR,
+    # )
+    return render_template(
+        "my_brackets.html", brackets=brackets, groups=groups, year=YEAR
     )
+
+
+@mybrackets_bp.get("/api/my_brackets")
+@login_required
+def api_my_brackets():
+    # brackets = [
+    #     b.to_dict()
+    #     for b in bracket_queries.get_my_brackets(include_group_brackets=True)
+    # ]
+
+    # groups = [g.to_dict() for g in group_queries.get_all_groups_for_user(sort=True)]
+
+    return dict()

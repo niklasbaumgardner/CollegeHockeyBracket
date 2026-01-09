@@ -60,34 +60,34 @@ export class GroupStandings extends Standings {
   }
 
   closeDialog(event) {
-    event.target.closest("sl-dialog").hide();
+    event.target.closest("wa-dialog").hide();
   }
 
   memeberTemplate() {
     if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
       return html`<nb-countdown></nb-countdown>
         <div class="d-flex gap-3">
-          <sl-button
+          <wa-button
             class="flex-grow-1"
             variant="primary"
             outline
             href=${this.group.new_bracket_url}
-            >Create New Bracket</sl-button
-          ><sl-button
+            >Create New Bracket</wa-button
+          ><wa-button
             class="flex-grow-1"
             variant="primary"
             outline
             href=${MY_BRACKETS_URL + "#group_" + this.group.id}
-            >Add Existing Bracket</sl-button
+            >Add Existing Bracket</wa-button
           >
         </div>`;
     } else if (this.canEditGroupBracket) {
       return html`<nb-countdown></nb-countdown
-        ><sl-button
+        ><wa-button
           variant="primary"
           outline
           href=${MY_BRACKETS_URL + "#group_" + this.group.id}
-          >Add A Bracket</sl-button
+          >Add A Bracket</wa-button
         >`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
@@ -103,14 +103,14 @@ export class GroupStandings extends Standings {
     }
 
     if (this.group.is_private) {
-      return html`<sl-button
+      return html`<wa-button
         variant="primary"
         @click=${this.handleJoinButtonClick}
-        >Join Group</sl-button
+        >Join Group</wa-button
       >`;
     } else {
-      return html`<sl-button variant="primary" href="${this.group.join_url}"
-        >Join Group</sl-button
+      return html`<wa-button variant="primary" href="${this.group.join_url}"
+        >Join Group</wa-button
       >`;
     }
   }
@@ -138,8 +138,8 @@ export class GroupStandings extends Standings {
         >${passwordTemplate}
       </div>
       ${this.group.year !== CURRENT_YEAR
-        ? html`<sl-alert open>
-            You are viewing a group from ${this.group.year}</sl-alert
+        ? html`<wa-alert open>
+            You are viewing a group from ${this.group.year}</wa-alert
           >`
         : null}`;
   }
@@ -154,7 +154,7 @@ export class GroupStandings extends Standings {
   }
 
   joinPrivateGroupTemplate() {
-    return html`<sl-dialog id="join-dialog" label="Join ${this.group.name}">
+    return html`<wa-dialog id="join-dialog" label="Join ${this.group.name}">
       <form
         id="join-private-group"
         action="${this.group.join_url}"
@@ -163,44 +163,44 @@ export class GroupStandings extends Standings {
         <p class="mb-3">
           This group is private. Please enter the password to join.
         </p>
-        <sl-input
+        <wa-input
           type="text"
           id="password"
           name="password"
           placeholder="Password"
           maxlength="60"
           required
-        ></sl-input>
+        ></wa-input>
       </form>
-      <sl-button @click=${this.closeDialog} slot="footer">Close</sl-button>
-      <sl-button
+      <wa-button @click=${this.closeDialog} slot="footer">Close</wa-button>
+      <wa-button
         type="submit"
         form="join-private-group"
         slot="footer"
         variant="primary"
-        >Join</sl-button
+        >Join</wa-button
       >
-    </sl-dialog>`;
+    </wa-dialog>`;
   }
 
   titleTemplate() {
     const inviteTemplate = html`<div class="d-flex align-items-center">
       Invite friends
-      <sl-copy-button
+      <wa-copy-button
         value="${this.group.share_url}"
         copy-label="Copy link to join"
       >
-        <sl-icon slot="copy-icon" name="share"></sl-icon>
-      </sl-copy-button>
+        <wa-icon slot="copy-icon" name="share"></wa-icon>
+      </wa-copy-button>
     </div>`;
 
     let editGroupTemplate = null;
     if (CURRENT_USER.id === this.group.creator_id && this.canEditGroupBracket) {
-      editGroupTemplate = html`<sl-button
-        style="--sl-button-font-size-medium: var(--sl-font-size-x-large);"
+      editGroupTemplate = html`<wa-button
+        style="--wa-button-font-size-medium: var(--wa-font-size-x-large);"
         variant="text"
         @click=${this.handleEditGroupClick}
-        ><sl-icon name="gear">Edit Group</sl-icon></sl-button
+        ><wa-icon name="gear">Edit Group</wa-icon></wa-button
       >`;
     }
 

@@ -145,26 +145,6 @@ p {
   width: 40px;
 }
 
-.standings-row {
-  display: flex;
-  align-items: start;
-  gap: var(--sl-spacing-2x-small);
-}
-
-.name-cell {
-  display: grid;
-}
-
-.standings-bracket-name {
-  line-height: var(--sl-line-height-normal);
-}
-
-.standings-username {
-  font-size: var(--sl-font-size-x-small);
-  line-height: var(--sl-line-height-dense);
-  color: var(--ag-data-color);
-}
-
 .nb-center {
   display: flex !important;
   justify-content: center;
@@ -317,31 +297,6 @@ sl-button:not([disabled])[variant="danger"]::part(base):active {
 .trophy,
 .group-size {
   color: var(--sl-color-neutral-950);
-}
-
-.group-card {
-  --padding: var(--sl-spacing-x-small);
-  width: fit-content;
-  max-width: 120px;
-
-  &.medium {
-    --padding: var(--sl-spacing-x-small) var(--sl-spacing-small);
-  }
-
-  .group-name {
-    font-size: var(--sl-font-size-x-small);
-    line-height: var(--sl-line-height-dense);
-  }
-
-  .trophy {
-    font-size: var(--sl-font-size-large);
-    min-width: var(--sl-font-size-medium);
-  }
-
-  .rank {
-    font-size: var(--sl-font-size-2x-small);
-    color: var(--sl-color-neutral-800);
-  }
 }
 
 .nb-group-card {
@@ -832,6 +787,3 @@ nb-my-brackets > div > sl-card > div > sl-tab-group {
     width: 807px;
   }
 }
-
-
-

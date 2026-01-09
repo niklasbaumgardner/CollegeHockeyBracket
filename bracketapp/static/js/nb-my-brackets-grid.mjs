@@ -3,6 +3,7 @@ import { html } from "./imports.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import { DeleteBracketModal } from "./nb-delete-bracket-modal.mjs";
 import { JoinGroupModal } from "./nb-add-bracket-to-group-modal.mjs";
+import * as agGrid from "./agGrid.bundle.mjs";
 
 class MyBracketElement extends NikElement {
   static properties = {
@@ -26,18 +27,17 @@ class MyBracketElement extends NikElement {
   }
 
   groupTemplate(groupBracket) {
-    return html`<sl-card class="group-card"
+    return html`<wa-card class="group-card"
       ><a
-        class="d-flex align-items-center gap-2 text-decoration-none"
+        class="flex items-center gap-(--wa-space-2xs) no-underline"
         href="${groupBracket.group.url}"
       >
-        <sl-icon class="trophy" name="trophy"></sl-icon>
-        <div class="d-flex flex-column group-name">
-          <span class="text-decoration-underline"
-            >${groupBracket.group.name}</span
+        <wa-icon class="trophy" name="trophy"></wa-icon>
+        <div class="flex flex-col group-name">
+          <span class="group-name underline">${groupBracket.group.name}</span
           ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
         </div>
-      </a></sl-card
+      </a></wa-card
     >`;
   }
 
@@ -46,29 +46,27 @@ class MyBracketElement extends NikElement {
       return null;
     }
 
-    return html`<sl-details
+    return html`<wa-details
       class="my-brackets-groups"
       summary="Groups (${this.bracket.group_brackets.length})"
-      ><div class="d-flex flex-wrap gap-2">
+      ><div class="wa-cluster flex-wrap gap-(--wa-space-xs)">
         ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
-      </div></sl-details
+      </div></wa-details
     >`;
   }
 
   render() {
     if (this.bracket.id === -1) {
-      return html`<sl-button href="${NEW_BRACKET_LINK}" variant="primary"
-        >Create new bracket</sl-button
+      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="primary"
+        >Create new bracket</wa-button
       >`;
     }
-    return html`<div class="d-flex flex-column gap-2 my-2">
-      <a
-        class="d-block w-100 h-100 text-decoration-none"
-        href=${this.bracket.url}
-        ><div class="standings-row">
+    return html`<div class="wa-stack py-(--wa-space-xs) gap-(--wa-space-xs)">
+      <a class="block w-full h-full no-underline" href=${this.bracket.url}
+        ><div class="flex gap-(--wa-space-xs)">
           ${this.getImageElement(this.bracket.winner_team)}
           <div class="name-cell">
-            <span class="standings-bracket-name text-decoration-underline"
+            <span class="standings-bracket-name underline"
               ><span>${this.bracket.name}</span></span
             ><span class="standings-username"
               >${this.bracket.user.username}</span
@@ -113,15 +111,19 @@ class MyBracketActions extends NikElement {
   }
 
   render() {
-    return html`<div class="d-flex gap-3">
-      <sl-button size="small" @click=${this.handleJoinGroupClick}
-        >Add To Group</sl-button
-      ><sl-button
+    return html`<div class="wa-cluster">
+      <wa-button
+        size="small"
+        variant="brand"
+        appearance="outlined"
+        @click=${this.handleJoinGroupClick}
+        >Add To Group</wa-button
+      ><wa-button
         size="small"
         variant="danger"
-        outline
+        appearance="outlined"
         @click=${this.handleDeleteClick}
-        >Delete</sl-button
+        >Delete</wa-button
       >
     </div>`;
   }
@@ -191,8 +193,9 @@ export class MyBracketsGrid extends StandingsGrid {
     const gridOptions = {
       columnDefs,
       rowData: this.brackets,
-      ...this.defaultGridOptions,
+      ...this.gridOptions,
     };
+    console.log(gridOptions);
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }
 }

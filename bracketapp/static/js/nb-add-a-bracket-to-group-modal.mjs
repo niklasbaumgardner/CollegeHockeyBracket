@@ -3,15 +3,12 @@ import { html } from "./imports.mjs";
 import "./nb-my-brackets-group-standings.mjs";
 import "./nb-radio-item.mjs";
 import "./nb-group-card.mjs";
+import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class AddBracketModal extends NikElement {
+export class AddBracketModal extends BaseDialog {
   static properties = {
     myBrackets: { type: Object },
     group: { type: Object },
-  };
-
-  static queries = {
-    dialogEl: "sl-dialog",
   };
 
   get joinedBrackets() {
@@ -22,18 +19,6 @@ export class AddBracketModal extends NikElement {
     return this.myBrackets.filter(
       (b) => !this.joinedBrackets.find((jb) => jb.id === b.id)
     );
-  }
-
-  show() {
-    this.updateComplete.then(() => {
-      this.dialogEl.updateComplete.then(() => {
-        this.dialogEl.show();
-      });
-    });
-  }
-
-  hide() {
-    this.dialogEl.hide();
   }
 
   groupTemplate() {
@@ -56,12 +41,12 @@ export class AddBracketModal extends NikElement {
 
     let newBracket = null;
     if (MY_BRACKET_COUNT < 5) {
-      newBracket = html`<sl-button
+      newBracket = html`<wa-button
         class="w-100"
         variant="text"
         outline
         href=${NEW_BRACKET_LINK + `?group_id=${this.group.id}`}
-        >Create New Bracket</sl-button
+        >Create New Bracket</wa-button
       >`;
     }
 
@@ -73,7 +58,7 @@ export class AddBracketModal extends NikElement {
   }
 
   render() {
-    return html`<sl-dialog label="Add Bracket To Group">
+    return html`<wa-dialog label="Add Bracket To Group">
       <form
         id="join-group-form"
         action="${this.group.add_bracket_url}"
@@ -81,15 +66,15 @@ export class AddBracketModal extends NikElement {
       ></form>
 
       ${this.groupTemplate()} ${this.bracketsTemplate()}
-      <sl-button
+      <wa-button
         id="join-button"
         class="w-100"
         type="submit"
         form="join-group-form"
         slot="footer"
         variant="primary"
-        >Add Bracket</sl-button
-      ></sl-dialog
+        >Add Bracket</wa-button
+      ></wa-dialog
     >`;
   }
 }

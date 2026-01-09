@@ -1,6 +1,5 @@
 {% extends "base.html" %} {% block title %}My Brackets{% endblock title %} {%
 block mybrackets %}active{% endblock mybrackets %} {% block content %}
-<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.new_bracket') }}";
   const CREATE_GROUP_URL = "{{ url_for('groups_bp.create_group') }}";
@@ -8,13 +7,13 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   const MY_BRACKETS_CONTENT_URL =
     "{{ url_for('mybrackets_bp.api_my_brackets') }}";
 </script>
-<link
-  rel="preload"
-  href="{{ url_for('mybrackets_bp.api_my_brackets') }}"
-  as="fetch"
-/>
 
-<nb-my-brackets theme="{{ theme }}"></nb-my-brackets>
+<nb-my-brackets
+  class="medium-card"
+  year="{{ year }}"
+  brackets='{{ brackets|tojson }}'
+  groups='{{ groups|tojson }}'
+></nb-my-brackets>
 
 <nb-create-group></nb-create-group>
 

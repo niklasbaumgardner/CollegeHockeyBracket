@@ -1,9 +1,0 @@
-.auth-card {
-  display: flex;
-  justify-content: center;
-
-  sl-card {
-    max-width: 100%;
-    width: 27rem;
-  }
-}

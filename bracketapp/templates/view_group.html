@@ -1,6 +1,5 @@
 {% extends "base.html" %} {% block title %}{{ group.name }}{% endblock title %}
 {% block standings %}active{% endblock standings %} {% block content %}
-<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
 <script>
   const MY_BRACKETS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
   const VIEW_GROUP_CONTENT_URL =

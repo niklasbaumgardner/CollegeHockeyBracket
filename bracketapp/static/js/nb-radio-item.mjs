@@ -21,7 +21,7 @@ export class RadioItem extends NikElement {
       return null;
     }
 
-    return html`<sl-icon name=${this.icon}></sl-icon>`;
+    return html`<wa-icon name=${this.icon}></wa-icon>`;
   }
 
   labelTemplate() {
@@ -29,7 +29,7 @@ export class RadioItem extends NikElement {
   }
 
   render() {
-    return html`<sl-card class="nb-radio-item">
+    return html`<wa-card class="nb-radio-item">
       <label class="d-flex align-items-center gap-2">
         <input
           type="radio"
@@ -39,7 +39,7 @@ export class RadioItem extends NikElement {
           required=""
         />${this.iconTemplate()}${this.labelTemplate()}
       </label>
-    </sl-card>`;
+    </wa-card>`;
   }
 }
 

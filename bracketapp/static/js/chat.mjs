@@ -10,7 +10,7 @@ class ChatEl extends NikElement {
     return {
       messageInputEl: "#messageInput",
       messageListEl: "#messageList",
-      drawerEl: "sl-drawer",
+      drawerEl: "wa-drawer",
     };
   }
 
@@ -164,24 +164,26 @@ class ChatEl extends NikElement {
   }
 
   render() {
-    return html`<sl-drawer label="Group Message" style="--size: 35rem;">
-      <sl-card id="messageList"
+    // TODO: Fix icon button below
+    return html`<wa-drawer label="Group Message" style="--size: 35rem;">
+      <wa-card id="messageList"
         ><div class="d-flex flex-column gap-3">
           ${this.messagesTemplate()}
-        </div></sl-card
+        </div></wa-card
       >
       <div class="d-flex align-items-center mt-3 gap-1">
-        <sl-textarea
+        <wa-textarea
           id="messageInput"
           rows="2"
           @keydown=${this.handleKeyDown}
-        ></sl-textarea
-        ><sl-icon-button
+        ></wa-textarea
+        ><wa-button
           @click=${this.handleSendClick}
           name="send"
           label="Send message"
-        ></sl-icon-button></div
-    ></sl-drawer>`;
+          ><wa-icon name="house" label="Home"></wa-icon
+        ></wa-button></div
+    ></wa-drawer>`;
   }
 }
 

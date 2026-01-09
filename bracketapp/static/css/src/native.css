@@ -1027,7 +1027,7 @@
     [type='range'],
     [type='reset'],
     [type='submit']
-  ), textarea, select {
+  ).wa, textarea, select {
     width: 100%;
     height: var(--wa-form-control-height);
     padding: 0 var(--wa-form-control-padding-inline);

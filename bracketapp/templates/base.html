@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html
   lang="en"
-  data-bs-theme="{{ theme }}"
-  class="sl-theme-{{ theme }} {{ color }}-primary"
+  class="wa-{{ user_settings.settings.mode }} wa-cloak"
+  style="{% if user_settings.settings.rounding %}--wa-border-radius-scale:{{user_settings.settings.rounding}};{% endif %}{% if user_settings.settings.spacing %}--wa-space-scale:{{user_settings.settings.spacing}};{% endif %}{% if user_settings.settings.border_width %}--wa-border-width-scale:{{user_settings.settings.border_width}};{% endif %}"
 >
   <head>
     <!-- Required meta tags -->
@@ -14,25 +14,6 @@
     />
 
     <link rel="manifest" href="/static/manifest.webmanifest" />
-
-    <!-- Shoelace components -->
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/shoelace.js"
-    ></script>
-
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-
-    <link href="/static/css/output.css" rel="stylesheet" />
-    <link href="/static/css/light.css" rel="stylesheet" />
-    <link href="/static/css/dark.css" rel="stylesheet" />
-    <link href="/static/css/themes.css" rel="stylesheet" />
 
     <link
       rel="stylesheet"
@@ -55,12 +36,13 @@
       fetchpriority="high"
     />
 
+    <link rel="stylesheet" href="/static/css/src/tw-out.css" />
+
     <link
       rel="icon"
       href="{% block icon %}/static/images/logo.svg{% endblock icon %}"
     />
     <title>{% block title %}{% endblock title %}</title>
-    <script src="/static/js/nb-countdown.mjs" type="module"></script>
 
     <script>
         // URL for updating user settings
@@ -114,11 +96,12 @@
     <script src="/static/js/nb-theme-selector.mjs" type="module"></script>
     <script src="/static/js/main.bundle.mjs" type="module"></script>
     <script src="/static/js/nb-combobox.mjs" type="module"></script>
+    <script src="/static/js/nb-countdown.mjs" type="module"></script>
 
     {% block head %}{% endblock head %}
 
     <script
-      src="https://js.sentry-cdn.com/85a281a7156d9e667f62a479c3277fce.min.js"
+      src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"
       crossorigin="anonymous"
       defer
     >
@@ -145,35 +128,175 @@
     }
   </style>
 
-  <body
-    class="{% if not backgroundColorMatches %}{{ backgroundColor }}-background{% endif %}"
-    {%
-    if
-    backgroundColorMatches
-    %}style="background-color: {{ backgroundColor }}"
-    {%
-    endif
-    %}
-  >
-    {% include "navbar.html" %}
+  <body class="@container">
+    <wa-page mobile-breakpoint="1024">
+      <header slot="header" class="flex justify-center">
+        <div class="container max-w-[80rem]">
+          <div class="wa-split">
+            <div class="wa-cluster">
+              {% block backButton %}{% endblock backButton %}
+              <a class="wa-heading-xl" href="/">NB Bracket Challenge</a>
+              {% if current_user.is_authenticated %}
+              <a
+                class="wa-desktop-only wa-heading-l"
+                href="{{ url_for('mybrackets_bp.my_brackets') }}#"
+                >My Brackets</a
+              >
+              <a
+                class="wa-desktop-only wa-heading-l"
+                href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
+                >Groups</a
+              >
+              {% endif %}
+              <a
+                class="wa-desktop-only wa-heading-l"
+                href="{{ url_for('leaderboard_bp.leaderboard') }}"
+                >Leaderboard</a
+              >
+              <a
+                class="wa-desktop-only wa-heading-l"
+                href="{{ url_for('archive_bp.archive') }}"
+                >Archive</a
+              >
+            </div>
 
-    <div class="container my-4 h-100">
+            <div class="wa-cluster">
+              <div class="wa-cluster wa-desktop-only">
+                <nb-theme-selector></nb-theme-selector>
+                {% if current_user.is_authenticated %}
+                <wa-dropdown placement="bottom-end"
+                  ><wa-button
+                    id="user-button"
+                    appearance="plain"
+                    slot="trigger"
+                    with-caret
+                    ><wa-icon
+                      slot="start"
+                      name="person-circle-outline"
+                      library="ion"
+                    ></wa-icon
+                    >{{ current_user.username }}</wa-button
+                  >
+                  {% if current_user.role and current_user.role > 1 %}
+                  <wa-dropdown-item
+                    ><a href="{{ url_for('admin_bp.admin') }}"
+                      >Admin</a
+                    ></wa-dropdown-item
+                  >
+                  {% endif %}
+                  <wa-dropdown-item
+                    ><a href="{{ url_for('preferences_bp.preferences') }}"
+                      >Preferences</a
+                    ></wa-dropdown-item
+                  ><wa-dropdown-item
+                    ><a href="{{ url_for('profile_bp.profile') }}"
+                      >Profile</a
+                    ></wa-dropdown-item
+                  ><wa-dropdown-item
+                    ><a href="{{ url_for('auth_bp.logout') }}"
+                      >Logout</a
+                    ></wa-dropdown-item
+                  >
+                </wa-dropdown>
+                {% else %}
+                <a href="{{ url_for('auth_bp.login') }}">Login</a>
+                {% endif %}
+              </div>
+
+              <wa-button data-toggle-nav appearance="plain"
+                ><wa-icon
+                  library="ion"
+                  name="menu-outline"
+                  label="Menu"
+                ></wa-icon
+              ></wa-button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <nav slot="navigation" class="wa-mobile-only">
+        <a class="wa-heading-xl" href="/">NB Bracket Challenge</a>
+        {% if current_user.is_authenticated %}
+        <a
+          class="wa-heading-l"
+          href="{{ url_for('mybrackets_bp.my_brackets') }}#"
+          >My Brackets</a
+        >
+        <a
+          class="wa-heading-l"
+          href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
+          >Groups</a
+        >
+        {% endif %}
+        <a
+          class="wa-heading-l"
+          href="{{ url_for('leaderboard_bp.leaderboard') }}"
+          >Leaderboard</a
+        >
+        <a class="wa-heading-l" href="{{ url_for('archive_bp.archive') }}"
+          >Archive</a
+        >
+
+        <nb-theme-selector></nb-theme-selector>
+        {% if current_user.is_authenticated %}
+        <div>
+          <wa-dropdown placement="bottom-end"
+            ><wa-button
+              id="user-button"
+              appearance="plain"
+              slot="trigger"
+              with-caret
+              ><wa-icon
+                slot="start"
+                name="person-circle-outline"
+                library="ion"
+              ></wa-icon
+              >{{ current_user.username }}</wa-button
+            >
+            {% if current_user.role and current_user.role > 1 %}
+            <wa-dropdown-item
+              ><a href="{{ url_for('admin_bp.admin') }}"
+                >Admin</a
+              ></wa-dropdown-item
+            >
+            {% endif %}
+            <wa-dropdown-item
+              ><a href="{{ url_for('preferences_bp.preferences') }}"
+                >Preferences</a
+              ></wa-dropdown-item
+            ><wa-dropdown-item
+              ><a href="{{ url_for('profile_bp.profile') }}"
+                >Profile</a
+              ></wa-dropdown-item
+            ><wa-dropdown-item
+              ><a href="{{ url_for('auth_bp.logout') }}"
+                >Logout</a
+              ></wa-dropdown-item
+            >
+          </wa-dropdown>
+        </div>
+        {% else %}
+        <a href="{{ url_for('auth_bp.login') }}">Login</a>
+        {% endif %}
+      </nav>
+
+      <main class="wa-stack wa-align-items-center">
+        <div id="content" class="container max-w-[80rem]">
+          {% block content %}{% endblock content %}
+        </div>
+      </main></wa-page
+    >
+
+    <nb-category-modal></nb-category-modal>
+
+    <div class="">
       {% with messages = get_flashed_messages(with_categories=true) %}
-      <div id="alerts" class="container d-flex justify-content-center">
+      <div id="alerts" class="">
         {% if messages %} {% for category, message in messages %}
-        <sl-alert variant="{{ category }}" duration="5000" open closable>
-          {{ message }}
-        </sl-alert>
+        <nb-alert category="{{ category }}" message="{{ message }}"></nb-alert>
         {% endfor %} {% endif %}
       </div>
-      {% endwith %} {% block content %}{% endblock content %}
+      {% endwith %}
     </div>
-
-    <!-- Optional JavaScript -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>

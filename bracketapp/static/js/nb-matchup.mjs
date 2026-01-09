@@ -82,22 +82,22 @@ class Matchup extends NikElement {
 
   topIconTemplate() {
     if (this.correctTop) {
-      return html`<sl-icon
+      return html`<wa-icon
         name="${this.correctTop?.id === this.winnerTop.id
           ? "check-circle-fill"
           : "x-circle-fill"}"
-      ></sl-icon>`;
+      ></wa-icon>`;
     }
     return null;
   }
 
   bottomIconTemplate() {
     if (this.correctBottom) {
-      return html`<sl-icon
+      return html`<wa-icon
         name="${this.correctBottom?.id === this.winnerBottom.id
           ? "check-circle-fill"
           : "x-circle-fill"}"
-      ></sl-icon>`;
+      ></wa-icon>`;
     }
     return null;
   }
@@ -187,10 +187,10 @@ class Matchup extends NikElement {
     } else {
       content = this.matchupTemplate();
     }
-    return html`<sl-card
+    return html`<wa-card
       class="matchup"
-      style="--padding: var(--sl-spacing-2x-small);"
-      >${content}</sl-card
+      style="--padding: var(--wa-spacing-2x-small);"
+      >${content}</wa-card
     >`;
   }
 }

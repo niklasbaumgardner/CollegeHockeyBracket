@@ -8,9 +8,9 @@ export class SearchGroups extends NikElement {
   };
 
   static queries = {
-    input: "sl-input",
-    popup: "sl-popup",
-    menu: "sl-menu",
+    input: "wa-input",
+    popup: "wa-popup",
+    menu: "wa-menu",
   };
 
   constructor() {
@@ -86,26 +86,26 @@ export class SearchGroups extends NikElement {
       return null;
     }
 
-    return html`<sl-menu>${this.results
+    return html`<wa-menu>${this.results
       .map((g) => [
-        html`<sl-menu-item>${this.groupTemplate(g)}</sl-menu-item>`,
-        html`<sl-divider></sl-divider>`,
+        html`<wa-menu-item>${this.groupTemplate(g)}</wa-menu-item>`,
+        html`<wa-divider></wa-divider>`,
       ])
       .flat()
-      .slice(0, -1)}</sl-menu-item>
-    </sl-menu>`;
+      .slice(0, -1)}</wa-menu-item>
+    </wa-menu>`;
   }
 
   render() {
     return html`
-      <sl-popup placement="bottom" sync="width" strategy="fixed">
-        <sl-input
+      <wa-popup placement="bottom" sync="width" strategy="fixed">
+        <wa-input
           slot="anchor"
           placeholder="Search for groups"
           clearable
-          @sl-input=${this.handleInputEvent}
-          ><sl-icon name="search" slot="prefix"></sl-icon></sl-input
-        >${this.resultsTemplate()}</sl-popup
+          @input=${this.handleInputEvent}
+          ><wa-icon name="search" slot="prefix"></wa-icon></wa-input
+        >${this.resultsTemplate()}</wa-popup
       >
     `;
   }

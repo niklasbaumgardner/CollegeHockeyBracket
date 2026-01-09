@@ -41,7 +41,7 @@ class MessageEl extends NikElement {
   }
 
   render() {
-    // <sl-format-date
+    // <wa-format-date
     //       month="long"
     //       day="numeric"
     //       year="numeric"
@@ -50,17 +50,17 @@ class MessageEl extends NikElement {
     //       hour-format="12"
     //       date="${this.data.updated_at}"
     //       hidden
-    //     ></sl-format-date>
-    return html`${this.usernameTemplate()}<sl-card
-        style="--padding: var(--sl-spacing-x-small);
-    --border-radius: var(--sl-border-radius-x-large);
+    //     ></wa-format-date>
+    return html`${this.usernameTemplate()}<wa-card
+        style="--padding: var(--wa-spacing-x-small);
+    --border-radius: var(--wa-border-radius-x-large);
     ${this.myMessage
-          ? "--sl-panel-background-color: var(--sl-color-primary-200);"
+          ? "--wa-panel-background-color: var(--wa-color-primary-200);"
           : ""}"
         class="width-fit-content"
       >
         <p class="message-text">${this.data.text}</p>
-      </sl-card>`;
+      </wa-card>`;
   }
 }
 

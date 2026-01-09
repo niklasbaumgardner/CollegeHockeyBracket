@@ -1,0 +1,132 @@
+.my-brackets-groups::part(header) {
+  padding: var(--wa-space-xs) var(--wa-space-s);
+  line-height: initial;
+}
+
+.my-brackets-groups::part(content) {
+  padding: var(--wa-space-xs);
+}
+
+.standings-row {
+  display: flex;
+  align-items: start;
+  gap: var(--wa-spacing-2xs);
+}
+
+.name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wa-space-2xs);
+}
+
+.standings-bracket-name {
+  line-height: var(--wa-line-height-normal);
+}
+
+.standings-username {
+  font-size: var(--wa-font-size-xs);
+  line-height: var(--wa-line-height-condensed);
+  color: var(--wa-color-text-normal);
+}
+
+.rank,
+.trophy,
+.group-size {
+  color: var(--wa-color-neutral-950);
+}
+
+.group-card {
+  width: fit-content;
+  max-width: 120px;
+
+  &::part(body) {
+    padding: var(--wa-space-xs);
+  }
+
+  &.medium::part(body) {
+    padding: var(--wa-space-xs) var(--wa-space-s);
+  }
+
+  .group-name {
+    font-size: var(--wa-font-size-xs);
+    line-height: var(--wa-line-height-normal);
+  }
+
+  .trophy {
+    font-size: var(--wa-font-size-l);
+    min-width: var(--wa-font-size-m);
+  }
+
+  .rank {
+    font-size: var(--wa-font-size-2xs);
+    color: var(--wa-color-text-quiet);
+    line-height: var(--wa-line-height-normal);
+  }
+}
+
+.nb-group-card {
+  font-size: var(--wa-font-size-l);
+
+  .group-name {
+    font-size: var(--wa-font-size-l);
+    line-height: var(--wa-line-height-normal);
+  }
+
+  .trophy {
+    font-size: var(--wa-font-size-2xl);
+    min-width: var(--wa-font-size-2xl);
+  }
+
+  .group-size {
+    font-size: var(--wa-font-size-s);
+  }
+
+  .invite-others {
+    font-size: var(--wa-font-size-m);
+  }
+}
+
+.join-group-bracket {
+  div {
+    padding-inline: var(--wa-space-m);
+
+    &:not(:first-child) {
+      border-left: 1px solid var(--wa-panel-border-color);
+    }
+  }
+
+  .bracket-details-content {
+    font-size: var(--wa-font-size-xs);
+    padding: 0;
+  }
+
+  .bracket-details-label {
+    font-size: var(--wa-font-size-2xs);
+    padding: 0;
+  }
+}
+
+/* Min height for ag grids */
+.ag-center-cols-viewport,
+.ag-center-cols-container {
+  min-height: 0 !important;
+}
+
+nb-search-groups {
+  wa-popup::part(popup) {
+    z-index: var(--wa-z-index-drawer);
+  }
+
+  wa-popup {
+    wa-menu {
+      --wa-panel-background-color: var(--wa-color-neutral-0);
+      box-shadow: var(--wa-shadow-xl);
+      border-width: 0px;
+    }
+  }
+}
+
+nb-my-bracket-actions,
+nb-my-group-bracket-actions {
+  display: block;
+}

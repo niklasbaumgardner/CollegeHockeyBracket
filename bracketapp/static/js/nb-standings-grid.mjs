@@ -1,8 +1,10 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
 import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
+import { BaseGrid } from "./nb-base-grid.mjs";
+import * as agGrid from "./agGrid.bundle.mjs";
 
-export class StandingsGrid extends NikElement {
+export class StandingsGrid extends BaseGrid {
   #pageSizeKey = "agGridPaginationPageSize";
 
   static properties = {
@@ -42,12 +44,10 @@ export class StandingsGrid extends NikElement {
     return 256;
   }
 
-  get defaultGridOptions() {
+  get gridOptions() {
     return {
+      ...super.baseGridOptions,
       rowHeight: 50,
-      domLayout: "autoHeight",
-      suppressCellFocus: true,
-      suppressMovableColumns: true,
       autoSizeStrategy: {
         type: "fitGridWidth",
         columnLimits: [
@@ -89,7 +89,6 @@ export class StandingsGrid extends NikElement {
 
     this.cleanBracketNames();
     this.createDataGrid();
-    this.setupThemeWatcher();
   }
 
   getImageUrl(winner_team) {
@@ -180,7 +179,7 @@ export class StandingsGrid extends NikElement {
     const gridOptions = {
       columnDefs,
       rowData: this.brackets,
-      ...this.defaultGridOptions,
+      ...this.gridOptions,
       pagination: true,
       paginationPageSize: this.storedPageSize,
       paginationPageSizeSelector: [25, 50, 75, 100],
@@ -198,42 +197,12 @@ export class StandingsGrid extends NikElement {
     }
   }
 
-  setupThemeWatcher() {
-    this.mutationObserver = new MutationObserver((params) =>
-      this.handleThemeChange(params)
-    );
-
-    this.mutationObserver.observe(document.documentElement, {
-      attributes: true,
-    });
-
-    this.handleThemeChange();
-  }
-
-  handleThemeChange() {
-    let theme = document.documentElement.getAttribute("data-bs-theme");
-    this.standingsGridEl?.classList.toggle(
-      "ag-theme-alpine-dark",
-      theme === "dark"
-    );
-    this.standingsGridEl?.classList.toggle(
-      "ag-theme-alpine",
-      theme === "light"
-    );
-  }
-
   render() {
     if (!this.brackets.length) {
       return null;
     }
 
-    return html`<div
-      id="standingsGrid"
-      style="--ag-grid-size: 4px;"
-      class=${this.theme === "dark"
-        ? "ag-theme-alpine-dark"
-        : "ag-theme-alpine"}
-    ></div>`;
+    return html`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`;
   }
 }
 

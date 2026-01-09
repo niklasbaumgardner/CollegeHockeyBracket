@@ -2,6 +2,7 @@ import { NikElement } from "./customElement.mjs";
 import { html } from "./imports.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import { RemoveGroupBracketModal } from "./nb-remove-group-bracket-modal.mjs";
+import * as agGrid from "./agGrid.bundle.mjs";
 
 class MyGroupBracketElement extends NikElement {
   static properties = {
@@ -62,12 +63,12 @@ class MyGroupBracketActions extends NikElement {
 
   render() {
     return html`<div class="d-flex gap-3">
-      <sl-button
+      <wa-button
         size="small"
         variant="danger"
         outline
         @click=${this.handleRemoveFromGroupClick}
-        >Remove From Group</sl-button
+        >Remove From Group</wa-button
       >
     </div>`;
   }

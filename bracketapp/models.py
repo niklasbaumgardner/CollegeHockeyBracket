@@ -86,6 +86,7 @@ class UserSettings(BaseModel, SqidSerializerMixin):
     __tablename__ = "user_settings"
 
     id: Mapped[int_pk]
+    # Add unique constraint
     user_id: Mapped[user_fk]
     settings: Mapped[dict[str, Any]] = mapped_column(
         JSONB, default=dict, nullable=False
@@ -182,7 +183,6 @@ class Bracket(BaseModel, SqidSerializerMixin):
 
     # TODO: fix override
     def to_dict(self, *args, **kwargs):
-        print(self.safe_only)
         if self.safe_only:
             kwargs["only"] = (
                 "id",

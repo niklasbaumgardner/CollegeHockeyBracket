@@ -1,13 +1,10 @@
 import { html } from "./imports.mjs";
 import { NikElement } from "./customElement.mjs";
+import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class CreateGroup extends NikElement {
+export class CreateGroup extends BaseDialog {
   static properties = {
     private: { type: Boolean },
-  };
-
-  static queries = {
-    dialog: "sl-dialog",
   };
 
   constructor() {
@@ -35,11 +32,11 @@ export class CreateGroup extends NikElement {
   }
 
   render() {
-    return html`<sl-dialog label="Create A Group">
+    return html`<wa-dialog label="Create A Group">
       <form id="new-group-form" action=${CREATE_GROUP_URL} method="POST"></form>
 
       <div class="d-flex flex-column gap-4">
-        <sl-input
+        <wa-input
           form="new-group-form"
           placeholder="Group name"
           label="Group name"
@@ -47,18 +44,18 @@ export class CreateGroup extends NikElement {
           name="name"
           maxlength="60"
           required
-        ></sl-input>
+        ></wa-input>
 
-        <sl-checkbox
+        <wa-checkbox
           form="new-group-form"
           id="is_private"
           name="is_private"
-          @sl-input=${this.handlePrivateChange}
+          @input=${this.handlePrivateChange}
           checked
-          >Require Password To Join</sl-checkbox
+          >Require Password To Join</wa-checkbox
         >
 
-        <sl-input
+        <wa-input
           form="new-group-form"
           type="text"
           label="Password"
@@ -68,18 +65,18 @@ export class CreateGroup extends NikElement {
           maxlength="60"
           ?hidden=${!this.private}
           ?required=${this.private}
-        ></sl-input>
+        ></wa-input>
       </div>
 
-      <sl-button
+      <wa-button
         class="w-100"
         variant="primary"
         type="submit"
         form="new-group-form"
         slot="footer"
-        >Create</sl-button
+        >Create</wa-button
       >
-    </sl-dialog>`;
+    </wa-dialog>`;
   }
 }
 

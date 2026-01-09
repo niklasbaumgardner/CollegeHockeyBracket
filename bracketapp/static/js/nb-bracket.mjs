@@ -134,9 +134,9 @@ class Bracket extends NikElement {
 
     if (this.correct.winner) {
       if (this.correct.winner === this.bracket?.winner) {
-        return html`<sl-icon name="check-circle-fill"></sl-icon>`;
+        return html`<wa-icon name="check-circle-fill"></wa-icon>`;
       }
-      return html`<sl-icon name="x-circle-fill"></sl-icon>`;
+      return html`<wa-icon name="x-circle-fill"></wa-icon>`;
     }
     return null;
   }
@@ -162,13 +162,13 @@ class Bracket extends NikElement {
     return html`<div>
       <span>Predicted Score:</span>
       <p class="fs-6 display-inline-flex">
-        <sl-card
-          style="--padding:var(--sl-spacing-x-small);--border-color: var(--sl-color-neutral-300);"
-          >${this.bracket?.winner_goals}</sl-card
+        <wa-card
+          style="--padding:var(--wa-spacing-x-small);--border-color: var(--wa-color-neutral-300);"
+          >${this.bracket?.winner_goals}</wa-card
         ><span class="p-2"> - </span
-        ><sl-card
-          style="--padding:var(--sl-spacing-x-small);--border-color: var(--sl-color-neutral-300);"
-          >${this.bracket?.loser_goals}</sl-card
+        ><wa-card
+          style="--padding:var(--wa-spacing-x-small);--border-color: var(--wa-color-neutral-300);"
+          >${this.bracket?.loser_goals}</wa-card
         >
       </p>
     </div>`;
@@ -176,13 +176,13 @@ class Bracket extends NikElement {
 
   championTemplate() {
     return html`<div class="round-final my-auto">
-      <sl-card>
+      <wa-card>
         <div class="champion-card">
           <span class="champion-top">${this.default.year} Championship</span>
           <div class="d-flex justify-content-center gap-4">
             ${this.pickedChampionTemplate()} ${this.correctChampionTemplate()}
           </div>
-          <sl-divider class="w-100"></sl-divider>
+          <wa-divider class="w-100"></wa-divider>
           <div class="d-flex gap-4">
             <div>
               ${this.matchupTemplate({
@@ -196,7 +196,7 @@ class Bracket extends NikElement {
             ${this.predictedScoreTemplate()}
           </div>
         </div>
-      </sl-card>
+      </wa-card>
     </div>`;
   }
 
@@ -270,18 +270,18 @@ class Bracket extends NikElement {
   }
 
   groupTemplate(groupBracket) {
-    return html`<sl-card class="group-card medium"
+    return html`<wa-card class="group-card medium"
       ><a
         class="d-flex align-items-center gap-2 text-decoration-none"
         href="${groupBracket.group.url}"
       >
-        <sl-icon class="trophy" name="trophy"></sl-icon>
+        <wa-icon class="trophy" name="trophy"></wa-icon>
         <div class="d-flex flex-column group-name">
           <span class="text-decoration-underline"
             >${groupBracket.group.name}</span
           ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
         </div>
-      </a></sl-card
+      </a></wa-card
     >`;
   }
 
@@ -290,12 +290,12 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<sl-details
+    return html`<wa-details
       class="my-brackets-groups"
       summary="Groups (${this.bracket.group_brackets.length})"
       ><div class="d-flex flex-wrap gap-2">
         ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
-      </div></sl-details
+      </div></wa-details
     >`;
   }
 
@@ -336,7 +336,7 @@ class Bracket extends NikElement {
                 >
               </div>
               <div class="d-flex">
-                <sl-divider vertical></sl-divider>
+                <wa-divider vertical></wa-divider>
                 <span
                   ><p class="bracket-details-content">
                     ${this.bracket?.points}
@@ -345,7 +345,7 @@ class Bracket extends NikElement {
                 >
               </div>
               <div class="d-flex">
-                <sl-divider vertical></sl-divider>
+                <wa-divider vertical></wa-divider>
                 <span
                   ><p class="bracket-details-content">
                     ${this.bracket?.max_points}
@@ -370,7 +370,7 @@ class Bracket extends NikElement {
               >
             </div>
             <div class="d-flex">
-              <sl-divider vertical></sl-divider>
+              <wa-divider vertical></wa-divider>
               <span
                 ><p class="bracket-details-content">
                   ${this.bracket?.round_two_points ?? "--"} / 80
@@ -379,7 +379,7 @@ class Bracket extends NikElement {
               >
             </div>
             <div class="d-flex">
-              <sl-divider vertical></sl-divider>
+              <wa-divider vertical></wa-divider>
               <span
                 ><p class="bracket-details-content">
                   ${this.bracket?.round_three_points ?? "--"} / 80
@@ -388,7 +388,7 @@ class Bracket extends NikElement {
               >
             </div>
             <div class="d-flex">
-              <sl-divider vertical></sl-divider>
+              <wa-divider vertical></wa-divider>
               <span
                 ><p class="bracket-details-content">
                   ${this.bracket?.round_four_points ?? "--"} / 80
@@ -405,7 +405,7 @@ class Bracket extends NikElement {
 
   topCardTemplate() {
     return html`<div class="d-flex justify-content-center">
-      <sl-card class="width-fit-content mb-3">${this.topCardStats()}</sl-card>
+      <wa-card class="width-fit-content mb-3">${this.topCardStats()}</wa-card>
     </div>`;
   }
 
@@ -418,21 +418,21 @@ class Bracket extends NikElement {
     //     >
     //   </div>
     //   <div class="d-flex">
-    //     <sl-divider vertical></sl-divider>
+    //     <wa-divider vertical></wa-divider>
     //     <span
     //       ><p class="bracket-details-content">${this.bracket?.r2}</p>
     //       <p class="bracket-details-label">Round 2 points</p></span
     //     >
     //   </div>
     //   <div class="d-flex">
-    //     <sl-divider vertical></sl-divider>
+    //     <wa-divider vertical></wa-divider>
     //     <span
     //       ><p class="bracket-details-content">${this.bracket?.r3}</p>
     //       <p class="bracket-details-label">Round 3 points</p></span
     //     >
     //   </div>
     //   <div class="d-flex">
-    //     <sl-divider vertical></sl-divider>
+    //     <wa-divider vertical></wa-divider>
     //     <span
     //       ><p class="bracket-details-content">${this.bracket?.r4}</p>
     //       <p class="bracket-details-label">Round 4 points</p></span
@@ -445,34 +445,34 @@ class Bracket extends NikElement {
 
       <div class="${this.getBracketClass()}">
         <div class="round-one-left">
-          <sl-card class="round-details">Round 1</sl-card>
+          <wa-card class="round-details">Round 1</wa-card>
           ${this.roundOneLeftTemplate()}
         </div>
 
         <div class="round-two-left">
-          <sl-card class="round-details">Round 2</sl-card>
+          <wa-card class="round-details">Round 2</wa-card>
           ${this.roundTwoLeftTemplate()}
         </div>
 
         <div class="round-three-left">
-          <sl-card class="round-details">Round 3</sl-card>
+          <wa-card class="round-details">Round 3</wa-card>
           ${this.roundThreeLeftTemplate()}
         </div>
 
         ${this.championTemplate()}
 
         <div class="round-three-right">
-          <sl-card class="round-details">Round 3</sl-card>
+          <wa-card class="round-details">Round 3</wa-card>
           ${this.roundThreeRightTemplate()}
         </div>
 
         <div class="round-two-right">
-          <sl-card class="round-details">Round 2</sl-card>
+          <wa-card class="round-details">Round 2</wa-card>
           ${this.roundTwoRightTemplate()}
         </div>
 
         <div class="round-one-right">
-          <sl-card class="round-details">Round 1</sl-card>
+          <wa-card class="round-details">Round 1</wa-card>
           ${this.roundOneRightTemplate()}
         </div>
       </div>

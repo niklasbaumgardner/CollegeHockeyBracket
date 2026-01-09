@@ -40,18 +40,18 @@ export class Standings extends NikElement {
     let winnerTitle = "Winner" + (this.numWinners > 1 ? "s" : "");
     let winners = this.winners.map((w) => w.user.username).join(", ");
 
-    return html`<sl-card
-      style="--sl-panel-background-color:var(--sl-color-neutral-100);"
+    return html`<wa-card
+      style="--wa-panel-background-color:var(--wa-color-neutral-100);"
       ><div
         class="d-flex flex-column gap-1 justify-content-center align-items-center"
       >
-        <sl-icon
-          style="color:var(--sl-color-amber-500);font-size:var(--sl-font-size-3x-large);"
+        <wa-icon
+          style="color:var(--wa-color-amber-500);font-size:var(--wa-font-size-3x-large);"
           name="trophy"
-        ></sl-icon>
+        ></wa-icon>
         <p>${winnerTitle}</p>
         <b>${winners}</b>
-      </div></sl-card
+      </div></wa-card
     >`;
   }
 
@@ -83,12 +83,12 @@ export class Standings extends NikElement {
     }
 
     return html`<div class="d-flex justify-content-center">
-      <sl-card>
+      <wa-card>
         ${this.titleTemplate()}
         <div class="d-flex flex-column gap-4">
           ${this.messageTemplate()}${this.bracketsTemplate()}
         </div>
-      </sl-card>
+      </wa-card>
     </div>`;
   }
 }
