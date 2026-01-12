@@ -1,7 +1,8 @@
 import { html } from "./lit.bundle.mjs";
 import { Standings } from "./nb-standings.mjs";
-import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
-import { EditGroup } from "./nb-edit-group.mjs";
+import "./nb-group-standings-grid.mjs";
+import "./nb-edit-group.mjs";
+import "./nb-join-private-group.mjs";
 
 export class GroupStandings extends Standings {
   static properties = {
@@ -17,7 +18,7 @@ export class GroupStandings extends Standings {
   };
 
   static queries = {
-    joinDialog: "#join-dialog",
+    // joinDialog: "#join-dialog",
     bracketDialog: "#create-bracket-dialog",
   };
 
@@ -40,7 +41,13 @@ export class GroupStandings extends Standings {
     this.isMember = is_member;
   }
 
-  handleJoinButtonClick() {
+  handleJoinGroupClick() {
+    if (!this.joinDialog) {
+      this.joinDialog = document.createElement("nb-join-private-group");
+      this.joinDialog.group = this.group;
+
+      document.body.appendChild(this.joinDialog);
+    }
     this.joinDialog.show();
   }
 
@@ -66,17 +73,17 @@ export class GroupStandings extends Standings {
   memeberTemplate() {
     if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
       return html`<nb-countdown></nb-countdown>
-        <div class="d-flex gap-3">
+        <div class="wa-cluster">
           <wa-button
-            class="flex-grow-1"
-            variant="primary"
-            outline
+            class="grow"
+            variant="brand"
+            appearance="outlined"
             href=${this.group.new_bracket_url}
             >Create New Bracket</wa-button
           ><wa-button
-            class="flex-grow-1"
-            variant="primary"
-            outline
+            class="grow"
+            variant="brand"
+            appearance="outlined"
             href=${MY_BRACKETS_URL + "#group_" + this.group.id}
             >Add Existing Bracket</wa-button
           >
@@ -84,8 +91,8 @@ export class GroupStandings extends Standings {
     } else if (this.canEditGroupBracket) {
       return html`<nb-countdown></nb-countdown
         ><wa-button
-          variant="primary"
-          outline
+          variant="brand"
+          appearance="outlined"
           href=${MY_BRACKETS_URL + "#group_" + this.group.id}
           >Add A Bracket</wa-button
         >`;
@@ -105,11 +112,11 @@ export class GroupStandings extends Standings {
     if (this.group.is_private) {
       return html`<wa-button
         variant="primary"
-        @click=${this.handleJoinButtonClick}
+        @click=${this.handleJoinGroupClick}
         >Join Group</wa-button
       >`;
     } else {
-      return html`<wa-button variant="primary" href="${this.group.join_url}"
+      return html`<wa-button variant="primary" href=${this.group.join_url}
         >Join Group</wa-button
       >`;
     }
@@ -119,20 +126,21 @@ export class GroupStandings extends Standings {
     let passwordTemplate = null;
     if (this.group.is_private && this.isMember) {
       passwordTemplate = html`<small
-        ><span class="fw-semibold">Password</span> ${this.group.password}</small
+        ><span class="font-semibold">Password</span> ${this.group
+          .password}</small
       >`;
     }
 
-    return html`<div class="d-flex gap-4">
+    return html`<div class="wa-cluster">
         <small
-          ><span class="fw-semibold">Members</span> ${this.group.members
+          ><span class="font-semibold">Members</span> ${this.group.members
             .length}</small
         ><small
-          ><span class="fw-semibold">Brackets</span> ${this.brackets
+          ><span class="font-semibold">Brackets</span> ${this.brackets
             .length}</small
         >
         <small
-          ><span class="fw-semibold">Group type</span> ${this.group.is_private
+          ><span class="font-semibold">Group type</span> ${this.group.is_private
             ? "Private"
             : "Public"}</small
         >${passwordTemplate}
@@ -153,38 +161,8 @@ export class GroupStandings extends Standings {
     }
   }
 
-  joinPrivateGroupTemplate() {
-    return html`<wa-dialog id="join-dialog" label="Join ${this.group.name}">
-      <form
-        id="join-private-group"
-        action="${this.group.join_url}"
-        method="GET"
-      >
-        <p class="mb-3">
-          This group is private. Please enter the password to join.
-        </p>
-        <wa-input
-          type="text"
-          id="password"
-          name="password"
-          placeholder="Password"
-          maxlength="60"
-          required
-        ></wa-input>
-      </form>
-      <wa-button @click=${this.closeDialog} slot="footer">Close</wa-button>
-      <wa-button
-        type="submit"
-        form="join-private-group"
-        slot="footer"
-        variant="primary"
-        >Join</wa-button
-      >
-    </wa-dialog>`;
-  }
-
   titleTemplate() {
-    const inviteTemplate = html`<div class="d-flex align-items-center">
+    const inviteTemplate = html`<div class="wa-cluster">
       Invite friends
       <wa-copy-button
         value="${this.group.share_url}"
@@ -197,15 +175,15 @@ export class GroupStandings extends Standings {
     let editGroupTemplate = null;
     if (CURRENT_USER.id === this.group.creator_id && this.canEditGroupBracket) {
       editGroupTemplate = html`<wa-button
-        style="--wa-button-font-size-medium: var(--wa-font-size-x-large);"
-        variant="text"
+        variant="brand"
+        appearance="plain"
         @click=${this.handleEditGroupClick}
         ><wa-icon name="gear">Edit Group</wa-icon></wa-button
       >`;
     }
 
-    return html`<div class="d-flex justify-content-between">
-      <div class="d-flex">
+    return html`<div class="wa-split">
+      <div class="wa-cluster">
         <h2>${this.group.name}</h2>
         ${editGroupTemplate}
       </div>
@@ -227,7 +205,7 @@ export class GroupStandings extends Standings {
       return null;
     }
 
-    return html`${super.render()}${this.joinPrivateGroupTemplate()}`;
+    return html`${super.render()}`;
   }
 }
 

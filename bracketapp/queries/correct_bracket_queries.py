@@ -52,8 +52,10 @@ def get_all_completed_correct_brackets():
     return db.session.scalars(stmt).unique().all()
 
 
-def get_correct_bracket(year=YEAR):
+def get_correct_bracket(year=YEAR, include_games=False):
     stmt = select(CorrectBracket).where(CorrectBracket.year == year)
+    if include_games:
+        stmt = stmt.options(joinedload(CorrectBracket.games_list))
     return db.session.scalars(stmt.limit(1)).first()
 
 

@@ -24,19 +24,21 @@ def view_bracket(sqid):
 
     if CAN_EDIT_BRACKET and bracket.year == YEAR:
         if my_bracket:
-            # if not app.debug:
-            return redirect(url_for("editbracket_bp.edit_bracket", sqid=sqid))
+            if False:
+                return redirect(url_for("editbracket_bp.edit_bracket", sqid=sqid))
         else:
             return redirect(url_for("leaderboard_bp.index"))
 
     default = default_bracket_queries.get_default_bracket(year=bracket.year)
-    correct = correct_bracket_queries.get_correct_bracket(year=bracket.year)
+    correct = correct_bracket_queries.get_correct_bracket(
+        year=bracket.year, include_games=True
+    )
 
     return render_template(
         "view_bracket.html",
         correct=correct.to_dict(),
         default=default.to_dict(),
-        bracket=bracket.to_dict(safe_only=False),
+        bracket=bracket.to_dict(),
         bracket_winner_img=bracket.winner_team.team.icon_path,
         correct_winner_img=(
             correct.winner_team.team.icon_path if correct.winner_team else ""
@@ -52,9 +54,9 @@ def view_cbracket(year):
     if (CAN_EDIT_BRACKET and year == YEAR) and not current_user.is_admin():
         return redirect(url_for("archive_bp.archive"))
 
-    correct = correct_bracket_queries.get_correct_bracket(year)
+    correct = correct_bracket_queries.get_correct_bracket(year, include_games=True)
 
-    if not correct or (correct and not correct.winner):
+    if not correct or (correct and not correct.winner_id):
         return redirect(url_for("archive_bp.archive"))
 
     default = default_bracket_queries.get_default_bracket(year)

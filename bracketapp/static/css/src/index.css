@@ -3,6 +3,7 @@
 @import url("./nb-components/nb-chat-el.css");
 @import url("./nb-components/nb-radio-items.css");
 @import url("./nb-components/nb-standings.css");
+@import url("./nb-components/nb-archive-years.css");
 
 .small-card {
   display: flex;
@@ -31,6 +32,35 @@
   > wa-card {
     max-width: 100%;
     width: 100%;
+  }
+}
+
+wa-card:has(> a.clickable-card),
+div:has(> a.clickable-card) {
+  &::part(body) {
+    padding: 0;
+  }
+
+  & > a.clickable-card {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    text-decoration-line: none;
+  }
+}
+
+wa-card:has(wa-card) {
+  & wa-card {
+    background-color: var(--wa-color-neutral-95);
+  }
+}
+
+.wa-dark {
+  wa-card:has(wa-card) {
+    & wa-card {
+      background-color: var(--wa-color-neutral-20);
+    }
   }
 }
 

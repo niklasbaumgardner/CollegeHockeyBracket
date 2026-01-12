@@ -45,7 +45,7 @@ def edit_bracket(sqid):
 
     return render_template(
         "edit_bracket.html",
-        bracket=bracket.to_dict(safe_only=False),
+        bracket=bracket.to_dict(),
         default=default.to_dict(),
         group_id=group_id,
     )

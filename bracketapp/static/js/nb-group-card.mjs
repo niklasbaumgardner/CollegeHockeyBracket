@@ -7,23 +7,24 @@ export class GroupCardContent extends NikElement {
   };
 
   render() {
-    return html`<div class="d-flex align-items-center gap-2">
+    return html`<div class="wa-cluster">
       <wa-icon
-        style="font-size:var(--wa-font-size-2x-large);"
+        style="font-size:var(--wa-font-size-2xl);"
         name="trophy"
       ></wa-icon>
-      <div>
+      <div class="wa-stack gap-(--wa-space-xs)">
         <div>${this.group.name}</div>
-        <div class="d-flex gap-4">
+        <div class="wa-cluster">
           <small
-            ><span class="fw-semibold">Members</span> ${this.group.members
+            ><span class="font-semibold">Members</span> ${this.group.members
               .length}</small
           ><small
-            ><span class="fw-semibold">Brackets</span> ${this.group.brackets
+            ><span class="font-semibold">Brackets</span> ${this.group.brackets
               .length}</small
           >
           <small
-            ><span class="fw-semibold">Group type</span> ${this.group.is_private
+            ><span class="font-semibold">Group type</span> ${this.group
+              .is_private
               ? "Private"
               : "Public"}</small
           >
@@ -41,7 +42,7 @@ export class GroupCard extends NikElement {
   };
 
   render() {
-    return html`<wa-card style="--padding:var(--wa-spacing-small);"
+    return html`<wa-card style="--spacing:var(--wa-space-s);"
       ><nb-group-card-content .group=${this.group}></nb-group-card-content
     ></wa-card>`;
   }

@@ -8,7 +8,10 @@ archive_bp = Blueprint("archive_bp", __name__)
 
 @archive_bp.get("/archive")
 def archive():
-    archived_years = correct_bracket_queries.get_all_completed_correct_brackets()
+    archived_years = [
+        cb.to_dict()
+        for cb in correct_bracket_queries.get_all_completed_correct_brackets()
+    ]
 
     return render_template("archive.html", archived_years=archived_years)
 
@@ -33,10 +36,8 @@ def api_archive_year(year):
     # page to show correct winners on brackets table?
     standings, winners, correct = bracket_utils.get_bracket_standings(year)
 
-    standings_dict = [correct.to_dict(include_games=False)] + [
-        b.to_dict(safe_only=False, include_games=False) for b in standings
-    ]
-    winners_dict = [b.to_dict(safe_only=False, include_games=False) for b in winners]
+    standings_dict = [correct.to_dict()] + [b.to_dict() for b in standings]
+    winners_dict = [b.to_dict() for b in winners]
 
     return dict(
         standings=standings_dict,

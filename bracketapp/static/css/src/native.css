@@ -551,7 +551,7 @@
             [type="file"],
             [type="hidden"],
             [type="image"],
-            [type="radio"],
+            [type="radio"].wa-native,
             [type="reset"],
             [type="submit"]
           ),
@@ -561,8 +561,18 @@
       width: 100%;
     }
 
-    & + :is(input:not([type="checkbox"], [type="radio"]), textarea, select),
-    & > :is(input:not([type="checkbox"], [type="radio"]), textarea, select) {
+    &
+      + :is(
+        input.wa-native:not([type="checkbox"], [type="radio"]),
+        textarea,
+        select
+      ),
+    &
+      > :is(
+        input.wa-native:not([type="checkbox"], [type="radio"]),
+        textarea,
+        select
+      ) {
       margin-block-start: 0.5em;
     }
   }
@@ -889,8 +899,8 @@
   /* #region Checkboxes + Radios ~~~~~~~~~~~~~ */
   input[type="checkbox"],
   label:has(input[type="checkbox"]),
-  input[type="radio"],
-  label:has(input[type="radio"]) {
+  input[type="radio"].wa-native,
+  label:has(input[type="radio"].wa-native) {
     display: inline-flex;
 
     width: fit-content;
@@ -918,7 +928,7 @@
   }
 
   input[type="checkbox"],
-  input[type="radio"] {
+  input[type="radio"].wa-native {
     appearance: none;
 
     flex: 0 0 auto;
@@ -987,7 +997,7 @@
   }
 
   /* Radio */
-  input[type="radio"] {
+  input[type="radio"].wa-native {
     --checked-icon-color: var(--wa-form-control-activated-color);
     --checked-icon-scale: 0.7;
 

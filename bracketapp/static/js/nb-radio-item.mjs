@@ -30,7 +30,7 @@ export class RadioItem extends NikElement {
 
   render() {
     return html`<wa-card class="nb-radio-item">
-      <label class="d-flex align-items-center gap-2">
+      <label class="wa-cluster w-full">
         <input
           type="radio"
           name=${this.name}

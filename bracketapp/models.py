@@ -174,9 +174,11 @@ class Bracket(BaseModel, SqidSerializerMixin):
 
     @property
     def safe_only(self):
-        if self.user_id == current_user.id:
+        if not current_user.is_authenticated:
+            return True
+        elif self.user_id == current_user.id:
             return False
-        if self.year == YEAR and CAN_EDIT_BRACKET and self.user_id != current_user.id:
+        elif self.year == YEAR and CAN_EDIT_BRACKET and self.user_id != current_user.id:
             return True
 
         return False
@@ -240,6 +242,8 @@ class CorrectBracket(BaseModel, SqidSerializerMixin):
         "user",
         "url",
         "-games_list",
+        "games",
+        "archive_url",
     )
 
     id: Mapped[int_pk]
@@ -275,6 +279,9 @@ class CorrectBracket(BaseModel, SqidSerializerMixin):
 
     def url(self):
         return url_for("viewbracket_bp.view_cbracket", year=self.year)
+
+    def archive_url(self):
+        return url_for("archive_bp.archive_year", year=self.year)
 
 
 class CorrectGame(BaseModel, SqidSerializerMixin):

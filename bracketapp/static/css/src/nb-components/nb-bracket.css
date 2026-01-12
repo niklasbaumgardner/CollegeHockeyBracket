@@ -5,10 +5,17 @@ nb-edit-correct-matchup {
 }
 
 .matchup {
-  background-color: var(--sl-color-neutral-100);
-  border-radius: var(--border-radius);
-  font-size: var(--sl-font-size-x-small);
-  box-shadow: var(--sl-shadow-large);
+  background-color: var(--wa-color-neutral-95);
+  /* border-radius: var(--border-radius); */
+  font-size: var(--wa-font-size-xs);
+  box-shadow: var(--wa-shadow-l);
+  --spacing: var(--wa-space-2xs);
+}
+
+.wa-dark {
+  .matchup {
+    background-color: var(--wa-color-neutral-10);
+  }
 }
 
 .nb-team {
@@ -18,28 +25,39 @@ nb-edit-correct-matchup {
 
   display: inline-flex;
   align-items: center;
-  padding: var(--sl-spacing-3x-small);
-  gap: var(--sl-spacing-2x-small);
+  padding: var(--wa-space-3xs);
+  gap: var(--wa-space-2xs);
 
   &.user-pick {
     height: 15px;
     padding-block: 0;
-    gap: var(--sl-spacing-2x-small);
+    gap: var(--wa-space-2xs);
 
     .team-name {
-      font-size: var(--sl-font-size-2x-small);
+      font-size: var(--wa-font-size-2xs);
     }
   }
 }
 
+input[type="radio"] {
+  margin: 0;
+
+  &:checked {
+    accent-color: var(--wa-color-brand-70);
+  }
+}
+
 .nb-team:has(input:checked) {
-  background-color: var(--sl-color-primary-50);
-  border: 1px solid var(--sl-color-primary-300);
+  background-color: var(--wa-color-brand-95);
+  border: 1px solid var(--wa-color-brand-70);
   border-radius: 5px;
 }
 
-input[type="radio"]:checked {
-  accent-color: var(--sl-color-primary-700);
+.wa-dark {
+  .nb-team:has(input:checked) {
+    background-color: var(--wa-color-brand-05);
+    border: 1px solid var(--wa-color-brand-30);
+  }
 }
 
 .champion-pick {
@@ -52,7 +70,7 @@ input[type="radio"]:checked {
 label#top,
 label#bottom {
   display: inline-flex;
-  gap: var(--sl-spacing-3x-small);
+  gap: var(--wa-space-3xs);
   width: 100%;
 }
 
@@ -65,7 +83,7 @@ label#bottom {
 }
 
 .loser-team {
-  color: var(--sl-color-neutral-500);
+  color: var(--wa-color-neutral-50);
 }
 
 .winner-img {
@@ -200,8 +218,8 @@ label#bottom {
   .bracket-grid-edit,
   .cbracket-grid-edit {
     overflow-x: scroll;
-    box-shadow: var(--sl-shadow-x-large);
-    padding: var(--sl-spacing-small);
+    box-shadow: var(--wa-shadow-l);
+    padding: var(--wa-space-s);
   }
 }
 
@@ -228,8 +246,12 @@ label#bottom {
   justify-content: center;
 }
 
-.goals {
+wa-input[type="number"].goals {
   width: 5rem;
+
+  &::part(label) {
+    display: none;
+  }
 }
 
 nb-edit-correct-matchup input[type="number"] {
@@ -240,36 +262,37 @@ nb-edit-correct-matchup input[type="number"] {
 }
 
 .round-details {
-  --padding: var(--sl-spacing-3x-small);
+  --spacing: var(--wa-space-3xs);
   text-align: center;
 }
 
 .bracket-details-content {
-  font-weight: var(--sl-font-weight-bold);
-  padding: var(--sl-spacing-x-small);
+  font-weight: var(--wa-font-weight-bold);
+  padding: var(--wa-space-xs);
+  margin: 0;
 }
 
 .bracket-details-label {
   white-space: nowrap;
   text-transform: uppercase;
-  color: var(--sl-color-neutral-700);
-  font-size: var(--sl-font-size-x-small);
-  padding: var(--sl-spacing-x-small);
+  color: var(--wa-color-text-quiet);
+  font-size: var(--wa-font-size-xs);
+  padding: var(--wa-space-xs);
 }
 
 .bracket-sub-details {
   .bracket-details-content {
-    font-size: var(--sl-font-size-x-small);
-    padding: var(--sl-spacing-2x-small);
+    font-size: var(--wa-font-size-xs);
+    padding: var(--wa-space-2xs);
   }
 
   .bracket-details-label {
-    font-size: var(--sl-font-size-2x-small);
-    padding: var(--sl-spacing-2x-small);
+    font-size: var(--wa-font-size-2xs);
+    padding: var(--wa-space-2xs);
   }
 }
 
-.sl-theme-light {
+.wa-light {
   img[src="/static/images/MichiganSt.svg"] {
     filter: brightness(0) saturate(100%) invert(19%) sepia(32%) saturate(892%)
       hue-rotate(104deg) brightness(98%) contrast(93%);

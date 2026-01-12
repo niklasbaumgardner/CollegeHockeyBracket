@@ -30,9 +30,16 @@ export class CreateGroup extends BaseDialog {
     this.private = !this.private;
   }
 
-  render() {
-    return html`<wa-dialog label="Create A Group">
-      <form id="new-group-form" action=${CREATE_GROUP_URL} method="POST"></form>
+  lableTemplate() {
+    return html`Create A Group`;
+  }
+
+  contentTemplate() {
+    return html` <form
+        id="new-group-form"
+        action=${CREATE_GROUP_URL}
+        method="POST"
+      ></form>
 
       <div class="wa-stack">
         <wa-input
@@ -65,17 +72,17 @@ export class CreateGroup extends BaseDialog {
           ?hidden=${!this.private}
           ?required=${this.private}
         ></wa-input>
-      </div>
+      </div>`;
+  }
 
-      <wa-button
-        class="w-full"
-        variant="brand"
-        type="submit"
-        form="new-group-form"
-        slot="footer"
-        >Create</wa-button
-      >
-    </wa-dialog>`;
+  footerTemplate() {
+    return html`<wa-button
+      class="w-full"
+      variant="brand"
+      type="submit"
+      form="new-group-form"
+      >Create</wa-button
+    >`;
   }
 }
 

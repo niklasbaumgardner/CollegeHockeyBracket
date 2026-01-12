@@ -1,7 +1,7 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "./lit.bundle.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
-import "./nb-remove-group-bracket-modal.mjs";
+import "./nb-remove-group-bracket.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
 import "./nb-my-bracket-column.mjs";
 
@@ -14,7 +14,7 @@ class MyGroupBracketActions extends NikElement {
   handleRemoveFromGroupClick() {
     if (!this.removeFromGroupModal) {
       this.removeFromGroupModal = document.createElement(
-        "nb-remove-group-bracket-modal"
+        "nb-remove-group-bracket"
       );
       this.removeFromGroupModal.bracket = this.bracket;
       this.removeFromGroupModal.group = this.group;
@@ -25,7 +25,7 @@ class MyGroupBracketActions extends NikElement {
   }
 
   render() {
-    return html`<div class="flex">
+    return html`<div class="flex w-full h-full">
       <wa-button
         size="small"
         variant="danger"
@@ -98,7 +98,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
           ele.group = this.group;
           return ele;
         },
-        cellClass: "nb-center justify-content-start",
+        cellClass: "flex! items-center justify-content-start",
       });
     } else {
       columnDefs.push(

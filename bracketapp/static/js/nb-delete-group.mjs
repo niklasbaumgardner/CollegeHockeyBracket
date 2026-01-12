@@ -1,5 +1,4 @@
 import { html } from "./lit.bundle.mjs";
-import { NikElement } from "./nik-element.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
 export class DeleteGroup extends BaseDialog {
@@ -12,31 +11,42 @@ export class DeleteGroup extends BaseDialog {
     this.controller.show();
   }
 
-  render() {
-    return html`<wa-dialog
-      label="Delete this group?"
-      @wa-hide=${this.handleHide}
+  lableTemplate() {
+    return html`Delete this group?`;
+  }
+
+  contentTemplate() {
+    return html`<form
+      id="delete-group-form"
+      action=${this.group.delete_url}
+      method="POST"
     >
-      <form
-        id="delete-group-form"
-        action=${this.group.delete_url}
-        method="POST"
-      >
-        <p>Are you sure want to delete <strong>${this.group.name}</strong>?</p>
-      </form>
-      <div slot="footer" class="d-flex gap-3">
-        <wa-button class="w-50" variant="neutral" outline @click=${this.hide}
-          >Cancel</wa-button
-        >
-        <wa-button
-          class="w-50"
-          variant="danger"
-          type="submit"
-          form="delete-group-form"
-          >Delete Group</wa-button
-        >
-      </div>
-    </wa-dialog>`;
+      <p>Are you sure want to delete <strong>${this.group.name}</strong>?</p>
+    </form>`;
+  }
+
+  footerTemplate() {
+    return html`${this.cancelButtonTemplate()}
+      <wa-button
+        class="grow"
+        variant="danger"
+        type="submit"
+        form="delete-group-form"
+        >Delete Group</wa-button
+      >`;
+  }
+
+  async connectedCallback() {
+    super.connectedCallback();
+    await this.updateComplete;
+
+    this.boundHandleHide = this.handleHide.bind(this);
+    this.dialog.addEventListener("wa-hide", this.boundHandleHide);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.dialog.removeEventListener("wa-hide", this.boundHandleHide);
   }
 }
 

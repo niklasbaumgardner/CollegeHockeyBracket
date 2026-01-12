@@ -2,7 +2,7 @@ import { html } from "./lit.bundle.mjs";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-group-standings-grid.mjs";
 import "./nb-my-brackets.mjs";
-import "./nb-add-a-bracket-to-group-modal.mjs";
+import "./nb-group-add-bracket.mjs";
 import "./nb-my-group-brackets-grid.mjs";
 
 export class MyBracketsGroupStandings extends NikElement {
@@ -39,7 +39,7 @@ export class MyBracketsGroupStandings extends NikElement {
 
   handleAddBracketClick() {
     if (!this.addBracketModal) {
-      this.addBracketModal = document.createElement("nb-add-bracket-modal");
+      this.addBracketModal = document.createElement("nb-group-add-bracket");
       this.addBracketModal.group = this.group;
       this.addBracketModal.myBrackets = this.myBrackets;
       document.body.appendChild(this.addBracketModal);
@@ -69,7 +69,8 @@ export class MyBracketsGroupStandings extends NikElement {
     return html`<div class="wa-cluster">
       <wa-button
         size="small"
-        appearance="filled-outlined"
+        variant="brand"
+        appearance="outlined"
         @click=${this.handleAddBracketClick}
         >Add A Bracket</wa-button
       >
@@ -86,13 +87,14 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   render() {
+    // TODO: Fix bg color
     return html`<wa-card
       style="
           --wa-panel-background-color: var(--wa-color-neutral-100);
         "
     >
-      <div class="flex flex-col items-center gap-3 nb-group-card">
-        <div class="flex justify-content-between w-full flex-wrap">
+      <div class="wa-stack items-center nb-group-card">
+        <div class="wa-split">
           <a
             class="flex grow items-center no-underline"
             href="${this.group.url}"

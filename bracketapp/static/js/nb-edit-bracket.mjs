@@ -194,9 +194,9 @@ export class EditBracket extends NikElement {
   }
 
   predictedScoreTemplate() {
-    return html`<div class="championship-grid">
-      <p class="m-0 fs-6">Final Game Score</p>
-      <div class="d-flex justify-content-center align-items-center">
+    return html`<div class="wa-stack">
+      <p class="text-center">Final Game Score</p>
+      <div class="flex justify-center items-center gap-(--wa-space-m)">
         <wa-input
           class="goals"
           name="winner_goals"
@@ -205,9 +205,9 @@ export class EditBracket extends NikElement {
           max="99"
           step="1"
           required=""
-          value="${this.bracket.winner_goals}"
+          value=${this.bracket.winner_goals}
         ></wa-input>
-        <span class="px-2">-</span>
+        <span>-</span>
         <wa-input
           class="goals"
           name="loser_goals"
@@ -216,7 +216,7 @@ export class EditBracket extends NikElement {
           max="99"
           step="1"
           required=""
-          value="${this.bracket.loser_goals}"
+          value=${this.bracket.loser_goals}
         ></wa-input>
       </div>
     </div>`;
@@ -225,8 +225,8 @@ export class EditBracket extends NikElement {
   championTemplate() {
     return html`<div class="round-final my-auto">
       <wa-card>
-        <div class="championship-grid">
-          <p class="round-details champion-top m-0">National Champion</p>
+        <div class="wa-stack">
+          <p class="text-center">National Champion</p>
           ${this.matchupTemplate({
             game: "game15",
             type: "edit",
@@ -310,8 +310,9 @@ export class EditBracket extends NikElement {
 
   buttonsTemplate() {
     let content = html`<wa-button
+      class="grow"
       id="save-button"
-      variant="primary"
+      variant="brand"
       type="submit"
       >Save bracket</wa-button
     >`;
@@ -322,7 +323,11 @@ export class EditBracket extends NikElement {
     //     >`;
     // }
 
-    return html`<wa-button href=${CANCEL_BRACKET_URL}>Cancel</wa-button
+    return html`<wa-button
+        class="grow"
+        appearance="outlined"
+        href=${CANCEL_BRACKET_URL}
+        >Cancel</wa-button
       >${content}`;
   }
 
@@ -420,11 +425,11 @@ export class EditBracket extends NikElement {
   }
 
   topCardTemplate() {
-    return html` <div class="d-flex justify-content-center">
-      <wa-card class="width-fit-content mb-4">
-        <h2 class="mb-2">${this.bracket?.year} Bracket Challenge</h2>
-        <div class="d-flex mb-4">
-          <div>
+    return html` <div class="flex justify-center">
+      <wa-card>
+        <div class="wa-stack">
+          <h2>${this.bracket?.year} Bracket Challenge</h2>
+          <div class="wa-stack gap-(--wa-space-3xs)">
             <p>
               To view current conference standings
               <a
@@ -444,34 +449,33 @@ export class EditBracket extends NikElement {
               <a href="${ARCHIVE_URL}" target="_blank">click here</a>.
             </p>
           </div>
-        </div>
-        <div class="d-flex justify-content-center mb-3">
+
           <wa-input
             name="name"
             maxlength="60"
             label="Bracket name"
             placeholder="My bracket name"
             value=${this.bracket.name}
-            class="w-100"
+            class="w-full"
             required=""
           ></wa-input>
-        </div>
-        <div class="d-flex justify-content-center gap-3">
-          ${this.buttonsTemplate()}
+
+          <div class="wa-cluster">${this.buttonsTemplate()}</div>
         </div>
       </wa-card>
     </div>`;
   }
 
   render() {
-    return html`<div class="w-100">
+    return html`<div class="w-full ">
       <form
-        action="${BRACKET_FORM_URL}"
+        action=${BRACKET_FORM_URL}
         method="POST"
         @input=${this.handleInput}
+        class="wa-stack"
       >
         ${this.topCardTemplate()}
-        <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
+        <div class="bracket-grid-edit" @click=${this.handleClick}>
           <div class="round-one-left">
             <wa-card class="round-details">Round 1</wa-card>
             ${this.roundOneLeftTemplate()}

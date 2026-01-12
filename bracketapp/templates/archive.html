@@ -1,46 +1,10 @@
 {% extends "base.html" %} {% block title %}Archive{% endblock title %} {% block
-archive %}active{% endblock archive %} {% block content %}
+archive %}active{% endblock archive %} {% block head %}
+<script src="/static/js/nb-archive-years.mjs" type="module"></script>
+{% endblock head %} {% block content %}
 
-<div class="d-flex justify-content-center">
-  <sl-card class="mb-5 width-fit-content">
-    <h2>Archive</h2>
-    <p class="mb-4">
-      Click on the cards below to view the standings and brackets for that year
-    </p>
-
-    <div class="archive-grid">
-      {% for bracket in archived_years %}
-      <sl-card
-        style="
-          --padding: 0;
-          --sl-panel-background-color: var(--sl-color-neutral-100);
-        "
-      >
-        <a
-          class="archive-card"
-          href="{{ url_for('archive_bp.archive_year', year=bracket.year) }}"
-        >
-          <div class="row pb-2">
-            <div class="col">
-              <img
-                width="75px"
-                height="75px"
-                src="{{ bracket.winner_team.team.icon_path }}"
-                alt="{{ bracket.winner_team.team.name }}"
-              />
-            </div>
-            <div class="col">
-              <h2>{{ bracket.year }}</h2>
-            </div>
-          </div>
-          <div class="row">
-            <h3>{{ bracket.winner_team.team.name }}</h3>
-          </div>
-        </a>
-      </sl-card>
-      {% endfor %}
-    </div>
-  </sl-card>
-</div>
+<nb-archive-years
+  archivedYears='{{ archived_years|tojson }}'
+></nb-archive-years>
 
 {% endblock content %}

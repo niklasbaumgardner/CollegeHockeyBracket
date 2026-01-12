@@ -187,11 +187,7 @@ class Matchup extends NikElement {
     } else {
       content = this.matchupTemplate();
     }
-    return html`<wa-card
-      class="matchup"
-      style="--padding: var(--wa-spacing-2x-small);"
-      >${content}</wa-card
-    >`;
+    return html`<wa-card class="matchup">${content}</wa-card>`;
   }
 }
 

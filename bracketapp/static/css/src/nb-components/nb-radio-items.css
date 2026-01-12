@@ -3,17 +3,17 @@ nb-radio-item {
 }
 
 .nb-radio-item {
-  --padding: 0;
-  --border-width: 1px;
+  --spacing: 0;
+  border-width: 1px;
 
   label {
-    padding: var(--sl-spacing-small);
+    padding: var(--wa-space-s);
     cursor: pointer;
   }
 
   &:has(input:checked) {
-    --sl-panel-background-color: var(--sl-color-primary-50);
-    --border-color: var(--sl-color-primary-300);
-    border-radius: var(--sl-border-radius-medium);
+    background-color: var(--wa-color-brand-05);
+    border-color: var(--wa-color-brand-30);
+    /* border-radius: var(--wa-border-radius-medium); */
   }
 }

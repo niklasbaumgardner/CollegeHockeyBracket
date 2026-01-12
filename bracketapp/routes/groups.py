@@ -10,7 +10,7 @@ from bracketapp.utils.Sqids import sqids
 groups_bp = Blueprint("groups_bp", __name__)
 
 
-@groups_bp.route("/groups", methods=["GET"])
+@groups_bp.get("/groups")
 def groups():
     standings = bracket_utils.get_bracket_standings()
     standings_json = [
@@ -56,13 +56,8 @@ def api_view_group(sqid):
         group_id=group_id, year=group.year
     )
 
-    safe_only = group.year == YEAR and CAN_EDIT_BRACKET
-    brackets_dict = [
-        b.to_dict(safe_only=safe_only, include_games=False) for b in brackets
-    ]
-    winners_dict = [
-        b.to_dict(safe_only=safe_only, include_games=False) for b in winners
-    ]
+    brackets_dict = [b.to_dict() for b in brackets]
+    winners_dict = [b.to_dict() for b in winners]
 
     return dict(
         is_member=is_member,

@@ -1,5 +1,4 @@
 import { html } from "./lit.bundle.mjs";
-import { NikElement } from "./nik-element.mjs";
 import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 import { BaseGrid } from "./nb-base-grid.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
@@ -11,8 +10,8 @@ export class StandingsGrid extends BaseGrid {
     brackets: {
       type: Object,
     },
-    theme: {
-      type: String,
+    year: {
+      type: Number,
     },
     headerName: { type: String },
   };
@@ -51,7 +50,7 @@ export class StandingsGrid extends BaseGrid {
       autoSizeStrategy: {
         type: "fitGridWidth",
         columnLimits: [
-          { colId: "rank", minWidth: 57, maxWidth: 57 },
+          { colId: "rank", minWidth: 64, maxWidth: 64 },
           {
             colId: "name",
             minWidth: this.defaultBracketColumnWidth,
@@ -89,14 +88,7 @@ export class StandingsGrid extends BaseGrid {
 
     this.cleanBracketNames();
     this.createDataGrid();
-  }
-
-  getImageUrl(winner_team) {
-    if (!winner_team) {
-      return "";
-    }
-
-    return winner_team.team.icon_path;
+    this.setupThemeWatcher();
   }
 
   getImageElement(winner_team) {
@@ -106,7 +98,7 @@ export class StandingsGrid extends BaseGrid {
 
     return `<img
       class="standings-img"
-      src="${this.getImageUrl(winner_team)}"
+      src="${winner_team.team.icon_path}"
       alt="${winner_team.team.name}"
     />`;
   }
@@ -132,15 +124,15 @@ export class StandingsGrid extends BaseGrid {
         cellRenderer: (param) => {
           let bracket = param.data;
           if (bracket.winner_team) {
-            return `<div class="d-flex flex-column gap-2 my-1">
+            return `<div class="flex w-full h-full">
               <a
-                class="d-block w-100 h-100 text-decoration-none"
+                class="clickable-card py-(--wa-space-2xs)"
                 href="${bracket.url}"
                 ><div class="standings-row">
                   ${this.getImageElement(bracket.winner_team)}
                   <div class="name-cell">
                     <span
-                      class="standings-bracket-name text-decoration-underline"
+                      class="standings-bracket-name underline"
                       ><span>${bracket.safeName}</span></span
                     ><span class="standings-username"
                       >${bracket.user.username}</span
@@ -165,7 +157,7 @@ export class StandingsGrid extends BaseGrid {
       { field: "max_points", headerName: "Max" }
     );
 
-    if (!CAN_EDIT_BRACKET) {
+    if (this.year < CURRENT_YEAR || !CAN_EDIT_BRACKET) {
       {
         columnDefs.push(
           { field: "round_one_points", headerName: "R1" },

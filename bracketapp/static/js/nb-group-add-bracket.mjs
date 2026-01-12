@@ -1,11 +1,10 @@
-import { NikElement } from "./nik-element.mjs";
 import { html } from "./lit.bundle.mjs";
 import "./nb-my-brackets-group-standings.mjs";
 import "./nb-radio-item.mjs";
 import "./nb-group-card.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class AddBracketModal extends BaseDialog {
+export class GroupAddBracket extends BaseDialog {
   static properties = {
     myBrackets: { type: Object },
     group: { type: Object },
@@ -22,7 +21,7 @@ export class AddBracketModal extends BaseDialog {
   }
 
   groupTemplate() {
-    return html`<div class="mb-4">
+    return html`<div class="wa-stack">
       <p>Joining group:</p>
       <nb-group-card .group=${this.group}></nb-group-card>
     </div> `;
@@ -42,41 +41,46 @@ export class AddBracketModal extends BaseDialog {
     let newBracket = null;
     if (MY_BRACKET_COUNT < 5) {
       newBracket = html`<wa-button
-        class="w-100"
-        variant="text"
+        class="w-full"
+        appearance="plain"
         outline
         href=${NEW_BRACKET_LINK + `?group_id=${this.group.id}`}
         >Create New Bracket</wa-button
       >`;
     }
 
-    return html`<div class="d-flex flex-column gap-2 mb-2">
+    return html`<div class="wa-stack gap-(--wa-space-s)">
         <p>Available brackets to add:</p>
         ${bracketCards}
       </div>
       ${newBracket}`;
   }
 
-  render() {
-    return html`<wa-dialog label="Add Bracket To Group">
-      <form
+  lableTemplate() {
+    return html`Add Bracket To Group`;
+  }
+
+  contentTemplate() {
+    return html`<form
         id="join-group-form"
-        action="${this.group.add_bracket_url}"
+        action=${this.group.add_bracket_url}
         method="POST"
       ></form>
+      <div class="wa-stack">
+        ${this.groupTemplate()} ${this.bracketsTemplate()}
+      </div>`;
+  }
 
-      ${this.groupTemplate()} ${this.bracketsTemplate()}
-      <wa-button
-        id="join-button"
-        class="w-100"
-        type="submit"
-        form="join-group-form"
-        slot="footer"
-        variant="primary"
-        >Add Bracket</wa-button
-      ></wa-dialog
+  footerTemplate() {
+    return html`<wa-button
+      id="join-button"
+      class="w-full"
+      type="submit"
+      form="join-group-form"
+      variant="brand"
+      >Add Bracket</wa-button
     >`;
   }
 }
 
-customElements.define("nb-add-bracket-modal", AddBracketModal);
+customElements.define("nb-group-add-bracket", GroupAddBracket);

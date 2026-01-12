@@ -40,13 +40,13 @@ export class Standings extends NikElement {
     let winnerTitle = "Winner" + (this.numWinners > 1 ? "s" : "");
     let winners = this.winners.map((w) => w.user.username).join(", ");
 
+    // TODO: fix bg color
     return html`<wa-card
-      style="--wa-panel-background-color:var(--wa-color-neutral-100);"
-      ><div
-        class="d-flex flex-column gap-1 justify-content-center align-items-center"
-      >
+      class=""
+      style="--wa-panel-background-color:var(--wa-color-neutral-10);"
+      ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
         <wa-icon
-          style="color:var(--wa-color-amber-500);font-size:var(--wa-font-size-3x-large);"
+          style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
           name="trophy"
         ></wa-icon>
         <p>${winnerTitle}</p>
@@ -72,6 +72,7 @@ export class Standings extends NikElement {
 
   bracketsTemplate() {
     return html`<nb-standings-grid
+      year=${this.year}
       .brackets=${this.brackets}
       theme=${this.theme}
     ></nb-standings-grid>`;
@@ -82,11 +83,11 @@ export class Standings extends NikElement {
       return null;
     }
 
-    return html`<div class="d-flex justify-content-center">
+    return html`<div class="flex justify-center">
       <wa-card>
-        ${this.titleTemplate()}
-        <div class="d-flex flex-column gap-4">
-          ${this.messageTemplate()}${this.bracketsTemplate()}
+        <div class="wa-stack">
+          ${this.titleTemplate()} ${this.messageTemplate()}
+          ${this.bracketsTemplate()}
         </div>
       </wa-card>
     </div>`;

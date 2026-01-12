@@ -10,7 +10,7 @@
 .standings-row {
   display: flex;
   align-items: start;
-  gap: var(--wa-spacing-2xs);
+  gap: var(--wa-space-2xs);
 }
 
 .name-cell {
@@ -87,14 +87,6 @@
 }
 
 .join-group-bracket {
-  div {
-    padding-inline: var(--wa-space-m);
-
-    &:not(:first-child) {
-      border-left: 1px solid var(--wa-panel-border-color);
-    }
-  }
-
   .bracket-details-content {
     font-size: var(--wa-font-size-xs);
     padding: 0;

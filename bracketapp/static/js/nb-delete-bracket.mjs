@@ -1,4 +1,3 @@
-import { NikElement } from "./nik-element.mjs";
 import { html } from "./lit.bundle.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
@@ -12,35 +11,33 @@ export class DeleteBracketModal extends BaseDialog {
     deleteButton: "#delete-button",
   };
 
-  render() {
-    return html`<wa-dialog label='Delete bracket named "${this.bracket.name}"?'>
-      <form
+  lableTemplate() {
+    return html`Delete bracket named "${this.bracket.name}"?`;
+  }
+
+  contentTemplate() {
+    return html`<form
         id="delete-bracket-form"
-        action="${this.bracket.delete_url}"
+        action=${this.bracket.delete_url}
         method="POST"
       ></form>
-      <div class="d-flex flex-column">
+      <div class="wa-stack">
         <p>Are you sure you want to delete this bracket?</p>
         <strong>This action cannot be undone.</strong>
-      </div>
+      </div>`;
+  }
+
+  footerTemplate() {
+    return html`${this.cancelButtonTemplate()}
       <wa-button
-        slot="footer"
-        id="close-button"
-        variant="neutral"
-        outline
-        @click=${this.hide}
-        >Cancel</wa-button
-      >
-      <wa-button
+        class="grow"
         type="submit"
         form="delete-bracket-form"
-        slot="footer"
         id="delete-button"
         variant="danger"
         >Delete bracket</wa-button
-      ></wa-dialog
-    >`;
+      >`;
   }
 }
 
-customElements.define("nb-delete-bracket-modal", DeleteBracketModal);
+customElements.define("nb-delete-bracket", DeleteBracketModal);

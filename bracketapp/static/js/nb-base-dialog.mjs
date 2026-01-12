@@ -1,4 +1,5 @@
 import { NikElement } from "./nik-element.mjs";
+import { html } from "./lit.bundle.mjs";
 
 export class BaseDialog extends NikElement {
   static queries = {
@@ -35,5 +36,37 @@ export class BaseDialog extends NikElement {
     if (event.explicitOriginalTarget.localName === "wa-option") {
       event.preventDefault();
     }
+  }
+
+  lableTemplate() {
+    return null;
+  }
+
+  contentTemplate() {
+    return null;
+  }
+
+  footerTemplate() {
+    return null;
+  }
+
+  cancelButtonTemplate() {
+    return html`<wa-button
+      class="grow"
+      data-dialog="close"
+      variant="neutral"
+      appearance="outlined"
+      >Cancel</wa-button
+    >`;
+  }
+
+  render() {
+    return html`<wa-dialog>
+      <div slot="label">${this.lableTemplate()}</div>
+      ${this.contentTemplate()}
+      <div class="wa-cluster w-full" slot="footer">
+        ${this.footerTemplate()}
+      </div>
+    </wa-dialog>`;
   }
 }

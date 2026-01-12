@@ -1,8 +1,8 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "./lit.bundle.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
-import { DeleteBracketModal } from "./nb-delete-bracket-modal.mjs";
-import { JoinGroupModal } from "./nb-add-bracket-to-group-modal.mjs";
+import { DeleteBracketModal } from "./nb-delete-bracket.mjs";
+import "./nb-add-bracket-to-group.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
 import { MyBracketColumn } from "./nb-my-bracket-column.mjs";
 import "./nb-my-bracket-column.mjs";
@@ -61,7 +61,7 @@ class MyBracketActions extends NikElement {
   handleJoinGroupClick() {
     // show groups?
     if (!this.joinGroupModal) {
-      this.joinGroupModal = document.createElement("nb-join-group-modal");
+      this.joinGroupModal = document.createElement("nb-add-bracket-to-group");
       this.joinGroupModal.bracket = this.bracket;
       this.joinGroupModal.groups = this.groups;
       document.body.appendChild(this.joinGroupModal);
@@ -72,9 +72,7 @@ class MyBracketActions extends NikElement {
 
   handleDeleteClick() {
     if (!this.deleteBracketModal) {
-      this.deleteBracketModal = document.createElement(
-        "nb-delete-bracket-modal"
-      );
+      this.deleteBracketModal = document.createElement("nb-delete-bracket");
       this.deleteBracketModal.bracket = this.bracket;
       document.body.appendChild(this.deleteBracketModal);
     }
@@ -149,7 +147,7 @@ export class MyBracketsGrid extends StandingsGrid {
           ele.groups = this.groups;
           return ele;
         },
-        cellClass: "nb-center justify-content-start",
+        cellClass: "flex! items-center justify-content-start",
       });
     } else {
       columnDefs.push(
