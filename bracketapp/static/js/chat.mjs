@@ -1,6 +1,5 @@
 import { html } from "./lit.bundle.mjs";
 import { NikElement } from "./nik-element.mjs";
-import { getRequest } from "./fetch.mjs";
 import "./messageEl.mjs";
 
 class ChatEl extends NikElement {
@@ -23,7 +22,7 @@ class ChatEl extends NikElement {
     this.client = StreamChat.getInstance("w22wdxnm8jwk");
 
     if (!CHAT_USER.streamchat_token) {
-      let response = await getRequest(CREATE_STREAMCHAT_TOKEN_URL);
+      let response = await fetch(CREATE_STREAMCHAT_TOKEN_URL);
       let chatUser = await response.json();
       CHAT_USER.streamchat_token = chatUser.streamchat_token;
     }

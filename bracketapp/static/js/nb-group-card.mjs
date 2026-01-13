@@ -11,6 +11,8 @@ export class GroupCardContent extends NikElement {
       <wa-icon
         style="font-size:var(--wa-font-size-2xl);"
         name="trophy"
+        library="hero"
+        variant="outline"
       ></wa-icon>
       <div class="wa-stack gap-(--wa-space-xs)">
         <div>${this.group.name}</div>

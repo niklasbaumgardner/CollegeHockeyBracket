@@ -88,12 +88,9 @@ wa-button.icon-button {
 
 #alerts {
   position: absolute;
+  z-index: 999999999;
   width: 100%;
   top: var(--wa-space-4xl);
-  z-index: 999999999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .nb-tab-group-dialog {

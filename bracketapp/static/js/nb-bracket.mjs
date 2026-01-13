@@ -2,6 +2,7 @@ import { html } from "./lit.bundle.mjs";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-matchup.mjs";
 import "./nb-bracket-points-charts.mjs";
+import "./nb-group-bracket-details.mjs";
 
 class Bracket extends NikElement {
   static properties = {
@@ -134,9 +135,17 @@ class Bracket extends NikElement {
 
     if (this.correct.winner_team) {
       if (this.correct.winner_id === this.bracket?.winner_id) {
-        return html`<wa-icon name="check-circle-fill"></wa-icon>`;
+        return html`<wa-icon
+          library="hero"
+          name="check-circle"
+          variant="solid"
+        ></wa-icon>`;
       }
-      return html`<wa-icon name="x-circle-fill"></wa-icon>`;
+      return html`<wa-icon
+        library="hero"
+        name="x-circle"
+        variant="solid"
+      ></wa-icon>`;
     }
     return null;
   }
@@ -148,7 +157,7 @@ class Bracket extends NikElement {
 
     return html`<div class="wa-stack">
       ${this.getImageElement(this.bracket?.winner_team)}
-      <p class="text-center">
+      <p class="text-center inline-flex justify-around items-center">
         ${IS_ME ? "Your pick" : "Their pick"}${this.getChampionPickIcon()}
       </p>
     </div>`;
@@ -265,32 +274,14 @@ class Bracket extends NikElement {
     ></nb-bracket-points-chart>`;
   }
 
-  groupTemplate(groupBracket) {
-    // TODO: component??
-    return html`<wa-card class="group-card medium"
-      ><a class="clickable-card" href="${groupBracket.group.url}">
-        <wa-icon class="trophy" name="trophy"></wa-icon>
-        <div class="d-flex flex-column group-name">
-          <span class="text-decoration-underline"
-            >${groupBracket.group.name}</span
-          ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
-        </div>
-      </a></wa-card
-    >`;
-  }
-
   groupsTemplate() {
     if (!this.bracket.group_brackets.length) {
       return null;
     }
 
-    return html`<wa-details
-      class="my-brackets-groups"
-      summary="Groups (${this.bracket.group_brackets.length})"
-      ><div class="wa-cluster">
-        ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
-      </div></wa-details
-    >`;
+    return html`<nb-group-bracket-details
+      .groupBrackets=${this.bracket.group_brackets}
+    ></nb-group-bracket-details>`;
   }
 
   topCardStats() {
@@ -312,84 +303,80 @@ class Bracket extends NikElement {
       </div> `;
     }
 
-    return html`<div class="wa-cluster">
-      <div>
-        <div class="wa-cluster">
-          ${this.getImageElement(this.bracket?.winner_team, true)}
-          <div class="wa-stack">
-            <h2>${this.bracket.name}</h2>
-            <div class="flex justify-evenly">
-              <div class="flex">
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.rank ?? "--"}
-                  </p>
-                  <p class="bracket-details-label">Rank</p></span
-                >
-              </div>
-              <div class="flex">
-                <wa-divider orientation="vertical"></wa-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.points}
-                  </p>
-                  <p class="bracket-details-label">Points</p></span
-                >
-              </div>
-              <div class="flex">
-                <wa-divider orientation="vertical"></wa-divider>
-                <span
-                  ><p class="bracket-details-content">
-                    ${this.bracket?.max_points}
-                  </p>
-                  <p class="bracket-details-label">Max points</p></span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bracket-sub-details wa-stack">
+    return html`<div class="wa-stack">
+      <div class="wa-cluster">
+        ${this.getImageElement(this.bracket?.winner_team, true)}
+        <div class="wa-stack">
+          <h2>${this.bracket.name}</h2>
           <div class="flex justify-evenly">
             <div class="flex">
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.round_one_points ?? "--"} / 80
+                  ${this.bracket?.rank ?? "--"}
                 </p>
-                <p class="bracket-details-label">Round 1</p></span
+                <p class="bracket-details-label">Rank</p></span
+              >
+            </div>
+            <div class="flex">
+              <wa-divider orientation="vertical"></wa-divider>
+              <span
+                ><p class="bracket-details-content">${this.bracket?.points}</p>
+                <p class="bracket-details-label">Points</p></span
               >
             </div>
             <div class="flex">
               <wa-divider orientation="vertical"></wa-divider>
               <span
                 ><p class="bracket-details-content">
-                  ${this.bracket?.round_two_points ?? "--"} / 80
+                  ${this.bracket?.max_points}
                 </p>
-                <p class="bracket-details-label">Round 2</p></span
-              >
-            </div>
-            <div class="flex">
-              <wa-divider orientation="vertical"></wa-divider>
-              <span
-                ><p class="bracket-details-content">
-                  ${this.bracket?.round_three_points ?? "--"} / 80
-                </p>
-                <p class="bracket-details-label">Final Four</p></span
-              >
-            </div>
-            <div class="flex">
-              <wa-divider orientation="vertical"></wa-divider>
-              <span
-                ><p class="bracket-details-content">
-                  ${this.bracket?.round_four_points ?? "--"} / 80
-                </p>
-                <p class="bracket-details-label">Championship</p></span
+                <p class="bracket-details-label">Max points</p></span
               >
             </div>
           </div>
         </div>
-        ${this.groupsTemplate()}
       </div>
+
+      <div class="bracket-sub-details wa-stack">
+        <div class="flex justify-evenly">
+          <div class="flex">
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.round_one_points ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Round 1</p></span
+            >
+          </div>
+          <div class="flex">
+            <wa-divider orientation="vertical"></wa-divider>
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.round_two_points ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Round 2</p></span
+            >
+          </div>
+          <div class="flex">
+            <wa-divider orientation="vertical"></wa-divider>
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.round_three_points ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Final Four</p></span
+            >
+          </div>
+          <div class="flex">
+            <wa-divider orientation="vertical"></wa-divider>
+            <span
+              ><p class="bracket-details-content">
+                ${this.bracket?.round_four_points ?? "--"} / 80
+              </p>
+              <p class="bracket-details-label">Championship</p></span
+            >
+          </div>
+        </div>
+      </div>
+      ${this.groupsTemplate()}
     </div>`;
   }
 

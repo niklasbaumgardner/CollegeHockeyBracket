@@ -83,9 +83,11 @@ class Matchup extends NikElement {
   topIconTemplate() {
     if (this.correctTop) {
       return html`<wa-icon
+        library="hero"
+        variant="solid"
         name="${this.correctTop?.id === this.winnerTop.id
-          ? "check-circle-fill"
-          : "x-circle-fill"}"
+          ? "check-circle"
+          : "x-circle"}"
       ></wa-icon>`;
     }
     return null;
@@ -94,9 +96,11 @@ class Matchup extends NikElement {
   bottomIconTemplate() {
     if (this.correctBottom) {
       return html`<wa-icon
+        library="hero"
+        variant="solid"
         name="${this.correctBottom?.id === this.winnerBottom.id
-          ? "check-circle-fill"
-          : "x-circle-fill"}"
+          ? "check-circle"
+          : "x-circle"}"
       ></wa-icon>`;
     }
     return null;

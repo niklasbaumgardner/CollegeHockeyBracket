@@ -1,44 +1,22 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "./lit.bundle.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
-import { DeleteBracketModal } from "./nb-delete-bracket.mjs";
+import "./nb-delete-bracket.mjs";
 import "./nb-add-bracket-to-group.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
 import { MyBracketColumn } from "./nb-my-bracket-column.mjs";
 import "./nb-my-bracket-column.mjs";
+import "./nb-group-bracket-details.mjs";
 
 class MyBracketElement extends MyBracketColumn {
-  handleCreateGroupClick() {
-    document.dispatchEvent(new CustomEvent("CreateNewGroup"));
-  }
-
-  groupTemplate(groupBracket) {
-    return html`<wa-card class="group-card"
-      ><a
-        class="flex items-center gap-(--wa-space-2xs) no-underline"
-        href="${groupBracket.group.url}"
-      >
-        <wa-icon class="trophy" name="trophy"></wa-icon>
-        <div class="flex flex-col group-name">
-          <span class="group-name underline">${groupBracket.group.name}</span
-          ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
-        </div>
-      </a></wa-card
-    >`;
-  }
-
   groupsTemplate() {
     if (!this.bracket.group_brackets.length) {
       return null;
     }
 
-    return html`<wa-details
-      class="my-brackets-groups"
-      summary="Groups (${this.bracket.group_brackets.length})"
-      ><div class="wa-cluster flex-wrap gap-(--wa-space-xs)">
-        ${this.bracket.group_brackets.map((gb) => this.groupTemplate(gb))}
-      </div></wa-details
-    >`;
+    return html`<nb-group-bracket-details
+      .groupBrackets=${this.bracket.group_brackets}
+    ></nb-group-bracket-details>`;
   }
 
   render() {

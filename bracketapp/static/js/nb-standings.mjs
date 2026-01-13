@@ -48,6 +48,8 @@ export class Standings extends NikElement {
         <wa-icon
           style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
           name="trophy"
+          library="hero"
+          variant="outline"
         ></wa-icon>
         <p>${winnerTitle}</p>
         <b>${winners}</b>

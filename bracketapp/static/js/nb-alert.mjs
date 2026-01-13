@@ -1,5 +1,6 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "./lit.bundle.mjs";
+import { DeferredTask } from "./DeferredTask.mjs";
 
 export class Alert extends NikElement {
   static properties = {
@@ -10,11 +11,13 @@ export class Alert extends NikElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.timeoutId = setTimeout(() => this.removeSelf(), 5000);
+    this.removeSelfTask = new DeferredTask(() => this.removeSelf(), 5000, {
+      finalizeBeforeUnload: true,
+    });
+    this.removeSelfTask.arm();
   }
 
   removeSelf() {
-    clearTimeout(this.timeoutId);
     this.remove();
   }
 

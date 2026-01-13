@@ -1,5 +1,5 @@
 from bracketapp.queries import bracket_queries, group_queries
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
@@ -12,12 +12,17 @@ mybrackets_bp = Blueprint("mybrackets_bp", __name__)
 @mybrackets_bp.get("/my_brackets")
 @login_required
 def my_brackets():
+    print("Got request. Querying for brackets")
     brackets = [
         b.to_dict()
         for b in bracket_queries.get_my_brackets(include_group_brackets=True)
     ]
 
+    print("Got brackets. Querying for groups")
+
     groups = [g.to_dict() for g in group_queries.get_all_groups_for_user(sort=True)]
+
+    print("Got groups. Rendering")
 
     # return dict(
     #     brackets=brackets,

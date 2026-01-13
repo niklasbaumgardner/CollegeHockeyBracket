@@ -23,6 +23,7 @@ from bracketapp.utils.Sqids import sqids
 
 
 def get_all_groups_for_user(sort=False):
+    print("Building groups query stmt")
     stmt = (
         select(Group, Bracket, GroupBracket)
         .outerjoin(GroupMember, Group.id == GroupMember.group_id)
@@ -40,7 +41,9 @@ def get_all_groups_for_user(sort=False):
         )
     )
 
+    print("Built groups query. Executing stmt")
     groups = db.session.execute(stmt).unique().all()
+    print("Got the groups. Enumerating them")
 
     return_groups = []
     seen_groups = {}

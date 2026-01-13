@@ -80,7 +80,12 @@ export class MyBracketsGroupStandings extends NikElement {
           value=${this.group.share_url}
           copy-label="Copy link to join"
         >
-          <wa-icon slot="copy-icon" name="share"></wa-icon>
+          <wa-icon
+            slot="copy-icon"
+            name="share"
+            library="hero"
+            variant="outline"
+          ></wa-icon>
         </wa-copy-button>
       </div>
     </div>`;
@@ -99,7 +104,12 @@ export class MyBracketsGroupStandings extends NikElement {
             class="flex grow items-center no-underline"
             href="${this.group.url}"
           >
-            <wa-icon class="trophy" name="trophy"></wa-icon>
+            <wa-icon
+              class="trophy"
+              name="trophy"
+              library="hero"
+              variant="outline"
+            ></wa-icon>
             <div class="flex flex-col group-name">
               <span class="underline">${this.group.name}</span>
               <span class="group-size"

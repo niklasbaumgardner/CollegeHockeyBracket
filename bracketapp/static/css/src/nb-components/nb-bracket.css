@@ -248,7 +248,9 @@ label#bottom {
 
 wa-input[type="number"].goals {
   width: 5rem;
+}
 
+wa-input:not([label]) {
   &::part(label) {
     display: none;
   }
@@ -297,4 +299,12 @@ nb-edit-correct-matchup input[type="number"] {
     filter: brightness(0) saturate(100%) invert(19%) sepia(32%) saturate(892%)
       hue-rotate(104deg) brightness(98%) contrast(93%);
   }
+}
+
+wa-icon[name="check-circle"] {
+  color: var(--wa-color-success-50);
+}
+
+wa-icon[name="x-circle"] {
+  color: var(--wa-color-danger-50);
 }

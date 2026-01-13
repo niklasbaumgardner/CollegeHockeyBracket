@@ -91,11 +91,10 @@
       }
       console.log(window.THEME);
     </script>
-    <script src="/static/js/nb-back-button.mjs" type="module"></script>
-    <script src="/static/js/nb-alert.mjs" type="module"></script>
+    <!-- <script src="/static/js/nb-back-button.mjs" type="module"></script> -->
+    <script src="/static/js/nb-alert-manager.mjs" type="module"></script>
     <script src="/static/js/nb-theme-selector.mjs" type="module"></script>
     <script src="/static/js/main.bundle.mjs" type="module"></script>
-    <script src="/static/js/nb-combobox.mjs" type="module"></script>
     <script src="/static/js/nb-countdown.mjs" type="module"></script>
 
     {% block head %}{% endblock head %}
@@ -287,16 +286,8 @@
       </main></wa-page
     >
 
-    <nb-category-modal></nb-category-modal>
-
-    <div class="">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      <div id="alerts" class="">
-        {% if messages %} {% for category, message in messages %}
-        <nb-alert category="{{ category }}" message="{{ message }}"></nb-alert>
-        {% endfor %} {% endif %}
-      </div>
-      {% endwith %}
-    </div>
+    <nb-alert-manager
+      messages="{{ get_flashed_messages(with_categories=true) }}"
+    ></nb-alert-manager>
   </body>
 </html>

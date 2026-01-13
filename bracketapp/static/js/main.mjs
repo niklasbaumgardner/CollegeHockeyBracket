@@ -19,7 +19,6 @@ import "@awesome.me/webawesome-pro/dist/components/dropdown/dropdown.js";
 import "@awesome.me/webawesome-pro/dist/components/dropdown-item/dropdown-item.js";
 
 import "@awesome.me/webawesome-pro/dist/components/format-date/format-date.js";
-import "@awesome.me/webawesome-pro/dist/components/format-number/format-number.js";
 
 import "@awesome.me/webawesome-pro/dist/components/icon/icon.js";
 
@@ -33,7 +32,6 @@ import "@awesome.me/webawesome-pro/dist/components/radio-group/radio-group.js";
 import "@awesome.me/webawesome-pro/dist/components/scroller/scroller.js";
 
 import "@awesome.me/webawesome-pro/dist/components/select/select.js";
-import WaCombobox from "@awesome.me/webawesome-pro/dist/components/combobox/combobox.js";
 import "@awesome.me/webawesome-pro/dist/components/option/option.js";
 
 import "@awesome.me/webawesome-pro/dist/components/tooltip/tooltip.js";
@@ -82,4 +80,14 @@ registerIconLibrary("remix", {
   mutator: (svg) => svg.setAttribute("fill", "currentColor"),
 });
 
-export { WaCombobox };
+registerIconLibrary("hero", {
+  resolver: (name, family, variant) =>
+    `https://cdn.jsdelivr.net/npm/heroicons@2.2.0/24/${variant}/${name}.svg`,
+  // mutator: (svg, hostElement) => {
+  //   console.log(svg, hostElement);
+  //   svg.querySelectorAll("path").forEach((path) => {
+  //     path.setAttribute("fill", "currentColor");
+  //     path.setAttribute("stroke", "currentColor");
+  //   });
+  // },
+});

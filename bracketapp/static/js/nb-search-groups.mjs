@@ -104,7 +104,7 @@ export class SearchGroups extends NikElement {
           placeholder="Search for groups"
           clearable
           @input=${this.handleInputEvent}
-          ><wa-icon name="search" slot="prefix"></wa-icon></wa-input
+          ><wa-icon name="search" slot="start"></wa-icon></wa-input
         >${this.resultsTemplate()}</wa-popup
       >
     `;

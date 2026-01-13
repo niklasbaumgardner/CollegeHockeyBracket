@@ -1,12 +1,3 @@
-.my-brackets-groups::part(header) {
-  padding: var(--wa-space-xs) var(--wa-space-s);
-  line-height: initial;
-}
-
-.my-brackets-groups::part(content) {
-  padding: var(--wa-space-xs);
-}
-
 .standings-row {
   display: flex;
   align-items: start;
@@ -35,32 +26,44 @@
   color: var(--wa-color-text-normal);
 }
 
-.group-card {
-  width: fit-content;
-  max-width: 120px;
+nb-group-bracket-details {
+  .my-brackets-groups::part(header) {
+    padding: var(--wa-space-xs) var(--wa-space-s);
+    line-height: initial;
+  }
 
-  &::part(body) {
+  .my-brackets-groups::part(content) {
     padding: var(--wa-space-xs);
   }
 
-  &.medium::part(body) {
-    padding: var(--wa-space-xs) var(--wa-space-s);
-  }
+  .group-bracket-card {
+    width: fit-content;
+    max-width: 120px;
 
-  .group-name {
-    font-size: var(--wa-font-size-xs);
-    line-height: var(--wa-line-height-normal);
-  }
+    &::part(body) {
+      /* padding: var(--wa-space-xs); */
+      padding: var(--wa-space-xs) var(--wa-space-s);
+    }
 
-  .trophy {
-    font-size: var(--wa-font-size-l);
-    min-width: var(--wa-font-size-m);
-  }
+    &.medium::part(body) {
+      padding: var(--wa-space-xs) var(--wa-space-s);
+    }
 
-  .rank {
-    font-size: var(--wa-font-size-2xs);
-    color: var(--wa-color-text-quiet);
-    line-height: var(--wa-line-height-normal);
+    .group-name {
+      font-size: var(--wa-font-size-xs);
+      line-height: var(--wa-line-height-normal);
+    }
+
+    .trophy {
+      font-size: var(--wa-font-size-l);
+      min-width: var(--wa-font-size-m);
+    }
+
+    .rank {
+      font-size: var(--wa-font-size-2xs);
+      color: var(--wa-color-text-quiet);
+      line-height: var(--wa-line-height-normal);
+    }
   }
 }
 

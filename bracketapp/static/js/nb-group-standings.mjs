@@ -168,7 +168,12 @@ export class GroupStandings extends Standings {
         value="${this.group.share_url}"
         copy-label="Copy link to join"
       >
-        <wa-icon slot="copy-icon" name="share"></wa-icon>
+        <wa-icon
+          slot="copy-icon"
+          name="share"
+          library="hero"
+          variant="outline"
+        ></wa-icon>
       </wa-copy-button>
     </div>`;
 
@@ -178,7 +183,9 @@ export class GroupStandings extends Standings {
         variant="brand"
         appearance="plain"
         @click=${this.handleEditGroupClick}
-        ><wa-icon name="gear">Edit Group</wa-icon></wa-button
+        ><wa-icon library="hero" name="cog-6-tooth" variant="outline"
+          >Edit Group</wa-icon
+        ></wa-button
       >`;
     }
 
