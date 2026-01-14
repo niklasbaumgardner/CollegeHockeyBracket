@@ -67,20 +67,17 @@ export class MyBrackets extends Standings {
     }
   }
 
-  async requestContent() {}
+  // async requestContent() {}
 
-  // async requestContent() {
-  //   let response = await fetch(MY_BRACKETS_CONTENT_URL, {
-  //     credentials: "include",
-  //     mode: "no-cors",
-  //   });
-  //   let data = await response.json();
+  async requestContent() {
+    let response = await fetch(MY_BRACKETS_CONTENT_URL);
+    let data = await response.json();
 
-  //   let { brackets, groups, year } = data;
-  //   this.brackets = brackets;
-  //   this.groups = groups;
-  //   this.year = year;
-  // }
+    let { brackets, groups, year } = data;
+    this.brackets = brackets;
+    this.groups = groups;
+    this.year = year;
+  }
 
   async updated() {
     if (

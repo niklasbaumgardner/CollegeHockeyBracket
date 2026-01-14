@@ -1,6 +1,6 @@
-nb-standings > div > sl-card,
-nb-my-brackets > div > sl-card,
-nb-group-standings > div > sl-card {
+/* nb-standings > div > wa-card,
+nb-my-brackets > div > wa-card,
+nb-group-standings > div > wa-card {
   width: 100%;
 
   @media (min-width: 992px) {
@@ -10,8 +10,8 @@ nb-group-standings > div > sl-card {
 
 nb-standings-grid,
 nb-my-brackets-grid,
-nb-group-standings-grid:not(.w-100),
-nb-my-brackets > div > sl-card > div > sl-tab-group {
+nb-group-standings-grid:not(.w-full),
+nb-my-brackets > wa-card > div > wa-tab-group {
   display: block;
 
   @media (min-width: 576px) {
@@ -21,4 +21,4 @@ nb-my-brackets > div > sl-card > div > sl-tab-group {
   @media (min-width: 992px) {
     width: 807px;
   }
-}
+} */

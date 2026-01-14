@@ -85,14 +85,12 @@ export class Standings extends NikElement {
       return null;
     }
 
-    return html`<div class="flex justify-center">
-      <wa-card>
-        <div class="wa-stack">
-          ${this.titleTemplate()} ${this.messageTemplate()}
-          ${this.bracketsTemplate()}
-        </div>
-      </wa-card>
-    </div>`;
+    return html`<wa-card>
+      <div class="wa-stack">
+        ${this.titleTemplate()} ${this.messageTemplate()}
+        ${this.bracketsTemplate()}
+      </div>
+    </wa-card>`;
   }
 }
 

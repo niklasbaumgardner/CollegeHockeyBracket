@@ -3,7 +3,6 @@
 @import url("./nb-components/nb-chat-el.css");
 @import url("./nb-components/nb-radio-items.css");
 @import url("./nb-components/nb-standings.css");
-@import url("./nb-components/nb-archive-years.css");
 
 .small-card {
   display: flex;
