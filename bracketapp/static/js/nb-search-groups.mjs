@@ -1,6 +1,7 @@
 import { html } from "./lit.bundle.mjs";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-group-card.mjs";
+import { DeferredTask } from "./DeferredTask.mjs";
 
 export class SearchGroups extends NikElement {
   static properties = {
@@ -10,7 +11,8 @@ export class SearchGroups extends NikElement {
   static queries = {
     input: "wa-input",
     popup: "wa-popup",
-    menu: "wa-menu",
+    dropdown: "wa-dropdown",
+    popover: "wa-popover",
   };
 
   constructor() {
@@ -31,23 +33,17 @@ export class SearchGroups extends NikElement {
       this.popup.active = false;
       return;
     }
+    this.popup.active = true;
 
     let res = await fetch(SEARCH_URL + "?" + new URLSearchParams({ name }));
     this.results = await res.json();
+    console.log(this.results, this.popup);
 
     this.lastSearchValue = name;
   }
 
-  debounce(callback, wait) {
-    return (...args) => {
-      window.clearTimeout(this.timeoutId);
-      this.timeoutId = window.setTimeout(() => {
-        callback(...args);
-      }, wait);
-    };
-  }
-
   handleInputEvent(e) {
+    console.log(e);
     if (!this.input.value) {
       this.results = [];
       return;
@@ -57,12 +53,14 @@ export class SearchGroups extends NikElement {
       return;
     }
 
-    this.debounce(async () => {
+    this.searchTask = new DeferredTask(async () => {
       await this.search();
-    }, 300)();
+    }, 300);
+
+    this.searchTask.arm();
   }
 
-  handleFocusIn() {
+  handleFocusIn(event) {
     if (this.contains(event.target)) {
       this.popup.active = true;
     } else {
@@ -71,43 +69,44 @@ export class SearchGroups extends NikElement {
   }
 
   groupTemplate(group) {
-    return html`<a
-      tabindex="-1"
-      style="color:unset;"
-      class="d-flex flex-grow-1 align-items-center text-decoration-none gap-3"
-      href="${group.url}"
-    >
+    return html`<a class="clickable-group" href=${group.url}>
       <nb-group-card-content .group=${group}></nb-group-card-content>
     </a>`;
   }
 
   resultsTemplate() {
+    let resultsContent = "";
     if (!this.results.length) {
-      return null;
+      resultsContent = html`No groups found`;
+    } else {
+      resultsContent = this.results
+        .flatMap((g) => [
+          this.groupTemplate(g),
+          html`<wa-divider></wa-divider>`,
+        ])
+        .slice(0, -1);
     }
 
-    return html`<wa-menu>${this.results
-      .map((g) => [
-        html`<wa-menu-item>${this.groupTemplate(g)}</wa-menu-item>`,
-        html`<wa-divider></wa-divider>`,
-      ])
-      .flat()
-      .slice(0, -1)}</wa-menu-item>
-    </wa-menu>`;
+    return html`<wa-card>${resultsContent}</wa-card>`;
+  }
+
+  popoverTemplate() {
+    return html`<wa-popup placement="bottom"
+      >${this.resultsTemplate()}</wa-popup
+    >`;
   }
 
   render() {
-    return html`
-      <wa-popup placement="bottom" sync="width" strategy="fixed">
-        <wa-input
-          slot="anchor"
-          placeholder="Search for groups"
-          clearable
-          @input=${this.handleInputEvent}
-          ><wa-icon name="search" slot="start"></wa-icon></wa-input
-        >${this.resultsTemplate()}</wa-popup
-      >
-    `;
+    return html`<wa-popup placement="bottom" sync="width"
+      ><wa-input
+        slot="anchor"
+        id="search-input"
+        placeholder="Search for groups"
+        with-clear
+        @input=${this.handleInputEvent}
+        ><wa-icon name="search" slot="start"></wa-icon></wa-input
+      >${this.resultsTemplate()}</wa-popup
+    >`;
   }
 }
 

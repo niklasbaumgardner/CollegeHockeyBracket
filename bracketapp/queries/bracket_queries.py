@@ -1,3 +1,4 @@
+from sqlalchemy.util.topological import sort
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
@@ -14,10 +15,8 @@ from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
 from flask_login import current_user
-from sqlalchemy.sql import func, asc
-from sqlalchemy.orm import joinedload
-from sqlalchemy import func, insert, select, update
-from sqlalchemy.sql import or_, and_
+from sqlalchemy.orm import joinedload, contains_eager, with_loader_criteria
+from sqlalchemy import and_, func, insert, select, update, delete
 from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
@@ -28,6 +27,7 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 
 def get_empty_bracket():
+    # TODO: return just a dict?
     return Bracket(
         user_id=None,
         name="",
@@ -134,6 +134,18 @@ def get_my_bracket_for_bracket_id(bracket_id, include_games=False):
     return db.session.scalars(stmt.limit(1)).first()
 
 
+def get_bracket_for_bracket_id(bracket_id):
+    if not bracket_id:
+        return
+
+    stmt = (
+        select(Bracket)
+        .where(Bracket.id == bracket_id)
+        .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
+    )
+    return db.session.scalars(stmt.limit(1)).first()
+
+
 def my_bracket_count():
     if current_user.is_authenticated:
         stmt = select(func.count(Bracket.id)).where(
@@ -161,6 +173,44 @@ def get_my_brackets(include_group_brackets=False):
     return brackets
 
 
+def get_brackets_for_group(group_id):
+    stmt = (
+        select(Bracket)
+        .join(GroupBracket, Bracket.id == GroupBracket.bracket_id)
+        .where(GroupBracket.group_id == group_id)
+        .options(contains_eager(Bracket.group_bracket))
+    )
+
+    # TODO: Maybe sort here?
+
+    return db.session.scalars(stmt).unique().all()
+
+
+def delete_bracket(bracket_id):
+    if not CAN_EDIT_BRACKET:
+        return
+
+    stmt = delete(Bracket).where(
+        and_(
+            Bracket.id == bracket_id,
+            Bracket.user_id == current_user.id,
+            Bracket.year == YEAR,
+        )
+    )
+    db.session.execute(stmt)
+    db.session.commit()
+
+
+def get_all_brackets_joined():
+    stmt = (
+        select(Bracket)
+        .where(Bracket.year == YEAR)
+        .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
+    )
+
+    return db.session.scalars(stmt).all()
+
+
 #####################################################################################
 
 
@@ -175,32 +225,6 @@ def is_admin():
 ##
 ## Bracket and Game queries
 ##
-
-
-def get_bracket_for_bracket_id(bracket_id):
-    if not bracket_id:
-        return
-
-    stmt = (
-        select(Bracket)
-        .where(Bracket.id == bracket_id)
-        .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
-    )
-    return db.session.scalars(stmt.limit(1)).first()
-
-    # return (
-    #     Bracket.query.filter_by(id=bracket_id)
-    #     .options(joinedload(Bracket.group_brackets))
-    #     .first()
-    # )
-
-
-def get_bracket_for_bracket_id_and_year(bracket_id, year):
-    if not bracket_id or not year:
-        return
-    stmt = select(Bracket).where(and_(Bracket.id == bracket_id, year=year))
-    return db.session.scalars(stmt.limit(1)).first()
-    # return Bracket.query.filter_by(id=bracket_id, year=year).first()
 
 
 def get_group_brackets_for_bracket(bracket_id):
@@ -251,16 +275,6 @@ def get_all_brackets(year=YEAR):
 
     # return Bracket.query.filter_by(year=YEAR).all()
 
-
-def get_all_brackets_joined():
-    stmt = (
-        select(Bracket)
-        .where(Bracket.year == YEAR)
-        .options(joinedload(Bracket.group_brackets))
-    )
-
-    return db.session.scalars(stmt).all()
-
     # return (
     #     Bracket.query.filter_by(year=YEAR)
     #     .options(joinedload(Bracket.group_brackets))
@@ -274,76 +288,53 @@ def get_all_brackets_joined():
 #     return Bracket.query.filter_by(year=year).all()
 
 
-def get_brackets_for_group(group_id):
-    brackets = (
-        db.session.query(Bracket, GroupBracket)
-        .join(GroupBracket, Bracket.id == GroupBracket.bracket_id)
-        .filter(GroupBracket.group_id == group_id)
-        .all()
-    )
-    for bracket, group_bracket in brackets:
-        bracket.group_bracket = group_bracket
-
-    return [b for b, _ in brackets]
+# def get_all_games_for_bracket(bracket_id):
+#     if not bracket_id:
+#         return []
+#     return Game.query.filter_by(bracket_id=bracket_id).all()
 
 
-def get_all_games_for_bracket(bracket_id):
-    if not bracket_id:
-        return []
-    return Game.query.filter_by(bracket_id=bracket_id).all()
+# def delete_all_brackets():
+#     if not is_admin():
+#         return
+
+#     brackets = Bracket.query.filter_by(year=YEAR).all()
+#     for b in brackets:
+#         __admin_delete_bracket__(b.id)
 
 
-def delete_all_brackets():
-    if not is_admin():
-        return
+# def __admin_delete_bracket__(bracket_id):
+#     if not is_admin():
+#         return
 
-    brackets = Bracket.query.filter_by(year=YEAR).all()
-    for b in brackets:
-        __admin_delete_bracket__(b.id)
+#     bracket = get_bracket_for_bracket_id(bracket_id=bracket_id)
+#     games = get_all_games_for_bracket(bracket_id=bracket.id)
+#     group_brackets = get_group_brackets_for_bracket(bracket_id=bracket.id)
 
+#     for group_bracket in group_brackets:
+#         db.session.delete(group_bracket)
 
-def __admin_delete_bracket__(bracket_id):
-    if not is_admin():
-        return
+#     for game in games:
+#         db.session.delete(game)
 
-    bracket = get_bracket_for_bracket_id(bracket_id=bracket_id)
-    games = get_all_games_for_bracket(bracket_id=bracket.id)
-    group_brackets = get_group_brackets_for_bracket(bracket_id=bracket.id)
-
-    for group_bracket in group_brackets:
-        db.session.delete(group_bracket)
-
-    for game in games:
-        db.session.delete(game)
-
-    db.session.delete(bracket)
-    db.session.commit()
+#     db.session.delete(bracket)
+#     db.session.commit()
 
 
-def delete_bracket(bracket_id):
-    # You can only delete your own brackets here
-    bracket = get_my_bracket_for_bracket_id(bracket_id=bracket_id)
-    games = get_all_games_for_bracket(bracket_id=bracket.id)
-    group_brackets = get_my_group_brackets_for_bracket(bracket_id=bracket.id)
+# def delete_bracket(bracket_id):
+#     # You can only delete your own brackets here
+#     bracket = get_my_bracket_for_bracket_id(bracket_id=bracket_id)
+#     games = get_all_games_for_bracket(bracket_id=bracket.id)
+#     group_brackets = get_my_group_brackets_for_bracket(bracket_id=bracket.id)
 
-    for group_bracket in group_brackets:
-        db.session.delete(group_bracket)
+#     for group_bracket in group_brackets:
+#         db.session.delete(group_bracket)
 
-    for game in games:
-        db.session.delete(game)
+#     for game in games:
+#         db.session.delete(game)
 
-    db.session.delete(bracket)
-    db.session.commit()
-
-
-##
-## CorrectBracket and CorrectGame queries
-##
-
-
-##
-## DefaultBracket and DefaultGame queries
-##
+#     db.session.delete(bracket)
+#     db.session.commit()
 
 
 ##

@@ -5,17 +5,14 @@ nb-edit-correct-matchup {
 }
 
 .matchup {
-  background-color: var(--wa-color-neutral-95);
-  /* border-radius: var(--border-radius); */
+  background-color: light-dark(
+    var(--wa-color-neutral-95),
+    var(--wa-color-neutral-10)
+  );
+
   font-size: var(--wa-font-size-xs);
   box-shadow: var(--wa-shadow-l);
   --spacing: var(--wa-space-2xs);
-}
-
-.wa-dark {
-  .matchup {
-    background-color: var(--wa-color-neutral-10);
-  }
 }
 
 .nb-team {
@@ -27,6 +24,8 @@ nb-edit-correct-matchup {
   align-items: center;
   padding: var(--wa-space-3xs);
   gap: var(--wa-space-2xs);
+
+  border-radius: var(--wa-panel-border-radius);
 
   &.user-pick {
     height: 15px;
@@ -43,21 +42,20 @@ input[type="radio"] {
   margin: 0;
 
   &:checked {
-    accent-color: var(--wa-color-brand-70);
+    accent-color: light-dark(
+      var(--wa-color-brand-30),
+      var(--wa-color-brand-70)
+    );
   }
 }
 
 .nb-team:has(input:checked) {
-  background-color: var(--wa-color-brand-95);
-  border: 1px solid var(--wa-color-brand-70);
-  border-radius: 5px;
-}
-
-.wa-dark {
-  .nb-team:has(input:checked) {
-    background-color: var(--wa-color-brand-05);
-    border: 1px solid var(--wa-color-brand-30);
-  }
+  background-color: light-dark(
+    var(--wa-color-brand-95),
+    var(--wa-color-brand-05)
+  );
+  border: 1px solid;
+  border-color: light-dark(var(--wa-color-brand-70), var(--wa-color-brand-30));
 }
 
 .champion-pick {

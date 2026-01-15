@@ -4,7 +4,7 @@ const themeStorage = window.localStorage;
 
 export const THEME_LIST = [
   "default",
-  "awesome",
+  // "awesome",
   "shoelace",
   "active",
   "brutalist",

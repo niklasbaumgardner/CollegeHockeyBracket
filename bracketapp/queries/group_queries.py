@@ -1,3 +1,4 @@
+from enum import unique
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
@@ -12,33 +13,39 @@ from bracketapp.models import (
     BracketTeam,
 )
 from bracketapp import db
-from bracketapp.config import YEAR
+from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from flask_login import current_user
-from sqlalchemy import and_, or_
-from sqlalchemy.sql import func, asc
 from copy import deepcopy
-from sqlalchemy import func, insert, select, update
-from sqlalchemy.sql import or_, and_
+from sqlalchemy.orm import (
+    joinedload,
+    contains_eager,
+    with_loader_criteria,
+    with_expression,
+)
+from sqlalchemy import and_, or_, func, insert, select, update, collate, delete
 from bracketapp.utils.Sqids import sqids
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 
 def get_all_groups_for_user(sort=False):
     print("Building groups query stmt")
+
     stmt = (
         select(Group, Bracket, GroupBracket)
         .outerjoin(GroupMember, Group.id == GroupMember.group_id)
         .outerjoin(GroupBracket, Group.id == GroupBracket.group_id)
-        .outerjoin(
-            Bracket,
-            and_(
-                Bracket.id == GroupBracket.bracket_id,
-                Bracket.user_id == current_user.id,
-            ),
-        )
+        .outerjoin(Bracket, Bracket.id == GroupBracket.bracket_id)
         .where(
-            Group.year == YEAR,
-            GroupMember.user_id == current_user.id,
+            and_(
+                Group.year == YEAR,
+                GroupMember.user_id == current_user.id,
+                or_(
+                    Bracket.id.is_(None),
+                    Bracket.user_id == current_user.id,
+                ),
+            )
         )
+        .order_by(collate(Group.name, "en_US"))
     )
 
     print("Built groups query. Executing stmt")
@@ -47,17 +54,17 @@ def get_all_groups_for_user(sort=False):
 
     return_groups = []
     seen_groups = {}
+
     for index, [g, b, gb] in enumerate(groups):
         if g.id not in seen_groups:
             seen_groups[g.id] = [g, index]
 
-        if b and gb and g.id == gb.group_id:
-            b_copied = deepcopy(b)
-
-            b_copied.group_bracket = gb
+        if b:
+            b_copy = deepcopy(b)
+            b_copy.group_bracket = gb
 
             return_group, _ = seen_groups[g.id]
-            return_group.brackets.append(b_copied)
+            return_group.brackets.append(b_copy)
 
     for value in seen_groups.values():
         group, index = value
@@ -87,128 +94,123 @@ def get_group_member(group_id):
     return db.session.scalars(stmt.limit(1)).first()
 
 
-#############################################################################
-def create_group_member(group_id):
-    group_member = GroupMember(group_id=group_id, user_id=current_user.id)
-    db.session.add(group_member)
-    db.session.commit()
-    return group_member
+def search_groups(group_name):
+    if not group_name:
+        return []
 
-
-def maybe_create_group_member(group_id):
-    group_member = get_group_member(group_id)
-    if not group_member:
-        group_member = create_group_member(group_id)
-
-    return group_member
+    stmt = select(Group).where(
+        and_(Group.year == YEAR, Group.name.ilike(f"%{group_name}%"))
+    )
+    return db.session.scalars(stmt.limit(10)).unique().all()
 
 
 def create_group(name, is_private, password):
-    group = Group(
+    stmt = insert(Group).values(
         year=YEAR,
         name=name,
         is_private=is_private,
         locked=False,
         password=password,
-        created_by=current_user.id,
+        creator_id=current_user.id,
     )
-    db.session.add(group)
+
+    result = db.session.execute(stmt)
     db.session.commit()
-    return group
+
+    group_id = result.inserted_primary_key.id
+    return group_id
 
 
-def lock_group(group_id):
-    group = get_group(group_id=group_id)
-    group.locked = True
+def update_group(group_id, name=None, is_private=None, password=None, locked=None):
+    update_dict = {}
+    if name is not None:
+        update_dict["name"] = name
+
+    if is_private is not None:
+        update_dict["is_private"] = is_private
+
+        if is_private and password is not None:
+            update_dict["password"] = password
+        else:
+            update_dict["password"] = None
+
+    if locked is not None:
+        update_dict["locked"] = locked
+
+    stmt = (
+        update(Group)
+        .values(update_dict)
+        .where(
+            and_(
+                Group.year == YEAR,
+                Group.id == group_id,
+                Group.creator_id == current_user.id,
+            )
+        )
+    )
+    db.session.execute(stmt)
     db.session.commit()
-    return group
 
 
-def edit_group(group_id, name, is_private, password, locked):
-    group = get_group(group_id=group_id)
-
-    if group.name != name:
-        group.name = name
-
-    if group.is_private != is_private:
-        group.is_private = is_private
-
-    if group.password != password:
-        group.password = password
-
-    if group.locked != locked:
-        group.locked = locked
-
+def upsert_group_member(group_id):
+    stmt = pg_insert(GroupMember).values(group_id=group_id, user_id=current_user.id)
+    upsert_stmt = stmt.on_conflict_do_nothing(
+        constraint="group_member_group_id_user_id_key",
+    )
+    db.session.execute(upsert_stmt)
     db.session.commit()
-    return group
-
-
-def get_group_bracket_for_group_and_bracket(group_id, bracket_id):
-    return GroupBracket.query.filter_by(
-        group_id=group_id, bracket_id=bracket_id, user_id=current_user.id
-    ).first()
 
 
 def create_group_bracket(group_id, bracket_id):
-    if get_group_bracket_for_group_and_bracket(
-        group_id=group_id, bracket_id=bracket_id
-    ):
-        return
-
-    group_bracket = GroupBracket(
+    stmt = pg_insert(GroupBracket).values(
         group_id=group_id, bracket_id=bracket_id, user_id=current_user.id
     )
-    db.session.add(group_bracket)
+    upsert_stmt = stmt.on_conflict_do_nothing(
+        constraint="group_bracket_group_id_bracket_id_key",
+    )
+    db.session.execute(upsert_stmt)
     db.session.commit()
-    return group_bracket
 
 
 def get_my_group_bracket_for_id(group_bracket_id):
-    if not current_user.is_authenticated:
-        return None
+    stmt = select(GroupBracket).where(
+        and_(
+            GroupBracket.id == group_bracket_id, GroupBracket.user_id == current_user.id
+        )
+    )
 
-    return GroupBracket.query.filter_by(
-        user_id=current_user.id, id=group_bracket_id
-    ).first()
+    return db.session.scalars(stmt.limit(1)).first()
 
 
 def delete_group_bracket(group_bracket_id):
-    gb = get_my_group_bracket_for_id(group_bracket_id=group_bracket_id)
-    if gb:
-        db.session.delete(gb)
-        db.session.commit()
+    if not CAN_EDIT_BRACKET:
+        return
 
-
-def search_groups(group_name):
-    if not group_name:
-        return []
-
-    return (
-        Group.query.filter_by(year=YEAR)
-        .where(Group.name.ilike(f"%{group_name}%"))
-        .limit(10)
-        .all()
+    stmt = delete(GroupBracket).where(
+        and_(
+            GroupBracket.id == group_bracket_id, GroupBracket.user_id == current_user.id
+        )
     )
+
+    db.session.execute(stmt)
+    db.session.commit()
 
 
 def delete_group(group_id):
-    group = get_group(group_id=group_id)
-
-    if not group:
+    if not CAN_EDIT_BRACKET:
         return
 
-    if current_user.is_authenticated and group.created_by != current_user.id:
-        return
+    stmt = delete(Group).where(
+        and_(
+            Group.id == group_id,
+            Group.creator_id == current_user.id,
+            Group.year == YEAR,
+        )
+    )
+
+    db.session.execute(stmt)
+    db.session.commit()
 
     # Have to delete group members and group brackets first
-    group_members = GroupMember.query.filter_by(group_id=group_id).all()
-    group_brackets = GroupBracket.query.filter_by(group_id=group_id).all()
-
-    for group_member in group_members:
-        db.session.delete(group_member)
-
-    for group_bracket in group_brackets:
-        db.session.delete(group_bracket)
-
-    db.session.delete(group)
-    db.session.commit()
+    # group_members = GroupMember.query.filter_by(group_id=group_id).all()
+    # group_brackets = GroupBracket.query.filter_by(group_id=group_id).all()

@@ -36,8 +36,10 @@ def api_archive_year(year):
     # page to show correct winners on brackets table?
     standings, winners, correct = bracket_utils.get_bracket_standings(year)
 
-    standings_dict = [correct.to_dict()] + [b.to_dict() for b in standings]
-    winners_dict = [b.to_dict() for b in winners]
+    standings_dict = [correct.to_dict()] + [
+        b.to_dict(safe_only=False) for b in standings
+    ]
+    winners_dict = [b.to_dict(safe_only=False) for b in winners]
 
     return dict(
         standings=standings_dict,

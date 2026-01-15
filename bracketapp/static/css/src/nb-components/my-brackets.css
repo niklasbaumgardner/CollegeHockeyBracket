@@ -107,7 +107,7 @@ nb-group-bracket-details {
   min-height: 0 !important;
 }
 
-nb-search-groups {
+/* nb-search-groups {
   wa-popup::part(popup) {
     z-index: var(--wa-z-index-drawer);
   }
@@ -119,9 +119,24 @@ nb-search-groups {
       border-width: 0px;
     }
   }
-}
+} */
 
 nb-my-bracket-actions,
 nb-my-group-bracket-actions {
   display: block;
+}
+
+.clickable-group {
+  display: flex;
+  width: 100%;
+
+  /* TODO: light and dark */
+  &:hover {
+    background-color: var(--wa-color-neutral-30);
+  }
+
+  &:focus-visible {
+    background-color: var(--wa-color-text-link);
+    color: var(--wa-color-neutral-20);
+  }
 }

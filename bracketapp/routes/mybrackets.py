@@ -36,7 +36,7 @@ def my_brackets():
 @login_required
 def api_my_brackets():
     brackets = [
-        b.to_dict()
+        b.to_dict(safe_only=False)
         for b in bracket_queries.get_my_brackets(include_group_brackets=True)
     ]
 

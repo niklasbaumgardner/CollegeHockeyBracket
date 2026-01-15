@@ -535,45 +535,37 @@
   /* #endregion */
 
   /* #region Form Labels ~~~~~~~~~~~~~~~~~~~~~ */
-  label {
-    display: inline-block;
-    position: relative;
+  .wa-native {
+    label {
+      display: inline-block;
+      position: relative;
 
-    color: var(--wa-form-control-label-color);
-    font-weight: var(--wa-form-control-label-font-weight);
-    line-height: var(--wa-form-control-label-line-height);
+      color: var(--wa-form-control-label-color);
+      font-weight: var(--wa-form-control-label-font-weight);
+      line-height: var(--wa-form-control-label-line-height);
 
-    &:has(
-        input:not(
-            [type="button"],
-            [type="checkbox"],
-            [type="color"],
-            [type="file"],
-            [type="hidden"],
-            [type="image"],
-            [type="radio"].wa-native,
-            [type="reset"],
-            [type="submit"]
-          ),
-        textarea,
-        select
-      ) {
-      width: 100%;
-    }
+      &:has(
+          input:not(
+              [type="button"],
+              [type="checkbox"],
+              [type="color"],
+              [type="file"],
+              [type="hidden"],
+              [type="image"],
+              [type="radio"],
+              [type="reset"],
+              [type="submit"]
+            ),
+          textarea,
+          select
+        ) {
+        width: 100%;
+      }
 
-    &
-      + :is(
-        input.wa-native:not([type="checkbox"], [type="radio"]),
-        textarea,
-        select
-      ),
-    &
-      > :is(
-        input.wa-native:not([type="checkbox"], [type="radio"]),
-        textarea,
-        select
-      ) {
-      margin-block-start: 0.5em;
+      & + :is(input:not([type="checkbox"], [type="radio"]), textarea, select),
+      & > :is(input:not([type="checkbox"], [type="radio"]), textarea, select) {
+        margin-block-start: 0.5em;
+      }
     }
   }
   /* #endregion */
@@ -595,437 +587,438 @@
   }
   /* #endregion */
 
-  /* #region Buttons ~~~~~~~~~~~~~~~~~~~~~~~~~ */
-  button,
-  input[type="button"],
-  input[type="reset"],
-  input[type="submit"],
-  input[type="file"] {
-    /* We allow modifier classes on <input type="file">,
+  .wa-native {
+    /* #region Buttons ~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    button,
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"],
+    input[type="file"] {
+      /* We allow modifier classes on <input type="file">,
      * but these selectors ensure the styles only apply to
      * the file selector button in the user agent's shadow root */
-    &:not(input[type="file"]),
-    &::file-selector-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      height: var(--wa-form-control-height);
-      padding: 0 var(--wa-form-control-padding-inline);
-
-      font-family: inherit;
-      font-size: var(--wa-form-control-value-font-size);
-      font-weight: var(--wa-font-weight-action);
-      line-height: calc(
-        var(--wa-form-control-height) - var(--border-width) * 2
-      );
-      text-decoration: none;
-      vertical-align: middle;
-      white-space: nowrap;
-
-      border-style: var(--wa-border-style);
-      border-width: max(1px, var(--wa-form-control-border-width));
-      border-radius: var(--wa-form-control-border-radius);
-
-      transition-property: background, border, box-shadow, color;
-      transition-duration: var(--wa-transition-fast);
-      transition-timing-function: var(--wa-transition-easing);
-
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    /* Default styles for standard buttons */
-    :where(&:not(input[type="file"])) {
-      color: var(--wa-color-on-loud, var(--wa-color-neutral-on-loud));
-      background-color: var(
-        --wa-color-fill-loud,
-        var(--wa-color-neutral-fill-loud)
-      );
-      border-color: transparent;
-
-      &:not(:disabled) {
-        &:hover {
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
-            var(--wa-color-mix-hover)
-          );
-        }
-
-        &:active {
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
-            var(--wa-color-mix-active)
-          );
-        }
-      }
-    }
-
-    /* Default styles for file selector buttons */
-    :where(&:is(input[type="file"])) {
+      &:not(input[type="file"]),
       &::file-selector-button {
-        color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
-        background-color: var(
-          --wa-color-fill-normal,
-          var(--wa-color-neutral-fill-normal)
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        height: var(--wa-form-control-height);
+        padding: 0 var(--wa-form-control-padding-inline);
+
+        font-family: inherit;
+        font-size: var(--wa-form-control-value-font-size);
+        font-weight: var(--wa-font-weight-action);
+        line-height: calc(
+          var(--wa-form-control-height) - var(--border-width) * 2
         );
-        border-color: transparent;
+        text-decoration: none;
+        vertical-align: middle;
+        white-space: nowrap;
+
+        border-style: var(--wa-border-style);
+        border-width: max(1px, var(--wa-form-control-border-width));
+        border-radius: var(--wa-form-control-border-radius);
+
+        transition-property: background, border, box-shadow, color;
+        transition-duration: var(--wa-transition-fast);
+        transition-timing-function: var(--wa-transition-easing);
+
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
       }
 
-      &:not(:disabled) {
-        &::file-selector-button:hover {
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
-            var(--wa-color-mix-hover)
-          );
-        }
-
-        &::file-selector-button:active {
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
-            var(--wa-color-mix-active)
-          );
-        }
-      }
-    }
-
-    /* Modifier classes */
-    &.wa-plain {
-      &:not(input[type="file"]),
-      &::file-selector-button {
-        color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
-        background-color: transparent;
-        border-color: transparent;
-      }
-
-      &:not(:disabled) {
-        &:not(input[type="file"]):hover,
-        &::file-selector-button:hover {
-          color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
-          background-color: var(
-            --wa-color-fill-quiet,
-            var(--wa-color-neutral-fill-quiet)
-          );
-        }
-
-        &:not(input[type="file"]):active,
-        &::file-selector-button:active {
-          color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-quiet, var(--wa-color-neutral-fill-quiet)),
-            var(--wa-color-mix-active)
-          );
-        }
-      }
-    }
-
-    &.wa-outlined {
-      &:not(input[type="file"]),
-      &::file-selector-button {
-        color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
-        background-color: transparent;
-        border-color: var(
-          --wa-color-border-loud,
-          var(--wa-color-neutral-border-loud)
-        );
-      }
-
-      &:not(:disabled) {
-        &:not(input[type="file"]):hover,
-        &::file-selector-button:hover {
-          color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
-          background-color: var(
-            --wa-color-fill-quiet,
-            var(--wa-color-neutral-fill-quiet)
-          );
-        }
-
-        &:not(input[type="file"]):active,
-        &::file-selector-button:active {
-          color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-quiet, var(--wa-color-neutral-fill-quiet)),
-            var(--wa-color-mix-active)
-          );
-        }
-      }
-    }
-
-    &.wa-filled {
-      &:not(input[type="file"]),
-      &::file-selector-button {
-        color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
-        background-color: var(
-          --wa-color-fill-normal,
-          var(--wa-color-neutral-fill-normal)
-        );
-        border-color: transparent;
-      }
-
-      &:not(:disabled) {
-        &:not(input[type="file"]):hover,
-        &::file-selector-button:hover {
-          color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
-            var(--wa-color-mix-hover)
-          );
-        }
-
-        &:not(input[type="file"]):active,
-        &::file-selector-button:active {
-          color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
-            var(--wa-color-mix-active)
-          );
-        }
-      }
-
-      &.wa-outlined {
-        &:not(input[type="file"]),
-        &::file-selector-button {
-          border-color: var(
-            --wa-color-border-normal,
-            var(--wa-color-neutral-border-normal)
-          );
-        }
-      }
-    }
-
-    &.wa-accent {
-      &:not(input[type="file"]),
-      &::file-selector-button {
+      /* Default styles for standard buttons */
+      :where(&:not(input[type="file"])) {
         color: var(--wa-color-on-loud, var(--wa-color-neutral-on-loud));
         background-color: var(
           --wa-color-fill-loud,
           var(--wa-color-neutral-fill-loud)
         );
         border-color: transparent;
+
+        &:not(:disabled) {
+          &:hover {
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
+              var(--wa-color-mix-hover)
+            );
+          }
+
+          &:active {
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
+              var(--wa-color-mix-active)
+            );
+          }
+        }
       }
 
-      &:not(:disabled) {
-        &:not(input[type="file"]):hover,
-        &::file-selector-button:hover {
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
-            var(--wa-color-mix-hover)
+      /* Default styles for file selector buttons */
+      :where(&:is(input[type="file"])) {
+        &::file-selector-button {
+          color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
+          background-color: var(
+            --wa-color-fill-normal,
+            var(--wa-color-neutral-fill-normal)
+          );
+          border-color: transparent;
+        }
+
+        &:not(:disabled) {
+          &::file-selector-button:hover {
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
+              var(--wa-color-mix-hover)
+            );
+          }
+
+          &::file-selector-button:active {
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
+              var(--wa-color-mix-active)
+            );
+          }
+        }
+      }
+
+      /* Modifier classes */
+      &.wa-plain {
+        &:not(input[type="file"]),
+        &::file-selector-button {
+          color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
+          background-color: transparent;
+          border-color: transparent;
+        }
+
+        &:not(:disabled) {
+          &:not(input[type="file"]):hover,
+          &::file-selector-button:hover {
+            color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
+            background-color: var(
+              --wa-color-fill-quiet,
+              var(--wa-color-neutral-fill-quiet)
+            );
+          }
+
+          &:not(input[type="file"]):active,
+          &::file-selector-button:active {
+            color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-quiet, var(--wa-color-neutral-fill-quiet)),
+              var(--wa-color-mix-active)
+            );
+          }
+        }
+      }
+
+      &.wa-outlined {
+        &:not(input[type="file"]),
+        &::file-selector-button {
+          color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
+          background-color: transparent;
+          border-color: var(
+            --wa-color-border-loud,
+            var(--wa-color-neutral-border-loud)
           );
         }
 
-        &:not(input[type="file"]):active,
-        &::file-selector-button:active {
-          background-color: color-mix(
-            in oklab,
-            var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
-            var(--wa-color-mix-active)
-          );
+        &:not(:disabled) {
+          &:not(input[type="file"]):hover,
+          &::file-selector-button:hover {
+            color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
+            background-color: var(
+              --wa-color-fill-quiet,
+              var(--wa-color-neutral-fill-quiet)
+            );
+          }
+
+          &:not(input[type="file"]):active,
+          &::file-selector-button:active {
+            color: var(--wa-color-on-quiet, var(--wa-color-neutral-on-quiet));
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-quiet, var(--wa-color-neutral-fill-quiet)),
+              var(--wa-color-mix-active)
+            );
+          }
         }
       }
-    }
 
-    &.wa-pill {
-      &:not(input[type="file"]),
-      &::file-selector-button {
-        border-radius: var(--wa-border-radius-pill);
+      &.wa-filled {
+        &:not(input[type="file"]),
+        &::file-selector-button {
+          color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
+          background-color: var(
+            --wa-color-fill-normal,
+            var(--wa-color-neutral-fill-normal)
+          );
+          border-color: transparent;
+        }
+
+        &:not(:disabled) {
+          &:not(input[type="file"]):hover,
+          &::file-selector-button:hover {
+            color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
+              var(--wa-color-mix-hover)
+            );
+          }
+
+          &:not(input[type="file"]):active,
+          &::file-selector-button:active {
+            color: var(--wa-color-on-normal, var(--wa-color-neutral-on-normal));
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-normal, var(--wa-color-neutral-fill-normal)),
+              var(--wa-color-mix-active)
+            );
+          }
+        }
+
+        &.wa-outlined {
+          &:not(input[type="file"]),
+          &::file-selector-button {
+            border-color: var(
+              --wa-color-border-normal,
+              var(--wa-color-neutral-border-normal)
+            );
+          }
+        }
       }
-    }
 
-    &:focus {
-      outline: none;
-    }
+      &.wa-accent {
+        &:not(input[type="file"]),
+        &::file-selector-button {
+          color: var(--wa-color-on-loud, var(--wa-color-neutral-on-loud));
+          background-color: var(
+            --wa-color-fill-loud,
+            var(--wa-color-neutral-fill-loud)
+          );
+          border-color: transparent;
+        }
 
-    &:focus-visible {
-      outline: var(--wa-focus-ring);
-      outline-offset: var(--wa-focus-ring-offset);
-    }
+        &:not(:disabled) {
+          &:not(input[type="file"]):hover,
+          &::file-selector-button:hover {
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
+              var(--wa-color-mix-hover)
+            );
+          }
 
-    /* Wrap in :is() so that Safari doesn't stop parsing this block */
-    &:is(::-moz-focus-inner) {
-      border: 0;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-
-      /* When disabled, prevent mouse events from bubbling up from children */
-      * {
-        pointer-events: none;
+          &:not(input[type="file"]):active,
+          &::file-selector-button:active {
+            background-color: color-mix(
+              in oklab,
+              var(--wa-color-fill-loud, var(--wa-color-neutral-fill-loud)),
+              var(--wa-color-mix-active)
+            );
+          }
+        }
       }
-    }
 
-    /* Adds space between icons and adjacent elements
+      &.wa-pill {
+        &:not(input[type="file"]),
+        &::file-selector-button {
+          border-radius: var(--wa-border-radius-pill);
+        }
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: var(--wa-focus-ring);
+        outline-offset: var(--wa-focus-ring-offset);
+      }
+
+      /* Wrap in :is() so that Safari doesn't stop parsing this block */
+      &:is(::-moz-focus-inner) {
+        border: 0;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        /* When disabled, prevent mouse events from bubbling up from children */
+        * {
+          pointer-events: none;
+        }
+      }
+
+      /* Adds space between icons and adjacent elements
      * Prefer sibling selectors over :first-child/:last-child to avoid extra space when an icon is used alone */
-    & > wa-icon:has(+ *) {
-      margin-inline-end: 0.75em;
+      & > wa-icon:has(+ *) {
+        margin-inline-end: 0.75em;
+      }
+
+      & > * + wa-icon {
+        margin-inline-start: 0.75em;
+      }
     }
+    /* #endregion */
 
-    & > * + wa-icon {
-      margin-inline-start: 0.75em;
-    }
-  }
-  /* #endregion */
+    /* #region File Inputs ~~~~~~~~~~~~~~~~~~~~~ */
+    input[type="file"] {
+      display: block;
 
-  /* #region File Inputs ~~~~~~~~~~~~~~~~~~~~~ */
-  input[type="file"] {
-    display: block;
+      max-inline-size: 100%;
 
-    max-inline-size: 100%;
+      color: var(--wa-form-control-value-color);
+      font-family: inherit;
+      font-size: var(--wa-form-control-value-font-size);
+      font-weight: var(--wa-form-control-value-font-weight);
+      line-height: var(--wa-form-control-value-line-height);
+      vertical-align: middle;
 
-    color: var(--wa-form-control-value-color);
-    font-family: inherit;
-    font-size: var(--wa-form-control-value-font-size);
-    font-weight: var(--wa-form-control-value-font-weight);
-    line-height: var(--wa-form-control-value-line-height);
-    vertical-align: middle;
+      border-radius: var(--wa-border-radius-m);
 
-    border-radius: var(--wa-border-radius-m);
-
-    cursor: pointer;
-  }
-  /* #endregion */
-
-  /* #region Checkboxes + Radios ~~~~~~~~~~~~~ */
-  input[type="checkbox"],
-  label:has(input[type="checkbox"]),
-  input[type="radio"].wa-native,
-  label:has(input[type="radio"].wa-native) {
-    display: inline-flex;
-
-    width: fit-content;
-
-    color: var(--wa-form-control-value-color);
-    font-family: inherit;
-    font-size: var(--wa-form-control-value-font-size);
-    font-weight: var(--wa-form-control-value-font-weight);
-    line-height: var(--wa-form-control-value-line-height);
-
-    user-select: none;
-    -webkit-user-select: none;
-
-    &,
-    + label {
       cursor: pointer;
     }
+    /* #endregion */
 
-    &:disabled,
-    &:has(:disabled) {
-      opacity: 0.5;
+    /* #region Checkboxes + Radios ~~~~~~~~~~~~~ */
+    input[type="checkbox"],
+    label:has(input[type="checkbox"]),
+    input[type="radio"],
+    label:has(input[type="radio"]) {
+      display: inline-flex;
 
-      cursor: not-allowed;
-    }
-  }
+      width: fit-content;
 
-  input[type="checkbox"],
-  input[type="radio"].wa-native {
-    appearance: none;
+      color: var(--wa-form-control-value-color);
+      font-family: inherit;
+      font-size: var(--wa-form-control-value-font-size);
+      font-weight: var(--wa-form-control-value-font-weight);
+      line-height: var(--wa-form-control-value-line-height);
 
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
+      user-select: none;
+      -webkit-user-select: none;
 
-    width: var(--wa-form-control-toggle-size);
-    height: var(--wa-form-control-toggle-size);
-    margin: 0;
-    margin-inline-end: 0.5em;
+      &,
+      + label {
+        cursor: pointer;
+      }
 
-    background-color: var(--wa-form-control-background-color);
-    border-color: var(--wa-form-control-border-color);
-    border-style: var(--wa-border-style);
-    border-width: var(--wa-form-control-border-width);
+      &:disabled,
+      &:has(:disabled) {
+        opacity: 0.5;
 
-    transition: background var(--wa-transition-normal),
-      border-color var(--wa-transition-fast),
-      box-shadow var(--wa-transition-fast), color var(--wa-transition-fast);
-    transition-timing-function: var(--wa-transition-easing);
-
-    &:focus-visible {
-      outline: var(--wa-focus-ring);
-      outline-offset: var(--wa-focus-ring-offset);
-    }
-  }
-
-  /* Checkbox */
-  input[type="checkbox"] {
-    --checked-icon-color: var(--wa-color-brand-on-loud);
-    --checked-icon-scale: 0.8;
-
-    border-radius: min(
-      calc(var(--wa-form-control-toggle-size) * 0.375),
-      var(--wa-border-radius-s)
-    ); /* min prevents entirely circular checkbox */
-
-    &:checked,
-    &:indeterminate {
-      color: var(--checked-icon-color);
-
-      background-color: var(--wa-form-control-activated-color);
-      border-color: var(--wa-form-control-activated-color);
+        cursor: not-allowed;
+      }
     }
 
-    &:checked::after,
-    &:indeterminate::after {
-      content: "";
+    input[type="checkbox"],
+    input[type="radio"] {
+      appearance: none;
+
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
 
       width: var(--wa-form-control-toggle-size);
       height: var(--wa-form-control-toggle-size);
-      scale: var(--checked-icon-scale);
+      margin: 0;
+      margin-inline-end: 0.5em;
 
-      background-color: currentColor;
+      background-color: var(--wa-form-control-background-color);
+      border-color: var(--wa-form-control-border-color);
+      border-style: var(--wa-border-style);
+      border-width: var(--wa-form-control-border-width);
+
+      transition: background var(--wa-transition-normal),
+        border-color var(--wa-transition-fast),
+        box-shadow var(--wa-transition-fast), color var(--wa-transition-fast);
+      transition-timing-function: var(--wa-transition-easing);
+
+      &:focus-visible {
+        outline: var(--wa-focus-ring);
+        outline-offset: var(--wa-focus-ring-offset);
+      }
     }
 
-    &:checked::after {
-      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>')
-        center / 1em 1em no-repeat;
+    /* Checkbox */
+    input[type="checkbox"] {
+      --checked-icon-color: var(--wa-color-brand-on-loud);
+      --checked-icon-scale: 0.8;
+
+      border-radius: min(
+        calc(var(--wa-form-control-toggle-size) * 0.375),
+        var(--wa-border-radius-s)
+      ); /* min prevents entirely circular checkbox */
+
+      &:checked,
+      &:indeterminate {
+        color: var(--checked-icon-color);
+
+        background-color: var(--wa-form-control-activated-color);
+        border-color: var(--wa-form-control-activated-color);
+      }
+
+      &:checked::after,
+      &:indeterminate::after {
+        content: "";
+
+        width: var(--wa-form-control-toggle-size);
+        height: var(--wa-form-control-toggle-size);
+        scale: var(--checked-icon-scale);
+
+        background-color: currentColor;
+      }
+
+      &:checked::after {
+        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>')
+          center / 1em 1em no-repeat;
+      }
+
+      &:indeterminate::after {
+        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M431 256c0 17.7-14.3 32-32 32H49c-17.7 0-32-14.3-32-32s14.3-32 32-32h350c17.7 0 32 14.3 32 32z"/></svg>')
+          center no-repeat;
+      }
     }
 
-    &:indeterminate::after {
-      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M431 256c0 17.7-14.3 32-32 32H49c-17.7 0-32-14.3-32-32s14.3-32 32-32h350c17.7 0 32 14.3 32 32z"/></svg>')
-        center no-repeat;
-    }
-  }
+    /* Radio */
+    input[type="radio"] {
+      --checked-icon-color: var(--wa-form-control-activated-color);
+      --checked-icon-scale: 0.7;
 
-  /* Radio */
-  input[type="radio"].wa-native {
-    --checked-icon-color: var(--wa-form-control-activated-color);
-    --checked-icon-scale: 0.7;
+      color: transparent;
 
-    color: transparent;
-
-    border-radius: 50%;
-
-    &:checked {
-      color: var(--checked-icon-color);
-
-      border-color: var(--wa-form-control-activated-color);
-    }
-
-    &:checked::after {
-      content: "";
-
-      aspect-ratio: 1;
-      width: 100%;
-      scale: var(--checked-icon-scale);
-
-      background-color: currentColor;
       border-radius: 50%;
-    }
-  }
-  /* #endregion */
 
-  /* #region Text Fields + Textareas + Selects */
-  input:not(
+      &:checked {
+        color: var(--checked-icon-color);
+
+        border-color: var(--wa-form-control-activated-color);
+      }
+
+      &:checked::after {
+        content: "";
+
+        aspect-ratio: 1;
+        width: 100%;
+        scale: var(--checked-icon-scale);
+
+        background-color: currentColor;
+        border-radius: 50%;
+      }
+    }
+    /* #endregion */
+
+    /* #region Text Fields + Textareas + Selects */
+    input:not(
     /* Exclude inputs that don't accept text */
     [type='button'],
     [type='checkbox'],
@@ -1037,283 +1030,284 @@
     [type='range'],
     [type='reset'],
     [type='submit']
-  ).wa, textarea, select {
-    width: 100%;
-    height: var(--wa-form-control-height);
-    padding: 0 var(--wa-form-control-padding-inline);
+  ), textarea, select {
+      width: 100%;
+      height: var(--wa-form-control-height);
+      padding: 0 var(--wa-form-control-padding-inline);
 
-    color: var(--wa-form-control-value-color);
-    font-size: var(--wa-form-control-value-size);
-    font-family: inherit;
-    font-weight: var(--wa-form-control-value-font-weight);
-    line-height: var(--wa-form-control-value-line-height);
-    vertical-align: middle;
+      color: var(--wa-form-control-value-color);
+      font-size: var(--wa-form-control-value-size);
+      font-family: inherit;
+      font-weight: var(--wa-form-control-value-font-weight);
+      line-height: var(--wa-form-control-value-line-height);
+      vertical-align: middle;
 
-    background-color: var(--wa-form-control-background-color);
-    border-color: var(--wa-form-control-border-color);
-    border-style: var(--wa-form-control-border-style);
-    border-width: var(--wa-form-control-border-width);
-    border-radius: var(--wa-form-control-border-radius);
-
-    transition: background-color var(--wa-transition-normal),
-      border var(--wa-transition-normal), outline var(--wa-transition-fast);
-    transition-timing-function: var(--wa-transition-easing);
-
-    cursor: text;
-
-    &::placeholder {
-      color: var(--wa-form-control-placeholder-color);
-
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    &:focus {
-      outline: none;
-    }
-
-    &:focus-visible {
-      outline: var(--wa-focus-ring);
-      outline-offset: var(--wa-focus-ring-offset);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-
-      cursor: not-allowed;
-    }
-
-    &.wa-outlined {
       background-color: var(--wa-form-control-background-color);
       border-color: var(--wa-form-control-border-color);
-    }
+      border-style: var(--wa-form-control-border-style);
+      border-width: var(--wa-form-control-border-width);
+      border-radius: var(--wa-form-control-border-radius);
 
-    &.wa-filled {
-      background-color: var(--wa-color-neutral-fill-quiet);
-      border-color: var(--wa-color-neutral-fill-quiet);
+      transition: background-color var(--wa-transition-normal),
+        border var(--wa-transition-normal), outline var(--wa-transition-fast);
+      transition-timing-function: var(--wa-transition-easing);
+
+      cursor: text;
+
+      &::placeholder {
+        color: var(--wa-form-control-placeholder-color);
+
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: var(--wa-focus-ring);
+        outline-offset: var(--wa-focus-ring-offset);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+
+        cursor: not-allowed;
+      }
 
       &.wa-outlined {
+        background-color: var(--wa-form-control-background-color);
         border-color: var(--wa-form-control-border-color);
+      }
+
+      &.wa-filled {
+        background-color: var(--wa-color-neutral-fill-quiet);
+        border-color: var(--wa-color-neutral-fill-quiet);
+
+        &.wa-outlined {
+          border-color: var(--wa-form-control-border-color);
+        }
+      }
+
+      &.wa-pill {
+        border-radius: var(--wa-border-radius-pill);
       }
     }
 
-    &.wa-pill {
-      border-radius: var(--wa-border-radius-pill);
-    }
-  }
+    /* Textarea */
+    textarea {
+      height: auto;
+      min-height: var(--wa-form-control-height);
+      padding: calc(var(--wa-form-control-padding-block) - ((1lh - 1em) / 2))
+        var(--wa-form-control-padding-inline); /* accounts for the larger line height of textarea content */
 
-  /* Textarea */
-  textarea {
-    height: auto;
-    min-height: var(--wa-form-control-height);
-    padding: calc(var(--wa-form-control-padding-block) - ((1lh - 1em) / 2))
-      var(--wa-form-control-padding-inline); /* accounts for the larger line height of textarea content */
+      line-height: var(--wa-line-height-normal);
 
-    line-height: var(--wa-line-height-normal);
-
-    resize: vertical;
-  }
-
-  /* Select */
-  select {
-    --icon-caret: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="rgb(180 180 200)" d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
-
-    appearance: none;
-
-    position: relative;
-
-    min-width: 0;
-    overflow: hidden;
-
-    background-image: var(--icon-caret), var(--icon-caret);
-    background-repeat: no-repeat;
-    background-position: center right var(--wa-form-control-padding-inline);
-    background-blend-mode: hue, difference;
-    background-size: 1rem 1rem;
-
-    cursor: pointer;
-  }
-  /* #endregion */
-
-  /* #region Color Pickers ~~~~~~~~~~~~~~~~~~~ */
-  input[type="color"] {
-    display: block;
-
-    block-size: var(--wa-form-control-height);
-    inline-size: var(--wa-form-control-height);
-    padding: calc(var(--wa-form-control-border-width) * 2);
-
-    font-size: 1em;
-
-    background: transparent;
-    border: var(--wa-form-control-border-width) var(--wa-border-style)
-      var(--wa-form-control-border-color);
-    border-radius: var(--wa-form-control-border-radius);
-
-    cursor: pointer;
-    forced-color-adjust: none;
-
-    &::-webkit-color-swatch-wrapper {
-      padding: 0;
-      border-radius: inherit;
+      resize: vertical;
     }
 
-    &::-webkit-color-swatch {
-      border: none;
-      border-radius: calc(
-        var(--wa-form-control-border-radius) -
-          var(--wa-form-control-border-width) * 3
-      );
+    /* Select */
+    select {
+      --icon-caret: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="rgb(180 180 200)" d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
+
+      appearance: none;
+
+      position: relative;
+
+      min-width: 0;
+      overflow: hidden;
+
+      background-image: var(--icon-caret), var(--icon-caret);
+      background-repeat: no-repeat;
+      background-position: center right var(--wa-form-control-padding-inline);
+      background-blend-mode: hue, difference;
+      background-size: 1rem 1rem;
+
+      cursor: pointer;
     }
+    /* #endregion */
 
-    &::-moz-color-swatch {
-      border: none;
-      border-radius: calc(
-        var(--wa-form-control-border-radius) -
-          var(--wa-form-control-border-width) * 3
-      );
-    }
+    /* #region Color Pickers ~~~~~~~~~~~~~~~~~~~ */
+    input[type="color"] {
+      display: block;
 
-    &:focus-visible {
-      outline: var(--wa-focus-ring);
-      outline-offset: var(--wa-focus-ring-offset);
-    }
-  }
-  /* #endregion */
+      block-size: var(--wa-form-control-height);
+      inline-size: var(--wa-form-control-height);
+      padding: calc(var(--wa-form-control-border-width) * 2);
 
-  /* #region Sliders ~~~~~~~~~~~~~~~~~~~~~~~~~ */
-  input[type="range"] {
-    --thumb-width: 1.4em;
-    --thumb-height: 1.4em;
-    --track-size: 0.5em;
+      font-size: 1em;
 
-    -webkit-appearance: none;
+      background: transparent;
+      border: var(--wa-form-control-border-width) var(--wa-border-style)
+        var(--wa-form-control-border-color);
+      border-radius: var(--wa-form-control-border-radius);
 
-    display: flex;
-    flex-direction: column;
-    position: relative;
+      cursor: pointer;
+      forced-color-adjust: none;
 
-    width: 100%;
-    height: var(--track-size);
-    margin: 0;
+      &::-webkit-color-swatch-wrapper {
+        padding: 0;
+        border-radius: inherit;
+      }
 
-    font-size: inherit;
-    line-height: var(--wa-form-control-height);
-    vertical-align: middle;
+      &::-webkit-color-swatch {
+        border: none;
+        border-radius: calc(
+          var(--wa-form-control-border-radius) -
+            var(--wa-form-control-border-width) * 3
+        );
+      }
 
-    background-color: var(--wa-color-neutral-fill-normal);
-    border-radius: calc(var(--track-size) / 2);
+      &::-moz-color-swatch {
+        border: none;
+        border-radius: calc(
+          var(--wa-form-control-border-radius) -
+            var(--wa-form-control-border-width) * 3
+        );
+      }
 
-    &::-webkit-slider-runnable-track {
-      width: 100%;
-      height: var(--track-size);
-
-      border: none;
-      border-radius: 999px;
-    }
-
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-
-      width: var(--thumb-width);
-      height: var(--thumb-height);
-      margin-top: calc(var(--thumb-height) / -2 + var(--track-size) / 2);
-
-      background-color: var(--wa-form-control-activated-color);
-      border: solid 0.125em var(--wa-color-surface-default);
-      border-radius: 50%;
-
-      transition-property: background-color, border-color, box-shadow, color;
-      transition-duration: var(--wa-transition-normal);
-      transition-timing-function: var(--wa-transition-easing);
-    }
-
-    &:enabled {
-      &:focus-visible::-webkit-slider-thumb {
+      &:focus-visible {
         outline: var(--wa-focus-ring);
         outline-offset: var(--wa-focus-ring-offset);
+      }
+    }
+    /* #endregion */
+
+    /* #region Sliders ~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    input[type="range"] {
+      --thumb-width: 1.4em;
+      --thumb-height: 1.4em;
+      --track-size: 0.5em;
+
+      -webkit-appearance: none;
+
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      width: 100%;
+      height: var(--track-size);
+      margin: 0;
+
+      font-size: inherit;
+      line-height: var(--wa-form-control-height);
+      vertical-align: middle;
+
+      background-color: var(--wa-color-neutral-fill-normal);
+      border-radius: calc(var(--track-size) / 2);
+
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: var(--track-size);
+
+        border: none;
+        border-radius: 999px;
       }
 
       &::-webkit-slider-thumb {
-        cursor: pointer;
+        -webkit-appearance: none;
+
+        width: var(--thumb-width);
+        height: var(--thumb-height);
+        margin-top: calc(var(--thumb-height) / -2 + var(--track-size) / 2);
+
+        background-color: var(--wa-form-control-activated-color);
+        border: solid 0.125em var(--wa-color-surface-default);
+        border-radius: 50%;
+
+        transition-property: background-color, border-color, box-shadow, color;
+        transition-duration: var(--wa-transition-normal);
+        transition-timing-function: var(--wa-transition-easing);
       }
 
-      &::-webkit-slider-thumb:active {
-        cursor: grabbing;
+      &:enabled {
+        &:focus-visible::-webkit-slider-thumb {
+          outline: var(--wa-focus-ring);
+          outline-offset: var(--wa-focus-ring-offset);
+        }
+
+        &::-webkit-slider-thumb {
+          cursor: pointer;
+        }
+
+        &::-webkit-slider-thumb:active {
+          cursor: grabbing;
+        }
       }
-    }
 
-    &::-moz-focus-outer {
-      border: 0;
-    }
+      &::-moz-focus-outer {
+        border: 0;
+      }
 
-    &::-moz-range-progress {
-      height: var(--track-size);
+      &::-moz-range-progress {
+        height: var(--track-size);
 
-      background-color: var(--wa-color-neutral-fill-normal);
-      border-radius: 3px;
-    }
+        background-color: var(--wa-color-neutral-fill-normal);
+        border-radius: 3px;
+      }
 
-    &::-moz-range-track {
-      width: 100%;
-      height: var(--track-size);
+      &::-moz-range-track {
+        width: 100%;
+        height: var(--track-size);
 
-      background-color: var(--wa-color-neutral-fill-normal);
-      border: none;
-      border-radius: 999px;
-    }
-
-    &::-moz-range-thumb {
-      width: var(--thumb-width);
-      height: var(--thumb-height);
-
-      background-color: var(--wa-form-control-activated-color);
-      border: solid 0.125em var(--wa-color-surface-default);
-      border-radius: 50%;
-
-      transition-property: background-color, border-color, box-shadow, color;
-      transition-duration: var(--wa-transition-normal);
-      transition-timing-function: var(--wa-transition-easing);
-    }
-
-    &:enabled {
-      &:focus-visible::-moz-range-thumb {
-        outline: var(--wa-focus-ring);
-        outline-offset: var(--wa-focus-ring-offset);
+        background-color: var(--wa-color-neutral-fill-normal);
+        border: none;
+        border-radius: 999px;
       }
 
       &::-moz-range-thumb {
-        cursor: pointer;
+        width: var(--thumb-width);
+        height: var(--thumb-height);
+
+        background-color: var(--wa-form-control-activated-color);
+        border: solid 0.125em var(--wa-color-surface-default);
+        border-radius: 50%;
+
+        transition-property: background-color, border-color, box-shadow, color;
+        transition-duration: var(--wa-transition-normal);
+        transition-timing-function: var(--wa-transition-easing);
       }
 
-      &::-moz-range-thumb:active {
-        cursor: grabbing;
+      &:enabled {
+        &:focus-visible::-moz-range-thumb {
+          outline: var(--wa-focus-ring);
+          outline-offset: var(--wa-focus-ring-offset);
+        }
+
+        &::-moz-range-thumb {
+          cursor: pointer;
+        }
+
+        &::-moz-range-thumb:active {
+          cursor: grabbing;
+        }
       }
     }
-  }
 
-  label > input[type="range"] {
-    margin-block-start: 1em;
-  }
-
-  input[type="range"]:focus {
-    outline: none;
-  }
-
-  input[type="range"]:disabled {
-    opacity: 0.5;
-
-    cursor: not-allowed;
-
-    &::-webkit-slider-thumb {
-      cursor: not-allowed;
+    label > input[type="range"] {
+      margin-block-start: 1em;
     }
 
-    &::-moz-range-thumb {
-      cursor: not-allowed;
+    input[type="range"]:focus {
+      outline: none;
     }
+
+    input[type="range"]:disabled {
+      opacity: 0.5;
+
+      cursor: not-allowed;
+
+      &::-webkit-slider-thumb {
+        cursor: not-allowed;
+      }
+
+      &::-moz-range-thumb {
+        cursor: not-allowed;
+      }
+    }
+    /* #endregion */
   }
-  /* #endregion */
 
   /* #region Progress ~~~~~~~~~~~~~~~~~~~~~~~~ */
   progress {

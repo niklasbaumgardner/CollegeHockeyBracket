@@ -155,6 +155,163 @@ export class PreferencesCard extends NikElement {
     this.requestUpdate();
   }
 
+  roundingTemplate() {
+    return html`<div class="wa-split">
+      <div class="wa-stack grow">
+        <wa-slider
+          id="theme-rounding"
+          label="Rounding"
+          min="0"
+          max="4"
+          step="0.1"
+          .value=${this.theme.rounding}
+          with-tooltip
+          @change=${this.handleRoundingChange}
+        ></wa-slider>
+        <wa-button-group label="Rounding">
+          <wa-button
+            appearance="filled-outlined"
+            @click=${this.decrementRounding}
+            ><wa-icon
+              library="ion"
+              name="remove-outline"
+              label="Smaller rounding"
+            ></wa-icon
+          ></wa-button>
+          <wa-input
+            id="theme-rounding-input"
+            min="0"
+            max="4"
+            step="0.1"
+            @input=${this.handleRoundingChange}
+            type="number"
+            .value=${this.theme.rounding}
+          ></wa-input>
+          <wa-button
+            appearance="filled-outlined"
+            @click=${this.incrementRounding}
+            ><wa-icon
+              library="ion"
+              name="add-outline"
+              label="Bigger rounding"
+            ></wa-icon
+          ></wa-button>
+        </wa-button-group>
+      </div>
+
+      <wa-button
+        appearance="outlined"
+        variant="danger"
+        @click=${this.resetRounding}
+        >Reset</wa-button
+      >
+    </div>`;
+  }
+
+  spacingTemplate() {
+    return html`<div class="wa-split">
+      <div class="wa-stack grow">
+        <wa-slider
+          id="theme-spacing"
+          label="Spacing"
+          min="0.5"
+          max="2"
+          step="0.0125"
+          .value=${this.theme.spacing}
+          with-tooltip
+          @change=${this.handleSpacingChange}
+        ></wa-slider>
+        <wa-button-group label="Spacing">
+          <wa-button
+            appearance="filled-outlined"
+            @click=${this.decrementSpacing}
+            ><wa-icon
+              library="ion"
+              name="remove-outline"
+              label="Smaller spacing"
+            ></wa-icon
+          ></wa-button>
+          <wa-input
+            id="theme-spacing-input"
+            min="0.5"
+            max="2"
+            step="0.0125"
+            @input=${this.handleSpacingChange}
+            type="number"
+            .value=${this.theme.spacing}
+          ></wa-input>
+          <wa-button
+            appearance="filled-outlined"
+            @click=${this.incrementSpacing}
+            ><wa-icon
+              library="ion"
+              name="add-outline"
+              label="Bigger spacing"
+            ></wa-icon
+          ></wa-button>
+        </wa-button-group>
+      </div>
+      <wa-button
+        appearance="outlined"
+        variant="danger"
+        @click=${this.resetSpacing}
+        >Reset</wa-button
+      >
+    </div>`;
+  }
+
+  borderWidthTemplate() {
+    return html`<div class="wa-split">
+      <div class="wa-stack grow">
+        <wa-slider
+          id="theme-border-width"
+          label="Border width"
+          min="0.5"
+          max="4"
+          step="0.5"
+          .value=${this.theme.borderWidth}
+          with-tooltip
+          @change=${this.handleBorderWidthChange}
+        ></wa-slider>
+        <wa-button-group label="Border width">
+          <wa-button
+            appearance="filled-outlined"
+            @click=${this.decrementBorderWidth}
+            ><wa-icon
+              library="ion"
+              name="remove-outline"
+              label="Smaller border width"
+            ></wa-icon
+          ></wa-button>
+          <wa-input
+            id="theme-border-width-input"
+            min="0.5"
+            max="4"
+            step="0.5"
+            @input=${this.handleBorderWidthChange}
+            type="number"
+            .value=${this.theme.borderWidth}
+          ></wa-input>
+          <wa-button
+            appearance="filled-outlined"
+            @click=${this.incrementBorderWidth}
+            ><wa-icon
+              library="ion"
+              name="add-outline"
+              label="Bigger border width"
+            ></wa-icon
+          ></wa-button>
+        </wa-button-group>
+      </div>
+      <wa-button
+        appearance="outlined"
+        variant="danger"
+        @click=${this.resetBorderWidth}
+        >Reset</wa-button
+      >
+    </div>`;
+  }
+
   render() {
     if (!this.theme) {
       return null;
@@ -241,154 +398,7 @@ export class PreferencesCard extends NikElement {
               </div>
 
               <div class="wa-stack gap-(--wa-space-l)">
-                <div class="wa-split">
-                  <div class="wa-stack grow">
-                    <wa-slider
-                      id="theme-rounding"
-                      label="Rounding"
-                      min="0"
-                      max="4"
-                      step="0.1"
-                      .value=${this.theme.rounding}
-                      with-tooltip
-                      @change=${this.handleRoundingChange}
-                    ></wa-slider>
-                    <wa-button-group label="Rounding">
-                      <wa-button
-                        appearance="filled-outlined"
-                        @click=${this.decrementRounding}
-                        ><wa-icon
-                          library="ion"
-                          name="remove-outline"
-                          label="Smaller rounding"
-                        ></wa-icon
-                      ></wa-button>
-                      <wa-input
-                        id="theme-rounding-input"
-                        min="0"
-                        max="4"
-                        step="0.1"
-                        @input=${this.handleRoundingChange}
-                        type="number"
-                        .value=${this.theme.rounding}
-                      ></wa-input>
-                      <wa-button
-                        appearance="filled-outlined"
-                        @click=${this.incrementRounding}
-                        ><wa-icon
-                          library="ion"
-                          name="add-outline"
-                          label="Bigger rounding"
-                        ></wa-icon
-                      ></wa-button>
-                    </wa-button-group>
-                  </div>
-
-                  <wa-button
-                    appearance="outlined"
-                    variant="danger"
-                    @click=${this.resetRounding}
-                    >Reset</wa-button
-                  >
-                </div>
-                <div class="wa-split">
-                  <div class="wa-stack grow">
-                    <wa-slider
-                      id="theme-spacing"
-                      label="Spacing"
-                      min="0.5"
-                      max="2"
-                      step="0.0125"
-                      .value=${this.theme.spacing}
-                      with-tooltip
-                      @change=${this.handleSpacingChange}
-                    ></wa-slider>
-                    <wa-button-group label="Spacing">
-                      <wa-button
-                        appearance="filled-outlined"
-                        @click=${this.decrementSpacing}
-                        ><wa-icon
-                          library="ion"
-                          name="remove-outline"
-                          label="Smaller spacing"
-                        ></wa-icon
-                      ></wa-button>
-                      <wa-input
-                        id="theme-spacing-input"
-                        min="0.5"
-                        max="2"
-                        step="0.0125"
-                        @input=${this.handleSpacingChange}
-                        type="number"
-                        .value=${this.theme.spacing}
-                      ></wa-input>
-                      <wa-button
-                        appearance="filled-outlined"
-                        @click=${this.incrementSpacing}
-                        ><wa-icon
-                          library="ion"
-                          name="add-outline"
-                          label="Bigger spacing"
-                        ></wa-icon
-                      ></wa-button>
-                    </wa-button-group>
-                  </div>
-                  <wa-button
-                    appearance="outlined"
-                    variant="danger"
-                    @click=${this.resetSpacing}
-                    >Reset</wa-button
-                  >
-                </div>
-                <div class="wa-split">
-                  <div class="wa-stack grow">
-                    <wa-slider
-                      id="theme-border-width"
-                      label="Border width"
-                      min="0.5"
-                      max="4"
-                      step="0.5"
-                      .value=${this.theme.borderWidth}
-                      with-tooltip
-                      @change=${this.handleBorderWidthChange}
-                    ></wa-slider>
-                    <wa-button-group label="Border width">
-                      <wa-button
-                        appearance="filled-outlined"
-                        @click=${this.decrementBorderWidth}
-                        ><wa-icon
-                          library="ion"
-                          name="remove-outline"
-                          label="Smaller border width"
-                        ></wa-icon
-                      ></wa-button>
-                      <wa-input
-                        id="theme-border-width-input"
-                        min="0.5"
-                        max="4"
-                        step="0.5"
-                        @input=${this.handleBorderWidthChange}
-                        type="number"
-                        .value=${this.theme.borderWidth}
-                      ></wa-input>
-                      <wa-button
-                        appearance="filled-outlined"
-                        @click=${this.incrementBorderWidth}
-                        ><wa-icon
-                          library="ion"
-                          name="add-outline"
-                          label="Bigger border width"
-                        ></wa-icon
-                      ></wa-button>
-                    </wa-button-group>
-                  </div>
-                  <wa-button
-                    appearance="outlined"
-                    variant="danger"
-                    @click=${this.resetBorderWidth}
-                    >Reset</wa-button
-                  >
-                </div>
+                ${this.roundingTemplate()}
               </div>
             </div>
           </div>

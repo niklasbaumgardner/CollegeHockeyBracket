@@ -51,7 +51,7 @@ export class BaseGrid extends NikElement {
 
   setupThemeWatcher() {
     this.mutationObserver = new MutationObserver(() => {
-      this.dataGrid.setGridOption("theme", this.gridTheme);
+      this.dataGrid?.setGridOption("theme", this.gridTheme);
     });
 
     this.mutationObserver.observe(document.documentElement, {

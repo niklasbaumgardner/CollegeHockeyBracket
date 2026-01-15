@@ -25,6 +25,7 @@ import "@awesome.me/webawesome-pro/dist/components/icon/icon.js";
 import "@awesome.me/webawesome-pro/dist/components/input/input.js";
 
 import "@awesome.me/webawesome-pro/dist/components/popup/popup.js";
+import "@awesome.me/webawesome-pro/dist/components/popover/popover.js";
 
 import "@awesome.me/webawesome-pro/dist/components/radio/radio.js";
 import "@awesome.me/webawesome-pro/dist/components/radio-group/radio-group.js";

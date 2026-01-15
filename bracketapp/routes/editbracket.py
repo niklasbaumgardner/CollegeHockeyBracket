@@ -45,7 +45,7 @@ def edit_bracket(sqid):
 
     return render_template(
         "edit_bracket.html",
-        bracket=bracket.to_dict(),
+        bracket=bracket.to_dict(safe_only=False),
         default=default.to_dict(),
         group_id=group_id,
     )
@@ -157,7 +157,7 @@ def new_bracket_post():
 def bracket_join_group(sqid):
     bracket_id = sqids.decode_one(sqid)
 
-    group_sqid = request.args.get("group_id")
+    group_sqid = request.form.get("group_id")
     group_id = None
     if group_sqid:
         group_id = sqids.decode_one(group_sqid)
@@ -175,30 +175,4 @@ def bracket_join_group(sqid):
     group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
 
     flash(f"Your bracket has been added to {group.name}", "success")
-    return redirect(url_for("groups_bp.view_group", id=group.id))
-
-
-@editbracket_bp.post("/add_bracket_to_group/<string:sqid>")
-@login_required
-def add_bracket_to_group(sqid):
-    group_id = sqids.decode_one(sqid)
-
-    bracket_sqid = request.args.get("bracket_id")
-    bracket_id = None
-    if bracket_sqid:
-        bracket_id = sqids.decode_one(bracket_sqid)
-
-    bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=bracket_id)
-    if not bracket:
-        flash("Sorry, this bracket could not be found", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    group = group_queries.get_group(group_id=group_id)
-    if not group:
-        flash("Sorry, this group could not be found", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
-
-    flash(f"Your bracket has been added to {group.name}", "success")
-    return redirect(url_for("groups_bp.view_group", id=group.id))
+    return redirect(url_for("groups_bp.view_group", sqid=group_sqid))

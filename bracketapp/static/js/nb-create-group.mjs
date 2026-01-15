@@ -6,6 +6,13 @@ export class CreateGroup extends BaseDialog {
     private: { type: Boolean },
   };
 
+  static queries = {
+    ...BaseDialog.queries,
+    isPrivateCheckbox: "#is_private",
+    password: "#password",
+    form: "form",
+  };
+
   constructor() {
     super();
 
@@ -35,12 +42,12 @@ export class CreateGroup extends BaseDialog {
   }
 
   contentTemplate() {
-    return html` <form
-        id="new-group-form"
-        action=${CREATE_GROUP_URL}
-        method="POST"
-      ></form>
-
+    return html`<form
+      id="new-group-form"
+      action=${CREATE_GROUP_URL}
+      method="POST"
+      class="wa-native"
+    >
       <div class="wa-stack">
         <wa-input
           form="new-group-form"
@@ -50,29 +57,32 @@ export class CreateGroup extends BaseDialog {
           name="name"
           maxlength="60"
           required
+          autofocus
         ></wa-input>
 
         <wa-checkbox
           form="new-group-form"
           id="is_private"
           name="is_private"
-          @input=${this.handlePrivateChange}
+          @change=${this.handlePrivateChange}
           checked
           >Require Password To Join</wa-checkbox
         >
 
-        <wa-input
-          form="new-group-form"
-          type="text"
-          label="Password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          maxlength="60"
-          ?hidden=${!this.private}
-          ?required=${this.private}
-        ></wa-input>
-      </div>`;
+        <label ?hidden=${!this.private}
+          >Password
+          <input
+            form="new-group-form"
+            type="text"
+            label="Password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            maxlength="60"
+            ?required=${this.private}
+        /></label>
+      </div>
+    </form>`;
   }
 
   footerTemplate() {

@@ -27,10 +27,10 @@ const config = {
   },
   optimization: {
     minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin({ minify: CssMinimizerPlugin.lightningCssMinify }),
-      "...",
-    ],
+    // minimizer: [
+    //   new CssMinimizerPlugin({ minify: CssMinimizerPlugin.lightningCssMinify }),
+    //   "...",
+    // ],
     splitChunks: {
       // include all types of chunks
       chunks: "all",

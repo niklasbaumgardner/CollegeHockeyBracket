@@ -37,19 +37,17 @@ export class ArchiveYears extends NikElement {
   }
 
   render() {
-    return html`<div class="flex justify-center">
-      <wa-card>
-        <div class="wa-stack">
-          <h2>Archive</h2>
-          <div
-            class="archive-grid"
-            class-bad="grid gap-(--wa-space-l) grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-          >
-            ${this.yearsTemplate()}
-          </div>
+    return html`<wa-card>
+      <div class="wa-stack">
+        <h2>Archive</h2>
+        <div
+          class_="archive-grid"
+          class="grid gap-(--wa-space-l) grid-cols-[auto] md:grid-cols-[auto_auto] lg:grid-cols-[auto_auto_auto]"
+        >
+          ${this.yearsTemplate()}
         </div>
-      </wa-card>
-    </div>`;
+      </div>
+    </wa-card>`;
   }
 }
 

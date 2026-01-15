@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html, ifDefined } from "./lit.bundle.mjs";
 import "./nb-delete-group.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
@@ -13,12 +13,6 @@ export class EditGroup extends BaseDialog {
     form: "#edit-group-form",
     saveButton: "#save-button",
   };
-
-  constructor() {
-    super();
-
-    this.private = true;
-  }
 
   async firstUpdated() {
     super.firstUpdated();
@@ -61,6 +55,7 @@ export class EditGroup extends BaseDialog {
       id="edit-group-form"
       action=${this.group.edit_url}
       method="POST"
+      class="wa-native"
     >
       <div class="wa-stack">
         <wa-input
@@ -73,6 +68,7 @@ export class EditGroup extends BaseDialog {
           value=${this.group.name}
           required
         ></wa-input>
+
         <wa-radio-group
           form="edit-group-form"
           label="Lock Group"
@@ -96,18 +92,20 @@ export class EditGroup extends BaseDialog {
           <wa-radio value="true">Private</wa-radio>
           <wa-radio value="false">Public</wa-radio>
         </wa-radio-group>
-        <wa-input
-          form="edit-group-form"
-          type="text"
-          label="Password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          maxlength="60"
-          value=${this.group.password}
-          ?hidden=${!this.private}
-          ?required=${this.private}
-        ></wa-input>
+
+        <label ?hidden=${!this.private}
+          >Password
+          <input
+            form="edit-group-form"
+            type="text"
+            label="Password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            maxlength="60"
+            value=${this.group.password}
+            ?required=${this.private}
+        /></label>
       </div>
     </form>`;
   }
@@ -134,6 +132,8 @@ export class EditGroup extends BaseDialog {
   async connectedCallback() {
     super.connectedCallback();
     await this.updateComplete;
+
+    this.private = this.group.is_private;
 
     this.boundHandleInput = this.handleInput.bind(this);
     this.dialog.addEventListener("input", this.boundHandleInput);

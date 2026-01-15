@@ -79,6 +79,27 @@ export class StandingsGrid extends BaseGrid {
     }
   }
 
+  sortBrackets() {
+    // TODO: sort by rank if we have a winner
+    if (CAN_EDIT_BRACKET && CURRENT_YEAR === this.year) {
+      this.brackets.sort((a, b) => {
+        let res = null;
+        if (a.user_id === CURRENT_USER.id) {
+          res = -1;
+        } else if (b.user_id === CURRENT_USER.id) {
+          res = 1;
+        } else {
+          res = a.name.localeCompare(b.name);
+        }
+        return res;
+      });
+    } else {
+      this.brackets.sort((a, b) => {
+        return a.rank - b.rank;
+      });
+    }
+  }
+
   firstUpdated() {
     this.init();
   }
@@ -87,6 +108,7 @@ export class StandingsGrid extends BaseGrid {
     await this.updateComplete;
 
     this.cleanBracketNames();
+    this.sortBrackets();
     this.createDataGrid();
     this.setupThemeWatcher();
   }
@@ -191,7 +213,7 @@ export class StandingsGrid extends BaseGrid {
 
   render() {
     if (!this.brackets.length) {
-      return null;
+      return html`<div class="flex justify-center">No brackets yet</div>`;
     }
 
     return html`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`;

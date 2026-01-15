@@ -51,15 +51,10 @@ div:has(> a.clickable-card) {
 
 wa-card:has(wa-card) {
   & wa-card {
-    background-color: var(--wa-color-neutral-95);
-  }
-}
-
-.wa-dark {
-  wa-card:has(wa-card) {
-    & wa-card {
-      background-color: var(--wa-color-neutral-20);
-    }
+    background-color: light-dark(
+      var(--wa-color-neutral-95),
+      var(--wa-color-neutral-20)
+    );
   }
 }
 
@@ -109,4 +104,14 @@ wa-page {
 
 .standings-img {
   width: 40px;
+}
+
+*:not(:defined) {
+  border: 2px solid red;
+}
+
+html {
+  --wa-space-scale: 1 !important;
+  /* --wa-border-radius-scale: 2.9; */
+  --wa-border-width-scale: 1 !important;
 }

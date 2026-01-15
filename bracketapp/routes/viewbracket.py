@@ -13,7 +13,7 @@ from bracketapp.utils.Sqids import sqids
 viewbracket_bp = Blueprint("viewbracket_bp", __name__)
 
 
-@viewbracket_bp.get("/view_bracket/<string:sqid>")
+@viewbracket_bp.get("/bracket/<string:sqid>")
 def view_bracket(sqid):
     bracket_id = sqids.decode_one(sqid)
     bracket = bracket_queries.get_bracket_for_bracket_id(bracket_id=bracket_id)
@@ -38,7 +38,7 @@ def view_bracket(sqid):
         "view_bracket.html",
         correct=correct.to_dict(),
         default=default.to_dict(),
-        bracket=bracket.to_dict(),
+        bracket=bracket.to_dict(safe_only=False),
         bracket_winner_img=bracket.winner_team.team.icon_path,
         correct_winner_img=(
             correct.winner_team.team.icon_path if correct.winner_team else ""
@@ -49,7 +49,7 @@ def view_bracket(sqid):
     )
 
 
-@viewbracket_bp.get("/view_cbracket/<int:year>")
+@viewbracket_bp.get("/finalbracket/<int:year>")
 def view_cbracket(year):
     if (CAN_EDIT_BRACKET and year == YEAR) and not current_user.is_admin():
         return redirect(url_for("archive_bp.archive"))

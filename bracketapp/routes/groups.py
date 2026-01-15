@@ -12,6 +12,8 @@ groups_bp = Blueprint("groups_bp", __name__)
 
 @groups_bp.get("/groups")
 def groups():
+    # TODO: fix this method. No idea what it's tryng to do?
+    # Maybe /my_brackets#groups?
     standings = bracket_utils.get_bracket_standings()
     standings_json = [
         b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in standings
@@ -28,11 +30,12 @@ def groups():
     )
 
 
-@groups_bp.get("/view_group/<string:sqid>")
+@groups_bp.get("/group/<string:sqid>")
 def view_group(sqid):
     group_id = sqids.decode_one(sqid)
     group = group_queries.get_group(group_id=group_id)
 
+    # TODO: fix viewability
     # if group.is_private and not group_queries.get_group_member(group_id=id):
     #     flash("You must join this group to view it")
     #     return redirect(url_for("groups_bp.groups"))
@@ -44,7 +47,7 @@ def view_group(sqid):
     return render_template("view_group.html", group=group.to_dict())
 
 
-@groups_bp.get("/api/view_group/<string:sqid>")
+@groups_bp.get("/api/group/<string:sqid>")
 def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
     group = group_queries.get_group(group_id=group_id)
@@ -56,8 +59,8 @@ def api_view_group(sqid):
         group_id=group_id, year=group.year
     )
 
-    brackets_dict = [b.to_dict() for b in brackets]
-    winners_dict = [b.to_dict() for b in winners]
+    brackets_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
+    winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
 
     return dict(
         is_member=is_member,
@@ -67,13 +70,29 @@ def api_view_group(sqid):
     )
 
 
+@groups_bp.post("/create_group")
+@login_required
+def create_group():
+    group_name = request.form.get("name")
+    is_private = request.form.get("is_private", type=bool, default=False)
+    password = request.form.get("password")
+
+    group_id = group_queries.create_group(
+        name=group_name, is_private=is_private, password=password
+    )
+
+    group_queries.upsert_group_member(group_id=group_id)
+
+    return redirect(url_for("groups_bp.view_group", sqid=sqids.encode_one(group_id)))
+
+
 @groups_bp.post("/edit_group/<string:sqid>")
 @login_required
 def edit_group(sqid):
     group_id = sqids.decode_one(sqid)
 
     group = group_queries.get_group(group_id=group_id)
-    if group.created_by != current_user.id:
+    if group.creator_id != current_user.id:
         flash("You can't edit a group you didn't create")
 
     group_name = request.form.get("name")
@@ -81,7 +100,7 @@ def edit_group(sqid):
     password = request.form.get("password")
     locked = request.form.get("locked") == "true"
 
-    group_queries.edit_group(
+    group_queries.update_group(
         group_id=group_id,
         name=group_name,
         is_private=is_private,
@@ -90,7 +109,7 @@ def edit_group(sqid):
     )
 
     flash("Group updated", "success")
-    return redirect(url_for("groups_bp.view_group", id=id))
+    return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
 
 @groups_bp.post("/delete_group/<string:sqid>")
@@ -106,23 +125,7 @@ def delete_group(sqid):
     group_queries.delete_group(group_id=group_id)
 
     flash("Group deleted", "success")
-    return redirect(url_for("groups_bp.my_brackets"))
-
-
-@groups_bp.post("/create_group")
-@login_required
-def create_group():
-    group_name = request.form.get("name")
-    is_private = request.form.get("is_private", type=bool, default=False)
-    password = request.form.get("password")
-
-    group = group_queries.create_group(
-        name=group_name, is_private=is_private, password=password
-    )
-
-    group_queries.maybe_create_group_member(group_id=group.id)
-
-    return redirect(url_for("groups_bp.view_group", id=group.id))
+    return redirect(url_for("mybrackets_bp.my_brackets"))
 
 
 @groups_bp.route("/join_group/<string:sqid>", methods=["GET", "POST"])
@@ -153,22 +156,34 @@ def join_group(sqid):
             # Go pass to viewing private group password page
             return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
-    group_queries.maybe_create_group_member(group_id=group_id)
+    group_queries.upsert_group_member(group_id=group_id)
 
     return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
 
-@groups_bp.post("/lock_group/<string:sqid>")
+@groups_bp.post("/group_add_bracket/<string:sqid>")
 @login_required
-def lock_group(sqid):
+def group_add_bracket(sqid):
     group_id = sqids.decode_one(sqid)
+
+    bracket_sqid = request.form.get("bracket_id")
+    bracket_id = None
+    if bracket_sqid:
+        bracket_id = sqids.decode_one(bracket_sqid)
+
+    bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=bracket_id)
+    if not bracket:
+        flash("Sorry, this bracket could not be found", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets"))
+
     group = group_queries.get_group(group_id=group_id)
-    if group.creator_id != current_user.id:
-        flash("You can't lock a group you didn't create")
-        return redirect(url_for("groups_bp.view_group", sqid=sqid))
+    if not group:
+        flash("Sorry, this group could not be found", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets"))
 
-    group_queries.lock_group(group_id=group_id)
+    group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
 
+    flash(f"Your bracket has been added to {group.name}", "success")
     return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
 
