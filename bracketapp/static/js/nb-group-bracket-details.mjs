@@ -8,7 +8,7 @@ export class GroupBracketDetails extends NikElement {
   };
 
   groupBracketTemplate(groupBracket) {
-    return html`<wa-card class="group-bracket-card"
+    return html`<wa-card class="group-bracket-card ${this.size}"
       ><a
         class="flex items-center gap-(--wa-space-2xs) no-underline"
         href="${groupBracket.group.url}"
@@ -19,7 +19,7 @@ export class GroupBracketDetails extends NikElement {
           library="hero"
           variant="outline"
         ></wa-icon>
-        <div class="flex flex-col group-name">
+        <div class="flex flex-col">
           <span class="group-name underline">${groupBracket.group.name}</span
           ><span class="rank">Rank: ${groupBracket.group_rank ?? "--"}</span>
         </div>

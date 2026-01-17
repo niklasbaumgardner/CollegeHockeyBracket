@@ -105,18 +105,16 @@ export class GroupStandings extends Standings {
   }
 
   nonMemberTemplate() {
-    if (this.group.locked) {
+    if (this.group.locked || !CURRENT_USER.id) {
       return;
     }
 
     if (this.group.is_private) {
-      return html`<wa-button
-        variant="primary"
-        @click=${this.handleJoinGroupClick}
+      return html`<wa-button variant="brand" @click=${this.handleJoinGroupClick}
         >Join Group</wa-button
       >`;
     } else {
-      return html`<wa-button variant="primary" href=${this.group.join_url}
+      return html`<wa-button variant="brand" href=${this.group.join_url}
         >Join Group</wa-button
       >`;
     }
@@ -133,8 +131,8 @@ export class GroupStandings extends Standings {
 
     return html`<div class="wa-cluster">
         <small
-          ><span class="font-semibold">Members</span> ${this.group.members
-            .length}</small
+          ><span class="font-semibold">Members</span> ${this.group
+            .member_count}</small
         ><small
           ><span class="font-semibold">Brackets</span> ${this.brackets
             .length}</small

@@ -24,8 +24,8 @@ def view_bracket(sqid):
 
     if CAN_EDIT_BRACKET and bracket.year == YEAR:
         if my_bracket:
-            if False:
-                return redirect(url_for("editbracket_bp.edit_bracket", sqid=sqid))
+            # if False:
+            return redirect(url_for("editbracket_bp.edit_bracket", sqid=sqid))
         else:
             return redirect(url_for("leaderboard_bp.index"))
 

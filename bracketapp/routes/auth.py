@@ -54,7 +54,7 @@ def signup():
         password1 = request.form.get("password1")
 
         if not user_queries.is_email_unique(email):
-            flash("Email already exists. Please log in", "primary")
+            flash("Email already exists. Please log in", "brand")
             return redirect(url_for("auth_bp.login", email=email))
 
         if not user_queries.is_username_unique(username):

@@ -29,7 +29,7 @@ export class GroupAddBracket extends BaseDialog {
 
   bracketTemplate(bracket) {
     return html`<nb-bracket-radio-item
-      name="bracket_id"
+      name="bracket_sqid"
       form="join-group-form"
       .bracket=${bracket}
     ></nb-bracket-radio-item>`;
@@ -42,9 +42,8 @@ export class GroupAddBracket extends BaseDialog {
     if (MY_BRACKET_COUNT < 5) {
       newBracket = html`<wa-button
         class="w-full"
-        appearance="plain"
-        outline
-        href=${NEW_BRACKET_LINK + `?group_id=${this.group.id}`}
+        appearance="outlined"
+        href=${NEW_BRACKET_LINK + `?group_sqid=${this.group.id}`}
         >Create New Bracket</wa-button
       >`;
     }

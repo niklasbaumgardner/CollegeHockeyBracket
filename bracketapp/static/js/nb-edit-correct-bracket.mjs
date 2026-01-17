@@ -208,7 +208,7 @@ class EditCorrectBracket extends EditBracket {
   }
 
   buttonsTemplate() {
-    let content = html`<wa-button variant="primary" type="submit"
+    let content = html`<wa-button variant="brand" type="submit"
       >Save bracket</wa-button
     >`;
 
@@ -242,7 +242,7 @@ class EditCorrectBracket extends EditBracket {
   render() {
     return html`<div class="w-100">
       <form
-        action="${BRACKET_FORM_URL}"
+        action="${this.bracket.form_url}"
         method="POST"
         @input=${this.handleInput}
       >

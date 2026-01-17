@@ -15,7 +15,7 @@ def delete_bracket(sqid):
     bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=bracket_id)
     if bracket and bracket.year == YEAR and CAN_EDIT_BRACKET:
         bracket_queries.delete_bracket(bracket_id=bracket.id)
-        flash("Bracket deleted", "success")
+        flash("Bracket successfully deleted", "success")
 
     return redirect(url_for("mybrackets_bp.my_brackets"))
 
@@ -35,6 +35,6 @@ def delete_group_bracket(sqid):
     )
     if bracket and bracket.year == YEAR and CAN_EDIT_BRACKET:
         group_queries.delete_group_bracket(group_bracket_id=group_bracket.id)
-        flash("Bracket Removed", "success")
+        flash("Bracket successfully removed from group", "success")
 
     return redirect(url_for("mybrackets_bp.my_brackets"))

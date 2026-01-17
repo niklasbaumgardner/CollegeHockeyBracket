@@ -26,8 +26,11 @@ export class AlertManager extends NikElement {
 
     return html`<div id="alerts" class="wa-stack items-center">
       ${this.messages.map(
-        ([category, message]) =>
-          html`<nb-alert category=${category} message=${message}></nb-alert>`
+        ([category, ...rest]) =>
+          html`<nb-alert
+            category=${category}
+            message=${rest.join(", ")}
+          ></nb-alert>`
       )}
     </div>`;
   }

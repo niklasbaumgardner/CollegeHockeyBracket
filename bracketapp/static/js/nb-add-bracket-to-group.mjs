@@ -32,7 +32,7 @@ export class AddBracketToGroup extends BaseDialog {
 
   groupTemplate(group) {
     return html`<nb-group-radio-item
-      name="group_id"
+      name="group_sqid"
       icon="trophy"
       .group=${group}
       form="join-group-form"

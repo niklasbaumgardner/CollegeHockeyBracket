@@ -3877,20 +3877,24 @@ nb-group-bracket-details {
 
   .group-bracket-card {
     width: fit-content;
-    max-width: 120px;
+    /* max-width: 120px; */
 
     &::part(body) {
-      /* padding: var(--wa-space-xs); */
       padding: var(--wa-space-xs) var(--wa-space-s);
     }
 
-    &.medium::part(body) {
-      padding: var(--wa-space-xs) var(--wa-space-s);
+    &.small::part(body) {
+      /* padding: var(--wa-space-xs); */
+      padding: var(--wa-space-2xs) var(--wa-space-xs);
     }
 
     .group-name {
       font-size: var(--wa-font-size-xs);
       line-height: var(--wa-line-height-normal);
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 100px;
     }
 
     .trophy {
@@ -3946,38 +3950,37 @@ nb-group-bracket-details {
   min-height: 0 !important;
 }
 
-/* nb-search-groups {
-  wa-popup::part(popup) {
-    z-index: var(--wa-z-index-drawer);
+nb-search-groups {
+  wa-card::part(body) {
+    padding: var(--wa-space-s) 0;
   }
 
-  wa-popup {
-    wa-menu {
-      --wa-panel-background-color: var(--wa-color-neutral-0);
-      box-shadow: var(--wa-shadow-xl);
-      border-width: 0px;
+  .clickable-group {
+    display: flex;
+    width: 100%;
+    padding: var(--wa-space-s) var(--wa-space-l);
+
+    /* TODO: light and dark */
+    &:hover {
+      background-color: light-dark(
+        var(--wa-color-neutral-70),
+        var(--wa-color-neutral-30)
+      );
+    }
+
+    &:focus-visible {
+      background-color: light-dark(
+        var(--wa-color-brand-50),
+        var(--wa-color-neutral-70)
+      );
+      color: light-dark(var(--wa-color-neutral-95), var(--wa-color-neutral-05));
     }
   }
-} */
+}
 
 nb-my-bracket-actions,
 nb-my-group-bracket-actions {
   display: block;
-}
-
-.clickable-group {
-  display: flex;
-  width: 100%;
-
-  /* TODO: light and dark */
-  &:hover {
-    background-color: var(--wa-color-neutral-30);
-  }
-
-  &:focus-visible {
-    background-color: var(--wa-color-text-link);
-    color: var(--wa-color-neutral-20);
-  }
 }
 
 nb-matchup,

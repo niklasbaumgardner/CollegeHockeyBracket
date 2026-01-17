@@ -469,7 +469,7 @@ export class EditBracket extends NikElement {
   render() {
     return html`<div class="w-full ">
       <form
-        action=${BRACKET_FORM_URL}
+        action=${this.bracket.form_url + location.search}
         method="POST"
         @input=${this.handleInput}
         class="wa-stack"

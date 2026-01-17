@@ -77,7 +77,7 @@ export class SearchGroups extends NikElement {
   resultsTemplate() {
     let resultsContent = "";
     if (!this.results.length) {
-      resultsContent = html`No groups found`;
+      resultsContent = html`<p class="text-center">No groups found</p>`;
     } else {
       resultsContent = this.results
         .flatMap((g) => [

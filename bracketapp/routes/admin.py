@@ -98,7 +98,7 @@ def update_correct():
 
         return render_template(
             "edit_cbracket.html",
-            bracket=correct.to_dict(),
+            bracket=correct.to_dict(rules=("form_url",)),
             default=default.to_dict(),
         )
 

@@ -11,6 +11,7 @@ from bracketapp.models import (
     DefaultGame,
     Team,
     BracketTeam,
+    User,
 )
 from bracketapp import db
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
@@ -22,7 +23,7 @@ from sqlalchemy.orm import (
     with_loader_criteria,
     with_expression,
 )
-from sqlalchemy import and_, or_, func, insert, select, update, collate, delete
+from sqlalchemy import and_, or_, func, insert, select, update, collate, delete, exists
 from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
@@ -42,6 +43,10 @@ def get_all_groups_for_user(sort=False):
                 or_(
                     Bracket.id.is_(None),
                     Bracket.user_id == current_user.id,
+                ),
+                or_(
+                    GroupBracket.id.is_(None),
+                    GroupBracket.user_id == current_user.id,
                 ),
             )
         )
@@ -78,6 +83,13 @@ def get_group(group_id):
     return db.session.scalars(stmt.limit(1)).first()
 
 
+def get_my_group(group_id):
+    stmt = select(Group).where(
+        and_(Group.id == group_id, Group.creator_id == current_user.id)
+    )
+    return db.session.scalars(stmt.limit(1)).first()
+
+
 def get_all_groups(year=YEAR):
     stmt = select(Group).where(Group.year == year)
     return db.session.scalars(stmt).all()
@@ -94,12 +106,31 @@ def get_group_member(group_id):
     return db.session.scalars(stmt.limit(1)).first()
 
 
+def is_group_member(group_id):
+    if not current_user.is_authenticated:
+        return False
+
+    stmt = select(
+        exists().where(
+            and_(
+                GroupMember.group_id == group_id, current_user.id == GroupMember.user_id
+            )
+        )
+    )
+
+    return db.session.scalar(stmt)
+
+
 def search_groups(group_name):
     if not group_name:
         return []
 
     stmt = select(Group).where(
-        and_(Group.year == YEAR, Group.name.ilike(f"%{group_name}%"))
+        and_(
+            Group.year == YEAR,
+            Group.name.ilike(f"%{group_name}%"),
+            Group.locked == False,
+        )
     )
     return db.session.scalars(stmt.limit(10)).unique().all()
 
@@ -152,12 +183,23 @@ def update_group(group_id, name=None, is_private=None, password=None, locked=Non
     db.session.commit()
 
 
+def get_group_member_count(group_id):
+    stmt = select(func.count(1)).where(GroupMember.group_id == group_id)
+    return db.session.execute(stmt).scalar_one()
+
+
 def upsert_group_member(group_id):
     stmt = pg_insert(GroupMember).values(group_id=group_id, user_id=current_user.id)
     upsert_stmt = stmt.on_conflict_do_nothing(
         constraint="group_member_group_id_user_id_key",
     )
     db.session.execute(upsert_stmt)
+
+    member_count = get_group_member_count(group_id)
+
+    stmt = update(Group).where(Group.id == group_id).values(member_count=member_count)
+    db.session.execute(stmt)
+
     db.session.commit()
 
 

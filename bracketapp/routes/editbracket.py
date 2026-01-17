@@ -14,11 +14,6 @@ editbracket_bp = Blueprint("editbracket_bp", __name__)
 def edit_bracket(sqid):
     bracket_id = sqids.decode_one(sqid)
 
-    group_sqid = request.args.get("group_id")
-    group_id = None
-    if group_sqid:
-        group_id = sqids.decode_one(group_sqid)
-
     if not CAN_EDIT_BRACKET:
         # if we have a bracket id and we can't edit, go to viewing the bracket
         return redirect(
@@ -30,16 +25,12 @@ def edit_bracket(sqid):
     )
 
     if not bracket:
+        # This seems better
+        return redirect(url_for("mybrackets_bp.my_brackets"))
         # is this really what i want to do?
-        return redirect(
-            url_for("viewbracket_bp.view_bracket", sqid=sqids.encode_one(bracket_id))
-        )
-
-    if group_id and not group_queries.get_group_member(group_id=group_id):
-        flash("You must join this group to submit a bracket", "danger")
-        return redirect(
-            url_for("groups_bp.view_group", sqid=sqids.encode_one(group_id))
-        )
+        # return redirect(
+        #     url_for("viewbracket_bp.view_bracket", sqid=sqids.encode_one(bracket_id))
+        # )
 
     default = default_bracket_queries.get_default_bracket()
 
@@ -47,17 +38,16 @@ def edit_bracket(sqid):
         "edit_bracket.html",
         bracket=bracket.to_dict(safe_only=False),
         default=default.to_dict(),
-        group_id=group_id,
     )
 
 
 @editbracket_bp.get("/new_bracket")
 @login_required
 def new_bracket():
-    group_sqid = request.args.get("group_id")
-    group_id = None
-    if group_sqid:
-        group_id = sqids.decode_one(group_sqid)
+    # group_sqid = request.args.get("group_id")
+    # group_id = None
+    # if group_sqid:
+    #     group_id = sqids.decode_one(group_sqid)
 
     my_bracket_count = bracket_queries.my_bracket_count()
     if my_bracket_count >= 5:
@@ -71,18 +61,16 @@ def new_bracket():
         flash("Editing is disabled", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
-    if group_id and not group_queries.get_group_member(group_id=group_id):
-        flash("You must join this group to submit a bracket", "danger")
-        return redirect(url_for("groups_bp.view_group", id=group_id))
+    # Check group in post
+    # if group_id and not group_queries.get_group_member(group_id=group_id):
+    #     flash("You must join this group to submit a bracket", "danger")
+    #     return redirect(url_for("groups_bp.view_group", id=group_id))
 
-    bracket = bracket_queries.get_empty_bracket()
-    default = bracket_queries.get_default_bracket()
+    bracket = bracket_queries.get_empty_bracket_dict()
+    default = default_bracket_queries.get_default_bracket()
 
     return render_template(
-        "edit_bracket.html",
-        bracket=bracket.to_dict(safe_only=False),
-        default=default.to_dict(),
-        group_id=group_id,
+        "edit_bracket.html", bracket=bracket, default=default.to_dict()
     )
 
 
@@ -91,25 +79,26 @@ def new_bracket():
 def edit_bracket_post(sqid):
     bracket_id = sqids.decode_one(sqid)
 
-    group_sqid = request.args.get("group_id")
-    group_id = None
-    if group_sqid:
-        group_id = sqids.decode_one(group_sqid)
+    # TODO: is this even possible to have group_id in the url?
+    # group_sqid = request.args.get("group_sqid")
+    # group_id = None
+    # if group_sqid:
+    #     group_id = sqids.decode_one(group_sqid)
 
     if not CAN_EDIT_BRACKET:
         # if we have a bracket id and we can't edit, go to viewing the bracket
         return redirect(url_for("viewbracket_bp.view_bracket", id=bracket_id))
 
-    if group_id and not group_queries.get_group_member(group_id=group_id):
-        flash("You must join this group to submit a bracket", "danger")
-        return redirect(url_for("groups_bp.view_group", sqid=group_id))
+    # if group_id and not group_queries.get_group_member(group_id=group_id):
+    #     flash("You must join this group to submit a bracket", "danger")
+    #     return redirect(url_for("groups_bp.view_group", sqid=group_id))
 
     bracket_queries.update_bracket_from_form(bracket_id, request.form)
 
     # if existing_bracket:
     flash("Bracket saved", "success")
-    if group_id:
-        return redirect(url_for("groups_bp.view_group", sqid=group_id))
+    # if group_id:
+    #     return redirect(url_for("groups_bp.view_group", sqid=group_id))
 
     # else:
     #     flash("No bracket was found for that id. Please try again", "danger")
@@ -120,7 +109,7 @@ def edit_bracket_post(sqid):
 @editbracket_bp.post("/new_bracket")
 @login_required
 def new_bracket_post():
-    group_sqid = request.args.get("group_id")
+    group_sqid = request.args.get("group_sqid")
     group_id = None
     if group_sqid:
         group_id = sqids.decode_one(group_sqid)
@@ -136,9 +125,9 @@ def new_bracket_post():
         # if we can't edit, go to viewing my brackets
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
-    if group_id and not group_queries.get_group_member(group_id=group_id):
+    if not group_queries.is_group_member(group_id=group_id):
         flash("You must join this group to submit a bracket", "danger")
-        return redirect(url_for("groups_bp.view_group", id=group_id))
+        return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
 
     new_bracket_id = bracket_queries.create_bracket_from_form(request.form)
 
@@ -146,7 +135,7 @@ def new_bracket_post():
         group_queries.create_group_bracket(group_id=group_id, bracket_id=new_bracket_id)
 
         flash("Bracket saved", "success")
-        return redirect(url_for("groups_bp.view_group", id=group_id))
+        return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
 
     flash("Bracket saved", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))
@@ -157,7 +146,7 @@ def new_bracket_post():
 def bracket_join_group(sqid):
     bracket_id = sqids.decode_one(sqid)
 
-    group_sqid = request.form.get("group_id")
+    group_sqid = request.form.get("group_sqid")
     group_id = None
     if group_sqid:
         group_id = sqids.decode_one(group_sqid)

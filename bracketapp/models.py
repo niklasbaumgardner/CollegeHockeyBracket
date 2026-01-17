@@ -5,8 +5,15 @@ from flask_login import UserMixin, current_user
 from itsdangerous import URLSafeTimedSerializer
 import os
 from flask import url_for
-from sqlalchemy.orm import mapped_column, Mapped, relationship, query_expression
-from sqlalchemy import ForeignKey, BigInteger, Identity, UniqueConstraint
+from sqlalchemy.orm import (
+    mapped_column,
+    Mapped,
+    relationship,
+    query_expression,
+    column_property,
+    declared_attr,
+)
+from sqlalchemy import ForeignKey, BigInteger, Identity, UniqueConstraint, select, func
 from sqlalchemy.sql import and_
 from bracketapp.utils.Serializer import SerializerMixin
 from enum import IntFlag
@@ -171,6 +178,9 @@ class Bracket(BaseModel, SqidSerializerMixin):
     def url(self):
         return url_for("viewbracket_bp.view_bracket", sqid=self.sqid_id())
 
+    def form_url(self):
+        return url_for("editbracket_bp.edit_bracket_post", sqid=self.sqid_id())
+
     def delete_url(self):
         return url_for("deletebracket_bp.delete_bracket", sqid=self.sqid_id())
 
@@ -300,6 +310,9 @@ class CorrectBracket(BaseModel, SqidSerializerMixin):
     def url(self):
         return url_for("viewbracket_bp.view_cbracket", year=self.year)
 
+    def form_url(self):
+        return url_for("admin_bp.update_correct")
+
     def archive_url(self):
         return url_for("archive_bp.archive_year", year=self.year)
 
@@ -366,6 +379,18 @@ class DefaultGame(BaseModel, SqidSerializerMixin):
     )
 
 
+class GroupMember(BaseModel, SqidSerializerMixin):
+    __tablename__ = "group_member"
+    __table_args__ = (UniqueConstraint("group_id", "user_id"),)
+
+    id: Mapped[int_pk]
+    group_id: Mapped[int] = mapped_column(ForeignKey("group.id"))
+    user_id: Mapped[user_fk]
+
+    user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
+    # group = relationship("Group", lazy="noload")
+
+
 class Group(BaseModel, SqidSerializerMixin):
     __tablename__ = "group"
     __table_args__ = (UniqueConstraint("year", "name"),)
@@ -376,6 +401,7 @@ class Group(BaseModel, SqidSerializerMixin):
         "join_url",
         "share_url",
         "add_bracket_url",
+        "new_bracket_url",
         "delete_url",
         "members",
         "brackets",
@@ -388,8 +414,10 @@ class Group(BaseModel, SqidSerializerMixin):
     locked: Mapped[bool]
     password: Mapped[Optional[str]]
     creator_id: Mapped[user_fk]
+    member_count: Mapped[int]
 
-    members: Mapped[list["GroupMember"]] = relationship(lazy="joined", viewonly=True)
+    members: Mapped[list["GroupMember"]] = relationship(lazy="noload", viewonly=True)
+
     # brackets: Mapped[list["Bracket"] | None] = query_expression()
     # creator: Mapped["User"] = relationship("User", lazy="joined")
     # brackets: Mapped[list["Bracket"]] = relationship(
@@ -442,18 +470,6 @@ class Group(BaseModel, SqidSerializerMixin):
 
     def new_bracket_url(self):
         return url_for("editbracket_bp.new_bracket", group_sqid=self.sqid_id())
-
-
-class GroupMember(BaseModel, SqidSerializerMixin):
-    __tablename__ = "group_member"
-    __table_args__ = (UniqueConstraint("group_id", "user_id"),)
-
-    id: Mapped[int_pk]
-    group_id: Mapped[int] = mapped_column(ForeignKey("group.id"))
-    user_id: Mapped[user_fk]
-
-    user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
-    # group = relationship("Group", lazy="noload")
 
 
 class GroupBracket(BaseModel, SqidSerializerMixin):

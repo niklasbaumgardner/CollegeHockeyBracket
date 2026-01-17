@@ -10,35 +10,17 @@ from bracketapp.utils.Sqids import sqids
 groups_bp = Blueprint("groups_bp", __name__)
 
 
-@groups_bp.get("/groups")
-def groups():
-    # TODO: fix this method. No idea what it's tryng to do?
-    # Maybe /my_brackets#groups?
-    standings = bracket_utils.get_bracket_standings()
-    standings_json = [
-        b.to_dict(safe_only=CAN_EDIT_BRACKET, include_games=False) for b in standings
-    ]
-
-    message = bracket_utils.get_standings_message(standings)
-
-    return render_template(
-        "standings.html",
-        standings=standings_json,
-        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
-        message=message,
-        year=YEAR,
-    )
-
-
 @groups_bp.get("/group/<string:sqid>")
 def view_group(sqid):
     group_id = sqids.decode_one(sqid)
     group = group_queries.get_group(group_id=group_id)
 
+    print("am i a member?????????????????????", group_queries.is_group_member(group_id))
+
     # TODO: fix viewability
     # if group.is_private and not group_queries.get_group_member(group_id=id):
     #     flash("You must join this group to view it")
-    #     return redirect(url_for("groups_bp.groups"))
+    #     return redirect(url_for("mybrackets_bp.mybrackets")+"#groups")
 
     if not group:
         flash("Sorry. This group doesn't exist")
@@ -91,9 +73,10 @@ def create_group():
 def edit_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    group = group_queries.get_group(group_id=group_id)
-    if group.creator_id != current_user.id:
-        flash("You can't edit a group you didn't create")
+    group = group_queries.get_my_group(group_id=group_id)
+    if not group:
+        flash("Something went wrong", "danger")
+        return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
     group_name = request.form.get("name")
     is_private = request.form.get("is_private") == "true"
@@ -117,14 +100,14 @@ def edit_group(sqid):
 def delete_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    group = group_queries.get_group(group_id=group_id)
-    if group.creator_id != current_user.id:
-        flash("You can't delete a group you didn't create")
+    group = group_queries.get_my_group(group_id=group_id)
+    if not group:
+        flash("Something went wrong", "danger")
         return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
     group_queries.delete_group(group_id=group_id)
 
-    flash("Group deleted", "success")
+    flash("Group successfully deleted", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))
 
 
@@ -166,7 +149,7 @@ def join_group(sqid):
 def group_add_bracket(sqid):
     group_id = sqids.decode_one(sqid)
 
-    bracket_sqid = request.form.get("bracket_id")
+    bracket_sqid = request.form.get("bracket_sqid")
     bracket_id = None
     if bracket_sqid:
         bracket_id = sqids.decode_one(bracket_sqid)

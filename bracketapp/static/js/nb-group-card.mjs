@@ -18,8 +18,8 @@ export class GroupCardContent extends NikElement {
         <div>${this.group.name}</div>
         <div class="wa-cluster">
           <small
-            ><span class="font-semibold">Members</span> ${this.group.members
-              .length}</small
+            ><span class="font-semibold">Members</span> ${this.group
+              .member_count}</small
           ><small
             ><span class="font-semibold">Brackets</span> ${this.group.brackets
               .length}</small

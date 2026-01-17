@@ -1,3 +1,4 @@
+from flask import url_for
 from sqlalchemy.util.topological import sort
 from bracketapp.models import (
     CorrectBracket,
@@ -26,17 +27,14 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 ##
 
 
-def get_empty_bracket():
+def get_empty_bracket_dict():
     # TODO: return just a dict?
-    return Bracket(
+    return dict(
         user_id=None,
         name="",
         year=YEAR,
-        winner=None,
-        winner_goals=None,
-        loser_goals=None,
-        max_points=320,
-        points=0,
+        games=dict(),
+        form_url=url_for("editbracket_bp.new_bracket"),
     )
 
 
@@ -74,6 +72,8 @@ def create_bracket_from_form(form_data):
     stmt = insert(Game).values(games)
     db.session.execute(stmt)
     db.session.commit()
+
+    return new_bracket_id
 
 
 def update_bracket_from_form(bracket_id, form_data):

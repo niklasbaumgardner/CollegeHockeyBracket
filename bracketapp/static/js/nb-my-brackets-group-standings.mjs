@@ -113,7 +113,7 @@ export class MyBracketsGroupStandings extends NikElement {
             <div class="flex flex-col group-name">
               <span class="underline">${this.group.name}</span>
               <span class="group-size"
-                >Group size: ${this.group.members.length}</span
+                >Group size: ${this.group.member_count}</span
               >
             </div>
           </a>

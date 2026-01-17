@@ -15,13 +15,14 @@ class MyBracketElement extends MyBracketColumn {
     }
 
     return html`<nb-group-bracket-details
+      size="small"
       .groupBrackets=${this.bracket.group_brackets}
     ></nb-group-bracket-details>`;
   }
 
   render() {
     if (this.bracket.id === -1) {
-      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="primary"
+      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="brand"
         >Create new bracket</wa-button
       >`;
     }
