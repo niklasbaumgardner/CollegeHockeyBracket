@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% block title %}My Brackets{% endblock title %} {%
-block mybrackets %}active{% endblock mybrackets %} {% block content %}
+{% extends "base.html" %} {% block mybrackets %}active{% endblock mybrackets %}
+{% block head %}
+
+<title>My Brackets</title>
+<script type="module" src="/static/js/nb-my-brackets.mjs"></script>
+<script type="module" src="/static/js/nb-create-group.mjs"></script>
 <script>
   const NEW_BRACKET_LINK = "{{ url_for('editbracket_bp.new_bracket') }}";
   const CREATE_GROUP_URL = "{{ url_for('groups_bp.create_group') }}";
@@ -14,11 +18,10 @@ block mybrackets %}active{% endblock mybrackets %} {% block content %}
   crossorigin="anonymous"
 />
 
+{% endblock head %} {% block content %}
+
 <nb-my-brackets class="medium-card"></nb-my-brackets>
 
 <nb-create-group></nb-create-group>
-
-<script type="module" src="/static/js/nb-my-brackets.mjs"></script>
-<script type="module" src="/static/js/nb-create-group.mjs"></script>
 
 {% endblock content %}

@@ -1,15 +1,13 @@
-{% extends "base.html" %} {% block title %}Default Bracket{% endblock title %}
-{% block head %}
+{% extends "base.html" %} {% block head %}
 
+<title>{{ default.year }} Default Correct</title>
 <script src="/static/js/nb-default-bracket.mjs" type="module"></script>
 
-{% endblock head %}
-{% block content %}
+{% endblock head %} {% block content %}
 
 <nb-default-bracket
   default='{{ default|tojson }}'
   teams='{{ teams|tojson }}'
-></nb-edit-bracke>
-
+></nb-default-bracket>
 
 {% endblock content %}

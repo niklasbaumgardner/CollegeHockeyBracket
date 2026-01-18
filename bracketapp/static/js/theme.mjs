@@ -101,6 +101,9 @@ export class Theme {
   #initing;
 
   constructor(theme) {
+    if (!theme.mode) {
+      theme.mode = window.localStorage.getItem("theme.mode");
+    }
     this.#initing = true;
     this.#domProperties = window.getComputedStyle(document.documentElement);
     this.theme = theme.theme;

@@ -19,7 +19,7 @@ def globals():
     return dict(
         user_settings=user_settings.to_dict()
         if user_settings
-        else {"settings": {"theme": "classic"}},
+        else {"settings": {"theme": "shoelace"}},
         MY_BRACKET_COUNT=my_bracket_count,
         CURRENT_YEAR=YEAR,
         CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,

@@ -27,16 +27,12 @@ export class StandingsGrid extends BaseGrid {
     standingsGridEl: "#standingsGrid",
   };
 
-  get localStorage() {
-    if (!this._localStorage) {
-      this._localStorage = window.localStorage;
-    }
-
-    return this._localStorage;
-  }
-
   get storedPageSize() {
-    return this.localStorage.getItem(this.#pageSizeKey) ?? 25;
+    const storedNumber = parseInt(
+      window.localStorage.getItem(this.#pageSizeKey)
+    );
+
+    return isNaN(storedNumber) ? 25 : storedNumber;
   }
 
   get defaultBracketColumnWidth() {
@@ -50,7 +46,7 @@ export class StandingsGrid extends BaseGrid {
       autoSizeStrategy: {
         type: "fitGridWidth",
         columnLimits: [
-          { colId: "rank", minWidth: 64, maxWidth: 64 },
+          { colId: "rank", minWidth: 75, maxWidth: 75 },
           {
             colId: "name",
             minWidth: this.defaultBracketColumnWidth,
@@ -204,7 +200,7 @@ export class StandingsGrid extends BaseGrid {
 
   handlePaginationChangedEvent(event) {
     if (event.newPageSize) {
-      this.localStorage.setItem(
+      window.localStorage.setItem(
         this.#pageSizeKey,
         this.dataGrid.paginationGetPageSize()
       );

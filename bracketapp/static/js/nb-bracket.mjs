@@ -181,6 +181,7 @@ class Bracket extends NikElement {
     </div>`;
   }
 
+  // TODO: consider combining champion templates below
   championTemplate() {
     return html`<div class="round-final my-auto">
       <wa-card>

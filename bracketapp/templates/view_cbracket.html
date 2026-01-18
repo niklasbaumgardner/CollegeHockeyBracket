@@ -1,12 +1,14 @@
-{% extends "base.html" %} {% block title %}{{ year }} Final Bracket{% endblock
-title %} {% block content %}
+{% extends "base.html" %} {% block head %}
+
+<title>{{ year }} Final Bracket</title>
+<script type="module" src="/static/js/nb-bracket.mjs"></script>
+
+{% endblock head %} {% block content %}
 
 <nb-bracket
   type="correct"
   default='{{ default|tojson }}'
   correct='{{ correct|tojson }}'
 ></nb-bracket>
-
-<script type="module" src="/static/js/nb-bracket.mjs"></script>
 
 {% endblock content %}

@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}{{ group.name }}{% endblock title %}
-{% block standings %}active{% endblock standings %} {% block content %}
+{% extends "base.html" %} {% block standings %}active{% endblock standings %} {%
+block head %}
+
+<title>{{ group.name }}</title>
+<script src="/static/js/nb-group-standings.mjs" type="module"></script>
 <script>
   const MY_BRACKETS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
   const VIEW_GROUP_CONTENT_URL =
@@ -11,8 +14,8 @@
   as="fetch"
 />
 
-<nb-group-standings theme="{{ theme }}"></nb-group-standings>
+{% endblock head %} {% block content %}
 
-<script src="/static/js/nb-group-standings.mjs" type="module"></script>
+<nb-group-standings class="medium-card"></nb-group-standings>
 
 {% endblock content %}

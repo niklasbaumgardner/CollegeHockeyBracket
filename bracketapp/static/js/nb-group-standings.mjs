@@ -201,7 +201,6 @@ export class GroupStandings extends Standings {
   bracketsTemplate() {
     return html`<nb-group-standings-grid
       .brackets=${this.brackets}
-      theme=${this.theme}
     ></nb-group-standings-grid>`;
   }
 

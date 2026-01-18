@@ -1,15 +1,16 @@
-{% extends "base.html" %} {% block title %}{{ bracket.year }} Update Correct{%
-endblock title %} {% block content %}
+{% extends "base.html" %} {% block head %}
 
+<title>{{ bracket.year }} Update Correct</title>
+<script type="module" src="/static/js/nb-edit-correct-bracket.mjs"></script>
 <script>
   const CANCEL_BRACKET_URL = "{{ url_for('admin_bp.update_correct') }}";
 </script>
+
+{% endblock head %} {% block content %}
 
 <nb-edit-correct-bracket
   bracket='{{ bracket|tojson }}'
   default='{{ default|tojson }}'
 ></nb-edit-correct-bracket>
-
-<script type="module" src="/static/js/nb-edit-correct-bracket.mjs"></script>
 
 {% endblock content %}

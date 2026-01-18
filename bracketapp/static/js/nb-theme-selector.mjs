@@ -51,6 +51,8 @@ export class ThemeSelector extends NikElement {
     }
 
     this.icon.name = this.getThemeIconName();
+
+    window.localStorage.setItem("theme.mode", this.theme.mode);
   }
 
   setTheme(themeMode) {

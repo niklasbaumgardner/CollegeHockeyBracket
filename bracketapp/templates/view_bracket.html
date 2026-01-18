@@ -1,17 +1,20 @@
-{% extends "base.html" %} {% block title %}{{ name }}{% endblock title %} {%
-block mybracket %}{{ active }}{% endblock mybracket %} {% block content %}
+{% extends "base.html" %} {% block mybracket %}{{ active }}{% endblock mybracket
+%} {% block head %}
+
+<title>{{ name }}</title>
+<script type="module" src="/static/js/nb-bracket.mjs"></script>
 <script>
   const BRACKET_WINNER_IMAGE = "{{ bracket_winner_img }}";
   const CORRECT_WINNER_IMAGE = "{{ correct_winner_img }}";
   const IS_ME = "{{ my_bracket }}" === "True";
 </script>
 
+{% endblock head %} {% block content %}
+
 <nb-bracket
   bracket='{{ bracket|tojson }}'
   default='{{ default|tojson }}'
   correct='{{ correct|tojson }}'
 ></nb-bracket>
-
-<script type="module" src="/static/js/nb-bracket.mjs"></script>
 
 {% endblock content %}

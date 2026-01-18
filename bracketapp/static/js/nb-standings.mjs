@@ -8,9 +8,6 @@ export class Standings extends NikElement {
       type: Object,
     },
     winners: { type: Object },
-    theme: {
-      type: String,
-    },
     year: { type: Number },
   };
 
@@ -76,7 +73,6 @@ export class Standings extends NikElement {
     return html`<nb-standings-grid
       year=${this.year}
       .brackets=${this.brackets}
-      theme=${this.theme}
     ></nb-standings-grid>`;
   }
 

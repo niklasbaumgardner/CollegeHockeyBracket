@@ -1,16 +1,19 @@
-{% extends "base.html" %} {% block title %}My Bracket{% endblock title %} {%
-block mybracket %}active{% endblock mybracket %} {% block content %}
+{% extends "base.html" %} {% block mybracket %}active{% endblock mybracket %} {%
+block head %}
+
+<title>My Bracket</title>
+<script type="module" src="/static/js/nb-edit-bracket.mjs"></script>
 <script>
   const CANCEL_BRACKET_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
   const STANDINGS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";
   const ARCHIVE_URL = "{{ url_for('archive_bp.archive') }}";
 </script>
 
+{% endblock head %} {% block content %}
+
 <nb-edit-bracket
   bracket='{{ bracket|tojson }}'
   default='{{ default|tojson }}'
-></nb-edit-bracke>
-
-<script type="module" src="/static/js/nb-edit-bracket.mjs"></script>
+></nb-edit-bracket>
 
 {% endblock content %}

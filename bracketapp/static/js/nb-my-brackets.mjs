@@ -135,7 +135,6 @@ export class MyBrackets extends Standings {
         headerName="My Brackets"
         .brackets=${this.brackets}
         .groups=${this.groups}
-        theme=${this.theme}
       ></nb-my-brackets-grid>
     </div>`;
   }

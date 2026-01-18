@@ -1,13 +1,18 @@
-{% extends "base.html" %} {% block title %}{% if year == CURRENT_YEAR
-%}Leaderboard{% else %}Archive {{ year }}{% endif %}{% endblock title %} {%
-block standings %}active{% endblock standings %} {% block content %}
+{% extends "base.html" %} {% block standings %}active{% endblock standings %} {%
+block head %}
+
+<title>
+  {% if year == CURRENT_YEAR %}Leaderboard{% else %}Archive {{ year }}{% endif
+  %}
+</title>
+<script src="/static/js/nb-standings.mjs" type="module"></script>
 <script>
   const LEADERBOARD_CONTENT_URL = "{{ content_url }}";
 </script>
 <link rel="preload" href="{{ content_url }}" as="fetch" />
 
-<nb-standings class="medium-card"></nb-standings>
+{% endblock head %} {% block content %}
 
-<script src="/static/js/nb-standings.mjs" type="module"></script>
+<nb-standings class="medium-card"></nb-standings>
 
 {% endblock content %}
