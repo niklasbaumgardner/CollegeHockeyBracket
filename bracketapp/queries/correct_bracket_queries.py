@@ -104,13 +104,3 @@ def update_correct_bracket_from_form(form_data):
     db.session.execute(upsert_stmt)
 
     db.session.commit()
-
-
-# def delete_correct_bracket():
-# correct = get_correct_bracket()
-
-# for game in correct.games_list:
-#     db.session.delete(game)
-
-# db.session.delete(correct)
-# db.session.commit()

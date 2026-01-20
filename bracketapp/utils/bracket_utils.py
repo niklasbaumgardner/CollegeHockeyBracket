@@ -1,4 +1,4 @@
-from bracketapp.queries import bracket_queries, user_queries, correct_bracket_queries
+from bracketapp.queries import bracket_queries, correct_bracket_queries, group_queries
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from flask_login import current_user
 from flask import url_for
@@ -10,13 +10,6 @@ class BracketWinner:
         self.winner = winning_bracket
         self.tie = tie
         self.total_correct_goals = total_correct_goals
-
-
-def assign_image(bracket):
-    if not bracket or not bracket.winner_id:
-        return ""
-    team = bracket_queries.get_team_by_bracket_team_id(id=bracket.winner_id)
-    return team.icon_path
 
 
 def get_winner(standings):
@@ -223,6 +216,100 @@ def get_bracket_standings(year=YEAR):
     return brackets, winners, correct
 
 
+def update_all_brackets_points():
+    brackets = bracket_queries.get_all_brackets_joined()
+    correct = correct_bracket_queries.get_correct_bracket()
+
+    brackets_update_list = []
+    for user_bracket in brackets:
+        bracket_update_dict = user_bracket.to_dict(
+            only=(
+                "winner_goals",
+                "loser_goals",
+            )
+        )
+        bracket_update_dict["id"] = user_bracket.id
+
+        points_dict = calculate_points_for_bracket(user_bracket, correct)
+        bracket_update_dict |= points_dict
+
+        max_points = calculate_max_points_for_bracket(user_bracket, correct)
+        bracket_update_dict["max_points"] = max_points
+
+        brackets_update_list.append(bracket_update_dict)
+
+    brackets_update_list = update_standings(brackets_update_list, correct)
+
+    group_brackets_update_list = update_all_group_standings(
+        brackets_update_list, correct
+    )
+
+    bracket_queries.bulk_update_bracket_points(brackets_update_list)
+    bracket_queries.bulk_update_group_ranks(group_brackets_update_list)
+
+    # update_all_groups(brackets=brackets, correct=correct)
+
+
+def update_standings(brackets_update_list, correct):
+    if correct.winner_id:
+        for bracket in brackets_update_list:
+            bracket["goal_difference"] = abs(
+                bracket["winner_goals"]
+                + bracket["loser_goals"]
+                - (correct.winner_goals + correct.loser_goals)
+            )
+
+        brackets_update_list.sort(key=lambda b: b["goal_difference"])
+
+    brackets_update_list.sort(key=lambda b: b["points"], reverse=True)
+
+    rank = 1
+    for i, bracket in enumerate(brackets_update_list):
+        if i == 0:
+            bracket["rank"] = rank
+        elif bracket["points"] == brackets_update_list[i - 1]["points"]:
+            bracket["rank"] = rank
+        else:
+            rank = i + 1
+            bracket["rank"] = rank
+
+    return brackets_update_list
+
+
+def update_all_group_standings(brackets_update_list, correct):
+    groups = group_queries.get_all_groups()
+    groups_dict = {g.id: [] for g in groups}
+
+    brackets_dict = {b["id"]: b for b in brackets_update_list}
+    group_brackets = bracket_queries.get_all_group_brackets()
+
+    for gb in group_brackets:
+        gb_dict = {"id": gb.id}
+        groups_dict[gb.group_id].append((gb_dict, brackets_dict[gb.bracket_id]))
+
+    for group_brackets in groups_dict.values():
+        if correct.winner_id:
+            group_brackets.sort(key=lambda tup: tup[1]["goal_difference"])
+
+        group_brackets.sort(key=lambda tup: tup[1]["points"], reverse=True)
+
+        rank = 1
+        for i, [group_bracket, bracket] in enumerate(group_brackets):
+            if i == 0:
+                group_bracket["group_rank"] = rank
+            elif bracket["points"] == group_brackets[i - 1][1]["points"]:
+                group_bracket["group_rank"] = rank
+            else:
+                rank = i + 1
+                group_bracket["group_rank"] = rank
+
+    group_brackets_update_list = []
+    for [gb, _] in groups_dict.values():
+        group_brackets_update_list.append(gb)
+
+    return group_brackets_update_list
+
+
 def calculate_points_for_bracket(bracket, correct):
     r1 = 0
     r2 = 0
@@ -271,7 +358,13 @@ def calculate_points_for_bracket(bracket, correct):
         r4 += 80
 
     points = r1 + r2 + r3 + r4
-    points_dict = dict(r1=r1, r2=r2, r3=r3, r4=r4, points=points)
+    points_dict = dict(
+        round_one_points=r1,
+        round_two_points=r2,
+        round_three_points=r3,
+        round_four_points=r4,
+        points=points,
+    )
 
     return points_dict
 

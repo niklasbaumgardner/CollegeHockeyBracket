@@ -24,6 +24,7 @@ def admin():
     return render_template("admin.html")
 
 
+# TODO: check url
 @admin_bp.route("/update_points")
 @login_required
 def update_points():
@@ -33,47 +34,6 @@ def update_points():
     bracket_queries.update_points()
 
     return redirect(url_for("leaderboard_bp.index"))
-
-
-@admin_bp.route("/update_group_points")
-@login_required
-def update_group_points():
-    if not current_user.is_admin():
-        return redirect(url_for("leaderboard_bp.index"))
-
-    bracket_queries.update_group_points()
-
-    return redirect(url_for("leaderboard_bp.index"))
-
-
-# @admin_bp.route("/delete_brackets", methods=["GET"])
-# @login_required
-# def delete_brackets():
-#     if not current_user.is_admin():
-#         return redirect(url_for("leaderboard_bp.index"))
-
-#     brackets = bracket_queries.get_all_brackets()
-#     db_users = user_queries.get_all_users()
-#     users = {}
-#     for u in db_users:
-#         users[u.id] = u
-
-#     return render_template("delete_brackets.html", users=users, brackets=brackets)
-
-
-# @admin_bp.route("/delete_bracket/<id>", methods=["GET"])
-# @login_required
-# def delete_bracket(id):
-#     if not id or not current_user.is_admin():
-#         return redirect(url_for("leaderboard_bp.index"))
-
-#     if id == "all":
-#         # delete all brackets
-#         bracket_queries.delete_all_brackets()
-#     else:
-#         bracket_queries.delete_bracket(id)
-
-#     return redirect(url_for("leaderboard_bp.index"))
 
 
 @admin_bp.route("/update_correct", methods=["GET", "POST"])
@@ -112,8 +72,6 @@ def update_default():
         return redirect(url_for("leaderboard_bp.index"))
 
     if request.method == "POST":
-        d_bracket = default_bracket_queries.get_default_bracket()
-
         default_bracket_queries.update_default_bracket_from_form(request.form)
 
         # create the correct bracket after creating the default
@@ -124,57 +82,14 @@ def update_default():
     if request.method == "GET":
         default = default_bracket_queries.get_default_bracket()
         if not default:
-            default = bracket_queries.create_default_bracket()
+            default = default_bracket_queries.create_default_bracket()
 
         teams = [t.to_dict() for t in team_qeuries.get_all_teams()]
         return render_template(
             "default_bracket.html", default=default.to_dict(), teams=teams
         )
 
-    return redirect(url_for("admin_bp.admin"))
-
-
-@admin_bp.route("/delete_default", methods=["GET"])
-@login_required
-def delete_default():
-    if not current_user.is_admin():
-        return redirect(url_for("leaderboard_bp.index"))
-
-    bracket_queries.delete_default_bracket()
-
-    return redirect(url_for("leaderboard_bp.index"))
-
-
-@admin_bp.route("/delete_correct", methods=["GET"])
-@login_required
-def delete_correct():
-    if not current_user.is_admin():
-        return redirect(url_for("leaderboard_bp.index"))
-
-    correct_bracket_queries.delete_correct_bracket()
-
-    return redirect(url_for("leaderboard_bp.index"))
-
-
-@admin_bp.route("/debugging")
-@login_required
-def debugging():
-    if not current_user.is_admin():
-        return redirect(url_for("leaderboard_bp.index"))
-    string = ""
-    users = user_queries.get_all_users()
-
-    brackets = bracket_queries.get_all_brackets()
-
-    for u in users:
-        string += f"{u.id} {u.username}<br>"
-
-    string += "<br>"
-
-    for b in brackets:
-        string += f"{b.id} {b.user_id} {b.name}<br>"
-
-    return string
+    return redirect(url_for("admin_bp.update_default"))
 
 
 @admin_bp.get("/create_team")

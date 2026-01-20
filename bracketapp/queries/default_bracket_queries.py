@@ -19,11 +19,6 @@ from sqlalchemy.sql import or_, and_
 from bracketapp.utils.Sqids import sqids
 
 
-def get_default_bracket(year=YEAR):
-    stmt = select(DefaultBracket).where(DefaultBracket.year == year)
-    return db.session.scalars(stmt.limit(1)).first()
-
-
 def create_default_bracket():
     stmt = insert(DefaultBracket).values(year=YEAR)
     result = db.session.execute(stmt)
@@ -45,42 +40,93 @@ def create_default_bracket():
     return new_default_bracket_id
 
 
+def get_default_bracket(year=YEAR):
+    stmt = select(DefaultBracket).where(DefaultBracket.year == year)
+    return db.session.scalars(stmt.limit(1)).first()
+
+
+def get_bracket_teams_count(year=YEAR):
+    stmt = select(func.count(1)).where(BracketTeam.year == year)
+    return db.session.execute(stmt).scalar_one()
+
+
+def create_bracket_teams_from_form(form_data):
+    bracket_teams_list = []
+    for i in range(1, 9):
+        top_team = dict(
+            team_id=sqids.decode_one(form_data.get(f"game{i}-top-team-id")),
+            rank=form_data.get(f"game{i}-top-team-rank"),
+            year=YEAR,
+        )
+
+        bottm_team = dict(
+            team_id=sqids.decode_one(form_data.get(f"game{i}-bottom-team-id")),
+            rank=form_data.get(f"game{i}-bottom-team-rank"),
+            year=YEAR,
+        )
+        bracket_teams_list.append(top_team)
+        bracket_teams_list.append(bottm_team)
+
+    stmt = insert(BracketTeam).values(bracket_teams_list)
+    result = db.session.execute(stmt)
+    row_ids = result.inserted_primary_key_rows
+
+    games_update_list = []
+    for i in range(8):
+        index = i * 2
+
+        games_update_list.append(
+            dict(
+                id=sqids.decode_one(form_data.get(f"game${i + 1}-id")),
+                top_team_id=row_ids[index],
+                bottom_team_id=row_ids[index + 1],
+            )
+        )
+
+    db.session.execute(update(DefaultGame), games_update_list)
+    db.session.commit()
+
+
+def update_bracket_teams_from_form(form_data):
+    bracket_teams = []
+    for i in range(1, 9):
+        bracket_teams.append(
+            dict(
+                id=sqids.decode_one(form_data.get(f"game{i}-top-bracket-team-id")),
+                team_id=sqids.decode_one(form_data.get(f"game{i}-top-team-id")),
+                rank=form_data.get(f"game{i}-top-team-rank"),
+                # year=YEAR,
+            )
+        )
+
+        bracket_teams.append(
+            dict(
+                id=sqids.decode_one(form_data.get(f"game{i}-top-bracket-team-id")),
+                team_id=sqids.decode_one(form_data.get(f"game{i}-bottom-team-id")),
+                rank=form_data.get(f"game{i}-bottom-team-rank"),
+                # year=YEAR,
+            )
+        )
+
+    db.session.execute(update(BracketTeam), bracket_teams)
+    db.session.commit()
+
+
 # TODO: This needs to be updated.
 # Once a default bracket is created, there should be ability to update it
 # meaning bracket_teams can be updated.
 # There should be a separate method for creating a default bracket
 def update_default_bracket_from_form(form_data):
-    update_dict = {}
-    update_dict["winner_id"] = sqids.decode_one(form_data.get("game15"))
-    update_dict["winner_goals"] = form_data.get("winner_goals")
-    update_dict["loser_goals"] = form_data.get("loser_goals")
+    if get_bracket_teams_count() == 16:
+        update_bracket_teams_from_form(form_data)
+    else:
+        create_bracket_teams_from_form(form_data)
 
-    default_bracket = get_default_bracket()
-
-    top_teams = [
-        dict(
-            team_id=sqids.decode_one(form_data.get(f"game{i}-top-team-id")),
-            rank=form_data.get(f"game{i}-top-team-rank"),
-            year=YEAR,
-        )
-        for i in range(1, 9)
-    ]
-    bottom_teams = [
-        dict(
-            team_id=sqids.decode_one(form_data.get(f"game{i}-bottom-team-id")),
-            rank=form_data.get(f"game{i}-bottom-team-rank"),
-            year=YEAR,
-        )
-        for i in range(1, 9)
-    ]
+    return
 
     games = [
         dict(
-            bracket_id=default_bracket.id,
-            game_number=f"game{i}",
-            winner_id=sqids.decode_one(form_data.get(f"game{i}")),
-            top_team_goals=form_data.get(f"game{i}-h_goals"),
-            bottom_team_goals=form_data.get(f"game{i}-a_goals"),
+            id=sqids.decode_one(form_data.get(f"game${i}-id")),
         )
         for i in range(1, 9)
     ]
@@ -122,13 +168,3 @@ def update_default_bracket_from_form(form_data):
             home=home_bracket_team.id,
             away=away_bracket_team.id,
         )
-
-
-# def delete_default_bracket():
-#     default = get_default_bracket()
-
-#     for game in default.games_list:
-#         db.session.delete(game)
-
-#     db.session.delete(default)
-#     db.session.commit()

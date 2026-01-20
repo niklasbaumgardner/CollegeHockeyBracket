@@ -156,7 +156,9 @@ class Bracket(BaseModel, SqidSerializerMixin):
     user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
     # TODO: below relationship
     group_bracket: Mapped["GroupBracket"] = relationship(lazy="noload", viewonly=True)
-    group_brackets: Mapped[list["GroupBracket"]] = relationship(lazy="noload")
+    group_brackets: Mapped[list["GroupBracket"]] = relationship(
+        lazy="noload", viewonly=True
+    )
 
     # __group_bracket__ = None
 
@@ -342,6 +344,7 @@ class DefaultBracket(BaseModel, SqidSerializerMixin):
     __tablename__ = "default_bracket"
 
     serialize_rules = (
+        "update_url",
         "-games_list",
         "games",
     )
@@ -357,6 +360,9 @@ class DefaultBracket(BaseModel, SqidSerializerMixin):
             d[g.game_number] = g
 
         return d
+
+    def update_url(self):
+        return url_for("admin_bp.update_default")
 
 
 class DefaultGame(BaseModel, SqidSerializerMixin):

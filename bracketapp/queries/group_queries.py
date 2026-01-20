@@ -228,14 +228,17 @@ def delete_group_bracket(group_bracket_id):
     if not CAN_EDIT_BRACKET:
         return
 
+    # TODO: how to check that group and bracket are the correct year
     stmt = delete(GroupBracket).where(
         and_(
-            GroupBracket.id == group_bracket_id, GroupBracket.user_id == current_user.id
+            GroupBracket.id == group_bracket_id,
+            GroupBracket.user_id == current_user.id,
         )
     )
 
-    db.session.execute(stmt)
+    result = db.session.execute(stmt)
     db.session.commit()
+    return result.rowcount
 
 
 def delete_group(group_id):
@@ -250,9 +253,7 @@ def delete_group(group_id):
         )
     )
 
-    db.session.execute(stmt)
+    result = db.session.execute(stmt)
     db.session.commit()
 
-    # Have to delete group members and group brackets first
-    # group_members = GroupMember.query.filter_by(group_id=group_id).all()
-    # group_brackets = GroupBracket.query.filter_by(group_id=group_id).all()
+    return result.rowcount

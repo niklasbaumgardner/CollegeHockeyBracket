@@ -1,59 +1,16 @@
 {% extends "base.html" %} {% block admin %}active{% endblock admin %} {% block
-content %}
-<div class="pb-5 d-flex justify-content-center mx-0">
-  <div class="fw-bold fs-1">Admin page.</div>
-</div>
-<div class="container mx-0 p-3">
-  <div class="row mb-5">
-    <div class="col-12">
-      <a
-        class="btn btn-primary m-3"
-        href="{{ url_for('admin_bp.update_points') }}"
-        >Update bracket points</a
-      >
-      <a
-        class="btn btn-outline-primary m-3"
-        href="{{ url_for('admin_bp.update_group_points') }}"
-        >Update group points</a
-      >
-    </div>
-  </div>
-  <div class="row mb-5">
-    <div class="col-12">
-      <a
-        class="text-primary m-3"
-        href="{{ url_for('admin_bp.update_correct') }}"
-        >Correct bracket page</a
-      >
-      <a
-        class="text-primary m-3"
-        href="{{ url_for('admin_bp.update_default') }}"
-        >Default bracket page</a
-      >
-    </div>
-  </div>
-  <div class="row mb-5">
-    <div class="col-12">
-      <a
-        class="text-danger m-3"
-        href="{{ url_for('admin_bp.delete_brackets') }}"
-        >Delete brackets page</a
-      >
-    </div>
-  </div>
-  <div class="row mb-5">
-    <div class="col-12">
-      <a
-        class="btn btn-danger m-3"
-        href="{{ url_for('admin_bp.delete_default') }}"
-        >Delete Default Bracket</a
-      >
-      <a
-        class="btn btn-danger m-3"
-        href="{{ url_for('admin_bp.delete_correct') }}"
-        >Delete Correct Bracket</a
-      >
-    </div>
-  </div>
-</div>
+head %}
+
+<title>Admin</title>
+<script src="/static/js/nb-admin.mjs" type="module"></script>
+<script>
+  const UPDATE_ALL_POINTS_URL = "{{ url_for('admin_bp.update_points') }}";
+  const CORRECT_BRACKET_PAGE = "{{ url_for('admin_bp.update_correct') }}";
+  const DEFAULT_BRACKET_PAGE = "{{ url_for('admin_bp.update_default') }}";
+</script>
+
+{% endblock head %} {% block content %}
+
+<nb-admin class="small-card"></nb-admin>
+
 {% endblock content %}

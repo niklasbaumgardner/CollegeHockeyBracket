@@ -27,6 +27,7 @@ def api_leaderboard():
     # TODO: return the correct bracket if possible?
     # I forgot what I meant by this. Maybe bring correct to the
     # page to show correct winners on brackets table?
+    # I'm pretty sure I meant to make this exactly like the archive page
     standings, winners, correct = bracket_utils.get_bracket_standings()
     standings_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in standings]
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
