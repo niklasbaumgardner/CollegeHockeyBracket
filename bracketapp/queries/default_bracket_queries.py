@@ -30,7 +30,7 @@ def create_default_bracket():
             bracket_id=new_default_bracket_id,
             game_number=f"game{i}",
         )
-        for i in range(1, 16)
+        for i in range(1, 9)
     ]
 
     stmt = insert(DefaultGame).values(games)
@@ -67,9 +67,13 @@ def create_bracket_teams_from_form(form_data):
         bracket_teams_list.append(top_team)
         bracket_teams_list.append(bottm_team)
 
-    stmt = insert(BracketTeam).values(bracket_teams_list)
-    result = db.session.execute(stmt)
-    row_ids = result.inserted_primary_key_rows
+    print(len(bracket_teams_list), bracket_teams_list)
+
+    stmt = insert(BracketTeam).returning(BracketTeam.id)
+    result = db.session.execute(stmt, bracket_teams_list)
+    row_ids = result.all()
+
+    print(len(row_ids), row_ids)
 
     games_update_list = []
     for i in range(8):
@@ -77,11 +81,13 @@ def create_bracket_teams_from_form(form_data):
 
         games_update_list.append(
             dict(
-                id=sqids.decode_one(form_data.get(f"game${i + 1}-id")),
-                top_team_id=row_ids[index],
-                bottom_team_id=row_ids[index + 1],
+                id=sqids.decode_one(form_data.get(f"game{i + 1}-id")),
+                top_team_id=row_ids[index][0],
+                bottom_team_id=row_ids[index + 1][0],
             )
         )
+
+    print(len(games_update_list), games_update_list)
 
     db.session.execute(update(DefaultGame), games_update_list)
     db.session.commit()
@@ -123,48 +129,3 @@ def update_default_bracket_from_form(form_data):
         create_bracket_teams_from_form(form_data)
 
     return
-
-    games = [
-        dict(
-            id=sqids.decode_one(form_data.get(f"game${i}-id")),
-        )
-        for i in range(1, 9)
-    ]
-
-    stmt = insert(DefaultGame).values(games)
-    upsert_stmt = stmt.on_conflict_do_update(
-        constraint="default_game_bracket_id_game_number_unique",
-        set_={
-            "winner_id": stmt.excluded.winner_id,
-            "top_team_goals": stmt.excluded.top_team_goals,
-            "bottom_team_goals": stmt.excluded.bottom_team_goals,
-        },
-    )
-
-    db.session.execute(upsert_stmt)
-
-    db.session.commit()
-
-    for i in range(1, 9):
-        game_num = f"game{i}"
-
-        home_team_id = request.form.get(f"{game_num}-home")
-        home_team_rank = request.form.get(f"{game_num}-home-rank")
-
-        home_bracket_team = bracket_queries.create_default_bracket_team(
-            team_id=home_team_id, rank=home_team_rank
-        )
-
-        away_team_id = request.form.get(f"{game_num}-away")
-        away_team_rank = request.form.get(f"{game_num}-away-rank")
-
-        away_bracket_team = bracket_queries.create_default_bracket_team(
-            team_id=away_team_id, rank=away_team_rank
-        )
-
-        bracket_queries.update_default_game(
-            b_id=d_bracket.id,
-            game_num=game_num,
-            home=home_bracket_team.id,
-            away=away_bracket_team.id,
-        )

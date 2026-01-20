@@ -101,9 +101,6 @@ export class Theme {
   #initing;
 
   constructor(theme) {
-    if (!theme.mode) {
-      theme.mode = window.localStorage.getItem("theme.mode");
-    }
     this.#initing = true;
     this.#domProperties = window.getComputedStyle(document.documentElement);
     this.theme = theme.theme;
@@ -193,6 +190,9 @@ export class Theme {
   }
 
   set mode(mode) {
+    if (!mode) {
+      mode = themeStorage.getItem("theme.mode");
+    }
     if (mode && mode === this.mode) {
       return;
     }
@@ -209,7 +209,7 @@ export class Theme {
     document.documentElement.classList.toggle("wa-dark", this.mode === "dark");
     document.documentElement.classList.toggle(
       "wa-light",
-      this.mode === "light"
+      this.mode === "light",
     );
 
     if (!this.#initing) {
@@ -288,7 +288,7 @@ export class Theme {
     }
 
     document.documentElement.classList.remove(
-      `wa-palette-${this.colorPalette}`
+      `wa-palette-${this.colorPalette}`,
     );
 
     if (COLOR_PALETTE_LIST.includes(colorPalette)) {
@@ -332,7 +332,7 @@ export class Theme {
     if (this.#rounding !== null) {
       document.documentElement.style.setProperty(
         "--wa-border-radius-scale",
-        this.#rounding
+        this.#rounding,
       );
     }
 
@@ -359,7 +359,7 @@ export class Theme {
     if (this.#spacing !== null) {
       document.documentElement.style.setProperty(
         "--wa-space-scale",
-        this.#spacing
+        this.#spacing,
       );
     }
 
@@ -386,7 +386,7 @@ export class Theme {
     if (this.#borderWidth !== null) {
       document.documentElement.style.setProperty(
         "--wa-border-width-scale",
-        this.#borderWidth
+        this.#borderWidth,
       );
     }
 
@@ -408,7 +408,7 @@ export class Theme {
           });
         },
         1000,
-        { finalizeBeforeUnload: true }
+        { finalizeBeforeUnload: true },
       );
     }
     this.updateTask.arm(args);

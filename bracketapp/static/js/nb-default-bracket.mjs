@@ -17,15 +17,15 @@ export class DefaultBracket extends NikElement {
       (team) =>
         html`<option
           value=${team.id}
-          ?selected=${this.default.games?.[`game${gameNumber}`][attribute].team
+          ?selected=${this.default.games[`game${gameNumber}`][attribute]?.team
             .id === team.id}
         >
           ${team.name}
-        </option>`
+        </option>`,
     );
 
     options.unshift(
-      html`<option value="">-- Please choose and option --</option>`
+      html`<option value="">-- Please choose and option --</option>`,
     );
 
     return options;

@@ -89,6 +89,7 @@ def update_correct_bracket_from_form(form_data):
             bottom_team_goals=form_data.get(f"game{i}-a_goals"),
         )
         for i in range(1, 16)
+        if form_data.get(f"game{i}")
     ]
 
     stmt = pg_insert(CorrectGame).values(games)

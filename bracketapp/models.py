@@ -281,10 +281,10 @@ class CorrectBracket(BaseModel, SqidSerializerMixin):
     )
 
     id: Mapped[int_pk]
-    winner_id: Mapped[int] = mapped_column(ForeignKey("bracket_team.id"))
     year: Mapped[int] = mapped_column(unique=True)
-    winner_goals: Mapped[int]
-    loser_goals: Mapped[int]
+    winner_id: Mapped[Optional[int]] = mapped_column(ForeignKey("bracket_team.id"))
+    winner_goals: Mapped[Optional[int]]
+    loser_goals: Mapped[Optional[int]]
 
     winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
     # TODO
@@ -329,8 +329,8 @@ class CorrectGame(BaseModel, SqidSerializerMixin):
     loser_id: Mapped[Optional[int]] = mapped_column(ForeignKey("bracket_team.id"))
 
     game_number: Mapped[str]
-    top_team_goals: Mapped[int]
-    bottom_team_goals: Mapped[int]
+    top_team_goals: Mapped[Optional[int]]
+    bottom_team_goals: Mapped[Optional[int]]
 
     winner_team: Mapped["BracketTeam"] = relationship(
         foreign_keys=[winner_id], lazy="joined", viewonly=True

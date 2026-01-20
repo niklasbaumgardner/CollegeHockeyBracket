@@ -11,6 +11,9 @@ export class Admin extends NikElement {
         <wa-button appearance="outlined" href=${CORRECT_BRACKET_PAGE}
           >Go to correct bracket page</wa-button
         >
+        <wa-button appearance="outlined" href=${ADD_TEAM_PAGE}
+          >Go to add team page</wa-button
+        >
         <wa-button appearance="outlined" href=${DEFAULT_BRACKET_PAGE}
           >Go to default bracket page</wa-button
         >

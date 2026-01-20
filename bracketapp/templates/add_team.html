@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block head %}
+
+<title>Add Team</title>
+<script src="/static/js/nb-add-team.mjs" type="module"></script>
+
+{% endblock head %} {% block content %}
+
+<nb-add-team class="small-card" teams='{{ teams|tojson }}'></nb-add-team>
+
+{% endblock content %}

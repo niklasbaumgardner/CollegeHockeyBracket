@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html
   lang="en"
   class="wa-{{ user_settings.settings.mode }} wa-cloak"
-  style="{% if user_settings.settings.rounding %}--wa-border-radius-scale:{{user_settings.settings.rounding}};{% endif %}{% if user_settings.settings.spacing %}--wa-space-scale:{{user_settings.settings.spacing}};{% endif %}{% if user_settings.settings.border_width %}--wa-border-width-scale:{{user_settings.settings.border_width}};{% endif %}"
+  style="{% if user_settings.settings.rounding %}--wa-border-radius-scale:{{user_settings.settings.rounding}};{% endif %}"
 >
   <head>
     <!-- Required meta tags -->
@@ -24,14 +24,14 @@
     <link
       id="theme"
       rel="stylesheet"
-      href=""
+      href="{% if user_settings.settings.theme %}/static/css/{{ user_settings.settings.theme }}.min.css{% endif %}"
       render="blocking"
       fetchpriority="high"
     />
     <link
       id="palette"
       rel="stylesheet"
-      href=""
+      href="{% if user_settings.settings.color_palette %}/static/css/{{ user_settings.settings.color_palette }}.palette.min.css{% endif %}"
       render="blocking"
       fetchpriority="high"
     />
@@ -84,11 +84,6 @@
         COLOR_PALETTE_LIST,
       } from "/static/js/theme.mjs";
       window.THEME = new Theme({{ user_settings.settings|tojson }});
-
-      let storedTheme = window.localStorage.getItem("theme");
-      if (storedTheme === "dark" || storedTheme === "light") {
-        window.THEME.migrateTheme(storedTheme);
-      }
       console.log(window.THEME);
     </script>
     <script src="/static/js/nb-back-button.mjs" type="module"></script>

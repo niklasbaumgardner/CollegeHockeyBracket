@@ -1,9 +1,8 @@
 import { html, nothing } from "./lit.bundle.mjs";
-import { NikElement } from "./nik-element.mjs";
 import "./nb-edit-correct-matchup.mjs";
 import { EditBracket } from "./nb-edit-bracket.mjs";
 
-class EditCorrectBracket extends EditBracket {
+export class EditCorrectBracket extends EditBracket {
   matchupTagName = "nb-edit-correct-matchup";
 
   maybeToggleSaveButton() {
@@ -207,84 +206,16 @@ class EditCorrectBracket extends EditBracket {
     </div>`;
   }
 
-  buttonsTemplate() {
-    let content = html`<wa-button variant="brand" type="submit"
-      >Save bracket</wa-button
-    >`;
-
-    return html`${content}<wa-button href=${CANCEL_BRACKET_URL}
-        >Cancel</wa-button
-      >`;
-  }
-
   topCardTemplate() {
-    return html` <div class="d-flex justify-content-center">
-      <wa-card class="width-fit-content mb-4">
-        <h2 class="mb-2">${this.bracket?.year} Correct Bracket</h2>
-        <div class="d-flex justify-content-center mb-3">
-          <wa-input
-            name="name"
-            maxlength="60"
-            label="Bracket name"
-            placeholder="My bracket name"
-            value=${this.bracket?.name}
-            class="w-100"
-            required=""
-          ></wa-input>
-        </div>
-        <div class="d-flex justify-content-center gap-3">
-          ${this.buttonsTemplate()}
+    return html` <div class="flex justify-center">
+      <wa-card>
+        <div class="wa-stack">
+          <h2>${this.bracket?.name}</h2>
+          <div class="wa-cluster">${this.buttonsTemplate()}</div>
         </div>
       </wa-card>
     </div>`;
   }
-
-  render() {
-    return html`<div class="w-100">
-      <form
-        action="${this.bracket.form_url}"
-        method="POST"
-        @input=${this.handleInput}
-      >
-        ${this.topCardTemplate()}
-        <div class="bracket-grid-edit mb-3" @click=${this.handleClick}>
-          <div class="round-one-left">
-            <wa-card class="round-details">Round 1</wa-card>
-            ${this.roundOneLeftTemplate()}
-          </div>
-
-          <div class="round-two-left">
-            <wa-card class="round-details">Round 2</wa-card>
-            ${this.roundTwoLeftTemplate()}
-          </div>
-
-          <div class="round-three-left">
-            <wa-card class="round-details">Round 3</wa-card>
-            ${this.roundThreeLeftTemplate()}
-          </div>
-
-          ${this.championTemplate()}
-
-          <div class="round-three-right">
-            <wa-card class="round-details">Round 3</wa-card>
-            ${this.roundThreeRightTemplate()}
-          </div>
-
-          <div class="round-two-right">
-            <wa-card class="round-details">Round 2</wa-card>
-            ${this.roundTwoRightTemplate()}
-          </div>
-
-          <div class="round-one-right round-one">
-            <wa-card class="round-details">Round 1</wa-card>
-            ${this.roundOneRightTemplate()}
-          </div>
-        </div>
-      </form>
-    </div>`;
-  }
 }
-
-export default EditCorrectBracket;
 
 customElements.define("nb-edit-correct-bracket", EditCorrectBracket);

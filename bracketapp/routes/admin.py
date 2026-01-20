@@ -31,7 +31,7 @@ def update_points():
     if not current_user.is_admin():
         return redirect(url_for("leaderboard_bp.index"))
 
-    bracket_queries.update_points()
+    bracket_utils.update_all_brackets_points()
 
     return redirect(url_for("leaderboard_bp.index"))
 
@@ -45,8 +45,6 @@ def update_correct():
     if request.method == "POST":
         correct_bracket_queries.update_correct_bracket_from_form(request.form)
 
-        bracket_queries.update_points()
-
     if request.method == "GET":
         default = default_bracket_queries.get_default_bracket()
         if not default:
@@ -54,7 +52,8 @@ def update_correct():
 
         correct = correct_bracket_queries.get_correct_bracket()
         if not correct:
-            correct = correct_bracket_queries.create_correct_bracket()
+            correct_bracket_queries.create_correct_bracket()
+            correct = correct_bracket_queries.get_correct_bracket()
 
         return render_template(
             "edit_cbracket.html",
@@ -74,15 +73,11 @@ def update_default():
     if request.method == "POST":
         default_bracket_queries.update_default_bracket_from_form(request.form)
 
-        # create the correct bracket after creating the default
-        correct = correct_bracket_queries.get_correct_bracket()
-        if not correct:
-            correct_bracket_queries.create_correct_bracket()
-
     if request.method == "GET":
         default = default_bracket_queries.get_default_bracket()
         if not default:
-            default = default_bracket_queries.create_default_bracket()
+            default_bracket_queries.create_default_bracket()
+            default = default_bracket_queries.get_default_bracket()
 
         teams = [t.to_dict() for t in team_qeuries.get_all_teams()]
         return render_template(
@@ -92,21 +87,25 @@ def update_default():
     return redirect(url_for("admin_bp.update_default"))
 
 
-@admin_bp.get("/create_team")
+@admin_bp.route("/create_team", methods=["GET", "POST"])
 @login_required
 def create_team():
     if not current_user.is_admin():
         return redirect(url_for("leaderboard_bp.index"))
 
-    team = request.args.get("team")
+    if request.method == "GET":
+        teams = [t.to_dict() for t in team_qeuries.get_all_teams()]
+        return render_template("add_team.html", teams=teams)
 
-    if team_qeuries.get_team_by_name(name=team):
-        flash("Team already exists")
-        return redirect(url_for("admin_bp.admin"))
+    if request.method == "POST":
+        team = request.form.get("team")
 
-    if bracket_utils.does_team_image_exist(team):
-        bracket_queries.create_team(teamname=team)
-        flash("Team successfully added", "success")
+        if team_qeuries.get_team_by_name(name=team):
+            flash("Team already exists")
+
+        if bracket_utils.does_team_image_exist(team):
+            team_qeuries.create_team(teamname=team)
+            flash("Team successfully added", "success")
 
     return redirect(url_for("admin_bp.admin"))
 

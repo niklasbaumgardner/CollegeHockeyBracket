@@ -16,7 +16,7 @@ const config = {
       type: "module",
     },
   },
-  devtool: "source-map",
+  // devtool: "source-map",
   module: {
     rules: [
       {
