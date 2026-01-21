@@ -40,12 +40,11 @@
   header /static* Cache-Control max-age=86400
 
   # rate limit POST requests
-  @post {
-    method POST
-  }
-
-  rate_limit @post {
+  rate_limit {
     zone post_requests {
+      match {
+        method POST
+      }
       key {remote_host}
       events 1
       window 10s
