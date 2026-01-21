@@ -18,6 +18,7 @@ flask-login==0.6.3
 flask-mail==0.10.0
 flask-sqlalchemy-lite==0.2.1
 frozenlist==1.8.0
+gevent==25.9.1
 greenlet==3.3.0
 gunicorn==23.0.0
 idna==3.11
@@ -43,3 +44,5 @@ urllib3==2.6.2
 werkzeug==3.1.4
 wrapt==1.17.3
 yarl==1.22.0
+zope-event==6.1
+zope-interface==8.2
