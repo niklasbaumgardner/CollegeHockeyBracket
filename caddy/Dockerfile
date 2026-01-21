@@ -10,7 +10,7 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /app
 
 COPY /caddy/caddy_start.sh /caddy/Caddyfile .
-COPY /flaskapp/static  ./static
+COPY /bracketapp/static  ./static
 
 RUN chmod a+x caddy_start.sh
 
