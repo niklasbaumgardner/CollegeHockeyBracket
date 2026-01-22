@@ -420,7 +420,7 @@ class Group(BaseModel, SqidSerializerMixin):
     locked: Mapped[bool]
     password: Mapped[Optional[str]]
     creator_id: Mapped[user_fk]
-    member_count: Mapped[int]
+    member_count: Mapped[Optional[int]]
 
     members: Mapped[list["GroupMember"]] = relationship(lazy="noload", viewonly=True)
 
