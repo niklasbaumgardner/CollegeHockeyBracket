@@ -188,6 +188,14 @@ def get_group_member_count(group_id):
     return db.session.execute(stmt).scalar_one()
 
 
+def update_group_member_count(group_id):
+    member_count = get_group_member_count(group_id)
+
+    stmt = update(Group).where(Group.id == group_id).values(member_count=member_count)
+    db.session.execute(stmt)
+    db.session.commit()
+
+
 def upsert_group_member(group_id):
     stmt = pg_insert(GroupMember).values(group_id=group_id, user_id=current_user.id)
     upsert_stmt = stmt.on_conflict_do_nothing(
@@ -195,10 +203,7 @@ def upsert_group_member(group_id):
     )
     db.session.execute(upsert_stmt)
 
-    member_count = get_group_member_count(group_id)
-
-    stmt = update(Group).where(Group.id == group_id).values(member_count=member_count)
-    db.session.execute(stmt)
+    update_group_member_count(group_id)
 
     db.session.commit()
 
