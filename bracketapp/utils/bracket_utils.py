@@ -143,25 +143,6 @@ def get_group_standings(group_id, year):
     brackets = bracket_queries.get_brackets_for_group(group_id=group_id)
     correct = correct_bracket_queries.get_correct_bracket(year=year)
 
-    if correct and correct.winner_id:
-        for bracket in brackets:
-            bracket.goal_difference = abs(
-                bracket.winner_goals
-                + bracket.loser_goals
-                - (correct.winner_goals + correct.loser_goals)
-            )
-
-        brackets.sort(key=lambda b: b.goal_difference)
-
-    brackets.sort(key=lambda b: b.name.casefold())
-    if (
-        (YEAR != year or not CAN_EDIT_BRACKET)
-        and brackets
-        and brackets[0].group_bracket.group_rank
-    ):
-        brackets.sort(key=lambda b: b.max_points, reverse=True)
-        brackets.sort(key=lambda b: b.group_bracket.group_rank)
-
     winners = get_group_winners(standings=brackets, correct=correct)
 
     return brackets, winners, correct
@@ -192,24 +173,6 @@ def get_winners(standings, correct):
 def get_bracket_standings(year=YEAR):
     brackets = bracket_queries.get_all_brackets(year)
     correct = correct_bracket_queries.get_correct_bracket(year)
-
-    if correct and correct.winner_id:
-        for bracket in brackets:
-            bracket.goal_difference = abs(
-                bracket.winner_goals
-                + bracket.loser_goals
-                - (correct.winner_goals + correct.loser_goals)
-            )
-
-        brackets.sort(key=lambda b: b.goal_difference)
-
-    brackets.sort(key=lambda b: b.name.casefold())
-    if not CAN_EDIT_BRACKET and brackets and brackets[0].rank:
-        brackets.sort(key=lambda b: b.max_points, reverse=True)
-        try:
-            brackets.sort(key=lambda b: b.rank)
-        except Exception:
-            pass
 
     winners = get_winners(standings=brackets, correct=correct)
 
@@ -287,25 +250,26 @@ def update_all_group_standings(brackets_update_list, correct):
         gb_dict = {"id": gb.id}
         groups_dict[gb.group_id].append((gb_dict, brackets_dict[gb.bracket_id]))
 
-    for group_brackets in groups_dict.values():
+    for gbs in groups_dict.values():
         if correct.winner_id:
-            group_brackets.sort(key=lambda tup: tup[1]["goal_difference"])
+            gbs.sort(key=lambda tup: tup[1]["goal_difference"])
 
-        group_brackets.sort(key=lambda tup: tup[1]["points"], reverse=True)
+        gbs.sort(key=lambda tup: tup[1]["points"], reverse=True)
 
         rank = 1
-        for i, [group_bracket, bracket] in enumerate(group_brackets):
+        for i, [group_bracket, bracket] in enumerate(gbs):
             if i == 0:
                 group_bracket["group_rank"] = rank
-            elif bracket["points"] == group_brackets[i - 1][1]["points"]:
+            elif bracket["points"] == gbs[i - 1][1]["points"]:
                 group_bracket["group_rank"] = rank
             else:
                 rank = i + 1
                 group_bracket["group_rank"] = rank
 
     group_brackets_update_list = []
-    for [gb, _] in groups_dict.values():
-        group_brackets_update_list.append(gb)
+    for gbs in groups_dict.values():
+        for [gb, _] in gbs:
+            group_brackets_update_list.append(gb)
 
     return group_brackets_update_list
 

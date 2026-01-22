@@ -29,7 +29,7 @@ export class StandingsGrid extends BaseGrid {
 
   get storedPageSize() {
     const storedNumber = parseInt(
-      window.localStorage.getItem(this.#pageSizeKey)
+      window.localStorage.getItem(this.#pageSizeKey),
     );
 
     return isNaN(storedNumber) ? 25 : storedNumber;
@@ -76,19 +76,21 @@ export class StandingsGrid extends BaseGrid {
   }
 
   sortBrackets() {
-    // TODO: sort by rank if we have a winner
+    this.brackets.sort((a, b) => a.name.localeCompare(b.name));
+
     if (CAN_EDIT_BRACKET && CURRENT_YEAR === this.year) {
-      this.brackets.sort((a, b) => {
-        let res = null;
-        if (a.user_id === CURRENT_USER.id) {
-          res = -1;
-        } else if (b.user_id === CURRENT_USER.id) {
-          res = 1;
-        } else {
-          res = a.name.localeCompare(b.name);
-        }
-        return res;
-      });
+      // TODO: sort my brackets to top?
+      // this.brackets.sort((a, b) => {
+      //   let res = null;
+      //   if (a.user_id === CURRENT_USER.id) {
+      //     res = -1;
+      //   } else if (b.user_id === CURRENT_USER.id) {
+      //     res = 1;
+      //   } else {
+      //     res = 0;
+      //   }
+      //   return res;
+      // });
     } else {
       this.brackets.sort((a, b) => {
         return a.rank - b.rank;
@@ -172,7 +174,7 @@ export class StandingsGrid extends BaseGrid {
         },
       },
       { field: "points" },
-      { field: "max_points", headerName: "Max" }
+      { field: "max_points", headerName: "Max" },
     );
 
     if (this.year < CURRENT_YEAR || !CAN_EDIT_BRACKET) {
@@ -181,7 +183,7 @@ export class StandingsGrid extends BaseGrid {
           { field: "round_one_points", headerName: "R1" },
           { field: "round_two_points", headerName: "R2" },
           { field: "round_three_points", headerName: "R3" },
-          { field: "round_four_points", headerName: "R4" }
+          { field: "round_four_points", headerName: "R4" },
         );
       }
     }
@@ -202,7 +204,7 @@ export class StandingsGrid extends BaseGrid {
     if (event.newPageSize) {
       window.localStorage.setItem(
         this.#pageSizeKey,
-        this.dataGrid.paginationGetPageSize()
+        this.dataGrid.paginationGetPageSize(),
       );
     }
   }

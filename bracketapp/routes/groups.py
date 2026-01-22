@@ -15,12 +15,9 @@ def view_group(sqid):
     group_id = sqids.decode_one(sqid)
     group = group_queries.get_group(group_id=group_id)
 
-    print("am i a member?????????????????????", group_queries.is_group_member(group_id))
-
     # TODO: fix viewability
-    # if group.is_private and not group_queries.get_group_member(group_id=id):
-    #     flash("You must join this group to view it")
-    #     return redirect(url_for("mybrackets_bp.mybrackets")+"#groups")
+    # ESPN allows viewing any group (public and private) while logged in and not logged in
+    # maybe it's not allowed while CAN_EDIT_BRACKET?
 
     if not group:
         flash("Sorry. This group doesn't exist")

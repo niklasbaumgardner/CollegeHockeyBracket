@@ -316,7 +316,7 @@ export class EditBracket extends NikElement {
       type="submit"
       >Save bracket</wa-button
     >`;
-    // TODO: Fix this
+    // TODO: Fix this. Reset bracket button
     // if (!this.bracket.name) {
     //   return html`${content}<wa-button @click=${this.resetForm}
     //       >Reset bracket</wa-button

@@ -189,32 +189,6 @@ class Bracket(BaseModel, SqidSerializerMixin):
     def bracket_join_group_url(self):
         return url_for("editbracket_bp.bracket_join_group", sqid=self.sqid_id())
 
-    # @property
-    # def safe_only(self):
-    #     if not current_user.is_authenticated:
-    #         return True
-    #     elif self.user_id == current_user.id:
-    #         return False
-    #     elif self.year == YEAR and CAN_EDIT_BRACKET and self.user_id != current_user.id:
-    #         return True
-
-    #     return False
-
-    # # TODO: fix override
-    # @property
-    # def unsafe_rules(self):
-    #     return (
-    #         "id",
-    #         "user_id",
-    #         "name",
-    #         "year",
-    #         "points",
-    #         "max_points",
-    #         "rank",
-    #         "user",
-    #         "group_bracket",
-    #     )
-
     def to_dict(self, *args, **kwargs):
         if kwargs.get("safe_only") == False:
             rules = kwargs.get("rules", None)
@@ -233,18 +207,19 @@ class Bracket(BaseModel, SqidSerializerMixin):
         if "safe_only" in kwargs:
             del kwargs["safe_only"]
 
-        kwargs["only"] = (
-            "id",
-            "user_id",
-            "name",
-            "year",
-            "points",
-            "max_points",
-            "rank",
-            "user",
-            "group_bracket",
-            "url",
-        )
+        if kwargs.get("only") is None:
+            kwargs["only"] = (
+                "id",
+                "user_id",
+                "name",
+                "year",
+                "points",
+                "max_points",
+                "rank",
+                "user",
+                "group_bracket",
+                "url",
+            )
         return super().to_dict(**kwargs)
 
 

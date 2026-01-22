@@ -11,9 +11,8 @@ export class AlertManager extends NikElement {
           return [];
         }
 
-        // TODO: fix how this is split. Maybe in reverse and max 2 items?
         return [...value.match(/(?<=\()[^()]+(?=\))/g)].map((tuple) =>
-          tuple.replaceAll("'", "").split(", ")
+          tuple.replaceAll("'", "").split(", "),
         );
       },
     },
@@ -30,7 +29,7 @@ export class AlertManager extends NikElement {
           html`<nb-alert
             category=${category}
             message=${rest.join(", ")}
-          ></nb-alert>`
+          ></nb-alert>`,
       )}
     </div>`;
   }

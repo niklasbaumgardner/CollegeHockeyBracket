@@ -3960,7 +3960,6 @@ nb-search-groups {
     width: 100%;
     padding: var(--wa-space-s) var(--wa-space-l);
 
-    /* TODO: light and dark */
     &:hover {
       background-color: light-dark(
         var(--wa-color-neutral-70),

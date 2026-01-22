@@ -31,9 +31,6 @@ def archive_year(year):
 
 @archive_bp.get("/api/archive/<int:year>")
 def api_archive_year(year):
-    # TODO: return the correct bracket if possible?
-    # I forgot what I meant by this. Maybe bring correct to the
-    # page to show correct winners on brackets table?
     standings, winners, correct = bracket_utils.get_bracket_standings(year)
 
     standings_dict = [correct.to_dict()] + [

@@ -67,13 +67,9 @@ def create_bracket_teams_from_form(form_data):
         bracket_teams_list.append(top_team)
         bracket_teams_list.append(bottm_team)
 
-    print(len(bracket_teams_list), bracket_teams_list)
-
     stmt = insert(BracketTeam).returning(BracketTeam.id)
     result = db.session.execute(stmt, bracket_teams_list)
     row_ids = result.all()
-
-    print(len(row_ids), row_ids)
 
     games_update_list = []
     for i in range(8):
@@ -86,8 +82,6 @@ def create_bracket_teams_from_form(form_data):
                 bottom_team_id=row_ids[index + 1][0],
             )
         )
-
-    print(len(games_update_list), games_update_list)
 
     db.session.execute(update(DefaultGame), games_update_list)
     db.session.commit()
@@ -118,14 +112,8 @@ def update_bracket_teams_from_form(form_data):
     db.session.commit()
 
 
-# TODO: This needs to be updated.
-# Once a default bracket is created, there should be ability to update it
-# meaning bracket_teams can be updated.
-# There should be a separate method for creating a default bracket
 def update_default_bracket_from_form(form_data):
     if get_bracket_teams_count() == 16:
         update_bracket_teams_from_form(form_data)
     else:
         create_bracket_teams_from_form(form_data)
-
-    return

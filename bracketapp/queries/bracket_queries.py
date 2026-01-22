@@ -28,7 +28,6 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 
 def get_empty_bracket_dict():
-    # TODO: return just a dict?
     return dict(
         user_id=None,
         name="",
@@ -181,8 +180,6 @@ def get_brackets_for_group(group_id):
         .options(contains_eager(Bracket.group_bracket))
     )
 
-    # TODO: Maybe sort here?
-
     return db.session.scalars(stmt).unique().all()
 
 
@@ -210,7 +207,7 @@ def get_all_brackets_joined():
         .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
     )
 
-    return db.session.scalars(stmt).all()
+    return db.session.scalars(stmt).unique().all()
 
 
 def get_all_brackets(year=YEAR):

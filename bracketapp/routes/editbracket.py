@@ -44,11 +44,6 @@ def edit_bracket(sqid):
 @editbracket_bp.get("/new_bracket")
 @login_required
 def new_bracket():
-    # group_sqid = request.args.get("group_id")
-    # group_id = None
-    # if group_sqid:
-    #     group_id = sqids.decode_one(group_sqid)
-
     my_bracket_count = bracket_queries.my_bracket_count()
     if my_bracket_count >= 5:
         # if we don't have a bracket id and we are already at the max number of
@@ -60,11 +55,6 @@ def new_bracket():
         # if we don't have a bracket id and we can't edit, go to viewing my brackets
         flash("Editing is disabled", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    # Check group in post
-    # if group_id and not group_queries.get_group_member(group_id=group_id):
-    #     flash("You must join this group to submit a bracket", "danger")
-    #     return redirect(url_for("groups_bp.view_group", id=group_id))
 
     bracket = bracket_queries.get_empty_bracket_dict()
     default = default_bracket_queries.get_default_bracket()
@@ -79,29 +69,13 @@ def new_bracket():
 def edit_bracket_post(sqid):
     bracket_id = sqids.decode_one(sqid)
 
-    # TODO: is this even possible to have group_id in the url?
-    # group_sqid = request.args.get("group_sqid")
-    # group_id = None
-    # if group_sqid:
-    #     group_id = sqids.decode_one(group_sqid)
-
     if not CAN_EDIT_BRACKET:
         # if we have a bracket id and we can't edit, go to viewing the bracket
         return redirect(url_for("viewbracket_bp.view_bracket", id=bracket_id))
 
-    # if group_id and not group_queries.get_group_member(group_id=group_id):
-    #     flash("You must join this group to submit a bracket", "danger")
-    #     return redirect(url_for("groups_bp.view_group", sqid=group_id))
-
     bracket_queries.update_bracket_from_form(bracket_id, request.form)
 
-    # if existing_bracket:
     flash("Bracket saved", "success")
-    # if group_id:
-    #     return redirect(url_for("groups_bp.view_group", sqid=group_id))
-
-    # else:
-    #     flash("No bracket was found for that id. Please try again", "danger")
 
     return redirect(url_for("mybrackets_bp.my_brackets"))
 

@@ -35,12 +35,14 @@ export class Standings extends NikElement {
 
   getWinningMessage() {
     let winnerTitle = "Winner" + (this.numWinners > 1 ? "s" : "");
-    let winners = this.winners.map((w) => w.user.username).join(", ");
+    let winners = this.winners
+      .flatMap((w) => [
+        html`<b>${w.name}</b> <small>(${w.user.username})</small>`,
+        html`, `,
+      ])
+      .slice(0, -1);
 
-    // TODO: fix bg color
     return html`<wa-card
-      class=""
-      style="--wa-panel-background-color:var(--wa-color-neutral-10);"
       ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
         <wa-icon
           style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
@@ -49,7 +51,7 @@ export class Standings extends NikElement {
           variant="outline"
         ></wa-icon>
         <p>${winnerTitle}</p>
-        <b>${winners}</b>
+        <p>${winners}</p>
       </div></wa-card
     >`;
   }

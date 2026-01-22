@@ -24,7 +24,6 @@ def admin():
     return render_template("admin.html")
 
 
-# TODO: check url
 @admin_bp.route("/update_points")
 @login_required
 def update_points():

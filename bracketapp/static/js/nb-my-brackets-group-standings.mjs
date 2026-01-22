@@ -92,12 +92,7 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   render() {
-    // TODO: Fix bg color
-    return html`<wa-card
-      style="
-          --wa-panel-background-color: var(--wa-color-neutral-100);
-        "
-    >
+    return html`<wa-card>
       <div class="wa-stack items-center nb-group-card">
         <div class="wa-split">
           <a
@@ -127,5 +122,5 @@ export class MyBracketsGroupStandings extends NikElement {
 
 customElements.define(
   "nb-my-brackets-group-standings",
-  MyBracketsGroupStandings
+  MyBracketsGroupStandings,
 );

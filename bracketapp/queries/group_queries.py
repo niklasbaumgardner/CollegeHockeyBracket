@@ -28,9 +28,7 @@ from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 
-def get_all_groups_for_user(sort=False):
-    print("Building groups query stmt")
-
+def get_all_groups_for_user():
     stmt = (
         select(Group, Bracket, GroupBracket)
         .outerjoin(GroupMember, Group.id == GroupMember.group_id)
@@ -53,9 +51,7 @@ def get_all_groups_for_user(sort=False):
         .order_by(collate(Group.name, "en_US"))
     )
 
-    print("Built groups query. Executing stmt")
     groups = db.session.execute(stmt).unique().all()
-    print("Got the groups. Enumerating them")
 
     return_groups = []
     seen_groups = {}
