@@ -25,25 +25,22 @@
 
   header /static* Cache-Control max-age=86400
 
-  # allow more frequents requests here
-  handle /update_settings* {
-    rate_limit {
+  # rate limit all POST requests
+  rate_limit {
+    zone post_requests {
       zone update_settings {
         match {
           method POST
+          path /update_settings*
         }
         key {remote_host}
         events 1
         window 1s
       }
-    }
-  }
 
-  # rate limit all POST requests
-  rate_limit {
-    zone post_requests {
       match {
         method POST
+        not path /update_settings*
       }
       key {remote_host}
       events 1
