@@ -27,17 +27,18 @@
 
   # rate limit all POST requests
   rate_limit {
-    zone post_requests {
-      zone update_settings {
-        match {
-          method POST
-          path /update_settings*
-        }
-        key {remote_host}
-        events 1
-        window 1s
+    zone update_settings {
+      match {
+        method POST
+        path /update_settings*
       }
+      key {remote_host}
+      events 1
+      window 1s
+    }
 
+
+    zone post_requests {
       match {
         method POST
         not path /update_settings*
