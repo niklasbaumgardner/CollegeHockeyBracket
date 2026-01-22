@@ -15,21 +15,7 @@
   }
 }
 
-(lb_settings) {
-  lb_policy round_robin
-  lb_retries 100
-  lb_try_duration 10s
-  lb_try_interval 250ms
-}
-
-(passive_health_checks) {
-  fail_duration 60s
-  max_fails 300
-  unhealthy_latency 5s
-  unhealthy_request_count 200
-}
-
-# site block, listens on the $PORT environment variable, automatically assigned by railway
+# site block, listens on the $PORT environment variable
 :{$PORT} {
   # encode zstd
 
@@ -41,6 +27,15 @@
 
   # rate limit POST requests
   rate_limit {
+    zone update_settings {
+      match {
+        path /update_settings*
+      }
+      key {remote_host}
+      events 1
+      window 1s
+    }
+
     zone post_requests {
       match {
         method POST
@@ -63,10 +58,16 @@
     }
 
     # configure load balancing settings
-    import lb_settings
+    lb_policy round_robin
+    lb_retries 100
+    lb_try_duration 10s
+    lb_try_interval 250ms
 
     # configure passive health checks
-    import passive_health_checks
+    fail_duration 60s
+    max_fails 50
+    unhealthy_latency 5s
+    unhealthy_request_count 200
 
     # sets the Host header to the header to the dynamic name and port options
     header_up Host {upstream_hostport}
