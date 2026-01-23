@@ -153,9 +153,9 @@ export class GroupStandings extends Standings {
   messageTemplate() {
     let template = this.groupInfoTemplate();
     if (this.isMember) {
-      return html`${template}${this.memeberTemplate()}`;
+      return html`${template}${this.memeberTemplate()}${super.messageTemplate()}`;
     } else {
-      return html`${template}${this.nonMemberTemplate()}`;
+      return html`${template}${this.nonMemberTemplate()}${super.messageTemplate()}`;
     }
   }
 

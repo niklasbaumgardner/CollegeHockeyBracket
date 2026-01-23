@@ -65,7 +65,8 @@ export class Standings extends NikElement {
       return html`<nb-countdown></nb-countdown>`;
     } else if (this.numWinners > 0) {
       return this.getWinningMessage();
-    } else if (this.brackets.length && this.year === CURRENT_YEAR) {
+    } // TODO: Do we really need below options?
+    else if (this.brackets.length && this.year === CURRENT_YEAR) {
       return "View the current standings below.";
     }
     return "View the final standings below.";

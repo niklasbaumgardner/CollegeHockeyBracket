@@ -77,6 +77,7 @@ export class Countdown extends NikElement {
   }
 
   render() {
+    // TODO: fix me
     return html`<wa-card
       style="--wa-panel-background-color:var(--wa-color-danger-50);"
       ><div class="d-flex flex-column align-items-center">
