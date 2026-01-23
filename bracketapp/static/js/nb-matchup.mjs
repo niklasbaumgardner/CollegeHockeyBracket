@@ -191,7 +191,9 @@ class Matchup extends NikElement {
     } else {
       content = this.matchupTemplate();
     }
-    return html`<wa-card class="matchup">${content}</wa-card>`;
+    return html`<wa-card class="matchup default-bg default-border"
+      >${content}</wa-card
+    >`;
   }
 }
 

@@ -79,7 +79,7 @@ export class EditMatchup extends NikElement {
   }
 
   render() {
-    return html`<wa-card class="matchup">
+    return html`<wa-card class="matchup default-bg default-border">
       <label class="nb-team" id="top">
         ${this.topInput()} ${this.getImageElement(this.winnerTop)}
         <span>${this.winnerTopName}</span>

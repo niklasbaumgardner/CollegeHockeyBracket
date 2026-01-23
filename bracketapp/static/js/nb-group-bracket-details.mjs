@@ -8,7 +8,7 @@ export class GroupBracketDetails extends NikElement {
   };
 
   groupBracketTemplate(groupBracket) {
-    return html`<wa-card class="group-bracket-card ${this.size}"
+    return html`<wa-card class="group-bracket-card ${this.size} default-border"
       ><a
         class="flex items-center gap-(--wa-space-2xs) no-underline"
         href="${groupBracket.group.url}"

@@ -169,14 +169,11 @@ export class MyBrackets extends Standings {
             id="group_${g.id}"
             .group=${g}
             .myBrackets=${this.brackets}
-          ></nb-my-brackets-group-standings>`
+          ></nb-my-brackets-group-standings>`,
       );
     }
-    if (CAN_EDIT_BRACKET) {
-      return null;
-    }
 
-    return "Coming soon...";
+    return null;
   }
 
   groupSearchAndButtonTemplate() {

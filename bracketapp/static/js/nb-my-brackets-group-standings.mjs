@@ -92,7 +92,7 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   render() {
-    return html`<wa-card>
+    return html`<wa-card class="default-bg">
       <div class="wa-stack items-center nb-group-card">
         <div class="wa-split">
           <a

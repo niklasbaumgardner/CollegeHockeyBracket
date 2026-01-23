@@ -49,12 +49,22 @@ div:has(> a.clickable-card) {
   }
 }
 
-wa-card:has(wa-card) {
-  & wa-card {
+wa-card:has(wa-card:not(.default-bg)) {
+  & wa-card:not(.default-bg) {
     background-color: light-dark(
       var(--wa-color-neutral-95),
       var(--wa-color-neutral-20)
     );
+  }
+}
+
+wa-card:has(wa-card:not(.default-border)) {
+  & wa-card:not(.default-border) {
+    border-color: light-dark(
+      var(--wa-color-neutral-80),
+      var(--wa-color-neutral-30)
+    );
+    box-shadow: var(--wa-shadow-l);
   }
 }
 
