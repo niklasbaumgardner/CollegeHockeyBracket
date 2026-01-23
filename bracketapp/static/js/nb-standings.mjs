@@ -33,7 +33,7 @@ export class Standings extends NikElement {
     this.year = year;
   }
 
-  getWinningMessage() {
+  winnersTemplate() {
     let winnerTitle = "Winner" + (this.numWinners > 1 ? "s" : "");
     let winners = this.winners
       .flatMap((w) => [
@@ -64,7 +64,7 @@ export class Standings extends NikElement {
     if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
       return html`<nb-countdown></nb-countdown>`;
     } else if (this.numWinners > 0) {
-      return this.getWinningMessage();
+      return this.winnersTemplate();
     } // TODO: Do we really need below options?
     else if (this.brackets.length && this.year === CURRENT_YEAR) {
       return "View the current standings below.";

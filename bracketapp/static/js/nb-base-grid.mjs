@@ -14,27 +14,25 @@ export class BaseGrid extends NikElement {
   }
 
   get gridTheme() {
-    const spacing = 8 * window.THEME.spacing;
     const borderRadius = 4 * window.THEME.rounding;
-    const borderWidth = window.THEME.borderWidth;
-    return agGrid.themeAlpine.withPart(this.currentColorScheme);
-    // .withParams({
-    //   spacing,
-    //   cellHorizontalPadding: "1rem",
-    //   borderRadius: borderRadius,
-    //   wrapperBorderRadius: borderRadius,
-    //   borderWidth,
-    //   headerRowBorder: true,
-    //   rowBorder: true,
+    return agGrid.themeAlpine.withPart(this.currentColorScheme).withParams({
+      // cellHorizontalPadding: "1rem",
+      borderRadius: borderRadius,
+      wrapperBorderRadius: borderRadius,
+      borderWidth: 1,
+      headerRowBorder: true,
+      rowBorder: true,
 
-    //   backgroundColor: "var(--wa-color-surface-default)",
-    //   borderColor: "var(--wa-color-surface-border)",
-    //   cellTextColor: "var(--wa-color-text-normal)",
-    //   headerTextColor: "var(--wa-color-text-normal)",
-    //   rowHoverColor:
-    //     "color-mix(in srgb, var(--wa-color-brand-fill-quiet), transparent)",
-    //   fontFamily: "inherit",
-    // });
+      backgroundColor:
+        "light-dark(var(--wa-color-neutral-95), var(--wa-color-neutral-20))",
+      borderColor:
+        "light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",
+      cellTextColor: "var(--wa-color-text-normal)",
+      headerTextColor: "var(--wa-color-text-normal)",
+      // rowHoverColor:
+      //   "color-mix(in srgb, var(--wa-color-brand-fill-quiet) 50%, transparent 50%)",
+      fontFamily: "inherit",
+    });
   }
 
   get baseGridOptions() {

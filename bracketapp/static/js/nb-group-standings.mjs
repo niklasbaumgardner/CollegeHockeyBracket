@@ -96,16 +96,18 @@ export class GroupStandings extends Standings {
           href=${MY_BRACKETS_URL + "#group_" + this.group.id}
           >Add A Bracket</wa-button
         >`;
-    } else if (this.numWinners > 0) {
-      return this.getWinningMessage();
-    } else if (this.brackets.length) {
-      return "View the current standings below.";
     }
-    return "No brackets were created for this group.";
+    // TODO: is below needed?
+    // else if (this.numWinners > 0) {
+    //   return this.getWinningMessage();
+    // } else if (this.brackets.length) {
+    //   return "View the current standings below.";
+    // }
+    // return "No brackets were created for this group.";
   }
 
   nonMemberTemplate() {
-    if (this.group.locked || !CURRENT_USER.id) {
+    if (!CAN_EDIT_BRACKET || this.group.locked || !CURRENT_USER.id) {
       return;
     }
 
@@ -153,9 +155,9 @@ export class GroupStandings extends Standings {
   messageTemplate() {
     let template = this.groupInfoTemplate();
     if (this.isMember) {
-      return html`${template}${this.memeberTemplate()}${super.messageTemplate()}`;
+      return html`${template}${this.memeberTemplate()}${this.winnersTemplate()}`;
     } else {
-      return html`${template}${this.nonMemberTemplate()}${super.messageTemplate()}`;
+      return html`${template}${this.nonMemberTemplate()}${this.winnersTemplate()}`;
     }
   }
 

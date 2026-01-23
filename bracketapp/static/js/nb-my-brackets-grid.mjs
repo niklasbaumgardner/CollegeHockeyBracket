@@ -4,11 +4,10 @@ import { StandingsGrid } from "./nb-standings-grid.mjs";
 import "./nb-delete-bracket.mjs";
 import "./nb-add-bracket-to-group.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
-import { MyBracketColumn } from "./nb-my-bracket-column.mjs";
-import "./nb-my-bracket-column.mjs";
+import { BracketColumn } from "./nb-bracket-column.mjs";
 import "./nb-group-bracket-details.mjs";
 
-class MyBracketElement extends MyBracketColumn {
+class MyBracketElement extends BracketColumn {
   groupsTemplate() {
     if (!this.bracket.group_brackets.length) {
       return null;
@@ -135,7 +134,7 @@ export class MyBracketsGrid extends StandingsGrid {
         { field: "round_one_points", headerName: "R1" },
         { field: "round_two_points", headerName: "R2" },
         { field: "round_three_points", headerName: "R3" },
-        { field: "round_four_points", headerName: "R4" }
+        { field: "round_four_points", headerName: "R4" },
       );
     }
 

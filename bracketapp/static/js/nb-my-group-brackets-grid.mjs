@@ -3,7 +3,7 @@ import { html } from "./lit.bundle.mjs";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import "./nb-remove-group-bracket.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
-import "./nb-my-bracket-column.mjs";
+import "./nb-bracket-column.mjs";
 
 class MyGroupBracketActions extends NikElement {
   static properties = {
@@ -14,7 +14,7 @@ class MyGroupBracketActions extends NikElement {
   handleRemoveFromGroupClick() {
     if (!this.removeFromGroupModal) {
       this.removeFromGroupModal = document.createElement(
-        "nb-remove-group-bracket"
+        "nb-remove-group-bracket",
       );
       this.removeFromGroupModal.bracket = this.bracket;
       this.removeFromGroupModal.group = this.group;
@@ -83,7 +83,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
       headerName: this.headerName,
       autoHeight: true,
       cellRenderer: (param) => {
-        let ele = document.createElement("nb-my-bracket-column");
+        let ele = document.createElement("nb-bracket-column");
         ele.bracket = param.data;
         return ele;
       },
@@ -107,7 +107,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
         { field: "round_one_points", headerName: "R1" },
         { field: "round_two_points", headerName: "R2" },
         { field: "round_three_points", headerName: "R3" },
-        { field: "round_four_points", headerName: "R4" }
+        { field: "round_four_points", headerName: "R4" },
       );
     }
 

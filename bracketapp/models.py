@@ -218,7 +218,6 @@ class Bracket(BaseModel, SqidSerializerMixin):
                 "rank",
                 "user",
                 "group_bracket",
-                "url",
             )
         return super().to_dict(**kwargs)
 

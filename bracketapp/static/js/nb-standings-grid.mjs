@@ -2,6 +2,7 @@ import { html } from "./lit.bundle.mjs";
 import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 import { BaseGrid } from "./nb-base-grid.mjs";
 import * as agGrid from "./agGrid.bundle.mjs";
+import "./nb-bracket-column.mjs";
 
 export class StandingsGrid extends BaseGrid {
   #pageSizeKey = "agGridPaginationPageSize";
@@ -46,7 +47,7 @@ export class StandingsGrid extends BaseGrid {
       autoSizeStrategy: {
         type: "fitGridWidth",
         columnLimits: [
-          { colId: "rank", minWidth: 75, maxWidth: 75 },
+          { colId: "rank", minWidth: 64, maxWidth: 64 },
           {
             colId: "name",
             minWidth: this.defaultBracketColumnWidth,
@@ -142,25 +143,31 @@ export class StandingsGrid extends BaseGrid {
           return param.data.safeName;
         },
         cellRenderer: (param) => {
+          let ele = document.createElement("nb-bracket-column");
+          ele.bracket = param.data;
+          return ele;
           let bracket = param.data;
           if (bracket.winner_team) {
-            return `<div class="flex w-full h-full">
-              <a
-                class="clickable-card py-(--wa-space-2xs)"
-                href="${bracket.url}"
-                ><div class="standings-row">
-                  ${this.getImageElement(bracket.winner_team)}
-                  <div class="name-cell">
-                    <span
-                      class="standings-bracket-name underline"
-                      ><span>${bracket.safeName}</span></span
-                    ><span class="standings-username"
-                      >${bracket.user.username}</span
-                    >
-                  </div>
-                </div></a
-              >
-            </div>`;
+            let ele = document.createElement("nb-bracket-column");
+            ele.bracket = param.data;
+            return ele;
+            // return `<div class="flex w-full h-full">
+            //   <a
+            //     class="clickable-card py-(--wa-space-2xs)"
+            //     href="${bracket.url}"
+            //     ><div class="standings-row">
+            //       ${this.getImageElement(bracket.winner_team)}
+            //       <div class="name-cell">
+            //         <span
+            //           class="standings-bracket-name underline"
+            //           ><span>${bracket.safeName}</span></span
+            //         ><span class="standings-username"
+            //           >${bracket.user.username}</span
+            //         >
+            //       </div>
+            //     </div></a
+            //   >
+            // </div>`;
           }
 
           return `<div class="standings-row">
