@@ -73,7 +73,6 @@
 
     # sets the Host header to the header to the dynamic name and port options
     header_up Host {upstream_hostport}
-    header_up X-Request-Start "t={time.now.unix_ms}"
+    header_up X-Request-Start {time.now.unix_ms}
   }
-
 }
