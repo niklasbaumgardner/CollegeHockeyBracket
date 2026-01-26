@@ -1,6 +1,8 @@
 from bracketapp.queries import bracket_queries, correct_bracket_queries
 from flask import Blueprint, render_template, redirect, url_for
 from bracketapp.utils import bracket_utils
+from bracketapp.utils.cache import cache
+from bracketapp.utils.constants import ARCHIVE_BASE_CACHE_KEY, ARCHIVE_YEARS_CACHE_KEY
 
 
 archive_bp = Blueprint("archive_bp", __name__)
@@ -8,10 +10,15 @@ archive_bp = Blueprint("archive_bp", __name__)
 
 @archive_bp.get("/archive")
 def archive():
-    archived_years = [
-        cb.to_dict()
-        for cb in correct_bracket_queries.get_all_completed_correct_brackets()
-    ]
+    if cache.has(ARCHIVE_YEARS_CACHE_KEY):
+        archived_years = cache.get(ARCHIVE_YEARS_CACHE_KEY)
+    else:
+        archived_years = [
+            cb.to_dict()
+            for cb in correct_bracket_queries.get_all_completed_correct_brackets()
+        ]
+
+        cache.set(ARCHIVE_YEARS_CACHE_KEY, archived_years)
 
     return render_template("archive.html", archived_years=archived_years)
 
@@ -31,6 +38,10 @@ def archive_year(year):
 
 @archive_bp.get("/api/archive/<int:year>")
 def api_archive_year(year):
+    cache_key = f"{ARCHIVE_BASE_CACHE_KEY}_{year}"
+    if cache.has(cache_key):
+        return cache.get(cache_key)
+
     standings, winners, correct = bracket_utils.get_bracket_standings(year)
 
     standings_dict = [correct.to_dict()] + [
@@ -38,8 +49,13 @@ def api_archive_year(year):
     ]
     winners_dict = [b.to_dict(safe_only=False) for b in winners]
 
-    return dict(
-        standings=standings_dict,
-        winners=winners_dict,
-        year=year,
+    cache.set(
+        cache_key,
+        dict(
+            standings=standings_dict,
+            winners=winners_dict,
+            year=year,
+        ),
     )
+
+    return cache.get(cache_key)

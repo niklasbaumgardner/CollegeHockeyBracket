@@ -5,6 +5,8 @@ from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils.Sqids import sqids
+from bracketapp.utils.cache import cache
+from bracketapp.utils.constants import GROUP_BASE_CACHE_KEY
 
 
 groups_bp = Blueprint("groups_bp", __name__)
@@ -13,7 +15,13 @@ groups_bp = Blueprint("groups_bp", __name__)
 @groups_bp.get("/group/<string:sqid>")
 def view_group(sqid):
     group_id = sqids.decode_one(sqid)
-    group = group_queries.get_group(group_id=group_id)
+
+    group_cache_key = f"{GROUP_BASE_CACHE_KEY}_{group_id}"
+    if cache.has(group_cache_key):
+        group = cache.get(group_cache_key).get("group")
+    else:
+        group = group_queries.get_group(group_id=group_id)
+        group = group.to_dict() if group else None
 
     # TODO: fix viewability
     # ESPN allows viewing any group (public and private) while logged in and not logged in
@@ -23,16 +31,20 @@ def view_group(sqid):
         flash("Sorry. This group doesn't exist")
         return redirect(url_for("leaderboard_bp.index"))
 
-    return render_template("view_group.html", group=group.to_dict())
+    return render_template("view_group.html", group=group)
 
 
 @groups_bp.get("/api/group/<string:sqid>")
 def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
+
+    group_cache_key = f"{GROUP_BASE_CACHE_KEY}_{group_id}"
+    if cache.has(group_cache_key):
+        return cache.get(group_cache_key)
+
     group = group_queries.get_group(group_id=group_id)
 
-    member = group_queries.get_group_member(group_id=group_id)
-    is_member = member is not None
+    is_member = group_queries.is_group_member(group_id=group_id)
 
     brackets, winners, correct = bracket_utils.get_group_standings(
         group_id=group_id, year=group.year
@@ -40,13 +52,19 @@ def api_view_group(sqid):
 
     brackets_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
+    group_dict = group.to_dict()
 
-    return dict(
-        is_member=is_member,
-        group=group.to_dict(),
-        brackets=brackets_dict,
-        winners=winners_dict,
+    cache.set(
+        group_cache_key,
+        dict(
+            is_member=is_member,
+            group=group_dict,
+            brackets=brackets_dict,
+            winners=winners_dict,
+        ),
     )
+
+    return cache.get(group_cache_key)
 
 
 @groups_bp.post("/create_group")

@@ -47,7 +47,7 @@ export class StandingsGrid extends BaseGrid {
       autoSizeStrategy: {
         type: "fitGridWidth",
         columnLimits: [
-          { colId: "rank", minWidth: 64, maxWidth: 64 },
+          { colId: "rank", minWidth: 65, maxWidth: 65 },
           {
             colId: "name",
             minWidth: this.defaultBracketColumnWidth,
