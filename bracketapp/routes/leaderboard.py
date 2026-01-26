@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
 from bracketapp.utils import bracket_utils
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.utils.cache import cache
+from bracketapp.utils.cache import timed_cache
 from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
 
 
@@ -26,8 +26,8 @@ def leaderboard():
 
 @leaderboard_bp.get("/api/leaderboard")
 def api_leaderboard():
-    if cache.has(LEADERBOARD_CACHE_KEY):
-        return cache.get(LEADERBOARD_CACHE_KEY)
+    if result := timed_cache.get(LEADERBOARD_CACHE_KEY):
+        return result
 
     # TODO: return the correct bracket if possible?
     # I forgot what I meant by this. Maybe bring correct to the
@@ -37,7 +37,7 @@ def api_leaderboard():
     standings_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in standings]
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
 
-    cache.set(
+    timed_cache.set(
         LEADERBOARD_CACHE_KEY,
         dict(
             standings=standings_dict,
@@ -46,4 +46,4 @@ def api_leaderboard():
         ),
     )
 
-    return cache.get(LEADERBOARD_CACHE_KEY)
+    return timed_cache.get(LEADERBOARD_CACHE_KEY)

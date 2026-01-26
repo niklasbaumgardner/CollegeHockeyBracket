@@ -5,7 +5,7 @@ from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils.Sqids import sqids
-from bracketapp.utils.cache import cache
+from bracketapp.utils.cache import timed_cache
 from bracketapp.utils.constants import GROUP_BASE_CACHE_KEY
 
 
@@ -17,8 +17,8 @@ def view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
     group_cache_key = f"{GROUP_BASE_CACHE_KEY}_{group_id}"
-    if cache.has(group_cache_key):
-        group = cache.get(group_cache_key).get("group")
+    if result := timed_cache.get(group_cache_key):
+        return result
     else:
         group = group_queries.get_group(group_id=group_id)
         group = group.to_dict() if group else None
@@ -39,8 +39,8 @@ def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
     group_cache_key = f"{GROUP_BASE_CACHE_KEY}_{group_id}"
-    if cache.has(group_cache_key):
-        return cache.get(group_cache_key)
+    if result := timed_cache.get(group_cache_key):
+        return result
 
     group = group_queries.get_group(group_id=group_id)
 
@@ -54,7 +54,7 @@ def api_view_group(sqid):
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
     group_dict = group.to_dict()
 
-    cache.set(
+    timed_cache.set(
         group_cache_key,
         dict(
             is_member=is_member,
@@ -64,7 +64,7 @@ def api_view_group(sqid):
         ),
     )
 
-    return cache.get(group_cache_key)
+    return timed_cache.get(group_cache_key)
 
 
 @groups_bp.post("/create_group")

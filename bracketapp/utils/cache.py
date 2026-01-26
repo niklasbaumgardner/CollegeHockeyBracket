@@ -1,15 +1,11 @@
 from datetime import datetime
 
 
-TIMED_CACHE = {}
-
-
 class Cache:
     def __init__(self):
         self.data = {}
 
     def get(self, key):
-        print(f"cache hit on {key}")
         return self.data.get(key, None)
 
     def set(self, key, value):
@@ -28,34 +24,41 @@ class Cache:
 
 
 class TimedCache:
-    valid_time = 3600 * 24  # 1 hour in seconds
-    data = {}
+    def __init__(self):
+        self.data = {}
 
     def get(self, key):
-        result, set_time = self.data.get(key, (None, None))
+        value, expires = self.data.get(key, (None, None))
 
-        if set_time and self.is_time_still_valid(time=set_time):
-            return result
+        if value and self.is_time_still_valid(expires):
+            return value
 
         return None
 
-    def set(self, key, value):
-        now = datetime.now()
+    def set(self, key, value, valid_time=3600 * 24):
+        expires = datetime.now().timestamp() + valid_time
 
-        self.data[key] = (value, now)
+        self.data[key] = (value, expires)
 
     def has(self, key):
-        result, set_time = self.data.get(key, (None, None))
+        value, expires = self.data.get(key, (None, None))
 
-        return result and self.is_time_still_valid(time=set_time)
+        return value and self.is_time_still_valid(expires)
 
-    def is_time_still_valid(self, time):
-        now = datetime.now()
+    def is_time_still_valid(self, expires):
+        now = datetime.now().timestamp()
 
-        return (now - time).total_seconds() < self.valid_time
+        return now < expires
 
-    def invalidate(self):
+    def invalidate(self, keys):
+        for key in keys:
+            if key in self.data:
+                del self.data[key]
+
+    def invalidate_all(self):
         self.data.clear()
 
 
 cache = Cache()
+
+timed_cache = TimedCache()
