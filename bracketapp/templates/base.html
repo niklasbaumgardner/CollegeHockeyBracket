@@ -98,21 +98,9 @@
       src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"
       crossorigin="anonymous"
       defer
-    >
-      if (window.Sentry) {
-        Sentry.onLoad(function () {
-          Sentry.init({
-            release: "nbbracketchallengefront@1.0.13",
-            environment: "production",
-            integrations: [
-              Sentry.browserTracingIntegration(),
-            ],
-            tracesSampleRate: 1.0,
-            sendDefaultPii: true,
-          });
-        });
-      }
-    </script>
+    ></script>
+    <script src="/static/js/sentry.mjs" type="module" defer></script>
+    <script src="/static/js/appsignal.mjs" type="module" defer></script>
   </head>
 
   <style>

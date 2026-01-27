@@ -1,4 +1,3 @@
-from flask import Flask
 from flask_bcrypt import Bcrypt
 from bracketapp.config import Config
 from flask_mail import Mail
@@ -11,11 +10,21 @@ import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
 from scout_apm.flask import ScoutApm
 from scout_apm.sqlalchemy import instrument_sqlalchemy
+from appsignal import Appsignal
 
 
 class BaseModel(DeclarativeBase):
     pass
 
+
+if not os.environ.get("FLASK_DEBUG"):
+    appsignal = Appsignal(
+        name="nb-bracket", active=True, environment="production", revision="3.0.0"
+    )
+    appsignal.start()
+
+
+from flask import Flask
 
 app = Flask(__name__)
 
