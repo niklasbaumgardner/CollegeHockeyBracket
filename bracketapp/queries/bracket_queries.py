@@ -140,8 +140,17 @@ def get_bracket_for_bracket_id(bracket_id):
     stmt = (
         select(Bracket)
         .where(Bracket.id == bracket_id)
-        .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
+        .options(
+            joinedload(
+                Bracket.group_brackets.and_(
+                    Bracket.user_id
+                    == (current_user.id if current_user.is_authenticated else -1)
+                )
+            ),
+            joinedload(Bracket.games_list),
+        )
     )
+
     return db.session.scalars(stmt.limit(1)).first()
 
 
