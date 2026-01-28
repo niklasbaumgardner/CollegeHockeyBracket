@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user
 from bracketapp.utils import bracket_utils
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
@@ -26,7 +26,10 @@ def leaderboard():
 
 @leaderboard_bp.get("/api/leaderboard")
 def api_leaderboard():
-    if result := timed_cache.get(LEADERBOARD_CACHE_KEY):
+    if (
+        result := timed_cache.get(LEADERBOARD_CACHE_KEY)
+        and request.args.get("skip_cache") != "true"
+    ):
         return result
 
     # TODO: return the correct bracket if possible?
