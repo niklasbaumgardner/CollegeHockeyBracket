@@ -1,5 +1,5 @@
 from bracketapp.queries import bracket_queries, group_queries
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
@@ -20,7 +20,9 @@ def my_brackets():
 @login_required
 def api_my_brackets():
     cache_key = f"{MY_BRACKETS_BASE_CACHE_KEY}_{current_user.id}"
-    if result := timed_cache.get(cache_key):
+    if (result := timed_cache.get(cache_key)) and request.args.get(
+        "skip_cache"
+    ) != "true":
         return result
 
     brackets = [
