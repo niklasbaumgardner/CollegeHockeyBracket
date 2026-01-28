@@ -39,6 +39,13 @@ def api_leaderboard():
     standings_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in standings]
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
 
+    if request.args.get("skip_cache") != "true":
+        return dict(
+            standings=standings_dict,
+            winners=winners_dict,
+            year=YEAR,
+        )
+
     timed_cache.set(
         LEADERBOARD_CACHE_KEY,
         dict(

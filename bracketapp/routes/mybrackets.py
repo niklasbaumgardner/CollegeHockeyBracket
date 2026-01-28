@@ -41,6 +41,9 @@ def api_my_brackets():
 
     groups = [g.to_dict() for g in groups]
 
+    if request.args.get("skip_cache") != "true":
+        return dict(brackets=brackets, groups=groups, year=YEAR)
+
     timed_cache.set(cache_key, dict(brackets=brackets, groups=groups, year=YEAR))
 
     return timed_cache.get(cache_key)
