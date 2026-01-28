@@ -8,20 +8,10 @@ from sqlalchemy.orm import DeclarativeBase
 import os
 import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
-from scout_apm.flask import ScoutApm
-from scout_apm.sqlalchemy import instrument_sqlalchemy
-from appsignal import Appsignal
 
 
 class BaseModel(DeclarativeBase):
     pass
-
-
-if not os.environ.get("FLASK_DEBUG"):
-    appsignal = Appsignal(
-        name="nb-bracket", active=True, environment="production", revision="3.0.0"
-    )
-    appsignal.start()
 
 
 from flask import Flask
@@ -50,14 +40,10 @@ bcrypt.init_app(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth_bp.login"
-login_manager.login_message_category = "alert-primary"
+login_manager.login_message_category = "brand"
 
 mail = Mail()
 mail.init_app(app)
-
-ScoutApm(app)
-with app.app_context():
-    instrument_sqlalchemy(db.engine)
 
 
 # ruff: noqa: E402

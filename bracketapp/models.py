@@ -1,4 +1,3 @@
-from aiohttp.web import view
 from typing import Any, Annotated, Optional
 from bracketapp import db, login_manager, BaseModel
 from flask_login import UserMixin, current_user

@@ -16,7 +16,7 @@ export class GroupAddBracket extends BaseDialog {
 
   get bracketsCanJoin() {
     return this.myBrackets.filter(
-      (b) => !this.joinedBrackets.find((jb) => jb.id === b.id)
+      (b) => !this.joinedBrackets.find((jb) => jb.id === b.id),
     );
   }
 
