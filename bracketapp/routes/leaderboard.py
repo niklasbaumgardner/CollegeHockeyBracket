@@ -26,10 +26,9 @@ def leaderboard():
 
 @leaderboard_bp.get("/api/leaderboard")
 def api_leaderboard():
-    if (
-        result := timed_cache.get(LEADERBOARD_CACHE_KEY)
-        and request.args.get("skip_cache") != "true"
-    ):
+    if (result := timed_cache.get(LEADERBOARD_CACHE_KEY)) and request.args.get(
+        "skip_cache"
+    ) != "true":
         return result
 
     # TODO: return the correct bracket if possible?

@@ -20,10 +20,9 @@ def my_brackets():
 @login_required
 def api_my_brackets():
     cache_key = f"{MY_BRACKETS_BASE_CACHE_KEY}_{current_user.id}"
-    if (
-        result := timed_cache.get(cache_key)
-        and request.args.get("skip_cache") != "true"
-    ):
+    if (result := timed_cache.get(cache_key)) and request.args.get(
+        "skip_cache"
+    ) != "true":
         return result
 
     brackets = [
