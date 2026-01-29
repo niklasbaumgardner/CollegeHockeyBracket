@@ -27,10 +27,19 @@ const config = {
   },
   optimization: {
     minimize: true,
-    // minimizer: [
-    //   new CssMinimizerPlugin({ minify: CssMinimizerPlugin.lightningCssMinify }),
-    //   "...",
-    // ],
+    minimizer: [
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            "default",
+            {
+              calc: false,
+            },
+          ],
+        },
+      }),
+      "...",
+    ],
     splitChunks: {
       // include all types of chunks
       chunks: "all",
