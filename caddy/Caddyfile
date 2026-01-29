@@ -18,7 +18,7 @@
 :{$PORT} {
   # encode zstd
 
-  uri /static* query v 29494164
+  uri /static* query v 29495466
 
   handle /static* {
     file_server
