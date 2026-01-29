@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user
 from bracketapp.utils import bracket_utils
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.utils.cache import timed_cache
 from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
+from bracketapp import cache
+import time
 
 
 leaderboard_bp = Blueprint("leaderboard_bp", __name__)
@@ -26,9 +27,7 @@ def leaderboard():
 
 @leaderboard_bp.get("/api/leaderboard")
 def api_leaderboard():
-    if (result := timed_cache.get(LEADERBOARD_CACHE_KEY)) and request.args.get(
-        "skip_cache"
-    ) != "true":
+    if result := cache.get(LEADERBOARD_CACHE_KEY):
         return result
 
     # TODO: return the correct bracket if possible?
@@ -39,20 +38,12 @@ def api_leaderboard():
     standings_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in standings]
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
 
-    if request.args.get("skip_cache") != "true":
-        return dict(
-            standings=standings_dict,
-            winners=winners_dict,
-            year=YEAR,
-        )
-
-    timed_cache.set(
-        LEADERBOARD_CACHE_KEY,
-        dict(
-            standings=standings_dict,
-            winners=winners_dict,
-            year=YEAR,
-        ),
+    value = dict(
+        standings=standings_dict,
+        winners=winners_dict,
+        year=YEAR,
     )
 
-    return timed_cache.get(LEADERBOARD_CACHE_KEY)
+    cache.set(LEADERBOARD_CACHE_KEY, value)
+
+    return value

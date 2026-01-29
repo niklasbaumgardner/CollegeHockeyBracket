@@ -8,6 +8,8 @@ from sqlalchemy.orm import DeclarativeBase
 import os
 import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
+from pymemcache.client.base import Client
+from pymemcache import serde
 
 
 class BaseModel(DeclarativeBase):
@@ -44,6 +46,14 @@ login_manager.login_message_category = "brand"
 
 mail = Mail()
 mail.init_app(app)
+
+cache = Client(
+    Config.CACHE_MEMCACHED_SERVER,
+    serde=serde.pickle_serde,
+    connect_timeout=2,
+    timeout=1,
+    ignore_exc=True,
+)
 
 
 # ruff: noqa: E402

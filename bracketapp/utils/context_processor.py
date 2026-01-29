@@ -2,7 +2,7 @@ from flask_login import current_user
 from flask import Blueprint
 from bracketapp.queries import bracket_queries, user_settings_queries
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
-import re
+
 
 context_processor_bp = Blueprint("context_processor_bp", __name__)
 
@@ -17,7 +17,7 @@ def globals():
         my_bracket_count = bracket_queries.my_bracket_count()
 
     return dict(
-        user_settings=user_settings.to_dict()
+        user_settings=user_settings
         if user_settings
         else {"settings": {"theme": "shoelace"}},
         MY_BRACKET_COUNT=my_bracket_count,

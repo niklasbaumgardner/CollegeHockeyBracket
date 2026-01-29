@@ -20,6 +20,7 @@ class Config:
     SCOUT_MONITOR = True
     SCOUT_KEY = os.environ.get("SCOUT_KEY")
     SCOUT_NAME = APP_NAME
+    CACHE_MEMCACHED_SERVER = os.environ.get("CACHE_MEMCACHED_SERVER")
 
 
 YEAR = int(os.environ.get("YEAR"))

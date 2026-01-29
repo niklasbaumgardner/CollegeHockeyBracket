@@ -1,3 +1,8 @@
+from bracketapp.utils.constants import (
+    bracket_cache_key,
+    my_brackets_cache_key,
+    LEADERBOARD_CACHE_KEY,
+)
 from flask import url_for
 from sqlalchemy.util.topological import sort
 from bracketapp.models import (
@@ -11,7 +16,7 @@ from bracketapp.models import (
     Team,
     BracketTeam,
 )
-from bracketapp import db
+from bracketapp import db, cache
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
@@ -72,6 +77,10 @@ def create_bracket_from_form(form_data):
     db.session.execute(stmt)
     db.session.commit()
 
+    # TODO: invalidate cache
+    # group (done in group_bracket creation)
+    cache.delete_many([LEADERBOARD_CACHE_KEY, my_brackets_cache_key(current_user.id)])
+
     return new_bracket_id
 
 
@@ -116,6 +125,10 @@ def update_bracket_from_form(bracket_id, form_data):
 
     db.session.commit()
 
+    # TODO: invalidate cache
+    # group (done in group_bracket creation)
+    cache.delete_many([LEADERBOARD_CACHE_KEY, my_brackets_cache_key(current_user.id)])
+
 
 def get_my_bracket_for_bracket_id(bracket_id, include_games=False):
     if not bracket_id:
@@ -137,21 +150,31 @@ def get_bracket_for_bracket_id(bracket_id):
     if not bracket_id:
         return
 
+    cache_key = bracket_cache_key(bracket_id)
+    if bracket := cache.get(cache_key):
+        if not (current_user.is_authenticated and current_user.id == bracket.user_id):
+            # group_brackets are removed if current user is not the owner
+            bracket.group_brackets = []
+        return bracket
+
     stmt = (
         select(Bracket)
         .where(Bracket.id == bracket_id)
         .options(
-            joinedload(
-                Bracket.group_brackets.and_(
-                    Bracket.user_id
-                    == (current_user.id if current_user.is_authenticated else -1)
-                )
-            ),
+            joinedload(Bracket.group_brackets),
             joinedload(Bracket.games_list),
         )
     )
 
-    return db.session.scalars(stmt.limit(1)).first()
+    bracket = db.session.scalars(stmt.limit(1)).first()
+
+    cache.set(cache_key, bracket)
+
+    if not (current_user.is_authenticated and current_user.id == bracket.user_id):
+        # group_brackets are removed if current user is not the owner
+        bracket.group_brackets = []
+
+    return bracket
 
 
 def my_bracket_count():
@@ -164,19 +187,14 @@ def my_bracket_count():
     return 0
 
 
-def get_my_brackets(include_group_brackets=False):
-    if not current_user.is_authenticated:
-        return []
-
-    stmt = select(Bracket).where(
-        and_(Bracket.user_id == current_user.id, Bracket.year == YEAR)
+def get_my_brackets():
+    stmt = (
+        select(Bracket)
+        .where(and_(Bracket.user_id == current_user.id, Bracket.year == YEAR))
+        .options(joinedload(Bracket.group_brackets))
     )
-    if include_group_brackets:
-        stmt = stmt.options(joinedload(Bracket.group_brackets))
 
     brackets = db.session.scalars(stmt).unique().all()
-
-    # sort in js
 
     return brackets
 

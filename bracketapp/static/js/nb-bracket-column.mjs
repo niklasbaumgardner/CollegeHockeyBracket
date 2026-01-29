@@ -6,6 +6,10 @@ export class BracketColumn extends NikElement {
     bracket: { type: Object },
   };
 
+  get bracketName() {
+    return this.bracket.safeName ?? this.bracket.name;
+  }
+
   getImageElement(winner_team) {
     if (!winner_team) {
       return null;
@@ -31,7 +35,7 @@ export class BracketColumn extends NikElement {
           ${this.getImageElement(this.bracket.winner_team)}
           <div class="name-cell">
             <span class="standings-bracket-name underline"
-              >${this.bracket.name}</span
+              >${this.bracketName}</span
             ><span class="standings-username"
               >${this.bracket.user.username}</span
             >
@@ -43,7 +47,7 @@ export class BracketColumn extends NikElement {
 
   safeTemplate() {
     return html`<div class="name-cell">
-      <span class="standings-bracket-name">${this.bracket.name}</span
+      <span class="standings-bracket-name">${this.bracketName}</span
       ><span class="standings-username">${this.bracket.user.username}</span>
     </div>`;
   }

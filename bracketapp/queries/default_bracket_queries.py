@@ -1,3 +1,4 @@
+from bracketapp.utils.constants import default_bracket_cache_key
 from bracketapp.models import (
     Bracket,
     Game,
@@ -7,7 +8,7 @@ from bracketapp.models import (
     Team,
     BracketTeam,
 )
-from bracketapp import db
+from bracketapp import db, cache
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
@@ -41,8 +42,15 @@ def create_default_bracket():
 
 
 def get_default_bracket(year=YEAR):
+    cache_key = default_bracket_cache_key(year)
+    if result := cache.get(cache_key):
+        return result
+
     stmt = select(DefaultBracket).where(DefaultBracket.year == year)
-    return db.session.scalars(stmt.limit(1)).first()
+    default_bracket = db.session.scalars(stmt.limit(1)).first()
+
+    cache.set(cache_key, default_bracket)
+    return default_bracket
 
 
 def get_bracket_teams_count(year=YEAR):
@@ -117,3 +125,5 @@ def update_default_bracket_from_form(form_data):
         update_bracket_teams_from_form(form_data)
     else:
         create_bracket_teams_from_form(form_data)
+
+    cache.delete(default_bracket_cache_key(YEAR))

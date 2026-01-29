@@ -5,8 +5,8 @@ from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils.Sqids import sqids
-from bracketapp.utils.cache import timed_cache
-from bracketapp.utils.constants import GROUP_BASE_CACHE_KEY
+from bracketapp import cache
+from bracketapp.utils.constants import group_cache_key
 
 
 groups_bp = Blueprint("groups_bp", __name__)
@@ -16,9 +16,9 @@ groups_bp = Blueprint("groups_bp", __name__)
 def view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    group_cache_key = f"{GROUP_BASE_CACHE_KEY}_{group_id}"
-    if result := timed_cache.get(group_cache_key):
-        return result
+    group_cache_key = group_cache_key(group_id)
+    if result := cache.get(group_cache_key):
+        group = result["group"]
     else:
         group = group_queries.get_group(group_id=group_id)
         group = group.to_dict() if group else None
@@ -38,8 +38,9 @@ def view_group(sqid):
 def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    group_cache_key = f"{GROUP_BASE_CACHE_KEY}_{group_id}"
-    if result := timed_cache.get(group_cache_key):
+    # todo: is_member needs to be cached separately
+    group_cache_key = group_cache_key(group_id)
+    if result := cache.get(group_cache_key):
         return result
 
     group = group_queries.get_group(group_id=group_id)
@@ -54,17 +55,16 @@ def api_view_group(sqid):
     winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
     group_dict = group.to_dict()
 
-    timed_cache.set(
-        group_cache_key,
-        dict(
-            is_member=is_member,
-            group=group_dict,
-            brackets=brackets_dict,
-            winners=winners_dict,
-        ),
+    value = dict(
+        is_member=is_member,
+        group=group_dict,
+        brackets=brackets_dict,
+        winners=winners_dict,
     )
 
-    return timed_cache.get(group_cache_key)
+    cache.set(group_cache_key, value)
+
+    return value
 
 
 @groups_bp.post("/create_group")

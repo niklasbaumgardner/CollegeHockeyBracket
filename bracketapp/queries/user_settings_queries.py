@@ -1,9 +1,10 @@
 from bracketapp.models import UserSettings
 from flask_login import current_user
-from bracketapp import db
+from bracketapp import db, cache
 from sqlalchemy import select, cast
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.dialects.postgresql import JSONB
+from bracketapp.utils.constants import user_settings_cache_key
 
 
 ##
@@ -136,9 +137,20 @@ def is_valid_user_setting_arg(arg, val):
 
 
 def get_user_settings():
-    return db.session.scalars(
+    cache_key = user_settings_cache_key(current_user.id)
+    if result := cache.get(cache_key):
+        return result
+
+    settings = db.session.scalars(
         select(UserSettings).where(UserSettings.user_id == current_user.id).limit(1)
     ).first()
+
+    settings_dict = None
+    if settings:
+        settings_dict = settings.to_dict()
+        cache.set(cache_key, settings_dict)
+
+    return settings_dict
 
 
 def update_user_settings(**kwargs):

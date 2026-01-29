@@ -1,3 +1,4 @@
+from bracketapp.utils.constants import correct_bracket_cache_key
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
@@ -9,7 +10,7 @@ from bracketapp.models import (
     Team,
     BracketTeam,
 )
-from bracketapp import db
+from bracketapp import db, cache
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
@@ -53,10 +54,17 @@ def get_all_completed_correct_brackets():
 
 
 def get_correct_bracket(year=YEAR, include_games=False):
+    cache_key = correct_bracket_cache_key(year, include_games)
+    if result := cache.get(cache_key):
+        return result
+
     stmt = select(CorrectBracket).where(CorrectBracket.year == year)
     if include_games:
         stmt = stmt.options(joinedload(CorrectBracket.games_list))
-    return db.session.scalars(stmt.limit(1)).first()
+    correct_bracket = db.session.scalars(stmt.limit(1)).first()
+
+    cache.set(cache_key, correct_bracket)
+    return correct_bracket
 
 
 def update_correct_bracket_from_form(form_data):
@@ -105,3 +113,7 @@ def update_correct_bracket_from_form(form_data):
     db.session.execute(upsert_stmt)
 
     db.session.commit()
+
+    cache.delete_many(
+        [correct_bracket_cache_key(YEAR, True), correct_bracket_cache_key(YEAR, False)]
+    )

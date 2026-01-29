@@ -1,8 +1,8 @@
 from bracketapp.queries import bracket_queries, correct_bracket_queries
 from flask import Blueprint, render_template, redirect, url_for
 from bracketapp.utils import bracket_utils
-from bracketapp.utils.cache import timed_cache
-from bracketapp.utils.constants import ARCHIVE_BASE_CACHE_KEY, ARCHIVE_YEARS_CACHE_KEY
+from bracketapp import cache
+from bracketapp.utils.constants import ARCHIVE_YEARS_CACHE_KEY, archive_year_cache_key
 
 
 archive_bp = Blueprint("archive_bp", __name__)
@@ -10,7 +10,7 @@ archive_bp = Blueprint("archive_bp", __name__)
 
 @archive_bp.get("/archive")
 def archive():
-    if result := timed_cache.get(ARCHIVE_YEARS_CACHE_KEY):
+    if result := cache.get(ARCHIVE_YEARS_CACHE_KEY):
         archived_years = result
     else:
         archived_years = [
@@ -18,7 +18,7 @@ def archive():
             for cb in correct_bracket_queries.get_all_completed_correct_brackets()
         ]
 
-        timed_cache.set(ARCHIVE_YEARS_CACHE_KEY, archived_years)
+        cache.set(ARCHIVE_YEARS_CACHE_KEY, archived_years)
 
     return render_template("archive.html", archived_years=archived_years)
 
@@ -38,8 +38,8 @@ def archive_year(year):
 
 @archive_bp.get("/api/archive/<int:year>")
 def api_archive_year(year):
-    cache_key = f"{ARCHIVE_BASE_CACHE_KEY}_{year}"
-    if result := timed_cache.get(cache_key):
+    cache_key = archive_year_cache_key(year)
+    if result := cache.get(cache_key):
         return result
 
     standings, winners, correct = bracket_utils.get_bracket_standings(year)
@@ -49,13 +49,15 @@ def api_archive_year(year):
     ]
     winners_dict = [b.to_dict(safe_only=False) for b in winners]
 
-    timed_cache.set(
-        cache_key,
-        dict(
-            standings=standings_dict,
-            winners=winners_dict,
-            year=year,
-        ),
+    value = dict(
+        standings=standings_dict,
+        winners=winners_dict,
+        year=year,
     )
 
-    return timed_cache.get(cache_key)
+    cache.set(
+        cache_key,
+        value,
+    )
+
+    return value

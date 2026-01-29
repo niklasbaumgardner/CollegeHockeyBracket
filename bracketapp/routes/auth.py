@@ -2,10 +2,11 @@ from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
 from bracketapp.queries import user_queries
 from bracketapp.models import User
-from bracketapp import bcrypt
+from bracketapp import bcrypt, cache
 from bracketapp.utils import send_email
 import stream_chat
 import os
+from bracketapp.utils.constants import user_cache_key
 
 
 auth_bp = Blueprint("auth_bp", __name__)
@@ -132,6 +133,7 @@ def password_reset():
 @auth_bp.get("/logout")
 @login_required
 def logout():
+    cache.delete(user_cache_key(current_user.id))
     logout_user()
     return redirect(url_for("auth_bp.login"))
 

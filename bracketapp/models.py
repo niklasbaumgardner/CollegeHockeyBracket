@@ -1,5 +1,5 @@
 from typing import Any, Annotated, Optional
-from bracketapp import db, login_manager, BaseModel
+from bracketapp import db, login_manager, BaseModel, cache
 from flask_login import UserMixin, current_user
 from itsdangerous import URLSafeTimedSerializer
 import os
@@ -19,6 +19,7 @@ from enum import IntFlag
 from sqlalchemy.dialects.postgresql import JSONB
 from bracketapp.utils.Sqids import sqids
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.utils.constants import user_cache_key
 
 
 int_pk = Annotated[
@@ -35,7 +36,14 @@ class Role(IntFlag):
 
 @login_manager.user_loader
 def load_user(id):
-    return db.session.get(User, int(id))
+    cache_key = user_cache_key(id)
+    if result := cache.get(cache_key):
+        return result
+
+    stmt = select(User).where(User.id == id)
+    user = db.session.scalars(stmt.limit(1)).first()
+    cache.set(cache_key, user)
+    return user
 
 
 class SqidSerializerMixin(SerializerMixin):

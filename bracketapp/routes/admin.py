@@ -1,3 +1,4 @@
+from bracketapp import cache
 from bracketapp.queries import (
     bracket_queries,
     correct_bracket_queries,
@@ -123,3 +124,13 @@ def go_live():
         return "ok", 200
 
     return "", 503
+
+
+@admin_bp.get("/flush_cache")
+@login_required
+def flush_cache():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
+
+    cache.flush_all()
+    return redirect(url_for("admin_bp.admin"))

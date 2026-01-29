@@ -1,4 +1,4 @@
-from enum import unique
+from bracketapp.utils.constants import bracket_cache_key, group_cache_key
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
@@ -13,7 +13,7 @@ from bracketapp.models import (
     BracketTeam,
     User,
 )
-from bracketapp import db
+from bracketapp import db, cache
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from flask_login import current_user
 from copy import deepcopy
@@ -213,6 +213,8 @@ def create_group_bracket(group_id, bracket_id):
     )
     db.session.execute(upsert_stmt)
     db.session.commit()
+
+    cache.delete_many([group_cache_key(group_id), bracket_cache_key(bracket_id)])
 
 
 def get_my_group_bracket_for_id(group_bracket_id):

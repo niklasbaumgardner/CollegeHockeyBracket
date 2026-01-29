@@ -1,6 +1,7 @@
+from bracketapp.utils.constants import user_cache_key
 from bracketapp.models import User
 from flask_login import current_user
-from bracketapp import bcrypt, db
+from bracketapp import bcrypt, db, cache
 from sqlalchemy import func, insert, select, update
 
 
@@ -39,6 +40,8 @@ def update_user(username, email):
 
     db.session.execute(stmt)
     db.session.commit()
+
+    cache.delete(user_cache_key(current_user.id))
 
 
 def update_user_password(id, password):
