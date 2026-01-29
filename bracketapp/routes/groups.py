@@ -16,8 +16,8 @@ groups_bp = Blueprint("groups_bp", __name__)
 def view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    group_cache_key = group_cache_key(group_id)
-    if result := cache.get(group_cache_key):
+    cache_key = group_cache_key(group_id)
+    if result := cache.get(cache_key):
         group = result["group"]
     else:
         group = group_queries.get_group(group_id=group_id)
