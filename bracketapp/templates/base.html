@@ -43,6 +43,84 @@
     <title>NB Bracket Challenge</title>
 
     <script>
+      const JS_FILES = [
+        ["284.bundle.mjs", 1],
+        ["346.bundle.mjs", 1],
+        ["375.bundle.mjs", 1],
+        ["476.bundle.mjs", 1],
+        ["97.bundle.mjs", 1],
+        ["agGrid.bundle.mjs", 1],
+        //[ "agGrid.mjs",1],
+        //[ "chat.mjs",1],
+        ["css.bundle.mjs", 1],
+        //[ "css.mjs",1],
+        ["DeferredTask.mjs", 1],
+        ["lit.bundle.mjs", 1],
+        //[ "lit.mjs",1],
+        ["main.bundle.mjs", 1],
+        //[ "main.mjs",1],
+        //[ "messageEl.mjs",1],
+        ["nb-add-bracket-to-group.mjs", 1],
+        ["nb-add-team.mjs", 1],
+        ["nb-admin.mjs", 1],
+        ["nb-alert-manager.mjs", 1],
+        ["nb-alert.mjs", 1],
+        ["nb-archive-years.mjs", 1],
+        ["nb-back-button.mjs", 1],
+        ["nb-base-dialog.mjs", 1],
+        ["nb-base-grid.mjs", 1],
+        ["nb-bracket-card.mjs", 1],
+        ["nb-bracket-column.mjs", 1],
+        ["nb-bracket-points-charts.mjs", 1],
+        ["nb-bracket.mjs", 1],
+        ["nb-countdown.mjs", 1],
+        ["nb-create-group.mjs", 1],
+        ["nb-default-bracket.mjs", 1],
+        ["nb-delete-bracket.mjs", 1],
+        ["nb-delete-group.mjs", 1],
+        ["nb-edit-bracket.mjs", 1],
+        ["nb-edit-correct-bracket.mjs", 1],
+        ["nb-edit-correct-matchup.mjs", 1],
+        ["nb-edit-group.mjs", 1],
+        ["nb-edit-matchup.mjs", 1],
+        ["nb-group-add-bracket.mjs", 1],
+        ["nb-group-bracket-details.mjs", 1],
+        ["nb-group-card.mjs", 1],
+        ["nb-group-standings-grid.mjs", 1],
+        ["nb-group-standings.mjs", 1],
+        ["nb-join-private-group.mjs", 1],
+        ["nb-login.mjs", 1],
+        ["nb-matchup.mjs", 1],
+        ["nb-my-brackets-grid.mjs", 1],
+        ["nb-my-brackets-group-standings.mjs", 1],
+        ["nb-my-brackets.mjs", 1],
+        ["nb-my-group-brackets-grid.mjs", 1],
+        ["nb-password-reset-request.mjs", 1],
+        ["nb-preferences.mjs", 1],
+        ["nb-profile.mjs", 1],
+        ["nb-radio-item.mjs", 1],
+        ["nb-remove-group-bracket.mjs", 1],
+        ["nb-reset-password.mjs", 1],
+        ["nb-search-groups.mjs", 1],
+        ["nb-signup.mjs", 1],
+        ["nb-standings-grid.mjs", 1],
+        ["nb-standings.mjs", 1],
+        ["nb-theme-selector.mjs", 1],
+        ["nik-element.mjs", 1],
+        ["sentry.mjs", 1],
+        ["theme.mjs", 1],
+      ];
+
+      for (let [filename, currentVersion] of JS_FILES) {
+        const fileVersion = localStorage.getItem(filename);
+        if (!fileVersion || fileVersion < currentVersion) {
+          fetch(`/static/js/${filename}`, { cache: "no-cache" });
+          localStorage.setItem(filename, currentVersion);
+        }
+      }
+    </script>
+
+    <script>
         // URL for updating user settings
         const UPDATE_USER_SETTINGS =
           "{{ url_for('user_settings_bp.update_settings') }}"
