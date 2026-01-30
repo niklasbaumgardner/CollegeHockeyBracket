@@ -18,14 +18,13 @@
 :{$PORT} {
   # encode zstd
 
-  uri /static* query v 29495510
+  # uri /static* query v 29495510
 
   handle /static* {
     file_server
   }
 
-  header /static* Cache-Control "max-age=31536000, must-revalidate"
-  # 86400
+  header /static* Cache-Control max-age=31536000
 
   # rate limit all POST requests
   rate_limit {
