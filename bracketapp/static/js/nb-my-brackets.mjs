@@ -30,6 +30,8 @@ export class MyBrackets extends Standings {
     document.addEventListener("wa-tab-show", this);
 
     window.addEventListener("hashchange", this);
+
+    console.log("this is version 2");
   }
 
   handleEvent(event) {
@@ -66,8 +68,6 @@ export class MyBrackets extends Standings {
       this.tabGroup.active = "my-brackets";
     }
   }
-
-  // async requestContent() {}
 
   async requestContent() {
     let response = await fetch(MY_BRACKETS_CONTENT_URL);
