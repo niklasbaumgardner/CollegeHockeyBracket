@@ -24,7 +24,7 @@
     file_server
   }
 
-  header /static* Cache-Control max-age=31536000
+  header /static* Cache-Control "max-age=31536000, must-revalidate"
   # 86400
 
   # rate limit all POST requests
