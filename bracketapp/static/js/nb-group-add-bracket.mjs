@@ -1,5 +1,4 @@
-import { html } from "./lit.bundle.mjs";
-import "./nb-my-brackets-group-standings.mjs";
+import { html } from "lit";
 import "./nb-radio-item.mjs";
 import "./nb-group-card.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";

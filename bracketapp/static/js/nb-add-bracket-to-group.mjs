@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import "./nb-my-brackets-group-standings.mjs";
 import "./nb-radio-item.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
@@ -15,7 +15,7 @@ export class AddBracketToGroup extends BaseDialog {
 
   get groupsCanJoin() {
     return this.groups.filter(
-      (g) => !this.joinedGroups.find((jg) => jg.id === g.id)
+      (g) => !this.joinedGroups.find((jg) => jg.id === g.id),
     );
   }
 

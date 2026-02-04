@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
 export class RemoveGroupBracket extends BaseDialog {

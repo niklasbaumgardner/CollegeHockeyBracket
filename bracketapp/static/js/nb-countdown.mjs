@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 
 const BRACKET_CLOSE = new Date("2025-03-27T18:00:00.000Z");

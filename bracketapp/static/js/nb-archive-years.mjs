@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 
 export class ArchiveYears extends NikElement {
@@ -20,19 +20,20 @@ export class ArchiveYears extends NikElement {
 
   yearsTemplate() {
     return this.archivedYears.map(
-      (correctBracket) => html`<wa-card class="w-full"
-        ><a
-          class="clickable-card p-(--wa-space-l)"
-          href=${correctBracket.archive_url}
-          ><div class="wa-stack">
-            <div class="wa-cluster">
-              ${this.imgTemplate(correctBracket.winner_team)}
-              <h3>${correctBracket.year}</h3>
-            </div>
-            <h3>${correctBracket.winner_team.team.name}</h3>
-          </div></a
-        ></wa-card
-      >`
+      (correctBracket) =>
+        html`<wa-card class="w-full"
+          ><a
+            class="clickable-card p-(--wa-space-l)"
+            href=${correctBracket.archive_url}
+            ><div class="wa-stack">
+              <div class="wa-cluster">
+                ${this.imgTemplate(correctBracket.winner_team)}
+                <h3>${correctBracket.year}</h3>
+              </div>
+              <h3>${correctBracket.winner_team.team.name}</h3>
+            </div></a
+          ></wa-card
+        >`,
     );
   }
 

@@ -1,5 +1,5 @@
 import { BaseDialog } from "./nb-base-dialog.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 
 export class JoinPrivateGroup extends BaseDialog {
   static properties = { group: { type: Object } };

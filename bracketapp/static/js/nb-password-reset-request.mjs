@@ -1,5 +1,5 @@
 import { NikElement } from "./nik-element.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 
 const EMAUL_UNIQUE_HELP_TEXT =
   "This email already exists. Please login or reset the password.";

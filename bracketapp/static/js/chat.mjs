@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./messageEl.mjs";
 
@@ -33,7 +33,7 @@ class ChatEl extends NikElement {
           id: `${CHAT_USER.id}`,
           name: CHAT_USER.username,
         },
-        CHAT_USER.streamchat_token
+        CHAT_USER.streamchat_token,
       );
 
       this.channel = this.client.channel("messaging", "BracketApp2024", {
@@ -90,7 +90,7 @@ class ChatEl extends NikElement {
       console.log(
         `Trying to scroll to ${
           this.messageListEl.shadowRoot.querySelector("div").scrollHeight
-        }`
+        }`,
       );
       this.messageListEl.shadowRoot.querySelector("div").scrollTo({
         left: 0,
@@ -113,7 +113,7 @@ class ChatEl extends NikElement {
     }
 
     return this.channel.state.messages.map(
-      (m) => html`<nb-message-el .data=${m}></nb-message-el>`
+      (m) => html`<nb-message-el .data=${m}></nb-message-el>`,
     );
   }
 

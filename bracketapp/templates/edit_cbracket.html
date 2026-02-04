@@ -1,7 +1,6 @@
 {% extends "base.html" %} {% block head %}
 
 <title>{{ bracket.year }} Update Correct</title>
-<script type="module" src="/static/js/nb-edit-correct-bracket.mjs"></script>
 <script>
   const CANCEL_BRACKET_URL = "{{ url_for('admin_bp.update_correct') }}";
 </script>

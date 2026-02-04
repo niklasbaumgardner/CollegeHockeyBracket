@@ -1,7 +1,7 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 import { BaseGrid } from "./nb-base-grid.mjs";
-import * as agGrid from "./agGrid.bundle.mjs";
+import * as agGrid from "./agGrid.mjs";
 import "./nb-bracket-column.mjs";
 
 export class StandingsGrid extends BaseGrid {

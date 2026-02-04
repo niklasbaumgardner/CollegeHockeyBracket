@@ -1,4 +1,4 @@
-import { html, ifDefined } from "./lit.bundle.mjs";
+import { html } from "lit";
 import "./nb-delete-group.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 

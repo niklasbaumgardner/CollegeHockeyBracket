@@ -1,7 +1,6 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-group-standings-grid.mjs";
-import "./nb-my-brackets.mjs";
 import "./nb-group-add-bracket.mjs";
 import "./nb-my-group-brackets-grid.mjs";
 

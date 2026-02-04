@@ -117,6 +117,8 @@ export class Theme {
     if (!this.theme) {
       this.makeDefault();
     }
+
+    console.log(this);
   }
 
   get theme() {
@@ -182,7 +184,7 @@ export class Theme {
     themeStorage.setItem("theme", this.theme);
     document.documentElement.classList.add(`wa-theme-${this.theme}`);
 
-    this.themeLinkEl.href = `/static/css/${this.theme}.min.css`;
+    this.themeLinkEl.href = CSS_FILE_MAP[this.theme] ?? "";
 
     if (!this.#initing) {
       this.updateSettings({ theme: this.theme });
@@ -303,11 +305,8 @@ export class Theme {
       document.documentElement.classList.add(`wa-palette-${this.colorPalette}`);
     }
 
-    if (this.colorPalette) {
-      this.paletteLinkEl.href = `/static/css/${this.colorPalette}.palette.min.css`;
-    } else {
-      this.paletteLinkEl.href = "";
-    }
+    this.paletteLinkEl.href =
+      CSS_FILE_MAP[this.colorPalette + ".palette"] ?? "";
 
     if (!this.#initing) {
       this.updateSettings({ color_palette: this.colorPalette });

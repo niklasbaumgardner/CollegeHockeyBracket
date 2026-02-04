@@ -1,4 +1,4 @@
-import { html, nothing } from "./lit.bundle.mjs";
+import { html, nothing } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-edit-matchup.mjs";
 

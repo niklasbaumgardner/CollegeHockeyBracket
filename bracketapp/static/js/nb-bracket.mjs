@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-matchup.mjs";
 import "./nb-bracket-points-charts.mjs";

@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 
 export class ThemeSelector extends NikElement {
@@ -35,7 +35,7 @@ export class ThemeSelector extends NikElement {
 
   setupThemeWatcher() {
     this.mutationObserver = new MutationObserver((params) =>
-      this.handleThemeChange(params)
+      this.handleThemeChange(params),
     );
 
     this.mutationObserver.observe(document.documentElement, {

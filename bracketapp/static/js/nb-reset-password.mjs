@@ -1,5 +1,5 @@
 import { NikElement } from "./nik-element.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 
 const PASSWORD_MATCH_HELP_TEXT = "Passwords do not match.";
 

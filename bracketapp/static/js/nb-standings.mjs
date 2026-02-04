@@ -1,6 +1,6 @@
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import { NikElement } from "./nik-element.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 
 export class Standings extends NikElement {
   static properties = {

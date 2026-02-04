@@ -1,5 +1,5 @@
 import { Standings } from "./nb-standings.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import "./nb-my-brackets-grid.mjs";
 import "./nb-my-brackets-group-standings.mjs";
 import "./nb-search-groups.mjs";

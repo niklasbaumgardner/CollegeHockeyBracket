@@ -1,5 +1,6 @@
 import { NikElement } from "./nik-element.mjs";
-import { html, ifDefined } from "./lit.bundle.mjs";
+import { html } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 export class LoginCard extends NikElement {
   static properties = {

@@ -1,5 +1,5 @@
 import { NikElement } from "./nik-element.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { DeferredTask } from "./DeferredTask.mjs";
 
 const EMAUL_UNIQUE_HELP_TEXT =
@@ -26,7 +26,7 @@ export class SignupCard extends NikElement {
         "?" +
         new URLSearchParams({
           email,
-        })
+        }),
     );
     response = await response.json();
     return response;
@@ -38,7 +38,7 @@ export class SignupCard extends NikElement {
         "?" +
         new URLSearchParams({
           username,
-        })
+        }),
     );
     response = await response.json();
     return response;

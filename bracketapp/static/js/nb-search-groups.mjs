@@ -1,4 +1,4 @@
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-group-card.mjs";
 import { DeferredTask } from "./DeferredTask.mjs";

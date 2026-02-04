@@ -1,5 +1,5 @@
 import { NikElement } from "./nik-element.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import {
   THEME_LIST,
   PRIMARY_COLOR_LIST,
@@ -332,7 +332,7 @@ export class PreferencesCard extends NikElement {
                   ?selected=${this.theme.theme === theme}
                   value=${theme}
                   >${toUpper(theme)}</wa-option
-                >`
+                >`,
             )}</wa-select
           >
 
@@ -362,7 +362,7 @@ export class PreferencesCard extends NikElement {
                         ?selected=${this.theme.primaryColor === color}
                         value=${color}
                         >${toUpper(color)}</wa-option
-                      >`
+                      >`,
                   )}</wa-select
                 >
 
@@ -377,7 +377,7 @@ export class PreferencesCard extends NikElement {
                         ?selected=${this.theme.backgroundColor === color}
                         value=${color}
                         >${toUpper(color)}</wa-option
-                      >`
+                      >`,
                   )}</wa-select
                 >
 
@@ -392,7 +392,7 @@ export class PreferencesCard extends NikElement {
                         ?selected=${this.theme.colorPalette === color}
                         value=${color}
                         >${toUpper(color)}</wa-option
-                      >`
+                      >`,
                   )}</wa-select
                 >
               </div>

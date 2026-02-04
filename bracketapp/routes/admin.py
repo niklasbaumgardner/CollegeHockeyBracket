@@ -137,34 +137,4 @@ def flush_cache():
     return redirect(url_for("admin_bp.admin"))
 
 
-@admin_bp.get("/static_files_list")
-@login_required
-def static_files_list():
-    static_path = "./bracketapp/static/"
-    entries = os.listdir(static_path)
-    print(entries)
-    js = []
-    css = []
-    svg = []
 
-    for entry in entries:
-        path = os.path.join(static_path, entry)
-
-        # Check if the entry is a file
-        if os.path.isfile(path):
-            print(entry)
-            # filesnames.append(path)
-        elif os.path.isdir(path):
-            nested_entries = os.listdir(path)
-            print(nested_entries)
-            for nested_entry in nested_entries:
-                print(nested_entry)
-                # filesnames.append(nested_entry)
-                if nested_entry.endswith(".mjs"):
-                    js.append(nested_entry)
-                elif nested_entry.endswith(".css"):
-                    css.append(nested_entry)
-                elif nested_entry.endswith(".svg"):
-                    svg.append(nested_entry)
-
-    return dict(js=js, css=css, svg=svg)

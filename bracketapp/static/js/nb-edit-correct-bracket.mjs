@@ -1,4 +1,4 @@
-import { html, nothing } from "./lit.bundle.mjs";
+import { html, nothing } from "lit";
 import "./nb-edit-correct-matchup.mjs";
 import { EditBracket } from "./nb-edit-bracket.mjs";
 

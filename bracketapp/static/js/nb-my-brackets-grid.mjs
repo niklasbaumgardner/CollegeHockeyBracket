@@ -1,9 +1,9 @@
 import { NikElement } from "./nik-element.mjs";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
 import "./nb-delete-bracket.mjs";
 import "./nb-add-bracket-to-group.mjs";
-import * as agGrid from "./agGrid.bundle.mjs";
+import * as agGrid from "./agGrid.mjs";
 import { BracketColumn } from "./nb-bracket-column.mjs";
 import "./nb-group-bracket-details.mjs";
 

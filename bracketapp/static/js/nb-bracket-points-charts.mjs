@@ -1,5 +1,5 @@
 // import chartJs from "https://cdn.jsdelivr.net/npm/chart.js@4.4.8/+esm";
-import { html } from "./lit.bundle.mjs";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 
 export class BracketPointsChart extends NikElement {
@@ -24,7 +24,7 @@ export class BracketPointsChart extends NikElement {
     let danger = this.computedStyle.getPropertyValue("--wa-color-danger-400");
     let neutral = this.computedStyle.getPropertyValue("--wa-color-neutral-400");
     let borderColor = this.computedStyle.getPropertyValue(
-      "--wa-panel-background-color"
+      "--wa-panel-background-color",
     );
     let color = this.computedStyle.getPropertyValue("--wa-color-neutral-950");
 
@@ -63,7 +63,7 @@ export class BracketPointsChart extends NikElement {
     let danger = this.computedStyle.getPropertyValue("--wa-color-danger-400");
     let neutral = this.computedStyle.getPropertyValue("--wa-color-neutral-400");
     let borderColor = this.computedStyle.getPropertyValue(
-      "--wa-panel-background-color"
+      "--wa-panel-background-color",
     );
     let color = this.computedStyle.getPropertyValue("--wa-color-neutral-950");
 

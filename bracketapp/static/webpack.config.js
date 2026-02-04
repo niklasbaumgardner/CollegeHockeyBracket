@@ -1,6 +1,7 @@
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const AssetsPlugin = require("assets-webpack-plugin");
 
 const config = {
   entry: {
@@ -8,10 +9,12 @@ const config = {
     css: __dirname + "/js/css.mjs",
     agGrid: __dirname + "/js/agGrid.mjs",
     lit: { import: __dirname + "/js/lit.mjs" },
+    nbBase: { import: __dirname + "/js/nb-element.mjs", dependOn: "lit" },
+    nb: { import: __dirname + "/js/nb-components.mjs", dependOn: "nbBase" },
   },
   output: {
     path: __dirname + "/js",
-    filename: "[name].bundle.mjs",
+    filename: "[name].[contenthash].mjs",
     library: {
       type: "module",
     },
@@ -71,6 +74,7 @@ const config = {
         },
       ],
     }),
+    new AssetsPlugin(),
   ],
   experiments: {
     outputModule: true,
