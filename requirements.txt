@@ -3,7 +3,6 @@ aiofile==3.9.0
 aiohappyeyeballs==2.6.1
 aiohttp==3.13.3
 aiosignal==1.4.0
-asgiref==3.11.0
 attrs==25.4.0
 bcrypt==5.0.0
 blinker==1.9.0
