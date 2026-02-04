@@ -16,9 +16,7 @@
 
 # site block, listens on the $PORT environment variable
 :{$PORT} {
-  # encode zstd
-
-  # uri /static* query v 29495510
+  encode zstd
 
   handle /static* {
     file_server
