@@ -115,3 +115,5 @@ dmypy.json
 # Ignore node_modules
 node_modules
 .npmrc
+
+.claude
