@@ -1,7 +1,8 @@
 import "@awesome.me/webawesome-pro/dist/components/page/page.js";
 
 import "@awesome.me/webawesome-pro/dist/components/button/button.js";
-import "@awesome.me/webawesome-pro/dist/components/button-group/button-group.js";
+
+import "@awesome.me/webawesome-pro/dist/components/number-input/number-input.js";
 
 import "@awesome.me/webawesome-pro/dist/components/card/card.js";
 
@@ -64,10 +65,10 @@ registerIconLibrary("ion", {
     svg.setAttribute("fill", "currentColor");
     svg.setAttribute("stroke", "currentColor");
     [...svg.querySelectorAll(".ionicon-fill-none")].map((el) =>
-      el.setAttribute("fill", "none")
+      el.setAttribute("fill", "none"),
     );
     [...svg.querySelectorAll(".ionicon-stroke-width")].map((el) =>
-      el.setAttribute("stroke-width", "32px")
+      el.setAttribute("stroke-width", "32px"),
     );
   },
 });

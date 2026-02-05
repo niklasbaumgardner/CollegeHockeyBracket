@@ -168,35 +168,14 @@ export class PreferencesCard extends NikElement {
           with-tooltip
           @change=${this.handleRoundingChange}
         ></wa-slider>
-        <wa-button-group label="Rounding">
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.decrementRounding}
-            ><wa-icon
-              library="ion"
-              name="remove-outline"
-              label="Smaller rounding"
-            ></wa-icon
-          ></wa-button>
-          <wa-input
-            id="theme-rounding-input"
-            min="0"
-            max="4"
-            step="0.1"
-            @input=${this.handleRoundingChange}
-            type="number"
-            .value=${this.theme.rounding}
-          ></wa-input>
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.incrementRounding}
-            ><wa-icon
-              library="ion"
-              name="add-outline"
-              label="Bigger rounding"
-            ></wa-icon
-          ></wa-button>
-        </wa-button-group>
+
+        <wa-number-input
+          min="0"
+          max="4"
+          step="0.1"
+          .value=${this.theme.rounding}
+          @input=${this.handleRoundingChange}
+        ></wa-number-input>
       </div>
 
       <wa-button

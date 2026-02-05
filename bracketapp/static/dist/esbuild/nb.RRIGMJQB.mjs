@@ -1,4 +1,4 @@
-import{d as t,j as be,k as y}from"./chunk-XGX4NMMB.mjs";import{a as we,b as fe,c as ke,d as u}from"./chunk-PZ2SS3CX.mjs";import{a as d,b as ve,d as Te,e as _e,f as $e}from"./chunk-NFPNANZU.mjs";function Ee(s,e){return()=>s.querySelector(e)}function Ce(s,e){return()=>s.querySelectorAll(e)}var i=class extends be{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ce(this,r.all)}):Object.defineProperty(this,a,{get:Ee(this,r)})}createRenderRoot(){return this}};var E=class extends i{render(){return t`<wa-card
+import{d as t,j as be,k as y}from"./chunk-XGX4NMMB.mjs";import{a as we,b as fe,c as ke,d as u}from"./chunk-NB5LNMQ2.mjs";import{a as d,b as ve,d as Te,e as _e,f as $e}from"./chunk-NFPNANZU.mjs";function Ee(s,e){return()=>s.querySelector(e)}function Ce(s,e){return()=>s.querySelectorAll(e)}var i=class extends be{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ce(this,r.all)}):Object.defineProperty(this,a,{get:Ee(this,r)})}createRenderRoot(){return this}};var E=class extends i{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -1041,35 +1041,14 @@ import{d as t,j as be,k as y}from"./chunk-XGX4NMMB.mjs";import{a as we,b as fe,c
           with-tooltip
           @change=${this.handleRoundingChange}
         ></wa-slider>
-        <wa-button-group label="Rounding">
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.decrementRounding}
-            ><wa-icon
-              library="ion"
-              name="remove-outline"
-              label="Smaller rounding"
-            ></wa-icon
-          ></wa-button>
-          <wa-input
-            id="theme-rounding-input"
-            min="0"
-            max="4"
-            step="0.1"
-            @input=${this.handleRoundingChange}
-            type="number"
-            .value=${this.theme.rounding}
-          ></wa-input>
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.incrementRounding}
-            ><wa-icon
-              library="ion"
-              name="add-outline"
-              label="Bigger rounding"
-            ></wa-icon
-          ></wa-button>
-        </wa-button-group>
+
+        <wa-number-input
+          min="0"
+          max="4"
+          step="0.1"
+          .value=${this.theme.rounding}
+          @input=${this.handleRoundingChange}
+        ></wa-number-input>
       </div>
 
       <wa-button
@@ -1763,4 +1742,4 @@ import{d as t,j as be,k as y}from"./chunk-XGX4NMMB.mjs";import{a as we,b as fe,c
     </div>`}bracketsTemplate(){return t`<nb-group-standings-grid
       .brackets=${this.brackets}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ge);
-//# sourceMappingURL=nb.QT4UEUCR.mjs.map
+//# sourceMappingURL=nb.RRIGMJQB.mjs.map
