@@ -459,19 +459,19 @@
     wa-combobox::part(combobox),
     wa-textarea::part(textarea),
     input:where(
-        :not(
-            [type="button"],
-            [type="checkbox"],
-            [type="color"],
-            [type="file"],
-            [type="hidden"],
-            [type="image"],
-            [type="radio"],
-            [type="range"],
-            [type="reset"],
-            [type="submit"]
-          )
-      ),
+      :not(
+        [type="button"],
+        [type="checkbox"],
+        [type="color"],
+        [type="file"],
+        [type="hidden"],
+        [type="image"],
+        [type="radio"],
+        [type="range"],
+        [type="reset"],
+        [type="submit"]
+      )
+    ),
     select,
     textarea {
       border-width: 0 0 var(--wa-form-control-border-width)

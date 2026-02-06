@@ -583,10 +583,10 @@
     }
 
     :is(
-        wa-button,
-        button,
-        input:where([type="button"], [type="reset"], [type="submit"])
-      ):not([appearance="plain"]) {
+      wa-button,
+      button,
+      input:where([type="button"], [type="reset"], [type="submit"])
+    ):not([appearance="plain"]) {
       &:where(:not(wa-button)),
       &::part(base) {
         box-shadow: var(--wa-shadow-s);

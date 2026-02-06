@@ -474,7 +474,8 @@
         var(--ripple-color) var(--ripple-radius),
         transparent 0
       );
-      transition: var(--wa-transition-fast),
+      transition:
+        var(--wa-transition-fast),
         --ripple-progress var(--ripple-duration);
 
       &:active {
@@ -490,19 +491,19 @@
     }
 
     input:where(
-        :not(
-            [type="button"],
-            [type="checkbox"],
-            [type="color"],
-            [type="file"],
-            [type="hidden"],
-            [type="image"],
-            [type="radio"],
-            [type="range"],
-            [type="reset"],
-            [type="submit"]
-          )
-      ),
+      :not(
+        [type="button"],
+        [type="checkbox"],
+        [type="color"],
+        [type="file"],
+        [type="hidden"],
+        [type="image"],
+        [type="radio"],
+        [type="range"],
+        [type="reset"],
+        [type="submit"]
+      )
+    ),
     select,
     textarea,
     wa-input,
@@ -618,11 +619,11 @@
     }
     @media (hover: hover) {
       :is(
-          input:where([type="checkbox"], [type="radio"]),
-          wa-checkbox,
-          wa-tree-item,
-          wa-radio
-        ):hover {
+        input:where([type="checkbox"], [type="radio"]),
+        wa-checkbox,
+        wa-tree-item,
+        wa-radio
+      ):hover {
         &:where(input),
         &::part(control),
         &::part(checkbox__control) {

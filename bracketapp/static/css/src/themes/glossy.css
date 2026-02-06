@@ -425,13 +425,14 @@
     --bottom-shadow-active: inset 0 -0.125rem 0 0 rgb(255 255 255 / 0.04);
 
     :is(
-        wa-button,
-        button,
-        input:where([type="button"], [type="reset"], [type="submit"])
-      ):not([appearance~="plain"], .wa-plain) {
+      wa-button,
+      button,
+      input:where([type="button"], [type="reset"], [type="submit"])
+    ):not([appearance~="plain"], .wa-plain) {
       &:where(:not(wa-button)),
       &::part(base) {
-        box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint),
+        box-shadow:
+          var(--inner-shine), var(--top-highlight), var(--upper-tint),
           var(--lower-shade), var(--bottom-shadow);
         margin-bottom: var(--wa-shadow-offset-y-s);
         padding-inline: calc(
@@ -444,7 +445,8 @@
       &:not([disabled]):active {
         &:where(:not(wa-button)),
         &::part(base) {
-          box-shadow: var(--inner-shine-active), var(--top-highlight-active),
+          box-shadow:
+            var(--inner-shine-active), var(--top-highlight-active),
             var(--upper-tint-active), var(--lower-shade-active),
             var(--bottom-shadow-active);
           transform: scale(0.98);
@@ -453,19 +455,19 @@
     }
 
     input:where(
-        :not(
-            [type="button"],
-            [type="checkbox"],
-            [type="color"],
-            [type="file"],
-            [type="hidden"],
-            [type="image"],
-            [type="radio"],
-            [type="range"],
-            [type="reset"],
-            [type="submit"]
-          )
-      ),
+      :not(
+        [type="button"],
+        [type="checkbox"],
+        [type="color"],
+        [type="file"],
+        [type="hidden"],
+        [type="image"],
+        [type="radio"],
+        [type="range"],
+        [type="reset"],
+        [type="submit"]
+      )
+    ),
     select,
     textarea,
     wa-input,
@@ -489,7 +491,9 @@
         &:where(wa-select)::part(combobox),
         &:where(wa-combobox)::part(combobox),
         &:where(wa-textarea)::part(base) {
-          box-shadow: 0 0 transparent, 0 0 transparent;
+          box-shadow:
+            0 0 transparent,
+            0 0 transparent;
         }
       }
     }
@@ -501,15 +505,16 @@
       &:where(:not(wa-radio):not(wa-checkbox):not(wa-tree-item)),
       &:where(wa-checkbox, wa-radio, wa-switch)::part(control),
       &:where(wa-tree-item)::part(checkbox__control) {
-        box-shadow: var(--inner-shine), var(--top-highlight),
-          var(--bottom-shadow);
+        box-shadow:
+          var(--inner-shine), var(--top-highlight), var(--bottom-shadow);
       }
 
       &:active {
         &:where(:not(wa-radio):not(wa-checkbox):not(wa-tree-item)),
         &:where(wa-checkbox, wa-radio, wa-switch)::part(control),
         &:where(wa-tree-item)::part(checkbox__control) {
-          box-shadow: var(--inner-shine-active), var(--top-highlight-active),
+          box-shadow:
+            var(--inner-shine-active), var(--top-highlight-active),
             var(--bottom-shadow-active);
         }
       }
@@ -517,7 +522,8 @@
 
     wa-slider::part(thumb),
     wa-switch::part(thumb) {
-      box-shadow: var(--inner-shine), var(--top-highlight), var(--bottom-shadow);
+      box-shadow:
+        var(--inner-shine), var(--top-highlight), var(--bottom-shadow);
     }
 
     progress,
@@ -528,7 +534,9 @@
       }
 
       &::part(indicator) {
-        box-shadow: var(--inner-shine), var(--top-highlight),
+        box-shadow:
+          var(--inner-shine),
+          var(--top-highlight),
           inset 0 0.625rem 0 0 rgb(255 255 255 / 0.1) /* upper tint */,
           inset 0 -0.5rem 0 0 rgb(0 0 0 / 0.04) /* lower shade */,
           var(--bottom-shadow);

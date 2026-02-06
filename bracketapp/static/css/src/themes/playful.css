@@ -443,8 +443,8 @@
             oklab(from var(--wa-color-fill-loud) calc(l + 0.1) a b),
             transparent 70%
           );
-        --shadow-lower: inset 0 -0.125em 0.5em oklab(from
-              var(--wa-color-fill-loud) calc(l - 0.2) a b);
+        --shadow-lower: inset 0 -0.125em 0.5em
+          oklab(from var(--wa-color-fill-loud) calc(l - 0.2) a b);
         --shadow-upper: inset 0 0.125em 0.5em
           oklab(from var(--wa-color-fill-loud) calc(l + 0.4) a b);
 
@@ -456,8 +456,8 @@
             var(--gradient-middle) 51.88%,
             var(--gradient-bottom) 100%
           );
-          box-shadow: var(--glow-outer), var(--shadow-lower),
-            var(--shadow-upper);
+          box-shadow:
+            var(--glow-outer), var(--shadow-lower), var(--shadow-upper);
           text-shadow: 0 0.125em 0.125em
             oklab(from var(--wa-color-fill-loud) calc(l - 0.1) a b);
         }
@@ -476,8 +476,8 @@
               oklab(from var(--wa-color-fill-normal) calc(l + 0.1) a b),
               transparent 70%
             );
-          --shadow-lower: inset 0 -0.125em 0.5em oklab(from
-                var(--wa-color-fill-normal) calc(l - 0.1) a b);
+          --shadow-lower: inset 0 -0.125em 0.5em
+            oklab(from var(--wa-color-fill-normal) calc(l - 0.1) a b);
           --shadow-upper: inset 0 0.125em 0.5em
             oklab(from var(--wa-color-fill-normal) calc(l + 0.5) a b);
 
@@ -538,7 +538,9 @@
                   )
                   100%
               );
-              box-shadow: 0 0 transparent, var(--shadow-lower),
+              box-shadow:
+                0 0 transparent,
+                var(--shadow-lower),
                 var(--shadow-upper);
             }
           }
@@ -571,8 +573,8 @@
 
     wa-progress-bar,
     wa-slider {
-      --shadow-lower: inset 0 -0.125em 0.5em oklab(from
-            var(--wa-form-control-activated-color) calc(l - 0.2) a b);
+      --shadow-lower: inset 0 -0.125em 0.5em
+        oklab(from var(--wa-form-control-activated-color) calc(l - 0.2) a b);
       --shadow-upper: inset 0 0.125em 0.5em
         oklab(from var(--wa-form-control-activated-color) calc(l + 0.4) a b);
     }
