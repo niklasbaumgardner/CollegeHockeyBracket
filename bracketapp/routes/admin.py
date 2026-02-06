@@ -11,7 +11,6 @@ from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 import datetime
 from bracketapp.config import CAN_EDIT_BRACKET
-import os
 
 
 admin_bp = Blueprint("admin_bp", __name__)
@@ -135,6 +134,3 @@ def flush_cache():
 
     cache.flush_all()
     return redirect(url_for("admin_bp.admin"))
-
-
-

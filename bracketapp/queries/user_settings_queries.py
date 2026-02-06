@@ -154,7 +154,7 @@ def get_user_settings():
 
 
 def update_user_settings(**kwargs):
-    settings_data = {}
+    settings_data = {"theme": "shoelace"}
     for arg, val in kwargs.items():
         if is_valid_user_setting_arg(arg, val):
             settings_data[arg] = val
