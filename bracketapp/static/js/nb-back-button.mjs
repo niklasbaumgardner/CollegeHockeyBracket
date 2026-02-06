@@ -2,21 +2,44 @@ import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 
 export class BackButton extends NikElement {
-  click() {
-    if (window.history?.length >= 1) {
-      history.back();
-    } else {
-      window.location.href = document.referrer.length ? document.referrer : "/";
+  static properties = {
+    href: { type: String },
+  };
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    if (document.referrer) {
+      const prevURL = new URL(document.referrer);
+      const url = new URL(document.URL);
+
+      if (prevURL.origin === url.origin) {
+        this.href =
+          localStorage.getItem("nb-bracket-back") ?? document.referrer;
+      }
     }
+
+    if (!this.href) {
+      this.remove();
+    }
+
+    window.addEventListener("beforeunload", this);
+  }
+
+  handleEvent(event) {
+    if (event.type !== "beforeunload") {
+      return;
+    }
+
+    localStorage.setItem("nb-bracket-back", location.href);
   }
 
   render() {
     return html`<wa-button
-      href="/"
+      href=${this.href}
       id="back-button"
       variant="brand"
       appearance="outlined"
-      @click=${this.click}
     >
       <wa-icon library="ion" name="chevron-back-outline"></wa-icon>
       Back</wa-button

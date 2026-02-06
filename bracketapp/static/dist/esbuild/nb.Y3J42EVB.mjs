@@ -52,7 +52,7 @@ import{d as t,j as be,k as y}from"./chunk-XGX4NMMB.mjs";import{a as we,b as fe,c
           ${this.yearsTemplate()}
         </div>
       </div>
-    </wa-card>`}};customElements.define("nb-archive-years",x);var B=class extends i{static properties={href:{type:String}};connectedCallback(){super.connectedCallback(),this.href=localStorage.getItem("nb-bracket-back")??"/",addEventListener("beforeunload",this)}handleEvent(e){e.type==="beforeunload"&&(console.log(e),localStorage.setItem("nb-bracket-back",location.pathname))}disconnectedCallback(){localStorage.setItem("nb-bracket-back",location.pathname)}render(){return t`<wa-button
+    </wa-card>`}};customElements.define("nb-archive-years",x);var B=class extends i{static properties={href:{type:String}};connectedCallback(){if(super.connectedCallback(),document.referrer){let e=new URL(document.referrer),a=new URL(document.URL);e.origin===a.origin&&(this.href=localStorage.getItem("nb-bracket-back")??document.referrer)}this.href||this.remove(),window.addEventListener("beforeunload",this)}handleEvent(e){e.type==="beforeunload"&&localStorage.setItem("nb-bracket-back",location.href)}render(){return t`<wa-button
       href=${this.href}
       id="back-button"
       variant="brand"
@@ -1742,4 +1742,4 @@ import{d as t,j as be,k as y}from"./chunk-XGX4NMMB.mjs";import{a as we,b as fe,c
     </div>`}bracketsTemplate(){return t`<nb-group-standings-grid
       .brackets=${this.brackets}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ge);
-//# sourceMappingURL=nb.RRIGMJQB.mjs.map
+//# sourceMappingURL=nb.Y3J42EVB.mjs.map

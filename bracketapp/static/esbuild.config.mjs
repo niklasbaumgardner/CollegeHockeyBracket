@@ -56,8 +56,10 @@ const result = await buildFunction({
       name: "rebuild-notify",
       setup(build) {
         build.onEnd((result) => {
-          buildTemplate(result);
-          console.log("Build completed");
+          if (!result.errors.length) {
+            buildTemplate(result);
+            console.log("Build completed");
+          }
         });
       },
     },
