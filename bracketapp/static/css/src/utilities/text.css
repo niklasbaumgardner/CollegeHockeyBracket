@@ -1,26 +1,26 @@
 @layer wa-utilities {
   /* #region General ~~~~~ */
-  [class*='wa-body'] {
+  [class*="wa-body"] {
     font-family: var(--wa-font-family-body);
     font-weight: var(--wa-font-weight-body);
     line-height: var(--wa-line-height-normal);
   }
 
-  [class*='wa-heading'] {
+  [class*="wa-heading"] {
     font-family: var(--wa-font-family-heading);
     font-weight: var(--wa-font-weight-heading);
     line-height: var(--wa-line-height-condensed);
     text-wrap: balance;
   }
 
-  [class*='wa-caption'] {
+  [class*="wa-caption"] {
     color: var(--wa-color-text-quiet);
     font-family: var(--wa-font-family-body);
     font-weight: var(--wa-font-weight-body);
     line-height: var(--wa-line-height-condensed);
   }
 
-  [class*='wa-longform'] {
+  [class*="wa-longform"] {
     font-family: var(--wa-font-family-longform);
     font-weight: var(--wa-font-weight-longform);
     line-height: var(--wa-line-height-normal);
@@ -141,7 +141,11 @@
 
     @media (hover: hover) {
       &:hover {
-        color: color-mix(in oklab, var(--wa-color-text-link) 100%, var(--wa-color-mix-hover));
+        color: color-mix(
+          in oklab,
+          var(--wa-color-text-link) 100%,
+          var(--wa-color-mix-hover)
+        );
         text-decoration: var(--wa-link-decoration-hover);
         -webkit-text-decoration: var(--wa-link-decoration-hover);
       }
