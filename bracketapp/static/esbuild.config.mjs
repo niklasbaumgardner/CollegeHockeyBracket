@@ -2,7 +2,11 @@ import * as esbuild from "esbuild";
 import { cleanPlugin } from "esbuild-clean-plugin";
 import fs from "fs";
 
-const result = await esbuild.build({
+const args = process.argv.slice(2);
+const watchMode = args.filter((arg) => arg === "--watch").length > 0;
+let buildFunction = watchMode ? esbuild.context : esbuild.build;
+
+const result = await buildFunction({
   entryPoints: {
     // JS
     main: "./bracketapp/static/js/main.mjs",
@@ -46,8 +50,29 @@ const result = await esbuild.build({
   metafile: true,
   sourcemap: true,
 
-  plugins: [cleanPlugin()],
+  plugins: [
+    cleanPlugin(),
+    {
+      name: "rebuild-notify",
+      setup(build) {
+        build.onEnd((result) => {
+          buildTemplate(result);
+          console.log("Build completed");
+        });
+      },
+    },
+  ],
 });
+
+const runWatch = async () => {
+  await result.watch();
+};
+
+if (watchMode) {
+  runWatch();
+} else {
+  buildTemplate(result);
+}
 
 function scriptTemplate(filename, defer = false) {
   return `<script src="/static/dist/esbuild/${filename}" type="module" ${defer ? "defer" : ""}></script>`;
@@ -61,47 +86,48 @@ function linkTemplate(filename) {
 />`;
 }
 
-const myFiles = [];
-const linkFiles = [];
-const scriptFiles = [];
-const cssFilesMap = {};
-let themeFile = null;
-let sentryFile = null;
+function buildTemplate(result) {
+  const myFiles = [];
+  const linkFiles = [];
+  const scriptFiles = [];
+  const cssFilesMap = {};
+  let themeFile = null;
+  let sentryFile = null;
 
-const { outputs } = result.metafile;
-for (let [path, fileObject] of Object.entries(outputs)) {
-  let filename = path.split("/").at(-1);
-  let origFilename = fileObject.entryPoint?.split("/").at(-1);
-  if (!origFilename) {
-    continue;
-  }
-
-  if (path.endsWith(".mjs")) {
-    if (origFilename === "theme.mjs") {
-      themeFile = filename;
+  const { outputs } = result.metafile;
+  for (let [path, fileObject] of Object.entries(outputs)) {
+    let filename = path.split("/").at(-1);
+    let origFilename = fileObject.entryPoint?.split("/").at(-1);
+    if (!origFilename) {
       continue;
     }
-    myFiles.push({ path, orignal: fileObject.entryPoint });
-    if (origFilename === "sentry.mjs") {
-      sentryFile = scriptTemplate(filename, true);
-      continue;
-    }
-    scriptFiles.push(scriptTemplate(filename));
-  } else if (path.endsWith(".css")) {
-    myFiles.push({ path, orignal: fileObject.entryPoint });
-    if (origFilename === "bundle.css") {
-      linkFiles.unshift(linkTemplate(filename));
-    } else {
-      let name = origFilename.split(".")[0];
-      if (path.includes("palette")) {
-        name += ".palette";
+
+    if (path.endsWith(".mjs")) {
+      if (origFilename === "theme.mjs") {
+        themeFile = filename;
+        continue;
       }
-      cssFilesMap[name] = "/static/dist/esbuild/" + filename;
+      myFiles.push({ path, orignal: fileObject.entryPoint });
+      if (origFilename === "sentry.mjs") {
+        sentryFile = scriptTemplate(filename, true);
+        continue;
+      }
+      scriptFiles.push(scriptTemplate(filename));
+    } else if (path.endsWith(".css")) {
+      myFiles.push({ path, orignal: fileObject.entryPoint });
+      if (origFilename === "bundle.css") {
+        linkFiles.unshift(linkTemplate(filename));
+      } else {
+        let name = origFilename.split(".")[0];
+        if (path.includes("palette")) {
+          name += ".palette";
+        }
+        cssFilesMap[name] = "/static/dist/esbuild/" + filename;
+      }
     }
   }
-}
 
-const cssFilesMapScript = `<script>
+  const cssFilesMapScript = `<script>
   const CSS_FILE_MAP = { 
 ${Object.entries(cssFilesMap)
   .map(([k, v]) => {
@@ -126,7 +152,7 @@ ${Object.entries(cssFilesMap)
   }
 </script>`;
 
-const themeImportScript = `<script type="module">
+  const themeImportScript = `<script type="module">
   import {
     Theme,
     THEME_LIST,
@@ -135,7 +161,7 @@ const themeImportScript = `<script type="module">
   window.THEME = new Theme({{ user_settings.settings|tojson }});
 </script>`;
 
-const fileContents = `<link
+  const fileContents = `<link
   id="theme"
   rel="stylesheet"
   href=""
@@ -165,6 +191,7 @@ ${scriptFiles.join("\n")}
 ${sentryFile}
 `;
 
-fs.writeFileSync("./bracketapp/templates/includes.html", fileContents);
-// fs.writeFileSync("meta.json", JSON.stringify(myFiles, null, 2));
-// fs.writeFileSync("metafile.json", JSON.stringify(result.metafile));
+  fs.writeFileSync("./bracketapp/templates/includes.html", fileContents);
+  // fs.writeFileSync("meta.json", JSON.stringify(myFiles, null, 2));
+  // fs.writeFileSync("metafile.json", JSON.stringify(result.metafile));
+}
