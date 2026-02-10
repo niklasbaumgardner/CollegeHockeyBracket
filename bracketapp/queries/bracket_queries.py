@@ -77,10 +77,6 @@ def create_bracket_from_form(form_data):
     db.session.execute(stmt)
     db.session.commit()
 
-    # TODO: invalidate cache
-    # group (done in group_bracket creation)
-    cache.delete_many([LEADERBOARD_CACHE_KEY, my_brackets_cache_key(current_user.id)])
-
     return new_bracket_id
 
 
@@ -125,9 +121,7 @@ def update_bracket_from_form(bracket_id, form_data):
 
     db.session.commit()
 
-    # TODO: invalidate cache
-    # group (done in group_bracket creation)
-    cache.delete_many([LEADERBOARD_CACHE_KEY, my_brackets_cache_key(current_user.id)])
+    return update_dict.get("name") != form_data.get("old_name")
 
 
 def get_my_bracket_for_bracket_id(bracket_id, include_games=False):
@@ -168,6 +162,8 @@ def get_bracket_for_bracket_id(bracket_id):
 
     bracket = db.session.scalars(stmt.limit(1)).first()
 
+    # if not (bracket.year == YEAR and CAN_EDIT_BRACKET):
+    # Do not cache
     cache.set(cache_key, bracket)
 
     if not (current_user.is_authenticated and current_user.id == bracket.user_id):
@@ -205,6 +201,33 @@ def get_brackets_for_group(group_id):
         .join(GroupBracket, Bracket.id == GroupBracket.bracket_id)
         .where(GroupBracket.group_id == group_id)
         .options(contains_eager(Bracket.group_bracket))
+    )
+
+    return db.session.scalars(stmt).unique().all()
+
+
+def get_bracket_ids_for_group(group_id):
+    stmt = (
+        select(Bracket.id)
+        .join(GroupBracket, Bracket.id == GroupBracket.bracket_id)
+        .where(GroupBracket.group_id == group_id)
+    )
+
+    return db.session.scalars(stmt).unique().all()
+
+
+def get_bracket_ids_for_year(year=YEAR):
+    stmt = select(Bracket.id).where(Bracket.year == year)
+
+    return db.session.scalars(stmt).unique().all()
+
+
+def get_my_group_brackets_for_bracket_id(bracket_id):
+    stmt = select(GroupBracket).where(
+        and_(
+            GroupBracket.user_id == current_user.id,
+            GroupBracket.bracket_id == bracket_id,
+        )
     )
 
     return db.session.scalars(stmt).unique().all()

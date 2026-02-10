@@ -1,4 +1,5 @@
 from click import group
+from bracketapp.utils import cache_invalidator
 from bracketapp.utils.constants import bracket_cache_key, group_cache_key
 from bracketapp import cache
 from bracketapp.queries import bracket_queries, group_queries
@@ -18,12 +19,7 @@ def delete_bracket(sqid):
     # bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=bracket_id)
     # if bracket and bracket.year == YEAR and CAN_EDIT_BRACKET:
 
-    # TODO: Need to delete group_bracket groups from cache
-    cache.delete_many(
-        [
-            bracket_cache_key(bracket_id),
-        ]
-    )
+    cache_invalidator.delete_bracket(bracket_id)
 
     rowcount_deleted = bracket_queries.delete_bracket(bracket_id=bracket_id)
     if rowcount_deleted == 1:
@@ -51,12 +47,8 @@ def delete_group_bracket(sqid):
         rowcount_deleted = group_queries.delete_group_bracket(
             group_bracket_id=group_bracket.id
         )
-        cache.delete_many(
-            [
-                bracket_cache_key(group_bracket.bracket_id),
-                group_cache_key(group_bracket.group_id),
-            ]
-        )
+
+        cache_invalidator.delete_group_bracket(group_bracket.group_id, bracket.id)
         if rowcount_deleted == 1:
             flash("Bracket successfully removed from group", "success")
         else:

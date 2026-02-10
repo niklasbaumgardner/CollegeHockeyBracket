@@ -24,7 +24,7 @@ class Bracket extends NikElement {
     }
 
     let isWinnerCorrect =
-      force || !this.correct.winner || this.correct.winner === team.id;
+      force || !this.correct.winner_id || this.correct.winner_id === team.id;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
       src="${team.team.icon_path}"

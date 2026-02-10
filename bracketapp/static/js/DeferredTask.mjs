@@ -9,10 +9,9 @@ export class DeferredTask {
     this.#currentArgs = {};
 
     if (options?.finalizeBeforeUnload) {
-      addEventListener("visibilitychange", async () => {
-        if (document.hidden) {
-          await this.finalize();
-        }
+      window.addEventListener("beforeunload", async (event) => {
+        // event.preventDefault();
+        await this.finalize();
       });
     }
   }
@@ -46,8 +45,9 @@ export class DeferredTask {
 
   finalize() {
     if (this.isArmed) {
+      let args = this.#currentArgs;
       this.disarm();
-      return this.#callback();
+      return this.#callback(args);
     }
   }
 }

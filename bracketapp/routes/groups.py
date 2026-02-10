@@ -1,12 +1,16 @@
 from flask import Blueprint, render_template
-from bracketapp.utils import bracket_utils
+from bracketapp.utils import bracket_utils, cache_invalidator
 from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils.Sqids import sqids
 from bracketapp import cache
-from bracketapp.utils.constants import group_cache_key
+from bracketapp.utils.constants import (
+    group_cache_key,
+    bracket_cache_key,
+    my_brackets_cache_key,
+)
 
 
 groups_bp = Blueprint("groups_bp", __name__)
@@ -80,6 +84,8 @@ def create_group():
 
     group_queries.upsert_group_member(group_id=group_id)
 
+    cache_invalidator.new_group()
+
     return redirect(url_for("groups_bp.view_group", sqid=sqids.encode_one(group_id)))
 
 
@@ -94,6 +100,7 @@ def edit_group(sqid):
         return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
     group_name = request.form.get("name")
+    old_name = request.form.get("old_name")
     is_private = request.form.get("is_private") == "true"
     password = request.form.get("password")
     locked = request.form.get("locked") == "true"
@@ -105,6 +112,10 @@ def edit_group(sqid):
         password=password,
         locked=locked,
     )
+
+    print(group_name, old_name, group_name != old_name)
+
+    cache_invalidator.edit_group(group_id, name_changed=group_name != old_name)
 
     flash("Group updated", "success")
     return redirect(url_for("groups_bp.view_group", sqid=sqid))
@@ -120,6 +131,7 @@ def delete_group(sqid):
         flash("Something went wrong", "danger")
         return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
+    cache_invalidator.delete_group(group_id)
     group_queries.delete_group(group_id=group_id)
 
     flash("Group successfully deleted", "success")
@@ -155,6 +167,8 @@ def join_group(sqid):
 
     group_queries.upsert_group_member(group_id=group_id)
 
+    cache_invalidator.join_group(group_id)
+
     return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
 
@@ -179,6 +193,8 @@ def group_add_bracket(sqid):
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
+
+    cache_invalidator.new_group_bracket(group.id, bracket.id)
 
     flash(f"Your bracket has been added to {group.name}", "success")
     return redirect(url_for("groups_bp.view_group", sqid=sqid))

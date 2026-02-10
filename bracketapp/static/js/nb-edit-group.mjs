@@ -3,6 +3,8 @@ import "./nb-delete-group.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
 export class EditGroup extends BaseDialog {
+  inputEvent = true;
+
   static properties = {
     private: { type: Boolean },
     group: { type: Object },
@@ -25,7 +27,8 @@ export class EditGroup extends BaseDialog {
     this.private = !this.private;
   }
 
-  handleInput() {
+  async handleInput() {
+    await this.updateComplete;
     let currentFormData = new FormData(this.form);
     let currentEntriesArr = [...currentFormData.entries()];
 
@@ -57,6 +60,7 @@ export class EditGroup extends BaseDialog {
       method="POST"
       class="wa-native"
     >
+      <input name="old_name" value=${this.group.name} hidden />
       <div class="wa-stack">
         <wa-input
           form="edit-group-form"
@@ -135,14 +139,14 @@ export class EditGroup extends BaseDialog {
 
     this.private = this.group.is_private;
 
-    this.boundHandleInput = this.handleInput.bind(this);
-    this.dialog.addEventListener("input", this.boundHandleInput);
+    // this.boundHandleInput = this.handleInput.bind(this);
+    // this.dialog.addEventListener("input", this.boundHandleInput);
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.dialog.removeEventListener("input", this.boundHandleInput);
-  }
+  // disconnectedCallback() {
+  //   super.disconnectedCallback();
+  //   this.dialog.removeEventListener("input", this.boundHandleInput);
+  // }
 }
 
 customElements.define("nb-edit-group", EditGroup);

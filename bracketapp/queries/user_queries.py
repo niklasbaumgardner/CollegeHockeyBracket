@@ -41,8 +41,6 @@ def update_user(username, email):
     db.session.execute(stmt)
     db.session.commit()
 
-    cache.delete(user_cache_key(current_user.id))
-
 
 def update_user_password(id, password):
     if not password or not id:
@@ -73,3 +71,8 @@ def is_username_unique(username):
     stmt = select(func.count()).where(User.username == username)
     count = db.session.execute(stmt).scalar_one()
     return count == 0
+
+
+def get_all_user_ids():
+    stmt = select(User.id)
+    return db.session.scalars(stmt).unique().all()

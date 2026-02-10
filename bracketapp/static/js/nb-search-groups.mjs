@@ -37,13 +37,11 @@ export class SearchGroups extends NikElement {
 
     let res = await fetch(SEARCH_URL + "?" + new URLSearchParams({ name }));
     this.results = await res.json();
-    console.log(this.results, this.popup);
 
     this.lastSearchValue = name;
   }
 
   handleInputEvent(e) {
-    console.log(e);
     if (!this.input.value) {
       this.results = [];
       return;

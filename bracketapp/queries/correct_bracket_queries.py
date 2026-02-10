@@ -113,7 +113,3 @@ def update_correct_bracket_from_form(form_data):
     db.session.execute(upsert_stmt)
 
     db.session.commit()
-
-    cache.delete_many(
-        [correct_bracket_cache_key(YEAR, True), correct_bracket_cache_key(YEAR, False)]
-    )

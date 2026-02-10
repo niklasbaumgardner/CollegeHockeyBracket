@@ -11,7 +11,7 @@ export const THEME_LIST = [
   "glossy",
   "matter",
   "mellow",
-  "playful",
+  // "playful",
   "premium",
   "tailspin",
 ];
@@ -89,7 +89,6 @@ function round(num, digits = 2) {
 }
 
 export class Theme {
-  #domProperties;
   #theme;
   #mode;
   #primaryColor;
@@ -102,7 +101,7 @@ export class Theme {
 
   constructor(theme) {
     this.#initing = true;
-    this.#domProperties = window.getComputedStyle(document.documentElement);
+    this.domProperties = window.getComputedStyle(document.documentElement);
     this.theme = theme.theme;
     this.mode = theme.mode;
     this.primaryColor = theme.primary_color;
@@ -144,20 +143,20 @@ export class Theme {
   get rounding() {
     return (
       this.#rounding ??
-      this.#domProperties.getPropertyValue("--wa-border-radius-scale")
+      this.domProperties.getPropertyValue("--wa-border-radius-scale")
     );
   }
 
   get spacing() {
     return (
-      this.#spacing ?? this.#domProperties.getPropertyValue("--wa-space-scale")
+      this.#spacing ?? this.domProperties.getPropertyValue("--wa-space-scale")
     );
   }
 
   get borderWidth() {
     return (
       this.#borderWidth ??
-      this.#domProperties.getPropertyValue("--wa-border-width-scale")
+      this.domProperties.getPropertyValue("--wa-border-width-scale")
     );
   }
 
@@ -404,6 +403,7 @@ export class Theme {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(callbackArgs),
+            keepalive: true,
           });
         },
         1000,

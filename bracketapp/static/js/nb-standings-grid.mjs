@@ -77,7 +77,7 @@ export class StandingsGrid extends BaseGrid {
   }
 
   sortBrackets() {
-    this.brackets.sort((a, b) => a.name.localeCompare(b.name));
+    this.brackets = this.brackets.sort((a, b) => a.name.localeCompare(b.name));
 
     if (CAN_EDIT_BRACKET && CURRENT_YEAR === this.year) {
       // TODO: sort my brackets to top?

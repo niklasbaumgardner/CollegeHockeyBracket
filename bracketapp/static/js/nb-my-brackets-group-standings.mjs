@@ -9,6 +9,7 @@ export class MyBracketsGroupStandings extends NikElement {
     group: { type: Object },
     myBrackets: { type: Object },
     shouldShowBrackets: { type: Boolean },
+    year: { type: Number },
   };
 
   static queries = {
@@ -57,6 +58,7 @@ export class MyBracketsGroupStandings extends NikElement {
       headerName="My Brackets"
       .group=${this.group}
       .brackets=${this.group.brackets}
+      year=${this.year}
     ></nb-my-group-brackets-grid>`;
   }
 

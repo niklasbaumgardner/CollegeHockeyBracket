@@ -33,16 +33,16 @@ export class BracketColumn extends NikElement {
         href=${this.bracket.url}
         ><div class="flex gap-(--wa-space-xs)">
           ${this.getImageElement(this.bracket.winner_team)}
-          <div class="name-cell">
-            <span class="standings-bracket-name underline"
-              >${this.bracketName}</span
-            ><span class="standings-username"
-              >${this.bracket.user.username}</span
-            >
-          </div>
+          <div class="name-cell">${this.nameTemplate()}</div>
         </div></a
       >
       ${this.groupsTemplate()}`;
+  }
+
+  nameTemplate() {
+    return html`<span class="standings-bracket-name underline"
+        >${this.bracketName}</span
+      ><span class="standings-username">${this.bracket.user.username}</span>`;
   }
 
   safeTemplate() {
@@ -67,3 +67,33 @@ export class BracketColumn extends NikElement {
   }
 }
 customElements.define("nb-bracket-column", BracketColumn);
+
+export class MyBracketColumn extends BracketColumn {
+  groupsTemplate() {
+    if (!this.bracket.group_brackets.length) {
+      return null;
+    }
+
+    return html`<nb-group-bracket-details
+      size="small"
+      .groupBrackets=${this.bracket.group_brackets}
+    ></nb-group-bracket-details>`;
+  }
+
+  nameTemplate() {
+    return html`<span
+      class="standings-bracket-name underline _text-(length:--wa-font-size-larger)"
+      >${this.bracketName}</span
+    >`;
+  }
+
+  render() {
+    if (this.bracket.id === -1) {
+      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="brand"
+        >Create new bracket</wa-button
+      >`;
+    }
+    return super.render();
+  }
+}
+customElements.define("nb-my-bracket-column", MyBracketColumn);

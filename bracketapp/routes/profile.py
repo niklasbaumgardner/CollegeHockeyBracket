@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import current_user, login_required
 from bracketapp.queries import user_queries
+from bracketapp.utils import cache_invalidator
 
 
 profile_bp = Blueprint("profile_bp", __name__)
@@ -14,6 +15,8 @@ def profile():
         email = request.form.get("email")
 
         user_queries.update_user(email=email, username=username)
+        if username != current_user.username:
+            cache_invalidator.update_user()
 
         return redirect(url_for("profile_bp.profile"))
     return render_template(

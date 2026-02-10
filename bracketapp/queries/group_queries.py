@@ -88,7 +88,12 @@ def get_my_group(group_id):
 
 def get_all_groups(year=YEAR):
     stmt = select(Group).where(Group.year == year)
-    return db.session.scalars(stmt).all()
+    return db.session.scalars(stmt).unique().all()
+
+
+def get_all_group_ids_for_year(year=YEAR):
+    stmt = select(Group.id).where(Group.year == year)
+    return db.session.scalars(stmt).unique().all()
 
 
 def get_group_member(group_id):
@@ -115,6 +120,21 @@ def is_group_member(group_id):
     )
 
     return db.session.scalar(stmt)
+
+
+def get_my_group_ids_for_bracket_id(bracket_id):
+    stmt = (
+        select(Group.id)
+        .join(GroupBracket)
+        .where(
+            and_(
+                GroupBracket.user_id == current_user.id,
+                GroupBracket.bracket_id == bracket_id,
+            )
+        )
+    )
+
+    return db.session.scalars(stmt).unique().all()
 
 
 def search_groups(group_name):
@@ -151,7 +171,7 @@ def create_group(name, is_private, password):
 def update_group(group_id, name=None, is_private=None, password=None, locked=None):
     update_dict = {}
     if name is not None:
-        update_dict["name"] = name
+        update_dict["name"] = name.strip()
 
     if is_private is not None:
         update_dict["is_private"] = is_private
@@ -213,8 +233,6 @@ def create_group_bracket(group_id, bracket_id):
     )
     db.session.execute(upsert_stmt)
     db.session.commit()
-
-    cache.delete_many([group_cache_key(group_id), bracket_cache_key(bracket_id)])
 
 
 def get_my_group_bracket_for_id(group_bracket_id):

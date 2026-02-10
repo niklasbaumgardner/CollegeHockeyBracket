@@ -8,7 +8,7 @@ from bracketapp.queries import (
 )
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
-from bracketapp.utils import bracket_utils
+from bracketapp.utils import bracket_utils, cache_invalidator
 import datetime
 from bracketapp.config import CAN_EDIT_BRACKET
 
@@ -44,6 +44,8 @@ def update_correct():
 
     if request.method == "POST":
         correct_bracket_queries.update_correct_bracket_from_form(request.form)
+        cache_invalidator.correct_bracket()
+        bracket_utils.update_all_brackets_points()
 
     if request.method == "GET":
         default = default_bracket_queries.get_default_bracket()

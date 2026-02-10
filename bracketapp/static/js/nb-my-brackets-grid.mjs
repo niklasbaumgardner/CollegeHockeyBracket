@@ -4,31 +4,8 @@ import { StandingsGrid } from "./nb-standings-grid.mjs";
 import "./nb-delete-bracket.mjs";
 import "./nb-add-bracket-to-group.mjs";
 import * as agGrid from "./agGrid.mjs";
-import { BracketColumn } from "./nb-bracket-column.mjs";
+import "./nb-bracket-column.mjs";
 import "./nb-group-bracket-details.mjs";
-
-class MyBracketElement extends BracketColumn {
-  groupsTemplate() {
-    if (!this.bracket.group_brackets.length) {
-      return null;
-    }
-
-    return html`<nb-group-bracket-details
-      size="small"
-      .groupBrackets=${this.bracket.group_brackets}
-    ></nb-group-bracket-details>`;
-  }
-
-  render() {
-    if (this.bracket.id === -1) {
-      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="brand"
-        >Create new bracket</wa-button
-      >`;
-    }
-    return super.render();
-  }
-}
-customElements.define("nb-my-bracket-element", MyBracketElement);
 
 class MyBracketActions extends NikElement {
   static properties = {
@@ -110,7 +87,7 @@ export class MyBracketsGrid extends StandingsGrid {
       headerName: this.headerName,
       autoHeight: true,
       cellRenderer: (param) => {
-        let ele = document.createElement("nb-my-bracket-element");
+        let ele = document.createElement("nb-my-bracket-column");
         ele.bracket = param.data;
         return ele;
       },
@@ -143,7 +120,6 @@ export class MyBracketsGrid extends StandingsGrid {
       rowData: this.brackets,
       ...this.gridOptions,
     };
-    console.log(gridOptions);
     this.dataGrid = agGrid.createGrid(this.standingsGridEl, gridOptions);
   }
 }

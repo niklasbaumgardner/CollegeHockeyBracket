@@ -83,8 +83,13 @@ registerIconLibrary("remix", {
 });
 
 registerIconLibrary("hero", {
-  resolver: (name, family, variant) =>
-    `https://cdn.jsdelivr.net/npm/heroicons@2.2.0/24/${variant}/${name}.svg`,
+  resolver: (name, family, variant) => {
+    let size = 24;
+    if (variant.includes("-")) {
+      [size, variant] = variant.split("-");
+    }
+    return `https://cdn.jsdelivr.net/npm/heroicons@2.2.0/${size}/${variant}/${name}.svg`;
+  },
   // mutator: (svg, hostElement) => {
   //   console.log(svg, hostElement);
   //   svg.querySelectorAll("path").forEach((path) => {

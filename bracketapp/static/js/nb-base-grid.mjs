@@ -15,6 +15,12 @@ export class BaseGrid extends NikElement {
 
   get gridTheme() {
     const borderRadius = 4 * window.THEME.rounding;
+    // Shoelace uses a different bg color on cards
+    const darkBg =
+      window.THEME.theme === "shoelace"
+        ? "var(--wa-color-neutral-20)"
+        : "var(--wa-color-neutral-10)";
+
     return agGrid.themeAlpine.withPart(this.currentColorScheme).withParams({
       // cellHorizontalPadding: "1rem",
       borderRadius: borderRadius,
@@ -23,8 +29,7 @@ export class BaseGrid extends NikElement {
       headerRowBorder: true,
       rowBorder: true,
 
-      backgroundColor:
-        "light-dark(var(--wa-color-neutral-95), var(--wa-color-neutral-20))",
+      backgroundColor: `light-dark(var(--wa-color-neutral-95), ${darkBg})`,
       borderColor:
         "light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",
       cellTextColor: "var(--wa-color-text-normal)",

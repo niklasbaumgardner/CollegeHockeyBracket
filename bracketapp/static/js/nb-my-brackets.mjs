@@ -30,8 +30,6 @@ export class MyBrackets extends Standings {
     document.addEventListener("wa-tab-show", this);
 
     window.addEventListener("hashchange", this);
-
-    console.log("this is version 2");
   }
 
   handleEvent(event) {
@@ -135,6 +133,7 @@ export class MyBrackets extends Standings {
         headerName="My Brackets"
         .brackets=${this.brackets}
         .groups=${this.groups}
+        year=${this.year}
       ></nb-my-brackets-grid>
     </div>`;
   }
@@ -169,6 +168,7 @@ export class MyBrackets extends Standings {
             id="group_${g.id}"
             .group=${g}
             .myBrackets=${this.brackets}
+            year=${this.year}
           ></nb-my-brackets-group-standings>`,
       );
     }

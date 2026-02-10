@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from bracketapp.queries import user_queries
 from bracketapp.models import User
 from bracketapp import bcrypt, cache
-from bracketapp.utils import send_email
+from bracketapp.utils import cache_invalidator, send_email
 import stream_chat
 import os
 from bracketapp.utils.constants import user_cache_key
@@ -133,7 +133,7 @@ def password_reset():
 @auth_bp.get("/logout")
 @login_required
 def logout():
-    cache.delete(user_cache_key(current_user.id))
+    cache_invalidator.logout_user()
     logout_user()
     return redirect(url_for("auth_bp.login"))
 

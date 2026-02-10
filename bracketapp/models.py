@@ -136,6 +136,7 @@ class Bracket(BaseModel, SqidSerializerMixin):
         "-games_list",
         "group_bracket",
         "url",
+        "form_url",
         "delete_url",
         "bracket_join_group_url",
     )

@@ -3,6 +3,7 @@ from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from flask_login import current_user
 from flask import url_for
 import os.path
+from bracketapp.utils import cache_invalidator
 
 
 class BracketWinner:
@@ -183,6 +184,9 @@ def update_all_brackets_points():
     brackets = bracket_queries.get_all_brackets_joined()
     correct = correct_bracket_queries.get_correct_bracket()
 
+    if correct.winner_id:
+        cache_invalidator.archive()
+
     brackets_update_list = []
     for user_bracket in brackets:
         bracket_update_dict = user_bracket.to_dict(
@@ -209,6 +213,11 @@ def update_all_brackets_points():
 
     bracket_queries.bulk_update_bracket_points(brackets_update_list)
     bracket_queries.bulk_update_group_ranks(group_brackets_update_list)
+
+    cache_invalidator.update_points(
+        [b.id for b in brackets],
+        list(set(gb["group_id"] for gb in group_brackets_update_list)),
+    )
 
     # update_all_groups(brackets=brackets, correct=correct)
 
@@ -247,7 +256,7 @@ def update_all_group_standings(brackets_update_list, correct):
     group_brackets = bracket_queries.get_all_group_brackets()
 
     for gb in group_brackets:
-        gb_dict = {"id": gb.id}
+        gb_dict = {"id": gb.id, "group_id": gb.group_id}
         groups_dict[gb.group_id].append((gb_dict, brackets_dict[gb.bracket_id]))
 
     for gbs in groups_dict.values():

@@ -203,6 +203,7 @@ export class GroupStandings extends Standings {
   bracketsTemplate() {
     return html`<nb-group-standings-grid
       .brackets=${this.brackets}
+      year=${this.year}
     ></nb-group-standings-grid>`;
   }
 

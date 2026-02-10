@@ -83,8 +83,9 @@ class Matchup extends NikElement {
   topIconTemplate() {
     if (this.correctTop) {
       return html`<wa-icon
+        auto-width
         library="hero"
-        variant="solid"
+        variant="16-solid"
         name="${this.correctTop?.id === this.winnerTop.id
           ? "check-circle"
           : "x-circle"}"
@@ -96,8 +97,9 @@ class Matchup extends NikElement {
   bottomIconTemplate() {
     if (this.correctBottom) {
       return html`<wa-icon
+        auto-width
         library="hero"
-        variant="solid"
+        variant="16-solid"
         name="${this.correctBottom?.id === this.winnerBottom.id
           ? "check-circle"
           : "x-circle"}"
@@ -192,7 +194,7 @@ class Matchup extends NikElement {
       content = this.matchupTemplate();
     }
     return html`<wa-card class="matchup default-bg default-border"
-      >${content}</wa-card
+      ><div class="flex flex-col">${content}</div></wa-card
     >`;
   }
 }

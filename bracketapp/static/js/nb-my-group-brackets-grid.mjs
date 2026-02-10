@@ -83,7 +83,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
       headerName: this.headerName,
       autoHeight: true,
       cellRenderer: (param) => {
-        let ele = document.createElement("nb-bracket-column");
+        let ele = document.createElement("nb-my-bracket-column");
         ele.bracket = param.data;
         return ele;
       },

@@ -403,7 +403,8 @@ export class EditBracket extends NikElement {
     this.setNext(el);
   }
 
-  handleInput() {
+  async handleInput() {
+    await this.updateComplete;
     this.maybeToggleSaveButton();
   }
 
@@ -473,6 +474,7 @@ export class EditBracket extends NikElement {
         method="POST"
         @input=${this.handleInput}
       >
+        <input name="old_name" value=${this.bracket.name} hidden />
         <div class="wa-stack">
           ${this.topCardTemplate()}
           <div class="bracket-grid-edit" @click=${this.handleClick}>

@@ -53,8 +53,19 @@ wa-card:has(wa-card:not(.default-bg)) {
   & wa-card:not(.default-bg) {
     background-color: light-dark(
       var(--wa-color-neutral-95),
-      var(--wa-color-neutral-20)
+      var(--wa-color-neutral-10)
     );
+  }
+}
+
+.wa-theme-shoelace {
+  wa-card:has(wa-card:not(.default-bg)) {
+    & wa-card:not(.default-bg) {
+      background-color: light-dark(
+        var(--wa-color-neutral-95),
+        var(--wa-color-neutral-20)
+      );
+    }
   }
 }
 
@@ -124,4 +135,10 @@ html {
   --wa-space-scale: 1 !important;
   /* --wa-border-radius-scale: 2.9; */
   --wa-border-width-scale: 1 !important;
+  --wa-form-control-padding-block: 0.6em !important;
+  --wa-form-control-padding-inline: 1em !important;
+}
+
+.ag-cell {
+  line-height: initial;
 }

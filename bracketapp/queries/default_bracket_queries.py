@@ -9,7 +9,7 @@ from bracketapp.models import (
     BracketTeam,
 )
 from bracketapp import db, cache
-from bracketapp.utils import bracket_utils
+from bracketapp.utils import bracket_utils, cache_invalidator
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
 from flask_login import current_user
@@ -126,4 +126,4 @@ def update_default_bracket_from_form(form_data):
     else:
         create_bracket_teams_from_form(form_data)
 
-    cache.delete(default_bracket_cache_key(YEAR))
+    cache_invalidator.default_bracket()

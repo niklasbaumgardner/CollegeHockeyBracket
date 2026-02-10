@@ -1,7 +1,8 @@
 import { NikElement } from "./nik-element.mjs";
-import { html } from "lit";
+import { html, nothing } from "lit";
 
 export class BaseDialog extends NikElement {
+  inputEvent = false;
   static queries = {
     dialog: "wa-dialog",
   };
@@ -38,6 +39,10 @@ export class BaseDialog extends NikElement {
     }
   }
 
+  handleInput() {
+    // do nothing
+  }
+
   lableTemplate() {
     return null;
   }
@@ -61,7 +66,9 @@ export class BaseDialog extends NikElement {
   }
 
   render() {
-    return html`<wa-dialog>
+    return html`<wa-dialog
+      @input=${this.inputEvent ? this.handleInput : nothing}
+    >
       <div slot="label">${this.lableTemplate()}</div>
       ${this.contentTemplate()}
       <div class="wa-cluster w-full" slot="footer">

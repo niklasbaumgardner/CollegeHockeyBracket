@@ -1,9 +1,16 @@
 from bracketapp.queries import bracket_queries, default_bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
-from bracketapp.utils import bracket_utils
+from bracketapp.utils import bracket_utils, cache_invalidator
 from bracketapp.config import CAN_EDIT_BRACKET
 from bracketapp.utils.Sqids import sqids
+from bracketapp import cache
+from bracketapp.utils.constants import (
+    bracket_cache_key,
+    my_brackets_cache_key,
+    LEADERBOARD_CACHE_KEY,
+    group_cache_key,
+)
 
 
 editbracket_bp = Blueprint("editbracket_bp", __name__)
@@ -71,12 +78,13 @@ def edit_bracket_post(sqid):
 
     if not CAN_EDIT_BRACKET:
         # if we have a bracket id and we can't edit, go to viewing the bracket
-        return redirect(url_for("viewbracket_bp.view_bracket", id=bracket_id))
+        return redirect(url_for("viewbracket_bp.view_bracket", sqid=sqid))
 
-    bracket_queries.update_bracket_from_form(bracket_id, request.form)
+    name_changed = bracket_queries.update_bracket_from_form(bracket_id, request.form)
+
+    cache_invalidator.edit_bracket(bracket_id, name_changed)
 
     flash("Bracket saved", "success")
-
     return redirect(url_for("mybrackets_bp.my_brackets"))
 
 
@@ -104,6 +112,8 @@ def new_bracket_post():
         return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
 
     new_bracket_id = bracket_queries.create_bracket_from_form(request.form)
+
+    cache_invalidator.new_bracket(group_id)
 
     if group_id:
         group_queries.create_group_bracket(group_id=group_id, bracket_id=new_bracket_id)
@@ -136,6 +146,8 @@ def bracket_join_group(sqid):
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
+
+    cache_invalidator.new_group_bracket(group.id, bracket.id)
 
     flash(f"Your bracket has been added to {group.name}", "success")
     return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
