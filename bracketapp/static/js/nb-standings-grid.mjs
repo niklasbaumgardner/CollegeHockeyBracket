@@ -94,6 +94,12 @@ export class StandingsGrid extends BaseGrid {
       // });
     } else {
       this.brackets.sort((a, b) => {
+        if (a.rank === "-") {
+          return -1;
+        } else if (b.rank === "-") {
+          return 1;
+        }
+
         return a.rank - b.rank;
       });
     }

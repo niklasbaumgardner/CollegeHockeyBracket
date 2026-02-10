@@ -2,7 +2,7 @@ from bracketapp.utils.constants import user_cache_key
 from bracketapp.models import User
 from flask_login import current_user
 from bracketapp import bcrypt, db, cache
-from sqlalchemy import func, insert, select, update
+from sqlalchemy import func, insert, select, update, distinct
 
 
 ##
@@ -62,17 +62,17 @@ def hash_password(password):
 
 
 def is_email_unique(email):
-    stmt = select(func.count()).where(User.email == email)
+    stmt = select(func.count(1)).where(User.email == email)
     count = db.session.execute(stmt).scalar_one()
     return count == 0
 
 
 def is_username_unique(username):
-    stmt = select(func.count()).where(User.username == username)
+    stmt = select(func.count(1)).where(User.username == username)
     count = db.session.execute(stmt).scalar_one()
     return count == 0
 
 
 def get_all_user_ids():
-    stmt = select(User.id)
-    return db.session.scalars(stmt).unique().all()
+    stmt = select(distinct(User.id))
+    return db.session.scalars(stmt).all()

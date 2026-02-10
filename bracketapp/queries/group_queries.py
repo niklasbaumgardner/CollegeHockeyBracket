@@ -23,7 +23,18 @@ from sqlalchemy.orm import (
     with_loader_criteria,
     with_expression,
 )
-from sqlalchemy import and_, or_, func, insert, select, update, collate, delete, exists
+from sqlalchemy import (
+    and_,
+    or_,
+    func,
+    insert,
+    select,
+    update,
+    collate,
+    delete,
+    exists,
+    distinct,
+)
 from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
@@ -92,8 +103,8 @@ def get_all_groups(year=YEAR):
 
 
 def get_all_group_ids_for_year(year=YEAR):
-    stmt = select(Group.id).where(Group.year == year)
-    return db.session.scalars(stmt).unique().all()
+    stmt = select(distinct(Group.id)).where(Group.year == year)
+    return db.session.scalars(stmt).all()
 
 
 def get_group_member(group_id):
@@ -124,8 +135,8 @@ def is_group_member(group_id):
 
 def get_my_group_ids_for_bracket_id(bracket_id):
     stmt = (
-        select(Group.id)
-        .join(GroupBracket)
+        select(distinct(Group.id))
+        .join(GroupBracket, Group.id == GroupBracket.group_id)
         .where(
             and_(
                 GroupBracket.user_id == current_user.id,
@@ -134,7 +145,21 @@ def get_my_group_ids_for_bracket_id(bracket_id):
         )
     )
 
-    return db.session.scalars(stmt).unique().all()
+    return db.session.scalars(stmt).all()
+
+
+def get_my_group_ids():
+    stmt = (
+        select(distinct(Group.id))
+        .join(GroupBracket, Group.id == GroupBracket.group_id)
+        .where(
+            and_(
+                GroupBracket.user_id == current_user.id,
+            )
+        )
+    )
+
+    return db.session.scalars(stmt).all()
 
 
 def search_groups(group_name):

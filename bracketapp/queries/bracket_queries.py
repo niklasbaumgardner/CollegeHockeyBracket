@@ -22,7 +22,7 @@ from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
 from flask_login import current_user
 from sqlalchemy.orm import joinedload, contains_eager, noload
-from sqlalchemy import and_, func, insert, select, update, delete
+from sqlalchemy import and_, func, insert, select, update, delete, distinct
 from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
@@ -175,7 +175,7 @@ def get_bracket_for_bracket_id(bracket_id):
 
 def my_bracket_count():
     if current_user.is_authenticated:
-        stmt = select(func.count(Bracket.id)).where(
+        stmt = select(func.count(1)).where(
             and_(Bracket.user_id == current_user.id, Bracket.year == YEAR)
         )
         return db.session.execute(stmt).scalar_one()
@@ -208,18 +208,18 @@ def get_brackets_for_group(group_id):
 
 def get_bracket_ids_for_group(group_id):
     stmt = (
-        select(Bracket.id)
+        select(distinct(Bracket.id))
         .join(GroupBracket, Bracket.id == GroupBracket.bracket_id)
         .where(GroupBracket.group_id == group_id)
     )
 
-    return db.session.scalars(stmt).unique().all()
+    return db.session.scalars(stmt).all()
 
 
 def get_bracket_ids_for_year(year=YEAR):
-    stmt = select(Bracket.id).where(Bracket.year == year)
+    stmt = select(distinct(Bracket.id)).where(Bracket.year == year)
 
-    return db.session.scalars(stmt).unique().all()
+    return db.session.scalars(stmt).all()
 
 
 def get_my_group_brackets_for_bracket_id(bracket_id):
@@ -231,6 +231,12 @@ def get_my_group_brackets_for_bracket_id(bracket_id):
     )
 
     return db.session.scalars(stmt).unique().all()
+
+
+def get_my_bracket_years():
+    stmt = select(distinct(Bracket.year)).where(Bracket.user_id == current_user.id)
+
+    return db.session.scalars(stmt).all()
 
 
 def delete_bracket(bracket_id):

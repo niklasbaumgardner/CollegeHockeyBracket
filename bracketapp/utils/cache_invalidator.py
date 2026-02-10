@@ -9,6 +9,7 @@ from bracketapp.utils.constants import (
     default_bracket_cache_key,
     user_cache_key,
     user_settings_cache_key,
+    archive_year_cache_key,
 )
 from flask_login import current_user
 from bracketapp.queries import bracket_queries, group_queries, user_queries
@@ -165,8 +166,19 @@ def update_user():
     # TODO: Update archive, leaderboard, groups with user?
     # username is not show on bracket. so don't need to invalidate. same as ESPN
     # get group_ids where group_bracket
-    # get year on brackets
-    cache.delete_many([user_cache_key(current_user.id), LEADERBOARD_CACHE_KEY])
+    # get year on brackets for archive
+
+    cache.delete_many(
+        [
+            user_cache_key(current_user.id),
+            LEADERBOARD_CACHE_KEY,
+            *[group_cache_key(g_id) for g_id in group_queries.get_my_group_ids()],
+            *[
+                archive_year_cache_key(year)
+                for year in bracket_queries.get_my_bracket_years()
+            ],
+        ]
+    )
 
 
 def logout_user():
