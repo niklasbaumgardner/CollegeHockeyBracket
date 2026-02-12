@@ -10,6 +10,9 @@ import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
 from pymemcache.client.base import Client
 from pymemcache import serde
+from bracketapp.appsignal import appsignal
+
+appsignal.start()
 
 
 class BaseModel(DeclarativeBase):
