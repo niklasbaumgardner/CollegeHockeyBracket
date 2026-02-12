@@ -2,6 +2,7 @@ from bracketapp.utils.constants import (
     bracket_cache_key,
     my_brackets_cache_key,
     LEADERBOARD_CACHE_KEY,
+    my_bracket_count_cahce_key,
 )
 from flask import url_for
 from sqlalchemy.util.topological import sort
@@ -175,10 +176,17 @@ def get_bracket_for_bracket_id(bracket_id):
 
 def my_bracket_count():
     if current_user.is_authenticated:
+        cache_key = my_bracket_count_cahce_key(current_user.id)
+        if count := cache.get(cache_key):
+            return count
+
         stmt = select(func.count(1)).where(
             and_(Bracket.user_id == current_user.id, Bracket.year == YEAR)
         )
-        return db.session.execute(stmt).scalar_one()
+        count = db.session.execute(stmt).scalar_one()
+
+        cache.set(cache_key, count)
+        return count
 
     return 0
 

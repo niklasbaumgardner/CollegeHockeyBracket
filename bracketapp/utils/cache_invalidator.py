@@ -10,6 +10,7 @@ from bracketapp.utils.constants import (
     user_cache_key,
     user_settings_cache_key,
     archive_year_cache_key,
+    my_bracket_count_cahce_key,
 )
 from flask_login import current_user
 from bracketapp.queries import bracket_queries, group_queries, user_queries
@@ -18,7 +19,11 @@ from threading import Thread
 
 
 def new_bracket(group_id=None):
-    cache_keys = [LEADERBOARD_CACHE_KEY, my_brackets_cache_key(current_user.id)]
+    cache_keys = [
+        LEADERBOARD_CACHE_KEY,
+        my_brackets_cache_key(current_user.id),
+        my_bracket_count_cahce_key(current_user.id),
+    ]
 
     if group_id:
         cache_keys += [group_cache_key(group_id)]
@@ -46,6 +51,7 @@ def edit_bracket(bracket_id, name_changed):
 def delete_bracket(bracket_id):
     cache_keys = [
         my_brackets_cache_key(current_user.id),
+        my_bracket_count_cahce_key(current_user.id),
         bracket_cache_key(bracket_id),
         LEADERBOARD_CACHE_KEY,
         *[

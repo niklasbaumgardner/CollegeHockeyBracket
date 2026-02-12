@@ -3,6 +3,7 @@ ARCHIVE_YEARS_CACHE_KEY = "archive"
 ARCHIVE_BASE_CACHE_KEY = "api_archive"
 GROUP_BASE_CACHE_KEY = "api_group"
 MY_BRACKETS_BASE_CACHE_KEY = "my_brackets"
+MY_BRACKET_COUNT_BASE_CACHE_KEY = "my_bracket_count"
 USER_BASE_CACHE_KEY = "user"
 USER_SETTINGS_BASE_CACHE_KEY = "user_settings"
 BRACKET_BASE_CACHE_KEY = "bracket"
@@ -20,6 +21,10 @@ def archive_year_cache_key(year):
 
 def my_brackets_cache_key(user_id):
     return cache_key_generator(MY_BRACKETS_BASE_CACHE_KEY, user_id)
+
+
+def my_bracket_count_cahce_key(user_id):
+    return cache_key_generator(MY_BRACKET_COUNT_BASE_CACHE_KEY, user_id)
 
 
 def user_cache_key(user_id):
