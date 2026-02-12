@@ -14,6 +14,7 @@ const result = await buildFunction({
     nb: "./bracketapp/static/js/nb-components.mjs",
     theme: "./bracketapp/static/js/theme.mjs",
     sentry: "./bracketapp/static/js/sentry.mjs",
+    posthog: "./bracketapp/static/js/posthog.mjs",
 
     // CSS bundle
     bundle: "./bracketapp/static/css/src/bundle.css",

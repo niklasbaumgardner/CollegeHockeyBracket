@@ -15,7 +15,9 @@
 
 <script>
   const CSS_FILE_MAP = { 
+    "shoelace.palette": "/static/dist/esbuild/shoelace.palette.VIT5FZA2.css",
     "vogue.palette": "/static/dist/esbuild/vogue.palette.FY32WZXZ.css",
+    tailspin: "/static/dist/esbuild/tailspin.ZRBQXHX4.css",
     "anodized.palette": "/static/dist/esbuild/anodized.palette.N2MTE5BX.css",
     "base.palette": "/static/dist/esbuild/base.palette.CU2AYW2R.css",
     "bright.palette": "/static/dist/esbuild/bright.palette.4U3Z2VEM.css",
@@ -23,7 +25,7 @@
     "mild.palette": "/static/dist/esbuild/mild.palette.ESAXWICN.css",
     "natural.palette": "/static/dist/esbuild/natural.palette.WGSI542K.css",
     "rudimentary.palette": "/static/dist/esbuild/rudimentary.palette.FM3GLSBJ.css",
-    "shoelace.palette": "/static/dist/esbuild/shoelace.palette.VIT5FZA2.css",
+    awesome: "/static/dist/esbuild/awesome.T6OFC7KZ.css",
     brutalist: "/static/dist/esbuild/brutalist.ZDHQMQWW.css",
     glossy: "/static/dist/esbuild/glossy.RCEVOP4A.css",
     matter: "/static/dist/esbuild/matter.OE2MZREJ.css",
@@ -31,9 +33,7 @@
     playful: "/static/dist/esbuild/playful.RVCMPIQ2.css",
     premium: "/static/dist/esbuild/premium.FHB3DFLS.css",
     shoelace: "/static/dist/esbuild/shoelace.ZL2FZDSL.css",
-    tailspin: "/static/dist/esbuild/tailspin.ZRBQXHX4.css",
     active: "/static/dist/esbuild/active.AZAPFPCD.css",
-    awesome: "/static/dist/esbuild/awesome.T6OFC7KZ.css",
   };
 
   const myTheme = "{{ user_settings.settings.theme }}";
@@ -60,12 +60,13 @@
     Theme,
     THEME_LIST,
     COLOR_PALETTE_LIST,
-  } from "/static/dist/esbuild/theme.NBVZQ7ED.mjs";
+  } from "/static/dist/esbuild/theme.AEVD4T67.mjs";
   window.THEME = new Theme({{ user_settings.settings|tojson }});
 </script>
 <script src="/static/dist/esbuild/main.P7OBIUHW.mjs" type="module" ></script>
 <script src="/static/dist/esbuild/agGrid.KZ2J62RJ.mjs" type="module" ></script>
-<script src="/static/dist/esbuild/nb.DU7ZCKBM.mjs" type="module" ></script>
+<script src="/static/dist/esbuild/nb.7SZUGEX4.mjs" type="module" ></script>
+<script src="/static/dist/esbuild/posthog.L76RZWVB.mjs" type="module" ></script>
 
 <script
   src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"

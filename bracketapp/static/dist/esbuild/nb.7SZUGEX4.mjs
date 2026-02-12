@@ -1,4 +1,4 @@
-import{d as t,h as be,j as we,k as y}from"./chunk-XGX4NMMB.mjs";import{a as fe,b as ke,c as ve,d as u}from"./chunk-NB5LNMQ2.mjs";import{a as d,b as Te,d as _e,e as $e,f as ye}from"./chunk-GG6KFNCC.mjs";function Ce(s,e){return()=>s.querySelector(e)}function xe(s,e){return()=>s.querySelectorAll(e)}var i=class extends we{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:xe(this,r.all)}):Object.defineProperty(this,a,{get:Ce(this,r)})}createRenderRoot(){return this}};var E=class extends i{render(){return t`<wa-card
+import{d as t,h as be,j as we,k as y}from"./chunk-XGX4NMMB.mjs";import{a as fe,b as ke,c as ve,d as u}from"./chunk-NB5LNMQ2.mjs";import{a as d,b as Te,d as _e,e as $e,f as ye}from"./chunk-XVEEE6GM.mjs";function Ce(s,e){return()=>s.querySelector(e)}function xe(s,e){return()=>s.querySelectorAll(e)}var i=class extends we{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:xe(this,r.all)}):Object.defineProperty(this,a,{get:Ce(this,r)})}createRenderRoot(){return this}};var E=class extends i{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -1755,4 +1755,4 @@ import{d as t,h as be,j as we,k as y}from"./chunk-XGX4NMMB.mjs";import{a as fe,b
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ge);
-//# sourceMappingURL=nb.DU7ZCKBM.mjs.map
+//# sourceMappingURL=nb.7SZUGEX4.mjs.map
