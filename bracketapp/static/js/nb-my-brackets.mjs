@@ -71,10 +71,12 @@ export class MyBrackets extends Standings {
     let response = await fetch(MY_BRACKETS_CONTENT_URL);
     let data = await response.json();
 
-    let { brackets, groups, year } = data;
+    let { brackets, groups, year, years } = data;
+    console.log({ brackets, groups, year, years });
     this.brackets = brackets;
     this.groups = groups;
     this.year = year;
+    this.years = years;
   }
 
   async updated() {
@@ -97,9 +99,24 @@ export class MyBrackets extends Standings {
     document.dispatchEvent(new CustomEvent("CreateNewGroup"));
   }
 
+  yearsDropdown() {
+    if (!this.years || this.years?.length < 2) {
+      return this.year;
+    }
+
+    return html`<wa-select class="w-5">
+      ${this.years.map(
+        (y) =>
+          html`<wa-option value=${y} ?selected=${this.year === y}
+            >${y}</wa-option
+          >`,
+      )}
+    </wa-select>`;
+  }
+
   titleTemplate() {
     return html`<div>
-      <h2>My Brackets ${this.year}</h2>
+      <h2 class="wa-cluster">My Brackets ${this.yearsDropdown()}</h2>
     </div>`;
   }
 

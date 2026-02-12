@@ -234,7 +234,11 @@ def get_my_group_brackets_for_bracket_id(bracket_id):
 
 
 def get_my_bracket_years():
-    stmt = select(distinct(Bracket.year)).where(Bracket.user_id == current_user.id)
+    stmt = (
+        select(distinct(Bracket.year))
+        .where(Bracket.user_id == current_user.id)
+        .order_by(Bracket.year.desc())
+    )
 
     return db.session.scalars(stmt).all()
 

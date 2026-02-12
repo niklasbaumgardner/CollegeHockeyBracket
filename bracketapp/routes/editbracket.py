@@ -2,7 +2,7 @@ from bracketapp.queries import bracket_queries, default_bracket_queries, group_q
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils, cache_invalidator
-from bracketapp.config import CAN_EDIT_BRACKET
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from bracketapp.utils.Sqids import sqids
 from bracketapp import cache
 from bracketapp.utils.constants import (
@@ -143,6 +143,10 @@ def bracket_join_group(sqid):
     bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=bracket_id)
     if not bracket:
         flash("Sorry, this bracket could not be found", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets"))
+
+    if group.year != YEAR or bracket.year != YEAR:
+        flash("Something went wrong", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)

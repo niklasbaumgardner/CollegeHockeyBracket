@@ -55,6 +55,11 @@
       const MY_BRACKET_COUNT = {{ MY_BRACKET_COUNT }};
       const CURRENT_YEAR = {{ CURRENT_YEAR }};
     </script>
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="7a118d1c-176e-4034-b6d1-cae6de3e4461"
+    ></script>
 
     {% block head %}{% endblock head %}
   </head>
@@ -78,22 +83,26 @@
               <a
                 class="wa-desktop-only wa-heading-l"
                 href="{{ url_for('mybrackets_bp.my_brackets') }}#"
+                data-umami-event="My Brackets link"
                 >My Brackets</a
               >
               <a
                 class="wa-desktop-only wa-heading-l"
                 href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
+                data-umami-event="Groups link"
                 >Groups</a
               >
               {% endif %}
               <a
                 class="wa-desktop-only wa-heading-l"
                 href="{{ url_for('leaderboard_bp.leaderboard') }}"
+                data-umami-event="Leaderboard link"
                 >Leaderboard</a
               >
               <a
                 class="wa-desktop-only wa-heading-l"
                 href="{{ url_for('archive_bp.archive') }}"
+                data-umami-event="Archive link"
                 >Archive</a
               >
             </div>
@@ -123,11 +132,15 @@
                   >
                   {% endif %}
                   <wa-dropdown-item
-                    ><a href="{{ url_for('preferences_bp.preferences') }}"
+                    ><a
+                      href="{{ url_for('preferences_bp.preferences') }}"
+                      data-umami-event="Preferences link"
                       >Preferences</a
                     ></wa-dropdown-item
                   ><wa-dropdown-item
-                    ><a href="{{ url_for('profile_bp.profile') }}"
+                    ><a
+                      href="{{ url_for('profile_bp.profile') }}"
+                      data-umami-event="Profile link"
                       >Profile</a
                     ></wa-dropdown-item
                   ><wa-dropdown-item
@@ -158,20 +171,26 @@
         <a
           class="wa-heading-l"
           href="{{ url_for('mybrackets_bp.my_brackets') }}#"
+          data-umami-event="My Brackets link"
           >My Brackets</a
         >
         <a
           class="wa-heading-l"
           href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
+          data-umami-event="Groups link"
           >Groups</a
         >
         {% endif %}
         <a
           class="wa-heading-l"
           href="{{ url_for('leaderboard_bp.leaderboard') }}"
+          data-umami-event="Leaderboard link"
           >Leaderboard</a
         >
-        <a class="wa-heading-l" href="{{ url_for('archive_bp.archive') }}"
+        <a
+          class="wa-heading-l"
+          href="{{ url_for('archive_bp.archive') }}"
+          data-umami-event="Archive link"
           >Archive</a
         >
 
@@ -199,11 +218,15 @@
             >
             {% endif %}
             <wa-dropdown-item
-              ><a href="{{ url_for('preferences_bp.preferences') }}"
+              ><a
+                href="{{ url_for('preferences_bp.preferences') }}"
+                data-umami-event="Preferences link"
                 >Preferences</a
               ></wa-dropdown-item
             ><wa-dropdown-item
-              ><a href="{{ url_for('profile_bp.profile') }}"
+              ><a
+                href="{{ url_for('profile_bp.profile') }}"
+                data-umami-event="Profile link"
                 >Profile</a
               ></wa-dropdown-item
             ><wa-dropdown-item

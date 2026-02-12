@@ -42,7 +42,7 @@ def view_group(sqid):
 def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    # todo: is_member needs to be cached separately
+    # TODO: is_member needs to be cached separately
     cache_key = group_cache_key(group_id)
     if result := cache.get(cache_key):
         return result
@@ -190,6 +190,10 @@ def group_add_bracket(sqid):
     group = group_queries.get_group(group_id=group_id)
     if not group:
         flash("Sorry, this group could not be found", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets"))
+
+    if group.year != YEAR or bracket.year != YEAR:
+        flash("Something went wrong", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)

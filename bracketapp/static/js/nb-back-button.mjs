@@ -12,10 +12,12 @@ export class BackButton extends NikElement {
     if (document.referrer) {
       const prevURL = new URL(document.referrer);
       const url = new URL(document.URL);
-
-      if (prevURL.origin === url.origin) {
-        this.href =
-          localStorage.getItem("nb-bracket-back") ?? document.referrer;
+      // TODO: prevent looping
+      if (url.pathname !== "/leaderboard" && url.pathname !== "/my_brackets") {
+        if (prevURL.origin === url.origin) {
+          this.href =
+            localStorage.getItem("nb-bracket-back") ?? document.referrer;
+        }
       }
     }
 

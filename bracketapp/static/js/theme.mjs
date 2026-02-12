@@ -397,6 +397,12 @@ export class Theme {
     if (!this.updateTask) {
       this.updateTask = new DeferredTask(
         (callbackArgs) => {
+          try {
+            Sentry.metrics.count("updateSettings", 1, {
+              attributes: callbackArgs,
+            });
+            umami.track("updateSettings", callbackArgs);
+          } catch {}
           return fetch(UPDATE_USER_SETTINGS, {
             method: "POST",
             headers: {

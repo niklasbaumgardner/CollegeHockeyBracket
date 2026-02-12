@@ -20,10 +20,12 @@ def my_brackets():
 @login_required
 def api_my_brackets():
     cache_key = my_brackets_cache_key(current_user.id)
-    if result := cache.get(cache_key):
-        return result
+    # if result := cache.get(cache_key):
+    #     return result
 
     brackets = [b.to_dict(safe_only=False) for b in bracket_queries.get_my_brackets()]
+
+    years = bracket_queries.get_my_bracket_years()
 
     groups = group_queries.get_all_groups_for_user()
     # TODO: Make this better?
