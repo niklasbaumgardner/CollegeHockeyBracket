@@ -78,7 +78,7 @@ export class GroupStandings extends Standings {
             class="grow"
             variant="brand"
             appearance="outlined"
-            href=${this.group.new_bracket_url}
+            href=${this.group.create_bracket_url}
             >Create New Bracket</wa-button
           ><wa-button
             class="grow"

@@ -43,29 +43,6 @@ def edit_bracket(sqid):
     )
 
 
-@editbracket_bp.get("/new_bracket")
-@login_required
-def new_bracket():
-    my_bracket_count = bracket_queries.my_bracket_count()
-    if my_bracket_count >= 5:
-        # if we don't have a bracket id and we are already at the max number of
-        # # brackets, flash a message and go to viewing my brackets
-        flash("You have already created 5/5 brackets for this year", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    if not CAN_EDIT_BRACKET:
-        # if we don't have a bracket id and we can't edit, go to viewing my brackets
-        flash("Editing is disabled", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    bracket = bracket_queries.get_empty_bracket_dict()
-    default = default_bracket_queries.get_default_bracket()
-
-    return render_template(
-        "edit_bracket.html", bracket=bracket, default=default.to_dict()
-    )
-
-
 @editbracket_bp.post("/edit_bracket/<string:sqid>")
 @login_required
 def edit_bracket_post(sqid):
@@ -78,43 +55,6 @@ def edit_bracket_post(sqid):
     name_changed = bracket_queries.update_bracket_from_form(bracket_id, request.form)
 
     cache_invalidator.edit_bracket(bracket_id, name_changed)
-
-    flash("Bracket saved", "success")
-    return redirect(url_for("mybrackets_bp.my_brackets"))
-
-
-@editbracket_bp.post("/new_bracket")
-@login_required
-def new_bracket_post():
-    group_sqid = request.args.get("group_sqid")
-    group_id = None
-    if group_sqid:
-        group_id = sqids.decode_one(group_sqid)
-
-    my_bracket_count = bracket_queries.my_bracket_count()
-    if my_bracket_count >= 5:
-        # if we don't have a bracket id and we are already at the max number of
-        # # brackets, flash a message and go to viewing my brackets
-        flash("You have already created 5/5 brackets for this year", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    if not CAN_EDIT_BRACKET:
-        # if we can't edit, go to viewing my brackets
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    if not group_queries.is_group_member(group_id=group_id):
-        flash("You must join this group to submit a bracket", "danger")
-        return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
-
-    new_bracket_id = bracket_queries.create_bracket_from_form(request.form)
-
-    cache_invalidator.new_bracket(group_id)
-
-    if group_id:
-        group_queries.create_group_bracket(group_id=group_id, bracket_id=new_bracket_id)
-
-        flash("Bracket saved", "success")
-        return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
 
     flash("Bracket saved", "success")
     return redirect(url_for("mybrackets_bp.my_brackets"))

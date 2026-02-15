@@ -64,6 +64,7 @@ cache = Client(
 from bracketapp.routes.admin import admin_bp
 from bracketapp.routes.archive import archive_bp
 from bracketapp.routes.auth import auth_bp
+from bracketapp.routes.createbracket import createbracket_bp
 from bracketapp.routes.deletebracket import deletebracket_bp
 from bracketapp.routes.editbracket import editbracket_bp
 from bracketapp.routes.groups import groups_bp
@@ -78,6 +79,7 @@ from bracketapp.utils.context_processor import context_processor_bp
 app.register_blueprint(admin_bp)
 app.register_blueprint(archive_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(createbracket_bp)
 app.register_blueprint(deletebracket_bp)
 app.register_blueprint(editbracket_bp)
 app.register_blueprint(groups_bp)

@@ -89,7 +89,7 @@ export class MyBracketColumn extends BracketColumn {
 
   render() {
     if (this.bracket.id === -1) {
-      return html`<wa-button href="${NEW_BRACKET_LINK}" variant="brand"
+      return html`<wa-button href="${CREATE_BRACKET_LINK}" variant="brand"
         >Create new bracket</wa-button
       >`;
     }

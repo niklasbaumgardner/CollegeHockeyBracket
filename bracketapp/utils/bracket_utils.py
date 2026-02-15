@@ -105,7 +105,7 @@ def get_group_message(brackets, group_id, is_member, is_private):
         create_bracket_message = ""
         if current_user.is_authenticated:
             if bracket_queries.my_bracket_count() < 5:
-                create_bracket_message += f'Make sure to <a href="{url_for("editbracket_bp.new_bracket", group_id=group_id)}">create your bracket</a> before the tournament starts!<br/>'
+                create_bracket_message += f'Make sure to <a href="{url_for("createbracket_bp.create_bracket", group_id=group_id)}">create your bracket</a> before the tournament starts!<br/>'
 
             create_bracket_message += f'To view or edit your brackets <a href="{url_for("mybrackets_bp.my_brackets")}">click here</a>.'
         else:

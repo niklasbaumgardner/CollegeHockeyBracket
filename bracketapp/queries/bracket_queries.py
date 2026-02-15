@@ -39,7 +39,7 @@ def get_empty_bracket_dict():
         name="",
         year=YEAR,
         games=dict(),
-        form_url=url_for("editbracket_bp.new_bracket"),
+        form_url=url_for("createbracket_bp.create_bracket_post"),
     )
 
 

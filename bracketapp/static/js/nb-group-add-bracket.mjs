@@ -42,7 +42,7 @@ export class GroupAddBracket extends BaseDialog {
       newBracket = html`<wa-button
         class="w-full"
         appearance="outlined"
-        href=${NEW_BRACKET_LINK + `?group_sqid=${this.group.id}`}
+        href=${CREATE_BRACKET_LINK + `?group_sqid=${this.group.id}`}
         >Create New Bracket</wa-button
       >`;
     }

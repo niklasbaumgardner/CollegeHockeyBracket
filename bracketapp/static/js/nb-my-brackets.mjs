@@ -131,7 +131,7 @@ export class MyBrackets extends Standings {
       return html`<wa-button
         variant="brand"
         appearance="outlined"
-        href=${NEW_BRACKET_LINK}
+        href=${CREATE_BRACKET_LINK}
         >Create Bracket</wa-button
       >`;
     }

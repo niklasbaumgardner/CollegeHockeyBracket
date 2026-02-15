@@ -389,7 +389,7 @@ class Group(BaseModel, SqidSerializerMixin):
         "join_url",
         "share_url",
         "add_bracket_url",
-        "new_bracket_url",
+        "create_bracket_url",
         "delete_url",
         "members",
         "brackets",
@@ -456,8 +456,8 @@ class Group(BaseModel, SqidSerializerMixin):
     def add_bracket_url(self):
         return url_for("groups_bp.group_add_bracket", sqid=self.sqid_id())
 
-    def new_bracket_url(self):
-        return url_for("editbracket_bp.new_bracket", group_sqid=self.sqid_id())
+    def create_bracket_url(self):
+        return url_for("createbracket_bp.create_bracket", group_sqid=self.sqid_id())
 
 
 class GroupBracket(BaseModel, SqidSerializerMixin):
