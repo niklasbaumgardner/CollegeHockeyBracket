@@ -1,7 +1,7 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 import { StandingsGrid } from "./nb-standings-grid.mjs";
-import "./nb-remove-group-bracket.mjs";
+import "./nb-delete-group-bracket.mjs";
 import * as agGrid from "./agGrid.mjs";
 import "./nb-bracket-column.mjs";
 
@@ -14,7 +14,7 @@ class MyGroupBracketActions extends NikElement {
   handleRemoveFromGroupClick() {
     if (!this.removeFromGroupModal) {
       this.removeFromGroupModal = document.createElement(
-        "nb-remove-group-bracket",
+        "nb-delete-group-bracket",
       );
       this.removeFromGroupModal.bracket = this.bracket;
       this.removeFromGroupModal.group = this.group;
@@ -39,18 +39,14 @@ class MyGroupBracketActions extends NikElement {
 customElements.define("nb-my-group-bracket-actions", MyGroupBracketActions);
 
 export class MyGroupBracketsGrid extends StandingsGrid {
+  useSafeName = false;
+
   static properties = {
     group: { type: Object },
     brackets: {
       type: Object,
     },
   };
-
-  constructor() {
-    super();
-
-    this.useSafeName = false;
-  }
 
   /**
    * It doesn't matter if bad names appear on my_brackets page

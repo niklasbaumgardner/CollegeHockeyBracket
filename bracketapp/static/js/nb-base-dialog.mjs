@@ -3,8 +3,11 @@ import { html, nothing } from "lit";
 
 export class BaseDialog extends NikElement {
   inputEvent = false;
+  submitEvent = true;
+
   static queries = {
     dialog: "wa-dialog",
+    submitButton: "wa-button[type='submit']",
   };
 
   show() {
@@ -43,6 +46,12 @@ export class BaseDialog extends NikElement {
     // do nothing
   }
 
+  handleSubmit() {
+    // Disable submit button so form can only be submitted once
+    this.submitButton.disabled = true;
+    this.submitButton.loading = true;
+  }
+
   lableTemplate() {
     return null;
   }
@@ -68,6 +77,7 @@ export class BaseDialog extends NikElement {
   render() {
     return html`<wa-dialog
       @input=${this.inputEvent ? this.handleInput : nothing}
+      @submit=${this.submitEvent ? this.handleSubmit : nothing}
     >
       <div slot="label">${this.lableTemplate()}</div>
       ${this.contentTemplate()}

@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { BaseDialog } from "./nb-base-dialog.mjs";
 
-export class RemoveGroupBracket extends BaseDialog {
+export class DeleteGroupBracket extends BaseDialog {
   static properties = {
     bracket: { type: Object },
     group: { type: Object },
@@ -35,4 +35,4 @@ export class RemoveGroupBracket extends BaseDialog {
   }
 }
 
-customElements.define("nb-remove-group-bracket", RemoveGroupBracket);
+customElements.define("nb-delete-group-bracket", DeleteGroupBracket);

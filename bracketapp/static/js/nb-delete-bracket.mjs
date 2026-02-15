@@ -6,11 +6,6 @@ export class DeleteBracketModal extends BaseDialog {
     bracket: { type: Object },
   };
 
-  static queries = {
-    ...BaseDialog.queries,
-    deleteButton: "#delete-button",
-  };
-
   lableTemplate() {
     return html`Delete bracket named "${this.bracket.name}"?`;
   }
