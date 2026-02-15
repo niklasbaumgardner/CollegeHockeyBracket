@@ -1,0 +1,9 @@
+.ag-paging-panel {
+  height: minmax(var(--wa-font-size-4xl), fit-content);
+  flex-wrap: wrap;
+  row-gap: var(--wa-space-s);
+  padding-block: var(--wa-space-xs);
+  justify-content: flex-end;
+  --ag-icon-size: var(--wa-font-size-l);
+  font-size: var(--wa-font-size-s);
+}
