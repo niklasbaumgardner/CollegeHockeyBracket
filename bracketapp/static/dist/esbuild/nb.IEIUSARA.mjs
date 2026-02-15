@@ -77,7 +77,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
             category=${e}
             message=${a.join(", ")}
           ></nb-alert>`)}
-    </div>`:null}};customElements.define("nb-alert-manager",N);var I=class extends i{static properties={theme:{type:Object}};static queries={dropdown:"wa-dropdown",icon:"#icon",themeItems:{all:"wa-dropdown-item"}};get currentThemeIcon(){return this.theme?.mode==="dark"?this.darkIcon:this.lightIcon}connectedCallback(){super.connectedCallback(),this.init()}async init(){await this.updateComplete,this.theme=THEME,this.setupThemeWatcher()}setupThemeWatcher(){this.mutationObserver=new MutationObserver(e=>this.handleThemeChange(e)),this.mutationObserver.observe(document.documentElement,{attributes:!0}),this.handleThemeChange()}handleThemeChange(){for(let e of this.themeItems)e.checked=e.id===this.theme.mode;this.icon.name=this.getThemeIconName(),window.localStorage.setItem("theme.mode",this.theme.mode)}setTheme(e){this.theme.mode=e;for(let a of this.themeItems)a.checked=a.id===this.theme.mode;this.icon.name=this.getThemeIconName(),console.log("setting theme mode",this.theme.mode)}handleThemeSelect(e){let a=e.detail.item;this.setTheme(a.value)}getThemeIconName(){return this.theme?.mode==="dark"?"moon-outline":"sunny-outline"}render(){return t`<wa-dropdown @wa-select=${this.handleThemeSelect}>
+    </div>`:null}};customElements.define("nb-alert-manager",N);var G=class extends i{static properties={theme:{type:Object}};static queries={dropdown:"wa-dropdown",icon:"#icon",themeItems:{all:"wa-dropdown-item"}};get currentThemeIcon(){return this.theme?.mode==="dark"?this.darkIcon:this.lightIcon}connectedCallback(){super.connectedCallback(),this.init()}async init(){await this.updateComplete,this.theme=THEME,this.setupThemeWatcher()}setupThemeWatcher(){this.mutationObserver=new MutationObserver(e=>this.handleThemeChange(e)),this.mutationObserver.observe(document.documentElement,{attributes:!0}),this.handleThemeChange()}handleThemeChange(){for(let e of this.themeItems)e.checked=e.id===this.theme.mode;this.icon.name=this.getThemeIconName(),window.localStorage.setItem("theme.mode",this.theme.mode)}setTheme(e){this.theme.mode=e;for(let a of this.themeItems)a.checked=a.id===this.theme.mode;this.icon.name=this.getThemeIconName(),console.log("setting theme mode",this.theme.mode)}handleThemeSelect(e){let a=e.detail.item;this.setTheme(a.value)}getThemeIconName(){return this.theme?.mode==="dark"?"moon-outline":"sunny-outline"}render(){return t`<wa-dropdown @wa-select=${this.handleThemeSelect}>
       <wa-button
         id="theme-button"
         variant="brand"
@@ -99,7 +99,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       <wa-dropdown-item id="dark" type="checkbox" value="dark"
         >Dark</wa-dropdown-item
       >
-    </wa-dropdown>`}};customElements.define("nb-theme-selector",I);var v=new Date("2025-03-27T18:00:00.000Z"),G=class extends i{static properties={bracketsOpen:Boolean};get countdown(){let e=v-Date.now(),a=e/1e3,r=new Date(e),n=Math.floor(a/(3600*24)),l=r.toISOString().substring(11,13),m=r.toISOString().substring(14,16),k=r.toISOString().substring(17,19);return{days:n,hours:l,mins:m,secs:k}}connectedCallback(){super.connectedCallback(),!this.maybeDestroy()&&(this.intervalID=setInterval(()=>{this.maybeRequestUpdate()},1e3))}maybeRequestUpdate(){this.maybeDestroy()||this.requestUpdate()}destroy(){clearInterval(this.intervalID),this.remove()}maybeDestroy(){let e=v-Date.now();return!CAN_EDIT_BRACKET||e<0?(this.destroy(),!0):!1}timeCardTemplate(e,a){return t`<wa-card
+    </wa-dropdown>`}};customElements.define("nb-theme-selector",G);var v=new Date("2025-03-27T18:00:00.000Z"),I=class extends i{static properties={bracketsOpen:Boolean};get countdown(){let e=v-Date.now(),a=e/1e3,r=new Date(e),n=Math.floor(a/(3600*24)),l=r.toISOString().substring(11,13),m=r.toISOString().substring(14,16),k=r.toISOString().substring(17,19);return{days:n,hours:l,mins:m,secs:k}}connectedCallback(){super.connectedCallback(),!this.maybeDestroy()&&(this.intervalID=setInterval(()=>{this.maybeRequestUpdate()},1e3))}maybeRequestUpdate(){this.maybeDestroy()||this.requestUpdate()}destroy(){clearInterval(this.intervalID),this.remove()}maybeDestroy(){let e=v-Date.now();return!CAN_EDIT_BRACKET||e<0?(this.destroy(),!0):!1}timeCardTemplate(e,a){return t`<wa-card
       class="width-fit-content"
       style="--wa-panel-background-color:var(--wa-color-danger-300); --border-color:var(--wa-color-danger-300); --padding:var(--wa-spacing-x-small); --border-radius:var(--wa-border-radius-large);"
       ><div class="d-flex flex-column align-items-center">
@@ -127,7 +127,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         </h6>
         ${this.countdownTemplate()}
       </div></wa-card
-    >`}};customElements.define("nb-countdown",G);var g=class extends i{static properties={winnerTop:{type:Object},winnerBottom:{type:Object},winner_id:{type:String},game:{type:String},teams:{type:Object}};static queries={topInputEl:"#top > input",bottomInputEl:"#bottom > input"};get winnerTopName(){let e=this.winnerTop;return this.teamTemplate(e)}get winnerBottomName(){let e=this.winnerBottom;return this.teamTemplate(e)}teamTemplate(e){return e?.team?`${e.rank} ${e.team.name}`:""}getImageElement(e){return e?.team?t`<img
+    >`}};customElements.define("nb-countdown",I);var g=class extends i{static properties={winnerTop:{type:Object},winnerBottom:{type:Object},winner_id:{type:String},game:{type:String},teams:{type:Object}};static queries={topInputEl:"#top > input",bottomInputEl:"#bottom > input"};get winnerTopName(){let e=this.winnerTop;return this.teamTemplate(e)}get winnerBottomName(){let e=this.winnerBottom;return this.teamTemplate(e)}teamTemplate(e){return e?.team?`${e.rank} ${e.team.name}`:""}getImageElement(e){return e?.team?t`<img
       class="team-img"
       src="${e.team.icon_path}"
       alt="${e.team.name}"
@@ -213,7 +213,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           >Update bracket</wa-button
         >
       </div>
-    </form>`}};customElements.define("nb-default-bracket",O);var b=class extends i{matchupTagName="nb-edit-matchup";static properties={bracket:{type:Object},default:{type:Object},type:{type:String}};static queries={formEl:"form",nbEditMatchupEls:{all:"nb-edit-matchup"},saveButtonEl:"#save-button"};get teams(){if(this._teams)return this._teams;let e={};for(let a of Object.values(this.default.games)){let r=a.top_team,n=a.bottom_team;e[r.id]=r,e[n.id]=n}return this._teams=e}async getUpdateComplete(){await super.getUpdateComplete();for(let e of this.nbEditMatchupEls)await e.updateComplete}async firstUpdated(){super.firstUpdated(),await this.updateComplete,this.initialFormData=new FormData(this.formEl),this.maybeToggleSaveButton()}getNextMatchup(e){let a="null";switch(e){case"game1top":case"game1bottom":case"game2top":case"game2bottom":a="game9";break;case"game3top":case"game3bottom":case"game4top":case"game4bottom":a="game10";break;case"game5top":case"game5bottom":case"game6top":case"game6bottom":a="game11";break;case"game7top":case"game7bottom":case"game8top":case"game8bottom":a="game12";break;case"game9top":case"game9bottom":case"game10top":case"game10bottom":a="game13";break;case"game11top":case"game11bottom":case"game12top":case"game12bottom":a="game14";break;case"game13top":case"game13bottom":case"game14top":case"game14bottom":a="game15";break}return this.querySelector(`#${a}`)}getImageUrl(e){if(!e)return"";let a=e.substring(2);return a=a.replaceAll(" ",""),a=a.replaceAll(".",""),`/static/images/${a}.svg`}matchupTemplate(e){return t`<nb-edit-matchup
+    </form>`}};customElements.define("nb-default-bracket",O);var b=class extends i{matchupTagName="nb-edit-matchup";static properties={bracket:{type:Object},default:{type:Object},type:{type:String}};static queries={formEl:"form",nbEditMatchupEls:{all:"nb-edit-matchup"},saveButtonEl:"#save-button",winnerGoals:"#winner_goals",loserGoals:"#loser_goals"};get teams(){if(this._teams)return this._teams;let e={};for(let a of Object.values(this.default.games)){let r=a.top_team,n=a.bottom_team;e[r.id]=r,e[n.id]=n}return this._teams=e}get matchupsSorted(){return[...this.nbEditMatchupEls].sort((e,a)=>Number(e.id.replace("game","")-Number(a.id.replace("game",""))))}async getUpdateComplete(){await super.getUpdateComplete();for(let e of this.nbEditMatchupEls)await e.updateComplete}async firstUpdated(){super.firstUpdated(),await this.updateComplete,this.initialFormData=new FormData(this.formEl),this.maybeToggleSaveButton()}getNextMatchup(e){let a="null";switch(e){case"game1top":case"game1bottom":case"game2top":case"game2bottom":a="game9";break;case"game3top":case"game3bottom":case"game4top":case"game4bottom":a="game10";break;case"game5top":case"game5bottom":case"game6top":case"game6bottom":a="game11";break;case"game7top":case"game7bottom":case"game8top":case"game8bottom":a="game12";break;case"game9top":case"game9bottom":case"game10top":case"game10bottom":a="game13";break;case"game11top":case"game11bottom":case"game12top":case"game12bottom":a="game14";break;case"game13top":case"game13bottom":case"game14top":case"game14bottom":a="game15";break}return this.querySelector(`#${a}`)}getImageUrl(e){if(!e)return"";let a=e.substring(2);return a=a.replaceAll(" ",""),a=a.replaceAll(".",""),`/static/images/${a}.svg`}matchupTemplate(e){return t`<nb-edit-matchup
       id=${e.game}
       game=${e.game}
       type="${e.type}"
@@ -235,6 +235,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       <div class="flex justify-center items-center gap-(--wa-space-m)">
         <wa-input
           class="goals"
+          id="winner_goals"
           name="winner_goals"
           type="number"
           min="0"
@@ -246,6 +247,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         <span>-</span>
         <wa-input
           class="goals"
+          id="loser_goals"
           name="loser_goals"
           type="number"
           min="0"
@@ -284,7 +286,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         appearance="outlined"
         href=${CANCEL_BRACKET_URL}
         >Cancel</wa-button
-      >${e}`}setNext(e){let{id:a,value:r}=e,n=this.getNextMatchup(a);if(!n)return;let l=e.closest(this.matchupTagName);l.winner_id=e.value;let m=this.teams[r];if(a.match(/\d/g).join("")%2===1){n.winner_id===n.winnerTop?.id&&(n.winner_id="");let h=n.winnerTop;n.winnerTop=m,n.topInputEl.checked=!1,this.maybeClearInputs(n.id+"top",h)}else{n.winner_id===n.winnerBottom?.id&&(n.winner_id="");let h=n.winnerBottom;n.winnerBottom=m,n.bottomInputEl.checked=!1,this.maybeClearInputs(n.id+"bottom",h)}}maybeClearInputs(e,a){let r=this.getNextMatchup(e);if(!r)return;e.match(/\d/g).join("")%2===1?(a?.id===r.winnerTop?.id&&(r.winnerTop={},r.topInputEl.checked=!1),this.maybeClearInputs(r.id+"top",a)):(a?.id===r.winnerBottom?.id&&(r.winnerBottom={},r.bottomInputEl.checked=!1),this.maybeClearInputs(r.id+"bottom",a))}handleClick(e){let a=e.target;if(a instanceof HTMLInputElement){if(!a.value){e.preventDefault();return}this.setNext(a)}}async handleInput(){await this.updateComplete,this.maybeToggleSaveButton()}maybeToggleSaveButton(){let a=[...new FormData(this.formEl).entries()];if(a.length<18){this.saveButtonEl.disabled=!1;return}this.saveButtonEl.disabled=JSON.stringify([...this.initialFormData.entries()])===JSON.stringify(a)}resetForm(){this.formEl.reset()}topCardTemplate(){return t` <div class="flex justify-center">
+      >${e}`}setNext(e){let{id:a,value:r}=e,n=this.getNextMatchup(a);if(!n)return;let l=e.closest(this.matchupTagName);l.winner_id=e.value;let m=this.teams[r];if(a.match(/\d/g).join("")%2===1){n.winner_id===n.winnerTop?.id&&(n.winner_id="");let h=n.winnerTop;n.winnerTop=m,n.topInputEl.checked=!1,this.maybeClearInputs(n.id+"top",h)}else{n.winner_id===n.winnerBottom?.id&&(n.winner_id="");let h=n.winnerBottom;n.winnerBottom=m,n.bottomInputEl.checked=!1,this.maybeClearInputs(n.id+"bottom",h)}}maybeClearInputs(e,a){let r=this.getNextMatchup(e);if(!r)return;e.match(/\d/g).join("")%2===1?(a?.id===r.winnerTop?.id&&(r.winnerTop={},r.topInputEl.checked=!1),this.maybeClearInputs(r.id+"top",a)):(a?.id===r.winnerBottom?.id&&(r.winnerBottom={},r.bottomInputEl.checked=!1),this.maybeClearInputs(r.id+"bottom",a))}handleClick(e){let a=e.target;if(a instanceof HTMLInputElement){if(!a.value){e.preventDefault();return}this.setNext(a)}}async handleInput(){await this.updateComplete,this.maybeToggleSaveButton()}handleSubmit(){this.saveButtonEl.disabled=!0,this.saveButtonEl.loading=!0}maybeToggleSaveButton(){let a=[...new FormData(this.formEl).entries()];if(a.length<18){this.saveButtonEl.disabled=!1;return}this.saveButtonEl.disabled=JSON.stringify([...this.initialFormData.entries()])===JSON.stringify(a)}resetForm(){this.formEl.reset()}getRandomInt(e,a){return Math.floor(Math.random()*(a-e)+e)}async randomSeed(){for(let e of this.matchupsSorted)Math.round(Math.random())===0?e.topInputEl.click():e.bottomInputEl.click(),await new Promise(r=>setTimeout(r,10));this.winnerGoals.value=this.getRandomInt(1,10),this.loserGoals.value=this.getRandomInt(0,this.winnerGoals.value),this.winnerGoals.requestUpdate(),this.loserGoals.requestUpdate()}topCardTemplate(){return t` <div class="flex justify-center">
       <wa-card>
         <div class="wa-stack">
           <h2>${this.bracket?.year} Bracket Challenge</h2>
@@ -327,6 +329,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         action=${this.bracket.form_url+location.search}
         method="POST"
         @input=${this.handleInput}
+        @submit=${this.handleSubmit}
       >
         <input name="old_name" value=${this.bracket.name} hidden />
         <div class="wa-stack">
@@ -574,20 +577,13 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
     ></nb-group-bracket-details>`:null}nameTemplate(){return t`<span
       class="standings-bracket-name underline _text-(length:--wa-font-size-larger)"
       >${this.bracketName}</span
-    >`}render(){return this.bracket.id===-1?t`<wa-button href="${NEW_BRACKET_LINK}" variant="brand"
+    >`}render(){return this.bracket.id===-1?t`<wa-button href="${CREATE_BRACKET_LINK}" variant="brand"
         >Create new bracket</wa-button
       >`:super.render()}};customElements.define("nb-my-bracket-column",L);var c=class extends T{#e="agGridPaginationPageSize";static properties={brackets:{type:Object},year:{type:Number},headerName:{type:String}};constructor(){super(),this.headerName="Brackets",this.useSafeName=!0}static queries={standingsGridEl:"#standingsGrid"};get storedPageSize(){let e=parseInt(window.localStorage.getItem(this.#e));return isNaN(e)?25:e}get defaultBracketColumnWidth(){return 256}get gridOptions(){return{...super.baseGridOptions,rowHeight:50,autoSizeStrategy:{type:"fitGridWidth",columnLimits:[{colId:"rank",minWidth:65,maxWidth:65},{colId:"name",minWidth:this.defaultBracketColumnWidth,flex:1},{colId:"actions",minWidth:208},{colId:"points",minWidth:75,maxWidth:75},{colId:"max_points",minWidth:75,maxWidth:75},{colId:"round_one_points",minWidth:57,maxWidth:57},{colId:"round_two_points",minWidth:57,maxWidth:57},{colId:"round_three_points",minWidth:57,maxWidth:57},{colId:"round_four_points",minWidth:57,maxWidth:57}]},defaultColDef:{resizable:!1}}}cleanBracketNames(){for(let e of this.brackets)e.safeName=Be.clean(e.name,{keepFirstAndLastChar:!0})}sortBrackets(){this.brackets=this.brackets.sort((e,a)=>e.name.localeCompare(a.name)),CAN_EDIT_BRACKET&&CURRENT_YEAR===this.year||this.brackets.sort((e,a)=>e.rank==="-"?-1:a.rank==="-"?1:e.rank-a.rank)}firstUpdated(){this.init()}async init(){await this.updateComplete,this.cleanBracketNames(),this.sortBrackets(),this.createDataGrid(),this.setupThemeWatcher()}getImageElement(e){return e?`<img
       class="standings-img"
       src="${e.team.icon_path}"
       alt="${e.team.name}"
-    />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let n=document.createElement("nb-bracket-column");return n.bracket=r.data,n;if(r.data.winner_team){let m=document.createElement("nb-bracket-column");return m.bracket=r.data,m}return`<div class="standings-row">
-            <div class="name-cell">
-              <span class="standings-bracket-name">${r.value}</span>
-              <p class="standings-username"
-                >${r.data.user.username}</p
-              >
-            </div>
-          </div>`}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=u(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:t`<div class="flex justify-center">No brackets yet</div>`}};customElements.define("nb-standings-grid",c);var p=class extends i{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:n,year:l}=a;this.brackets=r,this.winners=n,this.year=l}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
+    />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let n=document.createElement("nb-bracket-column");return n.bracket=r.data,n}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=u(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:t`<div class="flex justify-center">No brackets yet</div>`}};customElements.define("nb-standings-grid",c);var p=class extends i{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:n,year:l}=a;this.brackets=r,this.winners=n,this.year=l}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
       ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
         <wa-icon
           style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
@@ -716,7 +712,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
     ></nb-bracket-radio-item>`}bracketsTemplate(){let e=this.bracketsCanJoin.map(r=>this.bracketTemplate(r)),a=null;return MY_BRACKET_COUNT<5&&(a=t`<wa-button
         class="w-full"
         appearance="outlined"
-        href=${NEW_BRACKET_LINK+`?group_sqid=${this.group.id}`}
+        href=${CREATE_BRACKET_LINK+`?group_sqid=${this.group.id}`}
         >Create New Bracket</wa-button
       >`),t`<div class="wa-stack gap-(--wa-space-s)">
         <p>Available brackets to add:</p>
@@ -897,7 +893,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       >${CAN_EDIT_BRACKET?t`<nb-countdown></nb-countdown>`:null}`}newBracketButtonTemplate(){return this.brackets.length<5&&CAN_EDIT_BRACKET?t`<wa-button
         variant="brand"
         appearance="outlined"
-        href=${NEW_BRACKET_LINK}
+        href=${CREATE_BRACKET_LINK}
         >Create Bracket</wa-button
       >`:null}bracketsTemplate(){if(!(this.initialTabPanel==="groups"&&!this.shouldShowBrackets))return t`<div class="wa-stack">
       ${this.newBracketButtonTemplate()}
@@ -1693,7 +1689,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
             class="grow"
             variant="brand"
             appearance="outlined"
-            href=${this.group.new_bracket_url}
+            href=${this.group.create_bracket_url}
             >Create New Bracket</wa-button
           ><wa-button
             class="grow"
@@ -1756,4 +1752,4 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",be);
-//# sourceMappingURL=nb.XLPFFC5T.mjs.map
+//# sourceMappingURL=nb.IEIUSARA.mjs.map

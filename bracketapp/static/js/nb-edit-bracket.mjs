@@ -19,6 +19,8 @@ export class EditBracket extends NikElement {
     formEl: "form",
     nbEditMatchupEls: { all: "nb-edit-matchup" },
     saveButtonEl: "#save-button",
+    winnerGoals: "#winner_goals",
+    loserGoals: "#loser_goals",
   };
 
   get teams() {
@@ -35,6 +37,12 @@ export class EditBracket extends NikElement {
     }
 
     return (this._teams = obj);
+  }
+
+  get matchupsSorted() {
+    return [...this.nbEditMatchupEls].sort((a, b) =>
+      Number(a.id.replace("game", "") - Number(b.id.replace("game", ""))),
+    );
   }
 
   async getUpdateComplete() {
@@ -199,6 +207,7 @@ export class EditBracket extends NikElement {
       <div class="flex justify-center items-center gap-(--wa-space-m)">
         <wa-input
           class="goals"
+          id="winner_goals"
           name="winner_goals"
           type="number"
           min="0"
@@ -210,6 +219,7 @@ export class EditBracket extends NikElement {
         <span>-</span>
         <wa-input
           class="goals"
+          id="loser_goals"
           name="loser_goals"
           type="number"
           min="0"
@@ -408,6 +418,11 @@ export class EditBracket extends NikElement {
     this.maybeToggleSaveButton();
   }
 
+  handleSubmit() {
+    this.saveButtonEl.disabled = true;
+    this.saveButtonEl.loading = true;
+  }
+
   maybeToggleSaveButton() {
     let currentFormData = new FormData(this.formEl);
     let currentEntriesArr = [...currentFormData.entries()];
@@ -423,6 +438,27 @@ export class EditBracket extends NikElement {
 
   resetForm() {
     this.formEl.reset();
+  }
+
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  async randomSeed() {
+    for (let matchup of this.matchupsSorted) {
+      let index = Math.round(Math.random());
+      if (index === 0) {
+        matchup.topInputEl.click();
+      } else {
+        matchup.bottomInputEl.click();
+      }
+      await new Promise((r) => setTimeout(r, 10));
+    }
+
+    this.winnerGoals.value = this.getRandomInt(1, 10);
+    this.loserGoals.value = this.getRandomInt(0, this.winnerGoals.value);
+    this.winnerGoals.requestUpdate();
+    this.loserGoals.requestUpdate();
   }
 
   topCardTemplate() {
@@ -473,6 +509,7 @@ export class EditBracket extends NikElement {
         action=${this.bracket.form_url + location.search}
         method="POST"
         @input=${this.handleInput}
+        @submit=${this.handleSubmit}
       >
         <input name="old_name" value=${this.bracket.name} hidden />
         <div class="wa-stack">

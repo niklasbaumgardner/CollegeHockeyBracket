@@ -152,38 +152,6 @@ export class StandingsGrid extends BaseGrid {
           let ele = document.createElement("nb-bracket-column");
           ele.bracket = param.data;
           return ele;
-          let bracket = param.data;
-          if (bracket.winner_team) {
-            let ele = document.createElement("nb-bracket-column");
-            ele.bracket = param.data;
-            return ele;
-            // return `<div class="flex w-full h-full">
-            //   <a
-            //     class="clickable-card py-(--wa-space-2xs)"
-            //     href="${bracket.url}"
-            //     ><div class="standings-row">
-            //       ${this.getImageElement(bracket.winner_team)}
-            //       <div class="name-cell">
-            //         <span
-            //           class="standings-bracket-name underline"
-            //           ><span>${bracket.safeName}</span></span
-            //         ><span class="standings-username"
-            //           >${bracket.user.username}</span
-            //         >
-            //       </div>
-            //     </div></a
-            //   >
-            // </div>`;
-          }
-
-          return `<div class="standings-row">
-            <div class="name-cell">
-              <span class="standings-bracket-name">${param.value}</span>
-              <p class="standings-username"
-                >${param.data.user.username}</p
-              >
-            </div>
-          </div>`;
         },
       },
       { field: "points" },
