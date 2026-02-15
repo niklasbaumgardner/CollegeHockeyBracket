@@ -32,12 +32,7 @@ def edit_bracket(sqid):
     )
 
     if not bracket:
-        # This seems better
         return redirect(url_for("mybrackets_bp.my_brackets"))
-        # is this really what i want to do?
-        # return redirect(
-        #     url_for("viewbracket_bp.view_bracket", sqid=sqids.encode_one(bracket_id))
-        # )
 
     default = default_bracket_queries.get_default_bracket()
 
@@ -135,23 +130,15 @@ def bracket_join_group(sqid):
     if group_sqid:
         group_id = sqids.decode_one(group_sqid)
 
-    group = group_queries.get_group(group_id=group_id)
-    if not group:
-        flash("Sorry, this group could not be found", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
+    rowcount = group_queries.create_group_bracket(
+        group_id=group_id, bracket_id=bracket_id
+    )
 
-    bracket = bracket_queries.get_my_bracket_for_bracket_id(bracket_id=bracket_id)
-    if not bracket:
-        flash("Sorry, this bracket could not be found", "danger")
-        return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    if group.year != YEAR or bracket.year != YEAR:
+    if rowcount == 1:
+        flash("Bracket successfully added to group", "success")
+        cache_invalidator.new_group_bracket(group_id, bracket_id)
+    else:
         flash("Something went wrong", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
-    group_queries.create_group_bracket(group_id=group.id, bracket_id=bracket.id)
-
-    cache_invalidator.new_group_bracket(group.id, bracket.id)
-
-    flash(f"Your bracket has been added to {group.name}", "success")
     return redirect(url_for("groups_bp.view_group", sqid=group_sqid))

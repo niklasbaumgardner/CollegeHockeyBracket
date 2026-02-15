@@ -34,6 +34,7 @@ from sqlalchemy import (
     delete,
     exists,
     distinct,
+    literal,
 )
 from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
@@ -238,7 +239,17 @@ def update_group_member_count(group_id):
 
 
 def upsert_group_member(group_id):
-    stmt = pg_insert(GroupMember).values(group_id=group_id, user_id=current_user.id)
+    select_stmt = select(
+        literal(group_id).label("group_id"),
+        literal(current_user.id).label("user_id"),
+    ).where(
+        and_(
+            select(1).where(and_(Group.id == group_id, Group.year == YEAR)).exists(),
+        )
+    )
+
+    stmt = pg_insert(GroupMember).from_select(["group_id", "user_id"], select_stmt)
+
     upsert_stmt = stmt.on_conflict_do_nothing(
         constraint="group_member_group_id_user_id_key",
     )
@@ -250,14 +261,42 @@ def upsert_group_member(group_id):
 
 
 def create_group_bracket(group_id, bracket_id):
-    stmt = pg_insert(GroupBracket).values(
-        group_id=group_id, bracket_id=bracket_id, user_id=current_user.id
+    select_stmt = select(
+        literal(group_id).label("group_id"),
+        literal(bracket_id).label("bracket_id"),
+        literal(current_user.id).label("user_id"),
+    ).where(
+        and_(
+            select(1)
+            .where(
+                and_(
+                    GroupMember.user_id == current_user.id,
+                    GroupMember.group_id == group_id,
+                )
+            )
+            .exists(),
+            select(1).where(and_(Group.id == group_id, Group.year == YEAR)).exists(),
+            select(1)
+            .where(
+                and_(
+                    Bracket.id == bracket_id,
+                    Bracket.year == YEAR,
+                    Bracket.user_id == current_user.id,
+                )
+            )
+            .exists(),
+        )
     )
+    stmt = pg_insert(GroupBracket).from_select(
+        ["group_id", "bracket_id", "user_id"], select_stmt
+    )
+
     upsert_stmt = stmt.on_conflict_do_nothing(
         constraint="group_bracket_group_id_bracket_id_key",
     )
-    db.session.execute(upsert_stmt)
+    result = db.session.execute(upsert_stmt)
     db.session.commit()
+    return result.rowcount
 
 
 def get_my_group_bracket_for_id(group_bracket_id):
@@ -274,17 +313,46 @@ def delete_group_bracket(group_bracket_id):
     if not CAN_EDIT_BRACKET:
         return
 
-    # TODO: how to check that group and bracket are the correct year
-    stmt = delete(GroupBracket).where(
-        and_(
-            GroupBracket.id == group_bracket_id,
-            GroupBracket.user_id == current_user.id,
+    stmt = (
+        delete(GroupBracket)
+        .where(
+            and_(
+                GroupBracket.id == group_bracket_id,
+                GroupBracket.user_id == current_user.id,
+                select(1)
+                .where(
+                    and_(
+                        GroupMember.user_id == current_user.id,
+                        GroupMember.group_id == GroupBracket.group_id,
+                    )
+                )
+                .exists(),
+                select(1)
+                .where(and_(Group.id == GroupBracket.group_id, Group.year == YEAR))
+                .exists(),
+                select(1)
+                .where(
+                    and_(
+                        Bracket.id == GroupBracket.bracket_id,
+                        Bracket.year == YEAR,
+                        Bracket.user_id == current_user.id,
+                    )
+                )
+                .exists(),
+            )
         )
+        .returning(GroupBracket.bracket_id, GroupBracket.group_id)
     )
 
-    result = db.session.execute(stmt)
+    result = db.session.execute(stmt).all()
     db.session.commit()
-    return result.rowcount
+
+    if len(result) == 0:
+        return 0, None, None
+    elif len(result) == 1:
+        return 1, result[0].bracket_id, result[0].group_id
+    else:
+        raise RuntimeError("Deleting more than 1 group bracket. Impossible")
 
 
 def delete_group(group_id):
