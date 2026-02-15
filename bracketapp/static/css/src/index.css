@@ -139,6 +139,7 @@ html {
   --wa-form-control-padding-inline: 1em !important;
 }
 
-.ag-cell {
+nb-my-bracket-actions,
+nb-my-group-bracket-actions {
   line-height: initial;
 }
