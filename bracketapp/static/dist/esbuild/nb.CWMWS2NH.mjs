@@ -286,7 +286,16 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         appearance="outlined"
         href=${CANCEL_BRACKET_URL}
         >Cancel</wa-button
-      >${e}`}setNext(e){let{id:a,value:r}=e,n=this.getNextMatchup(a);if(!n)return;let l=e.closest(this.matchupTagName);l.winner_id=e.value;let c=this.teams[r];if(a.match(/\d/g).join("")%2===1){n.winner_id===n.winnerTop?.id&&(n.winner_id="");let h=n.winnerTop;n.winnerTop=c,n.topInputEl.checked=!1,this.maybeClearInputs(n.id+"top",h)}else{n.winner_id===n.winnerBottom?.id&&(n.winner_id="");let h=n.winnerBottom;n.winnerBottom=c,n.bottomInputEl.checked=!1,this.maybeClearInputs(n.id+"bottom",h)}}maybeClearInputs(e,a){let r=this.getNextMatchup(e);if(!r)return;e.match(/\d/g).join("")%2===1?(a?.id===r.winnerTop?.id&&(r.winnerTop={},r.topInputEl.checked=!1),this.maybeClearInputs(r.id+"top",a)):(a?.id===r.winnerBottom?.id&&(r.winnerBottom={},r.bottomInputEl.checked=!1),this.maybeClearInputs(r.id+"bottom",a))}handleClick(e){let a=e.target;if(a instanceof HTMLInputElement){if(!a.value){e.preventDefault();return}this.setNext(a)}}async handleInput(){await this.updateComplete,this.maybeToggleSaveButton()}handleSubmit(){this.saveButtonEl.disabled=!0,this.saveButtonEl.loading=!0}maybeToggleSaveButton(){let a=[...new FormData(this.formEl).entries()];if(a.length<18){this.saveButtonEl.disabled=!1;return}this.saveButtonEl.disabled=JSON.stringify([...this.initialFormData.entries()])===JSON.stringify(a)}resetForm(){this.formEl.reset()}getRandomInt(e,a){return Math.floor(Math.random()*(a-e)+e)}async randomSeed(){for(let e of this.matchupsSorted)Math.round(Math.random())===0?e.topInputEl.click():e.bottomInputEl.click(),await new Promise(r=>setTimeout(r,10));this.winnerGoals.value=this.getRandomInt(1,10),this.loserGoals.value=this.getRandomInt(0,this.winnerGoals.value),await this.winnerGoals.updateComplete,await this.loserGoals.updateComplete,this.winnerGoals.checkValidity(),this.loserGoals.checkValidity()}topCardTemplate(){return t` <div class="flex justify-center">
+      >${e}`}setNext(e){let{id:a,value:r}=e,n=this.getNextMatchup(a);if(!n)return;let l=e.closest(this.matchupTagName);l.winner_id=e.value;let c=this.teams[r];if(a.match(/\d/g).join("")%2===1){n.winner_id===n.winnerTop?.id&&(n.winner_id="");let h=n.winnerTop;n.winnerTop=c,n.topInputEl.checked=!1,this.maybeClearInputs(n.id+"top",h)}else{n.winner_id===n.winnerBottom?.id&&(n.winner_id="");let h=n.winnerBottom;n.winnerBottom=c,n.bottomInputEl.checked=!1,this.maybeClearInputs(n.id+"bottom",h)}}maybeClearInputs(e,a){let r=this.getNextMatchup(e);if(!r)return;e.match(/\d/g).join("")%2===1?(a?.id===r.winnerTop?.id&&(r.winnerTop={},r.topInputEl.checked=!1),this.maybeClearInputs(r.id+"top",a)):(a?.id===r.winnerBottom?.id&&(r.winnerBottom={},r.bottomInputEl.checked=!1),this.maybeClearInputs(r.id+"bottom",a))}handleClick(e){let a=e.target;if(a instanceof HTMLInputElement){if(!a.value){e.preventDefault();return}this.setNext(a)}}async handleInput(){await this.updateComplete,this.maybeToggleSaveButton()}handleSubmit(){this.saveButtonEl.disabled=!0,this.saveButtonEl.loading=!0}maybeToggleSaveButton(){let a=[...new FormData(this.formEl).entries()];if(a.length<18){this.saveButtonEl.disabled=!1;return}this.saveButtonEl.disabled=JSON.stringify([...this.initialFormData.entries()])===JSON.stringify(a)}resetForm(){this.formEl.reset()}getRandomInt(e,a,r=1){return Math.floor(Math.random()*r*(a-e)+e)}async randomSeed(){for(let e of this.matchupsSorted)Math.round(Math.random())===0?e.topInputEl.click():e.bottomInputEl.click(),await new Promise(r=>setTimeout(r,10));this.winnerGoals.value=this.getRandomInt(1,10,3/4),this.loserGoals.value=this.getRandomInt(0,this.winnerGoals.value),await this.winnerGoals.updateComplete,await this.loserGoals.updateComplete,this.winnerGoals.checkValidity(),this.loserGoals.checkValidity()}async topSeed(){for(let e of this.matchupsSorted)0===0?e.topInputEl.click():e.bottomInputEl.click(),await new Promise(r=>setTimeout(r,10))}async simulate(){let e=Array(100).fill(0);for(let a=0;a<=25;a++){let r=this.getRandomInt(0,100);e[r]=1}for(let a of this.matchupsSorted){let r=e[this.getRandomInt(0,100)];r===0&&a.winnerTop.rank<a.winnerBottom.rank||r===1&&a.winnerTop.rank>a.winnerBottom.rank?a.topInputEl.click():r===0&&a.winnerTop.rank>a.winnerBottom.rank||r===1&&a.winnerTop.rank<a.winnerBottom.rank?a.bottomInputEl.click():(console.log(`Ranks should be equal. ${a.winnerTop.rank} ${a.winnerBottom.rank}`),Math.round(Math.random())===0?a.topInputEl.click():a.bottomInputEl.click()),await new Promise(n=>setTimeout(n,10))}}autoFillTemplate(){return t`<div class="wa-cluster">
+      <wa-button appearance="filled-outlined" @click=${this.randomSeed}
+        >Pick randomly</wa-button
+      ><wa-button appearance="filled-outlined" @click=${this.topSeed}
+        >Pick top seed</wa-button
+      >
+      <wa-button appearance="filled-outlined" @click=${this.simulate}
+        >Simulate</wa-button
+      >
+    </div>`}topCardTemplate(){return t` <div class="flex justify-center">
       <wa-card>
         <div class="wa-stack">
           <h2>${this.bracket?.year} Bracket Challenge</h2>
@@ -320,6 +329,8 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
             class="w-full"
             required=""
           ></wa-input>
+
+          ${this.autoFillTemplate()}
 
           <div class="wa-cluster">${this.buttonsTemplate()}</div>
         </div>
@@ -370,7 +381,7 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           </div>
         </div>
       </form>
-    </div>`}};customElements.define("nb-edit-bracket",b);var U=class s extends g{static properties={topTeamGoals:{type:Number,converter:s.goalConverter},bottomTeamGoals:{type:Number,converter:s.goalConverter}};static goalConverter(e,a){return e.length?Number(e):null}teamTemplate(e){return e?.team?e.team.name:""}topScoreInput(){return t`<input
+    </div>`}};customElements.define("nb-edit-bracket",b);var P=class s extends g{static properties={topTeamGoals:{type:Number,converter:s.goalConverter},bottomTeamGoals:{type:Number,converter:s.goalConverter}};static goalConverter(e,a){return e.length?Number(e):null}teamTemplate(e){return e?.team?e.team.name:""}topScoreInput(){return t`<input
       type="number"
       name="${this.game}-h_goals"
       value="${this.topTeamGoals>=0?this.topTeamGoals:null}"
@@ -402,7 +413,7 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         ${this.bottomInput()}<span>${this.winnerBottomName}</span>
         ${this.bottomScoreInput()}
       </label>
-    </wa-card>`}};customElements.define("nb-edit-correct-matchup",U);var P=class extends b{matchupTagName="nb-edit-correct-matchup";maybeToggleSaveButton(){}matchupTemplate(e){return t`<nb-edit-correct-matchup
+    </wa-card>`}};customElements.define("nb-edit-correct-matchup",P);var U=class extends b{matchupTagName="nb-edit-correct-matchup";maybeToggleSaveButton(){}matchupTemplate(e){return t`<nb-edit-correct-matchup
       id=${e.game}
       .teams=${this.default.teams}
       game=${e.game}
@@ -446,7 +457,7 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           <div class="wa-cluster">${this.buttonsTemplate()}</div>
         </div>
       </wa-card>
-    </div>`}};customElements.define("nb-edit-correct-bracket",P);var j=class extends i{static properties={email:{type:String}};connectedCallback(){super.connectedCallback();let a=new URLSearchParams(window.location.search).get("next");a&&window.localStorage.setItem("next",a)}nativeTemplate(){return t`<wa-card>
+    </div>`}};customElements.define("nb-edit-correct-bracket",U);var j=class extends i{static properties={email:{type:String}};connectedCallback(){super.connectedCallback();let a=new URLSearchParams(window.location.search).get("next");a&&window.localStorage.setItem("next",a)}nativeTemplate(){return t`<wa-card>
       <form id="login-form" action="${LOGIN_URL}" method="POST"></form>
       <div class="wa-stack">
         <h2>Login</h2>
@@ -1770,4 +1781,4 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",be);
-//# sourceMappingURL=nb.V6IMP5Z5.mjs.map
+//# sourceMappingURL=nb.CWMWS2NH.mjs.map

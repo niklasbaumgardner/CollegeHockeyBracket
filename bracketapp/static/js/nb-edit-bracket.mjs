@@ -440,8 +440,8 @@ export class EditBracket extends NikElement {
     this.formEl.reset();
   }
 
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+  getRandomInt(min, max, weight = 1) {
+    return Math.floor(Math.random() * weight * (max - min) + min);
   }
 
   async randomSeed() {
@@ -455,7 +455,8 @@ export class EditBracket extends NikElement {
       await new Promise((r) => setTimeout(r, 10));
     }
 
-    this.winnerGoals.value = this.getRandomInt(1, 10);
+    // TODO: Should I randomly set the goals or just leave blank?
+    this.winnerGoals.value = this.getRandomInt(1, 10, 3 / 4);
     this.loserGoals.value = this.getRandomInt(0, this.winnerGoals.value);
 
     await this.winnerGoals.updateComplete;
@@ -463,6 +464,66 @@ export class EditBracket extends NikElement {
 
     this.winnerGoals.checkValidity();
     this.loserGoals.checkValidity();
+  }
+
+  async topSeed() {
+    for (let matchup of this.matchupsSorted) {
+      let index = 0;
+      if (index === 0) {
+        matchup.topInputEl.click();
+      } else {
+        matchup.bottomInputEl.click();
+      }
+      await new Promise((r) => setTimeout(r, 10));
+    }
+  }
+
+  async simulate() {
+    let weightedArray = Array(100).fill(0);
+    for (let i = 0; i <= 25; i++) {
+      let index = this.getRandomInt(0, 100);
+      weightedArray[index] = 1;
+    }
+
+    for (let matchup of this.matchupsSorted) {
+      let seed = weightedArray[this.getRandomInt(0, 100)];
+      if (
+        (seed === 0 && matchup.winnerTop.rank < matchup.winnerBottom.rank) ||
+        (seed === 1 && matchup.winnerTop.rank > matchup.winnerBottom.rank)
+      ) {
+        matchup.topInputEl.click();
+      } else if (
+        (seed === 0 && matchup.winnerTop.rank > matchup.winnerBottom.rank) ||
+        (seed === 1 && matchup.winnerTop.rank < matchup.winnerBottom.rank)
+      ) {
+        matchup.bottomInputEl.click();
+      } else {
+        console.log(
+          `Ranks should be equal. ${matchup.winnerTop.rank} ${matchup.winnerBottom.rank}`,
+        );
+        let index = Math.round(Math.random());
+        if (index === 0) {
+          matchup.topInputEl.click();
+        } else {
+          matchup.bottomInputEl.click();
+        }
+      }
+
+      await new Promise((r) => setTimeout(r, 10));
+    }
+  }
+
+  autoFillTemplate() {
+    return html`<div class="wa-cluster">
+      <wa-button appearance="filled-outlined" @click=${this.randomSeed}
+        >Pick randomly</wa-button
+      ><wa-button appearance="filled-outlined" @click=${this.topSeed}
+        >Pick top seed</wa-button
+      >
+      <wa-button appearance="filled-outlined" @click=${this.simulate}
+        >Simulate</wa-button
+      >
+    </div>`;
   }
 
   topCardTemplate() {
@@ -500,6 +561,8 @@ export class EditBracket extends NikElement {
             class="w-full"
             required=""
           ></wa-input>
+
+          ${this.autoFillTemplate()}
 
           <div class="wa-cluster">${this.buttonsTemplate()}</div>
         </div>
