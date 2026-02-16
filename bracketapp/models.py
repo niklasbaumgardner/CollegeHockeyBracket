@@ -169,7 +169,7 @@ class Bracket(BaseModel, SqidSerializerMixin):
     )
 
     def safe_rank(self):
-        return "-"
+        return " "
 
     def games(self):
         d = {}
@@ -397,6 +397,7 @@ class Group(BaseModel, SqidSerializerMixin):
     password: Mapped[Optional[str]]
     creator_id: Mapped[user_fk]
     member_count: Mapped[Optional[int]]
+    bracket_count: Mapped[Optional[int]]
 
     members: Mapped[list["GroupMember"]] = relationship(lazy="noload", viewonly=True)
 

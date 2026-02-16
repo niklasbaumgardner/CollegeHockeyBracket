@@ -233,12 +233,29 @@ def get_group_member_count(group_id):
     return db.session.execute(stmt).scalar_one()
 
 
-def update_group_member_count(group_id):
+def update_group_member_count(group_id, commit=True):
     member_count = get_group_member_count(group_id)
 
     stmt = update(Group).where(Group.id == group_id).values(member_count=member_count)
     db.session.execute(stmt)
-    db.session.commit()
+
+    if commit:
+        db.session.commit()
+
+
+def get_group_bracket_count(group_id):
+    stmt = select(func.count(1)).where(GroupBracket.group_id == group_id)
+    return db.session.execute(stmt).scalar_one()
+
+
+def update_group_bracket_count(group_id, commit=True):
+    bracket_count = get_group_bracket_count(group_id)
+
+    stmt = update(Group).where(Group.id == group_id).values(bracket_count=bracket_count)
+    db.session.execute(stmt)
+
+    if commit:
+        db.session.commit()
 
 
 def upsert_group_member(group_id):
@@ -258,7 +275,7 @@ def upsert_group_member(group_id):
     )
     db.session.execute(upsert_stmt)
 
-    update_group_member_count(group_id)
+    update_group_member_count(group_id, commit=False)
 
     db.session.commit()
 
@@ -298,6 +315,9 @@ def create_group_bracket(group_id, bracket_id):
         constraint="group_bracket_group_id_bracket_id_key",
     )
     result = db.session.execute(upsert_stmt)
+
+    update_group_bracket_count(group_id, commit=False)
+
     db.session.commit()
     return result.rowcount
 
@@ -348,11 +368,13 @@ def delete_group_bracket(group_bracket_id):
     )
 
     result = db.session.execute(stmt).all()
+
     db.session.commit()
 
     if len(result) == 0:
         return 0, None, None
     elif len(result) == 1:
+        update_group_bracket_count(result[0].group_id, commit=True)
         return 1, result[0].bracket_id, result[0].group_id
     else:
         raise RuntimeError("Deleting more than 1 group bracket. Impossible")

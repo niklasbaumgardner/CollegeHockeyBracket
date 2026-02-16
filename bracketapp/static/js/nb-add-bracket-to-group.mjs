@@ -40,11 +40,17 @@ export class AddBracketToGroup extends BaseDialog {
   }
 
   groupsTemplate() {
-    let groupCards = this.groupsCanJoin.map((g) => this.groupTemplate(g));
+    let content = this.groupsCanJoin.map((g) => this.groupTemplate(g));
+
+    if (content.length === 0) {
+      content = html`<div class="flex justify-center">
+        <small class="wa-color-text-quiet">No available groups to join</small>
+      </div>`;
+    }
 
     return html`<div class="wa-stack gap-(--wa-space-s)">
       <p>Available groups to join:</p>
-      ${groupCards}
+      ${content}
     </div>`;
   }
 
@@ -67,6 +73,7 @@ export class AddBracketToGroup extends BaseDialog {
       type="submit"
       form="join-group-form"
       variant="brand"
+      ?disabled=${this.groupsCanJoin.length < 1}
       >Add Bracket</wa-button
     >`;
   }

@@ -457,8 +457,12 @@ export class EditBracket extends NikElement {
 
     this.winnerGoals.value = this.getRandomInt(1, 10);
     this.loserGoals.value = this.getRandomInt(0, this.winnerGoals.value);
-    this.winnerGoals.requestUpdate();
-    this.loserGoals.requestUpdate();
+
+    await this.winnerGoals.updateComplete;
+    await this.loserGoals.updateComplete;
+
+    this.winnerGoals.checkValidity();
+    this.loserGoals.checkValidity();
   }
 
   topCardTemplate() {
@@ -510,6 +514,7 @@ export class EditBracket extends NikElement {
         method="POST"
         @input=${this.handleInput}
         @submit=${this.handleSubmit}
+        @wa-invalid=${(e) => console.log(e)}
       >
         <input name="old_name" value=${this.bracket.name} hidden />
         <div class="wa-stack">

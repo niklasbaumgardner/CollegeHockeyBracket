@@ -21,8 +21,8 @@ export class GroupCardContent extends NikElement {
             ><span class="font-semibold">Members</span> ${this.group
               .member_count}</small
           ><small
-            ><span class="font-semibold">Brackets</span> ${this.group.brackets
-              .length}</small
+            ><span class="font-semibold">Brackets</span> ${this.group
+              .bracket_count}</small
           >
           <small
             ><span class="font-semibold">Group type</span> ${this.group

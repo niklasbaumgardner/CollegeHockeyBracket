@@ -35,13 +35,19 @@ export class GroupAddBracket extends BaseDialog {
   }
 
   bracketsTemplate() {
-    let bracketCards = this.bracketsCanJoin.map((g) => this.bracketTemplate(g));
+    let content = this.bracketsCanJoin.map((g) => this.bracketTemplate(g));
+    if (content.length === 0) {
+      content = html`<div class="flex justify-center">
+        <small class="wa-color-text-quiet">No available brackets to add</small>
+      </div>`;
+    }
 
     let newBracket = null;
     if (MY_BRACKET_COUNT < 5) {
       newBracket = html`<wa-button
         class="w-full"
         appearance="outlined"
+        variant="brand"
         href=${CREATE_BRACKET_LINK + `?group_sqid=${this.group.id}`}
         >Create New Bracket</wa-button
       >`;
@@ -49,7 +55,7 @@ export class GroupAddBracket extends BaseDialog {
 
     return html`<div class="wa-stack gap-(--wa-space-s)">
         <p>Available brackets to add:</p>
-        ${bracketCards}
+        ${content}
       </div>
       ${newBracket}`;
   }
@@ -76,6 +82,7 @@ export class GroupAddBracket extends BaseDialog {
       type="submit"
       form="join-group-form"
       variant="brand"
+      ?disabled=${this.bracketsCanJoin.length < 1}
       >Add Bracket</wa-button
     >`;
   }

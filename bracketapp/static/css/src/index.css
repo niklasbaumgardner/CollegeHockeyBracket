@@ -1,9 +1,3 @@
-@import url("./nb-components/my-brackets.css");
-@import url("./nb-components/nb-bracket.css");
-@import url("./nb-components/nb-chat-el.css");
-@import url("./nb-components/nb-radio-items.css");
-@import url("./nb-components/nb-standings.css");
-
 .small-card {
   display: flex;
   justify-content: center;

@@ -1,0 +1,22 @@
+nb-countdown {
+  > wa-card {
+    background-color: light-dark(
+      var(--wa-color-red-90),
+      var(--wa-color-red-10)
+    );
+    border-color: light-dark(var(--wa-color-red-90), var(--wa-color-red-10));
+
+    wa-card {
+      background-color: light-dark(
+        var(--wa-color-red-70),
+        var(--wa-color-red-30)
+      );
+      border-color: light-dark(var(--wa-color-red-70), var(--wa-color-red-30));
+      border-radius: var(--wa-border-radius-l);
+
+      &::part(body) {
+        padding: var(--wa-space-s);
+      }
+    }
+  }
+}

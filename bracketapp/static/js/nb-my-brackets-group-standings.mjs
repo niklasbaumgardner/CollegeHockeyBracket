@@ -14,13 +14,31 @@ export class MyBracketsGroupStandings extends NikElement {
 
   static queries = {
     card: "wa-card",
-    bracketGrid: "nb-my-group-brackets-grid",
+    bracketsGrid: "nb-my-group-brackets-grid",
   };
 
   constructor() {
     super();
 
-    this.shouldShowBrackets = new URL(document.URL).hash === "#groups";
+    this.shouldShowBrackets = window.location.hash === "#groups";
+  }
+
+  get canCreateBracket() {
+    return (
+      CAN_EDIT_BRACKET && this.year === CURRENT_YEAR && this.brackets.length > 5
+    );
+  }
+
+  get canEditThisYearsBrackets() {
+    return CAN_EDIT_BRACKET && this.year === CURRENT_YEAR;
+  }
+
+  async updateData(myBrackets, group, year) {
+    this.myBrackets = myBrackets;
+    this.group = group;
+    this.year = year;
+
+    this.bracketsGrid?.updateData(this.group.brackets, this.group, this.year);
   }
 
   connectedCallback() {
@@ -56,7 +74,6 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   bracketsTemplate() {
-    console.log("group", this.shouldShowBrackets);
     if (!this.shouldShowBrackets) {
       return null;
     }
@@ -71,7 +88,7 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   buttonsTemplate() {
-    if (!CAN_EDIT_BRACKET) {
+    if (!this.canEditThisYearsBrackets) {
       return null;
     }
 

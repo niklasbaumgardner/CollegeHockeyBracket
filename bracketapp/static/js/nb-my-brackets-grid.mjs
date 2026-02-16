@@ -66,12 +66,12 @@ export class MyBracketsGrid extends StandingsGrid {
 
   get canCreateBracket() {
     return (
-      CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR && this.brackets.length > 5
+      CAN_EDIT_BRACKET && this.year === CURRENT_YEAR && this.brackets.length > 5
     );
   }
 
   get canEditThisYearsBrackets() {
-    return CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR;
+    return CAN_EDIT_BRACKET && this.year === CURRENT_YEAR;
   }
 
   updateData(brackets, groups, year) {

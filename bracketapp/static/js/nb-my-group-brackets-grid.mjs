@@ -52,22 +52,23 @@ export class MyGroupBracketsGrid extends StandingsGrid {
   // best bet is to add a group in 2024 for testing
   get canCreateBracket() {
     return (
-      CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR && this.brackets.length > 5
+      CAN_EDIT_BRACKET && this.year === CURRENT_YEAR && this.brackets.length > 5
     );
   }
 
   get canEditThisYearsBrackets() {
-    return CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR;
+    return CAN_EDIT_BRACKET && this.year === CURRENT_YEAR;
   }
 
-  updateData(brackets, group, year) {
-    this.dataGrid.destroy();
-
+  async updateData(brackets, group, year) {
     this.brackets = brackets;
     this.group = group;
     this.year = year;
 
-    this.createDataGrid();
+    if (this.dataGrid) {
+      this.dataGrid.destroy();
+      this.createDataGrid();
+    }
   }
 
   /**
@@ -90,7 +91,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
 
     const columnDefs = [];
 
-    if (!CAN_EDIT_BRACKET) {
+    if (!this.canEditThisYearsBrackets) {
       columnDefs.push({
         field: "rank",
       });
@@ -107,7 +108,7 @@ export class MyGroupBracketsGrid extends StandingsGrid {
       },
     });
 
-    if (CAN_EDIT_BRACKET) {
+    if (this.canEditThisYearsBrackets) {
       columnDefs.push({
         field: "actions",
         cellRenderer: (param) => {

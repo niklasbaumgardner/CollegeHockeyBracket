@@ -2,6 +2,8 @@ import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 
 const BRACKET_CLOSE = new Date("2025-03-27T18:00:00.000Z");
+// TODO: 2026 guess is
+// const BRACKET_CLOSE = new Date("2025-03-26T18:00:00.000Z");
 
 export class Countdown extends NikElement {
   static properties = { bracketsOpen: Boolean };
@@ -54,10 +56,8 @@ export class Countdown extends NikElement {
   }
 
   timeCardTemplate(value, unit) {
-    return html`<wa-card
-      class="width-fit-content"
-      style="--wa-panel-background-color:var(--wa-color-danger-300); --border-color:var(--wa-color-danger-300); --padding:var(--wa-spacing-x-small); --border-radius:var(--wa-border-radius-large);"
-      ><div class="d-flex flex-column align-items-center">
+    return html`<wa-card class="default-bg default-border"
+      ><div class="wa-stack items-center gap-(--wa-space-xs)">
         <h5>${value}</h5>
         <span>${unit + (value == 1 ? "" : "s")}</span>
       </div></wa-card
@@ -66,7 +66,7 @@ export class Countdown extends NikElement {
 
   countdownTemplate() {
     let { days, hours, mins, secs } = this.countdown;
-    return html`<div class="d-flex gap-2">
+    return html`<div class="wa-cluster">
       ${[
         [days, "day"],
         [hours, "hour"],
@@ -77,11 +77,9 @@ export class Countdown extends NikElement {
   }
 
   render() {
-    // TODO: fix me
-    return html`<wa-card
-      style="--wa-panel-background-color:var(--wa-color-danger-50);"
-      ><div class="d-flex flex-column align-items-center">
-        <h6>
+    return html`<wa-card class="default-bg default-border"
+      ><div class="wa-stack items-center">
+        <h4>
           Brackets will close on
           <wa-format-date
             date=${BRACKET_CLOSE}
@@ -94,7 +92,7 @@ export class Countdown extends NikElement {
             hour="numeric"
             minute="numeric"
           ></wa-format-date>
-        </h6>
+        </h4>
         ${this.countdownTemplate()}
       </div></wa-card
     >`;

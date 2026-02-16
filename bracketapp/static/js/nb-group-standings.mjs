@@ -136,8 +136,8 @@ export class GroupStandings extends Standings {
           ><span class="font-semibold">Members</span> ${this.group
             .member_count}</small
         ><small
-          ><span class="font-semibold">Brackets</span> ${this.brackets
-            .length}</small
+          ><span class="font-semibold">Brackets</span> ${this.group
+            .bracket_count}</small
         >
         <small
           ><span class="font-semibold">Group type</span> ${this.group.is_private
@@ -155,9 +155,9 @@ export class GroupStandings extends Standings {
   messageTemplate() {
     let template = this.groupInfoTemplate();
     if (this.isMember) {
-      return html`${template}${this.memeberTemplate()}${this.winnersTemplate()}`;
+      return html`${template}${this.memeberTemplate()}${super.messageTemplate()}`;
     } else {
-      return html`${template}${this.nonMemberTemplate()}${this.winnersTemplate()}`;
+      return html`${template}${this.nonMemberTemplate()}${super.messageTemplate()}`;
     }
   }
 

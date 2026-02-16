@@ -6,6 +6,8 @@ import "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
   cache = {};
+  updatedBrackets = true;
+  updatedGroups = true;
 
   static properties = {
     groups: { type: Object },
@@ -31,12 +33,12 @@ export class MyBrackets extends Standings {
 
   get canCreateBracket() {
     return (
-      CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR && this.brackets.length > 5
+      CAN_EDIT_BRACKET && this.year === CURRENT_YEAR && this.brackets.length > 5
     );
   }
 
   get canEditThisYearsBrackets() {
-    return CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR;
+    return CAN_EDIT_BRACKET && this.year === CURRENT_YEAR;
   }
 
   connectedCallback() {
@@ -64,10 +66,12 @@ export class MyBrackets extends Standings {
     let tabName = event.detail.name;
     if (tabName === "my-brackets") {
       this.shouldShowBrackets = true;
+      this.maybeUpdateBracketsGrid();
     }
 
     if (tabName === "groups") {
       window.location.hash = "groups";
+      this.maybeUpdateGroupsGrids();
     } else {
       window.location.hash = "";
     }
@@ -102,7 +106,34 @@ export class MyBrackets extends Standings {
     this.cache[year] = data;
   }
 
+  maybeUpdateBracketsGrid() {
+    if (
+      !this.updatedBrackets &&
+      this.bracketGrid &&
+      window.location.hash === ""
+    ) {
+      this.bracketGrid?.updateData(this.brackets, this.groups, this.year);
+      this.updatedBrackets = true;
+    }
+  }
+
+  maybeUpdateGroupsGrids() {
+    if (
+      !this.updatedGroups &&
+      this.groupGrids &&
+      window.location.hash === "#groups"
+    ) {
+      [...this.groupGrids].map((g) =>
+        g.updateData(this.brackets, g.group, this.year),
+      );
+      this.updatedGroups = true;
+    }
+  }
+
   async handleYearChange() {
+    this.updatedBrackets = false;
+    this.updatedGroups = false;
+
     let selectedYear = this.yearSelect.value;
     let data;
     if (this.cache[selectedYear]) {
@@ -119,11 +150,10 @@ export class MyBrackets extends Standings {
     this.year = year;
     this.requestUpdate();
 
-    this.bracketGrid?.updateData(this.brackets, this.groups, this.year);
-    // if (this.groupGrids) {
-    //   [...this.groupGrids].map(g=>g.updateData())
-    // }
-    console.log(this.shouldShowBrackets);
+    await this.updateComplete;
+
+    this.maybeUpdateBracketsGrid();
+    this.maybeUpdateGroupsGrids();
   }
 
   async updated() {
@@ -189,9 +219,14 @@ export class MyBrackets extends Standings {
   }
 
   messageTemplate() {
-    return html`${this.canEditThisYearsBrackets
-      ? html`<nb-countdown></nb-countdown>`
-      : this.previewYearMessage()}`;
+    let content = null;
+    if (true || this.canEditThisYearsBrackets) {
+      content = html`<nb-countdown></nb-countdown>`;
+    }
+    if (this.year !== CURRENT_YEAR) {
+      content = html`${content}${this.previewYearMessage()}`;
+    }
+    return content;
   }
 
   newBracketButtonTemplate() {
@@ -264,10 +299,14 @@ export class MyBrackets extends Standings {
     }
 
     if (this.canEditThisYearsBrackets) {
-      return html`No groups yet`;
+      return html`<div class="flex justify-center">
+        <h4>No groups yet</h4>
+      </div>`;
     }
 
-    return html`No groups for this year`;
+    return html`<div class="flex justify-center">
+      <h4>No groups for this year</h4>
+    </div>`;
   }
 
   groupSearchAndButtonTemplate() {
