@@ -65,7 +65,7 @@ class SqidSerializerMixin(SerializerMixin):
 
         self.custom_mappings = self.get_custom_mappings(mappings) | custom_mappings
 
-        return super().to_dict(mappings=mappings, **kwargs)
+        return super().to_dict(**kwargs)
 
 
 class User(BaseModel, UserMixin, SqidSerializerMixin):
@@ -162,21 +162,14 @@ class Bracket(BaseModel, SqidSerializerMixin):
     winner_team: Mapped["BracketTeam"] = relationship(lazy="joined", viewonly=True)
     games_list: Mapped[list["Game"]] = relationship(lazy="noload", viewonly=True)
     user: Mapped["User"] = relationship(lazy="joined", viewonly=True)
-    # TODO: below relationship
+
     group_bracket: Mapped["GroupBracket"] = relationship(lazy="noload", viewonly=True)
     group_brackets: Mapped[list["GroupBracket"]] = relationship(
         lazy="noload", viewonly=True
     )
 
-    # __group_bracket__ = None
-
-    # @property
-    # def group_bracket(self):
-    #     return self.__group_bracket__
-
-    # @group_bracket.setter
-    # def group_bracket(self, gb):
-    #     self.__group_bracket__ = gb
+    def safe_rank(self):
+        return "-"
 
     def games(self):
         d = {}
@@ -227,6 +220,7 @@ class Bracket(BaseModel, SqidSerializerMixin):
                 "user",
                 "group_bracket",
             )
+            kwargs["mappings"] = {"rank": "safe_rank"}
         return super().to_dict(**kwargs)
 
 

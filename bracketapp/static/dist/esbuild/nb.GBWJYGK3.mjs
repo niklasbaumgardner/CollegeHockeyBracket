@@ -1,4 +1,4 @@
-import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b as ke,c as ve,d as u}from"./chunk-NB5LNMQ2.mjs";import{a as d,b as Te,d as _e,e as $e,f as ye}from"./chunk-XVEEE6GM.mjs";function Ce(s,e){return()=>s.querySelector(e)}function xe(s,e){return()=>s.querySelectorAll(e)}var i=class extends we{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:xe(this,r.all)}):Object.defineProperty(this,a,{get:Ce(this,r)})}createRenderRoot(){return this}};var C=class extends i{render(){return t`<wa-card
+import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b as ke,c as ve,d as u}from"./chunk-NB5LNMQ2.mjs";import{a as d,b as Te,d as _e,e as ye,f as $e}from"./chunk-XVEEE6GM.mjs";function Ce(s,e){return()=>s.querySelector(e)}function xe(s,e){return()=>s.querySelectorAll(e)}var i=class extends we{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:xe(this,r.all)}):Object.defineProperty(this,a,{get:Ce(this,r)})}createRenderRoot(){return this}};var C=class extends i{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -24,6 +24,9 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         >
         <wa-button appearance="outlined" href=${DEFAULT_BRACKET_PAGE}
           >Go to default bracket page</wa-button
+        >
+        <wa-button appearance="outlined" href=${FLUSH_CACHE_URL}
+          >Flush the cache</wa-button
         >
       </div>
     </wa-card>`}};customElements.define("nb-admin",x);var B=class extends i{static properties={archivedYears:{type:Array}};imgTemplate(e){return e?t`<img
@@ -52,7 +55,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           ${this.yearsTemplate()}
         </div>
       </div>
-    </wa-card>`}};customElements.define("nb-archive-years",B);var S=class extends i{static properties={href:{type:String}};connectedCallback(){if(super.connectedCallback(),document.referrer){let e=new URL(document.referrer),a=new URL(document.URL);a.pathname!=="/leaderboard"&&a.pathname!=="/my_brackets"&&e.origin===a.origin&&(this.href=localStorage.getItem("nb-bracket-back")??document.referrer)}this.href||this.remove(),window.addEventListener("beforeunload",this)}handleEvent(e){e.type==="beforeunload"&&localStorage.setItem("nb-bracket-back",location.href)}render(){return t`<wa-button
+    </wa-card>`}};customElements.define("nb-archive-years",B);var R=class extends i{static properties={href:{type:String}};connectedCallback(){if(super.connectedCallback(),document.referrer){let e=new URL(document.referrer),a=new URL(document.URL);a.pathname!=="/leaderboard"&&a.pathname!=="/my_brackets"&&e.origin===a.origin&&(this.href=localStorage.getItem("nb-bracket-back")??document.referrer)}this.href||this.remove(),window.addEventListener("beforeunload",this)}handleEvent(e){e.type==="beforeunload"&&localStorage.setItem("nb-bracket-back",location.href)}render(){return t`<wa-button
       href=${this.href}
       id="back-button"
       variant="brand"
@@ -60,7 +63,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
     >
       <wa-icon library="ion" name="chevron-back-outline"></wa-icon>
       Back</wa-button
-    >`}};customElements.define("nb-back-button",S);var R=class extends i{static properties={message:{type:String},category:{type:String}};connectedCallback(){super.connectedCallback(),this.removeSelfTask=new d(()=>this.removeSelf(),5e3,{finalizeBeforeUnload:!0}),this.removeSelfTask.arm()}removeSelf(){this.remove()}render(){return t`<wa-callout variant=${this.category}>
+    >`}};customElements.define("nb-back-button",R);var S=class extends i{static properties={message:{type:String},category:{type:String}};connectedCallback(){super.connectedCallback(),this.removeSelfTask=new d(()=>this.removeSelf(),5e3,{finalizeBeforeUnload:!0}),this.removeSelfTask.arm()}removeSelf(){this.remove()}render(){return t`<wa-callout variant=${this.category}>
       ${this.message}
       <wa-button
         class="icon-button"
@@ -72,7 +75,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           library="remix"
         ></wa-icon
       ></wa-button>
-    </wa-callout>`}};customElements.define("nb-alert",R);var N=class extends i{static properties={messages:{type:Array,converter:(e,a)=>!e||!e.length||e==="[]"?[]:[...e.match(/(?<=\()[^()]+(?=\))/g)].map(r=>r.replaceAll("'","").split(", "))}};render(){return this.messages.length?t`<div id="alerts" class="wa-stack items-center">
+    </wa-callout>`}};customElements.define("nb-alert",S);var N=class extends i{static properties={messages:{type:Array,converter:(e,a)=>!e||!e.length||e==="[]"?[]:[...e.match(/(?<=\()[^()]+(?=\))/g)].map(r=>r.replaceAll("'","").split(", "))}};render(){return this.messages.length?t`<div id="alerts" class="wa-stack items-center">
       ${this.messages.map(([e,...a])=>t`<nb-alert
             category=${e}
             message=${a.join(", ")}
@@ -99,7 +102,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       <wa-dropdown-item id="dark" type="checkbox" value="dark"
         >Dark</wa-dropdown-item
       >
-    </wa-dropdown>`}};customElements.define("nb-theme-selector",G);var v=new Date("2025-03-27T18:00:00.000Z"),I=class extends i{static properties={bracketsOpen:Boolean};get countdown(){let e=v-Date.now(),a=e/1e3,r=new Date(e),n=Math.floor(a/(3600*24)),l=r.toISOString().substring(11,13),m=r.toISOString().substring(14,16),k=r.toISOString().substring(17,19);return{days:n,hours:l,mins:m,secs:k}}connectedCallback(){super.connectedCallback(),!this.maybeDestroy()&&(this.intervalID=setInterval(()=>{this.maybeRequestUpdate()},1e3))}maybeRequestUpdate(){this.maybeDestroy()||this.requestUpdate()}destroy(){clearInterval(this.intervalID),this.remove()}maybeDestroy(){let e=v-Date.now();return!CAN_EDIT_BRACKET||e<0?(this.destroy(),!0):!1}timeCardTemplate(e,a){return t`<wa-card
+    </wa-dropdown>`}};customElements.define("nb-theme-selector",G);var v=new Date("2025-03-27T18:00:00.000Z"),I=class extends i{static properties={bracketsOpen:Boolean};get countdown(){let e=v-Date.now(),a=e/1e3,r=new Date(e),n=Math.floor(a/(3600*24)),l=r.toISOString().substring(11,13),c=r.toISOString().substring(14,16),k=r.toISOString().substring(17,19);return{days:n,hours:l,mins:c,secs:k}}connectedCallback(){super.connectedCallback(),!this.maybeDestroy()&&(this.intervalID=setInterval(()=>{this.maybeRequestUpdate()},1e3))}maybeRequestUpdate(){this.maybeDestroy()||this.requestUpdate()}destroy(){clearInterval(this.intervalID),this.remove()}maybeDestroy(){let e=v-Date.now();return!CAN_EDIT_BRACKET||e<0?(this.destroy(),!0):!1}timeCardTemplate(e,a){return t`<wa-card
       class="width-fit-content"
       style="--wa-panel-background-color:var(--wa-color-danger-300); --border-color:var(--wa-color-danger-300); --padding:var(--wa-spacing-x-small); --border-radius:var(--wa-border-radius-large);"
       ><div class="d-flex flex-column align-items-center">
@@ -286,7 +289,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         appearance="outlined"
         href=${CANCEL_BRACKET_URL}
         >Cancel</wa-button
-      >${e}`}setNext(e){let{id:a,value:r}=e,n=this.getNextMatchup(a);if(!n)return;let l=e.closest(this.matchupTagName);l.winner_id=e.value;let m=this.teams[r];if(a.match(/\d/g).join("")%2===1){n.winner_id===n.winnerTop?.id&&(n.winner_id="");let h=n.winnerTop;n.winnerTop=m,n.topInputEl.checked=!1,this.maybeClearInputs(n.id+"top",h)}else{n.winner_id===n.winnerBottom?.id&&(n.winner_id="");let h=n.winnerBottom;n.winnerBottom=m,n.bottomInputEl.checked=!1,this.maybeClearInputs(n.id+"bottom",h)}}maybeClearInputs(e,a){let r=this.getNextMatchup(e);if(!r)return;e.match(/\d/g).join("")%2===1?(a?.id===r.winnerTop?.id&&(r.winnerTop={},r.topInputEl.checked=!1),this.maybeClearInputs(r.id+"top",a)):(a?.id===r.winnerBottom?.id&&(r.winnerBottom={},r.bottomInputEl.checked=!1),this.maybeClearInputs(r.id+"bottom",a))}handleClick(e){let a=e.target;if(a instanceof HTMLInputElement){if(!a.value){e.preventDefault();return}this.setNext(a)}}async handleInput(){await this.updateComplete,this.maybeToggleSaveButton()}handleSubmit(){this.saveButtonEl.disabled=!0,this.saveButtonEl.loading=!0}maybeToggleSaveButton(){let a=[...new FormData(this.formEl).entries()];if(a.length<18){this.saveButtonEl.disabled=!1;return}this.saveButtonEl.disabled=JSON.stringify([...this.initialFormData.entries()])===JSON.stringify(a)}resetForm(){this.formEl.reset()}getRandomInt(e,a){return Math.floor(Math.random()*(a-e)+e)}async randomSeed(){for(let e of this.matchupsSorted)Math.round(Math.random())===0?e.topInputEl.click():e.bottomInputEl.click(),await new Promise(r=>setTimeout(r,10));this.winnerGoals.value=this.getRandomInt(1,10),this.loserGoals.value=this.getRandomInt(0,this.winnerGoals.value),this.winnerGoals.requestUpdate(),this.loserGoals.requestUpdate()}topCardTemplate(){return t` <div class="flex justify-center">
+      >${e}`}setNext(e){let{id:a,value:r}=e,n=this.getNextMatchup(a);if(!n)return;let l=e.closest(this.matchupTagName);l.winner_id=e.value;let c=this.teams[r];if(a.match(/\d/g).join("")%2===1){n.winner_id===n.winnerTop?.id&&(n.winner_id="");let h=n.winnerTop;n.winnerTop=c,n.topInputEl.checked=!1,this.maybeClearInputs(n.id+"top",h)}else{n.winner_id===n.winnerBottom?.id&&(n.winner_id="");let h=n.winnerBottom;n.winnerBottom=c,n.bottomInputEl.checked=!1,this.maybeClearInputs(n.id+"bottom",h)}}maybeClearInputs(e,a){let r=this.getNextMatchup(e);if(!r)return;e.match(/\d/g).join("")%2===1?(a?.id===r.winnerTop?.id&&(r.winnerTop={},r.topInputEl.checked=!1),this.maybeClearInputs(r.id+"top",a)):(a?.id===r.winnerBottom?.id&&(r.winnerBottom={},r.bottomInputEl.checked=!1),this.maybeClearInputs(r.id+"bottom",a))}handleClick(e){let a=e.target;if(a instanceof HTMLInputElement){if(!a.value){e.preventDefault();return}this.setNext(a)}}async handleInput(){await this.updateComplete,this.maybeToggleSaveButton()}handleSubmit(){this.saveButtonEl.disabled=!0,this.saveButtonEl.loading=!0}maybeToggleSaveButton(){let a=[...new FormData(this.formEl).entries()];if(a.length<18){this.saveButtonEl.disabled=!1;return}this.saveButtonEl.disabled=JSON.stringify([...this.initialFormData.entries()])===JSON.stringify(a)}resetForm(){this.formEl.reset()}getRandomInt(e,a){return Math.floor(Math.random()*(a-e)+e)}async randomSeed(){for(let e of this.matchupsSorted)Math.round(Math.random())===0?e.topInputEl.click():e.bottomInputEl.click(),await new Promise(r=>setTimeout(r,10));this.winnerGoals.value=this.getRandomInt(1,10),this.loserGoals.value=this.getRandomInt(0,this.winnerGoals.value),this.winnerGoals.requestUpdate(),this.loserGoals.requestUpdate()}topCardTemplate(){return t` <div class="flex justify-center">
       <wa-card>
         <div class="wa-stack">
           <h2>${this.bracket?.year} Bracket Challenge</h2>
@@ -401,7 +404,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         ${this.bottomInput()}<span>${this.winnerBottomName}</span>
         ${this.bottomScoreInput()}
       </label>
-    </wa-card>`}};customElements.define("nb-edit-correct-matchup",P);var j=class extends b{matchupTagName="nb-edit-correct-matchup";maybeToggleSaveButton(){}matchupTemplate(e){return t`<nb-edit-correct-matchup
+    </wa-card>`}};customElements.define("nb-edit-correct-matchup",P);var U=class extends b{matchupTagName="nb-edit-correct-matchup";maybeToggleSaveButton(){}matchupTemplate(e){return t`<nb-edit-correct-matchup
       id=${e.game}
       .teams=${this.default.teams}
       game=${e.game}
@@ -445,7 +448,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           <div class="wa-cluster">${this.buttonsTemplate()}</div>
         </div>
       </wa-card>
-    </div>`}};customElements.define("nb-edit-correct-bracket",j);var U=class extends i{static properties={email:{type:String}};connectedCallback(){super.connectedCallback();let a=new URLSearchParams(window.location.search).get("next");a&&window.localStorage.setItem("next",a)}nativeTemplate(){return t`<wa-card>
+    </div>`}};customElements.define("nb-edit-correct-bracket",U);var j=class extends i{static properties={email:{type:String}};connectedCallback(){super.connectedCallback();let a=new URLSearchParams(window.location.search).get("next");a&&window.localStorage.setItem("next",a)}nativeTemplate(){return t`<wa-card>
       <form id="login-form" action="${LOGIN_URL}" method="POST"></form>
       <div class="wa-stack">
         <h2>Login</h2>
@@ -550,7 +553,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           <a href="${SIGNUP_URL}">Sign Up</a>
         </p>
       </div>
-    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",U);import Be from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var T=class extends i{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?ke:fe}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return ve.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:`light-dark(var(--wa-color-neutral-95), ${a})`,borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var _=class extends i{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){return e?t`<img
+    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",j);import Be from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var T=class extends i{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?ke:fe}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return ve.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:`light-dark(var(--wa-color-neutral-95), ${a})`,borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var _=class extends i{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){return e?t`<img
       class="standings-img"
       src="${e.team.icon_path}"
       alt="${e.team.name}"
@@ -579,11 +582,11 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       >${this.bracketName}</span
     >`}render(){return this.bracket.id===-1?t`<wa-button href="${CREATE_BRACKET_LINK}" variant="brand"
         >Create new bracket</wa-button
-      >`:super.render()}};customElements.define("nb-my-bracket-column",L);var c=class extends T{#e="agGridPaginationPageSize";static properties={brackets:{type:Object},year:{type:Number},headerName:{type:String}};constructor(){super(),this.headerName="Brackets",this.useSafeName=!0}static queries={standingsGridEl:"#standingsGrid"};get storedPageSize(){let e=parseInt(window.localStorage.getItem(this.#e));return isNaN(e)?25:e}get defaultBracketColumnWidth(){return 256}get gridOptions(){return{...super.baseGridOptions,rowHeight:50,autoSizeStrategy:{type:"fitGridWidth",columnLimits:[{colId:"rank",minWidth:65,maxWidth:65},{colId:"name",minWidth:this.defaultBracketColumnWidth,flex:1},{colId:"actions",minWidth:208},{colId:"points",minWidth:75,maxWidth:75},{colId:"max_points",minWidth:75,maxWidth:75},{colId:"round_one_points",minWidth:57,maxWidth:57},{colId:"round_two_points",minWidth:57,maxWidth:57},{colId:"round_three_points",minWidth:57,maxWidth:57},{colId:"round_four_points",minWidth:57,maxWidth:57}]},defaultColDef:{resizable:!1}}}cleanBracketNames(){for(let e of this.brackets)e.safeName=Be.clean(e.name,{keepFirstAndLastChar:!0})}sortBrackets(){this.brackets=this.brackets.sort((e,a)=>e.name.localeCompare(a.name)),CAN_EDIT_BRACKET&&CURRENT_YEAR===this.year||this.brackets.sort((e,a)=>e.rank==="-"?-1:a.rank==="-"?1:e.rank-a.rank)}firstUpdated(){this.init()}async init(){await this.updateComplete,this.cleanBracketNames(),this.sortBrackets(),this.createDataGrid(),this.setupThemeWatcher()}getImageElement(e){return e?`<img
+      >`:super.render()}};customElements.define("nb-my-bracket-column",L);var m=class extends T{#e="agGridPaginationPageSize";static properties={brackets:{type:Object},year:{type:Number},headerName:{type:String}};constructor(){super(),this.headerName="Brackets",this.useSafeName=!0}static queries={standingsGridEl:"#standingsGrid"};get storedPageSize(){let e=parseInt(window.localStorage.getItem(this.#e));return isNaN(e)?25:e}get defaultBracketColumnWidth(){return 256}get gridOptions(){return{...super.baseGridOptions,rowHeight:50,autoSizeStrategy:{type:"fitGridWidth",columnLimits:[{colId:"rank",minWidth:65,maxWidth:65},{colId:"name",minWidth:this.defaultBracketColumnWidth,flex:1},{colId:"actions",minWidth:208},{colId:"points",minWidth:75,maxWidth:75},{colId:"max_points",minWidth:75,maxWidth:75},{colId:"round_one_points",minWidth:57,maxWidth:57},{colId:"round_two_points",minWidth:57,maxWidth:57},{colId:"round_three_points",minWidth:57,maxWidth:57},{colId:"round_four_points",minWidth:57,maxWidth:57}]},defaultColDef:{resizable:!1}}}cleanBracketNames(){for(let e of this.brackets)e.safeName=Be.clean(e.name,{keepFirstAndLastChar:!0})}sortBrackets(){this.brackets=this.brackets.sort((e,a)=>e.name.localeCompare(a.name)),CAN_EDIT_BRACKET&&CURRENT_YEAR===this.year||this.brackets.sort((e,a)=>e.rank==="-"?-1:a.rank==="-"?1:e.rank-a.rank)}firstUpdated(){this.init()}async init(){await this.updateComplete,this.cleanBracketNames(),this.sortBrackets(),this.createDataGrid(),this.setupThemeWatcher()}getImageElement(e){return e?`<img
       class="standings-img"
       src="${e.team.icon_path}"
       alt="${e.team.name}"
-    />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let n=document.createElement("nb-bracket-column");return n.bracket=r.data,n}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=u(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:t`<div class="flex justify-center">No brackets yet</div>`}};customElements.define("nb-standings-grid",c);var p=class extends i{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:n,year:l}=a;this.brackets=r,this.winners=n,this.year=l}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
+    />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let n=document.createElement("nb-bracket-column");return n.bracket=r.data,n}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=u(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:t`<div class="flex justify-center">No brackets yet</div>`}};customElements.define("nb-standings-grid",m);var p=class extends i{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:n,year:l}=a;this.brackets=r,this.winners=n,this.year=l}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
       ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
         <wa-icon
           style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
@@ -609,8 +612,8 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       appearance="outlined"
       >Cancel</wa-button
     >`}render(){return t`<wa-dialog
-      @input=${this.inputEvent?this.handleInput:y}
-      @submit=${this.submitEvent?this.handleSubmit:y}
+      @input=${this.inputEvent?this.handleInput:$}
+      @submit=${this.submitEvent?this.handleSubmit:$}
     >
       <div slot="label">${this.lableTemplate()}</div>
       ${this.contentTemplate()}
@@ -633,7 +636,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         id="delete-button"
         variant="danger"
         >Delete bracket</wa-button
-      >`}};customElements.define("nb-delete-bracket",D);var q=class extends c{sortBrackets(){for(let e of this.brackets)e.rank=e.group_bracket?.group_rank;super.sortBrackets()}};customElements.define("nb-group-standings-grid",q);var M=class extends i{static properties={bracket:{type:Object}};render(){return t`<div class="wa-cluster">
+      >`}};customElements.define("nb-delete-bracket",D);var q=class extends m{sortBrackets(){for(let e of this.brackets)e.rank=e.group_bracket?.group_rank;super.sortBrackets()}};customElements.define("nb-group-standings-grid",q);var M=class extends i{static properties={bracket:{type:Object}};render(){return t`<div class="wa-cluster">
       <img
         class="standings-img"
         src=${this.bracket.winner_team.team.icon_path}
@@ -666,7 +669,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       ><nb-bracket-card-content
         .bracket=${this.bracket}
       ></nb-bracket-card-content
-    ></wa-card>`}};customElements.define("nb-bracket-card",W);var F=class extends i{static properties={group:{type:Object}};render(){return t`<div class="wa-cluster">
+    ></wa-card>`}};customElements.define("nb-bracket-card",W);var Y=class extends i{static properties={group:{type:Object}};render(){return t`<div class="wa-cluster">
       <wa-icon
         style="font-size:var(--wa-font-size-2xl);"
         name="trophy"
@@ -686,9 +689,9 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           >
         </div>
       </div>
-    </div>`}};customElements.define("nb-group-card-content",F);var K=class extends i{static properties={group:{type:Object}};render(){return t`<wa-card style="--spacing:var(--wa-space-s);"
+    </div>`}};customElements.define("nb-group-card-content",Y);var F=class extends i{static properties={group:{type:Object}};render(){return t`<wa-card style="--spacing:var(--wa-space-s);"
       ><nb-group-card-content .group=${this.group}></nb-group-card-content
-    ></wa-card>`}};customElements.define("nb-group-card",K);var w=class extends i{static properties={label:{type:String},value:{type:String},name:{type:String},icon:{type:String},form:{type:String}};static queries={input:"input"};iconTemplate(){return this.icon?t`<wa-icon name=${this.icon}></wa-icon>`:null}labelTemplate(){return t`<span>${this.label}</span>`}render(){return t`<wa-card class="nb-radio-item">
+    ></wa-card>`}};customElements.define("nb-group-card",F);var w=class extends i{static properties={label:{type:String},value:{type:String},name:{type:String},icon:{type:String},form:{type:String}};static queries={input:"input"};iconTemplate(){return this.icon?t`<wa-icon name=${this.icon}></wa-icon>`:null}labelTemplate(){return t`<span>${this.label}</span>`}render(){return t`<wa-card class="nb-radio-item">
       <label class="wa-cluster w-full">
         <input
           type="radio"
@@ -698,11 +701,11 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           required=""
         />${this.iconTemplate()}${this.labelTemplate()}
       </label>
-    </wa-card>`}};customElements.define("nb-radio-item",w);var z=class extends w{static properties={bracket:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.bracket.id}iconTemplate(){return null}labelTemplate(){return t`<nb-bracket-card-content
+    </wa-card>`}};customElements.define("nb-radio-item",w);var K=class extends w{static properties={bracket:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.bracket.id}iconTemplate(){return null}labelTemplate(){return t`<nb-bracket-card-content
       .bracket=${this.bracket}
-    ></nb-bracket-card-content>`}};customElements.define("nb-bracket-radio-item",z);var H=class extends w{static properties={group:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.group.id}iconTemplate(){return null}labelTemplate(){return t`<nb-group-card-content
+    ></nb-bracket-card-content>`}};customElements.define("nb-bracket-radio-item",K);var H=class extends w{static properties={group:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.group.id}iconTemplate(){return null}labelTemplate(){return t`<nb-group-card-content
       .group=${this.group}
-    ></nb-group-card-content>`}};customElements.define("nb-group-radio-item",H);var V=class extends o{static properties={myBrackets:{type:Object},group:{type:Object}};get joinedBrackets(){return this.group.brackets.filter(e=>e.user_id===CURRENT_USER.id)}get bracketsCanJoin(){return this.myBrackets.filter(e=>!this.joinedBrackets.find(a=>a.id===e.id))}groupTemplate(){return t`<div class="wa-stack">
+    ></nb-group-card-content>`}};customElements.define("nb-group-radio-item",H);var z=class extends o{static properties={myBrackets:{type:Object},group:{type:Object}};get joinedBrackets(){return this.group.brackets.filter(e=>e.user_id===CURRENT_USER.id)}get bracketsCanJoin(){return this.myBrackets.filter(e=>!this.joinedBrackets.find(a=>a.id===e.id))}groupTemplate(){return t`<div class="wa-stack">
       <p>Joining group:</p>
       <nb-group-card .group=${this.group}></nb-group-card>
     </div> `}bracketTemplate(e){return t`<nb-bracket-radio-item
@@ -732,7 +735,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       form="join-group-form"
       variant="brand"
       >Add Bracket</wa-button
-    >`}};customElements.define("nb-group-add-bracket",V);var Y=class extends o{static properties={bracket:{type:Object},group:{type:Object}};lableTemplate(){return t`Remove Bracket?`}contentTemplate(){return t`<form
+    >`}};customElements.define("nb-group-add-bracket",z);var V=class extends o{static properties={bracket:{type:Object},group:{type:Object}};lableTemplate(){return t`Remove Bracket?`}contentTemplate(){return t`<form
       id="delete-group-bracket-form"
       action=${this.bracket.group_bracket.delete_url}
       method="POST"
@@ -747,7 +750,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         type="submit"
         form="delete-group-bracket-form"
         >Remove Bracket</wa-button
-      >`}};customElements.define("nb-delete-group-bracket",Y);var J=class extends i{static properties={bracket:{type:Object},group:{type:Object}};handleRemoveFromGroupClick(){this.removeFromGroupModal||(this.removeFromGroupModal=document.createElement("nb-delete-group-bracket"),this.removeFromGroupModal.bracket=this.bracket,this.removeFromGroupModal.group=this.group,document.body.appendChild(this.removeFromGroupModal)),this.removeFromGroupModal.show()}render(){return t`<div class="flex w-full h-full">
+      >`}};customElements.define("nb-delete-group-bracket",V);var J=class extends i{static properties={bracket:{type:Object},group:{type:Object}};handleRemoveFromGroupClick(){this.removeFromGroupModal||(this.removeFromGroupModal=document.createElement("nb-delete-group-bracket"),this.removeFromGroupModal.bracket=this.bracket,this.removeFromGroupModal.group=this.group,document.body.appendChild(this.removeFromGroupModal)),this.removeFromGroupModal.show()}render(){return t`<div class="flex w-full h-full">
       <wa-button
         size="small"
         variant="danger"
@@ -755,7 +758,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         @click=${this.handleRemoveFromGroupClick}
         >Remove From Group</wa-button
       >
-    </div>`}};customElements.define("nb-my-group-bracket-actions",J);var Q=class extends c{useSafeName=!1;static properties={group:{type:Object},brackets:{type:Object}};cleanBracketNames(){}get defaultBracketColumnWidth(){return 250}createDataGrid(){if(!this.brackets.length)return;for(let r of this.brackets)r.rank=r.group_bracket?.group_rank;let e=[];CAN_EDIT_BRACKET||e.push({field:"rank"}),e.push({field:"name",headerName:this.headerName,autoHeight:!0,cellRenderer:r=>{let n=document.createElement("nb-my-bracket-column");return n.bracket=r.data,n}}),CAN_EDIT_BRACKET?e.push({field:"actions",cellRenderer:r=>{let n=document.createElement("nb-my-group-bracket-actions");return n.bracket=r.data,n.group=this.group,n},cellClass:"flex! items-center justify-content-start"}):e.push({field:"points"},{field:"max_points",headerName:"Max"},{field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions};this.dataGrid=u(this.standingsGridEl,a)}};customElements.define("nb-my-group-brackets-grid",Q);var X=class extends i{static properties={group:{type:Object},myBrackets:{type:Object},shouldShowBrackets:{type:Boolean},year:{type:Number}};static queries={card:"wa-card"};connectedCallback(){super.connectedCallback(),document.addEventListener("wa-tab-show",this)}handleEvent(e){e.type==="wa-tab-show"&&e.detail.name==="groups"&&(this.shouldShowBrackets=!0,document.removeEventListener("wa-tab-show",this))}addABracket(){this.handleAddBracketClick()}handleAddBracketClick(){this.addBracketModal||(this.addBracketModal=document.createElement("nb-group-add-bracket"),this.addBracketModal.group=this.group,this.addBracketModal.myBrackets=this.myBrackets,document.body.appendChild(this.addBracketModal)),this.addBracketModal.show()}bracketsTemplate(){return this.shouldShowBrackets?t`<nb-my-group-brackets-grid
+    </div>`}};customElements.define("nb-my-group-bracket-actions",J);var Q=class extends m{useSafeName=!1;static properties={group:{type:Object},brackets:{type:Object}};get canCreateBracket(){return CAN_EDIT_BRACKET&&this.year>=CURRENT_YEAR&&this.brackets.length>5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year>=CURRENT_YEAR}updateData(e,a,r){this.dataGrid.destroy(),this.brackets=e,this.group=a,this.year=r,this.createDataGrid()}cleanBracketNames(){}get defaultBracketColumnWidth(){return 250}createDataGrid(){if(!this.brackets.length)return;for(let r of this.brackets)r.rank=r.group_bracket?.group_rank;let e=[];CAN_EDIT_BRACKET||e.push({field:"rank"}),e.push({field:"name",headerName:this.headerName,autoHeight:!0,cellRenderer:r=>{let n=document.createElement("nb-my-bracket-column");return n.bracket=r.data,n}}),CAN_EDIT_BRACKET?e.push({field:"actions",cellRenderer:r=>{let n=document.createElement("nb-my-group-bracket-actions");return n.bracket=r.data,n.group=this.group,n},cellClass:"flex! items-center justify-content-start"}):e.push({field:"points"},{field:"max_points",headerName:"Max"},{field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions};this.dataGrid=u(this.standingsGridEl,a)}};customElements.define("nb-my-group-brackets-grid",Q);var X=class extends i{static properties={group:{type:Object},myBrackets:{type:Object},shouldShowBrackets:{type:Boolean},year:{type:Number}};static queries={card:"wa-card",bracketGrid:"nb-my-group-brackets-grid"};constructor(){super(),this.shouldShowBrackets=new URL(document.URL).hash==="#groups"}connectedCallback(){super.connectedCallback(),document.addEventListener("wa-tab-show",this)}handleEvent(e){e.type==="wa-tab-show"&&e.detail.name==="groups"&&(this.shouldShowBrackets=!0,document.removeEventListener("wa-tab-show",this))}addABracket(){this.handleAddBracketClick()}handleAddBracketClick(){this.addBracketModal||(this.addBracketModal=document.createElement("nb-group-add-bracket"),this.addBracketModal.group=this.group,this.addBracketModal.myBrackets=this.myBrackets,document.body.appendChild(this.addBracketModal)),this.addBracketModal.show()}bracketsTemplate(){return console.log("group",this.shouldShowBrackets),this.shouldShowBrackets?t`<nb-my-group-brackets-grid
       class="w-full"
       headerName="My Brackets"
       .group=${this.group}
@@ -869,7 +872,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         @click=${this.handleDeleteClick}
         >Delete</wa-button
       >
-    </div>`}};customElements.define("nb-my-bracket-actions",te);var ae=class extends c{static properties={groups:{type:Object}};constructor(){super(),this.useSafeName=!1}cleanBracketNames(){}createDataGrid(){if(!this.brackets.length)return;let e=[];CAN_EDIT_BRACKET||e.push({field:"rank"}),e.push({field:"name",headerName:this.headerName,autoHeight:!0,cellRenderer:r=>{let n=document.createElement("nb-my-bracket-column");return n.bracket=r.data,n}}),CAN_EDIT_BRACKET?e.push({field:"actions",cellRenderer:r=>{let n=document.createElement("nb-my-bracket-actions");return n.bracket=r.data,n.groups=this.groups,n},cellClass:"flex! items-center justify-content-start"}):e.push({field:"points"},{field:"max_points",headerName:"Max"},{field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions};this.dataGrid=u(this.standingsGridEl,a)}};customElements.define("nb-my-brackets-grid",ae);var re=class extends i{static properties={results:{type:Object}};static queries={input:"wa-input",popup:"wa-popup",dropdown:"wa-dropdown",popover:"wa-popover"};constructor(){super(),this.results=[]}connectedCallback(){super.connectedCallback(),document.addEventListener("focusin",this.handleFocusIn.bind(this))}async search(){let e=this.input.value;if(!e){this.popup.active=!1;return}this.popup.active=!0;let a=await fetch(SEARCH_URL+"?"+new URLSearchParams({name:e}));this.results=await a.json(),this.lastSearchValue=e}handleInputEvent(e){if(!this.input.value){this.results=[];return}this.input.value.length<3||(this.searchTask=new d(async()=>{await this.search()},300),this.searchTask.arm())}handleFocusIn(e){this.contains(e.target)?this.popup.active=!0:this.popup.active=!1}groupTemplate(e){return t`<a class="clickable-group" href=${e.url}>
+    </div>`}};customElements.define("nb-my-bracket-actions",te);var ae=class extends m{static properties={groups:{type:Object}};constructor(){super(),this.useSafeName=!1}get canCreateBracket(){return CAN_EDIT_BRACKET&&this.year>=CURRENT_YEAR&&this.brackets.length>5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year>=CURRENT_YEAR}updateData(e,a,r){this.dataGrid.destroy(),this.brackets=e,this.groups=a,this.year=r,this.createDataGrid()}cleanBracketNames(){}createDataGrid(){if(!this.brackets.length)return;let e=[];this.canEditThisYearsBrackets||e.push({field:"rank"}),e.push({field:"name",headerName:this.headerName,autoHeight:!0,cellRenderer:r=>{let n=document.createElement("nb-my-bracket-column");return n.bracket=r.data,n}}),this.canEditThisYearsBrackets?e.push({field:"actions",cellRenderer:r=>{let n=document.createElement("nb-my-bracket-actions");return n.bracket=r.data,n.groups=this.groups,n},cellClass:"flex! items-center justify-content-start"}):e.push({field:"points"},{field:"max_points",headerName:"Max"},{field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions};this.dataGrid=u(this.standingsGridEl,a)}};customElements.define("nb-my-brackets-grid",ae);var re=class extends i{static properties={results:{type:Object}};static queries={input:"wa-input",popup:"wa-popup",dropdown:"wa-dropdown",popover:"wa-popover"};constructor(){super(),this.results=[]}connectedCallback(){super.connectedCallback(),document.addEventListener("focusin",this.handleFocusIn.bind(this))}async search(){let e=this.input.value;if(!e){this.popup.active=!1;return}this.popup.active=!0;let a=await fetch(SEARCH_URL+"?"+new URLSearchParams({name:e}));this.results=await a.json(),this.lastSearchValue=e}handleInputEvent(e){if(!this.input.value){this.results=[];return}this.input.value.length<3||(this.searchTask=new d(async()=>{await this.search()},300),this.searchTask.arm())}handleFocusIn(e){this.contains(e.target)?this.popup.active=!0:this.popup.active=!1}groupTemplate(e){return t`<a class="clickable-group" href=${e.url}>
       <nb-group-card-content .group=${e}></nb-group-card-content>
     </a>`}resultsTemplate(){let e="";return this.results.length?e=this.results.flatMap(a=>[this.groupTemplate(a),t`<wa-divider></wa-divider>`]).slice(0,-1):e=t`<p class="text-center">No groups found</p>`,t`<wa-card>${e}</wa-card>`}popoverTemplate(){return t`<wa-popup placement="bottom"
       >${this.resultsTemplate()}</wa-popup
@@ -882,20 +885,27 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         @input=${this.handleInputEvent}
         ><wa-icon name="search" slot="start"></wa-icon></wa-input
       >${this.resultsTemplate()}</wa-popup
-    >`}};customElements.define("nb-search-groups",re);var ie=class extends p{static properties={groups:{type:Object},shouldShowBrackets:{type:Boolean}};static queries={tabGroup:"wa-tab-group"};constructor(){super(),this.url=new URL(window.location),this.initialTabPanel=this.url.hash.includes("group")?"groups":"my-brackets"}connectedCallback(){super.connectedCallback(),document.addEventListener("wa-tab-show",this),window.addEventListener("hashchange",this)}handleEvent(e){switch(e.type){case"wa-tab-show":{this.handleTabShow(e);break}case"hashchange":{this.handleHashChange(e);break}}}handleTabShow(e){let a=e.detail.name;a==="my-brackets"&&(this.shouldShowBrackets=!0),a==="groups"?window.location.hash="groups":window.location.hash=""}handleHashChange(e){new URL(e.newURL).hash==="#groups"?this.tabGroup.active="groups":this.tabGroup.active="my-brackets"}async requestContent(){let a=await(await fetch(MY_BRACKETS_CONTENT_URL)).json(),{brackets:r,groups:n,year:l,years:m}=a;console.log({brackets:r,groups:n,year:l,years:m}),this.brackets=r,this.groups=n,this.year=l,this.years=m}async updated(){!this.openedToGroups&&this.tabGroup&&this.initialTabPanel==="groups"&&(await this.tabGroup.updateComplete,this.tabGroup.active="groups",this.openedToGroups=!0,this.url.hash.includes("group_")&&document.querySelector(this.url.hash).addABracket())}handleCreateGroupClick(){document.dispatchEvent(new CustomEvent("CreateNewGroup"))}yearsDropdown(){return!this.years||this.years?.length<2?this.year:t`<wa-select class="w-5">
+    >`}};customElements.define("nb-search-groups",re);var ie=class extends p{cache={};static properties={groups:{type:Object},shouldShowBrackets:{type:Boolean}};static queries={tabGroup:"wa-tab-group",yearSelect:"#year-select",bracketGrid:"nb-my-brackets-grid",groupGrids:{all:"nb-my-brackets-group-standings"}};constructor(){super(),this.url=new URL(window.location),this.initialTabPanel=this.url.hash.includes("group")?"groups":"my-brackets"}get canCreateBracket(){return CAN_EDIT_BRACKET&&this.year>=CURRENT_YEAR&&this.brackets.length>5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year>=CURRENT_YEAR}connectedCallback(){super.connectedCallback(),document.addEventListener("wa-tab-show",this),window.addEventListener("hashchange",this)}handleEvent(e){switch(e.type){case"wa-tab-show":{this.handleTabShow(e);break}case"hashchange":{this.handleHashChange(e);break}}}handleTabShow(e){let a=e.detail.name;a==="my-brackets"&&(this.shouldShowBrackets=!0),a==="groups"?window.location.hash="groups":window.location.hash=""}handleHashChange(e){new URL(e.newURL).hash==="#groups"?this.tabGroup.active="groups":this.tabGroup.active="my-brackets"}async requestContentForYear(e=null){return(await fetch(MY_BRACKETS_CONTENT_URL+(e?`/${e}`:""))).json()}async requestContent(){let e=await this.requestContentForYear(),{brackets:a,groups:r,year:n,years:l}=e;this.brackets=a,this.groups=r,this.year=n,this.years=l,this.cache[n]=e}async handleYearChange(){let e=this.yearSelect.value,a;this.cache[e]?a=this.cache[e]:(a=await this.requestContentForYear(e),this.cache[e]=a);let{brackets:r,groups:n,year:l}=a;this.brackets=r,this.groups=n,this.year=l,this.requestUpdate(),this.bracketGrid?.updateData(this.brackets,this.groups,this.year),console.log(this.shouldShowBrackets)}async updated(){!this.openedToGroups&&this.tabGroup&&this.initialTabPanel==="groups"&&(await this.tabGroup.updateComplete,this.tabGroup.active="groups",this.openedToGroups=!0,this.url.hash.includes("group_")&&document.querySelector(this.url.hash).addABracket())}handleCreateGroupClick(){document.dispatchEvent(new CustomEvent("CreateNewGroup"))}yearsDropdown(){return!this.years||this.years?.length<2?this.year:t`<wa-select
+      id="year-select"
+      class="w-5"
+      @input=${this.handleYearChange}
+    >
       ${this.years.map(e=>t`<wa-option value=${e} ?selected=${this.year===e}
             >${e}</wa-option
           >`)}
     </wa-select>`}titleTemplate(){return t`<div>
-      <h2 class="wa-cluster">My Brackets ${this.yearsDropdown()}</h2>
-    </div>`}messageTemplate(){return t`<small class="text-(--wa-color-text-quiet)"
+      <h2 class="wa-cluster m-0">My Brackets ${this.yearsDropdown()}</h2>
+      ${this.subtitleTemplate()}
+    </div>`}subtitleTemplate(){return this.year>=CURRENT_YEAR?t`<small class="text-(--wa-color-text-quiet)"
         >You created ${this.brackets.length}/5 brackets</small
-      >${CAN_EDIT_BRACKET?t`<nb-countdown></nb-countdown>`:null}`}newBracketButtonTemplate(){return this.brackets.length<5&&CAN_EDIT_BRACKET?t`<wa-button
+      >`:null}previewYearMessage(){return t`<wa-callout variant="brand"
+      >You are viewing brackets from a previous year.</wa-callout
+    >`}messageTemplate(){return t`${this.canEditThisYearsBrackets?t`<nb-countdown></nb-countdown>`:this.previewYearMessage()}`}newBracketButtonTemplate(){return this.canCreateBracket?t`<wa-button
         variant="brand"
         appearance="outlined"
         href=${CREATE_BRACKET_LINK}
         >Create Bracket</wa-button
-      >`:null}bracketsTemplate(){if(!(this.initialTabPanel==="groups"&&!this.shouldShowBrackets))return t`<div class="wa-stack">
+      >`:null}bracketsTemplate(){if(!(this.initialTabPanel==="groups"&&!this.shouldShowBrackets))return this.bracketsTemplateCache||(this.bracketsTemplateCache={}),this.bracketsTemplateCache[this.year]=t`<div class="wa-stack">
       ${this.newBracketButtonTemplate()}
       <nb-my-brackets-grid
         headerName="My Brackets"
@@ -903,26 +913,25 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         .groups=${this.groups}
         year=${this.year}
       ></nb-my-brackets-grid>
-    </div>`}newGroupButtonTemplate(){return CAN_EDIT_BRACKET?t`<wa-button
+    </div>`,this.bracketsTemplateCache[this.year]}newGroupButtonTemplate(){return this.canEditThisYearsBrackets?t`<wa-button
         class="w-full"
         variant="brand"
         appearance="outlined"
         @click=${this.handleCreateGroupClick}
         >Create Group</wa-button
-      >`:null}searchGroupsTemplate(){return CAN_EDIT_BRACKET?t`<nb-search-groups></nb-search-groups>`:null}groupCardsTemplate(){return this.groups.length?this.groups.map(e=>t`<nb-my-brackets-group-standings
+      >`:null}searchGroupsTemplate(){return this.canEditThisYearsBrackets?t`<nb-search-groups></nb-search-groups>`:null}groupCardsTemplate(){return this.groups.length?this.groups.map(e=>t`<nb-my-brackets-group-standings
             id="group_${e.id}"
             .group=${e}
             .myBrackets=${this.brackets}
             year=${this.year}
-          ></nb-my-brackets-group-standings>`):null}groupSearchAndButtonTemplate(){return t`<div class="wa-cluster">
-      <div class="grow">${this.newGroupButtonTemplate()}</div>
-      <div class="grow">${this.searchGroupsTemplate()}</div>
-    </div>`}groupsTemplate(){return t`<div class="wa-stack">
+          ></nb-my-brackets-group-standings>`):this.canEditThisYearsBrackets?t`No groups yet`:t`No groups for this year`}groupSearchAndButtonTemplate(){return this.canEditThisYearsBrackets?t`<div class="wa-cluster">
+        <div class="grow">${this.newGroupButtonTemplate()}</div>
+        <div class="grow">${this.searchGroupsTemplate()}</div>
+      </div>`:null}groupsTemplate(){return t`<div class="wa-stack">
       ${this.groupSearchAndButtonTemplate()}${this.groupCardsTemplate()}
     </div>`}render(){return this.year?t`<wa-card>
-      ${this.titleTemplate()}
       <div class="wa-stack">
-        ${this.messageTemplate()}
+        ${this.titleTemplate()} ${this.messageTemplate()}
         <wa-tab-group @wa-tab-show=${this.handleTabShow}>
           <wa-tab slot="nav" panel="my-brackets">My Brackets</wa-tab>
           <wa-tab slot="nav" panel="groups">Groups</wa-tab>
@@ -1035,7 +1044,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           >Reset Password</wa-button
         >
       </div>
-    </wa-card>`}};customElements.define("nb-reset-password",oe);function $(s){return s.charAt(0).toUpperCase()+s.slice(1)}var le=class extends i{static properties={theme:{type:Object}};static queries={themesSelect:"#themes",modeSelect:"#mode",primaryColorSelect:"#primary-color",backgroundColorSelect:"#background-color",colorContrastSelect:"#color-contrast",colorPaletteSelect:"#color-palette",roundingSlider:"#theme-rounding",spacingSlider:"#theme-spacing",borderWidthSlider:"#theme-border-width",roundingInput:"#theme-rounding-input",spacingInput:"#theme-spacing-input",borderWidthInput:"#theme-border-width-input"};connectedCallback(){super.connectedCallback(),this.init()}init(){this.theme=THEME,document.addEventListener("transitionstart",this),this.styleOberserver=new MutationObserver(()=>this.handleCSSChange()),this.styleOberserver.observe(document.documentElement,{attributeFilter:["style"]})}handleThemeChange(){let e=this.themesSelect.value;console.log(e),this.theme.theme=e}handleModeChange(){let e=this.modeSelect.value;console.log(e),this.theme.mode=e}handlePrimaryColorChange(){let e=this.primaryColorSelect.value;console.log(e),this.theme.primaryColor=e}handleBackgroundColorChange(){let e=this.backgroundColorSelect.value;console.log(e),this.theme.backgroundColor=e}handleColorPaletteChange(){let e=this.colorPaletteSelect.value;console.log(e),this.theme.colorPalette=e}handleColorContrastChange(){let e=this.colorContrastSelect.value;console.log(e),this.theme.colorContrast=e}handleRoundingChange(e){let a=e.target.value;this.theme.rounding=a}decrementRounding(){this.theme.rounding=Number(this.roundingInput.value)-.1}incrementRounding(){this.theme.rounding=Number(this.roundingInput.value)+.1}resetRounding(){this.theme.rounding=null}handleSpacingChange(e){let a=e.target.value;this.theme.spacing=a}decrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)-.0125}incrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)+.0125}resetSpacing(){this.theme.spacing=null}handleBorderWidthChange(e){let a=e.target.value;this.theme.borderWidth=a}decrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)-.5}incrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)+.5}resetBorderWidth(){this.theme.borderWidth=null}handleEvent(e){e.type==="transitionstart"&&this.handleCSSChange(e)}handleCSSChange(){this.requestUpdate()}roundingTemplate(){return t`<div class="wa-split">
+    </wa-card>`}};customElements.define("nb-reset-password",oe);function y(s){return s.charAt(0).toUpperCase()+s.slice(1)}var le=class extends i{static properties={theme:{type:Object}};static queries={themesSelect:"#themes",modeSelect:"#mode",primaryColorSelect:"#primary-color",backgroundColorSelect:"#background-color",colorContrastSelect:"#color-contrast",colorPaletteSelect:"#color-palette",roundingSlider:"#theme-rounding",spacingSlider:"#theme-spacing",borderWidthSlider:"#theme-border-width",roundingInput:"#theme-rounding-input",spacingInput:"#theme-spacing-input",borderWidthInput:"#theme-border-width-input"};connectedCallback(){super.connectedCallback(),this.init()}init(){this.theme=THEME,document.addEventListener("transitionstart",this),this.styleOberserver=new MutationObserver(()=>this.handleCSSChange()),this.styleOberserver.observe(document.documentElement,{attributeFilter:["style"]})}handleThemeChange(){let e=this.themesSelect.value;console.log(e),this.theme.theme=e}handleModeChange(){let e=this.modeSelect.value;console.log(e),this.theme.mode=e}handlePrimaryColorChange(){let e=this.primaryColorSelect.value;console.log(e),this.theme.primaryColor=e}handleBackgroundColorChange(){let e=this.backgroundColorSelect.value;console.log(e),this.theme.backgroundColor=e}handleColorPaletteChange(){let e=this.colorPaletteSelect.value;console.log(e),this.theme.colorPalette=e}handleColorContrastChange(){let e=this.colorContrastSelect.value;console.log(e),this.theme.colorContrast=e}handleRoundingChange(e){let a=e.target.value;this.theme.rounding=a}decrementRounding(){this.theme.rounding=Number(this.roundingInput.value)-.1}incrementRounding(){this.theme.rounding=Number(this.roundingInput.value)+.1}resetRounding(){this.theme.rounding=null}handleSpacingChange(e){let a=e.target.value;this.theme.spacing=a}decrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)-.0125}incrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)+.0125}resetSpacing(){this.theme.spacing=null}handleBorderWidthChange(e){let a=e.target.value;this.theme.borderWidth=a}decrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)-.5}incrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)+.5}resetBorderWidth(){this.theme.borderWidth=null}handleEvent(e){e.type==="transitionstart"&&this.handleCSSChange(e)}handleCSSChange(){this.requestUpdate()}roundingTemplate(){return t`<div class="wa-split">
       <div class="wa-stack grow">
         <wa-slider
           id="theme-rounding"
@@ -1171,7 +1180,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
             >${Te.map(e=>t`<wa-option
                   ?selected=${this.theme.theme===e}
                   value=${e}
-                  >${$(e)}</wa-option
+                  >${y(e)}</wa-option
                 >`)}</wa-select
           >
 
@@ -1198,7 +1207,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
                   >${_e.map(e=>t`<wa-option
                         ?selected=${this.theme.primaryColor===e}
                         value=${e}
-                        >${$(e)}</wa-option
+                        >${y(e)}</wa-option
                       >`)}</wa-select
                 >
 
@@ -1207,10 +1216,10 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
                   id="background-color"
                   label="Background Color"
                   @input=${this.handleBackgroundColorChange}
-                  >${$e.map(e=>t`<wa-option
+                  >${ye.map(e=>t`<wa-option
                         ?selected=${this.theme.backgroundColor===e}
                         value=${e}
-                        >${$(e)}</wa-option
+                        >${y(e)}</wa-option
                       >`)}</wa-select
                 >
 
@@ -1219,10 +1228,10 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
                   id="color-palette"
                   label="Color Palette"
                   @input=${this.handleColorPaletteChange}
-                  >${ye.map(e=>t`<wa-option
+                  >${$e.map(e=>t`<wa-option
                         ?selected=${this.theme.colorPalette===e}
                         value=${e}
-                        >${$(e)}</wa-option
+                        >${y(e)}</wa-option
                       >`)}</wa-select
                 >
               </div>
@@ -1234,7 +1243,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           </div>
         </div>
       </div>
-    </wa-card>`:null}};customElements.define("nb-preferences",le);var Se="Email taken. Please choose a different email or login.",Re="Username taken. Please choose a different username.",f=class extends i{static properties={email:{type:String},emailValid:{type:Boolean},usernameValid:{type:Boolean}};static queries={emailInput:"#email",usernameInput:"#username",submitButton:"#submitButtn"};async checkEmailUnique(e){let a=await fetch(EMAIL_UNIQUE_URL+"?"+new URLSearchParams({email:e}));return a=await a.json(),a}async checkUsernameUnique(e){let a=await fetch(USERNAME_UNIQUE_URL+"?"+new URLSearchParams({username:e}));return a=await a.json(),a}async handleEmailInput(){this.emailTask||(this.emailTask=new d(async()=>{let e=this.emailInput.value,a=await this.checkEmailUnique(e);console.log("email is unique",a.isUnique),a.isUnique?(this.emailInput.hint="",this.emailValid=!0):(this.emailInput.hint=Se,this.emailValid=!1)},300)),this.emailTask.arm()}async handleUsernameInput(){this.usernameTask||(this.usernameTask=new d(async()=>{let e=this.usernameInput.value,a=await this.checkUsernameUnique(e);console.log("username is unique",a.isUnique),a.isUnique?(this.usernameInput.hint="",this.usernameValid=!0):(this.usernameInput.hint=Re,this.usernameValid=!1)},300)),this.usernameTask.arm()}render(){return t`<wa-card>
+    </wa-card>`:null}};customElements.define("nb-preferences",le);var Re="Email taken. Please choose a different email or login.",Se="Username taken. Please choose a different username.",f=class extends i{static properties={email:{type:String},emailValid:{type:Boolean},usernameValid:{type:Boolean}};static queries={emailInput:"#email",usernameInput:"#username",submitButton:"#submitButtn"};async checkEmailUnique(e){let a=await fetch(EMAIL_UNIQUE_URL+"?"+new URLSearchParams({email:e}));return a=await a.json(),a}async checkUsernameUnique(e){let a=await fetch(USERNAME_UNIQUE_URL+"?"+new URLSearchParams({username:e}));return a=await a.json(),a}async handleEmailInput(){this.emailTask||(this.emailTask=new d(async()=>{let e=this.emailInput.value,a=await this.checkEmailUnique(e);console.log("email is unique",a.isUnique),a.isUnique?(this.emailInput.hint="",this.emailValid=!0):(this.emailInput.hint=Re,this.emailValid=!1)},300)),this.emailTask.arm()}async handleUsernameInput(){this.usernameTask||(this.usernameTask=new d(async()=>{let e=this.usernameInput.value,a=await this.checkUsernameUnique(e);console.log("username is unique",a.isUnique),a.isUnique?(this.usernameInput.hint="",this.usernameValid=!0):(this.usernameInput.hint=Se,this.usernameValid=!1)},300)),this.usernameTask.arm()}render(){return t`<wa-card>
       <form id="signup-form" action="${SIGNUP_URL}" method="POST"></form>
       <div class="wa-stack">
         <h2>Sign Up</h2>
@@ -1683,7 +1692,7 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         form="join-private-group"
         variant="brand"
         >Join</wa-button
-      >`}};customElements.define("nb-join-private-group",ge);var be=class extends p{static properties={group:{type:Object},isMember:{type:Boolean,converter:(e,a)=>e==="True"}};static queries={bracketDialog:"#create-bracket-dialog"};get canEditGroupBracket(){return CAN_EDIT_BRACKET&&CURRENT_YEAR===this.group.year}async requestContent(){let a=await(await fetch(VIEW_GROUP_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{brackets:r,winners:n,group:l,is_member:m}=a;this.brackets=r,this.winners=n,this.group=l,this.year=this.group.year,this.isMember=m}handleJoinGroupClick(){this.joinDialog||(this.joinDialog=document.createElement("nb-join-private-group"),this.joinDialog.group=this.group,document.body.appendChild(this.joinDialog)),this.joinDialog.show()}handleCreateBracketButtonClick(){this.bracketDialog.show()}handleEditGroupClick(){this.editGroup||(this.editGroup=document.createElement("nb-edit-group"),this.editGroup.group=this.group,this.editGroup.private=this.group.is_private,document.body.appendChild(this.editGroup)),this.editGroup.show()}closeDialog(e){e.target.closest("wa-dialog").hide()}memeberTemplate(){if(this.canEditGroupBracket&&MY_BRACKET_COUNT<5)return t`<nb-countdown></nb-countdown>
+      >`}};customElements.define("nb-join-private-group",ge);var be=class extends p{static properties={group:{type:Object},isMember:{type:Boolean,converter:(e,a)=>e==="True"}};static queries={bracketDialog:"#create-bracket-dialog"};get canEditGroupBracket(){return CAN_EDIT_BRACKET&&CURRENT_YEAR===this.group.year}async requestContent(){let a=await(await fetch(VIEW_GROUP_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{brackets:r,winners:n,group:l,is_member:c}=a;this.brackets=r,this.winners=n,this.group=l,this.year=this.group.year,this.isMember=c}handleJoinGroupClick(){this.joinDialog||(this.joinDialog=document.createElement("nb-join-private-group"),this.joinDialog.group=this.group,document.body.appendChild(this.joinDialog)),this.joinDialog.show()}handleCreateBracketButtonClick(){this.bracketDialog.show()}handleEditGroupClick(){this.editGroup||(this.editGroup=document.createElement("nb-edit-group"),this.editGroup.group=this.group,this.editGroup.private=this.group.is_private,document.body.appendChild(this.editGroup)),this.editGroup.show()}closeDialog(e){e.target.closest("wa-dialog").hide()}memeberTemplate(){if(this.canEditGroupBracket&&MY_BRACKET_COUNT<5)return t`<nb-countdown></nb-countdown>
         <div class="wa-cluster">
           <wa-button
             class="grow"
@@ -1752,4 +1761,4 @@ import{d as t,h as y,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",be);
-//# sourceMappingURL=nb.IEIUSARA.mjs.map
+//# sourceMappingURL=nb.GBWJYGK3.mjs.map

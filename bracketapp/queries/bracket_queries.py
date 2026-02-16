@@ -191,10 +191,13 @@ def my_bracket_count():
     return 0
 
 
-def get_my_brackets():
+def get_my_brackets(year=None):
+    if year is None:
+        year = YEAR
+
     stmt = (
         select(Bracket)
-        .where(and_(Bracket.user_id == current_user.id, Bracket.year == YEAR))
+        .where(and_(Bracket.user_id == current_user.id, Bracket.year == year))
         .options(joinedload(Bracket.group_brackets))
     )
 

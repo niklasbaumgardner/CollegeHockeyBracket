@@ -17,6 +17,9 @@ export class Admin extends NikElement {
         <wa-button appearance="outlined" href=${DEFAULT_BRACKET_PAGE}
           >Go to default bracket page</wa-button
         >
+        <wa-button appearance="outlined" href=${FLUSH_CACHE_URL}
+          >Flush the cache</wa-button
+        >
       </div>
     </wa-card>`;
   }

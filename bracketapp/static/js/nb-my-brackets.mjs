@@ -5,6 +5,8 @@ import "./nb-my-brackets-group-standings.mjs";
 import "./nb-search-groups.mjs";
 
 export class MyBrackets extends Standings {
+  cache = {};
+
   static properties = {
     groups: { type: Object },
     shouldShowBrackets: { type: Boolean },
@@ -12,6 +14,9 @@ export class MyBrackets extends Standings {
 
   static queries = {
     tabGroup: "wa-tab-group",
+    yearSelect: "#year-select",
+    bracketGrid: "nb-my-brackets-grid",
+    groupGrids: { all: "nb-my-brackets-group-standings" },
   };
 
   constructor() {
@@ -22,6 +27,16 @@ export class MyBrackets extends Standings {
     this.initialTabPanel = this.url.hash.includes("group")
       ? "groups"
       : "my-brackets";
+  }
+
+  get canCreateBracket() {
+    return (
+      CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR && this.brackets.length > 5
+    );
+  }
+
+  get canEditThisYearsBrackets() {
+    return CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR;
   }
 
   connectedCallback() {
@@ -67,16 +82,48 @@ export class MyBrackets extends Standings {
     }
   }
 
+  async requestContentForYear(year = null) {
+    let response = await fetch(
+      MY_BRACKETS_CONTENT_URL + (year ? `/${year}` : ""),
+    );
+    return response.json();
+  }
+
   async requestContent() {
-    let response = await fetch(MY_BRACKETS_CONTENT_URL);
-    let data = await response.json();
+    let data = await this.requestContentForYear();
 
     let { brackets, groups, year, years } = data;
-    console.log({ brackets, groups, year, years });
+
     this.brackets = brackets;
     this.groups = groups;
     this.year = year;
     this.years = years;
+
+    this.cache[year] = data;
+  }
+
+  async handleYearChange() {
+    let selectedYear = this.yearSelect.value;
+    let data;
+    if (this.cache[selectedYear]) {
+      data = this.cache[selectedYear];
+    } else {
+      data = await this.requestContentForYear(selectedYear);
+      this.cache[selectedYear] = data;
+    }
+
+    let { brackets, groups, year } = data;
+
+    this.brackets = brackets;
+    this.groups = groups;
+    this.year = year;
+    this.requestUpdate();
+
+    this.bracketGrid?.updateData(this.brackets, this.groups, this.year);
+    // if (this.groupGrids) {
+    //   [...this.groupGrids].map(g=>g.updateData())
+    // }
+    console.log(this.shouldShowBrackets);
   }
 
   async updated() {
@@ -104,7 +151,11 @@ export class MyBrackets extends Standings {
       return this.year;
     }
 
-    return html`<wa-select class="w-5">
+    return html`<wa-select
+      id="year-select"
+      class="w-5"
+      @input=${this.handleYearChange}
+    >
       ${this.years.map(
         (y) =>
           html`<wa-option value=${y} ?selected=${this.year === y}
@@ -116,18 +167,36 @@ export class MyBrackets extends Standings {
 
   titleTemplate() {
     return html`<div>
-      <h2 class="wa-cluster">My Brackets ${this.yearsDropdown()}</h2>
+      <h2 class="wa-cluster m-0">My Brackets ${this.yearsDropdown()}</h2>
+      ${this.subtitleTemplate()}
     </div>`;
   }
 
-  messageTemplate() {
-    return html`<small class="text-(--wa-color-text-quiet)"
+  subtitleTemplate() {
+    if (this.year >= CURRENT_YEAR) {
+      return html`<small class="text-(--wa-color-text-quiet)"
         >You created ${this.brackets.length}/5 brackets</small
-      >${CAN_EDIT_BRACKET ? html`<nb-countdown></nb-countdown>` : null}`;
+      >`;
+    }
+
+    return null;
+  }
+
+  previewYearMessage() {
+    return html`<wa-callout variant="brand"
+      >You are viewing brackets from a previous year.</wa-callout
+    >`;
+  }
+
+  messageTemplate() {
+    return html`${this.canEditThisYearsBrackets
+      ? html`<nb-countdown></nb-countdown>`
+      : this.previewYearMessage()}`;
   }
 
   newBracketButtonTemplate() {
-    if (this.brackets.length < 5 && CAN_EDIT_BRACKET) {
+    // if (this.brackets.length < 5 && CAN_EDIT_BRACKET) {
+    if (this.canCreateBracket) {
       return html`<wa-button
         variant="brand"
         appearance="outlined"
@@ -143,8 +212,10 @@ export class MyBrackets extends Standings {
     if (this.initialTabPanel === "groups" && !this.shouldShowBrackets) {
       return;
     }
-
-    return html`<div class="wa-stack">
+    if (!this.bracketsTemplateCache) {
+      this.bracketsTemplateCache = {};
+    }
+    this.bracketsTemplateCache[this.year] = html`<div class="wa-stack">
       ${this.newBracketButtonTemplate()}
       <nb-my-brackets-grid
         headerName="My Brackets"
@@ -153,10 +224,12 @@ export class MyBrackets extends Standings {
         year=${this.year}
       ></nb-my-brackets-grid>
     </div>`;
+
+    return this.bracketsTemplateCache[this.year];
   }
 
   newGroupButtonTemplate() {
-    if (CAN_EDIT_BRACKET) {
+    if (this.canEditThisYearsBrackets) {
       return html`<wa-button
         class="w-full"
         variant="brand"
@@ -170,7 +243,7 @@ export class MyBrackets extends Standings {
   }
 
   searchGroupsTemplate() {
-    if (CAN_EDIT_BRACKET) {
+    if (this.canEditThisYearsBrackets) {
       return html`<nb-search-groups></nb-search-groups>`;
     }
 
@@ -190,14 +263,22 @@ export class MyBrackets extends Standings {
       );
     }
 
-    return null;
+    if (this.canEditThisYearsBrackets) {
+      return html`No groups yet`;
+    }
+
+    return html`No groups for this year`;
   }
 
   groupSearchAndButtonTemplate() {
-    return html`<div class="wa-cluster">
-      <div class="grow">${this.newGroupButtonTemplate()}</div>
-      <div class="grow">${this.searchGroupsTemplate()}</div>
-    </div>`;
+    if (this.canEditThisYearsBrackets) {
+      return html`<div class="wa-cluster">
+        <div class="grow">${this.newGroupButtonTemplate()}</div>
+        <div class="grow">${this.searchGroupsTemplate()}</div>
+      </div>`;
+    }
+
+    return null;
   }
 
   groupsTemplate() {
@@ -212,9 +293,8 @@ export class MyBrackets extends Standings {
     }
 
     return html`<wa-card>
-      ${this.titleTemplate()}
       <div class="wa-stack">
-        ${this.messageTemplate()}
+        ${this.titleTemplate()} ${this.messageTemplate()}
         <wa-tab-group @wa-tab-show=${this.handleTabShow}>
           <wa-tab slot="nav" panel="my-brackets">My Brackets</wa-tab>
           <wa-tab slot="nav" panel="groups">Groups</wa-tab>

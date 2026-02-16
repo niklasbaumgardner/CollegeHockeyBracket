@@ -64,6 +64,26 @@ export class MyBracketsGrid extends StandingsGrid {
     this.useSafeName = false;
   }
 
+  get canCreateBracket() {
+    return (
+      CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR && this.brackets.length > 5
+    );
+  }
+
+  get canEditThisYearsBrackets() {
+    return CAN_EDIT_BRACKET && this.year >= CURRENT_YEAR;
+  }
+
+  updateData(brackets, groups, year) {
+    this.dataGrid.destroy();
+
+    this.brackets = brackets;
+    this.groups = groups;
+    this.year = year;
+
+    this.createDataGrid();
+  }
+
   /**
    * It doesn't matter if bad names appear on my_brackets page
    */
@@ -76,7 +96,7 @@ export class MyBracketsGrid extends StandingsGrid {
 
     const columnDefs = [];
 
-    if (!CAN_EDIT_BRACKET) {
+    if (!this.canEditThisYearsBrackets) {
       columnDefs.push({
         field: "rank",
       });
@@ -93,7 +113,7 @@ export class MyBracketsGrid extends StandingsGrid {
       },
     });
 
-    if (CAN_EDIT_BRACKET) {
+    if (this.canEditThisYearsBrackets) {
       columnDefs.push({
         field: "actions",
         cellRenderer: (param) => {

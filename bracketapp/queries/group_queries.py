@@ -40,7 +40,10 @@ from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 
-def get_all_groups_for_user():
+def get_all_groups_for_user(year=None):
+    if year is None:
+        year = YEAR
+
     stmt = (
         select(Group, Bracket, GroupBracket)
         .outerjoin(GroupMember, Group.id == GroupMember.group_id)
@@ -48,7 +51,7 @@ def get_all_groups_for_user():
         .outerjoin(Bracket, Bracket.id == GroupBracket.bracket_id)
         .where(
             and_(
-                Group.year == YEAR,
+                Group.year == year,
                 GroupMember.user_id == current_user.id,
                 or_(
                     Bracket.id.is_(None),

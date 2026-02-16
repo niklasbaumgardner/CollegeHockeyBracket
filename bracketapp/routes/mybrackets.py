@@ -1,10 +1,12 @@
+import yarl
+from tkinter import CURRENT
 from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils
 from bracketapp.config import YEAR, CAN_EDIT_BRACKET
 from bracketapp import cache
-from bracketapp.utils.constants import my_brackets_cache_key
+from bracketapp.utils.constants import my_brackets_cache_key, my_bracket_years_cache_key
 
 
 mybrackets_bp = Blueprint("mybrackets_bp", __name__)
@@ -17,30 +19,49 @@ def my_brackets():
 
 
 @mybrackets_bp.get("/api/my_brackets")
+@mybrackets_bp.get("/api/my_brackets/<int:year>")
 @login_required
-def api_my_brackets():
-    cache_key = my_brackets_cache_key(current_user.id)
-    # if result := cache.get(cache_key):
-    #     return result
+def api_my_brackets(year=None):
+    my_b_cache_key = my_brackets_cache_key(current_user.id, year)
+    years_cache_key = my_bracket_years_cache_key(current_user.id)
+    cache_dict = cache.get_many([my_b_cache_key, years_cache_key])
 
-    brackets = [b.to_dict(safe_only=False) for b in bracket_queries.get_my_brackets()]
+    cache_hits = 0
 
-    # TODO: cahce is disabled because of the years
-    years = bracket_queries.get_my_bracket_years()
+    if not (brackets_data := cache_dict.get(my_b_cache_key)):
+        brackets = [
+            b.to_dict(safe_only=False) for b in bracket_queries.get_my_brackets(year)
+        ]
 
-    groups = group_queries.get_all_groups_for_user()
-    # TODO: Make this better?
-    # I unfortunately don't have a better way to do this.
-    for g in groups:
-        group_brackets = []
-        for b in g.brackets:
-            group_brackets.append(b.to_dict(safe_only=False))
-        g.brackets = group_brackets
+        # TODO: cahce is disabled because of the years
 
-    groups = [g.to_dict() for g in groups]
+        groups = group_queries.get_all_groups_for_user(year)
+        # TODO: Make this better?
+        # I unfortunately don't have a better way to do this.
+        for g in groups:
+            group_brackets = []
+            for b in g.brackets:
+                group_brackets.append(b.to_dict(safe_only=False))
+            g.brackets = group_brackets
 
-    value = dict(brackets=brackets, groups=groups, year=YEAR)
+        groups = [g.to_dict() for g in groups]
 
-    cache.set(cache_key, value)
+        brackets_data = dict(
+            brackets=brackets,
+            groups=groups,
+            year=year or YEAR,
+        )
+    else:
+        cache_hits += 1
 
-    return value
+    if not (years := cache.get(years_cache_key)):
+        years = bracket_queries.get_my_bracket_years()
+    else:
+        cache_hits += 1
+
+    if cache_hits == 2:
+        return dict(**brackets_data, years=years)
+
+    cache.set_many({my_b_cache_key: brackets_data, years_cache_key: years})
+
+    return dict(**brackets_data, years=years)

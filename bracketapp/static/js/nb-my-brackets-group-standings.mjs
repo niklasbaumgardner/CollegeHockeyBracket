@@ -14,7 +14,14 @@ export class MyBracketsGroupStandings extends NikElement {
 
   static queries = {
     card: "wa-card",
+    bracketGrid: "nb-my-group-brackets-grid",
   };
+
+  constructor() {
+    super();
+
+    this.shouldShowBrackets = new URL(document.URL).hash === "#groups";
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -49,6 +56,7 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   bracketsTemplate() {
+    console.log("group", this.shouldShowBrackets);
     if (!this.shouldShowBrackets) {
       return null;
     }

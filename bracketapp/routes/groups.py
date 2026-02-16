@@ -10,6 +10,7 @@ from bracketapp.utils.constants import (
     group_cache_key,
     bracket_cache_key,
     my_brackets_cache_key,
+    group_membership_cache_key,
 )
 
 
@@ -42,33 +43,42 @@ def view_group(sqid):
 def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
-    # TODO: is_member needs to be cached separately
-    cache_key = group_cache_key(group_id)
-    if result := cache.get(cache_key):
-        return result
+    g_cache_key = group_cache_key(group_id)
+    gm_cache_key = group_membership_cache_key(current_user.id, group_id)
+    cache_dict = cache.get_many([g_cache_key, gm_cache_key])
 
-    group = group_queries.get_group(group_id=group_id)
+    cache_hits = 0
 
-    is_member = group_queries.is_group_member(group_id=group_id)
+    if not (group_data := cache_dict.get(g_cache_key)):
+        group = group_queries.get_group(group_id=group_id)
 
-    brackets, winners, correct = bracket_utils.get_group_standings(
-        group_id=group_id, year=group.year
-    )
+        brackets, winners, correct = bracket_utils.get_group_standings(
+            group_id=group_id, year=group.year
+        )
 
-    brackets_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
-    winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
-    group_dict = group.to_dict()
+        brackets_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
+        winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
+        group_dict = group.to_dict()
 
-    value = dict(
-        is_member=is_member,
-        group=group_dict,
-        brackets=brackets_dict,
-        winners=winners_dict,
-    )
+        group_data = dict(
+            group=group_dict,
+            brackets=brackets_dict,
+            winners=winners_dict,
+        )
+    else:
+        cache_hits += 1
 
-    cache.set(cache_key, value)
+    if not (is_member := cache.get(gm_cache_key)):
+        is_member = group_queries.is_group_member(group_id=group_id)
+    else:
+        cache_hits += 1
 
-    return value
+    if cache_hits == 2:
+        return dict(**group_data, is_member=is_member)
+
+    cache.set_many({g_cache_key: group_data, gm_cache_key: is_member})
+
+    return dict(**group_data, is_member=is_member)
 
 
 @groups_bp.post("/create_group")
