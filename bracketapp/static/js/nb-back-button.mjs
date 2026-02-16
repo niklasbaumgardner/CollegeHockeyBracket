@@ -9,31 +9,37 @@ export class BackButton extends NikElement {
   connectedCallback() {
     super.connectedCallback();
 
+    const storedPrev = localStorage.getItem("nb-bracket-back");
+    const storedPrevPrev = localStorage.getItem("nb-bracket-back.prev");
+
     if (document.referrer) {
-      const prevURL = new URL(document.referrer);
+      const prevURL = new URL(storedPrev ?? document.referrer);
+      const prevPrevURL = storedPrevPrev ? new URL(storedPrevPrev) : null;
       const url = new URL(document.URL);
-      // TODO: prevent looping
-      if (url.pathname !== "/leaderboard" && url.pathname !== "/my_brackets") {
-        if (prevURL.origin === url.origin) {
-          this.href =
-            localStorage.getItem("nb-bracket-back") ?? document.referrer;
-        }
+
+      if (
+        prevURL.origin === url.origin &&
+        url.pathname !== "/leaderboard" &&
+        url.pathname !== "/my_brackets"
+      ) {
+        this.href = prevURL.href;
+
+        // TODO: prevent looping. Do i care about looping?
+        //
+        // if (url.href === prevPrevURL.href) {
+        //   this.href = "/leaderboard";
+        // } else {
+        //   this.href = prevURL.href;
+        // }
       }
     }
+
+    localStorage.setItem("nb-bracket-back", location.href);
+    localStorage.setItem("nb-bracket-back.prev", storedPrev);
 
     if (!this.href) {
       this.remove();
     }
-
-    window.addEventListener("beforeunload", this);
-  }
-
-  handleEvent(event) {
-    if (event.type !== "beforeunload") {
-      return;
-    }
-
-    localStorage.setItem("nb-bracket-back", location.href);
   }
 
   render() {

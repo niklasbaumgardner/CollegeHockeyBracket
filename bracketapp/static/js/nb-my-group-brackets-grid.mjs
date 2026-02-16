@@ -48,8 +48,6 @@ export class MyGroupBracketsGrid extends StandingsGrid {
     },
   };
 
-  // TODO: When switching years, groups will likely need to be updated
-  // best bet is to add a group in 2024 for testing
   get canCreateBracket() {
     return (
       CAN_EDIT_BRACKET && this.year === CURRENT_YEAR && this.brackets.length > 5

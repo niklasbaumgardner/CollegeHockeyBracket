@@ -108,7 +108,6 @@ def join_group(group_id):
 def delete_group(group_id):
     cache_keys = [
         group_cache_key(group_id),
-        # TODO: Everyones my_brackets_cache_key?
         *[my_brackets_cache_key(u_id) for u_id in user_queries.get_all_user_ids()],
         *[
             bracket_cache_key(bracket_id)
@@ -143,7 +142,6 @@ def update_points(bracket_ids, group_ids):
     cache.delete_many(
         [
             LEADERBOARD_CACHE_KEY,
-            # TODO: Everyones my_brackets_cache_key?
             *[my_brackets_cache_key(u_id) for u_id in user_queries.get_all_user_ids()],
             *[bracket_cache_key(b_id) for b_id in bracket_ids],
             *[group_cache_key(g_id) for g_id in group_ids],
@@ -157,7 +155,6 @@ def update_points_async(a_app, bracket_ids, group_ids):
         cache.delete_many(
             [
                 LEADERBOARD_CACHE_KEY,
-                # TODO: Everyones my_brackets_cache_key?
                 *[
                     my_brackets_cache_key(u_id)
                     for u_id in user_queries.get_all_user_ids()
@@ -169,11 +166,6 @@ def update_points_async(a_app, bracket_ids, group_ids):
 
 
 def update_user():
-    # TODO: Update archive, leaderboard, groups with user?
-    # username is not show on bracket. so don't need to invalidate. same as ESPN
-    # get group_ids where group_bracket
-    # get year on brackets for archive
-
     cache.delete_many(
         [
             user_cache_key(current_user.id),

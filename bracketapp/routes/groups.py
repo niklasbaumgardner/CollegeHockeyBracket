@@ -31,6 +31,7 @@ def view_group(sqid):
     # TODO: fix viewability
     # ESPN allows viewing any group (public and private) while logged in and not logged in
     # maybe it's not allowed while CAN_EDIT_BRACKET?
+    # maybe just leave this?
 
     if not group:
         flash("Sorry. This group doesn't exist")

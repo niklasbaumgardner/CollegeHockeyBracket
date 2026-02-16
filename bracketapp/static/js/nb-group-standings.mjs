@@ -97,13 +97,6 @@ export class GroupStandings extends Standings {
           >Add A Bracket</wa-button
         >`;
     }
-    // TODO: is below needed?
-    // else if (this.numWinners > 0) {
-    //   return this.getWinningMessage();
-    // } else if (this.brackets.length) {
-    //   return "View the current standings below.";
-    // }
-    // return "No brackets were created for this group.";
   }
 
   nonMemberTemplate() {

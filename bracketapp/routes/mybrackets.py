@@ -33,8 +33,6 @@ def api_my_brackets(year=None):
             b.to_dict(safe_only=False) for b in bracket_queries.get_my_brackets(year)
         ]
 
-        # TODO: cahce is disabled because of the years
-
         groups = group_queries.get_all_groups_for_user(year)
         # TODO: Make this better?
         # I unfortunately don't have a better way to do this.
