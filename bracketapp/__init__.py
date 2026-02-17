@@ -5,7 +5,6 @@ from flask_login import LoginManager
 from flask_sqlalchemy_lite import SQLAlchemy
 from sqlalchemy.pool import NullPool
 from sqlalchemy.orm import DeclarativeBase
-import os
 import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
 from bracketapp.NBCacheClient import NBClient
@@ -22,9 +21,9 @@ app = Flask(__name__)
 
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
-if True or not os.environ.get("FLASK_DEBUG"):
+if True or not Config.FLASK_DEBUG:
     sentry_sdk.init(
-        dsn=os.environ.get("SENTRY_DSN"),
+        dsn=Config.SENTRY_DSN,
         traces_sample_rate=1.0,
         send_default_pii=True,
         release="nbbracketchallenge@3.0.0",

@@ -17,9 +17,8 @@ class Config:
     REMEMBER_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN")
     SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME")
     SESSION_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN")
-    SCOUT_MONITOR = True
-    SCOUT_KEY = os.environ.get("SCOUT_KEY")
-    SCOUT_NAME = APP_NAME
+    SENTRY_DSN = os.environ.get("SENTRY_DSN")
+    FLASK_DEBUG = os.environ.get("FLASK_DEBUG")
     CACHE_MEMCACHED_SERVER = os.environ.get("CACHE_MEMCACHED_SERVER")
 
 

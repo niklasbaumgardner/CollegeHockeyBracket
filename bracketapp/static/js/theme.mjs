@@ -401,8 +401,6 @@ export class Theme {
             Sentry.metrics.count("updateSettings", 1, {
               attributes: callbackArgs,
             });
-            umami.track("updateSettings", callbackArgs);
-            posthog.capture("updateSettings", callbackArgs);
           } catch {}
           return fetch(UPDATE_USER_SETTINGS, {
             method: "POST",
