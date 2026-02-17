@@ -8,12 +8,8 @@ from sqlalchemy.orm import DeclarativeBase
 import os
 import sentry_sdk
 from werkzeug.middleware.proxy_fix import ProxyFix
-from pymemcache.client.base import Client
+from bracketapp.NBCacheClient import NBClient
 from pymemcache import serde
-from bracketapp.appsignal import appsignal
-
-if not os.environ.get("FLASK_DEBUG"):
-    appsignal.start()
 
 
 class BaseModel(DeclarativeBase):
@@ -26,7 +22,7 @@ app = Flask(__name__)
 
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
-if not os.environ.get("FLASK_DEBUG"):
+if True or not os.environ.get("FLASK_DEBUG"):
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_DSN"),
         traces_sample_rate=1.0,
@@ -51,7 +47,7 @@ login_manager.login_message_category = "brand"
 mail = Mail()
 mail.init_app(app)
 
-cache = Client(
+cache = NBClient(
     Config.CACHE_MEMCACHED_SERVER,
     serde=serde.pickle_serde,
     connect_timeout=2,

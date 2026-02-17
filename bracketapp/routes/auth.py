@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
+from sentry_sdk import metrics
 from bracketapp.queries import user_queries
 from bracketapp.models import User
 from bracketapp import bcrypt, cache
 from bracketapp.utils import cache_invalidator, send_email
-import stream_chat
+
+# import stream_chat
 import os
 from bracketapp.utils.constants import user_cache_key
 
@@ -70,10 +72,10 @@ def signup():
             return redirect(url_for("auth_bp.signup"))
 
         user_queries.create_user(email=email, username=username, password=password1)
-        try:
-            send_email.send_signup_notification_email()
-        except Exception:
-            pass
+        metrics.count(
+            "user_signup",
+            1,
+        )
 
         flash("Sign up succesful", "success")
         return redirect(url_for("auth_bp.login"))
@@ -152,15 +154,15 @@ def email_unique():
     return {"isUnique": user_queries.is_email_unique(email)}
 
 
-@auth_bp.get("/create_streamchat_token")
-@login_required
-def create_streamchat_token():
-    server_client = stream_chat.StreamChat(
-        api_key=os.environ.get("STREAM_CHAT_API_KEY"),
-        api_secret=os.environ.get("STREAM_CHAT_SECRET_KEY"),
-    )
+# @auth_bp.get("/create_streamchat_token")
+# @login_required
+# def create_streamchat_token():
+#     server_client = stream_chat.StreamChat(
+#         api_key=os.environ.get("STREAM_CHAT_API_KEY"),
+#         api_secret=os.environ.get("STREAM_CHAT_SECRET_KEY"),
+#     )
 
-    token = server_client.create_token(f"{current_user.id}")
-    user_queries.update_user(id=current_user.id, token=token)
+#     token = server_client.create_token(f"{current_user.id}")
+#     user_queries.update_user(id=current_user.id, token=token)
 
-    return current_user.to_dict()
+#     return current_user.to_dict()

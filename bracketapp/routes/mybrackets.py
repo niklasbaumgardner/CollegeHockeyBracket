@@ -1,5 +1,3 @@
-import yarl
-from tkinter import CURRENT
 from bracketapp.queries import bracket_queries, group_queries
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
@@ -52,7 +50,7 @@ def api_my_brackets(year=None):
     else:
         cache_hits += 1
 
-    if not (years := cache.get(years_cache_key)):
+    if not (years := cache_dict.get(years_cache_key)):
         years = bracket_queries.get_my_bracket_years()
     else:
         cache_hits += 1
