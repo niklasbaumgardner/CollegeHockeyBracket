@@ -117,3 +117,5 @@ node_modules
 .npmrc
 
 .claude
+
+*.env.json
