@@ -65,9 +65,6 @@
   .sticky {
     position: sticky;
   }
-  .right-\[-40px\] {
-    right: -40px;
-  }
   .col-3 {
     grid-column: 3;
   }

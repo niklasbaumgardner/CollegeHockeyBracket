@@ -2,8 +2,17 @@ nb-matchup,
 nb-edit-matchup,
 nb-edit-correct-matchup {
   display: block;
-  --info-button-pos-right: -40px;
-  --info-button-pos-left: unset;
+}
+
+nb-matchup-info {
+  display: block;
+  position: absolute;
+  --nb-matchup-info-offset: -34px;
+  right: var(--nb-matchup-info-offset);
+
+  wa-popover::part(body) {
+    padding: var(--wa-space-s);
+  }
 }
 
 .matchup {
@@ -15,12 +24,6 @@ nb-edit-correct-matchup {
   font-size: var(--wa-font-size-xs);
   box-shadow: var(--wa-shadow-l);
   --spacing: var(--wa-space-2xs);
-
-  .info-button {
-    position: absolute;
-    right: -40px;
-    /* left: -40px; */
-  }
 }
 
 .nb-team {
@@ -172,17 +175,17 @@ label#bottom {
 .round-three-left {
   grid-area: round-three-left;
 
-  .info-button {
-    position: absolute;
+  nb-matchup-info {
     right: unset;
-    left: -40px;
+    left: var(--nb-matchup-info-offset);
   }
 }
 
 .round-final {
   min-width: 274px;
   grid-area: round-final;
-  .info-button {
+
+  nb-matchup-info {
     position: initial;
   }
 }
@@ -190,20 +193,18 @@ label#bottom {
 .round-one-right {
   grid-area: round-one-right;
 
-  .info-button {
-    position: absolute;
+  nb-matchup-info {
     right: unset;
-    left: -40px;
+    left: var(--nb-matchup-info-offset);
   }
 }
 
 .round-two-right {
   grid-area: round-two-right;
 
-  .info-button {
-    position: absolute;
+  nb-matchup-info {
     right: unset;
-    left: -40px;
+    left: var(--nb-matchup-info-offset);
   }
 }
 
@@ -240,8 +241,8 @@ label#bottom {
       "round-one-right round-two-right round-three-right round-final";
   }
 
-  .info-button {
-    right: -40px !important;
+  nb-matchup-info {
+    right: var(--nb-matchup-info-offset) !important;
     left: unset !important;
   }
 }

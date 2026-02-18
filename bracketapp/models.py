@@ -115,6 +115,8 @@ class Team(BaseModel, SqidSerializerMixin):
     name: Mapped[str] = mapped_column(
         unique=True,
     )
+    long_name: Mapped[str]
+    short_name: Mapped[str]
     icon_path: Mapped[str] = mapped_column(unique=True)
 
 

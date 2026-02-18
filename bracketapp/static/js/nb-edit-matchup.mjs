@@ -1,5 +1,6 @@
 import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
+import "./nb-matchup-info.mjs";
 
 export class EditMatchup extends NikElement {
   static properties = {
@@ -113,21 +114,23 @@ export class EditMatchup extends NikElement {
   }
 
   render() {
-    return html`<wa-card class="matchup default-bg default-border">
-      <div class="flex items-center relative">
-        <div>
-          <label class="nb-team" id="top">
-            ${this.topInput()} ${this.getImageElement(this.winnerTop)}
-            <span>${this.winnerTopName}</span>
-          </label>
-          <label class="nb-team" id="bottom">
-            ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
-            <span>${this.winnerBottomName}</span>
-          </label>
-        </div>
-        ${this.popoverTemplate()}
-      </div>
-    </wa-card>`;
+    return html`<div class="flex items-center relative">
+      <wa-card class="matchup default-bg default-border">
+        <label class="nb-team" id="top">
+          ${this.topInput()} ${this.getImageElement(this.winnerTop)}
+          <span>${this.winnerTopName}</span>
+        </label>
+        <label class="nb-team" id="bottom">
+          ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
+          <span>${this.winnerBottomName}</span>
+        </label>
+      </wa-card>
+      <nb-matchup-info
+        .topTeam=${this.winnerTop}
+        .bottomTeam=${this.winnerBottom}
+        game=${this.game}
+      ></nb-matchup-info>
+    </div>`;
   }
 }
 
