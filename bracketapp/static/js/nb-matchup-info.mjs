@@ -1,5 +1,9 @@
 import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
+import { getStandingsForTeam } from "./standings-data.mjs";
+
+// const STANDINGS = STANDINGS_YEARS[CURRENT_YEAR];
+// const CONFERENCE_STANDINGS = CONFERENCE_STANDINGS_YEARS[CURRENT_YEAR];
 
 export class MatchupInfo extends NikElement {
   static properties = {
@@ -11,6 +15,50 @@ export class MatchupInfo extends NikElement {
     },
     game: { type: String },
   };
+
+  // TODO: I'd like to make this better
+  buildRecord(object) {
+    return `${object.wins}-${object.losses}-${object.ties} (${object.otw}-${object.otl})`;
+  }
+
+  statsTemplate(stats) {
+    return html`<small>NPI Rank: ${stats.rank}</small>
+      <small>${stats.conference.name} rank: ${stats.conference.rank}</small>
+      <small>Record: ${this.buildRecord(stats.overall)}</small>
+      <span></span>`;
+  }
+
+  topTeamStatsTemplate() {
+    if (!this.topTeam.team) {
+      return null;
+    }
+
+    let stats = getStandingsForTeam(this.topTeam.team);
+    if (!stats) {
+      return null;
+    }
+
+    return html`<div class="flex flex-col">
+      <div>${this.topTeam.team.name}</div>
+      <div class="flex flex-col">${this.statsTemplate(stats)}</div>
+    </div>`;
+  }
+
+  bottomTeamStatsTemplate() {
+    if (!this.bottomTeam.team) {
+      return null;
+    }
+
+    let stats = getStandingsForTeam(this.bottomTeam.team);
+    if (!stats) {
+      return null;
+    }
+
+    return html`<div class="flex flex-col items-end">
+      <div>${this.bottomTeam.team.name}</div>
+      <div class="flex flex-col items-end">${this.statsTemplate(stats)}</div>
+    </div>`;
+  }
 
   render() {
     if (!(this.topTeam?.team && this.bottomTeam?.team)) {
@@ -33,41 +81,10 @@ export class MatchupInfo extends NikElement {
       ></wa-button>
       <wa-popover placement="top" for="${this.game}-info">
         <div class="wa-cluster">
-          <div class="flex flex-col">
-            <span>${this.topTeam.team.name}</span>
-            <small>Rank: 1</small>
-            <small>B1G rank: 1</small>
-            <small>Record: 11-1</small>
-            <span></span>
-          </div>
-          <div class="flex flex-col items-end">
-            <span>${this.bottomTeam.team.name}</span>
-            <small>Rank: 4</small>
-            <small>B1G rank: 3</small>
-            <small>Record: 8-4</small>
-            <span></span>
-          </div>
+          ${this.topTeamStatsTemplate()} ${this.bottomTeamStatsTemplate()}
         </div>
       </wa-popover>`;
   }
-
-  // render() {
-  //   return html`<wa-card class="matchup default-bg default-border">
-  //     <div class="flex items-center relative">
-  //       <div>
-  //         <label class="nb-team" id="top">
-  //           ${this.topInput()} ${this.getImageElement(this.winnerTop)}
-  //           <span>${this.winnerTopName}</span>
-  //         </label>
-  //         <label class="nb-team" id="bottom">
-  //           ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
-  //           <span>${this.winnerBottomName}</span>
-  //         </label>
-  //       </div>
-  //       ${this.popoverTemplate()}
-  //     </div>
-  //   </wa-card>`;
-  // }
 }
 
 customElements.define("nb-matchup-info", MatchupInfo);

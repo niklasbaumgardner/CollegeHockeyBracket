@@ -13,6 +13,11 @@ nb-matchup-info {
   wa-popover::part(body) {
     padding: var(--wa-space-s);
   }
+
+  small {
+    font-size: var(--wa-font-size-xs);
+    color: light-dark(var(--wa-color-neutral-30), var(--wa-color-neutral-70));
+  }
 }
 
 .matchup {
