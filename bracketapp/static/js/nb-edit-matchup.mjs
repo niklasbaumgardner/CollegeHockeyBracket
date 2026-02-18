@@ -78,16 +78,55 @@ export class EditMatchup extends NikElement {
     />`;
   }
 
+  popoverTemplate() {
+    if (this.winnerTop?.team && this.winnerBottom?.team) {
+      return html`<wa-button
+          id="${this.game}-info"
+          class="info-button"
+          appearance="plain"
+          size="small"
+          variant="brand"
+          pill
+          ><wa-icon library="ion" name="information-circle-outline"></wa-icon
+        ></wa-button>
+        <wa-popover placement="top" for="${this.game}-info">
+          <div class="wa-cluster">
+            <div class="flex flex-col">
+              <span>${this.winnerTop.team.name}</span>
+              <small>Rank: 1</small>
+              <small>B1G rank: 1</small>
+              <small>Record: 11-1</small>
+              <span></span>
+            </div>
+            <div class="flex flex-col items-end">
+              <span>${this.winnerBottom.team.name}</span>
+              <small>Rank: 4</small>
+              <small>B1G rank: 3</small>
+              <small>Record: 8-4</small>
+              <span></span>
+            </div>
+          </div>
+        </wa-popover>`;
+    }
+
+    return null;
+  }
+
   render() {
     return html`<wa-card class="matchup default-bg default-border">
-      <label class="nb-team" id="top">
-        ${this.topInput()} ${this.getImageElement(this.winnerTop)}
-        <span>${this.winnerTopName}</span>
-      </label>
-      <label class="nb-team" id="bottom">
-        ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
-        <span>${this.winnerBottomName}</span>
-      </label>
+      <div class="flex items-center relative">
+        <div>
+          <label class="nb-team" id="top">
+            ${this.topInput()} ${this.getImageElement(this.winnerTop)}
+            <span>${this.winnerTopName}</span>
+          </label>
+          <label class="nb-team" id="bottom">
+            ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
+            <span>${this.winnerBottomName}</span>
+          </label>
+        </div>
+        ${this.popoverTemplate()}
+      </div>
     </wa-card>`;
   }
 }

@@ -2,6 +2,8 @@ nb-matchup,
 nb-edit-matchup,
 nb-edit-correct-matchup {
   display: block;
+  --info-button-pos-right: -40px;
+  --info-button-pos-left: unset;
 }
 
 .matchup {
@@ -13,6 +15,12 @@ nb-edit-correct-matchup {
   font-size: var(--wa-font-size-xs);
   box-shadow: var(--wa-shadow-l);
   --spacing: var(--wa-space-2xs);
+
+  .info-button {
+    position: absolute;
+    right: -40px;
+    /* left: -40px; */
+  }
 }
 
 .nb-team {
@@ -163,19 +171,40 @@ label#bottom {
 
 .round-three-left {
   grid-area: round-three-left;
+
+  .info-button {
+    position: absolute;
+    right: unset;
+    left: -40px;
+  }
 }
 
 .round-final {
   min-width: 274px;
   grid-area: round-final;
+  .info-button {
+    position: initial;
+  }
 }
 
 .round-one-right {
   grid-area: round-one-right;
+
+  .info-button {
+    position: absolute;
+    right: unset;
+    left: -40px;
+  }
 }
 
 .round-two-right {
   grid-area: round-two-right;
+
+  .info-button {
+    position: absolute;
+    right: unset;
+    left: -40px;
+  }
 }
 
 .round-three-right {
@@ -209,6 +238,11 @@ label#bottom {
     grid-template:
       "round-one-left round-two-left round-three-left round-final"
       "round-one-right round-two-right round-three-right round-final";
+  }
+
+  .info-button {
+    right: -40px !important;
+    left: unset !important;
   }
 }
 

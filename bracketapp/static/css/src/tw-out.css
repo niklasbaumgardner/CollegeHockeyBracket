@@ -65,6 +65,9 @@
   .sticky {
     position: sticky;
   }
+  .right-\[-40px\] {
+    right: -40px;
+  }
   .col-3 {
     grid-column: 3;
   }
@@ -242,6 +245,9 @@
   .items-center {
     align-items: center;
   }
+  .items-end {
+    align-items: flex-end;
+  }
   .justify-around {
     justify-content: space-around;
   }
@@ -299,18 +305,6 @@
   .border-0 {
     border-style: var(--tw-border-style);
     border-width: 0px;
-  }
-  .border-\(--wa-color-danger-300\) {
-    border-color: var(--wa-color-danger-300);
-  }
-  .bg-\(--wa-color-danger-50\) {
-    background-color: var(--wa-color-danger-50);
-  }
-  .bg-\(--wa-color-danger-300\) {
-    background-color: var(--wa-color-danger-300);
-  }
-  .bg-\(--wa-color-danger-500\) {
-    background-color: var(--wa-color-danger-500);
   }
   .p-\(--wa-space-l\) {
     padding: var(--wa-space-l);

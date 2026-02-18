@@ -145,15 +145,46 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       value="${this.winnerBottom?.id}"
       required=""
       ?checked=${!!(this.winnerBottom&&this.winner_id&&this.winner_id===this.winnerBottom.id)}
-    />`}render(){return t`<wa-card class="matchup default-bg default-border">
-      <label class="nb-team" id="top">
-        ${this.topInput()} ${this.getImageElement(this.winnerTop)}
-        <span>${this.winnerTopName}</span>
-      </label>
-      <label class="nb-team" id="bottom">
-        ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
-        <span>${this.winnerBottomName}</span>
-      </label>
+    />`}popoverTemplate(){return this.winnerTop?.team&&this.winnerBottom?.team?t`<wa-button
+          id="${this.game}-info"
+          class="info-button"
+          appearance="plain"
+          size="small"
+          variant="brand"
+          pill
+          ><wa-icon library="ion" name="information-circle-outline"></wa-icon
+        ></wa-button>
+        <wa-popover placement="top" for="${this.game}-info">
+          <div class="wa-cluster">
+            <div class="flex flex-col">
+              <span>${this.winnerTop.team.name}</span>
+              <small>Rank: 1</small>
+              <small>B1G rank: 1</small>
+              <small>Record: 11-1</small>
+              <span></span>
+            </div>
+            <div class="flex flex-col items-end">
+              <span>${this.winnerBottom.team.name}</span>
+              <small>Rank: 4</small>
+              <small>B1G rank: 3</small>
+              <small>Record: 8-4</small>
+              <span></span>
+            </div>
+          </div>
+        </wa-popover>`:null}render(){return t`<wa-card class="matchup default-bg default-border">
+      <div class="flex items-center relative">
+        <div>
+          <label class="nb-team" id="top">
+            ${this.topInput()} ${this.getImageElement(this.winnerTop)}
+            <span>${this.winnerTopName}</span>
+          </label>
+          <label class="nb-team" id="bottom">
+            ${this.bottomInput()} ${this.getImageElement(this.winnerBottom)}
+            <span>${this.winnerBottomName}</span>
+          </label>
+        </div>
+        ${this.popoverTemplate()}
+      </div>
     </wa-card>`}};customElements.define("nb-edit-matchup",g);var O=class extends i{static properties={default:{type:Object},teams:{type:Array}};teamOptions(e,a){let r=this.teams.map(n=>t`<option
           value=${n.id}
           ?selected=${this.default.games[`game${e}`][a]?.team.id===n.id}
@@ -710,11 +741,11 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
           required=""
         />${this.iconTemplate()}${this.labelTemplate()}
       </label>
-    </wa-card>`}};customElements.define("nb-radio-item",w);var H=class extends w{static properties={bracket:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.bracket.id}iconTemplate(){return null}labelTemplate(){return t`<nb-bracket-card-content
+    </wa-card>`}};customElements.define("nb-radio-item",w);var z=class extends w{static properties={bracket:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.bracket.id}iconTemplate(){return null}labelTemplate(){return t`<nb-bracket-card-content
       .bracket=${this.bracket}
-    ></nb-bracket-card-content>`}};customElements.define("nb-bracket-radio-item",H);var K=class extends w{static properties={group:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.group.id}iconTemplate(){return null}labelTemplate(){return t`<nb-group-card-content
+    ></nb-bracket-card-content>`}};customElements.define("nb-bracket-radio-item",z);var H=class extends w{static properties={group:{type:Object}};connectedCallback(){super.connectedCallback(),this.value=this.group.id}iconTemplate(){return null}labelTemplate(){return t`<nb-group-card-content
       .group=${this.group}
-    ></nb-group-card-content>`}};customElements.define("nb-group-radio-item",K);var V=class extends l{static properties={myBrackets:{type:Object},group:{type:Object}};get joinedBrackets(){return this.group.brackets.filter(e=>e.user_id===CURRENT_USER.id)}get bracketsCanJoin(){return this.myBrackets.filter(e=>!this.joinedBrackets.find(a=>a.id===e.id))}groupTemplate(){return t`<div class="wa-stack">
+    ></nb-group-card-content>`}};customElements.define("nb-group-radio-item",H);var K=class extends l{static properties={myBrackets:{type:Object},group:{type:Object}};get joinedBrackets(){return this.group.brackets.filter(e=>e.user_id===CURRENT_USER.id)}get bracketsCanJoin(){return this.myBrackets.filter(e=>!this.joinedBrackets.find(a=>a.id===e.id))}groupTemplate(){return t`<div class="wa-stack">
       <p>Joining group:</p>
       <nb-group-card .group=${this.group}></nb-group-card>
     </div> `}bracketTemplate(e){return t`<nb-bracket-radio-item
@@ -748,7 +779,7 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       variant="brand"
       ?disabled=${this.bracketsCanJoin.length<1}
       >Add Bracket</wa-button
-    >`}};customElements.define("nb-group-add-bracket",V);var z=class extends l{static properties={bracket:{type:Object},group:{type:Object}};lableTemplate(){return t`Remove Bracket?`}contentTemplate(){return t`<form
+    >`}};customElements.define("nb-group-add-bracket",K);var V=class extends l{static properties={bracket:{type:Object},group:{type:Object}};lableTemplate(){return t`Remove Bracket?`}contentTemplate(){return t`<form
       id="delete-group-bracket-form"
       action=${this.bracket.group_bracket.delete_url}
       method="POST"
@@ -763,7 +794,7 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
         type="submit"
         form="delete-group-bracket-form"
         >Remove Bracket</wa-button
-      >`}};customElements.define("nb-delete-group-bracket",z);var J=class extends i{static properties={bracket:{type:Object},group:{type:Object}};handleRemoveFromGroupClick(){this.removeFromGroupModal||(this.removeFromGroupModal=document.createElement("nb-delete-group-bracket"),this.removeFromGroupModal.bracket=this.bracket,this.removeFromGroupModal.group=this.group,document.body.appendChild(this.removeFromGroupModal)),this.removeFromGroupModal.show()}render(){return t`<div class="flex w-full h-full">
+      >`}};customElements.define("nb-delete-group-bracket",V);var J=class extends i{static properties={bracket:{type:Object},group:{type:Object}};handleRemoveFromGroupClick(){this.removeFromGroupModal||(this.removeFromGroupModal=document.createElement("nb-delete-group-bracket"),this.removeFromGroupModal.bracket=this.bracket,this.removeFromGroupModal.group=this.group,document.body.appendChild(this.removeFromGroupModal)),this.removeFromGroupModal.show()}render(){return t`<div class="flex w-full h-full">
       <wa-button
         size="small"
         variant="danger"
@@ -1781,4 +1812,4 @@ import{d as t,h as $,j as we,k as E}from"./chunk-XGX4NMMB.mjs";import{a as fe,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",be);
-//# sourceMappingURL=nb.HGUEOXDL.mjs.map
+//# sourceMappingURL=nb.KHWFQNRL.mjs.map
