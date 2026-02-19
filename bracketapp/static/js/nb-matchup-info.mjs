@@ -1,67 +1,154 @@
 import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import { getStandingsForTeam } from "./standings-data.mjs";
-
-// const STANDINGS = STANDINGS_YEARS[CURRENT_YEAR];
-// const CONFERENCE_STANDINGS = CONFERENCE_STANDINGS_YEARS[CURRENT_YEAR];
+import { getHeadToHeadGames, getHomeAwayNeutralRecord } from "./games-data.mjs";
 
 export class MatchupInfo extends NikElement {
   static properties = {
     topTeam: {
       type: Object,
     },
+    topTeamStats: {
+      type: Object,
+    },
     bottomTeam: {
+      type: Object,
+    },
+    bottomTeamStats: {
       type: Object,
     },
     game: { type: String },
   };
 
-  // TODO: I'd like to make this better
-  buildRecord(object) {
-    return `${object.wins}-${object.losses}-${object.ties} (${object.otw}-${object.otl})`;
+  requestUpdate(propertyName, oldValue) {
+    if (propertyName === "topTeam") {
+      this.topTeamStats = null;
+      this.requestTopTeamStats();
+    }
+    if (propertyName === "bottomTeam") {
+      this.bottomTeamStats = null;
+      this.requestBottomTeamStats();
+    }
+    if (
+      (propertyName === "topTeamStats" || propertyName === "bottomTeamStats") &&
+      this.topTeamStats &&
+      this.bottomTeamStats
+    ) {
+      this.requestHeadToHeadStats();
+    }
+    return super.requestUpdate(propertyName, oldValue);
   }
 
-  statsTemplate(stats) {
-    return html`<small>NPI Rank: ${stats.rank}</small>
-      <small>${stats.conference.name} rank: ${stats.conference.rank}</small>
-      <small>Record: ${this.buildRecord(stats.overall)}</small>
-      <span></span>`;
+  async requestHeadToHeadStats() {
+    if (
+      !(
+        this.topTeam?.team &&
+        this.bottomTeam?.team &&
+        this.topTeamStats &&
+        this.bottomTeamStats
+      )
+    ) {
+      return;
+    }
+
+    let [top, bottom] = await getHeadToHeadGames(
+      this.topTeam.team,
+      this.bottomTeam.team,
+    );
+
+    this.topTeamStats.h2h = top;
+    this.bottomTeamStats.h2h = bottom;
+
+    this.requestUpdate();
+  }
+
+  statsTemplate(stats, rightSide = false) {
+    return html`<small class="${rightSide ? "self-end" : ""}"
+        >NPI: ${stats.rank}</small
+      >
+      <small class="${rightSide ? "self-end" : ""}"
+        >${stats.conference.name}: ${stats.conference.rank}</small
+      >
+      <wa-divider class="my-(--wa-space-xs)"></wa-divider>
+      <div class="flex justify-between text-(length:--wa-font-size-2xs)!">
+        <small>Home</small><span>${stats.records[0].join("-")}</span>
+      </div>
+      <div class="flex justify-between text-(length:--wa-font-size-2xs)!">
+        <small>Away</small><span>${stats.records[1].join("-")}</span>
+      </div>
+      <div class="flex justify-between text-(length:--wa-font-size-2xs)!">
+        <small>Neutral</small><span>${stats.records[2].join("-")}</span>
+      </div>
+
+      <wa-divider class="my-(--wa-space-xs)"></wa-divider>
+      ${stats.h2h
+        ? html`<div
+            class="flex justify-between text-(length:--wa-font-size-2xs)!"
+          >
+            <small>H2H</small><span>${stats.h2h.join("-")}</span>
+          </div>`
+        : null}`;
+  }
+
+  async requestTopTeamStats() {
+    if (!this.topTeam.team) {
+      this.topTeamStats = null;
+      return;
+    }
+
+    let standings = await getStandingsForTeam(this.topTeam.team);
+    let records = await getHomeAwayNeutralRecord(this.topTeam.team);
+
+    this.topTeamStats = { ...standings, records };
+  }
+
+  async requestBottomTeamStats() {
+    if (!this.bottomTeam.team) {
+      this.bottomTeamStats = null;
+      return;
+    }
+
+    let standings = await getStandingsForTeam(this.bottomTeam.team);
+    let records = await getHomeAwayNeutralRecord(this.bottomTeam.team);
+
+    this.bottomTeamStats = { ...standings, records };
   }
 
   topTeamStatsTemplate() {
-    if (!this.topTeam.team) {
+    if (!this.topTeamStats) {
       return null;
     }
 
-    let stats = getStandingsForTeam(this.topTeam.team);
-    if (!stats) {
-      return null;
-    }
-
-    return html`<div class="flex flex-col">
+    return html`<div class="grow flex flex-col min-w-33">
       <div>${this.topTeam.team.name}</div>
-      <div class="flex flex-col">${this.statsTemplate(stats)}</div>
+      <div class="flex flex-col w-full">
+        ${this.statsTemplate(this.topTeamStats)}
+      </div>
     </div>`;
   }
 
   bottomTeamStatsTemplate() {
-    if (!this.bottomTeam.team) {
+    if (!this.bottomTeamStats) {
       return null;
     }
 
-    let stats = getStandingsForTeam(this.bottomTeam.team);
-    if (!stats) {
-      return null;
-    }
-
-    return html`<div class="flex flex-col items-end">
+    return html`<div class="grow flex flex-col items-end min-w-33">
       <div>${this.bottomTeam.team.name}</div>
-      <div class="flex flex-col items-end">${this.statsTemplate(stats)}</div>
+      <div class="flex flex-col w-full">
+        ${this.statsTemplate(this.bottomTeamStats, true)}
+      </div>
     </div>`;
   }
 
   render() {
-    if (!(this.topTeam?.team && this.bottomTeam?.team)) {
+    if (
+      !(
+        this.topTeam?.team &&
+        this.bottomTeam?.team &&
+        this.topTeamStats &&
+        this.bottomTeamStats
+      )
+    ) {
       return null;
     }
 
@@ -80,8 +167,10 @@ export class MatchupInfo extends NikElement {
         ></wa-icon
       ></wa-button>
       <wa-popover placement="top" for="${this.game}-info">
-        <div class="wa-cluster">
-          ${this.topTeamStatsTemplate()} ${this.bottomTeamStatsTemplate()}
+        <div class="flex justify-between">
+          ${this.topTeamStatsTemplate()}
+          <div><wa-divider orientation="vertical"></wa-divider></div>
+          ${this.bottomTeamStatsTemplate()}
         </div>
       </wa-popover>`;
   }

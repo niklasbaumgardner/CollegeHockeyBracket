@@ -104,6 +104,9 @@
   .mx-auto {
     margin-inline: auto;
   }
+  .my-\(--wa-space-xs\) {
+    margin-block: var(--wa-space-xs);
+  }
   .my-1 {
     margin-block: calc(var(--spacing) * 1);
   }
@@ -197,6 +200,12 @@
   .max-w-324 {
     max-width: calc(var(--spacing) * 324);
   }
+  .min-w-25 {
+    min-width: calc(var(--spacing) * 25);
+  }
+  .min-w-33 {
+    min-width: calc(var(--spacing) * 33);
+  }
   .flex-shrink {
     flex-shrink: 1;
   }
@@ -287,6 +296,9 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
+  .self-end {
+    align-self: flex-end;
+  }
   .truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -335,6 +347,9 @@
   }
   .text-center {
     text-align: center;
+  }
+  .text-\(length\:--wa-font-size-2xs\)\! {
+    font-size: var(--wa-font-size-2xs) !important;
   }
   .text-\(length\:--wa-font-size-s\) {
     font-size: var(--wa-font-size-s);

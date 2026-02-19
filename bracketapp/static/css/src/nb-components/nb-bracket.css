@@ -16,7 +16,7 @@ nb-matchup-info {
 
   small {
     font-size: var(--wa-font-size-xs);
-    color: light-dark(var(--wa-color-neutral-30), var(--wa-color-neutral-70));
+    color: light-dark(var(--wa-color-neutral-20), var(--wa-color-neutral-80));
   }
 }
 

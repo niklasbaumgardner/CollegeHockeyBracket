@@ -89,29 +89,6 @@ def update_default():
     return redirect(url_for("admin_bp.update_default"))
 
 
-@admin_bp.route("/create_team", methods=["GET", "POST"])
-@login_required
-def create_team():
-    if not current_user.is_admin():
-        return redirect(url_for("leaderboard_bp.index"))
-
-    if request.method == "GET":
-        teams = [t.to_dict() for t in team_qeuries.get_all_teams()]
-        return render_template("add_team.html", teams=teams)
-
-    if request.method == "POST":
-        team = request.form.get("team")
-
-        if team_qeuries.get_team_by_name(name=team):
-            flash("Team already exists")
-
-        if bracket_utils.does_team_image_exist(team):
-            team_qeuries.create_team(teamname=team)
-            flash("Team successfully added", "success")
-
-    return redirect(url_for("admin_bp.admin"))
-
-
 @admin_bp.get("/go_live")
 def go_live():
     current_time = datetime.datetime.now(datetime.UTC)
