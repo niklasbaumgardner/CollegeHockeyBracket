@@ -1,0 +1,15 @@
+input.box-radio {
+  appearance: none;
+  color: light-dark(white, black);
+  border: 2px solid currentColor;
+  border-radius: var(--wa-border-radius-s);
+
+  width: 3rem;
+  aspect-ratio: 1;
+
+  outline-offset: 2px;
+
+  &:checked {
+    border-color: var(--wa-color-brand);
+  }
+}

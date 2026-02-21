@@ -195,6 +195,70 @@ ${sentryFile}
 `;
 
   fs.writeFileSync("./bracketapp/templates/includes.html", fileContents);
+  brandOverrides();
   // fs.writeFileSync("meta.json", JSON.stringify(myFiles, null, 2));
   // fs.writeFileSync("metafile.json", JSON.stringify(result.metafile));
+}
+
+function brandOverrides() {
+  const COLORS = [
+    "red",
+    "orange",
+    "amber",
+    "yellow",
+    "lime",
+    "green",
+    "emerald",
+    "teal",
+    "cyan",
+    "sky",
+    "blue",
+    "indigo",
+    "violet",
+    "purple",
+    "fuchsia",
+    "pink",
+    "rose",
+    "slate",
+    "gray",
+    "zinc",
+    "neutral",
+    "stone",
+    "taupe",
+    "mauve",
+    "mist",
+    "olive",
+  ];
+
+  let contents = [];
+  for (let color of COLORS) {
+    contents.push(`.${color}-brand {
+  --wa-color-brand-05: var(--color-${color}-950);
+  --wa-color-brand-10: var(--color-${color}-900);
+  --wa-color-brand-20: var(--color-${color}-800);
+  --wa-color-brand-30: var(--color-${color}-700);
+  --wa-color-brand-40: var(--color-${color}-600);
+  --wa-color-brand-50: var(--color-${color}-500);
+  --wa-color-brand-60: var(--color-${color}-400);
+  --wa-color-brand-70: var(--color-${color}-300);
+  --wa-color-brand-80: var(--color-${color}-200);
+  --wa-color-brand-90: var(--color-${color}-100);
+  --wa-color-brand-95: var(--color-${color}-50);
+  --wa-color-brand: var(--color-${color}-600);
+  --wa-color-${color}-key: 60;
+  --wa-color-${color}-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-${color}-key), 1) * 100%)
+  );
+  --wa-color-${color}-on: color-mix(
+    in oklab,
+    var(--wa-color-${color}-10) var(--wa-color-${color}-gte-60),
+    white
+  );
+}`);
+  }
+
+  fs.writeFileSync(
+    "./bracketapp/static/css/src/brand-overrides.css",
+    contents.join("\n\n"),
+  );
 }

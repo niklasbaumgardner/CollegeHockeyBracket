@@ -41,12 +41,16 @@ export const PRIMARY_COLOR_LIST = [
   "zinc",
   "neutral",
   "stone",
+  "taupe",
+  "mauve",
+  "mist",
+  "olive",
 ];
 
-export const BACKGROUND_COLOR_LIST = [
-  "niks-favorite",
+export const NUMBERS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+export const COLORS = [
   "red",
-  "gray",
   "orange",
   "amber",
   "yellow",
@@ -63,7 +67,22 @@ export const BACKGROUND_COLOR_LIST = [
   "fuchsia",
   "pink",
   "rose",
+  "slate",
+  "gray",
+  "zinc",
+  "neutral",
+  "stone",
+  "taupe",
+  "mauve",
+  "mist",
+  "olive",
 ];
+
+export const TAILWIND_COLORS = COLORS.flatMap((color) =>
+  NUMBERS.map((number) => `--color-${color}-${number}`),
+);
+
+export const BACKGROUND_COLOR_LIST = ["niks-favorite", ...TAILWIND_COLORS];
 
 export const COLOR_PALETTE_LIST = [
   "default",
@@ -252,13 +271,6 @@ export class Theme {
       return;
     }
 
-    document
-      .querySelector("main")
-      .classList.remove(`${this.backgroundColor}-background`);
-    document
-      .querySelector("wa-page")
-      .classList.remove(`${this.backgroundColor}-background`);
-
     if (BACKGROUND_COLOR_LIST.includes(backgroundColor)) {
       this.#backgroundColor = backgroundColor;
     } else {
@@ -267,12 +279,10 @@ export class Theme {
 
     themeStorage.setItem("backgroundColor", this.backgroundColor);
     if (this.backgroundColor) {
-      document
-        .querySelector("main")
-        .classList.add(`${this.backgroundColor}-background`);
-      document
-        .querySelector("wa-page")
-        .classList.add(`${this.backgroundColor}-background`);
+      document.querySelector("main").style.backgroundColor =
+        `var(${this.backgroundColor}`;
+      document.querySelector("wa-page").style.backgroundColor =
+        `var(${this.backgroundColor}`;
     }
 
     if (!this.#initing) {

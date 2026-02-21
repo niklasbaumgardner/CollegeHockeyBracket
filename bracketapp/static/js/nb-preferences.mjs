@@ -5,6 +5,9 @@ import {
   PRIMARY_COLOR_LIST,
   BACKGROUND_COLOR_LIST,
   COLOR_PALETTE_LIST,
+  COLORS,
+  NUMBERS,
+  TAILWIND_COLORS,
 } from "./theme.mjs";
 
 function toUpper(string) {
@@ -29,6 +32,7 @@ export class PreferencesCard extends NikElement {
     roundingInput: "#theme-rounding-input",
     spacingInput: "#theme-spacing-input",
     borderWidthInput: "#theme-border-width-input",
+    bgNumberInputs: { all: ".box-radio" },
   };
 
   connectedCallback() {
@@ -38,6 +42,7 @@ export class PreferencesCard extends NikElement {
 
   init() {
     this.theme = THEME;
+    this.bgNumber = 600;
 
     document.addEventListener("transitionstart", this);
     this.styleOberserver = new MutationObserver(() => this.handleCSSChange());
@@ -71,7 +76,19 @@ export class PreferencesCard extends NikElement {
     let backgroundColor = this.backgroundColorSelect.value;
     console.log(backgroundColor);
 
-    this.theme.backgroundColor = backgroundColor;
+    this.theme.backgroundColor = `--color-${backgroundColor}-${this.bgNumber}`;
+
+    this.requestUpdate();
+  }
+
+  handleBackgroundNumberChange() {
+    for (let input of this.bgNumberInputs) {
+      if (input.checked) {
+        this.bgNumber = Number(input.value);
+        break;
+      }
+    }
+    this.handleBackgroundColorChange();
   }
 
   handleColorPaletteChange() {
@@ -291,6 +308,51 @@ export class PreferencesCard extends NikElement {
     </div>`;
   }
 
+  bgNumberRadioTemplate() {
+    if (!this.backgroundColorSelect) {
+      this.requestUpdate();
+      return;
+    }
+
+    let color = this.backgroundColorSelect.value?.toLowerCase();
+    if (!COLORS.includes(color)) {
+      return;
+    }
+
+    return NUMBERS.map(
+      (n) =>
+        html`<input
+          @input=${this.handleBackgroundNumberChange}
+          class="box-radio bg-(--color-${color}-${n})"
+          style="background-color: var(--color-${color}-${n});"
+          type="radio"
+          name="color-number"
+          ?checked=${this.bgNumber === n}
+          value=${n}
+        />`,
+    );
+  }
+
+  backgroundColorTemplate() {
+    return html`<div class="wa-stack">
+      <wa-select
+        with-clear
+        id="background-color"
+        label="Background Color"
+        @input=${this.handleBackgroundColorChange}
+        >${COLORS.map(
+          (color) =>
+            html`<wa-option
+              ?selected=${this.theme.backgroundColor?.includes(color)}
+              value=${color}
+              >${toUpper(color)}</wa-option
+            >`,
+        )}</wa-select
+      >
+      <div class="wa-cluster wa-nativ">${this.bgNumberRadioTemplate()}</div>
+    </div>`;
+  }
+
   render() {
     if (!this.theme) {
       return null;
@@ -345,20 +407,7 @@ export class PreferencesCard extends NikElement {
                   )}</wa-select
                 >
 
-                <wa-select
-                  with-clear
-                  id="background-color"
-                  label="Background Color"
-                  @input=${this.handleBackgroundColorChange}
-                  >${BACKGROUND_COLOR_LIST.map(
-                    (color) =>
-                      html`<wa-option
-                        ?selected=${this.theme.backgroundColor === color}
-                        value=${color}
-                        >${toUpper(color)}</wa-option
-                      >`,
-                  )}</wa-select
-                >
+                ${this.backgroundColorTemplate()}
 
                 <wa-select
                   with-clear
