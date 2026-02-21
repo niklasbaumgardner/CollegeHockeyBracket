@@ -18,7 +18,7 @@ export const THEME_LIST = [
 
 export const THEME_MODE_LIST = ["light", "dark"];
 
-export const PRIMARY_COLOR_LIST = [
+export const VARIANT_COLOR_LIST = [
   "red",
   "orange",
   "amber",
@@ -46,6 +46,8 @@ export const PRIMARY_COLOR_LIST = [
   "mist",
   "olive",
 ];
+
+export const VARIANTS = ["brand", "danger", "neutral", "success", "warning"];
 
 export const NUMBERS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -118,25 +120,34 @@ export class Theme {
   #borderWidth;
   #initing;
 
+  #brandColor;
+  #dangerColor;
+  #neutralColor;
+  #successColor;
+  #warningColor;
+
   constructor(theme) {
     this.#initing = true;
     this.domProperties = window.getComputedStyle(document.documentElement);
     this.theme = theme.theme;
     this.mode = theme.mode;
-    this.primaryColor = theme.primary_color;
     this.backgroundColor = theme.background_color;
     this.colorPalette = theme.color_palette;
     this.rounding = theme.rounding;
     this.spacing = theme.spacing;
     this.borderWidth = theme.border_width;
 
+    for (let [variant, color] of Object.entries(theme).filter(([k, v]) =>
+      VARIANTS.includes(k),
+    )) {
+      this.setVariantColor(variant, color);
+    }
+
     this.#initing = false;
 
     if (!this.theme) {
       this.makeDefault();
     }
-
-    console.log(this);
   }
 
   get theme() {
@@ -247,7 +258,7 @@ export class Theme {
 
     document.documentElement.classList.remove(`${this.primaryColor}-brand`);
 
-    if (PRIMARY_COLOR_LIST.includes(primaryColor)) {
+    if (VARIANT_COLOR_LIST.includes(primaryColor)) {
       this.#primaryColor = primaryColor;
     } else {
       this.#primaryColor = null;
@@ -261,6 +272,99 @@ export class Theme {
     if (!this.#initing) {
       this.updateSettings({ primary_color: this.primaryColor });
     }
+  }
+
+  setVariantColor(variant, value) {
+    if (!VARIANT_COLOR_LIST.includes(value)) {
+      value = null;
+    }
+
+    let removeColor = null;
+
+    switch (variant) {
+      case "brand": {
+        if (this.#brandColor === value) {
+          return;
+        }
+
+        removeColor = this.#brandColor;
+        this.#brandColor = value;
+        break;
+      }
+      case "danger": {
+        if (this.#dangerColor === value) {
+          return;
+        }
+
+        removeColor = this.#dangerColor;
+        this.#dangerColor = value;
+        break;
+      }
+      case "neutral": {
+        if (this.#neutralColor === value) {
+          return;
+        }
+
+        removeColor = this.#neutralColor;
+        this.#neutralColor = value;
+        break;
+      }
+      case "success": {
+        if (this.#successColor === value) {
+          return;
+        }
+
+        removeColor = this.#successColor;
+        this.#successColor = value;
+        break;
+      }
+      case "warning": {
+        if (this.#warningColor === value) {
+          return;
+        }
+
+        removeColor = this.#warningColor;
+        this.#warningColor = value;
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+
+    themeStorage.setItem(`${variant}Color`, value);
+    document.documentElement.classList.remove(`${removeColor}-${variant}`);
+    if (value) {
+      document.documentElement.classList.add(`${value}-${variant}`);
+    }
+
+    if (!this.#initing) {
+      let settingsObject = {};
+      settingsObject[variant] = value;
+      this.updateSettings(settingsObject);
+    }
+  }
+
+  getVariantColor(variant) {
+    switch (variant) {
+      case "brand": {
+        return this.#brandColor;
+      }
+      case "danger": {
+        return this.#dangerColor;
+      }
+      case "neutral": {
+        return this.#neutralColor;
+      }
+      case "success": {
+        return this.#successColor;
+      }
+      case "warning": {
+        return this.#warningColor;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -279,10 +383,12 @@ export class Theme {
 
     themeStorage.setItem("backgroundColor", this.backgroundColor);
     if (this.backgroundColor) {
-      document.querySelector("main").style.backgroundColor =
-        `var(${this.backgroundColor}`;
-      document.querySelector("wa-page").style.backgroundColor =
-        `var(${this.backgroundColor}`;
+      document.documentElement.style.setProperty(
+        "--nb-background-color",
+        `var(${this.backgroundColor}`,
+      );
+    } else {
+      document.documentElement.style.removeProperty("--nb-background-color");
     }
 
     if (!this.#initing) {

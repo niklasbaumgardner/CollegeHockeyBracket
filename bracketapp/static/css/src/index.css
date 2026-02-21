@@ -131,9 +131,25 @@ html {
   --wa-border-width-scale: 1 !important;
   --wa-form-control-padding-block: 0.6em !important;
   --wa-form-control-padding-inline: 1em !important;
+  --nb-background-color: var(--wa-color-surface-default);
+}
+
+wa-page,
+main {
+  background-color: var(--nb-background-color);
 }
 
 nb-my-bracket-actions,
 nb-my-group-bracket-actions {
   line-height: initial;
+}
+
+wa-dropdown-item:has(a) {
+  padding: 0;
+
+  a {
+    display: inline-block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
 }

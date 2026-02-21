@@ -12,29 +12,31 @@ from bracketapp.utils.constants import user_settings_cache_key
 ##
 
 
-VALID_USER_SETTINGS_ARGS = set(
-    [
-        "theme",
-        "mode",
-        "primary_color",
-        "background_color",
-        "color_contrast",
-        "color_palette",
-        "rounding",
-        "spacing",
-        "border_width",
-    ]
+VALID_VARIANTS = set(["brand", "danger", "neutral", "success", "warning"])
+
+VALID_USER_SETTINGS_ARGS = (
+    set(
+        [
+            "theme",
+            "mode",
+            "background_color",
+            "color_contrast",
+            "color_palette",
+            "rounding",
+        ]
+    )
+    | VALID_VARIANTS
 )
-ARGS_ALLOW_NULL = set(
-    [
-        "primary_color",
-        "background_color",
-        "color_contrast",
-        "color_palette",
-        "rounding",
-        "spacing",
-        "border_width",
-    ]
+ARGS_ALLOW_NULL = (
+    set(
+        [
+            "background_color",
+            "color_contrast",
+            "color_palette",
+            "rounding",
+        ]
+    )
+    | VALID_VARIANTS
 )
 
 VALID_THEMES = set(
@@ -55,55 +57,44 @@ VALID_THEMES = set(
 
 VALID_THEME_MODES = set({"light", "dark"})
 
-VALID_PRIMARY_COLORS = set(
-    [
-        "red",
-        "orange",
-        "amber",
-        "yellow",
-        "lime",
-        "green",
-        "emerald",
-        "teal",
-        "cyan",
-        "sky",
-        "blue",
-        "indigo",
-        "violet",
-        "purple",
-        "fuchsia",
-        "pink",
-        "rose",
-        "slate",
-        "gray",
-        "zinc",
-        "neutral",
-        "stone",
-    ]
-)
+
+NUMBERS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+
+COLORS = [
+    "red",
+    "orange",
+    "amber",
+    "yellow",
+    "lime",
+    "green",
+    "emerald",
+    "teal",
+    "cyan",
+    "sky",
+    "blue",
+    "indigo",
+    "violet",
+    "purple",
+    "fuchsia",
+    "pink",
+    "rose",
+    "slate",
+    "gray",
+    "zinc",
+    "neutral",
+    "stone",
+    "taupe",
+    "mauve",
+    "mist",
+    "olive",
+]
+
 
 VALID_BACKGROUND_COLORS = set(
     [
         "niks-favorite",
-        "red",
-        "gray",
-        "orange",
-        "amber",
-        "yellow",
-        "lime",
-        "green",
-        "emerald",
-        "teal",
-        "cyan",
-        "sky",
-        "blue",
-        "indigo",
-        "violet",
-        "purple",
-        "fuchsia",
-        "pink",
-        "rose",
     ]
+    + [f"--color-{color}-{number}" for color in COLORS for number in NUMBERS]
 )
 
 VALID_COLOR_PALETTES = set(
@@ -122,16 +113,12 @@ VALID_COLOR_PALETTES = set(
 
 VALID_ROUNDING_VALUES = set([r / 10 for r in range(41)])
 
-VALID_SPACING_VALUES = set([r / 80 for r in range(40, 161)])
-
-VALID_BORDER_WIDTHS = set([r / 2 for r in range(1, 9)])
-
 
 def is_valid_user_setting_arg(arg, val):
     if arg in VALID_USER_SETTINGS_ARGS:
         if val is None:
             return arg in ARGS_ALLOW_NULL
-        return True
+        return validate_arg(arg, val)
 
     return False
 
@@ -183,18 +170,15 @@ def validate_arg(arg, value):
             return validate_theme(value)
         case "mode":
             return validate_mode(value)
-        case "primary_color":
-            return validate_primary_color(value)
         case "background_color":
             return validate_background_color(value)
         case "color_palette":
             return validate_color_palette(value)
         case "rounding":
             return validate_rounding(value)
-        case "spacing":
-            return validate_spacing(value)
-        case "border_width":
-            return validate_border_width(value)
+
+    if arg in VALID_VARIANTS:
+        return validate_variant_color(value)
 
     return False
 
@@ -207,8 +191,8 @@ def validate_mode(mode):
     return mode in VALID_THEME_MODES
 
 
-def validate_primary_color(primary_color):
-    return primary_color in VALID_PRIMARY_COLORS
+def validate_variant_color(variant_color):
+    return variant_color in COLORS
 
 
 def validate_background_color(background_color):
@@ -221,11 +205,3 @@ def validate_color_palette(color_palette):
 
 def validate_rounding(rounding):
     return rounding in VALID_ROUNDING_VALUES
-
-
-def validate_spacing(spacing):
-    return spacing in VALID_SPACING_VALUES
-
-
-def validate_border_width(border_width):
-    return border_width in VALID_BORDER_WIDTHS

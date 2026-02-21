@@ -230,22 +230,27 @@ function brandOverrides() {
     "olive",
   ];
 
+  const VARIANTS = ["brand", "danger", "neutral", "success", "warning"];
+
   let contents = [];
-  for (let color of COLORS) {
-    contents.push(`.${color}-brand {
-  --wa-color-brand-05: var(--color-${color}-950);
-  --wa-color-brand-10: var(--color-${color}-900);
-  --wa-color-brand-20: var(--color-${color}-800);
-  --wa-color-brand-30: var(--color-${color}-700);
-  --wa-color-brand-40: var(--color-${color}-600);
-  --wa-color-brand-50: var(--color-${color}-500);
-  --wa-color-brand-60: var(--color-${color}-400);
-  --wa-color-brand-70: var(--color-${color}-300);
-  --wa-color-brand-80: var(--color-${color}-200);
-  --wa-color-brand-90: var(--color-${color}-100);
-  --wa-color-brand-95: var(--color-${color}-50);
-  --wa-color-brand: var(--color-${color}-600);
+  for (let variant of VARIANTS) {
+    for (let color of COLORS) {
+      contents.push(`.${color}-${variant} {
+  --wa-color-${variant}-05: var(--color-${color}-950);
+  --wa-color-${variant}-10: var(--color-${color}-900);
+  --wa-color-${variant}-20: var(--color-${color}-800);
+  --wa-color-${variant}-30: var(--color-${color}-700);
+  --wa-color-${variant}-40: var(--color-${color}-600);
+  --wa-color-${variant}-50: var(--color-${color}-500);
+  --wa-color-${variant}-60: var(--color-${color}-400);
+  --wa-color-${variant}-70: var(--color-${color}-300);
+  --wa-color-${variant}-80: var(--color-${color}-200);
+  --wa-color-${variant}-90: var(--color-${color}-100);
+  --wa-color-${variant}-95: var(--color-${color}-50);
+  --wa-color-${variant}: var(--color-${color}-600);
+  --wa-color-${variant}-on: var(--wa-color-${color}-on);
   --wa-color-${color}-key: 60;
+
   --wa-color-${color}-gte-60: calc(
     100% - (clamp(0, 60 - var(--wa-color-${color}-key), 1) * 100%)
   );
@@ -255,10 +260,11 @@ function brandOverrides() {
     white
   );
 }`);
+    }
   }
 
   fs.writeFileSync(
-    "./bracketapp/static/css/src/brand-overrides.css",
+    "./bracketapp/static/css/src/wa-overrides.css",
     contents.join("\n\n"),
   );
 }

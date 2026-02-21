@@ -1,0 +1,3379 @@
+.red-brand {
+  --wa-color-brand-05: var(--color-red-950);
+  --wa-color-brand-10: var(--color-red-900);
+  --wa-color-brand-20: var(--color-red-800);
+  --wa-color-brand-30: var(--color-red-700);
+  --wa-color-brand-40: var(--color-red-600);
+  --wa-color-brand-50: var(--color-red-500);
+  --wa-color-brand-60: var(--color-red-400);
+  --wa-color-brand-70: var(--color-red-300);
+  --wa-color-brand-80: var(--color-red-200);
+  --wa-color-brand-90: var(--color-red-100);
+  --wa-color-brand-95: var(--color-red-50);
+  --wa-color-brand: var(--color-red-600);
+  --wa-color-brand-on: var(--wa-color-red-on);
+  --wa-color-red-key: 60;
+
+  --wa-color-red-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-red-key), 1) * 100%)
+  );
+  --wa-color-red-on: color-mix(
+    in oklab,
+    var(--wa-color-red-10) var(--wa-color-red-gte-60),
+    white
+  );
+}
+
+.orange-brand {
+  --wa-color-brand-05: var(--color-orange-950);
+  --wa-color-brand-10: var(--color-orange-900);
+  --wa-color-brand-20: var(--color-orange-800);
+  --wa-color-brand-30: var(--color-orange-700);
+  --wa-color-brand-40: var(--color-orange-600);
+  --wa-color-brand-50: var(--color-orange-500);
+  --wa-color-brand-60: var(--color-orange-400);
+  --wa-color-brand-70: var(--color-orange-300);
+  --wa-color-brand-80: var(--color-orange-200);
+  --wa-color-brand-90: var(--color-orange-100);
+  --wa-color-brand-95: var(--color-orange-50);
+  --wa-color-brand: var(--color-orange-600);
+  --wa-color-brand-on: var(--wa-color-orange-on);
+  --wa-color-orange-key: 60;
+
+  --wa-color-orange-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-orange-key), 1) * 100%)
+  );
+  --wa-color-orange-on: color-mix(
+    in oklab,
+    var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
+    white
+  );
+}
+
+.amber-brand {
+  --wa-color-brand-05: var(--color-amber-950);
+  --wa-color-brand-10: var(--color-amber-900);
+  --wa-color-brand-20: var(--color-amber-800);
+  --wa-color-brand-30: var(--color-amber-700);
+  --wa-color-brand-40: var(--color-amber-600);
+  --wa-color-brand-50: var(--color-amber-500);
+  --wa-color-brand-60: var(--color-amber-400);
+  --wa-color-brand-70: var(--color-amber-300);
+  --wa-color-brand-80: var(--color-amber-200);
+  --wa-color-brand-90: var(--color-amber-100);
+  --wa-color-brand-95: var(--color-amber-50);
+  --wa-color-brand: var(--color-amber-600);
+  --wa-color-brand-on: var(--wa-color-amber-on);
+  --wa-color-amber-key: 60;
+
+  --wa-color-amber-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-amber-key), 1) * 100%)
+  );
+  --wa-color-amber-on: color-mix(
+    in oklab,
+    var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
+    white
+  );
+}
+
+.yellow-brand {
+  --wa-color-brand-05: var(--color-yellow-950);
+  --wa-color-brand-10: var(--color-yellow-900);
+  --wa-color-brand-20: var(--color-yellow-800);
+  --wa-color-brand-30: var(--color-yellow-700);
+  --wa-color-brand-40: var(--color-yellow-600);
+  --wa-color-brand-50: var(--color-yellow-500);
+  --wa-color-brand-60: var(--color-yellow-400);
+  --wa-color-brand-70: var(--color-yellow-300);
+  --wa-color-brand-80: var(--color-yellow-200);
+  --wa-color-brand-90: var(--color-yellow-100);
+  --wa-color-brand-95: var(--color-yellow-50);
+  --wa-color-brand: var(--color-yellow-600);
+  --wa-color-brand-on: var(--wa-color-yellow-on);
+  --wa-color-yellow-key: 60;
+
+  --wa-color-yellow-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-yellow-key), 1) * 100%)
+  );
+  --wa-color-yellow-on: color-mix(
+    in oklab,
+    var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
+    white
+  );
+}
+
+.lime-brand {
+  --wa-color-brand-05: var(--color-lime-950);
+  --wa-color-brand-10: var(--color-lime-900);
+  --wa-color-brand-20: var(--color-lime-800);
+  --wa-color-brand-30: var(--color-lime-700);
+  --wa-color-brand-40: var(--color-lime-600);
+  --wa-color-brand-50: var(--color-lime-500);
+  --wa-color-brand-60: var(--color-lime-400);
+  --wa-color-brand-70: var(--color-lime-300);
+  --wa-color-brand-80: var(--color-lime-200);
+  --wa-color-brand-90: var(--color-lime-100);
+  --wa-color-brand-95: var(--color-lime-50);
+  --wa-color-brand: var(--color-lime-600);
+  --wa-color-brand-on: var(--wa-color-lime-on);
+  --wa-color-lime-key: 60;
+
+  --wa-color-lime-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-lime-key), 1) * 100%)
+  );
+  --wa-color-lime-on: color-mix(
+    in oklab,
+    var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
+    white
+  );
+}
+
+.green-brand {
+  --wa-color-brand-05: var(--color-green-950);
+  --wa-color-brand-10: var(--color-green-900);
+  --wa-color-brand-20: var(--color-green-800);
+  --wa-color-brand-30: var(--color-green-700);
+  --wa-color-brand-40: var(--color-green-600);
+  --wa-color-brand-50: var(--color-green-500);
+  --wa-color-brand-60: var(--color-green-400);
+  --wa-color-brand-70: var(--color-green-300);
+  --wa-color-brand-80: var(--color-green-200);
+  --wa-color-brand-90: var(--color-green-100);
+  --wa-color-brand-95: var(--color-green-50);
+  --wa-color-brand: var(--color-green-600);
+  --wa-color-brand-on: var(--wa-color-green-on);
+  --wa-color-green-key: 60;
+
+  --wa-color-green-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-green-key), 1) * 100%)
+  );
+  --wa-color-green-on: color-mix(
+    in oklab,
+    var(--wa-color-green-10) var(--wa-color-green-gte-60),
+    white
+  );
+}
+
+.emerald-brand {
+  --wa-color-brand-05: var(--color-emerald-950);
+  --wa-color-brand-10: var(--color-emerald-900);
+  --wa-color-brand-20: var(--color-emerald-800);
+  --wa-color-brand-30: var(--color-emerald-700);
+  --wa-color-brand-40: var(--color-emerald-600);
+  --wa-color-brand-50: var(--color-emerald-500);
+  --wa-color-brand-60: var(--color-emerald-400);
+  --wa-color-brand-70: var(--color-emerald-300);
+  --wa-color-brand-80: var(--color-emerald-200);
+  --wa-color-brand-90: var(--color-emerald-100);
+  --wa-color-brand-95: var(--color-emerald-50);
+  --wa-color-brand: var(--color-emerald-600);
+  --wa-color-brand-on: var(--wa-color-emerald-on);
+  --wa-color-emerald-key: 60;
+
+  --wa-color-emerald-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-emerald-key), 1) * 100%)
+  );
+  --wa-color-emerald-on: color-mix(
+    in oklab,
+    var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
+    white
+  );
+}
+
+.teal-brand {
+  --wa-color-brand-05: var(--color-teal-950);
+  --wa-color-brand-10: var(--color-teal-900);
+  --wa-color-brand-20: var(--color-teal-800);
+  --wa-color-brand-30: var(--color-teal-700);
+  --wa-color-brand-40: var(--color-teal-600);
+  --wa-color-brand-50: var(--color-teal-500);
+  --wa-color-brand-60: var(--color-teal-400);
+  --wa-color-brand-70: var(--color-teal-300);
+  --wa-color-brand-80: var(--color-teal-200);
+  --wa-color-brand-90: var(--color-teal-100);
+  --wa-color-brand-95: var(--color-teal-50);
+  --wa-color-brand: var(--color-teal-600);
+  --wa-color-brand-on: var(--wa-color-teal-on);
+  --wa-color-teal-key: 60;
+
+  --wa-color-teal-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-teal-key), 1) * 100%)
+  );
+  --wa-color-teal-on: color-mix(
+    in oklab,
+    var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
+    white
+  );
+}
+
+.cyan-brand {
+  --wa-color-brand-05: var(--color-cyan-950);
+  --wa-color-brand-10: var(--color-cyan-900);
+  --wa-color-brand-20: var(--color-cyan-800);
+  --wa-color-brand-30: var(--color-cyan-700);
+  --wa-color-brand-40: var(--color-cyan-600);
+  --wa-color-brand-50: var(--color-cyan-500);
+  --wa-color-brand-60: var(--color-cyan-400);
+  --wa-color-brand-70: var(--color-cyan-300);
+  --wa-color-brand-80: var(--color-cyan-200);
+  --wa-color-brand-90: var(--color-cyan-100);
+  --wa-color-brand-95: var(--color-cyan-50);
+  --wa-color-brand: var(--color-cyan-600);
+  --wa-color-brand-on: var(--wa-color-cyan-on);
+  --wa-color-cyan-key: 60;
+
+  --wa-color-cyan-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-cyan-key), 1) * 100%)
+  );
+  --wa-color-cyan-on: color-mix(
+    in oklab,
+    var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
+    white
+  );
+}
+
+.sky-brand {
+  --wa-color-brand-05: var(--color-sky-950);
+  --wa-color-brand-10: var(--color-sky-900);
+  --wa-color-brand-20: var(--color-sky-800);
+  --wa-color-brand-30: var(--color-sky-700);
+  --wa-color-brand-40: var(--color-sky-600);
+  --wa-color-brand-50: var(--color-sky-500);
+  --wa-color-brand-60: var(--color-sky-400);
+  --wa-color-brand-70: var(--color-sky-300);
+  --wa-color-brand-80: var(--color-sky-200);
+  --wa-color-brand-90: var(--color-sky-100);
+  --wa-color-brand-95: var(--color-sky-50);
+  --wa-color-brand: var(--color-sky-600);
+  --wa-color-brand-on: var(--wa-color-sky-on);
+  --wa-color-sky-key: 60;
+
+  --wa-color-sky-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-sky-key), 1) * 100%)
+  );
+  --wa-color-sky-on: color-mix(
+    in oklab,
+    var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
+    white
+  );
+}
+
+.blue-brand {
+  --wa-color-brand-05: var(--color-blue-950);
+  --wa-color-brand-10: var(--color-blue-900);
+  --wa-color-brand-20: var(--color-blue-800);
+  --wa-color-brand-30: var(--color-blue-700);
+  --wa-color-brand-40: var(--color-blue-600);
+  --wa-color-brand-50: var(--color-blue-500);
+  --wa-color-brand-60: var(--color-blue-400);
+  --wa-color-brand-70: var(--color-blue-300);
+  --wa-color-brand-80: var(--color-blue-200);
+  --wa-color-brand-90: var(--color-blue-100);
+  --wa-color-brand-95: var(--color-blue-50);
+  --wa-color-brand: var(--color-blue-600);
+  --wa-color-brand-on: var(--wa-color-blue-on);
+  --wa-color-blue-key: 60;
+
+  --wa-color-blue-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-blue-key), 1) * 100%)
+  );
+  --wa-color-blue-on: color-mix(
+    in oklab,
+    var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
+    white
+  );
+}
+
+.indigo-brand {
+  --wa-color-brand-05: var(--color-indigo-950);
+  --wa-color-brand-10: var(--color-indigo-900);
+  --wa-color-brand-20: var(--color-indigo-800);
+  --wa-color-brand-30: var(--color-indigo-700);
+  --wa-color-brand-40: var(--color-indigo-600);
+  --wa-color-brand-50: var(--color-indigo-500);
+  --wa-color-brand-60: var(--color-indigo-400);
+  --wa-color-brand-70: var(--color-indigo-300);
+  --wa-color-brand-80: var(--color-indigo-200);
+  --wa-color-brand-90: var(--color-indigo-100);
+  --wa-color-brand-95: var(--color-indigo-50);
+  --wa-color-brand: var(--color-indigo-600);
+  --wa-color-brand-on: var(--wa-color-indigo-on);
+  --wa-color-indigo-key: 60;
+
+  --wa-color-indigo-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-indigo-key), 1) * 100%)
+  );
+  --wa-color-indigo-on: color-mix(
+    in oklab,
+    var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
+    white
+  );
+}
+
+.violet-brand {
+  --wa-color-brand-05: var(--color-violet-950);
+  --wa-color-brand-10: var(--color-violet-900);
+  --wa-color-brand-20: var(--color-violet-800);
+  --wa-color-brand-30: var(--color-violet-700);
+  --wa-color-brand-40: var(--color-violet-600);
+  --wa-color-brand-50: var(--color-violet-500);
+  --wa-color-brand-60: var(--color-violet-400);
+  --wa-color-brand-70: var(--color-violet-300);
+  --wa-color-brand-80: var(--color-violet-200);
+  --wa-color-brand-90: var(--color-violet-100);
+  --wa-color-brand-95: var(--color-violet-50);
+  --wa-color-brand: var(--color-violet-600);
+  --wa-color-brand-on: var(--wa-color-violet-on);
+  --wa-color-violet-key: 60;
+
+  --wa-color-violet-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-violet-key), 1) * 100%)
+  );
+  --wa-color-violet-on: color-mix(
+    in oklab,
+    var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
+    white
+  );
+}
+
+.purple-brand {
+  --wa-color-brand-05: var(--color-purple-950);
+  --wa-color-brand-10: var(--color-purple-900);
+  --wa-color-brand-20: var(--color-purple-800);
+  --wa-color-brand-30: var(--color-purple-700);
+  --wa-color-brand-40: var(--color-purple-600);
+  --wa-color-brand-50: var(--color-purple-500);
+  --wa-color-brand-60: var(--color-purple-400);
+  --wa-color-brand-70: var(--color-purple-300);
+  --wa-color-brand-80: var(--color-purple-200);
+  --wa-color-brand-90: var(--color-purple-100);
+  --wa-color-brand-95: var(--color-purple-50);
+  --wa-color-brand: var(--color-purple-600);
+  --wa-color-brand-on: var(--wa-color-purple-on);
+  --wa-color-purple-key: 60;
+
+  --wa-color-purple-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-purple-key), 1) * 100%)
+  );
+  --wa-color-purple-on: color-mix(
+    in oklab,
+    var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
+    white
+  );
+}
+
+.fuchsia-brand {
+  --wa-color-brand-05: var(--color-fuchsia-950);
+  --wa-color-brand-10: var(--color-fuchsia-900);
+  --wa-color-brand-20: var(--color-fuchsia-800);
+  --wa-color-brand-30: var(--color-fuchsia-700);
+  --wa-color-brand-40: var(--color-fuchsia-600);
+  --wa-color-brand-50: var(--color-fuchsia-500);
+  --wa-color-brand-60: var(--color-fuchsia-400);
+  --wa-color-brand-70: var(--color-fuchsia-300);
+  --wa-color-brand-80: var(--color-fuchsia-200);
+  --wa-color-brand-90: var(--color-fuchsia-100);
+  --wa-color-brand-95: var(--color-fuchsia-50);
+  --wa-color-brand: var(--color-fuchsia-600);
+  --wa-color-brand-on: var(--wa-color-fuchsia-on);
+  --wa-color-fuchsia-key: 60;
+
+  --wa-color-fuchsia-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-fuchsia-key), 1) * 100%)
+  );
+  --wa-color-fuchsia-on: color-mix(
+    in oklab,
+    var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
+    white
+  );
+}
+
+.pink-brand {
+  --wa-color-brand-05: var(--color-pink-950);
+  --wa-color-brand-10: var(--color-pink-900);
+  --wa-color-brand-20: var(--color-pink-800);
+  --wa-color-brand-30: var(--color-pink-700);
+  --wa-color-brand-40: var(--color-pink-600);
+  --wa-color-brand-50: var(--color-pink-500);
+  --wa-color-brand-60: var(--color-pink-400);
+  --wa-color-brand-70: var(--color-pink-300);
+  --wa-color-brand-80: var(--color-pink-200);
+  --wa-color-brand-90: var(--color-pink-100);
+  --wa-color-brand-95: var(--color-pink-50);
+  --wa-color-brand: var(--color-pink-600);
+  --wa-color-brand-on: var(--wa-color-pink-on);
+  --wa-color-pink-key: 60;
+
+  --wa-color-pink-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-pink-key), 1) * 100%)
+  );
+  --wa-color-pink-on: color-mix(
+    in oklab,
+    var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
+    white
+  );
+}
+
+.rose-brand {
+  --wa-color-brand-05: var(--color-rose-950);
+  --wa-color-brand-10: var(--color-rose-900);
+  --wa-color-brand-20: var(--color-rose-800);
+  --wa-color-brand-30: var(--color-rose-700);
+  --wa-color-brand-40: var(--color-rose-600);
+  --wa-color-brand-50: var(--color-rose-500);
+  --wa-color-brand-60: var(--color-rose-400);
+  --wa-color-brand-70: var(--color-rose-300);
+  --wa-color-brand-80: var(--color-rose-200);
+  --wa-color-brand-90: var(--color-rose-100);
+  --wa-color-brand-95: var(--color-rose-50);
+  --wa-color-brand: var(--color-rose-600);
+  --wa-color-brand-on: var(--wa-color-rose-on);
+  --wa-color-rose-key: 60;
+
+  --wa-color-rose-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-rose-key), 1) * 100%)
+  );
+  --wa-color-rose-on: color-mix(
+    in oklab,
+    var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
+    white
+  );
+}
+
+.slate-brand {
+  --wa-color-brand-05: var(--color-slate-950);
+  --wa-color-brand-10: var(--color-slate-900);
+  --wa-color-brand-20: var(--color-slate-800);
+  --wa-color-brand-30: var(--color-slate-700);
+  --wa-color-brand-40: var(--color-slate-600);
+  --wa-color-brand-50: var(--color-slate-500);
+  --wa-color-brand-60: var(--color-slate-400);
+  --wa-color-brand-70: var(--color-slate-300);
+  --wa-color-brand-80: var(--color-slate-200);
+  --wa-color-brand-90: var(--color-slate-100);
+  --wa-color-brand-95: var(--color-slate-50);
+  --wa-color-brand: var(--color-slate-600);
+  --wa-color-brand-on: var(--wa-color-slate-on);
+  --wa-color-slate-key: 60;
+
+  --wa-color-slate-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-slate-key), 1) * 100%)
+  );
+  --wa-color-slate-on: color-mix(
+    in oklab,
+    var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
+    white
+  );
+}
+
+.gray-brand {
+  --wa-color-brand-05: var(--color-gray-950);
+  --wa-color-brand-10: var(--color-gray-900);
+  --wa-color-brand-20: var(--color-gray-800);
+  --wa-color-brand-30: var(--color-gray-700);
+  --wa-color-brand-40: var(--color-gray-600);
+  --wa-color-brand-50: var(--color-gray-500);
+  --wa-color-brand-60: var(--color-gray-400);
+  --wa-color-brand-70: var(--color-gray-300);
+  --wa-color-brand-80: var(--color-gray-200);
+  --wa-color-brand-90: var(--color-gray-100);
+  --wa-color-brand-95: var(--color-gray-50);
+  --wa-color-brand: var(--color-gray-600);
+  --wa-color-brand-on: var(--wa-color-gray-on);
+  --wa-color-gray-key: 60;
+
+  --wa-color-gray-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-gray-key), 1) * 100%)
+  );
+  --wa-color-gray-on: color-mix(
+    in oklab,
+    var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
+    white
+  );
+}
+
+.zinc-brand {
+  --wa-color-brand-05: var(--color-zinc-950);
+  --wa-color-brand-10: var(--color-zinc-900);
+  --wa-color-brand-20: var(--color-zinc-800);
+  --wa-color-brand-30: var(--color-zinc-700);
+  --wa-color-brand-40: var(--color-zinc-600);
+  --wa-color-brand-50: var(--color-zinc-500);
+  --wa-color-brand-60: var(--color-zinc-400);
+  --wa-color-brand-70: var(--color-zinc-300);
+  --wa-color-brand-80: var(--color-zinc-200);
+  --wa-color-brand-90: var(--color-zinc-100);
+  --wa-color-brand-95: var(--color-zinc-50);
+  --wa-color-brand: var(--color-zinc-600);
+  --wa-color-brand-on: var(--wa-color-zinc-on);
+  --wa-color-zinc-key: 60;
+
+  --wa-color-zinc-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-zinc-key), 1) * 100%)
+  );
+  --wa-color-zinc-on: color-mix(
+    in oklab,
+    var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
+    white
+  );
+}
+
+.neutral-brand {
+  --wa-color-brand-05: var(--color-neutral-950);
+  --wa-color-brand-10: var(--color-neutral-900);
+  --wa-color-brand-20: var(--color-neutral-800);
+  --wa-color-brand-30: var(--color-neutral-700);
+  --wa-color-brand-40: var(--color-neutral-600);
+  --wa-color-brand-50: var(--color-neutral-500);
+  --wa-color-brand-60: var(--color-neutral-400);
+  --wa-color-brand-70: var(--color-neutral-300);
+  --wa-color-brand-80: var(--color-neutral-200);
+  --wa-color-brand-90: var(--color-neutral-100);
+  --wa-color-brand-95: var(--color-neutral-50);
+  --wa-color-brand: var(--color-neutral-600);
+  --wa-color-brand-on: var(--wa-color-neutral-on);
+  --wa-color-neutral-key: 60;
+
+  --wa-color-neutral-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-neutral-key), 1) * 100%)
+  );
+  --wa-color-neutral-on: color-mix(
+    in oklab,
+    var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
+    white
+  );
+}
+
+.stone-brand {
+  --wa-color-brand-05: var(--color-stone-950);
+  --wa-color-brand-10: var(--color-stone-900);
+  --wa-color-brand-20: var(--color-stone-800);
+  --wa-color-brand-30: var(--color-stone-700);
+  --wa-color-brand-40: var(--color-stone-600);
+  --wa-color-brand-50: var(--color-stone-500);
+  --wa-color-brand-60: var(--color-stone-400);
+  --wa-color-brand-70: var(--color-stone-300);
+  --wa-color-brand-80: var(--color-stone-200);
+  --wa-color-brand-90: var(--color-stone-100);
+  --wa-color-brand-95: var(--color-stone-50);
+  --wa-color-brand: var(--color-stone-600);
+  --wa-color-brand-on: var(--wa-color-stone-on);
+  --wa-color-stone-key: 60;
+
+  --wa-color-stone-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-stone-key), 1) * 100%)
+  );
+  --wa-color-stone-on: color-mix(
+    in oklab,
+    var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
+    white
+  );
+}
+
+.taupe-brand {
+  --wa-color-brand-05: var(--color-taupe-950);
+  --wa-color-brand-10: var(--color-taupe-900);
+  --wa-color-brand-20: var(--color-taupe-800);
+  --wa-color-brand-30: var(--color-taupe-700);
+  --wa-color-brand-40: var(--color-taupe-600);
+  --wa-color-brand-50: var(--color-taupe-500);
+  --wa-color-brand-60: var(--color-taupe-400);
+  --wa-color-brand-70: var(--color-taupe-300);
+  --wa-color-brand-80: var(--color-taupe-200);
+  --wa-color-brand-90: var(--color-taupe-100);
+  --wa-color-brand-95: var(--color-taupe-50);
+  --wa-color-brand: var(--color-taupe-600);
+  --wa-color-brand-on: var(--wa-color-taupe-on);
+  --wa-color-taupe-key: 60;
+
+  --wa-color-taupe-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-taupe-key), 1) * 100%)
+  );
+  --wa-color-taupe-on: color-mix(
+    in oklab,
+    var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
+    white
+  );
+}
+
+.mauve-brand {
+  --wa-color-brand-05: var(--color-mauve-950);
+  --wa-color-brand-10: var(--color-mauve-900);
+  --wa-color-brand-20: var(--color-mauve-800);
+  --wa-color-brand-30: var(--color-mauve-700);
+  --wa-color-brand-40: var(--color-mauve-600);
+  --wa-color-brand-50: var(--color-mauve-500);
+  --wa-color-brand-60: var(--color-mauve-400);
+  --wa-color-brand-70: var(--color-mauve-300);
+  --wa-color-brand-80: var(--color-mauve-200);
+  --wa-color-brand-90: var(--color-mauve-100);
+  --wa-color-brand-95: var(--color-mauve-50);
+  --wa-color-brand: var(--color-mauve-600);
+  --wa-color-brand-on: var(--wa-color-mauve-on);
+  --wa-color-mauve-key: 60;
+
+  --wa-color-mauve-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mauve-key), 1) * 100%)
+  );
+  --wa-color-mauve-on: color-mix(
+    in oklab,
+    var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
+    white
+  );
+}
+
+.mist-brand {
+  --wa-color-brand-05: var(--color-mist-950);
+  --wa-color-brand-10: var(--color-mist-900);
+  --wa-color-brand-20: var(--color-mist-800);
+  --wa-color-brand-30: var(--color-mist-700);
+  --wa-color-brand-40: var(--color-mist-600);
+  --wa-color-brand-50: var(--color-mist-500);
+  --wa-color-brand-60: var(--color-mist-400);
+  --wa-color-brand-70: var(--color-mist-300);
+  --wa-color-brand-80: var(--color-mist-200);
+  --wa-color-brand-90: var(--color-mist-100);
+  --wa-color-brand-95: var(--color-mist-50);
+  --wa-color-brand: var(--color-mist-600);
+  --wa-color-brand-on: var(--wa-color-mist-on);
+  --wa-color-mist-key: 60;
+
+  --wa-color-mist-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mist-key), 1) * 100%)
+  );
+  --wa-color-mist-on: color-mix(
+    in oklab,
+    var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
+    white
+  );
+}
+
+.olive-brand {
+  --wa-color-brand-05: var(--color-olive-950);
+  --wa-color-brand-10: var(--color-olive-900);
+  --wa-color-brand-20: var(--color-olive-800);
+  --wa-color-brand-30: var(--color-olive-700);
+  --wa-color-brand-40: var(--color-olive-600);
+  --wa-color-brand-50: var(--color-olive-500);
+  --wa-color-brand-60: var(--color-olive-400);
+  --wa-color-brand-70: var(--color-olive-300);
+  --wa-color-brand-80: var(--color-olive-200);
+  --wa-color-brand-90: var(--color-olive-100);
+  --wa-color-brand-95: var(--color-olive-50);
+  --wa-color-brand: var(--color-olive-600);
+  --wa-color-brand-on: var(--wa-color-olive-on);
+  --wa-color-olive-key: 60;
+
+  --wa-color-olive-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-olive-key), 1) * 100%)
+  );
+  --wa-color-olive-on: color-mix(
+    in oklab,
+    var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
+    white
+  );
+}
+
+.red-danger {
+  --wa-color-danger-05: var(--color-red-950);
+  --wa-color-danger-10: var(--color-red-900);
+  --wa-color-danger-20: var(--color-red-800);
+  --wa-color-danger-30: var(--color-red-700);
+  --wa-color-danger-40: var(--color-red-600);
+  --wa-color-danger-50: var(--color-red-500);
+  --wa-color-danger-60: var(--color-red-400);
+  --wa-color-danger-70: var(--color-red-300);
+  --wa-color-danger-80: var(--color-red-200);
+  --wa-color-danger-90: var(--color-red-100);
+  --wa-color-danger-95: var(--color-red-50);
+  --wa-color-danger: var(--color-red-600);
+  --wa-color-danger-on: var(--wa-color-red-on);
+  --wa-color-red-key: 60;
+
+  --wa-color-red-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-red-key), 1) * 100%)
+  );
+  --wa-color-red-on: color-mix(
+    in oklab,
+    var(--wa-color-red-10) var(--wa-color-red-gte-60),
+    white
+  );
+}
+
+.orange-danger {
+  --wa-color-danger-05: var(--color-orange-950);
+  --wa-color-danger-10: var(--color-orange-900);
+  --wa-color-danger-20: var(--color-orange-800);
+  --wa-color-danger-30: var(--color-orange-700);
+  --wa-color-danger-40: var(--color-orange-600);
+  --wa-color-danger-50: var(--color-orange-500);
+  --wa-color-danger-60: var(--color-orange-400);
+  --wa-color-danger-70: var(--color-orange-300);
+  --wa-color-danger-80: var(--color-orange-200);
+  --wa-color-danger-90: var(--color-orange-100);
+  --wa-color-danger-95: var(--color-orange-50);
+  --wa-color-danger: var(--color-orange-600);
+  --wa-color-danger-on: var(--wa-color-orange-on);
+  --wa-color-orange-key: 60;
+
+  --wa-color-orange-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-orange-key), 1) * 100%)
+  );
+  --wa-color-orange-on: color-mix(
+    in oklab,
+    var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
+    white
+  );
+}
+
+.amber-danger {
+  --wa-color-danger-05: var(--color-amber-950);
+  --wa-color-danger-10: var(--color-amber-900);
+  --wa-color-danger-20: var(--color-amber-800);
+  --wa-color-danger-30: var(--color-amber-700);
+  --wa-color-danger-40: var(--color-amber-600);
+  --wa-color-danger-50: var(--color-amber-500);
+  --wa-color-danger-60: var(--color-amber-400);
+  --wa-color-danger-70: var(--color-amber-300);
+  --wa-color-danger-80: var(--color-amber-200);
+  --wa-color-danger-90: var(--color-amber-100);
+  --wa-color-danger-95: var(--color-amber-50);
+  --wa-color-danger: var(--color-amber-600);
+  --wa-color-danger-on: var(--wa-color-amber-on);
+  --wa-color-amber-key: 60;
+
+  --wa-color-amber-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-amber-key), 1) * 100%)
+  );
+  --wa-color-amber-on: color-mix(
+    in oklab,
+    var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
+    white
+  );
+}
+
+.yellow-danger {
+  --wa-color-danger-05: var(--color-yellow-950);
+  --wa-color-danger-10: var(--color-yellow-900);
+  --wa-color-danger-20: var(--color-yellow-800);
+  --wa-color-danger-30: var(--color-yellow-700);
+  --wa-color-danger-40: var(--color-yellow-600);
+  --wa-color-danger-50: var(--color-yellow-500);
+  --wa-color-danger-60: var(--color-yellow-400);
+  --wa-color-danger-70: var(--color-yellow-300);
+  --wa-color-danger-80: var(--color-yellow-200);
+  --wa-color-danger-90: var(--color-yellow-100);
+  --wa-color-danger-95: var(--color-yellow-50);
+  --wa-color-danger: var(--color-yellow-600);
+  --wa-color-danger-on: var(--wa-color-yellow-on);
+  --wa-color-yellow-key: 60;
+
+  --wa-color-yellow-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-yellow-key), 1) * 100%)
+  );
+  --wa-color-yellow-on: color-mix(
+    in oklab,
+    var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
+    white
+  );
+}
+
+.lime-danger {
+  --wa-color-danger-05: var(--color-lime-950);
+  --wa-color-danger-10: var(--color-lime-900);
+  --wa-color-danger-20: var(--color-lime-800);
+  --wa-color-danger-30: var(--color-lime-700);
+  --wa-color-danger-40: var(--color-lime-600);
+  --wa-color-danger-50: var(--color-lime-500);
+  --wa-color-danger-60: var(--color-lime-400);
+  --wa-color-danger-70: var(--color-lime-300);
+  --wa-color-danger-80: var(--color-lime-200);
+  --wa-color-danger-90: var(--color-lime-100);
+  --wa-color-danger-95: var(--color-lime-50);
+  --wa-color-danger: var(--color-lime-600);
+  --wa-color-danger-on: var(--wa-color-lime-on);
+  --wa-color-lime-key: 60;
+
+  --wa-color-lime-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-lime-key), 1) * 100%)
+  );
+  --wa-color-lime-on: color-mix(
+    in oklab,
+    var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
+    white
+  );
+}
+
+.green-danger {
+  --wa-color-danger-05: var(--color-green-950);
+  --wa-color-danger-10: var(--color-green-900);
+  --wa-color-danger-20: var(--color-green-800);
+  --wa-color-danger-30: var(--color-green-700);
+  --wa-color-danger-40: var(--color-green-600);
+  --wa-color-danger-50: var(--color-green-500);
+  --wa-color-danger-60: var(--color-green-400);
+  --wa-color-danger-70: var(--color-green-300);
+  --wa-color-danger-80: var(--color-green-200);
+  --wa-color-danger-90: var(--color-green-100);
+  --wa-color-danger-95: var(--color-green-50);
+  --wa-color-danger: var(--color-green-600);
+  --wa-color-danger-on: var(--wa-color-green-on);
+  --wa-color-green-key: 60;
+
+  --wa-color-green-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-green-key), 1) * 100%)
+  );
+  --wa-color-green-on: color-mix(
+    in oklab,
+    var(--wa-color-green-10) var(--wa-color-green-gte-60),
+    white
+  );
+}
+
+.emerald-danger {
+  --wa-color-danger-05: var(--color-emerald-950);
+  --wa-color-danger-10: var(--color-emerald-900);
+  --wa-color-danger-20: var(--color-emerald-800);
+  --wa-color-danger-30: var(--color-emerald-700);
+  --wa-color-danger-40: var(--color-emerald-600);
+  --wa-color-danger-50: var(--color-emerald-500);
+  --wa-color-danger-60: var(--color-emerald-400);
+  --wa-color-danger-70: var(--color-emerald-300);
+  --wa-color-danger-80: var(--color-emerald-200);
+  --wa-color-danger-90: var(--color-emerald-100);
+  --wa-color-danger-95: var(--color-emerald-50);
+  --wa-color-danger: var(--color-emerald-600);
+  --wa-color-danger-on: var(--wa-color-emerald-on);
+  --wa-color-emerald-key: 60;
+
+  --wa-color-emerald-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-emerald-key), 1) * 100%)
+  );
+  --wa-color-emerald-on: color-mix(
+    in oklab,
+    var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
+    white
+  );
+}
+
+.teal-danger {
+  --wa-color-danger-05: var(--color-teal-950);
+  --wa-color-danger-10: var(--color-teal-900);
+  --wa-color-danger-20: var(--color-teal-800);
+  --wa-color-danger-30: var(--color-teal-700);
+  --wa-color-danger-40: var(--color-teal-600);
+  --wa-color-danger-50: var(--color-teal-500);
+  --wa-color-danger-60: var(--color-teal-400);
+  --wa-color-danger-70: var(--color-teal-300);
+  --wa-color-danger-80: var(--color-teal-200);
+  --wa-color-danger-90: var(--color-teal-100);
+  --wa-color-danger-95: var(--color-teal-50);
+  --wa-color-danger: var(--color-teal-600);
+  --wa-color-danger-on: var(--wa-color-teal-on);
+  --wa-color-teal-key: 60;
+
+  --wa-color-teal-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-teal-key), 1) * 100%)
+  );
+  --wa-color-teal-on: color-mix(
+    in oklab,
+    var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
+    white
+  );
+}
+
+.cyan-danger {
+  --wa-color-danger-05: var(--color-cyan-950);
+  --wa-color-danger-10: var(--color-cyan-900);
+  --wa-color-danger-20: var(--color-cyan-800);
+  --wa-color-danger-30: var(--color-cyan-700);
+  --wa-color-danger-40: var(--color-cyan-600);
+  --wa-color-danger-50: var(--color-cyan-500);
+  --wa-color-danger-60: var(--color-cyan-400);
+  --wa-color-danger-70: var(--color-cyan-300);
+  --wa-color-danger-80: var(--color-cyan-200);
+  --wa-color-danger-90: var(--color-cyan-100);
+  --wa-color-danger-95: var(--color-cyan-50);
+  --wa-color-danger: var(--color-cyan-600);
+  --wa-color-danger-on: var(--wa-color-cyan-on);
+  --wa-color-cyan-key: 60;
+
+  --wa-color-cyan-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-cyan-key), 1) * 100%)
+  );
+  --wa-color-cyan-on: color-mix(
+    in oklab,
+    var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
+    white
+  );
+}
+
+.sky-danger {
+  --wa-color-danger-05: var(--color-sky-950);
+  --wa-color-danger-10: var(--color-sky-900);
+  --wa-color-danger-20: var(--color-sky-800);
+  --wa-color-danger-30: var(--color-sky-700);
+  --wa-color-danger-40: var(--color-sky-600);
+  --wa-color-danger-50: var(--color-sky-500);
+  --wa-color-danger-60: var(--color-sky-400);
+  --wa-color-danger-70: var(--color-sky-300);
+  --wa-color-danger-80: var(--color-sky-200);
+  --wa-color-danger-90: var(--color-sky-100);
+  --wa-color-danger-95: var(--color-sky-50);
+  --wa-color-danger: var(--color-sky-600);
+  --wa-color-danger-on: var(--wa-color-sky-on);
+  --wa-color-sky-key: 60;
+
+  --wa-color-sky-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-sky-key), 1) * 100%)
+  );
+  --wa-color-sky-on: color-mix(
+    in oklab,
+    var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
+    white
+  );
+}
+
+.blue-danger {
+  --wa-color-danger-05: var(--color-blue-950);
+  --wa-color-danger-10: var(--color-blue-900);
+  --wa-color-danger-20: var(--color-blue-800);
+  --wa-color-danger-30: var(--color-blue-700);
+  --wa-color-danger-40: var(--color-blue-600);
+  --wa-color-danger-50: var(--color-blue-500);
+  --wa-color-danger-60: var(--color-blue-400);
+  --wa-color-danger-70: var(--color-blue-300);
+  --wa-color-danger-80: var(--color-blue-200);
+  --wa-color-danger-90: var(--color-blue-100);
+  --wa-color-danger-95: var(--color-blue-50);
+  --wa-color-danger: var(--color-blue-600);
+  --wa-color-danger-on: var(--wa-color-blue-on);
+  --wa-color-blue-key: 60;
+
+  --wa-color-blue-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-blue-key), 1) * 100%)
+  );
+  --wa-color-blue-on: color-mix(
+    in oklab,
+    var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
+    white
+  );
+}
+
+.indigo-danger {
+  --wa-color-danger-05: var(--color-indigo-950);
+  --wa-color-danger-10: var(--color-indigo-900);
+  --wa-color-danger-20: var(--color-indigo-800);
+  --wa-color-danger-30: var(--color-indigo-700);
+  --wa-color-danger-40: var(--color-indigo-600);
+  --wa-color-danger-50: var(--color-indigo-500);
+  --wa-color-danger-60: var(--color-indigo-400);
+  --wa-color-danger-70: var(--color-indigo-300);
+  --wa-color-danger-80: var(--color-indigo-200);
+  --wa-color-danger-90: var(--color-indigo-100);
+  --wa-color-danger-95: var(--color-indigo-50);
+  --wa-color-danger: var(--color-indigo-600);
+  --wa-color-danger-on: var(--wa-color-indigo-on);
+  --wa-color-indigo-key: 60;
+
+  --wa-color-indigo-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-indigo-key), 1) * 100%)
+  );
+  --wa-color-indigo-on: color-mix(
+    in oklab,
+    var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
+    white
+  );
+}
+
+.violet-danger {
+  --wa-color-danger-05: var(--color-violet-950);
+  --wa-color-danger-10: var(--color-violet-900);
+  --wa-color-danger-20: var(--color-violet-800);
+  --wa-color-danger-30: var(--color-violet-700);
+  --wa-color-danger-40: var(--color-violet-600);
+  --wa-color-danger-50: var(--color-violet-500);
+  --wa-color-danger-60: var(--color-violet-400);
+  --wa-color-danger-70: var(--color-violet-300);
+  --wa-color-danger-80: var(--color-violet-200);
+  --wa-color-danger-90: var(--color-violet-100);
+  --wa-color-danger-95: var(--color-violet-50);
+  --wa-color-danger: var(--color-violet-600);
+  --wa-color-danger-on: var(--wa-color-violet-on);
+  --wa-color-violet-key: 60;
+
+  --wa-color-violet-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-violet-key), 1) * 100%)
+  );
+  --wa-color-violet-on: color-mix(
+    in oklab,
+    var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
+    white
+  );
+}
+
+.purple-danger {
+  --wa-color-danger-05: var(--color-purple-950);
+  --wa-color-danger-10: var(--color-purple-900);
+  --wa-color-danger-20: var(--color-purple-800);
+  --wa-color-danger-30: var(--color-purple-700);
+  --wa-color-danger-40: var(--color-purple-600);
+  --wa-color-danger-50: var(--color-purple-500);
+  --wa-color-danger-60: var(--color-purple-400);
+  --wa-color-danger-70: var(--color-purple-300);
+  --wa-color-danger-80: var(--color-purple-200);
+  --wa-color-danger-90: var(--color-purple-100);
+  --wa-color-danger-95: var(--color-purple-50);
+  --wa-color-danger: var(--color-purple-600);
+  --wa-color-danger-on: var(--wa-color-purple-on);
+  --wa-color-purple-key: 60;
+
+  --wa-color-purple-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-purple-key), 1) * 100%)
+  );
+  --wa-color-purple-on: color-mix(
+    in oklab,
+    var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
+    white
+  );
+}
+
+.fuchsia-danger {
+  --wa-color-danger-05: var(--color-fuchsia-950);
+  --wa-color-danger-10: var(--color-fuchsia-900);
+  --wa-color-danger-20: var(--color-fuchsia-800);
+  --wa-color-danger-30: var(--color-fuchsia-700);
+  --wa-color-danger-40: var(--color-fuchsia-600);
+  --wa-color-danger-50: var(--color-fuchsia-500);
+  --wa-color-danger-60: var(--color-fuchsia-400);
+  --wa-color-danger-70: var(--color-fuchsia-300);
+  --wa-color-danger-80: var(--color-fuchsia-200);
+  --wa-color-danger-90: var(--color-fuchsia-100);
+  --wa-color-danger-95: var(--color-fuchsia-50);
+  --wa-color-danger: var(--color-fuchsia-600);
+  --wa-color-danger-on: var(--wa-color-fuchsia-on);
+  --wa-color-fuchsia-key: 60;
+
+  --wa-color-fuchsia-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-fuchsia-key), 1) * 100%)
+  );
+  --wa-color-fuchsia-on: color-mix(
+    in oklab,
+    var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
+    white
+  );
+}
+
+.pink-danger {
+  --wa-color-danger-05: var(--color-pink-950);
+  --wa-color-danger-10: var(--color-pink-900);
+  --wa-color-danger-20: var(--color-pink-800);
+  --wa-color-danger-30: var(--color-pink-700);
+  --wa-color-danger-40: var(--color-pink-600);
+  --wa-color-danger-50: var(--color-pink-500);
+  --wa-color-danger-60: var(--color-pink-400);
+  --wa-color-danger-70: var(--color-pink-300);
+  --wa-color-danger-80: var(--color-pink-200);
+  --wa-color-danger-90: var(--color-pink-100);
+  --wa-color-danger-95: var(--color-pink-50);
+  --wa-color-danger: var(--color-pink-600);
+  --wa-color-danger-on: var(--wa-color-pink-on);
+  --wa-color-pink-key: 60;
+
+  --wa-color-pink-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-pink-key), 1) * 100%)
+  );
+  --wa-color-pink-on: color-mix(
+    in oklab,
+    var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
+    white
+  );
+}
+
+.rose-danger {
+  --wa-color-danger-05: var(--color-rose-950);
+  --wa-color-danger-10: var(--color-rose-900);
+  --wa-color-danger-20: var(--color-rose-800);
+  --wa-color-danger-30: var(--color-rose-700);
+  --wa-color-danger-40: var(--color-rose-600);
+  --wa-color-danger-50: var(--color-rose-500);
+  --wa-color-danger-60: var(--color-rose-400);
+  --wa-color-danger-70: var(--color-rose-300);
+  --wa-color-danger-80: var(--color-rose-200);
+  --wa-color-danger-90: var(--color-rose-100);
+  --wa-color-danger-95: var(--color-rose-50);
+  --wa-color-danger: var(--color-rose-600);
+  --wa-color-danger-on: var(--wa-color-rose-on);
+  --wa-color-rose-key: 60;
+
+  --wa-color-rose-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-rose-key), 1) * 100%)
+  );
+  --wa-color-rose-on: color-mix(
+    in oklab,
+    var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
+    white
+  );
+}
+
+.slate-danger {
+  --wa-color-danger-05: var(--color-slate-950);
+  --wa-color-danger-10: var(--color-slate-900);
+  --wa-color-danger-20: var(--color-slate-800);
+  --wa-color-danger-30: var(--color-slate-700);
+  --wa-color-danger-40: var(--color-slate-600);
+  --wa-color-danger-50: var(--color-slate-500);
+  --wa-color-danger-60: var(--color-slate-400);
+  --wa-color-danger-70: var(--color-slate-300);
+  --wa-color-danger-80: var(--color-slate-200);
+  --wa-color-danger-90: var(--color-slate-100);
+  --wa-color-danger-95: var(--color-slate-50);
+  --wa-color-danger: var(--color-slate-600);
+  --wa-color-danger-on: var(--wa-color-slate-on);
+  --wa-color-slate-key: 60;
+
+  --wa-color-slate-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-slate-key), 1) * 100%)
+  );
+  --wa-color-slate-on: color-mix(
+    in oklab,
+    var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
+    white
+  );
+}
+
+.gray-danger {
+  --wa-color-danger-05: var(--color-gray-950);
+  --wa-color-danger-10: var(--color-gray-900);
+  --wa-color-danger-20: var(--color-gray-800);
+  --wa-color-danger-30: var(--color-gray-700);
+  --wa-color-danger-40: var(--color-gray-600);
+  --wa-color-danger-50: var(--color-gray-500);
+  --wa-color-danger-60: var(--color-gray-400);
+  --wa-color-danger-70: var(--color-gray-300);
+  --wa-color-danger-80: var(--color-gray-200);
+  --wa-color-danger-90: var(--color-gray-100);
+  --wa-color-danger-95: var(--color-gray-50);
+  --wa-color-danger: var(--color-gray-600);
+  --wa-color-danger-on: var(--wa-color-gray-on);
+  --wa-color-gray-key: 60;
+
+  --wa-color-gray-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-gray-key), 1) * 100%)
+  );
+  --wa-color-gray-on: color-mix(
+    in oklab,
+    var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
+    white
+  );
+}
+
+.zinc-danger {
+  --wa-color-danger-05: var(--color-zinc-950);
+  --wa-color-danger-10: var(--color-zinc-900);
+  --wa-color-danger-20: var(--color-zinc-800);
+  --wa-color-danger-30: var(--color-zinc-700);
+  --wa-color-danger-40: var(--color-zinc-600);
+  --wa-color-danger-50: var(--color-zinc-500);
+  --wa-color-danger-60: var(--color-zinc-400);
+  --wa-color-danger-70: var(--color-zinc-300);
+  --wa-color-danger-80: var(--color-zinc-200);
+  --wa-color-danger-90: var(--color-zinc-100);
+  --wa-color-danger-95: var(--color-zinc-50);
+  --wa-color-danger: var(--color-zinc-600);
+  --wa-color-danger-on: var(--wa-color-zinc-on);
+  --wa-color-zinc-key: 60;
+
+  --wa-color-zinc-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-zinc-key), 1) * 100%)
+  );
+  --wa-color-zinc-on: color-mix(
+    in oklab,
+    var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
+    white
+  );
+}
+
+.neutral-danger {
+  --wa-color-danger-05: var(--color-neutral-950);
+  --wa-color-danger-10: var(--color-neutral-900);
+  --wa-color-danger-20: var(--color-neutral-800);
+  --wa-color-danger-30: var(--color-neutral-700);
+  --wa-color-danger-40: var(--color-neutral-600);
+  --wa-color-danger-50: var(--color-neutral-500);
+  --wa-color-danger-60: var(--color-neutral-400);
+  --wa-color-danger-70: var(--color-neutral-300);
+  --wa-color-danger-80: var(--color-neutral-200);
+  --wa-color-danger-90: var(--color-neutral-100);
+  --wa-color-danger-95: var(--color-neutral-50);
+  --wa-color-danger: var(--color-neutral-600);
+  --wa-color-danger-on: var(--wa-color-neutral-on);
+  --wa-color-neutral-key: 60;
+
+  --wa-color-neutral-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-neutral-key), 1) * 100%)
+  );
+  --wa-color-neutral-on: color-mix(
+    in oklab,
+    var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
+    white
+  );
+}
+
+.stone-danger {
+  --wa-color-danger-05: var(--color-stone-950);
+  --wa-color-danger-10: var(--color-stone-900);
+  --wa-color-danger-20: var(--color-stone-800);
+  --wa-color-danger-30: var(--color-stone-700);
+  --wa-color-danger-40: var(--color-stone-600);
+  --wa-color-danger-50: var(--color-stone-500);
+  --wa-color-danger-60: var(--color-stone-400);
+  --wa-color-danger-70: var(--color-stone-300);
+  --wa-color-danger-80: var(--color-stone-200);
+  --wa-color-danger-90: var(--color-stone-100);
+  --wa-color-danger-95: var(--color-stone-50);
+  --wa-color-danger: var(--color-stone-600);
+  --wa-color-danger-on: var(--wa-color-stone-on);
+  --wa-color-stone-key: 60;
+
+  --wa-color-stone-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-stone-key), 1) * 100%)
+  );
+  --wa-color-stone-on: color-mix(
+    in oklab,
+    var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
+    white
+  );
+}
+
+.taupe-danger {
+  --wa-color-danger-05: var(--color-taupe-950);
+  --wa-color-danger-10: var(--color-taupe-900);
+  --wa-color-danger-20: var(--color-taupe-800);
+  --wa-color-danger-30: var(--color-taupe-700);
+  --wa-color-danger-40: var(--color-taupe-600);
+  --wa-color-danger-50: var(--color-taupe-500);
+  --wa-color-danger-60: var(--color-taupe-400);
+  --wa-color-danger-70: var(--color-taupe-300);
+  --wa-color-danger-80: var(--color-taupe-200);
+  --wa-color-danger-90: var(--color-taupe-100);
+  --wa-color-danger-95: var(--color-taupe-50);
+  --wa-color-danger: var(--color-taupe-600);
+  --wa-color-danger-on: var(--wa-color-taupe-on);
+  --wa-color-taupe-key: 60;
+
+  --wa-color-taupe-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-taupe-key), 1) * 100%)
+  );
+  --wa-color-taupe-on: color-mix(
+    in oklab,
+    var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
+    white
+  );
+}
+
+.mauve-danger {
+  --wa-color-danger-05: var(--color-mauve-950);
+  --wa-color-danger-10: var(--color-mauve-900);
+  --wa-color-danger-20: var(--color-mauve-800);
+  --wa-color-danger-30: var(--color-mauve-700);
+  --wa-color-danger-40: var(--color-mauve-600);
+  --wa-color-danger-50: var(--color-mauve-500);
+  --wa-color-danger-60: var(--color-mauve-400);
+  --wa-color-danger-70: var(--color-mauve-300);
+  --wa-color-danger-80: var(--color-mauve-200);
+  --wa-color-danger-90: var(--color-mauve-100);
+  --wa-color-danger-95: var(--color-mauve-50);
+  --wa-color-danger: var(--color-mauve-600);
+  --wa-color-danger-on: var(--wa-color-mauve-on);
+  --wa-color-mauve-key: 60;
+
+  --wa-color-mauve-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mauve-key), 1) * 100%)
+  );
+  --wa-color-mauve-on: color-mix(
+    in oklab,
+    var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
+    white
+  );
+}
+
+.mist-danger {
+  --wa-color-danger-05: var(--color-mist-950);
+  --wa-color-danger-10: var(--color-mist-900);
+  --wa-color-danger-20: var(--color-mist-800);
+  --wa-color-danger-30: var(--color-mist-700);
+  --wa-color-danger-40: var(--color-mist-600);
+  --wa-color-danger-50: var(--color-mist-500);
+  --wa-color-danger-60: var(--color-mist-400);
+  --wa-color-danger-70: var(--color-mist-300);
+  --wa-color-danger-80: var(--color-mist-200);
+  --wa-color-danger-90: var(--color-mist-100);
+  --wa-color-danger-95: var(--color-mist-50);
+  --wa-color-danger: var(--color-mist-600);
+  --wa-color-danger-on: var(--wa-color-mist-on);
+  --wa-color-mist-key: 60;
+
+  --wa-color-mist-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mist-key), 1) * 100%)
+  );
+  --wa-color-mist-on: color-mix(
+    in oklab,
+    var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
+    white
+  );
+}
+
+.olive-danger {
+  --wa-color-danger-05: var(--color-olive-950);
+  --wa-color-danger-10: var(--color-olive-900);
+  --wa-color-danger-20: var(--color-olive-800);
+  --wa-color-danger-30: var(--color-olive-700);
+  --wa-color-danger-40: var(--color-olive-600);
+  --wa-color-danger-50: var(--color-olive-500);
+  --wa-color-danger-60: var(--color-olive-400);
+  --wa-color-danger-70: var(--color-olive-300);
+  --wa-color-danger-80: var(--color-olive-200);
+  --wa-color-danger-90: var(--color-olive-100);
+  --wa-color-danger-95: var(--color-olive-50);
+  --wa-color-danger: var(--color-olive-600);
+  --wa-color-danger-on: var(--wa-color-olive-on);
+  --wa-color-olive-key: 60;
+
+  --wa-color-olive-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-olive-key), 1) * 100%)
+  );
+  --wa-color-olive-on: color-mix(
+    in oklab,
+    var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
+    white
+  );
+}
+
+.red-neutral {
+  --wa-color-neutral-05: var(--color-red-950);
+  --wa-color-neutral-10: var(--color-red-900);
+  --wa-color-neutral-20: var(--color-red-800);
+  --wa-color-neutral-30: var(--color-red-700);
+  --wa-color-neutral-40: var(--color-red-600);
+  --wa-color-neutral-50: var(--color-red-500);
+  --wa-color-neutral-60: var(--color-red-400);
+  --wa-color-neutral-70: var(--color-red-300);
+  --wa-color-neutral-80: var(--color-red-200);
+  --wa-color-neutral-90: var(--color-red-100);
+  --wa-color-neutral-95: var(--color-red-50);
+  --wa-color-neutral: var(--color-red-600);
+  --wa-color-neutral-on: var(--wa-color-red-on);
+  --wa-color-red-key: 60;
+
+  --wa-color-red-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-red-key), 1) * 100%)
+  );
+  --wa-color-red-on: color-mix(
+    in oklab,
+    var(--wa-color-red-10) var(--wa-color-red-gte-60),
+    white
+  );
+}
+
+.orange-neutral {
+  --wa-color-neutral-05: var(--color-orange-950);
+  --wa-color-neutral-10: var(--color-orange-900);
+  --wa-color-neutral-20: var(--color-orange-800);
+  --wa-color-neutral-30: var(--color-orange-700);
+  --wa-color-neutral-40: var(--color-orange-600);
+  --wa-color-neutral-50: var(--color-orange-500);
+  --wa-color-neutral-60: var(--color-orange-400);
+  --wa-color-neutral-70: var(--color-orange-300);
+  --wa-color-neutral-80: var(--color-orange-200);
+  --wa-color-neutral-90: var(--color-orange-100);
+  --wa-color-neutral-95: var(--color-orange-50);
+  --wa-color-neutral: var(--color-orange-600);
+  --wa-color-neutral-on: var(--wa-color-orange-on);
+  --wa-color-orange-key: 60;
+
+  --wa-color-orange-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-orange-key), 1) * 100%)
+  );
+  --wa-color-orange-on: color-mix(
+    in oklab,
+    var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
+    white
+  );
+}
+
+.amber-neutral {
+  --wa-color-neutral-05: var(--color-amber-950);
+  --wa-color-neutral-10: var(--color-amber-900);
+  --wa-color-neutral-20: var(--color-amber-800);
+  --wa-color-neutral-30: var(--color-amber-700);
+  --wa-color-neutral-40: var(--color-amber-600);
+  --wa-color-neutral-50: var(--color-amber-500);
+  --wa-color-neutral-60: var(--color-amber-400);
+  --wa-color-neutral-70: var(--color-amber-300);
+  --wa-color-neutral-80: var(--color-amber-200);
+  --wa-color-neutral-90: var(--color-amber-100);
+  --wa-color-neutral-95: var(--color-amber-50);
+  --wa-color-neutral: var(--color-amber-600);
+  --wa-color-neutral-on: var(--wa-color-amber-on);
+  --wa-color-amber-key: 60;
+
+  --wa-color-amber-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-amber-key), 1) * 100%)
+  );
+  --wa-color-amber-on: color-mix(
+    in oklab,
+    var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
+    white
+  );
+}
+
+.yellow-neutral {
+  --wa-color-neutral-05: var(--color-yellow-950);
+  --wa-color-neutral-10: var(--color-yellow-900);
+  --wa-color-neutral-20: var(--color-yellow-800);
+  --wa-color-neutral-30: var(--color-yellow-700);
+  --wa-color-neutral-40: var(--color-yellow-600);
+  --wa-color-neutral-50: var(--color-yellow-500);
+  --wa-color-neutral-60: var(--color-yellow-400);
+  --wa-color-neutral-70: var(--color-yellow-300);
+  --wa-color-neutral-80: var(--color-yellow-200);
+  --wa-color-neutral-90: var(--color-yellow-100);
+  --wa-color-neutral-95: var(--color-yellow-50);
+  --wa-color-neutral: var(--color-yellow-600);
+  --wa-color-neutral-on: var(--wa-color-yellow-on);
+  --wa-color-yellow-key: 60;
+
+  --wa-color-yellow-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-yellow-key), 1) * 100%)
+  );
+  --wa-color-yellow-on: color-mix(
+    in oklab,
+    var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
+    white
+  );
+}
+
+.lime-neutral {
+  --wa-color-neutral-05: var(--color-lime-950);
+  --wa-color-neutral-10: var(--color-lime-900);
+  --wa-color-neutral-20: var(--color-lime-800);
+  --wa-color-neutral-30: var(--color-lime-700);
+  --wa-color-neutral-40: var(--color-lime-600);
+  --wa-color-neutral-50: var(--color-lime-500);
+  --wa-color-neutral-60: var(--color-lime-400);
+  --wa-color-neutral-70: var(--color-lime-300);
+  --wa-color-neutral-80: var(--color-lime-200);
+  --wa-color-neutral-90: var(--color-lime-100);
+  --wa-color-neutral-95: var(--color-lime-50);
+  --wa-color-neutral: var(--color-lime-600);
+  --wa-color-neutral-on: var(--wa-color-lime-on);
+  --wa-color-lime-key: 60;
+
+  --wa-color-lime-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-lime-key), 1) * 100%)
+  );
+  --wa-color-lime-on: color-mix(
+    in oklab,
+    var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
+    white
+  );
+}
+
+.green-neutral {
+  --wa-color-neutral-05: var(--color-green-950);
+  --wa-color-neutral-10: var(--color-green-900);
+  --wa-color-neutral-20: var(--color-green-800);
+  --wa-color-neutral-30: var(--color-green-700);
+  --wa-color-neutral-40: var(--color-green-600);
+  --wa-color-neutral-50: var(--color-green-500);
+  --wa-color-neutral-60: var(--color-green-400);
+  --wa-color-neutral-70: var(--color-green-300);
+  --wa-color-neutral-80: var(--color-green-200);
+  --wa-color-neutral-90: var(--color-green-100);
+  --wa-color-neutral-95: var(--color-green-50);
+  --wa-color-neutral: var(--color-green-600);
+  --wa-color-neutral-on: var(--wa-color-green-on);
+  --wa-color-green-key: 60;
+
+  --wa-color-green-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-green-key), 1) * 100%)
+  );
+  --wa-color-green-on: color-mix(
+    in oklab,
+    var(--wa-color-green-10) var(--wa-color-green-gte-60),
+    white
+  );
+}
+
+.emerald-neutral {
+  --wa-color-neutral-05: var(--color-emerald-950);
+  --wa-color-neutral-10: var(--color-emerald-900);
+  --wa-color-neutral-20: var(--color-emerald-800);
+  --wa-color-neutral-30: var(--color-emerald-700);
+  --wa-color-neutral-40: var(--color-emerald-600);
+  --wa-color-neutral-50: var(--color-emerald-500);
+  --wa-color-neutral-60: var(--color-emerald-400);
+  --wa-color-neutral-70: var(--color-emerald-300);
+  --wa-color-neutral-80: var(--color-emerald-200);
+  --wa-color-neutral-90: var(--color-emerald-100);
+  --wa-color-neutral-95: var(--color-emerald-50);
+  --wa-color-neutral: var(--color-emerald-600);
+  --wa-color-neutral-on: var(--wa-color-emerald-on);
+  --wa-color-emerald-key: 60;
+
+  --wa-color-emerald-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-emerald-key), 1) * 100%)
+  );
+  --wa-color-emerald-on: color-mix(
+    in oklab,
+    var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
+    white
+  );
+}
+
+.teal-neutral {
+  --wa-color-neutral-05: var(--color-teal-950);
+  --wa-color-neutral-10: var(--color-teal-900);
+  --wa-color-neutral-20: var(--color-teal-800);
+  --wa-color-neutral-30: var(--color-teal-700);
+  --wa-color-neutral-40: var(--color-teal-600);
+  --wa-color-neutral-50: var(--color-teal-500);
+  --wa-color-neutral-60: var(--color-teal-400);
+  --wa-color-neutral-70: var(--color-teal-300);
+  --wa-color-neutral-80: var(--color-teal-200);
+  --wa-color-neutral-90: var(--color-teal-100);
+  --wa-color-neutral-95: var(--color-teal-50);
+  --wa-color-neutral: var(--color-teal-600);
+  --wa-color-neutral-on: var(--wa-color-teal-on);
+  --wa-color-teal-key: 60;
+
+  --wa-color-teal-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-teal-key), 1) * 100%)
+  );
+  --wa-color-teal-on: color-mix(
+    in oklab,
+    var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
+    white
+  );
+}
+
+.cyan-neutral {
+  --wa-color-neutral-05: var(--color-cyan-950);
+  --wa-color-neutral-10: var(--color-cyan-900);
+  --wa-color-neutral-20: var(--color-cyan-800);
+  --wa-color-neutral-30: var(--color-cyan-700);
+  --wa-color-neutral-40: var(--color-cyan-600);
+  --wa-color-neutral-50: var(--color-cyan-500);
+  --wa-color-neutral-60: var(--color-cyan-400);
+  --wa-color-neutral-70: var(--color-cyan-300);
+  --wa-color-neutral-80: var(--color-cyan-200);
+  --wa-color-neutral-90: var(--color-cyan-100);
+  --wa-color-neutral-95: var(--color-cyan-50);
+  --wa-color-neutral: var(--color-cyan-600);
+  --wa-color-neutral-on: var(--wa-color-cyan-on);
+  --wa-color-cyan-key: 60;
+
+  --wa-color-cyan-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-cyan-key), 1) * 100%)
+  );
+  --wa-color-cyan-on: color-mix(
+    in oklab,
+    var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
+    white
+  );
+}
+
+.sky-neutral {
+  --wa-color-neutral-05: var(--color-sky-950);
+  --wa-color-neutral-10: var(--color-sky-900);
+  --wa-color-neutral-20: var(--color-sky-800);
+  --wa-color-neutral-30: var(--color-sky-700);
+  --wa-color-neutral-40: var(--color-sky-600);
+  --wa-color-neutral-50: var(--color-sky-500);
+  --wa-color-neutral-60: var(--color-sky-400);
+  --wa-color-neutral-70: var(--color-sky-300);
+  --wa-color-neutral-80: var(--color-sky-200);
+  --wa-color-neutral-90: var(--color-sky-100);
+  --wa-color-neutral-95: var(--color-sky-50);
+  --wa-color-neutral: var(--color-sky-600);
+  --wa-color-neutral-on: var(--wa-color-sky-on);
+  --wa-color-sky-key: 60;
+
+  --wa-color-sky-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-sky-key), 1) * 100%)
+  );
+  --wa-color-sky-on: color-mix(
+    in oklab,
+    var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
+    white
+  );
+}
+
+.blue-neutral {
+  --wa-color-neutral-05: var(--color-blue-950);
+  --wa-color-neutral-10: var(--color-blue-900);
+  --wa-color-neutral-20: var(--color-blue-800);
+  --wa-color-neutral-30: var(--color-blue-700);
+  --wa-color-neutral-40: var(--color-blue-600);
+  --wa-color-neutral-50: var(--color-blue-500);
+  --wa-color-neutral-60: var(--color-blue-400);
+  --wa-color-neutral-70: var(--color-blue-300);
+  --wa-color-neutral-80: var(--color-blue-200);
+  --wa-color-neutral-90: var(--color-blue-100);
+  --wa-color-neutral-95: var(--color-blue-50);
+  --wa-color-neutral: var(--color-blue-600);
+  --wa-color-neutral-on: var(--wa-color-blue-on);
+  --wa-color-blue-key: 60;
+
+  --wa-color-blue-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-blue-key), 1) * 100%)
+  );
+  --wa-color-blue-on: color-mix(
+    in oklab,
+    var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
+    white
+  );
+}
+
+.indigo-neutral {
+  --wa-color-neutral-05: var(--color-indigo-950);
+  --wa-color-neutral-10: var(--color-indigo-900);
+  --wa-color-neutral-20: var(--color-indigo-800);
+  --wa-color-neutral-30: var(--color-indigo-700);
+  --wa-color-neutral-40: var(--color-indigo-600);
+  --wa-color-neutral-50: var(--color-indigo-500);
+  --wa-color-neutral-60: var(--color-indigo-400);
+  --wa-color-neutral-70: var(--color-indigo-300);
+  --wa-color-neutral-80: var(--color-indigo-200);
+  --wa-color-neutral-90: var(--color-indigo-100);
+  --wa-color-neutral-95: var(--color-indigo-50);
+  --wa-color-neutral: var(--color-indigo-600);
+  --wa-color-neutral-on: var(--wa-color-indigo-on);
+  --wa-color-indigo-key: 60;
+
+  --wa-color-indigo-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-indigo-key), 1) * 100%)
+  );
+  --wa-color-indigo-on: color-mix(
+    in oklab,
+    var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
+    white
+  );
+}
+
+.violet-neutral {
+  --wa-color-neutral-05: var(--color-violet-950);
+  --wa-color-neutral-10: var(--color-violet-900);
+  --wa-color-neutral-20: var(--color-violet-800);
+  --wa-color-neutral-30: var(--color-violet-700);
+  --wa-color-neutral-40: var(--color-violet-600);
+  --wa-color-neutral-50: var(--color-violet-500);
+  --wa-color-neutral-60: var(--color-violet-400);
+  --wa-color-neutral-70: var(--color-violet-300);
+  --wa-color-neutral-80: var(--color-violet-200);
+  --wa-color-neutral-90: var(--color-violet-100);
+  --wa-color-neutral-95: var(--color-violet-50);
+  --wa-color-neutral: var(--color-violet-600);
+  --wa-color-neutral-on: var(--wa-color-violet-on);
+  --wa-color-violet-key: 60;
+
+  --wa-color-violet-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-violet-key), 1) * 100%)
+  );
+  --wa-color-violet-on: color-mix(
+    in oklab,
+    var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
+    white
+  );
+}
+
+.purple-neutral {
+  --wa-color-neutral-05: var(--color-purple-950);
+  --wa-color-neutral-10: var(--color-purple-900);
+  --wa-color-neutral-20: var(--color-purple-800);
+  --wa-color-neutral-30: var(--color-purple-700);
+  --wa-color-neutral-40: var(--color-purple-600);
+  --wa-color-neutral-50: var(--color-purple-500);
+  --wa-color-neutral-60: var(--color-purple-400);
+  --wa-color-neutral-70: var(--color-purple-300);
+  --wa-color-neutral-80: var(--color-purple-200);
+  --wa-color-neutral-90: var(--color-purple-100);
+  --wa-color-neutral-95: var(--color-purple-50);
+  --wa-color-neutral: var(--color-purple-600);
+  --wa-color-neutral-on: var(--wa-color-purple-on);
+  --wa-color-purple-key: 60;
+
+  --wa-color-purple-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-purple-key), 1) * 100%)
+  );
+  --wa-color-purple-on: color-mix(
+    in oklab,
+    var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
+    white
+  );
+}
+
+.fuchsia-neutral {
+  --wa-color-neutral-05: var(--color-fuchsia-950);
+  --wa-color-neutral-10: var(--color-fuchsia-900);
+  --wa-color-neutral-20: var(--color-fuchsia-800);
+  --wa-color-neutral-30: var(--color-fuchsia-700);
+  --wa-color-neutral-40: var(--color-fuchsia-600);
+  --wa-color-neutral-50: var(--color-fuchsia-500);
+  --wa-color-neutral-60: var(--color-fuchsia-400);
+  --wa-color-neutral-70: var(--color-fuchsia-300);
+  --wa-color-neutral-80: var(--color-fuchsia-200);
+  --wa-color-neutral-90: var(--color-fuchsia-100);
+  --wa-color-neutral-95: var(--color-fuchsia-50);
+  --wa-color-neutral: var(--color-fuchsia-600);
+  --wa-color-neutral-on: var(--wa-color-fuchsia-on);
+  --wa-color-fuchsia-key: 60;
+
+  --wa-color-fuchsia-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-fuchsia-key), 1) * 100%)
+  );
+  --wa-color-fuchsia-on: color-mix(
+    in oklab,
+    var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
+    white
+  );
+}
+
+.pink-neutral {
+  --wa-color-neutral-05: var(--color-pink-950);
+  --wa-color-neutral-10: var(--color-pink-900);
+  --wa-color-neutral-20: var(--color-pink-800);
+  --wa-color-neutral-30: var(--color-pink-700);
+  --wa-color-neutral-40: var(--color-pink-600);
+  --wa-color-neutral-50: var(--color-pink-500);
+  --wa-color-neutral-60: var(--color-pink-400);
+  --wa-color-neutral-70: var(--color-pink-300);
+  --wa-color-neutral-80: var(--color-pink-200);
+  --wa-color-neutral-90: var(--color-pink-100);
+  --wa-color-neutral-95: var(--color-pink-50);
+  --wa-color-neutral: var(--color-pink-600);
+  --wa-color-neutral-on: var(--wa-color-pink-on);
+  --wa-color-pink-key: 60;
+
+  --wa-color-pink-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-pink-key), 1) * 100%)
+  );
+  --wa-color-pink-on: color-mix(
+    in oklab,
+    var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
+    white
+  );
+}
+
+.rose-neutral {
+  --wa-color-neutral-05: var(--color-rose-950);
+  --wa-color-neutral-10: var(--color-rose-900);
+  --wa-color-neutral-20: var(--color-rose-800);
+  --wa-color-neutral-30: var(--color-rose-700);
+  --wa-color-neutral-40: var(--color-rose-600);
+  --wa-color-neutral-50: var(--color-rose-500);
+  --wa-color-neutral-60: var(--color-rose-400);
+  --wa-color-neutral-70: var(--color-rose-300);
+  --wa-color-neutral-80: var(--color-rose-200);
+  --wa-color-neutral-90: var(--color-rose-100);
+  --wa-color-neutral-95: var(--color-rose-50);
+  --wa-color-neutral: var(--color-rose-600);
+  --wa-color-neutral-on: var(--wa-color-rose-on);
+  --wa-color-rose-key: 60;
+
+  --wa-color-rose-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-rose-key), 1) * 100%)
+  );
+  --wa-color-rose-on: color-mix(
+    in oklab,
+    var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
+    white
+  );
+}
+
+.slate-neutral {
+  --wa-color-neutral-05: var(--color-slate-950);
+  --wa-color-neutral-10: var(--color-slate-900);
+  --wa-color-neutral-20: var(--color-slate-800);
+  --wa-color-neutral-30: var(--color-slate-700);
+  --wa-color-neutral-40: var(--color-slate-600);
+  --wa-color-neutral-50: var(--color-slate-500);
+  --wa-color-neutral-60: var(--color-slate-400);
+  --wa-color-neutral-70: var(--color-slate-300);
+  --wa-color-neutral-80: var(--color-slate-200);
+  --wa-color-neutral-90: var(--color-slate-100);
+  --wa-color-neutral-95: var(--color-slate-50);
+  --wa-color-neutral: var(--color-slate-600);
+  --wa-color-neutral-on: var(--wa-color-slate-on);
+  --wa-color-slate-key: 60;
+
+  --wa-color-slate-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-slate-key), 1) * 100%)
+  );
+  --wa-color-slate-on: color-mix(
+    in oklab,
+    var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
+    white
+  );
+}
+
+.gray-neutral {
+  --wa-color-neutral-05: var(--color-gray-950);
+  --wa-color-neutral-10: var(--color-gray-900);
+  --wa-color-neutral-20: var(--color-gray-800);
+  --wa-color-neutral-30: var(--color-gray-700);
+  --wa-color-neutral-40: var(--color-gray-600);
+  --wa-color-neutral-50: var(--color-gray-500);
+  --wa-color-neutral-60: var(--color-gray-400);
+  --wa-color-neutral-70: var(--color-gray-300);
+  --wa-color-neutral-80: var(--color-gray-200);
+  --wa-color-neutral-90: var(--color-gray-100);
+  --wa-color-neutral-95: var(--color-gray-50);
+  --wa-color-neutral: var(--color-gray-600);
+  --wa-color-neutral-on: var(--wa-color-gray-on);
+  --wa-color-gray-key: 60;
+
+  --wa-color-gray-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-gray-key), 1) * 100%)
+  );
+  --wa-color-gray-on: color-mix(
+    in oklab,
+    var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
+    white
+  );
+}
+
+.zinc-neutral {
+  --wa-color-neutral-05: var(--color-zinc-950);
+  --wa-color-neutral-10: var(--color-zinc-900);
+  --wa-color-neutral-20: var(--color-zinc-800);
+  --wa-color-neutral-30: var(--color-zinc-700);
+  --wa-color-neutral-40: var(--color-zinc-600);
+  --wa-color-neutral-50: var(--color-zinc-500);
+  --wa-color-neutral-60: var(--color-zinc-400);
+  --wa-color-neutral-70: var(--color-zinc-300);
+  --wa-color-neutral-80: var(--color-zinc-200);
+  --wa-color-neutral-90: var(--color-zinc-100);
+  --wa-color-neutral-95: var(--color-zinc-50);
+  --wa-color-neutral: var(--color-zinc-600);
+  --wa-color-neutral-on: var(--wa-color-zinc-on);
+  --wa-color-zinc-key: 60;
+
+  --wa-color-zinc-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-zinc-key), 1) * 100%)
+  );
+  --wa-color-zinc-on: color-mix(
+    in oklab,
+    var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
+    white
+  );
+}
+
+.neutral-neutral {
+  --wa-color-neutral-05: var(--color-neutral-950);
+  --wa-color-neutral-10: var(--color-neutral-900);
+  --wa-color-neutral-20: var(--color-neutral-800);
+  --wa-color-neutral-30: var(--color-neutral-700);
+  --wa-color-neutral-40: var(--color-neutral-600);
+  --wa-color-neutral-50: var(--color-neutral-500);
+  --wa-color-neutral-60: var(--color-neutral-400);
+  --wa-color-neutral-70: var(--color-neutral-300);
+  --wa-color-neutral-80: var(--color-neutral-200);
+  --wa-color-neutral-90: var(--color-neutral-100);
+  --wa-color-neutral-95: var(--color-neutral-50);
+  --wa-color-neutral: var(--color-neutral-600);
+  --wa-color-neutral-on: var(--wa-color-neutral-on);
+  --wa-color-neutral-key: 60;
+
+  --wa-color-neutral-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-neutral-key), 1) * 100%)
+  );
+  --wa-color-neutral-on: color-mix(
+    in oklab,
+    var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
+    white
+  );
+}
+
+.stone-neutral {
+  --wa-color-neutral-05: var(--color-stone-950);
+  --wa-color-neutral-10: var(--color-stone-900);
+  --wa-color-neutral-20: var(--color-stone-800);
+  --wa-color-neutral-30: var(--color-stone-700);
+  --wa-color-neutral-40: var(--color-stone-600);
+  --wa-color-neutral-50: var(--color-stone-500);
+  --wa-color-neutral-60: var(--color-stone-400);
+  --wa-color-neutral-70: var(--color-stone-300);
+  --wa-color-neutral-80: var(--color-stone-200);
+  --wa-color-neutral-90: var(--color-stone-100);
+  --wa-color-neutral-95: var(--color-stone-50);
+  --wa-color-neutral: var(--color-stone-600);
+  --wa-color-neutral-on: var(--wa-color-stone-on);
+  --wa-color-stone-key: 60;
+
+  --wa-color-stone-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-stone-key), 1) * 100%)
+  );
+  --wa-color-stone-on: color-mix(
+    in oklab,
+    var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
+    white
+  );
+}
+
+.taupe-neutral {
+  --wa-color-neutral-05: var(--color-taupe-950);
+  --wa-color-neutral-10: var(--color-taupe-900);
+  --wa-color-neutral-20: var(--color-taupe-800);
+  --wa-color-neutral-30: var(--color-taupe-700);
+  --wa-color-neutral-40: var(--color-taupe-600);
+  --wa-color-neutral-50: var(--color-taupe-500);
+  --wa-color-neutral-60: var(--color-taupe-400);
+  --wa-color-neutral-70: var(--color-taupe-300);
+  --wa-color-neutral-80: var(--color-taupe-200);
+  --wa-color-neutral-90: var(--color-taupe-100);
+  --wa-color-neutral-95: var(--color-taupe-50);
+  --wa-color-neutral: var(--color-taupe-600);
+  --wa-color-neutral-on: var(--wa-color-taupe-on);
+  --wa-color-taupe-key: 60;
+
+  --wa-color-taupe-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-taupe-key), 1) * 100%)
+  );
+  --wa-color-taupe-on: color-mix(
+    in oklab,
+    var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
+    white
+  );
+}
+
+.mauve-neutral {
+  --wa-color-neutral-05: var(--color-mauve-950);
+  --wa-color-neutral-10: var(--color-mauve-900);
+  --wa-color-neutral-20: var(--color-mauve-800);
+  --wa-color-neutral-30: var(--color-mauve-700);
+  --wa-color-neutral-40: var(--color-mauve-600);
+  --wa-color-neutral-50: var(--color-mauve-500);
+  --wa-color-neutral-60: var(--color-mauve-400);
+  --wa-color-neutral-70: var(--color-mauve-300);
+  --wa-color-neutral-80: var(--color-mauve-200);
+  --wa-color-neutral-90: var(--color-mauve-100);
+  --wa-color-neutral-95: var(--color-mauve-50);
+  --wa-color-neutral: var(--color-mauve-600);
+  --wa-color-neutral-on: var(--wa-color-mauve-on);
+  --wa-color-mauve-key: 60;
+
+  --wa-color-mauve-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mauve-key), 1) * 100%)
+  );
+  --wa-color-mauve-on: color-mix(
+    in oklab,
+    var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
+    white
+  );
+}
+
+.mist-neutral {
+  --wa-color-neutral-05: var(--color-mist-950);
+  --wa-color-neutral-10: var(--color-mist-900);
+  --wa-color-neutral-20: var(--color-mist-800);
+  --wa-color-neutral-30: var(--color-mist-700);
+  --wa-color-neutral-40: var(--color-mist-600);
+  --wa-color-neutral-50: var(--color-mist-500);
+  --wa-color-neutral-60: var(--color-mist-400);
+  --wa-color-neutral-70: var(--color-mist-300);
+  --wa-color-neutral-80: var(--color-mist-200);
+  --wa-color-neutral-90: var(--color-mist-100);
+  --wa-color-neutral-95: var(--color-mist-50);
+  --wa-color-neutral: var(--color-mist-600);
+  --wa-color-neutral-on: var(--wa-color-mist-on);
+  --wa-color-mist-key: 60;
+
+  --wa-color-mist-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mist-key), 1) * 100%)
+  );
+  --wa-color-mist-on: color-mix(
+    in oklab,
+    var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
+    white
+  );
+}
+
+.olive-neutral {
+  --wa-color-neutral-05: var(--color-olive-950);
+  --wa-color-neutral-10: var(--color-olive-900);
+  --wa-color-neutral-20: var(--color-olive-800);
+  --wa-color-neutral-30: var(--color-olive-700);
+  --wa-color-neutral-40: var(--color-olive-600);
+  --wa-color-neutral-50: var(--color-olive-500);
+  --wa-color-neutral-60: var(--color-olive-400);
+  --wa-color-neutral-70: var(--color-olive-300);
+  --wa-color-neutral-80: var(--color-olive-200);
+  --wa-color-neutral-90: var(--color-olive-100);
+  --wa-color-neutral-95: var(--color-olive-50);
+  --wa-color-neutral: var(--color-olive-600);
+  --wa-color-neutral-on: var(--wa-color-olive-on);
+  --wa-color-olive-key: 60;
+
+  --wa-color-olive-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-olive-key), 1) * 100%)
+  );
+  --wa-color-olive-on: color-mix(
+    in oklab,
+    var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
+    white
+  );
+}
+
+.red-success {
+  --wa-color-success-05: var(--color-red-950);
+  --wa-color-success-10: var(--color-red-900);
+  --wa-color-success-20: var(--color-red-800);
+  --wa-color-success-30: var(--color-red-700);
+  --wa-color-success-40: var(--color-red-600);
+  --wa-color-success-50: var(--color-red-500);
+  --wa-color-success-60: var(--color-red-400);
+  --wa-color-success-70: var(--color-red-300);
+  --wa-color-success-80: var(--color-red-200);
+  --wa-color-success-90: var(--color-red-100);
+  --wa-color-success-95: var(--color-red-50);
+  --wa-color-success: var(--color-red-600);
+  --wa-color-success-on: var(--wa-color-red-on);
+  --wa-color-red-key: 60;
+
+  --wa-color-red-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-red-key), 1) * 100%)
+  );
+  --wa-color-red-on: color-mix(
+    in oklab,
+    var(--wa-color-red-10) var(--wa-color-red-gte-60),
+    white
+  );
+}
+
+.orange-success {
+  --wa-color-success-05: var(--color-orange-950);
+  --wa-color-success-10: var(--color-orange-900);
+  --wa-color-success-20: var(--color-orange-800);
+  --wa-color-success-30: var(--color-orange-700);
+  --wa-color-success-40: var(--color-orange-600);
+  --wa-color-success-50: var(--color-orange-500);
+  --wa-color-success-60: var(--color-orange-400);
+  --wa-color-success-70: var(--color-orange-300);
+  --wa-color-success-80: var(--color-orange-200);
+  --wa-color-success-90: var(--color-orange-100);
+  --wa-color-success-95: var(--color-orange-50);
+  --wa-color-success: var(--color-orange-600);
+  --wa-color-success-on: var(--wa-color-orange-on);
+  --wa-color-orange-key: 60;
+
+  --wa-color-orange-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-orange-key), 1) * 100%)
+  );
+  --wa-color-orange-on: color-mix(
+    in oklab,
+    var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
+    white
+  );
+}
+
+.amber-success {
+  --wa-color-success-05: var(--color-amber-950);
+  --wa-color-success-10: var(--color-amber-900);
+  --wa-color-success-20: var(--color-amber-800);
+  --wa-color-success-30: var(--color-amber-700);
+  --wa-color-success-40: var(--color-amber-600);
+  --wa-color-success-50: var(--color-amber-500);
+  --wa-color-success-60: var(--color-amber-400);
+  --wa-color-success-70: var(--color-amber-300);
+  --wa-color-success-80: var(--color-amber-200);
+  --wa-color-success-90: var(--color-amber-100);
+  --wa-color-success-95: var(--color-amber-50);
+  --wa-color-success: var(--color-amber-600);
+  --wa-color-success-on: var(--wa-color-amber-on);
+  --wa-color-amber-key: 60;
+
+  --wa-color-amber-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-amber-key), 1) * 100%)
+  );
+  --wa-color-amber-on: color-mix(
+    in oklab,
+    var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
+    white
+  );
+}
+
+.yellow-success {
+  --wa-color-success-05: var(--color-yellow-950);
+  --wa-color-success-10: var(--color-yellow-900);
+  --wa-color-success-20: var(--color-yellow-800);
+  --wa-color-success-30: var(--color-yellow-700);
+  --wa-color-success-40: var(--color-yellow-600);
+  --wa-color-success-50: var(--color-yellow-500);
+  --wa-color-success-60: var(--color-yellow-400);
+  --wa-color-success-70: var(--color-yellow-300);
+  --wa-color-success-80: var(--color-yellow-200);
+  --wa-color-success-90: var(--color-yellow-100);
+  --wa-color-success-95: var(--color-yellow-50);
+  --wa-color-success: var(--color-yellow-600);
+  --wa-color-success-on: var(--wa-color-yellow-on);
+  --wa-color-yellow-key: 60;
+
+  --wa-color-yellow-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-yellow-key), 1) * 100%)
+  );
+  --wa-color-yellow-on: color-mix(
+    in oklab,
+    var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
+    white
+  );
+}
+
+.lime-success {
+  --wa-color-success-05: var(--color-lime-950);
+  --wa-color-success-10: var(--color-lime-900);
+  --wa-color-success-20: var(--color-lime-800);
+  --wa-color-success-30: var(--color-lime-700);
+  --wa-color-success-40: var(--color-lime-600);
+  --wa-color-success-50: var(--color-lime-500);
+  --wa-color-success-60: var(--color-lime-400);
+  --wa-color-success-70: var(--color-lime-300);
+  --wa-color-success-80: var(--color-lime-200);
+  --wa-color-success-90: var(--color-lime-100);
+  --wa-color-success-95: var(--color-lime-50);
+  --wa-color-success: var(--color-lime-600);
+  --wa-color-success-on: var(--wa-color-lime-on);
+  --wa-color-lime-key: 60;
+
+  --wa-color-lime-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-lime-key), 1) * 100%)
+  );
+  --wa-color-lime-on: color-mix(
+    in oklab,
+    var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
+    white
+  );
+}
+
+.green-success {
+  --wa-color-success-05: var(--color-green-950);
+  --wa-color-success-10: var(--color-green-900);
+  --wa-color-success-20: var(--color-green-800);
+  --wa-color-success-30: var(--color-green-700);
+  --wa-color-success-40: var(--color-green-600);
+  --wa-color-success-50: var(--color-green-500);
+  --wa-color-success-60: var(--color-green-400);
+  --wa-color-success-70: var(--color-green-300);
+  --wa-color-success-80: var(--color-green-200);
+  --wa-color-success-90: var(--color-green-100);
+  --wa-color-success-95: var(--color-green-50);
+  --wa-color-success: var(--color-green-600);
+  --wa-color-success-on: var(--wa-color-green-on);
+  --wa-color-green-key: 60;
+
+  --wa-color-green-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-green-key), 1) * 100%)
+  );
+  --wa-color-green-on: color-mix(
+    in oklab,
+    var(--wa-color-green-10) var(--wa-color-green-gte-60),
+    white
+  );
+}
+
+.emerald-success {
+  --wa-color-success-05: var(--color-emerald-950);
+  --wa-color-success-10: var(--color-emerald-900);
+  --wa-color-success-20: var(--color-emerald-800);
+  --wa-color-success-30: var(--color-emerald-700);
+  --wa-color-success-40: var(--color-emerald-600);
+  --wa-color-success-50: var(--color-emerald-500);
+  --wa-color-success-60: var(--color-emerald-400);
+  --wa-color-success-70: var(--color-emerald-300);
+  --wa-color-success-80: var(--color-emerald-200);
+  --wa-color-success-90: var(--color-emerald-100);
+  --wa-color-success-95: var(--color-emerald-50);
+  --wa-color-success: var(--color-emerald-600);
+  --wa-color-success-on: var(--wa-color-emerald-on);
+  --wa-color-emerald-key: 60;
+
+  --wa-color-emerald-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-emerald-key), 1) * 100%)
+  );
+  --wa-color-emerald-on: color-mix(
+    in oklab,
+    var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
+    white
+  );
+}
+
+.teal-success {
+  --wa-color-success-05: var(--color-teal-950);
+  --wa-color-success-10: var(--color-teal-900);
+  --wa-color-success-20: var(--color-teal-800);
+  --wa-color-success-30: var(--color-teal-700);
+  --wa-color-success-40: var(--color-teal-600);
+  --wa-color-success-50: var(--color-teal-500);
+  --wa-color-success-60: var(--color-teal-400);
+  --wa-color-success-70: var(--color-teal-300);
+  --wa-color-success-80: var(--color-teal-200);
+  --wa-color-success-90: var(--color-teal-100);
+  --wa-color-success-95: var(--color-teal-50);
+  --wa-color-success: var(--color-teal-600);
+  --wa-color-success-on: var(--wa-color-teal-on);
+  --wa-color-teal-key: 60;
+
+  --wa-color-teal-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-teal-key), 1) * 100%)
+  );
+  --wa-color-teal-on: color-mix(
+    in oklab,
+    var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
+    white
+  );
+}
+
+.cyan-success {
+  --wa-color-success-05: var(--color-cyan-950);
+  --wa-color-success-10: var(--color-cyan-900);
+  --wa-color-success-20: var(--color-cyan-800);
+  --wa-color-success-30: var(--color-cyan-700);
+  --wa-color-success-40: var(--color-cyan-600);
+  --wa-color-success-50: var(--color-cyan-500);
+  --wa-color-success-60: var(--color-cyan-400);
+  --wa-color-success-70: var(--color-cyan-300);
+  --wa-color-success-80: var(--color-cyan-200);
+  --wa-color-success-90: var(--color-cyan-100);
+  --wa-color-success-95: var(--color-cyan-50);
+  --wa-color-success: var(--color-cyan-600);
+  --wa-color-success-on: var(--wa-color-cyan-on);
+  --wa-color-cyan-key: 60;
+
+  --wa-color-cyan-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-cyan-key), 1) * 100%)
+  );
+  --wa-color-cyan-on: color-mix(
+    in oklab,
+    var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
+    white
+  );
+}
+
+.sky-success {
+  --wa-color-success-05: var(--color-sky-950);
+  --wa-color-success-10: var(--color-sky-900);
+  --wa-color-success-20: var(--color-sky-800);
+  --wa-color-success-30: var(--color-sky-700);
+  --wa-color-success-40: var(--color-sky-600);
+  --wa-color-success-50: var(--color-sky-500);
+  --wa-color-success-60: var(--color-sky-400);
+  --wa-color-success-70: var(--color-sky-300);
+  --wa-color-success-80: var(--color-sky-200);
+  --wa-color-success-90: var(--color-sky-100);
+  --wa-color-success-95: var(--color-sky-50);
+  --wa-color-success: var(--color-sky-600);
+  --wa-color-success-on: var(--wa-color-sky-on);
+  --wa-color-sky-key: 60;
+
+  --wa-color-sky-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-sky-key), 1) * 100%)
+  );
+  --wa-color-sky-on: color-mix(
+    in oklab,
+    var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
+    white
+  );
+}
+
+.blue-success {
+  --wa-color-success-05: var(--color-blue-950);
+  --wa-color-success-10: var(--color-blue-900);
+  --wa-color-success-20: var(--color-blue-800);
+  --wa-color-success-30: var(--color-blue-700);
+  --wa-color-success-40: var(--color-blue-600);
+  --wa-color-success-50: var(--color-blue-500);
+  --wa-color-success-60: var(--color-blue-400);
+  --wa-color-success-70: var(--color-blue-300);
+  --wa-color-success-80: var(--color-blue-200);
+  --wa-color-success-90: var(--color-blue-100);
+  --wa-color-success-95: var(--color-blue-50);
+  --wa-color-success: var(--color-blue-600);
+  --wa-color-success-on: var(--wa-color-blue-on);
+  --wa-color-blue-key: 60;
+
+  --wa-color-blue-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-blue-key), 1) * 100%)
+  );
+  --wa-color-blue-on: color-mix(
+    in oklab,
+    var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
+    white
+  );
+}
+
+.indigo-success {
+  --wa-color-success-05: var(--color-indigo-950);
+  --wa-color-success-10: var(--color-indigo-900);
+  --wa-color-success-20: var(--color-indigo-800);
+  --wa-color-success-30: var(--color-indigo-700);
+  --wa-color-success-40: var(--color-indigo-600);
+  --wa-color-success-50: var(--color-indigo-500);
+  --wa-color-success-60: var(--color-indigo-400);
+  --wa-color-success-70: var(--color-indigo-300);
+  --wa-color-success-80: var(--color-indigo-200);
+  --wa-color-success-90: var(--color-indigo-100);
+  --wa-color-success-95: var(--color-indigo-50);
+  --wa-color-success: var(--color-indigo-600);
+  --wa-color-success-on: var(--wa-color-indigo-on);
+  --wa-color-indigo-key: 60;
+
+  --wa-color-indigo-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-indigo-key), 1) * 100%)
+  );
+  --wa-color-indigo-on: color-mix(
+    in oklab,
+    var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
+    white
+  );
+}
+
+.violet-success {
+  --wa-color-success-05: var(--color-violet-950);
+  --wa-color-success-10: var(--color-violet-900);
+  --wa-color-success-20: var(--color-violet-800);
+  --wa-color-success-30: var(--color-violet-700);
+  --wa-color-success-40: var(--color-violet-600);
+  --wa-color-success-50: var(--color-violet-500);
+  --wa-color-success-60: var(--color-violet-400);
+  --wa-color-success-70: var(--color-violet-300);
+  --wa-color-success-80: var(--color-violet-200);
+  --wa-color-success-90: var(--color-violet-100);
+  --wa-color-success-95: var(--color-violet-50);
+  --wa-color-success: var(--color-violet-600);
+  --wa-color-success-on: var(--wa-color-violet-on);
+  --wa-color-violet-key: 60;
+
+  --wa-color-violet-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-violet-key), 1) * 100%)
+  );
+  --wa-color-violet-on: color-mix(
+    in oklab,
+    var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
+    white
+  );
+}
+
+.purple-success {
+  --wa-color-success-05: var(--color-purple-950);
+  --wa-color-success-10: var(--color-purple-900);
+  --wa-color-success-20: var(--color-purple-800);
+  --wa-color-success-30: var(--color-purple-700);
+  --wa-color-success-40: var(--color-purple-600);
+  --wa-color-success-50: var(--color-purple-500);
+  --wa-color-success-60: var(--color-purple-400);
+  --wa-color-success-70: var(--color-purple-300);
+  --wa-color-success-80: var(--color-purple-200);
+  --wa-color-success-90: var(--color-purple-100);
+  --wa-color-success-95: var(--color-purple-50);
+  --wa-color-success: var(--color-purple-600);
+  --wa-color-success-on: var(--wa-color-purple-on);
+  --wa-color-purple-key: 60;
+
+  --wa-color-purple-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-purple-key), 1) * 100%)
+  );
+  --wa-color-purple-on: color-mix(
+    in oklab,
+    var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
+    white
+  );
+}
+
+.fuchsia-success {
+  --wa-color-success-05: var(--color-fuchsia-950);
+  --wa-color-success-10: var(--color-fuchsia-900);
+  --wa-color-success-20: var(--color-fuchsia-800);
+  --wa-color-success-30: var(--color-fuchsia-700);
+  --wa-color-success-40: var(--color-fuchsia-600);
+  --wa-color-success-50: var(--color-fuchsia-500);
+  --wa-color-success-60: var(--color-fuchsia-400);
+  --wa-color-success-70: var(--color-fuchsia-300);
+  --wa-color-success-80: var(--color-fuchsia-200);
+  --wa-color-success-90: var(--color-fuchsia-100);
+  --wa-color-success-95: var(--color-fuchsia-50);
+  --wa-color-success: var(--color-fuchsia-600);
+  --wa-color-success-on: var(--wa-color-fuchsia-on);
+  --wa-color-fuchsia-key: 60;
+
+  --wa-color-fuchsia-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-fuchsia-key), 1) * 100%)
+  );
+  --wa-color-fuchsia-on: color-mix(
+    in oklab,
+    var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
+    white
+  );
+}
+
+.pink-success {
+  --wa-color-success-05: var(--color-pink-950);
+  --wa-color-success-10: var(--color-pink-900);
+  --wa-color-success-20: var(--color-pink-800);
+  --wa-color-success-30: var(--color-pink-700);
+  --wa-color-success-40: var(--color-pink-600);
+  --wa-color-success-50: var(--color-pink-500);
+  --wa-color-success-60: var(--color-pink-400);
+  --wa-color-success-70: var(--color-pink-300);
+  --wa-color-success-80: var(--color-pink-200);
+  --wa-color-success-90: var(--color-pink-100);
+  --wa-color-success-95: var(--color-pink-50);
+  --wa-color-success: var(--color-pink-600);
+  --wa-color-success-on: var(--wa-color-pink-on);
+  --wa-color-pink-key: 60;
+
+  --wa-color-pink-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-pink-key), 1) * 100%)
+  );
+  --wa-color-pink-on: color-mix(
+    in oklab,
+    var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
+    white
+  );
+}
+
+.rose-success {
+  --wa-color-success-05: var(--color-rose-950);
+  --wa-color-success-10: var(--color-rose-900);
+  --wa-color-success-20: var(--color-rose-800);
+  --wa-color-success-30: var(--color-rose-700);
+  --wa-color-success-40: var(--color-rose-600);
+  --wa-color-success-50: var(--color-rose-500);
+  --wa-color-success-60: var(--color-rose-400);
+  --wa-color-success-70: var(--color-rose-300);
+  --wa-color-success-80: var(--color-rose-200);
+  --wa-color-success-90: var(--color-rose-100);
+  --wa-color-success-95: var(--color-rose-50);
+  --wa-color-success: var(--color-rose-600);
+  --wa-color-success-on: var(--wa-color-rose-on);
+  --wa-color-rose-key: 60;
+
+  --wa-color-rose-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-rose-key), 1) * 100%)
+  );
+  --wa-color-rose-on: color-mix(
+    in oklab,
+    var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
+    white
+  );
+}
+
+.slate-success {
+  --wa-color-success-05: var(--color-slate-950);
+  --wa-color-success-10: var(--color-slate-900);
+  --wa-color-success-20: var(--color-slate-800);
+  --wa-color-success-30: var(--color-slate-700);
+  --wa-color-success-40: var(--color-slate-600);
+  --wa-color-success-50: var(--color-slate-500);
+  --wa-color-success-60: var(--color-slate-400);
+  --wa-color-success-70: var(--color-slate-300);
+  --wa-color-success-80: var(--color-slate-200);
+  --wa-color-success-90: var(--color-slate-100);
+  --wa-color-success-95: var(--color-slate-50);
+  --wa-color-success: var(--color-slate-600);
+  --wa-color-success-on: var(--wa-color-slate-on);
+  --wa-color-slate-key: 60;
+
+  --wa-color-slate-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-slate-key), 1) * 100%)
+  );
+  --wa-color-slate-on: color-mix(
+    in oklab,
+    var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
+    white
+  );
+}
+
+.gray-success {
+  --wa-color-success-05: var(--color-gray-950);
+  --wa-color-success-10: var(--color-gray-900);
+  --wa-color-success-20: var(--color-gray-800);
+  --wa-color-success-30: var(--color-gray-700);
+  --wa-color-success-40: var(--color-gray-600);
+  --wa-color-success-50: var(--color-gray-500);
+  --wa-color-success-60: var(--color-gray-400);
+  --wa-color-success-70: var(--color-gray-300);
+  --wa-color-success-80: var(--color-gray-200);
+  --wa-color-success-90: var(--color-gray-100);
+  --wa-color-success-95: var(--color-gray-50);
+  --wa-color-success: var(--color-gray-600);
+  --wa-color-success-on: var(--wa-color-gray-on);
+  --wa-color-gray-key: 60;
+
+  --wa-color-gray-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-gray-key), 1) * 100%)
+  );
+  --wa-color-gray-on: color-mix(
+    in oklab,
+    var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
+    white
+  );
+}
+
+.zinc-success {
+  --wa-color-success-05: var(--color-zinc-950);
+  --wa-color-success-10: var(--color-zinc-900);
+  --wa-color-success-20: var(--color-zinc-800);
+  --wa-color-success-30: var(--color-zinc-700);
+  --wa-color-success-40: var(--color-zinc-600);
+  --wa-color-success-50: var(--color-zinc-500);
+  --wa-color-success-60: var(--color-zinc-400);
+  --wa-color-success-70: var(--color-zinc-300);
+  --wa-color-success-80: var(--color-zinc-200);
+  --wa-color-success-90: var(--color-zinc-100);
+  --wa-color-success-95: var(--color-zinc-50);
+  --wa-color-success: var(--color-zinc-600);
+  --wa-color-success-on: var(--wa-color-zinc-on);
+  --wa-color-zinc-key: 60;
+
+  --wa-color-zinc-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-zinc-key), 1) * 100%)
+  );
+  --wa-color-zinc-on: color-mix(
+    in oklab,
+    var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
+    white
+  );
+}
+
+.neutral-success {
+  --wa-color-success-05: var(--color-neutral-950);
+  --wa-color-success-10: var(--color-neutral-900);
+  --wa-color-success-20: var(--color-neutral-800);
+  --wa-color-success-30: var(--color-neutral-700);
+  --wa-color-success-40: var(--color-neutral-600);
+  --wa-color-success-50: var(--color-neutral-500);
+  --wa-color-success-60: var(--color-neutral-400);
+  --wa-color-success-70: var(--color-neutral-300);
+  --wa-color-success-80: var(--color-neutral-200);
+  --wa-color-success-90: var(--color-neutral-100);
+  --wa-color-success-95: var(--color-neutral-50);
+  --wa-color-success: var(--color-neutral-600);
+  --wa-color-success-on: var(--wa-color-neutral-on);
+  --wa-color-neutral-key: 60;
+
+  --wa-color-neutral-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-neutral-key), 1) * 100%)
+  );
+  --wa-color-neutral-on: color-mix(
+    in oklab,
+    var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
+    white
+  );
+}
+
+.stone-success {
+  --wa-color-success-05: var(--color-stone-950);
+  --wa-color-success-10: var(--color-stone-900);
+  --wa-color-success-20: var(--color-stone-800);
+  --wa-color-success-30: var(--color-stone-700);
+  --wa-color-success-40: var(--color-stone-600);
+  --wa-color-success-50: var(--color-stone-500);
+  --wa-color-success-60: var(--color-stone-400);
+  --wa-color-success-70: var(--color-stone-300);
+  --wa-color-success-80: var(--color-stone-200);
+  --wa-color-success-90: var(--color-stone-100);
+  --wa-color-success-95: var(--color-stone-50);
+  --wa-color-success: var(--color-stone-600);
+  --wa-color-success-on: var(--wa-color-stone-on);
+  --wa-color-stone-key: 60;
+
+  --wa-color-stone-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-stone-key), 1) * 100%)
+  );
+  --wa-color-stone-on: color-mix(
+    in oklab,
+    var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
+    white
+  );
+}
+
+.taupe-success {
+  --wa-color-success-05: var(--color-taupe-950);
+  --wa-color-success-10: var(--color-taupe-900);
+  --wa-color-success-20: var(--color-taupe-800);
+  --wa-color-success-30: var(--color-taupe-700);
+  --wa-color-success-40: var(--color-taupe-600);
+  --wa-color-success-50: var(--color-taupe-500);
+  --wa-color-success-60: var(--color-taupe-400);
+  --wa-color-success-70: var(--color-taupe-300);
+  --wa-color-success-80: var(--color-taupe-200);
+  --wa-color-success-90: var(--color-taupe-100);
+  --wa-color-success-95: var(--color-taupe-50);
+  --wa-color-success: var(--color-taupe-600);
+  --wa-color-success-on: var(--wa-color-taupe-on);
+  --wa-color-taupe-key: 60;
+
+  --wa-color-taupe-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-taupe-key), 1) * 100%)
+  );
+  --wa-color-taupe-on: color-mix(
+    in oklab,
+    var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
+    white
+  );
+}
+
+.mauve-success {
+  --wa-color-success-05: var(--color-mauve-950);
+  --wa-color-success-10: var(--color-mauve-900);
+  --wa-color-success-20: var(--color-mauve-800);
+  --wa-color-success-30: var(--color-mauve-700);
+  --wa-color-success-40: var(--color-mauve-600);
+  --wa-color-success-50: var(--color-mauve-500);
+  --wa-color-success-60: var(--color-mauve-400);
+  --wa-color-success-70: var(--color-mauve-300);
+  --wa-color-success-80: var(--color-mauve-200);
+  --wa-color-success-90: var(--color-mauve-100);
+  --wa-color-success-95: var(--color-mauve-50);
+  --wa-color-success: var(--color-mauve-600);
+  --wa-color-success-on: var(--wa-color-mauve-on);
+  --wa-color-mauve-key: 60;
+
+  --wa-color-mauve-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mauve-key), 1) * 100%)
+  );
+  --wa-color-mauve-on: color-mix(
+    in oklab,
+    var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
+    white
+  );
+}
+
+.mist-success {
+  --wa-color-success-05: var(--color-mist-950);
+  --wa-color-success-10: var(--color-mist-900);
+  --wa-color-success-20: var(--color-mist-800);
+  --wa-color-success-30: var(--color-mist-700);
+  --wa-color-success-40: var(--color-mist-600);
+  --wa-color-success-50: var(--color-mist-500);
+  --wa-color-success-60: var(--color-mist-400);
+  --wa-color-success-70: var(--color-mist-300);
+  --wa-color-success-80: var(--color-mist-200);
+  --wa-color-success-90: var(--color-mist-100);
+  --wa-color-success-95: var(--color-mist-50);
+  --wa-color-success: var(--color-mist-600);
+  --wa-color-success-on: var(--wa-color-mist-on);
+  --wa-color-mist-key: 60;
+
+  --wa-color-mist-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mist-key), 1) * 100%)
+  );
+  --wa-color-mist-on: color-mix(
+    in oklab,
+    var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
+    white
+  );
+}
+
+.olive-success {
+  --wa-color-success-05: var(--color-olive-950);
+  --wa-color-success-10: var(--color-olive-900);
+  --wa-color-success-20: var(--color-olive-800);
+  --wa-color-success-30: var(--color-olive-700);
+  --wa-color-success-40: var(--color-olive-600);
+  --wa-color-success-50: var(--color-olive-500);
+  --wa-color-success-60: var(--color-olive-400);
+  --wa-color-success-70: var(--color-olive-300);
+  --wa-color-success-80: var(--color-olive-200);
+  --wa-color-success-90: var(--color-olive-100);
+  --wa-color-success-95: var(--color-olive-50);
+  --wa-color-success: var(--color-olive-600);
+  --wa-color-success-on: var(--wa-color-olive-on);
+  --wa-color-olive-key: 60;
+
+  --wa-color-olive-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-olive-key), 1) * 100%)
+  );
+  --wa-color-olive-on: color-mix(
+    in oklab,
+    var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
+    white
+  );
+}
+
+.red-warning {
+  --wa-color-warning-05: var(--color-red-950);
+  --wa-color-warning-10: var(--color-red-900);
+  --wa-color-warning-20: var(--color-red-800);
+  --wa-color-warning-30: var(--color-red-700);
+  --wa-color-warning-40: var(--color-red-600);
+  --wa-color-warning-50: var(--color-red-500);
+  --wa-color-warning-60: var(--color-red-400);
+  --wa-color-warning-70: var(--color-red-300);
+  --wa-color-warning-80: var(--color-red-200);
+  --wa-color-warning-90: var(--color-red-100);
+  --wa-color-warning-95: var(--color-red-50);
+  --wa-color-warning: var(--color-red-600);
+  --wa-color-warning-on: var(--wa-color-red-on);
+  --wa-color-red-key: 60;
+
+  --wa-color-red-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-red-key), 1) * 100%)
+  );
+  --wa-color-red-on: color-mix(
+    in oklab,
+    var(--wa-color-red-10) var(--wa-color-red-gte-60),
+    white
+  );
+}
+
+.orange-warning {
+  --wa-color-warning-05: var(--color-orange-950);
+  --wa-color-warning-10: var(--color-orange-900);
+  --wa-color-warning-20: var(--color-orange-800);
+  --wa-color-warning-30: var(--color-orange-700);
+  --wa-color-warning-40: var(--color-orange-600);
+  --wa-color-warning-50: var(--color-orange-500);
+  --wa-color-warning-60: var(--color-orange-400);
+  --wa-color-warning-70: var(--color-orange-300);
+  --wa-color-warning-80: var(--color-orange-200);
+  --wa-color-warning-90: var(--color-orange-100);
+  --wa-color-warning-95: var(--color-orange-50);
+  --wa-color-warning: var(--color-orange-600);
+  --wa-color-warning-on: var(--wa-color-orange-on);
+  --wa-color-orange-key: 60;
+
+  --wa-color-orange-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-orange-key), 1) * 100%)
+  );
+  --wa-color-orange-on: color-mix(
+    in oklab,
+    var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
+    white
+  );
+}
+
+.amber-warning {
+  --wa-color-warning-05: var(--color-amber-950);
+  --wa-color-warning-10: var(--color-amber-900);
+  --wa-color-warning-20: var(--color-amber-800);
+  --wa-color-warning-30: var(--color-amber-700);
+  --wa-color-warning-40: var(--color-amber-600);
+  --wa-color-warning-50: var(--color-amber-500);
+  --wa-color-warning-60: var(--color-amber-400);
+  --wa-color-warning-70: var(--color-amber-300);
+  --wa-color-warning-80: var(--color-amber-200);
+  --wa-color-warning-90: var(--color-amber-100);
+  --wa-color-warning-95: var(--color-amber-50);
+  --wa-color-warning: var(--color-amber-600);
+  --wa-color-warning-on: var(--wa-color-amber-on);
+  --wa-color-amber-key: 60;
+
+  --wa-color-amber-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-amber-key), 1) * 100%)
+  );
+  --wa-color-amber-on: color-mix(
+    in oklab,
+    var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
+    white
+  );
+}
+
+.yellow-warning {
+  --wa-color-warning-05: var(--color-yellow-950);
+  --wa-color-warning-10: var(--color-yellow-900);
+  --wa-color-warning-20: var(--color-yellow-800);
+  --wa-color-warning-30: var(--color-yellow-700);
+  --wa-color-warning-40: var(--color-yellow-600);
+  --wa-color-warning-50: var(--color-yellow-500);
+  --wa-color-warning-60: var(--color-yellow-400);
+  --wa-color-warning-70: var(--color-yellow-300);
+  --wa-color-warning-80: var(--color-yellow-200);
+  --wa-color-warning-90: var(--color-yellow-100);
+  --wa-color-warning-95: var(--color-yellow-50);
+  --wa-color-warning: var(--color-yellow-600);
+  --wa-color-warning-on: var(--wa-color-yellow-on);
+  --wa-color-yellow-key: 60;
+
+  --wa-color-yellow-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-yellow-key), 1) * 100%)
+  );
+  --wa-color-yellow-on: color-mix(
+    in oklab,
+    var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
+    white
+  );
+}
+
+.lime-warning {
+  --wa-color-warning-05: var(--color-lime-950);
+  --wa-color-warning-10: var(--color-lime-900);
+  --wa-color-warning-20: var(--color-lime-800);
+  --wa-color-warning-30: var(--color-lime-700);
+  --wa-color-warning-40: var(--color-lime-600);
+  --wa-color-warning-50: var(--color-lime-500);
+  --wa-color-warning-60: var(--color-lime-400);
+  --wa-color-warning-70: var(--color-lime-300);
+  --wa-color-warning-80: var(--color-lime-200);
+  --wa-color-warning-90: var(--color-lime-100);
+  --wa-color-warning-95: var(--color-lime-50);
+  --wa-color-warning: var(--color-lime-600);
+  --wa-color-warning-on: var(--wa-color-lime-on);
+  --wa-color-lime-key: 60;
+
+  --wa-color-lime-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-lime-key), 1) * 100%)
+  );
+  --wa-color-lime-on: color-mix(
+    in oklab,
+    var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
+    white
+  );
+}
+
+.green-warning {
+  --wa-color-warning-05: var(--color-green-950);
+  --wa-color-warning-10: var(--color-green-900);
+  --wa-color-warning-20: var(--color-green-800);
+  --wa-color-warning-30: var(--color-green-700);
+  --wa-color-warning-40: var(--color-green-600);
+  --wa-color-warning-50: var(--color-green-500);
+  --wa-color-warning-60: var(--color-green-400);
+  --wa-color-warning-70: var(--color-green-300);
+  --wa-color-warning-80: var(--color-green-200);
+  --wa-color-warning-90: var(--color-green-100);
+  --wa-color-warning-95: var(--color-green-50);
+  --wa-color-warning: var(--color-green-600);
+  --wa-color-warning-on: var(--wa-color-green-on);
+  --wa-color-green-key: 60;
+
+  --wa-color-green-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-green-key), 1) * 100%)
+  );
+  --wa-color-green-on: color-mix(
+    in oklab,
+    var(--wa-color-green-10) var(--wa-color-green-gte-60),
+    white
+  );
+}
+
+.emerald-warning {
+  --wa-color-warning-05: var(--color-emerald-950);
+  --wa-color-warning-10: var(--color-emerald-900);
+  --wa-color-warning-20: var(--color-emerald-800);
+  --wa-color-warning-30: var(--color-emerald-700);
+  --wa-color-warning-40: var(--color-emerald-600);
+  --wa-color-warning-50: var(--color-emerald-500);
+  --wa-color-warning-60: var(--color-emerald-400);
+  --wa-color-warning-70: var(--color-emerald-300);
+  --wa-color-warning-80: var(--color-emerald-200);
+  --wa-color-warning-90: var(--color-emerald-100);
+  --wa-color-warning-95: var(--color-emerald-50);
+  --wa-color-warning: var(--color-emerald-600);
+  --wa-color-warning-on: var(--wa-color-emerald-on);
+  --wa-color-emerald-key: 60;
+
+  --wa-color-emerald-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-emerald-key), 1) * 100%)
+  );
+  --wa-color-emerald-on: color-mix(
+    in oklab,
+    var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
+    white
+  );
+}
+
+.teal-warning {
+  --wa-color-warning-05: var(--color-teal-950);
+  --wa-color-warning-10: var(--color-teal-900);
+  --wa-color-warning-20: var(--color-teal-800);
+  --wa-color-warning-30: var(--color-teal-700);
+  --wa-color-warning-40: var(--color-teal-600);
+  --wa-color-warning-50: var(--color-teal-500);
+  --wa-color-warning-60: var(--color-teal-400);
+  --wa-color-warning-70: var(--color-teal-300);
+  --wa-color-warning-80: var(--color-teal-200);
+  --wa-color-warning-90: var(--color-teal-100);
+  --wa-color-warning-95: var(--color-teal-50);
+  --wa-color-warning: var(--color-teal-600);
+  --wa-color-warning-on: var(--wa-color-teal-on);
+  --wa-color-teal-key: 60;
+
+  --wa-color-teal-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-teal-key), 1) * 100%)
+  );
+  --wa-color-teal-on: color-mix(
+    in oklab,
+    var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
+    white
+  );
+}
+
+.cyan-warning {
+  --wa-color-warning-05: var(--color-cyan-950);
+  --wa-color-warning-10: var(--color-cyan-900);
+  --wa-color-warning-20: var(--color-cyan-800);
+  --wa-color-warning-30: var(--color-cyan-700);
+  --wa-color-warning-40: var(--color-cyan-600);
+  --wa-color-warning-50: var(--color-cyan-500);
+  --wa-color-warning-60: var(--color-cyan-400);
+  --wa-color-warning-70: var(--color-cyan-300);
+  --wa-color-warning-80: var(--color-cyan-200);
+  --wa-color-warning-90: var(--color-cyan-100);
+  --wa-color-warning-95: var(--color-cyan-50);
+  --wa-color-warning: var(--color-cyan-600);
+  --wa-color-warning-on: var(--wa-color-cyan-on);
+  --wa-color-cyan-key: 60;
+
+  --wa-color-cyan-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-cyan-key), 1) * 100%)
+  );
+  --wa-color-cyan-on: color-mix(
+    in oklab,
+    var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
+    white
+  );
+}
+
+.sky-warning {
+  --wa-color-warning-05: var(--color-sky-950);
+  --wa-color-warning-10: var(--color-sky-900);
+  --wa-color-warning-20: var(--color-sky-800);
+  --wa-color-warning-30: var(--color-sky-700);
+  --wa-color-warning-40: var(--color-sky-600);
+  --wa-color-warning-50: var(--color-sky-500);
+  --wa-color-warning-60: var(--color-sky-400);
+  --wa-color-warning-70: var(--color-sky-300);
+  --wa-color-warning-80: var(--color-sky-200);
+  --wa-color-warning-90: var(--color-sky-100);
+  --wa-color-warning-95: var(--color-sky-50);
+  --wa-color-warning: var(--color-sky-600);
+  --wa-color-warning-on: var(--wa-color-sky-on);
+  --wa-color-sky-key: 60;
+
+  --wa-color-sky-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-sky-key), 1) * 100%)
+  );
+  --wa-color-sky-on: color-mix(
+    in oklab,
+    var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
+    white
+  );
+}
+
+.blue-warning {
+  --wa-color-warning-05: var(--color-blue-950);
+  --wa-color-warning-10: var(--color-blue-900);
+  --wa-color-warning-20: var(--color-blue-800);
+  --wa-color-warning-30: var(--color-blue-700);
+  --wa-color-warning-40: var(--color-blue-600);
+  --wa-color-warning-50: var(--color-blue-500);
+  --wa-color-warning-60: var(--color-blue-400);
+  --wa-color-warning-70: var(--color-blue-300);
+  --wa-color-warning-80: var(--color-blue-200);
+  --wa-color-warning-90: var(--color-blue-100);
+  --wa-color-warning-95: var(--color-blue-50);
+  --wa-color-warning: var(--color-blue-600);
+  --wa-color-warning-on: var(--wa-color-blue-on);
+  --wa-color-blue-key: 60;
+
+  --wa-color-blue-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-blue-key), 1) * 100%)
+  );
+  --wa-color-blue-on: color-mix(
+    in oklab,
+    var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
+    white
+  );
+}
+
+.indigo-warning {
+  --wa-color-warning-05: var(--color-indigo-950);
+  --wa-color-warning-10: var(--color-indigo-900);
+  --wa-color-warning-20: var(--color-indigo-800);
+  --wa-color-warning-30: var(--color-indigo-700);
+  --wa-color-warning-40: var(--color-indigo-600);
+  --wa-color-warning-50: var(--color-indigo-500);
+  --wa-color-warning-60: var(--color-indigo-400);
+  --wa-color-warning-70: var(--color-indigo-300);
+  --wa-color-warning-80: var(--color-indigo-200);
+  --wa-color-warning-90: var(--color-indigo-100);
+  --wa-color-warning-95: var(--color-indigo-50);
+  --wa-color-warning: var(--color-indigo-600);
+  --wa-color-warning-on: var(--wa-color-indigo-on);
+  --wa-color-indigo-key: 60;
+
+  --wa-color-indigo-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-indigo-key), 1) * 100%)
+  );
+  --wa-color-indigo-on: color-mix(
+    in oklab,
+    var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
+    white
+  );
+}
+
+.violet-warning {
+  --wa-color-warning-05: var(--color-violet-950);
+  --wa-color-warning-10: var(--color-violet-900);
+  --wa-color-warning-20: var(--color-violet-800);
+  --wa-color-warning-30: var(--color-violet-700);
+  --wa-color-warning-40: var(--color-violet-600);
+  --wa-color-warning-50: var(--color-violet-500);
+  --wa-color-warning-60: var(--color-violet-400);
+  --wa-color-warning-70: var(--color-violet-300);
+  --wa-color-warning-80: var(--color-violet-200);
+  --wa-color-warning-90: var(--color-violet-100);
+  --wa-color-warning-95: var(--color-violet-50);
+  --wa-color-warning: var(--color-violet-600);
+  --wa-color-warning-on: var(--wa-color-violet-on);
+  --wa-color-violet-key: 60;
+
+  --wa-color-violet-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-violet-key), 1) * 100%)
+  );
+  --wa-color-violet-on: color-mix(
+    in oklab,
+    var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
+    white
+  );
+}
+
+.purple-warning {
+  --wa-color-warning-05: var(--color-purple-950);
+  --wa-color-warning-10: var(--color-purple-900);
+  --wa-color-warning-20: var(--color-purple-800);
+  --wa-color-warning-30: var(--color-purple-700);
+  --wa-color-warning-40: var(--color-purple-600);
+  --wa-color-warning-50: var(--color-purple-500);
+  --wa-color-warning-60: var(--color-purple-400);
+  --wa-color-warning-70: var(--color-purple-300);
+  --wa-color-warning-80: var(--color-purple-200);
+  --wa-color-warning-90: var(--color-purple-100);
+  --wa-color-warning-95: var(--color-purple-50);
+  --wa-color-warning: var(--color-purple-600);
+  --wa-color-warning-on: var(--wa-color-purple-on);
+  --wa-color-purple-key: 60;
+
+  --wa-color-purple-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-purple-key), 1) * 100%)
+  );
+  --wa-color-purple-on: color-mix(
+    in oklab,
+    var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
+    white
+  );
+}
+
+.fuchsia-warning {
+  --wa-color-warning-05: var(--color-fuchsia-950);
+  --wa-color-warning-10: var(--color-fuchsia-900);
+  --wa-color-warning-20: var(--color-fuchsia-800);
+  --wa-color-warning-30: var(--color-fuchsia-700);
+  --wa-color-warning-40: var(--color-fuchsia-600);
+  --wa-color-warning-50: var(--color-fuchsia-500);
+  --wa-color-warning-60: var(--color-fuchsia-400);
+  --wa-color-warning-70: var(--color-fuchsia-300);
+  --wa-color-warning-80: var(--color-fuchsia-200);
+  --wa-color-warning-90: var(--color-fuchsia-100);
+  --wa-color-warning-95: var(--color-fuchsia-50);
+  --wa-color-warning: var(--color-fuchsia-600);
+  --wa-color-warning-on: var(--wa-color-fuchsia-on);
+  --wa-color-fuchsia-key: 60;
+
+  --wa-color-fuchsia-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-fuchsia-key), 1) * 100%)
+  );
+  --wa-color-fuchsia-on: color-mix(
+    in oklab,
+    var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
+    white
+  );
+}
+
+.pink-warning {
+  --wa-color-warning-05: var(--color-pink-950);
+  --wa-color-warning-10: var(--color-pink-900);
+  --wa-color-warning-20: var(--color-pink-800);
+  --wa-color-warning-30: var(--color-pink-700);
+  --wa-color-warning-40: var(--color-pink-600);
+  --wa-color-warning-50: var(--color-pink-500);
+  --wa-color-warning-60: var(--color-pink-400);
+  --wa-color-warning-70: var(--color-pink-300);
+  --wa-color-warning-80: var(--color-pink-200);
+  --wa-color-warning-90: var(--color-pink-100);
+  --wa-color-warning-95: var(--color-pink-50);
+  --wa-color-warning: var(--color-pink-600);
+  --wa-color-warning-on: var(--wa-color-pink-on);
+  --wa-color-pink-key: 60;
+
+  --wa-color-pink-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-pink-key), 1) * 100%)
+  );
+  --wa-color-pink-on: color-mix(
+    in oklab,
+    var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
+    white
+  );
+}
+
+.rose-warning {
+  --wa-color-warning-05: var(--color-rose-950);
+  --wa-color-warning-10: var(--color-rose-900);
+  --wa-color-warning-20: var(--color-rose-800);
+  --wa-color-warning-30: var(--color-rose-700);
+  --wa-color-warning-40: var(--color-rose-600);
+  --wa-color-warning-50: var(--color-rose-500);
+  --wa-color-warning-60: var(--color-rose-400);
+  --wa-color-warning-70: var(--color-rose-300);
+  --wa-color-warning-80: var(--color-rose-200);
+  --wa-color-warning-90: var(--color-rose-100);
+  --wa-color-warning-95: var(--color-rose-50);
+  --wa-color-warning: var(--color-rose-600);
+  --wa-color-warning-on: var(--wa-color-rose-on);
+  --wa-color-rose-key: 60;
+
+  --wa-color-rose-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-rose-key), 1) * 100%)
+  );
+  --wa-color-rose-on: color-mix(
+    in oklab,
+    var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
+    white
+  );
+}
+
+.slate-warning {
+  --wa-color-warning-05: var(--color-slate-950);
+  --wa-color-warning-10: var(--color-slate-900);
+  --wa-color-warning-20: var(--color-slate-800);
+  --wa-color-warning-30: var(--color-slate-700);
+  --wa-color-warning-40: var(--color-slate-600);
+  --wa-color-warning-50: var(--color-slate-500);
+  --wa-color-warning-60: var(--color-slate-400);
+  --wa-color-warning-70: var(--color-slate-300);
+  --wa-color-warning-80: var(--color-slate-200);
+  --wa-color-warning-90: var(--color-slate-100);
+  --wa-color-warning-95: var(--color-slate-50);
+  --wa-color-warning: var(--color-slate-600);
+  --wa-color-warning-on: var(--wa-color-slate-on);
+  --wa-color-slate-key: 60;
+
+  --wa-color-slate-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-slate-key), 1) * 100%)
+  );
+  --wa-color-slate-on: color-mix(
+    in oklab,
+    var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
+    white
+  );
+}
+
+.gray-warning {
+  --wa-color-warning-05: var(--color-gray-950);
+  --wa-color-warning-10: var(--color-gray-900);
+  --wa-color-warning-20: var(--color-gray-800);
+  --wa-color-warning-30: var(--color-gray-700);
+  --wa-color-warning-40: var(--color-gray-600);
+  --wa-color-warning-50: var(--color-gray-500);
+  --wa-color-warning-60: var(--color-gray-400);
+  --wa-color-warning-70: var(--color-gray-300);
+  --wa-color-warning-80: var(--color-gray-200);
+  --wa-color-warning-90: var(--color-gray-100);
+  --wa-color-warning-95: var(--color-gray-50);
+  --wa-color-warning: var(--color-gray-600);
+  --wa-color-warning-on: var(--wa-color-gray-on);
+  --wa-color-gray-key: 60;
+
+  --wa-color-gray-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-gray-key), 1) * 100%)
+  );
+  --wa-color-gray-on: color-mix(
+    in oklab,
+    var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
+    white
+  );
+}
+
+.zinc-warning {
+  --wa-color-warning-05: var(--color-zinc-950);
+  --wa-color-warning-10: var(--color-zinc-900);
+  --wa-color-warning-20: var(--color-zinc-800);
+  --wa-color-warning-30: var(--color-zinc-700);
+  --wa-color-warning-40: var(--color-zinc-600);
+  --wa-color-warning-50: var(--color-zinc-500);
+  --wa-color-warning-60: var(--color-zinc-400);
+  --wa-color-warning-70: var(--color-zinc-300);
+  --wa-color-warning-80: var(--color-zinc-200);
+  --wa-color-warning-90: var(--color-zinc-100);
+  --wa-color-warning-95: var(--color-zinc-50);
+  --wa-color-warning: var(--color-zinc-600);
+  --wa-color-warning-on: var(--wa-color-zinc-on);
+  --wa-color-zinc-key: 60;
+
+  --wa-color-zinc-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-zinc-key), 1) * 100%)
+  );
+  --wa-color-zinc-on: color-mix(
+    in oklab,
+    var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
+    white
+  );
+}
+
+.neutral-warning {
+  --wa-color-warning-05: var(--color-neutral-950);
+  --wa-color-warning-10: var(--color-neutral-900);
+  --wa-color-warning-20: var(--color-neutral-800);
+  --wa-color-warning-30: var(--color-neutral-700);
+  --wa-color-warning-40: var(--color-neutral-600);
+  --wa-color-warning-50: var(--color-neutral-500);
+  --wa-color-warning-60: var(--color-neutral-400);
+  --wa-color-warning-70: var(--color-neutral-300);
+  --wa-color-warning-80: var(--color-neutral-200);
+  --wa-color-warning-90: var(--color-neutral-100);
+  --wa-color-warning-95: var(--color-neutral-50);
+  --wa-color-warning: var(--color-neutral-600);
+  --wa-color-warning-on: var(--wa-color-neutral-on);
+  --wa-color-neutral-key: 60;
+
+  --wa-color-neutral-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-neutral-key), 1) * 100%)
+  );
+  --wa-color-neutral-on: color-mix(
+    in oklab,
+    var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
+    white
+  );
+}
+
+.stone-warning {
+  --wa-color-warning-05: var(--color-stone-950);
+  --wa-color-warning-10: var(--color-stone-900);
+  --wa-color-warning-20: var(--color-stone-800);
+  --wa-color-warning-30: var(--color-stone-700);
+  --wa-color-warning-40: var(--color-stone-600);
+  --wa-color-warning-50: var(--color-stone-500);
+  --wa-color-warning-60: var(--color-stone-400);
+  --wa-color-warning-70: var(--color-stone-300);
+  --wa-color-warning-80: var(--color-stone-200);
+  --wa-color-warning-90: var(--color-stone-100);
+  --wa-color-warning-95: var(--color-stone-50);
+  --wa-color-warning: var(--color-stone-600);
+  --wa-color-warning-on: var(--wa-color-stone-on);
+  --wa-color-stone-key: 60;
+
+  --wa-color-stone-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-stone-key), 1) * 100%)
+  );
+  --wa-color-stone-on: color-mix(
+    in oklab,
+    var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
+    white
+  );
+}
+
+.taupe-warning {
+  --wa-color-warning-05: var(--color-taupe-950);
+  --wa-color-warning-10: var(--color-taupe-900);
+  --wa-color-warning-20: var(--color-taupe-800);
+  --wa-color-warning-30: var(--color-taupe-700);
+  --wa-color-warning-40: var(--color-taupe-600);
+  --wa-color-warning-50: var(--color-taupe-500);
+  --wa-color-warning-60: var(--color-taupe-400);
+  --wa-color-warning-70: var(--color-taupe-300);
+  --wa-color-warning-80: var(--color-taupe-200);
+  --wa-color-warning-90: var(--color-taupe-100);
+  --wa-color-warning-95: var(--color-taupe-50);
+  --wa-color-warning: var(--color-taupe-600);
+  --wa-color-warning-on: var(--wa-color-taupe-on);
+  --wa-color-taupe-key: 60;
+
+  --wa-color-taupe-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-taupe-key), 1) * 100%)
+  );
+  --wa-color-taupe-on: color-mix(
+    in oklab,
+    var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
+    white
+  );
+}
+
+.mauve-warning {
+  --wa-color-warning-05: var(--color-mauve-950);
+  --wa-color-warning-10: var(--color-mauve-900);
+  --wa-color-warning-20: var(--color-mauve-800);
+  --wa-color-warning-30: var(--color-mauve-700);
+  --wa-color-warning-40: var(--color-mauve-600);
+  --wa-color-warning-50: var(--color-mauve-500);
+  --wa-color-warning-60: var(--color-mauve-400);
+  --wa-color-warning-70: var(--color-mauve-300);
+  --wa-color-warning-80: var(--color-mauve-200);
+  --wa-color-warning-90: var(--color-mauve-100);
+  --wa-color-warning-95: var(--color-mauve-50);
+  --wa-color-warning: var(--color-mauve-600);
+  --wa-color-warning-on: var(--wa-color-mauve-on);
+  --wa-color-mauve-key: 60;
+
+  --wa-color-mauve-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mauve-key), 1) * 100%)
+  );
+  --wa-color-mauve-on: color-mix(
+    in oklab,
+    var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
+    white
+  );
+}
+
+.mist-warning {
+  --wa-color-warning-05: var(--color-mist-950);
+  --wa-color-warning-10: var(--color-mist-900);
+  --wa-color-warning-20: var(--color-mist-800);
+  --wa-color-warning-30: var(--color-mist-700);
+  --wa-color-warning-40: var(--color-mist-600);
+  --wa-color-warning-50: var(--color-mist-500);
+  --wa-color-warning-60: var(--color-mist-400);
+  --wa-color-warning-70: var(--color-mist-300);
+  --wa-color-warning-80: var(--color-mist-200);
+  --wa-color-warning-90: var(--color-mist-100);
+  --wa-color-warning-95: var(--color-mist-50);
+  --wa-color-warning: var(--color-mist-600);
+  --wa-color-warning-on: var(--wa-color-mist-on);
+  --wa-color-mist-key: 60;
+
+  --wa-color-mist-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-mist-key), 1) * 100%)
+  );
+  --wa-color-mist-on: color-mix(
+    in oklab,
+    var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
+    white
+  );
+}
+
+.olive-warning {
+  --wa-color-warning-05: var(--color-olive-950);
+  --wa-color-warning-10: var(--color-olive-900);
+  --wa-color-warning-20: var(--color-olive-800);
+  --wa-color-warning-30: var(--color-olive-700);
+  --wa-color-warning-40: var(--color-olive-600);
+  --wa-color-warning-50: var(--color-olive-500);
+  --wa-color-warning-60: var(--color-olive-400);
+  --wa-color-warning-70: var(--color-olive-300);
+  --wa-color-warning-80: var(--color-olive-200);
+  --wa-color-warning-90: var(--color-olive-100);
+  --wa-color-warning-95: var(--color-olive-50);
+  --wa-color-warning: var(--color-olive-600);
+  --wa-color-warning-on: var(--wa-color-olive-on);
+  --wa-color-olive-key: 60;
+
+  --wa-color-olive-gte-60: calc(
+    100% - (clamp(0, 60 - var(--wa-color-olive-key), 1) * 100%)
+  );
+  --wa-color-olive-on: color-mix(
+    in oklab,
+    var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
+    white
+  );
+}

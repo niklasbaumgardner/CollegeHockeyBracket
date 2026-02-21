@@ -2,12 +2,13 @@ import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 import {
   THEME_LIST,
-  PRIMARY_COLOR_LIST,
+  VARIANT_COLOR_LIST,
   BACKGROUND_COLOR_LIST,
   COLOR_PALETTE_LIST,
   COLORS,
   NUMBERS,
   TAILWIND_COLORS,
+  VARIANTS,
 } from "./theme.mjs";
 
 function toUpper(string) {
@@ -70,6 +71,13 @@ export class PreferencesCard extends NikElement {
     console.log(primaryColor);
 
     this.theme.primaryColor = primaryColor;
+  }
+
+  handleVariantChange(event) {
+    let select = event.target;
+    let variant = select.name;
+
+    this.theme.setVariantColor(variant, select.value);
   }
 
   handleBackgroundColorChange() {
@@ -204,110 +212,6 @@ export class PreferencesCard extends NikElement {
     </div>`;
   }
 
-  spacingTemplate() {
-    return html`<div class="wa-split">
-      <div class="wa-stack grow">
-        <wa-slider
-          id="theme-spacing"
-          label="Spacing"
-          min="0.5"
-          max="2"
-          step="0.0125"
-          .value=${this.theme.spacing}
-          with-tooltip
-          @change=${this.handleSpacingChange}
-        ></wa-slider>
-        <wa-button-group label="Spacing">
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.decrementSpacing}
-            ><wa-icon
-              library="ion"
-              name="remove-outline"
-              label="Smaller spacing"
-            ></wa-icon
-          ></wa-button>
-          <wa-input
-            id="theme-spacing-input"
-            min="0.5"
-            max="2"
-            step="0.0125"
-            @input=${this.handleSpacingChange}
-            type="number"
-            .value=${this.theme.spacing}
-          ></wa-input>
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.incrementSpacing}
-            ><wa-icon
-              library="ion"
-              name="add-outline"
-              label="Bigger spacing"
-            ></wa-icon
-          ></wa-button>
-        </wa-button-group>
-      </div>
-      <wa-button
-        appearance="outlined"
-        variant="danger"
-        @click=${this.resetSpacing}
-        >Reset</wa-button
-      >
-    </div>`;
-  }
-
-  borderWidthTemplate() {
-    return html`<div class="wa-split">
-      <div class="wa-stack grow">
-        <wa-slider
-          id="theme-border-width"
-          label="Border width"
-          min="0.5"
-          max="4"
-          step="0.5"
-          .value=${this.theme.borderWidth}
-          with-tooltip
-          @change=${this.handleBorderWidthChange}
-        ></wa-slider>
-        <wa-button-group label="Border width">
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.decrementBorderWidth}
-            ><wa-icon
-              library="ion"
-              name="remove-outline"
-              label="Smaller border width"
-            ></wa-icon
-          ></wa-button>
-          <wa-input
-            id="theme-border-width-input"
-            min="0.5"
-            max="4"
-            step="0.5"
-            @input=${this.handleBorderWidthChange}
-            type="number"
-            .value=${this.theme.borderWidth}
-          ></wa-input>
-          <wa-button
-            appearance="filled-outlined"
-            @click=${this.incrementBorderWidth}
-            ><wa-icon
-              library="ion"
-              name="add-outline"
-              label="Bigger border width"
-            ></wa-icon
-          ></wa-button>
-        </wa-button-group>
-      </div>
-      <wa-button
-        appearance="outlined"
-        variant="danger"
-        @click=${this.resetBorderWidth}
-        >Reset</wa-button
-      >
-    </div>`;
-  }
-
   bgNumberRadioTemplate() {
     if (!this.backgroundColorSelect) {
       this.requestUpdate();
@@ -353,6 +257,28 @@ export class PreferencesCard extends NikElement {
     </div>`;
   }
 
+  variantsTemplate() {
+    return VARIANTS.map(
+      (variant) =>
+        html`<wa-select
+          with-clear
+          id="${variant}-color"
+          name=${variant}
+          label="${toUpper(variant)} Color"
+          @input=${this.handleVariantChange}
+          >${VARIANT_COLOR_LIST.map(
+            (color) =>
+              html`<wa-option
+                style="background-color: var(--color-${color}-600);"
+                ?selected=${this.theme.getVariantColor(variant) === color}
+                value=${color}
+                >${toUpper(color)}</wa-option
+              >`,
+          )}</wa-select
+        >`,
+    );
+  }
+
   render() {
     if (!this.theme) {
       return null;
@@ -377,6 +303,21 @@ export class PreferencesCard extends NikElement {
             )}</wa-select
           >
 
+          <wa-select
+            with-clear
+            id="color-palette"
+            label="Color Palette"
+            @input=${this.handleColorPaletteChange}
+            >${COLOR_PALETTE_LIST.map(
+              (color) =>
+                html`<wa-option
+                  ?selected=${this.theme.colorPalette === color}
+                  value=${color}
+                  >${toUpper(color)}</wa-option
+                >`,
+            )}</wa-select
+          >
+
           <wa-select id="mode" label="Mode" @input=${this.handleModeChange}
             ><wa-option value="light" ?selected=${this.theme.mode === "light"}
               >Light</wa-option
@@ -388,41 +329,15 @@ export class PreferencesCard extends NikElement {
           <wa-divider></wa-divider>
 
           <div class="wa-stack">
-            <h4>Custom Theming Options</h4>
+            <h4>Advanced Theming Options</h4>
 
             <div class="wa-grid" style="--min-column-size: 20rem;">
               <div class="wa-stack">
-                <wa-select
-                  with-clear
-                  id="primary-color"
-                  label="Primary Color"
-                  @input=${this.handlePrimaryColorChange}
-                  >${PRIMARY_COLOR_LIST.map(
-                    (color) =>
-                      html`<wa-option
-                        ?selected=${this.theme.primaryColor === color}
-                        value=${color}
-                        >${toUpper(color)}</wa-option
-                      >`,
-                  )}</wa-select
-                >
-
                 ${this.backgroundColorTemplate()}
 
-                <wa-select
-                  with-clear
-                  id="color-palette"
-                  label="Color Palette"
-                  @input=${this.handleColorPaletteChange}
-                  >${COLOR_PALETTE_LIST.map(
-                    (color) =>
-                      html`<wa-option
-                        ?selected=${this.theme.colorPalette === color}
-                        value=${color}
-                        >${toUpper(color)}</wa-option
-                      >`,
-                  )}</wa-select
-                >
+                <wa-divider></wa-divider>
+
+                ${this.variantsTemplate()}
               </div>
 
               <div class="wa-stack gap-(--wa-space-l)">
