@@ -10,7 +10,10 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /app
 
 COPY /caddy/caddy_start.sh /caddy/Caddyfile .
-COPY /bracketapp/static  ./static
+# COPY /bracketapp/static  ./static
+COPY /bracketapp/static/dist  ./static/dist
+COPY /bracketapp/static/images  ./static/images
+COPY /bracketapp/static/json  ./static/json
 
 RUN chmod a+x caddy_start.sh
 
