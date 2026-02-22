@@ -647,7 +647,7 @@ import{d as t,h as C,j as _e,k as x}from"./chunk-XGX4NMMB.mjs";import{a as $e,b 
           <a href="${SIGNUP_URL}">Sign Up</a>
         </p>
       </div>
-    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",Y);import Le from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var $=class extends n{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?Ee:$e}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return Ce.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:`light-dark(var(--wa-color-neutral-95), ${a})`,borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var E=class extends n{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){return e?t`<img
+    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",Y);import Le from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var $=class extends n{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?Ee:$e}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return Ce.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:"var(--wa-color-surface-super-raised)",borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var E=class extends n{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){return e?t`<img
       class="standings-img"
       src="${e.team.icon_path}"
       alt="${e.team.name}"
@@ -1149,7 +1149,7 @@ import{d as t,h as C,j as _e,k as x}from"./chunk-XGX4NMMB.mjs";import{a as $e,b 
           >Reset Password</wa-button
         >
       </div>
-    </wa-card>`}};customElements.define("nb-reset-password",ue);function v(s){return s.charAt(0).toUpperCase()+s.slice(1)}var he=class extends n{static properties={theme:{type:Object}};static queries={themesSelect:"#themes",modeSelect:"#mode",primaryColorSelect:"#primary-color",backgroundColorSelect:"#background-color",colorContrastSelect:"#color-contrast",colorPaletteSelect:"#color-palette",roundingSlider:"#theme-rounding",spacingSlider:"#theme-spacing",borderWidthSlider:"#theme-border-width",roundingInput:"#theme-rounding-input",spacingInput:"#theme-spacing-input",borderWidthInput:"#theme-border-width-input",bgNumberInputs:{all:".box-radio"}};connectedCallback(){super.connectedCallback(),this.init()}init(){this.theme=THEME,this.bgNumber=600,document.addEventListener("transitionstart",this),this.styleOberserver=new MutationObserver(()=>this.handleCSSChange()),this.styleOberserver.observe(document.documentElement,{attributeFilter:["style"]})}handleThemeChange(){let e=this.themesSelect.value;console.log(e),this.theme.theme=e}handleModeChange(){let e=this.modeSelect.value;console.log(e),this.theme.mode=e}handlePrimaryColorChange(){let e=this.primaryColorSelect.value;console.log(e),this.theme.primaryColor=e}handleVariantChange(e){let a=e.target,r=a.name;this.theme.setVariantColor(r,a.value)}handleBackgroundColorChange(){let e=this.backgroundColorSelect.value;console.log(e),this.theme.backgroundColor=`--color-${e}-${this.bgNumber}`,this.requestUpdate()}handleBackgroundNumberChange(){for(let e of this.bgNumberInputs)if(e.checked){this.bgNumber=Number(e.value);break}this.handleBackgroundColorChange()}handleColorPaletteChange(){let e=this.colorPaletteSelect.value;console.log(e),this.theme.colorPalette=e}handleColorContrastChange(){let e=this.colorContrastSelect.value;console.log(e),this.theme.colorContrast=e}handleRoundingChange(e){let a=e.target.value;this.theme.rounding=a}decrementRounding(){this.theme.rounding=Number(this.roundingInput.value)-.1}incrementRounding(){this.theme.rounding=Number(this.roundingInput.value)+.1}resetRounding(){this.theme.rounding=null}handleSpacingChange(e){let a=e.target.value;this.theme.spacing=a}decrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)-.0125}incrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)+.0125}resetSpacing(){this.theme.spacing=null}handleBorderWidthChange(e){let a=e.target.value;this.theme.borderWidth=a}decrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)-.5}incrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)+.5}resetBorderWidth(){this.theme.borderWidth=null}handleEvent(e){e.type==="transitionstart"&&this.handleCSSChange(e)}handleCSSChange(){this.requestUpdate()}roundingTemplate(){return t`<div class="wa-split">
+    </wa-card>`}};customElements.define("nb-reset-password",ue);function v(s){return s.charAt(0).toUpperCase()+s.slice(1)}var he=class extends n{static properties={theme:{type:Object}};static queries={themesSelect:"#themes",modeSelect:"#mode",primaryColorSelect:"#primary-color",backgroundColorSelect:"#background-color",colorContrastSelect:"#color-contrast",colorPaletteSelect:"#color-palette",roundingSlider:"#theme-rounding",spacingSlider:"#theme-spacing",borderWidthSlider:"#theme-border-width",roundingInput:"#theme-rounding-input",spacingInput:"#theme-spacing-input",borderWidthInput:"#theme-border-width-input",bgNumberInputs:{all:".box-radio"}};connectedCallback(){super.connectedCallback(),this.init()}init(){this.theme=THEME;let e=this.theme.backgroundColor?.split("-");this.bgNumber=e?.at(-1)?Number(e.at(-1)):600,document.addEventListener("transitionstart",this),this.styleOberserver=new MutationObserver(()=>this.handleCSSChange()),this.styleOberserver.observe(document.documentElement,{attributeFilter:["style"]})}handleThemeChange(){let e=this.themesSelect.value;console.log(e),this.theme.theme=e}handleModeChange(){let e=this.modeSelect.value;console.log(e),this.theme.mode=e}handlePrimaryColorChange(){let e=this.primaryColorSelect.value;console.log(e),this.theme.primaryColor=e}handleVariantChange(e){let a=e.target,r=a.name;this.theme.setVariantColor(r,a.value)}handleBackgroundColorChange(){let e=this.backgroundColorSelect.value;console.log(e),this.theme.backgroundColor=`--color-${e}-${this.bgNumber}`,this.requestUpdate()}handleBackgroundNumberChange(){for(let e of this.bgNumberInputs)if(e.checked){this.bgNumber=Number(e.value);break}this.handleBackgroundColorChange()}handleColorPaletteChange(){let e=this.colorPaletteSelect.value;console.log(e),this.theme.colorPalette=e}handleColorContrastChange(){let e=this.colorContrastSelect.value;console.log(e),this.theme.colorContrast=e}handleRoundingChange(e){let a=e.target.value;this.theme.rounding=a}decrementRounding(){this.theme.rounding=Number(this.roundingInput.value)-.1}incrementRounding(){this.theme.rounding=Number(this.roundingInput.value)+.1}resetRounding(){this.theme.rounding=null}handleSpacingChange(e){let a=e.target.value;this.theme.spacing=a}decrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)-.0125}incrementSpacing(){this.theme.spacing=Number(this.spacingInput.value)+.0125}resetSpacing(){this.theme.spacing=null}handleBorderWidthChange(e){let a=e.target.value;this.theme.borderWidth=a}decrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)-.5}incrementBorderWidth(){this.theme.borderWidth=Number(this.borderWidthInput.value)+.5}resetBorderWidth(){this.theme.borderWidth=null}handleEvent(e){e.type==="transitionstart"&&this.handleCSSChange(e)}handleCSSChange(){this.requestUpdate()}roundingTemplate(){return t`<div class="wa-split">
       <div class="wa-stack grow">
         <wa-slider
           id="theme-rounding"
@@ -1194,8 +1194,8 @@ import{d as t,h as C,j as _e,k as x}from"./chunk-XGX4NMMB.mjs";import{a as $e,b 
         >${S.map(e=>t`<wa-option
               ?selected=${this.theme.backgroundColor?.includes(e)}
               value=${e}
-              >${v(e)}</wa-option
-            >`)}</wa-select
+              >${v(e)}
+            </wa-option>`)}</wa-select
       >
       <div class="wa-cluster wa-nativ">${this.bgNumberRadioTemplate()}</div>
     </div>`}variantsTemplate(){return Be.map(e=>t`<wa-select
@@ -1205,11 +1205,15 @@ import{d as t,h as C,j as _e,k as x}from"./chunk-XGX4NMMB.mjs";import{a as $e,b 
           label="${v(e)} Color"
           @input=${this.handleVariantChange}
           >${Se.map(a=>t`<wa-option
-                style="background-color: var(--color-${a}-600);"
                 ?selected=${this.theme.getVariantColor(e)===a}
                 value=${a}
-                >${v(a)}</wa-option
-              >`)}</wa-select
+                ><div class="wa-split">
+                  ${v(a)}
+                  <div
+                    class="grow h-1"
+                    style="background-color: var(--color-${a}-600);"
+                  ></div></div
+              ></wa-option>`)}</wa-select
         >`)}render(){return this.theme?t`<wa-card>
       <div class="wa-stack">
         <div class="wa-stack">
@@ -1784,4 +1788,4 @@ import{d as t,h as C,j as _e,k as x}from"./chunk-XGX4NMMB.mjs";import{a as $e,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ye);
-//# sourceMappingURL=nb.RSF2EXE6.mjs.map
+//# sourceMappingURL=nb.PUJFYCGA.mjs.map

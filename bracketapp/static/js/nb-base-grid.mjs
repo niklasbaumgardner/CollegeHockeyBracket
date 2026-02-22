@@ -29,7 +29,8 @@ export class BaseGrid extends NikElement {
       headerRowBorder: true,
       rowBorder: true,
 
-      backgroundColor: `light-dark(var(--wa-color-neutral-95), ${darkBg})`,
+      // backgroundColor: `light-dark(var(--wa-color-neutral-95), ${darkBg})`,
+      backgroundColor: `var(--wa-color-surface-super-raised)`,
       borderColor:
         "light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",
       cellTextColor: "var(--wa-color-text-normal)",

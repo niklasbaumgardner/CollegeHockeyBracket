@@ -3,11 +3,9 @@ import { html } from "lit";
 import {
   THEME_LIST,
   VARIANT_COLOR_LIST,
-  BACKGROUND_COLOR_LIST,
   COLOR_PALETTE_LIST,
   COLORS,
   NUMBERS,
-  TAILWIND_COLORS,
   VARIANTS,
 } from "./theme.mjs";
 
@@ -43,7 +41,8 @@ export class PreferencesCard extends NikElement {
 
   init() {
     this.theme = THEME;
-    this.bgNumber = 600;
+    const bgArray = this.theme.backgroundColor?.split("-");
+    this.bgNumber = bgArray?.at(-1) ? Number(bgArray.at(-1)) : 600;
 
     document.addEventListener("transitionstart", this);
     this.styleOberserver = new MutationObserver(() => this.handleCSSChange());
@@ -249,8 +248,8 @@ export class PreferencesCard extends NikElement {
             html`<wa-option
               ?selected=${this.theme.backgroundColor?.includes(color)}
               value=${color}
-              >${toUpper(color)}</wa-option
-            >`,
+              >${toUpper(color)}
+            </wa-option>`,
         )}</wa-select
       >
       <div class="wa-cluster wa-nativ">${this.bgNumberRadioTemplate()}</div>
@@ -269,11 +268,15 @@ export class PreferencesCard extends NikElement {
           >${VARIANT_COLOR_LIST.map(
             (color) =>
               html`<wa-option
-                style="background-color: var(--color-${color}-600);"
                 ?selected=${this.theme.getVariantColor(variant) === color}
                 value=${color}
-                >${toUpper(color)}</wa-option
-              >`,
+                ><div class="wa-split">
+                  ${toUpper(color)}
+                  <div
+                    class="grow h-1"
+                    style="background-color: var(--color-${color}-600);"
+                  ></div></div
+              ></wa-option>`,
           )}</wa-select
         >`,
     );

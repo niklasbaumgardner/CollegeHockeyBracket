@@ -8,7 +8,7 @@ from bracketapp.utils.constants import ARCHIVE_YEARS_CACHE_KEY, archive_year_cac
 archive_bp = Blueprint("archive_bp", __name__)
 
 
-@archive_bp.get("/archive")
+@archive_bp.get("/history")
 def archive():
     if result := cache.get(ARCHIVE_YEARS_CACHE_KEY):
         archived_years = result
@@ -23,7 +23,7 @@ def archive():
     return render_template("archive.html", archived_years=archived_years)
 
 
-@archive_bp.get("/archive/<int:year>")
+@archive_bp.get("/history/<int:year>")
 def archive_year(year):
     standings, winners, correct = bracket_utils.get_bracket_standings(year)
 
@@ -36,7 +36,7 @@ def archive_year(year):
     )
 
 
-@archive_bp.get("/api/archive/<int:year>")
+@archive_bp.get("/api/history/<int:year>")
 def api_archive_year(year):
     cache_key = archive_year_cache_key(year)
     if result := cache.get(cache_key):

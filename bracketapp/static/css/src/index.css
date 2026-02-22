@@ -1,3 +1,63 @@
+html {
+  --wa-space-scale: 1 !important;
+  /* --wa-border-radius-scale: 2.9; */
+  --wa-border-width-scale: 1 !important;
+  --wa-form-control-padding-block: 0.6em !important;
+  --wa-form-control-padding-inline: 1em !important;
+  --nb-background-color: var(--wa-color-surface-default);
+
+  -todo--wa-color-surface-super-raised: light-dark(
+    var(--wa-color-neutral-90) /* var(--wa-color-neutral-80), */,
+    var(--wa-color-neutral-20)
+  );
+  -todo--wa-color-surface-raised: light-dark(
+    var(--wa-color-neutral-95) /* var(--wa-color-neutral-90), */,
+    var(--wa-color-neutral-10)
+  );
+  -todo--wa-color-surface-default: light-dark(
+    white /* var(--wa-color-neutral-95), */,
+    var(--wa-color-neutral-05)
+  );
+  -todo--wa-color-surface-lowered: light-dark(white, black);
+
+  --wa-color-surface-super-raised: light-dark(
+    var(--wa-color-neutral-95),
+    var(--wa-color-neutral-10)
+  );
+
+  &.wa-theme-shoelace {
+    --wa-color-surface-super-raised: light-dark(
+      var(--wa-color-neutral-95),
+      var(--wa-color-neutral-20)
+    );
+  }
+}
+
+wa-page,
+main {
+  background-color: var(--nb-background-color);
+}
+
+wa-page > main {
+  padding: var(--wa-space-2xl) var(--wa-space-m) var(--wa-space-4xl);
+}
+
+wa-card:has(wa-card:not(.default-bg)) {
+  & wa-card:not(.default-bg) {
+    background-color: var(--wa-color-surface-super-raised);
+  }
+}
+
+wa-card:has(wa-card:not(.default-border)) {
+  & wa-card:not(.default-border) {
+    border-color: light-dark(
+      var(--wa-color-neutral-80),
+      var(--wa-color-neutral-30)
+    );
+    box-shadow: var(--wa-shadow-l);
+  }
+}
+
 .small-card {
   display: flex;
   justify-content: center;
@@ -41,40 +101,6 @@ div:has(> a.clickable-card) {
 
     text-decoration-line: none;
   }
-}
-
-wa-card:has(wa-card:not(.default-bg)) {
-  & wa-card:not(.default-bg) {
-    background-color: light-dark(
-      var(--wa-color-neutral-95),
-      var(--wa-color-neutral-10)
-    );
-  }
-}
-
-.wa-theme-shoelace {
-  wa-card:has(wa-card:not(.default-bg)) {
-    & wa-card:not(.default-bg) {
-      background-color: light-dark(
-        var(--wa-color-neutral-95),
-        var(--wa-color-neutral-20)
-      );
-    }
-  }
-}
-
-wa-card:has(wa-card:not(.default-border)) {
-  & wa-card:not(.default-border) {
-    border-color: light-dark(
-      var(--wa-color-neutral-80),
-      var(--wa-color-neutral-30)
-    );
-    box-shadow: var(--wa-shadow-l);
-  }
-}
-
-wa-page > main {
-  padding: var(--wa-space-2xl) var(--wa-space-m) var(--wa-space-4xl);
 }
 
 wa-card.wa-card-p-0::part(body) {
@@ -123,20 +149,6 @@ wa-page {
 
 *:not(:defined) {
   border: 2px solid red;
-}
-
-html {
-  --wa-space-scale: 1 !important;
-  /* --wa-border-radius-scale: 2.9; */
-  --wa-border-width-scale: 1 !important;
-  --wa-form-control-padding-block: 0.6em !important;
-  --wa-form-control-padding-inline: 1em !important;
-  --nb-background-color: var(--wa-color-surface-default);
-}
-
-wa-page,
-main {
-  background-color: var(--nb-background-color);
 }
 
 nb-my-bracket-actions,

@@ -21,10 +21,11 @@ nb-matchup-info {
 }
 
 .matchup {
-  background-color: light-dark(
+  /* background-color: light-dark(
     var(--wa-color-neutral-95),
     var(--wa-color-neutral-10)
-  );
+  ); */
+  background-color: var(--wa-color-surface-raised);
 
   font-size: var(--wa-font-size-xs);
   box-shadow: var(--wa-shadow-l);
