@@ -1,18 +1,12 @@
-from flask import Blueprint, render_template
-from bracketapp.utils import bracket_utils, cache_invalidator
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.queries import bracket_queries, group_queries
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from bracketapp.utils.Sqids import sqids
-from bracketapp import cache
-from bracketapp.utils.constants import (
-    group_cache_key,
-    bracket_cache_key,
-    my_brackets_cache_key,
-    group_membership_cache_key,
-)
 
+from bracketapp import cache
+from bracketapp.config import CAN_EDIT_BRACKET
+from bracketapp.queries import group_queries
+from bracketapp.utils import bracket_utils, cache_invalidator
+from bracketapp.utils.constants import group_cache_key, group_membership_cache_key
+from bracketapp.utils.Sqids import sqids
 
 groups_bp = Blueprint("groups_bp", __name__)
 
@@ -93,7 +87,7 @@ def create_group():
         name=group_name, is_private=is_private, password=password
     )
 
-    group_queries.upsert_group_member(group_id=group_id)
+    # group_queries.upsert_group_member(group_id=group_id)
 
     cache_invalidator.new_group()
 
@@ -153,16 +147,11 @@ def join_group(sqid):
     group_id = sqids.decode_one(sqid)
     group = group_queries.get_group(group_id=group_id)
     if not group:
-        flash("Sorry. This group doesn't exist", "danger")
+        flash("Something went wrong", "danger")
         return redirect(url_for("leaderboard_bp.index"))
 
-    member = group_queries.get_group_member(group_id=group_id)
-    if member:
-        flash("You are already a member of this group")
-        return redirect(url_for("groups_bp.view_group", sqid=sqid))
-
     if group.locked:
-        flash("Sorry. This group is locked.")
+        flash("This group is locked. Contact the group owner to join this group.")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     if group.is_private:
@@ -170,13 +159,16 @@ def join_group(sqid):
         password_post = request.form.get("password")
         password = password_get or password_post
         if password != group.password:
-            flash("Incorrect password. Please try again.")
+            flash("Incorrect password. Please try again.", "danger")
             # Go pass to viewing private group password page
-            return redirect(url_for("groups_bp.view_group", sqid=sqid))
+            return redirect(
+                url_for("groups_bp.view_group", sqid=sqid, _anchor="join-private-group")
+            )
 
-    group_queries.upsert_group_member(group_id=group_id)
+    new_group_member_id = group_queries.upsert_group_member(group_id=group_id)
 
-    cache_invalidator.join_group(group_id)
+    if new_group_member_id:
+        cache_invalidator.join_group(group_id)
 
     return redirect(url_for("groups_bp.view_group", sqid=sqid))
 

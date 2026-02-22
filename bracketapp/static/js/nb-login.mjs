@@ -10,18 +10,24 @@ export class LoginCard extends NikElement {
   connectedCallback() {
     super.connectedCallback();
 
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(location.search);
     const nextURL = params.get("next");
 
     if (nextURL) {
-      const localStorage = window.localStorage;
       localStorage.setItem("next", nextURL);
+    } else {
+      const storedNext = localStorage.getItem("next");
+      if (storedNext && !location.search.length) {
+        const url = new URL(location.href);
+        url.searchParams.set("next", storedNext);
+        history.replaceState(null, "", url);
+      }
     }
   }
 
   nativeTemplate() {
     return html`<wa-card>
-      <form id="login-form" action="${LOGIN_URL}" method="POST"></form>
+      <form id="login-form" method="POST"></form>
       <div class="wa-stack">
         <h2>Login</h2>
 
@@ -79,7 +85,7 @@ export class LoginCard extends NikElement {
 
   waTmeplate() {
     return html`<wa-card>
-      <form id="login-form" action="${LOGIN_URL}" method="POST"></form>
+      <form id="login-form" method="POST"></form>
       <div class="wa-stack">
         <h2>Login</h2>
 

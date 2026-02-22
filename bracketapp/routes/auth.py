@@ -1,14 +1,13 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for
-from flask_login import login_user, current_user, logout_user, login_required
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
 from sentry_sdk import metrics
-from bracketapp.queries import user_queries
+
+from bracketapp import bcrypt
 from bracketapp.models import User
-from bracketapp import bcrypt, cache
+from bracketapp.queries import user_queries
 from bracketapp.utils import cache_invalidator, send_email
 
 # import stream_chat
-import os
-from bracketapp.utils.constants import user_cache_key
 
 
 auth_bp = Blueprint("auth_bp", __name__)
@@ -78,7 +77,7 @@ def signup():
         )
 
         flash("Sign up succesful", "success")
-        return redirect(url_for("auth_bp.login"))
+        return redirect(url_for("auth_bp.login", email=email))
 
     return render_template("signup.html")
 

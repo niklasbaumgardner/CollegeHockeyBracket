@@ -1,43 +1,24 @@
-from bracketapp.utils.constants import bracket_cache_key, group_cache_key
-from bracketapp.models import (
-    CorrectBracket,
-    CorrectGame,
-    Bracket,
-    Game,
-    Group,
-    GroupBracket,
-    GroupMember,
-    DefaultBracket,
-    DefaultGame,
-    Team,
-    BracketTeam,
-    User,
-)
-from bracketapp import db, cache
-from bracketapp.config import YEAR, CAN_EDIT_BRACKET
-from flask_login import current_user
 from copy import deepcopy
-from sqlalchemy.orm import (
-    joinedload,
-    contains_eager,
-    with_loader_criteria,
-    with_expression,
-)
+
+from flask_login import current_user
 from sqlalchemy import (
     and_,
-    or_,
-    func,
-    insert,
-    select,
-    update,
     collate,
     delete,
-    exists,
     distinct,
+    exists,
+    func,
+    insert,
     literal,
+    or_,
+    select,
+    update,
 )
-from bracketapp.utils.Sqids import sqids
 from sqlalchemy.dialects.postgresql import insert as pg_insert
+
+from bracketapp import db
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.models import Bracket, Group, GroupBracket, GroupMember
 
 
 def get_all_groups_for_user(year=None):
@@ -273,11 +254,15 @@ def upsert_group_member(group_id):
     upsert_stmt = stmt.on_conflict_do_nothing(
         constraint="group_member_group_id_user_id_key",
     )
-    db.session.execute(upsert_stmt)
+    result = db.session.execute(upsert_stmt)
 
-    update_group_member_count(group_id, commit=False)
+    new_group_member_id = result.inserted_primary_key[0]
+
+    if new_group_member_id:
+        update_group_member_count(group_id, commit=False)
 
     db.session.commit()
+    return new_group_member_id
 
 
 def create_group_bracket(group_id, bracket_id):

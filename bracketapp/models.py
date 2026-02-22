@@ -1,26 +1,19 @@
-from typing import Any, Annotated, Optional
-from bracketapp import db, login_manager, BaseModel, cache
-from flask_login import UserMixin, current_user
-from itsdangerous import URLSafeTimedSerializer
 import os
-from flask import url_for
-from sqlalchemy.orm import (
-    mapped_column,
-    Mapped,
-    relationship,
-    query_expression,
-    column_property,
-    declared_attr,
-)
-from sqlalchemy import ForeignKey, BigInteger, Identity, UniqueConstraint, select, func
-from sqlalchemy.sql import and_
-from bracketapp.utils.Serializer import SerializerMixin
 from enum import IntFlag
-from sqlalchemy.dialects.postgresql import JSONB
-from bracketapp.utils.Sqids import sqids
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.utils.constants import user_cache_key
+from typing import Annotated, Any, Optional
 
+from flask import url_for
+from flask_login import UserMixin
+from itsdangerous import URLSafeTimedSerializer
+from sqlalchemy import BigInteger, ForeignKey, Identity, UniqueConstraint, select
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from bracketapp import BaseModel, cache, db, login_manager
+from bracketapp.config import Config
+from bracketapp.utils.constants import user_cache_key
+from bracketapp.utils.Serializer import SerializerMixin
+from bracketapp.utils.Sqids import sqids
 
 int_pk = Annotated[
     int, mapped_column(BigInteger, Identity(always=True), primary_key=True)
@@ -431,23 +424,29 @@ class Group(BaseModel, SqidSerializerMixin):
         return url_for("groups_bp.delete_group", sqid=self.sqid_id())
 
     def join_url(self):
-        return self.share_url()
+        return self.share_url(external=False)
 
-    def share_url(self):
+    def share_url(self, external=True):
+        scheme = None
+        if Config.FLASK_DEBUG and external:
+            scheme = "http"
+        elif external:
+            scheme = "https"
+
         if self.is_private:
             return url_for(
                 "groups_bp.join_group",
                 sqid=self.sqid_id(),
                 password=self.password,
-                _external=True,
-                _scheme="https",
+                _external=external,
+                _scheme=scheme,
             )
 
         return url_for(
             "groups_bp.join_group",
             sqid=self.sqid_id(),
-            _external=True,
-            _scheme="https",
+            _external=external,
+            _scheme=scheme,
         )
 
     def add_bracket_url(self):
@@ -476,4 +475,6 @@ class GroupBracket(BaseModel, SqidSerializerMixin):
     group: Mapped["Group"] = relationship(lazy="joined", viewonly=True)
 
     def delete_url(self):
+        return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())
+        return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())
         return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())

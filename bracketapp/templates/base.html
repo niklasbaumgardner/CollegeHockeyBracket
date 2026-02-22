@@ -42,6 +42,10 @@
           const CURRENT_USER = {};
         {% endif %}
 
+        if (CURRENT_USER.id) {
+          localStorage.removeItem("next");
+        }
+
         const [month, day, year] = new Date()
         .toLocaleDateString(undefined, {
           year: "numeric",

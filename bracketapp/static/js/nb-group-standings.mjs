@@ -39,6 +39,10 @@ export class GroupStandings extends Standings {
     this.group = group;
     this.year = this.group.year;
     this.isMember = is_member;
+
+    if (!this.isMember && location.hash === "#join-private-group") {
+      this.handleJoinGroupClick();
+    }
   }
 
   handleJoinGroupClick() {
