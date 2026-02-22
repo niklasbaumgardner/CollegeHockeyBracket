@@ -1,8 +1,10 @@
+import os
+from threading import Thread
+
 from flask import url_for
 from flask_mail import Message
+
 from bracketapp import app, mail
-from threading import Thread
-import os
 
 
 def async_email_sender(a_app, msg):

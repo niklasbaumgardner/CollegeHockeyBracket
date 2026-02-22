@@ -1,11 +1,11 @@
-from bracketapp.models import UserSettings
 from flask_login import current_user
-from bracketapp import db, cache
-from sqlalchemy import select, cast
-from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy import cast, select
 from sqlalchemy.dialects.postgresql import JSONB
-from bracketapp.utils.constants import user_settings_cache_key
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 
+from bracketapp import cache, db
+from bracketapp.models import UserSettings
+from bracketapp.utils.constants import user_settings_cache_key
 
 ##
 ## UserSettings queries

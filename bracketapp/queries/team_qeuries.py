@@ -1,7 +1,7 @@
-from bracketapp.models import Team
-from bracketapp import db
-
 from sqlalchemy import select
+
+from bracketapp import db
+from bracketapp.models import Team
 
 
 def get_all_teams():

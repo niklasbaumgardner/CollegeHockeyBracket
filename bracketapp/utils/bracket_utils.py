@@ -1,8 +1,10 @@
-from bracketapp.queries import bracket_queries, correct_bracket_queries, group_queries
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from flask_login import current_user
-from flask import url_for
 import os.path
+
+from flask import url_for
+from flask_login import current_user
+
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.queries import bracket_queries, correct_bracket_queries, group_queries
 from bracketapp.utils import cache_invalidator
 
 

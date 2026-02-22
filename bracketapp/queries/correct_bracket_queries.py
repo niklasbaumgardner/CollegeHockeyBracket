@@ -1,26 +1,15 @@
-from bracketapp.utils.constants import correct_bracket_cache_key
+from sqlalchemy import and_, insert, select, update
+from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy.orm import joinedload
+
+from bracketapp import cache, db
+from bracketapp.config import YEAR
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
-    Bracket,
-    Game,
-    GroupBracket,
-    DefaultBracket,
-    DefaultGame,
-    Team,
-    BracketTeam,
 )
-from bracketapp import db, cache
-from bracketapp.utils import bracket_utils
-from bracketapp.config import YEAR, CAN_EDIT_BRACKET
-from bracketapp.queries import group_queries
-from flask_login import current_user
-from sqlalchemy.sql import func, asc
-from sqlalchemy.orm import joinedload
-from sqlalchemy import func, insert, select, update
-from sqlalchemy.sql import or_, and_
+from bracketapp.utils.constants import correct_bracket_cache_key
 from bracketapp.utils.Sqids import sqids
-from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 
 def create_correct_bracket():

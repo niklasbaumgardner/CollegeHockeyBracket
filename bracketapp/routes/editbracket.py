@@ -1,17 +1,10 @@
-from bracketapp.queries import bracket_queries, default_bracket_queries, group_queries
-from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import current_user, login_required
-from bracketapp.utils import bracket_utils, cache_invalidator
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.utils.Sqids import sqids
-from bracketapp import cache
-from bracketapp.utils.constants import (
-    bracket_cache_key,
-    my_brackets_cache_key,
-    LEADERBOARD_CACHE_KEY,
-    group_cache_key,
-)
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import login_required
 
+from bracketapp.config import CAN_EDIT_BRACKET
+from bracketapp.queries import bracket_queries, default_bracket_queries, group_queries
+from bracketapp.utils import cache_invalidator
+from bracketapp.utils.Sqids import sqids
 
 editbracket_bp = Blueprint("editbracket_bp", __name__)
 

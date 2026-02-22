@@ -1,17 +1,16 @@
+import datetime
+
+from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import current_user, login_required
+
 from bracketapp import cache
+from bracketapp.config import CAN_EDIT_BRACKET
 from bracketapp.queries import (
-    bracket_queries,
     correct_bracket_queries,
     default_bracket_queries,
     team_qeuries,
-    user_queries,
 )
-from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import current_user, login_required
 from bracketapp.utils import bracket_utils, cache_invalidator
-import datetime
-from bracketapp.config import CAN_EDIT_BRACKET
-
 
 admin_bp = Blueprint("admin_bp", __name__)
 

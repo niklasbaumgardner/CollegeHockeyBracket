@@ -1,15 +1,13 @@
+from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import current_user
+
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from bracketapp.queries import (
     bracket_queries,
     correct_bracket_queries,
     default_bracket_queries,
-    group_queries,
 )
-from flask import Blueprint, render_template, redirect, url_for, request
-from flask_login import current_user
-from bracketapp.utils import bracket_utils
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from bracketapp.utils.Sqids import sqids
-
 
 viewbracket_bp = Blueprint("viewbracket_bp", __name__)
 

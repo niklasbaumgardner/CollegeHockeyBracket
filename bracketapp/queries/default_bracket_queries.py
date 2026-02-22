@@ -1,22 +1,14 @@
-from bracketapp.utils.constants import default_bracket_cache_key
+from sqlalchemy import func, insert, select, update
+
+from bracketapp import cache, db
+from bracketapp.config import YEAR
 from bracketapp.models import (
-    Bracket,
-    Game,
-    GroupBracket,
+    BracketTeam,
     DefaultBracket,
     DefaultGame,
-    Team,
-    BracketTeam,
 )
-from bracketapp import db, cache
-from bracketapp.utils import bracket_utils, cache_invalidator
-from bracketapp.config import YEAR, CAN_EDIT_BRACKET
-from bracketapp.queries import group_queries
-from flask_login import current_user
-from sqlalchemy.sql import func, asc
-from sqlalchemy.orm import joinedload
-from sqlalchemy import func, insert, select, update
-from sqlalchemy.sql import or_, and_
+from bracketapp.utils import cache_invalidator
+from bracketapp.utils.constants import default_bracket_cache_key
 from bracketapp.utils.Sqids import sqids
 
 

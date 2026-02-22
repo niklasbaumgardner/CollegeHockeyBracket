@@ -1,32 +1,21 @@
-from bracketapp.utils.constants import (
-    bracket_cache_key,
-    my_brackets_cache_key,
-    LEADERBOARD_CACHE_KEY,
-    my_bracket_count_cahce_key,
-)
 from flask import url_for
-from sqlalchemy.util.topological import sort
+from flask_login import current_user
+from sqlalchemy import and_, delete, distinct, func, insert, select, update
+from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy.orm import contains_eager, joinedload, noload
+
+from bracketapp import cache, db
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
 from bracketapp.models import (
-    CorrectBracket,
-    CorrectGame,
     Bracket,
     Game,
     GroupBracket,
-    DefaultBracket,
-    DefaultGame,
-    Team,
-    BracketTeam,
 )
-from bracketapp import db, cache
-from bracketapp.utils import bracket_utils
-from bracketapp.config import YEAR, CAN_EDIT_BRACKET
-from bracketapp.queries import group_queries
-from flask_login import current_user
-from sqlalchemy.orm import joinedload, contains_eager, noload
-from sqlalchemy import and_, func, insert, select, update, delete, distinct
+from bracketapp.utils.constants import (
+    bracket_cache_key,
+    my_bracket_count_cahce_key,
+)
 from bracketapp.utils.Sqids import sqids
-from sqlalchemy.dialects.postgresql import insert as pg_insert
-
 
 ##
 ## Bracket and Game queries

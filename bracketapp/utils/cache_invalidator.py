@@ -1,21 +1,21 @@
-from bracketapp import cache, app
+from flask_login import current_user
+
+from bracketapp import cache
+from bracketapp.config import YEAR
+from bracketapp.queries import bracket_queries, group_queries, user_queries
 from bracketapp.utils.constants import (
     ARCHIVE_YEARS_CACHE_KEY,
     LEADERBOARD_CACHE_KEY,
-    my_brackets_cache_key,
-    group_cache_key,
+    archive_year_cache_key,
     bracket_cache_key,
     correct_bracket_cache_key,
     default_bracket_cache_key,
+    group_cache_key,
+    my_bracket_count_cahce_key,
+    my_brackets_cache_key,
     user_cache_key,
     user_settings_cache_key,
-    archive_year_cache_key,
-    my_bracket_count_cahce_key,
 )
-from flask_login import current_user
-from bracketapp.queries import bracket_queries, group_queries, user_queries
-from bracketapp.config import YEAR
-from threading import Thread
 
 
 def new_bracket(group_id=None):

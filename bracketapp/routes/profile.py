@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+
 from bracketapp.queries import user_queries
 from bracketapp.utils import cache_invalidator
-
 
 profile_bp = Blueprint("profile_bp", __name__)
 

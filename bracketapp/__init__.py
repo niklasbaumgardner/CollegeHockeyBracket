@@ -1,14 +1,15 @@
-from flask_bcrypt import Bcrypt
-from bracketapp.config import Config
-from flask_mail import Mail
-from flask_login import LoginManager
-from flask_sqlalchemy_lite import SQLAlchemy
-from sqlalchemy.pool import NullPool
-from sqlalchemy.orm import DeclarativeBase
 import sentry_sdk
-from werkzeug.middleware.proxy_fix import ProxyFix
-from bracketapp.NBCacheClient import NBClient
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+from flask_mail import Mail
+from flask_sqlalchemy_lite import SQLAlchemy
 from pymemcache import serde
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.pool import NullPool
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+from bracketapp.config import Config
+from bracketapp.NBCacheClient import NBClient
 
 
 class BaseModel(DeclarativeBase):

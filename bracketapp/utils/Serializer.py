@@ -1,5 +1,6 @@
-from sqlalchemy.inspection import inspect as sa_inspect
 from typing import Any, Optional
+
+from sqlalchemy.inspection import inspect as sa_inspect
 
 
 class SerializerMixin:

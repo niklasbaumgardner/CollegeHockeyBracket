@@ -1,9 +1,8 @@
-from bracketapp.utils.constants import user_cache_key
-from bracketapp.models import User
 from flask_login import current_user
-from bracketapp import bcrypt, db, cache
-from sqlalchemy import func, insert, select, update, distinct
+from sqlalchemy import distinct, func, insert, select, update
 
+from bracketapp import bcrypt, db
+from bracketapp.models import User
 
 ##
 ## User queries

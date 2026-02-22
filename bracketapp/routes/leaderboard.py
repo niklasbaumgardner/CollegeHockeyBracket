@@ -1,11 +1,10 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user
-from bracketapp.utils import bracket_utils
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
-from bracketapp import cache
-import time
 
+from bracketapp import cache
+from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.utils import bracket_utils
+from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
 
 leaderboard_bp = Blueprint("leaderboard_bp", __name__)
 

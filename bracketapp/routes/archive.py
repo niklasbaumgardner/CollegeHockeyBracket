@@ -1,9 +1,9 @@
-from bracketapp.queries import bracket_queries, correct_bracket_queries
-from flask import Blueprint, render_template, redirect, url_for
-from bracketapp.utils import bracket_utils
-from bracketapp import cache
-from bracketapp.utils.constants import ARCHIVE_YEARS_CACHE_KEY, archive_year_cache_key
+from flask import Blueprint, redirect, render_template, url_for
 
+from bracketapp import cache
+from bracketapp.queries import correct_bracket_queries
+from bracketapp.utils import bracket_utils
+from bracketapp.utils.constants import ARCHIVE_YEARS_CACHE_KEY, archive_year_cache_key
 
 archive_bp = Blueprint("archive_bp", __name__)
 

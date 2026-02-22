@@ -1,13 +1,9 @@
-from click import group
-from bracketapp.utils import cache_invalidator
-from bracketapp.utils.constants import bracket_cache_key, group_cache_key
-from bracketapp import cache
-from bracketapp.queries import bracket_queries, group_queries
-from flask import Blueprint, redirect, url_for, flash
+from flask import Blueprint, flash, redirect, url_for
 from flask_login import login_required
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
-from bracketapp.utils.Sqids import sqids
 
+from bracketapp.queries import bracket_queries, group_queries
+from bracketapp.utils import cache_invalidator
+from bracketapp.utils.Sqids import sqids
 
 deletebracket_bp = Blueprint("deletebracket_bp", __name__)
 
