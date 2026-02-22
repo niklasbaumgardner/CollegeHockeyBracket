@@ -110,8 +110,8 @@ def edit_group(sqid):
         flash("Something went wrong", "danger")
         return redirect(url_for("groups_bp.view_group", sqid=sqid))
 
+    old_name = str(group.name)
     group_name = request.form.get("name")
-    old_name = request.form.get("old_name")
     is_private = request.form.get("is_private") == "true"
     password = request.form.get("password")
     locked = request.form.get("locked") == "true"
@@ -123,8 +123,6 @@ def edit_group(sqid):
         password=password,
         locked=locked,
     )
-
-    print(group_name, old_name, group_name != old_name)
 
     cache_invalidator.edit_group(group_id, name_changed=group_name != old_name)
 

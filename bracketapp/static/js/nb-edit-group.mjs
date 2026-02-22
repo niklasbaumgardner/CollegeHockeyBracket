@@ -60,7 +60,6 @@ export class EditGroup extends BaseDialog {
       method="POST"
       class="wa-native"
     >
-      <input name="old_name" value=${this.group.name} hidden />
       <div class="wa-stack">
         <wa-input
           form="edit-group-form"
