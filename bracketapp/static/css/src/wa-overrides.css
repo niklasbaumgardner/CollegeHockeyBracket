@@ -1374,13 +1374,6 @@
     var(--wa-color-red-10) var(--wa-color-red-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .orange-neutral {
@@ -1407,13 +1400,6 @@
     var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .amber-neutral {
@@ -1440,13 +1426,6 @@
     var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .yellow-neutral {
@@ -1473,13 +1452,6 @@
     var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .lime-neutral {
@@ -1506,13 +1478,6 @@
     var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .green-neutral {
@@ -1539,13 +1504,6 @@
     var(--wa-color-green-10) var(--wa-color-green-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .emerald-neutral {
@@ -1572,13 +1530,6 @@
     var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .teal-neutral {
@@ -1605,13 +1556,6 @@
     var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .cyan-neutral {
@@ -1638,13 +1582,6 @@
     var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .sky-neutral {
@@ -1671,13 +1608,6 @@
     var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .blue-neutral {
@@ -1704,13 +1634,6 @@
     var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .indigo-neutral {
@@ -1737,13 +1660,6 @@
     var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .violet-neutral {
@@ -1770,13 +1686,6 @@
     var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .purple-neutral {
@@ -1803,13 +1712,6 @@
     var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .fuchsia-neutral {
@@ -1836,13 +1738,6 @@
     var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .pink-neutral {
@@ -1869,13 +1764,6 @@
     var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .rose-neutral {
@@ -1902,13 +1790,6 @@
     var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .slate-neutral {
@@ -1935,13 +1816,6 @@
     var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .gray-neutral {
@@ -1968,13 +1842,6 @@
     var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .zinc-neutral {
@@ -2001,13 +1868,6 @@
     var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .neutral-neutral {
@@ -2034,13 +1894,6 @@
     var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .stone-neutral {
@@ -2067,13 +1920,6 @@
     var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .taupe-neutral {
@@ -2100,13 +1946,6 @@
     var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .mauve-neutral {
@@ -2133,13 +1972,6 @@
     var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .mist-neutral {
@@ -2166,13 +1998,6 @@
     var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .olive-neutral {
@@ -2199,13 +2024,6 @@
     var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
     white
   );
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }
 }
 
 .red-success {

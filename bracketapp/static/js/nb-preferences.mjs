@@ -1,7 +1,6 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 import {
-  THEME_LIST,
   VARIANT_COLOR_LIST,
   COLOR_PALETTE_LIST,
   COLORS,
@@ -19,7 +18,6 @@ export class PreferencesCard extends NikElement {
   };
 
   static queries = {
-    themesSelect: "#themes",
     modeSelect: "#mode",
     primaryColorSelect: "#primary-color",
     backgroundColorSelect: "#background-color",
@@ -49,13 +47,6 @@ export class PreferencesCard extends NikElement {
     this.styleOberserver.observe(document.documentElement, {
       attributeFilter: ["style"],
     });
-  }
-
-  handleThemeChange() {
-    let theme = this.themesSelect.value;
-    console.log(theme);
-
-    this.theme.theme = theme;
   }
 
   handleModeChange() {
@@ -291,20 +282,6 @@ export class PreferencesCard extends NikElement {
       <div class="wa-stack">
         <div class="wa-stack">
           <h2>Preferences</h2>
-
-          <wa-select
-            id="themes"
-            label="Builtin Themes"
-            @input=${this.handleThemeChange}
-            >${THEME_LIST.map(
-              (theme) =>
-                html`<wa-option
-                  ?selected=${this.theme.theme === theme}
-                  value=${theme}
-                  >${toUpper(theme)}</wa-option
-                >`,
-            )}</wa-select
-          >
 
           <wa-select
             with-clear

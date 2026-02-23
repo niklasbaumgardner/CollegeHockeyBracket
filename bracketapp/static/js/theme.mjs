@@ -2,20 +2,6 @@ import { DeferredTask } from "./DeferredTask.mjs";
 
 const themeStorage = window.localStorage;
 
-export const THEME_LIST = [
-  "default",
-  // "awesome",
-  "shoelace",
-  "active",
-  "brutalist",
-  "glossy",
-  "matter",
-  "mellow",
-  // "playful",
-  "premium",
-  "tailspin",
-];
-
 export const THEME_MODE_LIST = ["light", "dark"];
 
 export const VARIANT_COLOR_LIST = [
@@ -110,7 +96,6 @@ function round(num, digits = 2) {
 }
 
 export class Theme {
-  #theme;
   #mode;
   #primaryColor;
   #backgroundColor;
@@ -129,7 +114,6 @@ export class Theme {
   constructor(theme) {
     this.#initing = true;
     this.domProperties = window.getComputedStyle(document.documentElement);
-    this.theme = theme.theme;
     this.mode = theme.mode;
     this.backgroundColor = theme.background_color;
     this.colorPalette = theme.color_palette;
@@ -144,14 +128,6 @@ export class Theme {
     }
 
     this.#initing = false;
-
-    if (!this.theme) {
-      this.makeDefault();
-    }
-  }
-
-  get theme() {
-    return this.#theme;
   }
 
   get mode() {
@@ -190,34 +166,8 @@ export class Theme {
     );
   }
 
-  get themeLinkEl() {
-    return document.getElementById("theme");
-  }
   get paletteLinkEl() {
     return document.getElementById("palette");
-  }
-
-  set theme(theme) {
-    if (theme === this.theme) {
-      return;
-    }
-
-    document.documentElement.classList.remove(`wa-theme-${this.theme}`);
-
-    if (THEME_LIST.includes(theme)) {
-      this.#theme = theme;
-    } else {
-      this.#theme = THEME_LIST[0];
-    }
-
-    themeStorage.setItem("theme", this.theme);
-    document.documentElement.classList.add(`wa-theme-${this.theme}`);
-
-    this.themeLinkEl.href = CSS_FILE_MAP[this.theme] ?? "";
-
-    if (!this.#initing) {
-      this.updateSettings({ theme: this.theme });
-    }
   }
 
   set mode(mode) {
@@ -535,12 +485,10 @@ export class Theme {
   }
 
   makeDefault() {
-    this.theme = THEME_LIST[0];
     this.mode = "light";
   }
 
   migrateTheme(themeMode) {
-    this.theme = THEME_LIST[0];
     this.mode = themeMode;
   }
 }

@@ -1,7 +1,7 @@
 <link
   id="theme"
   rel="stylesheet"
-  href=""
+  href="/static/dist/esbuild/shoelace.ZL2FZDSL.css"
   render="blocking"
   fetchpriority="high"
 />
@@ -15,8 +15,6 @@
 
 <script>
   const CSS_FILE_MAP = { 
-    "vogue.palette": "/static/dist/esbuild/vogue.palette.FY32WZXZ.css",
-    "anodized.palette": "/static/dist/esbuild/anodized.palette.N2MTE5BX.css",
     "base.palette": "/static/dist/esbuild/base.palette.CU2AYW2R.css",
     "bright.palette": "/static/dist/esbuild/bright.palette.4U3Z2VEM.css",
     "elegant.palette": "/static/dist/esbuild/elegant.palette.BESGV7HV.css",
@@ -24,23 +22,10 @@
     "natural.palette": "/static/dist/esbuild/natural.palette.WGSI542K.css",
     "rudimentary.palette": "/static/dist/esbuild/rudimentary.palette.FM3GLSBJ.css",
     "shoelace.palette": "/static/dist/esbuild/shoelace.palette.VIT5FZA2.css",
-    brutalist: "/static/dist/esbuild/brutalist.ZDHQMQWW.css",
-    glossy: "/static/dist/esbuild/glossy.RCEVOP4A.css",
-    matter: "/static/dist/esbuild/matter.OE2MZREJ.css",
-    mellow: "/static/dist/esbuild/mellow.P664OCF3.css",
-    playful: "/static/dist/esbuild/playful.RVCMPIQ2.css",
-    premium: "/static/dist/esbuild/premium.FHB3DFLS.css",
-    shoelace: "/static/dist/esbuild/shoelace.ZL2FZDSL.css",
-    tailspin: "/static/dist/esbuild/tailspin.ZRBQXHX4.css",
-    active: "/static/dist/esbuild/active.AZAPFPCD.css",
-    awesome: "/static/dist/esbuild/awesome.T6OFC7KZ.css",
+    "vogue.palette": "/static/dist/esbuild/vogue.palette.FY32WZXZ.css",
+    "anodized.palette": "/static/dist/esbuild/anodized.palette.N2MTE5BX.css",
   };
 
-  const myTheme = "{{ user_settings.settings.theme }}";
-  if (myTheme.length) {
-    let themeLink = document.getElementById("theme");
-    themeLink.href = CSS_FILE_MAP[myTheme] ?? "";
-  }
   const myPalette = "{{ user_settings.settings.color_palette }}";
   if (myPalette.length) {
     let paletteLink = document.getElementById("palette");
@@ -50,22 +35,20 @@
 
 <link 
   rel="stylesheet" 
-  href="/static/dist/esbuild/bundle.R6KNATQV.css" 
+  href="/static/dist/esbuild/bundle.P3ZNVTRC.css" 
   render="blocking" 
   fetchpriority="high"
 />
 
 <script type="module">
   import {
-    Theme,
-    THEME_LIST,
-    COLOR_PALETTE_LIST,
-  } from "/static/dist/esbuild/theme.6E52YUYS.mjs";
+    Theme
+  } from "/static/dist/esbuild/theme.N44C4ZPO.mjs";
   window.THEME = new Theme({{ user_settings.settings|tojson }});
 </script>
 <script src="/static/dist/esbuild/main.P7OBIUHW.mjs" type="module" ></script>
 <script src="/static/dist/esbuild/agGrid.YD523LOU.mjs" type="module" ></script>
-<script src="/static/dist/esbuild/nb.JFOIEYL7.mjs" type="module" ></script>
+<script src="/static/dist/esbuild/nb.RI6FGB23.mjs" type="module" ></script>
 
 <script
   src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"

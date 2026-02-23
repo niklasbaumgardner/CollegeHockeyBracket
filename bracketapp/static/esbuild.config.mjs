@@ -19,16 +19,7 @@ const result = await buildFunction({
     // CSS bundle
     bundle: "./bracketapp/static/css/src/bundle.css",
     // Themes
-    active: "./bracketapp/static/css/src/themes/active.css",
-    awesome: "./bracketapp/static/css/src/themes/awesome.css",
-    brutalist: "./bracketapp/static/css/src/themes/brutalist.css",
-    glossy: "./bracketapp/static/css/src/themes/glossy.css",
-    matter: "./bracketapp/static/css/src/themes/matter.css",
-    mellow: "./bracketapp/static/css/src/themes/mellow.css",
-    playful: "./bracketapp/static/css/src/themes/playful.css",
-    premium: "./bracketapp/static/css/src/themes/premium.css",
     shoelace: "./bracketapp/static/css/src/themes/shoelace.css",
-    tailspin: "./bracketapp/static/css/src/themes/tailspin.css",
     // Palettes
     "anodized.palette": "./bracketapp/static/css/src/color/anodized.css",
     "base.palette": "./bracketapp/static/css/src/color/base.css",
@@ -96,6 +87,7 @@ function buildTemplate(result) {
   const cssFilesMap = {};
   let themeFile = null;
   let sentryFile = null;
+  let shoelaceFile = null;
 
   const { outputs } = result.metafile;
   for (let [path, fileObject] of Object.entries(outputs)) {
@@ -120,6 +112,8 @@ function buildTemplate(result) {
       myFiles.push({ path, orignal: fileObject.entryPoint });
       if (origFilename === "bundle.css") {
         linkFiles.unshift(linkTemplate(filename));
+      } else if (origFilename === "shoelace.css" && !path.includes("palette")) {
+        shoelaceFile = "/static/dist/esbuild/" + filename;
       } else {
         let name = origFilename.split(".")[0];
         if (path.includes("palette")) {
@@ -143,11 +137,6 @@ ${Object.entries(cssFilesMap)
   .join("\n")}
   };
 
-  const myTheme = "{{ user_settings.settings.theme }}";
-  if (myTheme.length) {
-    let themeLink = document.getElementById("theme");
-    themeLink.href = CSS_FILE_MAP[myTheme] ?? "";
-  }
   const myPalette = "{{ user_settings.settings.color_palette }}";
   if (myPalette.length) {
     let paletteLink = document.getElementById("palette");
@@ -157,9 +146,7 @@ ${Object.entries(cssFilesMap)
 
   const themeImportScript = `<script type="module">
   import {
-    Theme,
-    THEME_LIST,
-    COLOR_PALETTE_LIST,
+    Theme
   } from "/static/dist/esbuild/${themeFile}";
   window.THEME = new Theme({{ user_settings.settings|tojson }});
 </script>`;
@@ -167,7 +154,7 @@ ${Object.entries(cssFilesMap)
   const fileContents = `<link
   id="theme"
   rel="stylesheet"
-  href=""
+  href="${shoelaceFile}"
   render="blocking"
   fetchpriority="high"
 />
@@ -235,18 +222,6 @@ function brandOverrides() {
   let contents = [];
   for (let variant of VARIANTS) {
     for (let color of COLORS) {
-      let neutralTemplate = "";
-      if (variant === "neutral") {
-        neutralTemplate = `
-  &.wa-light {
-    --wa-color-surface-raised: var(--wa-color-neutral-90);
-    --wa-color-surface-default: var(--wa-color-neutral-95);
-    --wa-color-surface-lowered: white;
-    --wa-color-surface-border: var(--wa-color-neutral-80);
-    --wa-nested-card-bg-color-light: var(--wa-color-surface-raised);
-  }`;
-      }
-
       contents.push(`.${color}-${variant} {
   --wa-color-${variant}-05: var(--color-${color}-950);
   --wa-color-${variant}-10: var(--color-${color}-900);
@@ -270,7 +245,7 @@ function brandOverrides() {
     in oklab,
     var(--wa-color-${color}-10) var(--wa-color-${color}-gte-60),
     white
-  );${neutralTemplate}
+  );
 }`);
     }
   }
