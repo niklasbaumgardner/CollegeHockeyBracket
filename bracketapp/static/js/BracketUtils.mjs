@@ -33,6 +33,44 @@ class BracketUtilsClass {
     return data;
   }
 
+  async getStandings() {
+    if (this.cache.has(`${CURRENT_YEAR}.standings`)) {
+      this.cache.get(`${CURRENT_YEAR}.standings`);
+    }
+
+    if (!this.standingsRequestPromise) {
+      this.standingsRequestPromise = fetch(
+        `/static/json/${CURRENT_YEAR}.standings.json`,
+      );
+    }
+
+    if (!this.confStandingsRequestPromise) {
+      this.confStandingsRequestPromise = fetch(
+        `/static/json/${CURRENT_YEAR}.conference.json`,
+      );
+    }
+
+    const [standingsResponse, conferenceResponse] = await Promise.all([
+      this.standingsRequestPromise,
+      this.confStandingsRequestPromise,
+    ]);
+
+    if (!this.standingsJsonPromise) {
+      this.standingsJsonPromise = standingsResponse.json();
+    }
+
+    if (!this.confStandingsJsonPromise) {
+      this.confStandingsJsonPromise = conferenceResponse.json();
+    }
+
+    const data = await Promise.all([
+      this.standingsJsonPromise,
+      this.confStandingsJsonPromise,
+    ]);
+    this.cache.set(`${CURRENT_YEAR}.standings`, data);
+    return data;
+  }
+
   getRecordFromGames(teamName, games) {
     let winLossTie = [0, 0, 0];
     for (let game of games) {
@@ -99,44 +137,6 @@ class BracketUtilsClass {
     ];
   }
 
-  async getStandings() {
-    if (this.cache.has(`${CURRENT_YEAR}.standings`)) {
-      this.cache.get(`${CURRENT_YEAR}.standings`);
-    }
-
-    if (!this.standingsRequestPromise) {
-      this.standingsRequestPromise = fetch(
-        `/static/json/${CURRENT_YEAR}.standings.json`,
-      );
-    }
-
-    if (!this.confStandingsRequestPromise) {
-      this.confStandingsRequestPromise = fetch(
-        `/static/json/${CURRENT_YEAR}.conference.json`,
-      );
-    }
-
-    const [standingsResponse, conferenceResponse] = await Promise.all([
-      this.standingsRequestPromise,
-      this.confStandingsRequestPromise,
-    ]);
-
-    if (!this.standingsJsonPromise) {
-      this.standingsJsonPromise = standingsResponse.json();
-    }
-
-    if (!this.confStandingsJsonPromise) {
-      this.confStandingsJsonPromise = conferenceResponse.json();
-    }
-
-    const data = await Promise.all([
-      this.standingsJsonPromise,
-      this.confStandingsJsonPromise,
-    ]);
-    this.cache.set(`${CURRENT_YEAR}.standings`, data);
-    return data;
-  }
-
   async getStandingsForTeam(team) {
     const chnName = getCHNName(team.name);
 
@@ -150,6 +150,24 @@ class BracketUtilsClass {
     }
 
     return { ...stats, ...conferenceStats };
+  }
+
+  async getNotableWins(team) {
+    let games = await this.getGames();
+    const chnName = getCHNName(team.name);
+
+    let notableWins = [];
+    for (let game of games) {
+      if (
+        (game.home === chnName || game.away === chnName) &&
+        game.winner === chnName &&
+        !!game.notable
+      ) {
+        notableWins.push(game);
+      }
+    }
+
+    return notableWins;
   }
 }
 const BracketUtils = new BracketUtilsClass();

@@ -62,12 +62,18 @@ export class MatchupInfo extends NikElement {
   }
 
   statsTemplate(stats, rightSide = false) {
-    return html`<small class="${rightSide ? "self-end" : ""}"
-        >NPI: ${stats.rank}</small
-      >
-      <small class="${rightSide ? "self-end" : ""}"
+    let rightSideClass = rightSide ? "self-end text-right" : "";
+    return html`<small class="${rightSideClass}">NPI: ${stats.rank}</small>
+      <small class="${rightSideClass}"
         >${stats.conference.name}: ${stats.conference.rank}</small
       >
+      ${stats.notableWins?.length
+        ? html`<small
+            class="${rightSideClass} text-(length:--wa-font-size-2xs)!"
+            >Notable wins:
+            ${stats.notableWins.map((g) => g.notable).join(", ")}</small
+          >`
+        : null}
       <wa-divider class="my-(--wa-space-xs)"></wa-divider>
       <div class="flex justify-between text-(length:--wa-font-size-2xs)!">
         <small>Home</small><span>${stats.records[0].join("-")}</span>
@@ -99,6 +105,7 @@ export class MatchupInfo extends NikElement {
     let records = await BracketUtils.getHomeAwayNeutralRecord(
       this.topTeam.team,
     );
+    // let notableWins = await BracketUtils.getNotableWins(this.topTeam.team);
 
     this.topTeamStats = { ...standings, records };
   }
@@ -115,6 +122,7 @@ export class MatchupInfo extends NikElement {
     let records = await BracketUtils.getHomeAwayNeutralRecord(
       this.bottomTeam.team,
     );
+    // let notableWins = await BracketUtils.getNotableWins(this.bottomTeam.team);
 
     this.bottomTeamStats = { ...standings, records };
   }
@@ -124,7 +132,7 @@ export class MatchupInfo extends NikElement {
       return null;
     }
 
-    return html`<div class="grow flex flex-col min-w-33">
+    return html`<div class="grow flex flex-col w-1/2 min-w-[7rem]">
       <div>${this.topTeam.team.name}</div>
       <div class="flex flex-col w-full">
         ${this.statsTemplate(this.topTeamStats)}
@@ -137,7 +145,7 @@ export class MatchupInfo extends NikElement {
       return null;
     }
 
-    return html`<div class="grow flex flex-col items-end min-w-33">
+    return html`<div class="grow flex flex-col items-end w-1/2 min-w-[7rem]">
       <div>${this.bottomTeam.team.name}</div>
       <div class="flex flex-col w-full">
         ${this.statsTemplate(this.bottomTeamStats, true)}
