@@ -1374,6 +1374,11 @@
     var(--wa-color-red-10) var(--wa-color-red-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .orange-neutral {
@@ -1400,6 +1405,11 @@
     var(--wa-color-orange-10) var(--wa-color-orange-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .amber-neutral {
@@ -1426,6 +1436,11 @@
     var(--wa-color-amber-10) var(--wa-color-amber-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .yellow-neutral {
@@ -1452,6 +1467,11 @@
     var(--wa-color-yellow-10) var(--wa-color-yellow-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .lime-neutral {
@@ -1478,6 +1498,11 @@
     var(--wa-color-lime-10) var(--wa-color-lime-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .green-neutral {
@@ -1504,6 +1529,11 @@
     var(--wa-color-green-10) var(--wa-color-green-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .emerald-neutral {
@@ -1530,6 +1560,11 @@
     var(--wa-color-emerald-10) var(--wa-color-emerald-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .teal-neutral {
@@ -1556,6 +1591,11 @@
     var(--wa-color-teal-10) var(--wa-color-teal-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .cyan-neutral {
@@ -1582,6 +1622,11 @@
     var(--wa-color-cyan-10) var(--wa-color-cyan-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .sky-neutral {
@@ -1608,6 +1653,11 @@
     var(--wa-color-sky-10) var(--wa-color-sky-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .blue-neutral {
@@ -1634,6 +1684,11 @@
     var(--wa-color-blue-10) var(--wa-color-blue-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .indigo-neutral {
@@ -1660,6 +1715,11 @@
     var(--wa-color-indigo-10) var(--wa-color-indigo-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .violet-neutral {
@@ -1686,6 +1746,11 @@
     var(--wa-color-violet-10) var(--wa-color-violet-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .purple-neutral {
@@ -1712,6 +1777,11 @@
     var(--wa-color-purple-10) var(--wa-color-purple-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .fuchsia-neutral {
@@ -1738,6 +1808,11 @@
     var(--wa-color-fuchsia-10) var(--wa-color-fuchsia-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .pink-neutral {
@@ -1764,6 +1839,11 @@
     var(--wa-color-pink-10) var(--wa-color-pink-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .rose-neutral {
@@ -1790,6 +1870,11 @@
     var(--wa-color-rose-10) var(--wa-color-rose-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .slate-neutral {
@@ -1816,6 +1901,11 @@
     var(--wa-color-slate-10) var(--wa-color-slate-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .gray-neutral {
@@ -1842,6 +1932,11 @@
     var(--wa-color-gray-10) var(--wa-color-gray-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .zinc-neutral {
@@ -1868,6 +1963,11 @@
     var(--wa-color-zinc-10) var(--wa-color-zinc-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .neutral-neutral {
@@ -1894,6 +1994,11 @@
     var(--wa-color-neutral-10) var(--wa-color-neutral-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .stone-neutral {
@@ -1920,6 +2025,11 @@
     var(--wa-color-stone-10) var(--wa-color-stone-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .taupe-neutral {
@@ -1946,6 +2056,11 @@
     var(--wa-color-taupe-10) var(--wa-color-taupe-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .mauve-neutral {
@@ -1972,6 +2087,11 @@
     var(--wa-color-mauve-10) var(--wa-color-mauve-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .mist-neutral {
@@ -1998,6 +2118,11 @@
     var(--wa-color-mist-10) var(--wa-color-mist-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .olive-neutral {
@@ -2024,6 +2149,11 @@
     var(--wa-color-olive-10) var(--wa-color-olive-gte-60),
     white
   );
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }
 }
 
 .red-success {

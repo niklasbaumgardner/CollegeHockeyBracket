@@ -6,31 +6,16 @@ html {
   --wa-form-control-padding-inline: 1em !important;
   --nb-background-color: var(--wa-color-surface-default);
 
-  -todo--wa-color-surface-super-raised: light-dark(
-    var(--wa-color-neutral-90) /* var(--wa-color-neutral-80), */,
+  --wa-color-surface-super-raised: light-dark(
+    var(--wa-color-neutral-90),
     var(--wa-color-neutral-20)
   );
-  -todo--wa-color-surface-raised: light-dark(
-    var(--wa-color-neutral-95) /* var(--wa-color-neutral-90), */,
-    var(--wa-color-neutral-10)
-  );
-  -todo--wa-color-surface-default: light-dark(
-    white /* var(--wa-color-neutral-95), */,
-    var(--wa-color-neutral-05)
-  );
-  -todo--wa-color-surface-lowered: light-dark(white, black);
-
-  --wa-color-surface-super-raised: light-dark(
+  --wa-color-surface-raised: light-dark(
     var(--wa-color-neutral-95),
     var(--wa-color-neutral-10)
   );
-
-  &.wa-theme-shoelace {
-    --wa-color-surface-super-raised: light-dark(
-      var(--wa-color-neutral-95),
-      var(--wa-color-neutral-20)
-    );
-  }
+  --wa-color-surface-default: light-dark(white, var(--wa-color-neutral-05));
+  --wa-color-surface-lowered: light-dark(var(--wa-color-neutral-95), black);
 }
 
 wa-page,

@@ -222,6 +222,16 @@ function brandOverrides() {
   let contents = [];
   for (let variant of VARIANTS) {
     for (let color of COLORS) {
+      let neutralTemplate = "";
+      if (variant === "neutral") {
+        neutralTemplate = `
+  &.wa-light {
+    --wa-color-surface-super-raised: var(--wa-color-neutral-90);
+    --wa-color-surface-raised: var(--wa-color-neutral-95);
+    --wa-color-surface-border: var(--wa-color-neutral-80);
+  }`;
+      }
+
       contents.push(`.${color}-${variant} {
   --wa-color-${variant}-05: var(--color-${color}-950);
   --wa-color-${variant}-10: var(--color-${color}-900);
@@ -245,7 +255,7 @@ function brandOverrides() {
     in oklab,
     var(--wa-color-${color}-10) var(--wa-color-${color}-gte-60),
     white
-  );
+  );${neutralTemplate}
 }`);
     }
   }
