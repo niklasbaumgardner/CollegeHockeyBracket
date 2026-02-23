@@ -153,8 +153,8 @@ class BracketUtilsClass {
   }
 
   async getNotableWins(team) {
-    let games = await this.getGames();
     const chnName = getCHNName(team.name);
+    let games = await this.getGames();
 
     let notableWins = [];
     for (let game of games) {
@@ -168,6 +168,14 @@ class BracketUtilsClass {
     }
 
     return notableWins;
+  }
+
+  async getNPIRank(team) {
+    const chnName = getCHNName(team.name);
+    let [standings, _] = await this.getStandings();
+
+    let stats = standings[chnName];
+    return stats.rank;
   }
 }
 const BracketUtils = new BracketUtilsClass();

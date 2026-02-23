@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-edit-matchup.mjs";
+import { BracketUtils } from "./BracketUtils.mjs";
 
 export class EditBracket extends NikElement {
   matchupTagName = "nb-edit-matchup";
@@ -468,8 +469,9 @@ export class EditBracket extends NikElement {
 
   async topSeed() {
     for (let matchup of this.matchupsSorted) {
-      let index = 0;
-      if (index === 0) {
+      let topRank = await BracketUtils.getNPIRank(matchup.winnerTop.team);
+      let bottomRank = await BracketUtils.getNPIRank(matchup.winnerBottom.team);
+      if (topRank < bottomRank) {
         matchup.topInputEl.click();
       } else {
         matchup.bottomInputEl.click();
@@ -479,34 +481,33 @@ export class EditBracket extends NikElement {
   }
 
   async simulate() {
-    let weightedArray = Array(100).fill(0);
-    for (let i = 0; i <= 25; i++) {
-      let index = this.getRandomInt(0, 100);
-      weightedArray[index] = 1;
+    function winProbabilityFromRanks(rankA, rankB) {
+      // 1 vs 33 with k=1 => 0.9999999999999873
+      // 1 vs 33 with k=10 => 0.9608342772032357
+      const k = 10;
+      const diff = Math.abs(rankB - rankA);
+      return 1 / (1 + Math.exp(-diff / k));
+    }
+
+    function simulateWinner(topTeamRank, bottomTeamRank) {
+      const topTeamWinProbability = winProbabilityFromRanks(
+        topTeamRank,
+        bottomTeamRank,
+      );
+      return Math.random() < topTeamWinProbability
+        ? topTeamRank
+        : bottomTeamRank;
     }
 
     for (let matchup of this.matchupsSorted) {
-      let seed = weightedArray[this.getRandomInt(0, 100)];
-      if (
-        (seed === 0 && matchup.winnerTop.rank < matchup.winnerBottom.rank) ||
-        (seed === 1 && matchup.winnerTop.rank > matchup.winnerBottom.rank)
-      ) {
+      let topRank = await BracketUtils.getNPIRank(matchup.winnerTop.team);
+      let bottomRank = await BracketUtils.getNPIRank(matchup.winnerBottom.team);
+
+      let winnerRank = simulateWinner(topRank, bottomRank);
+      if (winnerRank === topRank) {
         matchup.topInputEl.click();
-      } else if (
-        (seed === 0 && matchup.winnerTop.rank > matchup.winnerBottom.rank) ||
-        (seed === 1 && matchup.winnerTop.rank < matchup.winnerBottom.rank)
-      ) {
-        matchup.bottomInputEl.click();
       } else {
-        console.log(
-          `Ranks should be equal. ${matchup.winnerTop.rank} ${matchup.winnerBottom.rank}`,
-        );
-        let index = Math.round(Math.random());
-        if (index === 0) {
-          matchup.topInputEl.click();
-        } else {
-          matchup.bottomInputEl.click();
-        }
+        matchup.bottomInputEl.click();
       }
 
       await new Promise((r) => setTimeout(r, 10));
@@ -531,27 +532,6 @@ export class EditBracket extends NikElement {
       <wa-card>
         <div class="wa-stack">
           <h2>${this.bracket?.year} Bracket Challenge</h2>
-          <div class="wa-stack gap-(--wa-space-3xs)">
-            <p>
-              To view current conference standings
-              <a
-                href="https://www.collegehockeynews.com/reports/standings.php"
-                target="_blank"
-                >click here</a
-              >.
-            </p>
-            <p>
-              To view current team stats
-              <a href="https://www.collegehockeynews.com/stats/" target="_blank"
-                >click here</a
-              >.
-            </p>
-            <p>
-              To view previous years brackets
-              <a href="${ARCHIVE_URL}" target="_blank">click here</a>.
-            </p>
-          </div>
-
           <wa-input
             name="name"
             maxlength="60"
