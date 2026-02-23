@@ -83,14 +83,20 @@ export class ThemeSelector extends NikElement {
         variant="brand"
         appearance="plain"
         slot="trigger"
-        with-caret
       >
-        <wa-icon
-          slot="start"
-          id="icon"
-          library="ion"
-          name="${this.getThemeIconName()}"
-        ></wa-icon>
+        <div class="wa-cluster flex-nowrap">
+          <wa-icon
+            auto-width
+            id="icon"
+            library="ion"
+            name=${this.getThemeIconName()}
+          ></wa-icon>
+          <wa-icon
+            auto-width
+            library="ion"
+            name="chevron-down-outline"
+          ></wa-icon>
+        </div>
       </wa-button>
 
       <wa-dropdown-item id="light" type="checkbox" value="light"

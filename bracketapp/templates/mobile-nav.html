@@ -1,0 +1,46 @@
+{% if current_user.is_authenticated %}
+<div
+  slot="navigation-header"
+  class="wa-mobile-only flex flex-row items-center p-0"
+>
+  <wa-icon auto-width name="person-circle-outline" library="ion"></wa-icon>{{
+  current_user.username }}
+</div>
+{% else %}
+<a slot="navigation-header" class="wa-mobile-only wa-heading-xl p-0" href="/"
+  >NB Bracket Challenge</a
+>
+{% endif %}
+
+<nav slot="navigation" class="wa-mobile-only py-0 gap-(--wa-space-s)">
+  {% if current_user.is_authenticated %}
+  <a class="wa-heading-l" href="{{ url_for('mybrackets_bp.my_brackets') }}#"
+    >My Brackets</a
+  >
+  <a
+    class="wa-heading-l"
+    href="{{ url_for('mybrackets_bp.my_brackets') }}#groups"
+    >Groups</a
+  >
+  {% endif %}
+  <a class="wa-heading-l" href="{{ url_for('leaderboard_bp.leaderboard') }}"
+    >Leaderboard</a
+  >
+  <a class="wa-heading-l" href="{{ url_for('archive_bp.archive') }}">History</a>
+
+  {% if current_user.is_authenticated %}
+  <wa-divider></wa-divider>
+
+  {% if current_user.role and current_user.role > 1 %}
+  <a class="wa-heading-l" href="{{ url_for('admin_bp.admin') }}">Admin</a>
+  {% endif %}
+  <a class="wa-heading-l" href="{{ url_for('preferences_bp.preferences') }}"
+    >Preferences</a
+  >
+  <a class="wa-heading-l" href="{{ url_for('profile_bp.profile') }}">Profile</a>
+  <a class="wa-heading-l" href="{{ url_for('auth_bp.logout') }}">Logout</a>
+
+  {% else %}
+  <a href="{{ url_for('auth_bp.login') }}">Login</a>
+  {% endif %}
+</nav>

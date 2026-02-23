@@ -83,14 +83,20 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         variant="brand"
         appearance="plain"
         slot="trigger"
-        with-caret
       >
-        <wa-icon
-          slot="start"
-          id="icon"
-          library="ion"
-          name="${this.getThemeIconName()}"
-        ></wa-icon>
+        <div class="wa-cluster flex-nowrap">
+          <wa-icon
+            auto-width
+            id="icon"
+            library="ion"
+            name=${this.getThemeIconName()}
+          ></wa-icon>
+          <wa-icon
+            auto-width
+            library="ion"
+            name="chevron-down-outline"
+          ></wa-icon>
+        </div>
       </wa-button>
 
       <wa-dropdown-item id="light" type="checkbox" value="light"
@@ -418,39 +424,41 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         <input name="old_name" value=${this.bracket.name} hidden />
         <div class="wa-stack">
           ${this.topCardTemplate()}
-          <div class="bracket-grid-edit" @click=${this.handleClick}>
-            <div class="round-one-left">
-              <wa-card class="round-details">Round 1</wa-card>
-              ${this.roundOneLeftTemplate()}
-            </div>
+          <wa-scroller
+            ><div class="bracket-grid-edit" @click=${this.handleClick}>
+              <div class="round-one-left">
+                <wa-card class="round-details">Round 1</wa-card>
+                ${this.roundOneLeftTemplate()}
+              </div>
 
-            <div class="round-two-left">
-              <wa-card class="round-details">Round 2</wa-card>
-              ${this.roundTwoLeftTemplate()}
-            </div>
+              <div class="round-two-left">
+                <wa-card class="round-details">Round 2</wa-card>
+                ${this.roundTwoLeftTemplate()}
+              </div>
 
-            <div class="round-three-left">
-              <wa-card class="round-details">Round 3</wa-card>
-              ${this.roundThreeLeftTemplate()}
-            </div>
+              <div class="round-three-left">
+                <wa-card class="round-details">Round 3</wa-card>
+                ${this.roundThreeLeftTemplate()}
+              </div>
 
-            ${this.championTemplate()}
+              ${this.championTemplate()}
 
-            <div class="round-three-right">
-              <wa-card class="round-details">Round 3</wa-card>
-              ${this.roundThreeRightTemplate()}
-            </div>
+              <div class="round-three-right">
+                <wa-card class="round-details">Round 3</wa-card>
+                ${this.roundThreeRightTemplate()}
+              </div>
 
-            <div class="round-two-right">
-              <wa-card class="round-details">Round 2</wa-card>
-              ${this.roundTwoRightTemplate()}
-            </div>
+              <div class="round-two-right">
+                <wa-card class="round-details">Round 2</wa-card>
+                ${this.roundTwoRightTemplate()}
+              </div>
 
-            <div class="round-one-right round-one">
-              <wa-card class="round-details">Round 1</wa-card>
-              ${this.roundOneRightTemplate()}
-            </div>
-          </div>
+              <div class="round-one-right round-one">
+                <wa-card class="round-details">Round 1</wa-card>
+                ${this.roundOneRightTemplate()}
+              </div>
+            </div></wa-scroller
+          >
         </div>
       </form>
     </div>`}};customElements.define("nb-edit-bracket",k);var D=class i extends f{static properties={topTeamGoals:{type:Number,converter:i.goalConverter},bottomTeamGoals:{type:Number,converter:i.goalConverter}};static goalConverter(e,a){return e.length?Number(e):null}teamTemplate(e){return e?.team?e.team.name:""}topScoreInput(){return t`<input
@@ -946,7 +954,7 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
       ><div class="wa-cluster flex-wrap gap-(--wa-space-xs)">
         ${this.groupBrackets.map(e=>this.groupBracketTemplate(e))}
       </div></wa-details
-    >`:null}};customElements.define("nb-group-bracket-details",ie);var ne=class extends n{static properties={bracket:{type:Object},groups:{type:Object}};handleJoinGroupClick(){this.joinGroupModal||(this.joinGroupModal=document.createElement("nb-add-bracket-to-group"),this.joinGroupModal.bracket=this.bracket,this.joinGroupModal.groups=this.groups,document.body.appendChild(this.joinGroupModal)),this.joinGroupModal.show()}handleDeleteClick(){this.deleteBracketModal||(this.deleteBracketModal=document.createElement("nb-delete-bracket"),this.deleteBracketModal.bracket=this.bracket,document.body.appendChild(this.deleteBracketModal)),this.deleteBracketModal.show()}render(){return t`<div class="wa-cluster">
+    >`:null}};customElements.define("nb-group-bracket-details",ie);var ne=class extends n{static properties={bracket:{type:Object},groups:{type:Object}};handleJoinGroupClick(){this.joinGroupModal||(this.joinGroupModal=document.createElement("nb-add-bracket-to-group"),this.joinGroupModal.bracket=this.bracket,this.joinGroupModal.groups=this.groups,document.body.appendChild(this.joinGroupModal)),this.joinGroupModal.show()}handleDeleteClick(){this.deleteBracketModal||(this.deleteBracketModal=document.createElement("nb-delete-bracket"),this.deleteBracketModal.bracket=this.bracket,document.body.appendChild(this.deleteBracketModal)),this.deleteBracketModal.show()}render(){return t`<div class="wa-cluster py-(--wa-space-2xs)">
       <wa-button
         size="small"
         variant="brand"
@@ -960,7 +968,7 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         @click=${this.handleDeleteClick}
         >Delete</wa-button
       >
-    </div>`}};customElements.define("nb-my-bracket-actions",ne);var oe=class extends p{static properties={groups:{type:Object}};constructor(){super(),this.useSafeName=!1}get canCreateBracket(){return CAN_EDIT_BRACKET&&this.year===CURRENT_YEAR&&this.brackets.length>5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year===CURRENT_YEAR}updateData(e,a,r){this.dataGrid.destroy(),this.brackets=e,this.groups=a,this.year=r,this.createDataGrid()}cleanBracketNames(){}createDataGrid(){if(!this.brackets.length)return;let e=[];this.canEditThisYearsBrackets||e.push({field:"rank"}),e.push({field:"name",headerName:this.headerName,autoHeight:!0,cellRenderer:r=>{let s=document.createElement("nb-my-bracket-column");return s.bracket=r.data,s}}),this.canEditThisYearsBrackets?e.push({field:"actions",cellRenderer:r=>{let s=document.createElement("nb-my-bracket-actions");return s.bracket=r.data,s.groups=this.groups,s},cellClass:"flex! items-center justify-content-start"}):e.push({field:"points"},{field:"max_points",headerName:"Max"},{field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions};this.dataGrid=b(this.standingsGridEl,a)}};customElements.define("nb-my-brackets-grid",oe);var le=class extends n{static properties={results:{type:Object}};static queries={input:"wa-input",popup:"wa-popup",dropdown:"wa-dropdown",popover:"wa-popover"};constructor(){super(),this.results=[]}connectedCallback(){super.connectedCallback(),document.addEventListener("focusin",this.handleFocusIn.bind(this))}async search(){let e=this.input.value;if(!e){this.popup.active=!1;return}this.popup.active=!0;let a=await fetch(SEARCH_URL+"?"+new URLSearchParams({name:e}));this.results=await a.json(),this.lastSearchValue=e}handleInputEvent(e){if(!this.input.value){this.results=[];return}this.input.value.length<3||(this.searchTask=new u(async()=>{await this.search()},300),this.searchTask.arm())}handleFocusIn(e){this.contains(e.target)?this.popup.active=!0:this.popup.active=!1}groupTemplate(e){return t`<a class="clickable-group" href=${e.url}>
+    </div>`}};customElements.define("nb-my-bracket-actions",ne);var oe=class extends p{static properties={groups:{type:Object}};constructor(){super(),this.useSafeName=!1}get canCreateBracket(){return CAN_EDIT_BRACKET&&this.year===CURRENT_YEAR&&this.brackets.length>5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year===CURRENT_YEAR}updateData(e,a,r){this.dataGrid.destroy(),this.brackets=e,this.groups=a,this.year=r,this.createDataGrid()}cleanBracketNames(){}createDataGrid(){if(!this.brackets.length)return;let e=[];this.canEditThisYearsBrackets||e.push({field:"rank"}),e.push({field:"name",headerName:this.headerName,autoHeight:!0,cellRenderer:r=>{let s=document.createElement("nb-my-bracket-column");return s.bracket=r.data,s}}),this.canEditThisYearsBrackets?e.push({field:"actions",autoHeight:!0,cellRenderer:r=>{let s=document.createElement("nb-my-bracket-actions");return s.bracket=r.data,s.groups=this.groups,s},cellClass:"flex! items-center justify-content-start"}):e.push({field:"points"},{field:"max_points",headerName:"Max"},{field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions};this.dataGrid=b(this.standingsGridEl,a)}};customElements.define("nb-my-brackets-grid",oe);var le=class extends n{static properties={results:{type:Object}};static queries={input:"wa-input",popup:"wa-popup",dropdown:"wa-dropdown",popover:"wa-popover"};constructor(){super(),this.results=[]}connectedCallback(){super.connectedCallback(),document.addEventListener("focusin",this.handleFocusIn.bind(this))}async search(){let e=this.input.value;if(!e){this.popup.active=!1;return}this.popup.active=!0;let a=await fetch(SEARCH_URL+"?"+new URLSearchParams({name:e}));this.results=await a.json(),this.lastSearchValue=e}handleInputEvent(e){if(!this.input.value){this.results=[];return}this.input.value.length<3||(this.searchTask=new u(async()=>{await this.search()},300),this.searchTask.arm())}handleFocusIn(e){this.contains(e.target)?this.popup.active=!0:this.popup.active=!1}groupTemplate(e){return t`<a class="clickable-group" href=${e.url}>
       <nb-group-card-content .group=${e}></nb-group-card-content>
     </a>`}resultsTemplate(){let e="";return this.results.length?e=this.results.flatMap(a=>[this.groupTemplate(a),t`<wa-divider></wa-divider>`]).slice(0,-1):e=t`<p class="text-center">No groups found</p>`,t`<wa-card>${e}</wa-card>`}popoverTemplate(){return t`<wa-popup placement="bottom"
       >${this.resultsTemplate()}</wa-popup
@@ -1556,39 +1564,41 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
     </div>`}render(){return t`<div class="w-full wa-stack">
       ${this.topCardTemplate()}
 
-      <div class="${this.getBracketClass()}">
-        <div class="round-one-left">
-          <wa-card class="round-details">Round 1</wa-card>
-          ${this.roundOneLeftTemplate()}
-        </div>
+      <wa-scroller>
+        <div class="${this.getBracketClass()}">
+          <div class="round-one-left">
+            <wa-card class="round-details">Round 1</wa-card>
+            ${this.roundOneLeftTemplate()}
+          </div>
 
-        <div class="round-two-left">
-          <wa-card class="round-details">Round 2</wa-card>
-          ${this.roundTwoLeftTemplate()}
-        </div>
+          <div class="round-two-left">
+            <wa-card class="round-details">Round 2</wa-card>
+            ${this.roundTwoLeftTemplate()}
+          </div>
 
-        <div class="round-three-left">
-          <wa-card class="round-details">Round 3</wa-card>
-          ${this.roundThreeLeftTemplate()}
-        </div>
+          <div class="round-three-left">
+            <wa-card class="round-details">Round 3</wa-card>
+            ${this.roundThreeLeftTemplate()}
+          </div>
 
-        ${this.championTemplate()}
+          ${this.championTemplate()}
 
-        <div class="round-three-right">
-          <wa-card class="round-details">Round 3</wa-card>
-          ${this.roundThreeRightTemplate()}
-        </div>
+          <div class="round-three-right">
+            <wa-card class="round-details">Round 3</wa-card>
+            ${this.roundThreeRightTemplate()}
+          </div>
 
-        <div class="round-two-right">
-          <wa-card class="round-details">Round 2</wa-card>
-          ${this.roundTwoRightTemplate()}
-        </div>
+          <div class="round-two-right">
+            <wa-card class="round-details">Round 2</wa-card>
+            ${this.roundTwoRightTemplate()}
+          </div>
 
-        <div class="round-one-right">
-          <wa-card class="round-details">Round 1</wa-card>
-          ${this.roundOneRightTemplate()}
+          <div class="round-one-right">
+            <wa-card class="round-details">Round 1</wa-card>
+            ${this.roundOneRightTemplate()}
+          </div>
         </div>
-      </div>
+      </wa-scroller>
     </div>`}};customElements.define("nb-bracket",we);var fe=class extends c{static properties={group:{type:Object},controller:{type:Object}};handleHide(){this.controller.show()}lableTemplate(){return t`Delete this group?`}contentTemplate(){return t`<form
       id="delete-group-form"
       action=${this.group.delete_url}
@@ -1764,4 +1774,4 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",Te);
-//# sourceMappingURL=nb.BW2HICLX.mjs.map
+//# sourceMappingURL=nb.57ANNLT3.mjs.map

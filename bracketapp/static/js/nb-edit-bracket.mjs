@@ -562,39 +562,41 @@ export class EditBracket extends NikElement {
         <input name="old_name" value=${this.bracket.name} hidden />
         <div class="wa-stack">
           ${this.topCardTemplate()}
-          <div class="bracket-grid-edit" @click=${this.handleClick}>
-            <div class="round-one-left">
-              <wa-card class="round-details">Round 1</wa-card>
-              ${this.roundOneLeftTemplate()}
-            </div>
+          <wa-scroller
+            ><div class="bracket-grid-edit" @click=${this.handleClick}>
+              <div class="round-one-left">
+                <wa-card class="round-details">Round 1</wa-card>
+                ${this.roundOneLeftTemplate()}
+              </div>
 
-            <div class="round-two-left">
-              <wa-card class="round-details">Round 2</wa-card>
-              ${this.roundTwoLeftTemplate()}
-            </div>
+              <div class="round-two-left">
+                <wa-card class="round-details">Round 2</wa-card>
+                ${this.roundTwoLeftTemplate()}
+              </div>
 
-            <div class="round-three-left">
-              <wa-card class="round-details">Round 3</wa-card>
-              ${this.roundThreeLeftTemplate()}
-            </div>
+              <div class="round-three-left">
+                <wa-card class="round-details">Round 3</wa-card>
+                ${this.roundThreeLeftTemplate()}
+              </div>
 
-            ${this.championTemplate()}
+              ${this.championTemplate()}
 
-            <div class="round-three-right">
-              <wa-card class="round-details">Round 3</wa-card>
-              ${this.roundThreeRightTemplate()}
-            </div>
+              <div class="round-three-right">
+                <wa-card class="round-details">Round 3</wa-card>
+                ${this.roundThreeRightTemplate()}
+              </div>
 
-            <div class="round-two-right">
-              <wa-card class="round-details">Round 2</wa-card>
-              ${this.roundTwoRightTemplate()}
-            </div>
+              <div class="round-two-right">
+                <wa-card class="round-details">Round 2</wa-card>
+                ${this.roundTwoRightTemplate()}
+              </div>
 
-            <div class="round-one-right round-one">
-              <wa-card class="round-details">Round 1</wa-card>
-              ${this.roundOneRightTemplate()}
-            </div>
-          </div>
+              <div class="round-one-right round-one">
+                <wa-card class="round-details">Round 1</wa-card>
+                ${this.roundOneRightTemplate()}
+              </div>
+            </div></wa-scroller
+          >
         </div>
       </form>
     </div>`;

@@ -160,7 +160,7 @@ label#bottom {
 .bracket-grid-edit,
 .cbracket-grid,
 .cbracket-grid-edit {
-  max-width: 100%;
+  width: fit-content;
   display: grid;
   gap: 10px;
   grid-template-columns:
@@ -258,7 +258,6 @@ label#bottom {
   .cbracket-grid,
   .bracket-grid-edit,
   .cbracket-grid-edit {
-    overflow-x: scroll;
     box-shadow: var(--wa-shadow-l);
     padding: var(--wa-space-s);
   }

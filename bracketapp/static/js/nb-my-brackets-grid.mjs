@@ -36,7 +36,7 @@ class MyBracketActions extends NikElement {
   }
 
   render() {
-    return html`<div class="wa-cluster">
+    return html`<div class="wa-cluster py-(--wa-space-2xs)">
       <wa-button
         size="small"
         variant="brand"
@@ -116,6 +116,7 @@ export class MyBracketsGrid extends StandingsGrid {
     if (this.canEditThisYearsBrackets) {
       columnDefs.push({
         field: "actions",
+        autoHeight: true,
         cellRenderer: (param) => {
           let ele = document.createElement("nb-my-bracket-actions");
           ele.bracket = param.data;
