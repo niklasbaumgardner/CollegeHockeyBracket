@@ -1,7 +1,6 @@
 import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
-import { getStandingsForTeam } from "./standings-data.mjs";
-import { getHeadToHeadGames, getHomeAwayNeutralRecord } from "./games-data.mjs";
+import { BracketUtils } from "./BracketUtils.mjs";
 
 export class MatchupInfo extends NikElement {
   static properties = {
@@ -51,7 +50,7 @@ export class MatchupInfo extends NikElement {
       return;
     }
 
-    let [top, bottom] = await getHeadToHeadGames(
+    let [top, bottom] = await BracketUtils.getHeadToHeadGames(
       this.topTeam.team,
       this.bottomTeam.team,
     );
@@ -96,8 +95,10 @@ export class MatchupInfo extends NikElement {
       return;
     }
 
-    let standings = await getStandingsForTeam(this.topTeam.team);
-    let records = await getHomeAwayNeutralRecord(this.topTeam.team);
+    let standings = await BracketUtils.getStandingsForTeam(this.topTeam.team);
+    let records = await BracketUtils.getHomeAwayNeutralRecord(
+      this.topTeam.team,
+    );
 
     this.topTeamStats = { ...standings, records };
   }
@@ -108,8 +109,12 @@ export class MatchupInfo extends NikElement {
       return;
     }
 
-    let standings = await getStandingsForTeam(this.bottomTeam.team);
-    let records = await getHomeAwayNeutralRecord(this.bottomTeam.team);
+    let standings = await BracketUtils.getStandingsForTeam(
+      this.bottomTeam.team,
+    );
+    let records = await BracketUtils.getHomeAwayNeutralRecord(
+      this.bottomTeam.team,
+    );
 
     this.bottomTeamStats = { ...standings, records };
   }
