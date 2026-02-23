@@ -174,10 +174,18 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         ></wa-icon
       ></wa-button>
       <wa-popover placement="top" for="${this.game}-info">
-        <div class="flex justify-between">
-          ${this.topTeamStatsTemplate()}
-          <div><wa-divider orientation="vertical"></wa-divider></div>
-          ${this.bottomTeamStatsTemplate()}
+        <div class="wa-stack gap-(--wa-space-2xs)">
+          <div class="flex justify-between">
+            ${this.topTeamStatsTemplate()}
+            <div><wa-divider orientation="vertical"></wa-divider></div>
+            ${this.bottomTeamStatsTemplate()}
+          </div>
+          <div class="text-center text-[10px]">
+            Data from
+            <a href="https://www.collegehockeynews.com/" target="_blank"
+              >collegehockeynews.com</a
+            >
+          </div>
         </div>
       </wa-popover>`:null}};customElements.define("nb-matchup-info",A);var f=class extends n{static properties={winnerTop:{type:Object},winnerBottom:{type:Object},winner_id:{type:String},game:{type:String},teams:{type:Object}};static queries={topInputEl:"#top > input",bottomInputEl:"#bottom > input"};get winnerTopName(){let e=this.winnerTop;return this.teamTemplate(e)}get winnerBottomName(){let e=this.winnerBottom;return this.teamTemplate(e)}teamTemplate(e){return e?.team?`${e.rank} ${e.team.name}`:""}getImageElement(e){return e?.team?t`<img
       class="team-img"
@@ -378,7 +386,7 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         >Pick top seed</wa-button
       >
       <wa-button appearance="filled-outlined" @click=${this.simulate}
-        >Simulate</wa-button
+        >Simulate picks</wa-button
       >
     </div>`}topCardTemplate(){return t` <div class="flex justify-center">
       <wa-card>
@@ -1756,4 +1764,4 @@ import{d as t,h as C,j as ye,k as x}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",Te);
-//# sourceMappingURL=nb.P7GMKSHK.mjs.map
+//# sourceMappingURL=nb.BW2HICLX.mjs.map

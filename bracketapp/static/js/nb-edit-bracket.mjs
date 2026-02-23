@@ -522,7 +522,7 @@ export class EditBracket extends NikElement {
         >Pick top seed</wa-button
       >
       <wa-button appearance="filled-outlined" @click=${this.simulate}
-        >Simulate</wa-button
+        >Simulate picks</wa-button
       >
     </div>`;
   }

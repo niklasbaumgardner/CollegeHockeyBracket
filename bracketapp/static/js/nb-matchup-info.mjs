@@ -180,10 +180,18 @@ export class MatchupInfo extends NikElement {
         ></wa-icon
       ></wa-button>
       <wa-popover placement="top" for="${this.game}-info">
-        <div class="flex justify-between">
-          ${this.topTeamStatsTemplate()}
-          <div><wa-divider orientation="vertical"></wa-divider></div>
-          ${this.bottomTeamStatsTemplate()}
+        <div class="wa-stack gap-(--wa-space-2xs)">
+          <div class="flex justify-between">
+            ${this.topTeamStatsTemplate()}
+            <div><wa-divider orientation="vertical"></wa-divider></div>
+            ${this.bottomTeamStatsTemplate()}
+          </div>
+          <div class="text-center text-[10px]">
+            Data from
+            <a href="https://www.collegehockeynews.com/" target="_blank"
+              >collegehockeynews.com</a
+            >
+          </div>
         </div>
       </wa-popover>`;
   }
