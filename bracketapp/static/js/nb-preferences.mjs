@@ -30,6 +30,7 @@ export class PreferencesCard extends NikElement {
     spacingInput: "#theme-spacing-input",
     borderWidthInput: "#theme-border-width-input",
     bgNumberInputs: { all: ".box-radio" },
+    selects: { all: "wa-select" },
   };
 
   connectedCallback() {
@@ -37,7 +38,7 @@ export class PreferencesCard extends NikElement {
     this.init();
   }
 
-  init() {
+  async init() {
     this.theme = THEME;
     const bgArray = this.theme.backgroundColor?.split("-");
     this.bgNumber = bgArray?.at(-1) ? Number(bgArray.at(-1)) : 600;
@@ -47,6 +48,16 @@ export class PreferencesCard extends NikElement {
     this.styleOberserver.observe(document.documentElement, {
       attributeFilter: ["style"],
     });
+
+    await this.updateComplete;
+
+    const selects = [...this.selects].filter(
+      (s) => s.value && s.hasAttribute("with-clear"),
+    );
+
+    for (let select of selects) {
+      select.hasInteracted = true;
+    }
   }
 
   handleModeChange() {
