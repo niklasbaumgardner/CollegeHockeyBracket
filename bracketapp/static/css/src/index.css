@@ -5,6 +5,9 @@ html {
   --wa-form-control-padding-block: 0.6em !important;
   --wa-form-control-padding-inline: 1em !important;
   --nb-background-color: var(--wa-color-surface-default);
+  wa-scroller {
+    --shadow-color: var(--nb-background-color);
+  }
 
   --wa-color-surface-super-raised: light-dark(
     var(--wa-color-neutral-90),
