@@ -204,7 +204,7 @@ export class PreferencesCard extends NikElement {
 
   bgNumberRadioTemplate() {
     if (!this.backgroundColorSelect) {
-      this.requestUpdate();
+      this.updateComplete.then(() => this.requestUpdate());
       return;
     }
 

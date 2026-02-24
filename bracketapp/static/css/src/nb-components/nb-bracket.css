@@ -141,15 +141,6 @@ label#bottom {
     [round-two-right] minmax(0, 1fr) [round-one-right] minmax(0, 1fr);
 }
 
-.bracket-grid,
-.cbracket-grid {
-  grid-template-columns:
-    [round-one-left] minmax(0, 1fr) [round-two-left] minmax(0, 1fr)
-    [round-three-left] minmax(0, 1fr) [round-final] minmax(0, 1.5fr)
-    [round-three-right] minmax(0, 1fr)
-    [round-two-right] minmax(0, 1fr) [round-one-right] minmax(0, 1fr);
-}
-
 .round-one,
 .round-two,
 .round-three,
@@ -162,6 +153,7 @@ label#bottom {
 
 .round-final {
   height: 100%;
+  min-width: 256px;
 
   > .final-card {
     &::part(body) {
@@ -257,16 +249,6 @@ label#bottom {
     > .round-details {
       display: none;
     }
-  }
-}
-
-@media screen and (max-width: 992px) {
-  .bracket-grid,
-  .cbracket-grid,
-  .bracket-grid-edit,
-  .cbracket-grid-edit {
-    box-shadow: var(--wa-shadow-l);
-    padding: var(--wa-space-s);
   }
 }
 
