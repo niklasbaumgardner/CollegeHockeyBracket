@@ -579,7 +579,10 @@ export class EditBracket extends NikElement {
                 ${this.roundThreeLeftTemplate()}
               </div>
 
-              ${this.championTemplate()}
+              <div class="round-final-middle flex flex-col">
+                <wa-card class="round-details">Championship</wa-card
+                >${this.championTemplate()}
+              </div>
 
               <div class="round-three-right">
                 <wa-card class="round-details">Round 3</wa-card>

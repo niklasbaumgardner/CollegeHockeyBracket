@@ -33,7 +33,7 @@ nb-matchup-info {
 }
 
 .nb-team {
-  width: 100%;
+  /* width: 100%; */
   min-width: 9rem;
   height: 28px;
 
@@ -113,36 +113,6 @@ label#bottom {
   min-height: 120px;
 }
 
-.round-one > nb-matchup,
-.round-one > nb-edit-matchup,
-.round-one > nb-edit-correct-matchup {
-  padding: 31px 0;
-}
-
-.round-two > nb-matchup {
-  padding: 80px 0;
-}
-
-.round-three > nb-matchup {
-  padding: 208px 0;
-}
-
-.bracket-grid-edit .round-two > nb-matchup,
-.cbracket-grid .round-two > nb-matchup,
-.cbracket-grid-edit .round-two > nb-matchup,
-.round-two > nb-edit-matchup,
-.round-two > nb-edit-correct-matchup {
-  padding: 95px 0;
-}
-
-.bracket-grid-edit .round-three > nb-matchup,
-.cbracket-grid .round-three > nb-matchup,
-.cbracket-grid-edit .round-three > nb-matchup,
-.round-three > nb-edit-matchup,
-.round-three > nb-edit-correct-matchup {
-  padding: 223px 0;
-}
-
 .cbracket-grid-edit li > input[type="number"] {
   width: 30px;
   height: 18px;
@@ -161,6 +131,7 @@ label#bottom {
 .cbracket-grid,
 .cbracket-grid-edit {
   width: fit-content;
+  min-width: 100%;
   display: grid;
   gap: 10px;
   grid-template-columns:
@@ -168,6 +139,35 @@ label#bottom {
     [round-three-left] minmax(0, 1fr) [round-final] minmax(0, 2fr)
     [round-three-right] minmax(0, 1fr)
     [round-two-right] minmax(0, 1fr) [round-one-right] minmax(0, 1fr);
+}
+
+.bracket-grid,
+.cbracket-grid {
+  grid-template-columns:
+    [round-one-left] minmax(0, 1fr) [round-two-left] minmax(0, 1fr)
+    [round-three-left] minmax(0, 1fr) [round-final] minmax(0, 1.5fr)
+    [round-three-right] minmax(0, 1fr)
+    [round-two-right] minmax(0, 1fr) [round-one-right] minmax(0, 1fr);
+}
+
+.round-one,
+.round-two,
+.round-three,
+.round-final {
+  height: 512px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.round-final {
+  height: 100%;
+
+  > .final-card {
+    &::part(body) {
+      padding: var(--wa-space-s);
+    }
+  }
 }
 
 .round-one-left {
@@ -187,8 +187,7 @@ label#bottom {
   }
 }
 
-.round-final {
-  min-width: 274px;
+.round-final-middle {
   grid-area: round-final;
 
   nb-matchup-info {
@@ -250,6 +249,14 @@ label#bottom {
   nb-matchup-info {
     right: var(--nb-matchup-info-offset) !important;
     left: unset !important;
+  }
+
+  .round-three-right,
+  .round-two-right,
+  .round-one-right {
+    > .round-details {
+      display: none;
+    }
   }
 }
 

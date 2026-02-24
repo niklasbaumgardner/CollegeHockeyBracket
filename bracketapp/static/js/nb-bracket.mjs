@@ -3,6 +3,7 @@ import { NikElement } from "./nik-element.mjs";
 import "./nb-matchup.mjs";
 import "./nb-bracket-points-charts.mjs";
 import "./nb-group-bracket-details.mjs";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 class Bracket extends NikElement {
   static properties = {
@@ -49,6 +50,7 @@ class Bracket extends NikElement {
         type="default"
         .default=${options.default}
         .correct=${options.correct}
+        .winnerTop=${ifDefined(options.winnerTop)}
       ></nb-matchup>`;
     }
 
@@ -67,21 +69,25 @@ class Bracket extends NikElement {
         type: "default",
         default: this.default.games.game1,
         correct: this.correct.games.game1,
+        winnerTop: this.bracket?.games.game1.winner_team,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game2,
         correct: this.correct.games.game2,
+        winnerTop: this.bracket?.games.game2.winner_team,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game3,
         correct: this.correct.games.game3,
+        winnerTop: this.bracket?.games.game3.winner_team,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game4,
         correct: this.correct.games.game4,
+        winnerTop: this.bracket?.games.game4.winner_team,
       })}
     </div>`;
   }
@@ -122,9 +128,11 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<div class="wa-stack">
-      ${this.getImageElement(this.correct.winner_team)}
-      <p class="text-center">Champion</p>
+    return html`<div class="flex flex-col items-center gap-(--wa-space-2xs)">
+      <div class="flex gap-(--wa-space-s) items-center">
+        <h4>${this.correct.year} Champion</h4>
+      </div>
+      ${this.getImageElement(this.correct?.winner_team)}
     </div>`;
   }
 
@@ -136,12 +144,14 @@ class Bracket extends NikElement {
     if (this.correct.winner_team) {
       if (this.correct.winner_id === this.bracket?.winner_id) {
         return html`<wa-icon
+          auto-width
           library="hero"
           name="check-circle"
           variant="solid"
         ></wa-icon>`;
       }
       return html`<wa-icon
+        auto-width
         library="hero"
         name="x-circle"
         variant="solid"
@@ -155,11 +165,13 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<div class="wa-stack">
+    return html`<div class="flex flex-col items-center gap-(--wa-space-2xs)">
+      <span>Championship pick</span>
+      <div class="flex gap-(--wa-space-s) items-center wa-heading-l">
+        <span>${this.bracket.winner_team.team.name}</span
+        >${this.getChampionPickIcon()}
+      </div>
       ${this.getImageElement(this.bracket?.winner_team)}
-      <p class="text-center inline-flex justify-around items-center">
-        ${IS_ME ? "Your pick" : "Their pick"}${this.getChampionPickIcon()}
-      </p>
     </div>`;
   }
 
@@ -168,39 +180,30 @@ class Bracket extends NikElement {
       return null;
     }
 
-    return html`<div class="wa-stack gap-(--wa-space-xs)">
-      <span class="text-(length:--wa-font-size-s)">Predicted Score:</span>
-      <div class="flex justify-center items-center gap-(--wa-space-s)">
-        <wa-card style="--spacing:var(--wa-space-xs);"
-          >${this.bracket?.winner_goals}</wa-card
-        ><span>-</span
-        ><wa-card style="--spacing:var(--wa-space-xs);"
-          >${this.bracket?.loser_goals}</wa-card
-        >
+    return html`<div class="flex flex-col text-(length:--wa-font-size-s)">
+      <div>Tiebreaker</div>
+      <div class="flex justify-center text-(length:--wa-font-size-xs)">
+        Final score: ${this.bracket?.winner_goals} -
+        ${this.bracket?.loser_goals}
       </div>
     </div>`;
   }
 
-  // TODO: consider combining champion templates below
   championTemplate() {
-    return html`<div class="round-final my-auto">
-      <wa-card>
+    return html`<div class="round-final">
+      <wa-card class="final-card">
         <div class="wa-stack">
-          <span class="text-center">${this.default.year} Championship</span>
-          <div class="flex justify-center gap-(--wa-space-m)">
-            ${this.pickedChampionTemplate()} ${this.correctChampionTemplate()}
-          </div>
-          <wa-divider></wa-divider>
-          <div class="flex justify-between gap-(--wa-space-s)">
-            ${this.matchupTemplate({
-              winnerTop: this.bracket?.games.game13.winner_team,
-              winnerBottom: this.bracket?.games.game14.winner_team,
-              correctTop: this.correct.games.game13.winner_team,
-              correctBottom: this.correct.games.game14.winner_team,
-              correct: this.correct.games.game15,
-            })}
-            ${this.predictedScoreTemplate()}
-          </div>
+          ${this.type === "correct"
+            ? this.correctChampionTemplate()
+            : this.pickedChampionTemplate()}
+          ${this.matchupTemplate({
+            winnerTop: this.bracket?.games.game13.winner_team,
+            winnerBottom: this.bracket?.games.game14.winner_team,
+            correctTop: this.correct.games.game13.winner_team,
+            correctBottom: this.correct.games.game14.winner_team,
+            correct: this.correct.games.game15,
+          })}
+          ${this.predictedScoreTemplate()}
         </div>
       </wa-card>
     </div>`;
@@ -243,21 +246,25 @@ class Bracket extends NikElement {
         type: "default",
         default: this.default.games.game5,
         correct: this.correct.games.game5,
+        winnerTop: this.bracket?.games.game5.winner_team,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game6,
         correct: this.correct.games.game6,
+        winnerTop: this.bracket?.games.game6.winner_team,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game7,
         correct: this.correct.games.game7,
+        winnerTop: this.bracket?.games.game7.winner_team,
       })}
       ${this.matchupTemplate({
         type: "default",
         default: this.default.games.game8,
         correct: this.correct.games.game8,
+        winnerTop: this.bracket?.games.game8.winner_team,
       })}
     </div>`;
   }
@@ -363,7 +370,7 @@ class Bracket extends NikElement {
               ><p class="bracket-details-content">
                 ${this.bracket?.round_three_points ?? "--"} / 80
               </p>
-              <p class="bracket-details-label">Final Four</p></span
+              <p class="bracket-details-label">Frozen Four</p></span
             >
           </div>
           <div class="flex">
@@ -388,36 +395,6 @@ class Bracket extends NikElement {
   }
 
   render() {
-    // let roundPoints = html`<div class="d-flex flex-wrap bracket-sub-details">
-    //   <div class="d-flex">
-    //     <span
-    //       ><p class="bracket-details-content">${this.bracket?.r1}</p>
-    //       <p class="bracket-details-label">Round 1 points</p></span
-    //     >
-    //   </div>
-    //   <div class="d-flex">
-    //     <wa-divider vertical></wa-divider>
-    //     <span
-    //       ><p class="bracket-details-content">${this.bracket?.r2}</p>
-    //       <p class="bracket-details-label">Round 2 points</p></span
-    //     >
-    //   </div>
-    //   <div class="d-flex">
-    //     <wa-divider vertical></wa-divider>
-    //     <span
-    //       ><p class="bracket-details-content">${this.bracket?.r3}</p>
-    //       <p class="bracket-details-label">Round 3 points</p></span
-    //     >
-    //   </div>
-    //   <div class="d-flex">
-    //     <wa-divider vertical></wa-divider>
-    //     <span
-    //       ><p class="bracket-details-content">${this.bracket?.r4}</p>
-    //       <p class="bracket-details-label">Round 4 points</p></span
-    //     >
-    //   </div>
-    // </div>`;
-
     return html`<div class="w-full wa-stack">
       ${this.topCardTemplate()}
 
@@ -434,14 +411,17 @@ class Bracket extends NikElement {
           </div>
 
           <div class="round-three-left">
-            <wa-card class="round-details">Round 3</wa-card>
+            <wa-card class="round-details">Frozen Four</wa-card>
             ${this.roundThreeLeftTemplate()}
           </div>
 
-          ${this.championTemplate()}
+          <div class="round-final-middle flex flex-col">
+            <wa-card class="round-details">Championship</wa-card
+            >${this.championTemplate()}
+          </div>
 
           <div class="round-three-right">
-            <wa-card class="round-details">Round 3</wa-card>
+            <wa-card class="round-details">Frozen Four</wa-card>
             ${this.roundThreeRightTemplate()}
           </div>
 

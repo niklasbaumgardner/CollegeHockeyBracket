@@ -74,14 +74,18 @@ class EditCorrectMatchup extends EditMatchup {
       class="matchup"
       style="--padding: var(--wa-spacing-2x-small);"
     >
-      <label class="nb-team" id="top">
-        ${this.topInput()}<span>${this.winnerTopName}</span>
+      <div class="nb-team flex justify-between" id="top">
+        <label class="flex items-center gap-(--wa-space-2xs)"
+          >${this.topInput()}${this.winnerTopName}</label
+        >
         ${this.topScoreInput()}
-      </label>
-      <label class="nb-team" id="bottom">
-        ${this.bottomInput()}<span>${this.winnerBottomName}</span>
+      </div>
+      <div class="nb-team flex justify-between" id="bottom">
+        <label class="flex items-center gap-(--wa-space-2xs)"
+          >${this.bottomInput()}${this.winnerBottomName}</label
+        >
         ${this.bottomScoreInput()}
-      </label>
+      </div>
     </wa-card>`;
   }
 }

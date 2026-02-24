@@ -655,6 +655,9 @@
   .text-\(length\:--wa-font-size-s\) {
     font-size: var(--wa-font-size-s);
   }
+  .text-\(length\:--wa-font-size-xs\) {
+    font-size: var(--wa-font-size-xs);
+  }
   .text-\[10px\] {
     font-size: 10px;
   }

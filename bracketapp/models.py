@@ -1,3 +1,4 @@
+import datetime
 import os
 from enum import IntFlag
 from typing import Annotated, Any, Optional
@@ -303,6 +304,10 @@ class CorrectGame(BaseModel, SqidSerializerMixin):
     top_team_goals: Mapped[Optional[int]]
     bottom_team_goals: Mapped[Optional[int]]
 
+    start_time: Mapped[Optional[datetime.datetime]]
+    overtime: Mapped[Optional[bool]]
+    number_overtimes: Mapped[Optional[int]]
+
     winner_team: Mapped["BracketTeam"] = relationship(
         foreign_keys=[winner_id], lazy="joined", viewonly=True
     )
@@ -475,6 +480,4 @@ class GroupBracket(BaseModel, SqidSerializerMixin):
     group: Mapped["Group"] = relationship(lazy="joined", viewonly=True)
 
     def delete_url(self):
-        return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())
-        return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())
         return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())

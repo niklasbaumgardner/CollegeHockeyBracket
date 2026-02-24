@@ -108,20 +108,16 @@ class Matchup extends NikElement {
     return null;
   }
 
-  topGameTemplate() {
-    return html`<div class="nb-team user-pick p-0">
-      <span class="team-name ms-auto">Final</span>
-    </div>`;
-  }
-
   topPickTemplate() {
     if (!this.winnerTop) {
       return null;
     }
-    return html`<div class="nb-team user-pick">
-      ${this.topIconTemplate()}<span class="team-name"
-        >${this.winnerTopName}</span
-      >
+    return html`<div class="flex justify-between">
+      <div class="nb-team user-pick">
+        ${this.topIconTemplate()}<span class="team-name"
+          >${this.winnerTopName}</span
+        >
+      </div>
     </div>`;
   }
 
@@ -136,51 +132,102 @@ class Matchup extends NikElement {
     </div>`;
   }
 
-  correctGameTemplate() {}
+  combinedPickTemplate() {
+    if (this.type === "default") {
+      let loserTeam =
+        this.winnerTop.team.id === this.default.top_team.team.id
+          ? this.default.bottom_team.team
+          : this.default.top_team.team;
+      return html`<div class="nb-team user-pick text-[10px]">
+        Pick:
+        <span class="team-name">${this.winnerTop.team.short_name}</span> over
+        <span class="team-name">${loserTeam.short_name}</span>
+      </div>`;
+    }
+
+    return html`<div class="nb-team user-pick text-[10px]">
+      Pick:
+      <span class="team-name">${this.winnerTop.team.short_name}</span> over
+      <span class="team-name">${this.winnerBottom.team.short_name}</span>
+    </div>`;
+  }
+
+  gameInfoTemplate() {
+    const gameStart = new Date(Date.parse(this.correct.start_time));
+    const now = new Date();
+
+    let content = null;
+    if (now < gameStart) {
+      const timeFormatter = new Intl.DateTimeFormat(undefined, {
+        timeStyle: "long",
+        timeZone: "America/New_York",
+      });
+      const dateFormatter = new Intl.DateTimeFormat(undefined, {
+        month: "short",
+        day: "numeric",
+      });
+      content =
+        dateFormatter.format(gameStart) +
+        " " +
+        timeFormatter.format(gameStart).replace(":00", "");
+    } else if (this.correct.winner_id) {
+      content = "Final";
+      if (this.correct.overtime) {
+        let numOvertimes = "";
+        if (this.correct.number_overtimes > 1) {
+          numOvertimes = this.correct.number_overtimes;
+        }
+        content += ` ${numOvertimes}OT`;
+      }
+    } else {
+      content = "Live";
+    }
+
+    return html`<div class="text-[10px] text-right user-pick">${content}</div>`;
+  }
+
+  getTopLoserTeamClass() {
+    const compareTeamId =
+      this.type === "default" ? this.default.top_team_id : this.correctTop?.id;
+    return this.correct.winner_id && this.correct.winner_id !== compareTeamId
+      ? "loser-team"
+      : "";
+  }
+
+  getBottomLoserTeamClass() {
+    const compareTeamId =
+      this.type === "default"
+        ? this.default.bottom_team_id
+        : this.correctBottom?.id;
+    return this.correct.winner_id && this.correct.winner_id !== compareTeamId
+      ? "loser-team"
+      : "";
+  }
 
   defaultMatchupTemplate() {
-    return html`<div class="nb-team">
+    return html`${this.gameInfoTemplate()}
+      <div class="nb-team ${this.getTopLoserTeamClass()}">
         ${this.getImageElement(this.default.top_team)}
-        <span
-          class="team-name ${this.correct.winner_id &&
-          this.correct.winner_id !== this.default.top_team_id
-            ? "loser-team"
-            : ""}"
-          >${this.defaultTopTeamName}</span
+        <span class="team-name">${this.defaultTopTeamName}</span
         ><span class="ms-auto">${this.correct?.top_team_goals}</span>
       </div>
-      <div class="nb-team">
+      <div class="nb-team ${this.getBottomLoserTeamClass()}">
         ${this.getImageElement(this.default.bottom_team)}
-        <span
-          class="team-name ${this.correct.winner_id &&
-          this.correct.winner_id !== this.default.bottom_team_id
-            ? "loser-team"
-            : ""}"
-          >${this.defaultBottomTeamName}</span
+        <span class="team-name">${this.defaultBottomTeamName}</span
         ><span class="ms-auto">${this.correct?.bottom_team_goals}</span>
       </div>`;
   }
 
   matchupTemplate() {
-    return html`${this.topPickTemplate()}
-      <div class="nb-team">
+    return html`${this.gameInfoTemplate()}${this.topPickTemplate()}
+      <div class="nb-team ${this.getTopLoserTeamClass()}">
         ${this.getImageElement(this.correctTop)}
-        <span
-          class="team-name ${this.correct.winner_id &&
-          this.correct.winner_id !== this.correctTop?.id
-            ? "loser-team"
-            : ""}"
-          >${this.correctTopName}</span
+        <span class="team-name">${this.correctTopName}</span
         ><span class="ms-auto">${this.correct?.top_team_goals}</span>
       </div>
-      <div class="nb-team">
+      <div class="nb-team ${this.getBottomLoserTeamClass()}">
         ${this.getImageElement(this.correctBottom)}
-        <span
-          class="team-name ${this.correct.winner_id &&
-          this.correct.winner_id !== this.correctBottom?.id
-            ? "loser-team"
-            : ""}"
-          >${this.correctBottomName}</span
+        <span class="team-name">${this.correctBottomName}</span
         ><span class="ms-auto">${this.correct?.bottom_team_goals}</span>
       </div>
       ${this.bottomPickTemplate()}`;
