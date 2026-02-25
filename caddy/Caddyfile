@@ -49,7 +49,33 @@
   }
 
   # proxy all requests for /* to the app, configure these variables in the service settings
-  reverse_proxy {
+  reverse_proxy host collegehockeybracket.com {
+    # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
+    dynamic a {
+      name {$APP2_DOMAIN}
+      port {$APP_PORT}
+      refresh 1s
+      dial_timeout 30s
+      versions ipv4 ipv6
+    }
+
+    # configure load balancing settings
+    lb_policy round_robin
+    lb_retries 100
+    lb_try_duration 10s
+    lb_try_interval 250ms
+
+    # configure passive health checks
+    fail_duration 60s
+    max_fails 50
+    unhealthy_latency 5s
+    unhealthy_request_count 200
+
+    # sets the Host header to the header to the dynamic name and port options
+    header_up Host {upstream_hostport}
+  }
+
+  reverse_proxy host niklasb.com {
     # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
     dynamic a {
       name {$APP_DOMAIN}
