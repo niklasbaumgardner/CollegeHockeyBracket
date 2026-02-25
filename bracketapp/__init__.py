@@ -64,6 +64,7 @@ from bracketapp.routes.createbracket import createbracket_bp
 from bracketapp.routes.deletebracket import deletebracket_bp
 from bracketapp.routes.editbracket import editbracket_bp
 from bracketapp.routes.groups import groups_bp
+from bracketapp.routes.health import health_bp
 from bracketapp.routes.leaderboard import leaderboard_bp
 from bracketapp.routes.mybrackets import mybrackets_bp
 from bracketapp.routes.preferences import preferences_bp
@@ -79,6 +80,7 @@ app.register_blueprint(createbracket_bp)
 app.register_blueprint(deletebracket_bp)
 app.register_blueprint(editbracket_bp)
 app.register_blueprint(groups_bp)
+app.register_blueprint(health_bp)
 app.register_blueprint(leaderboard_bp)
 app.register_blueprint(mybrackets_bp)
 app.register_blueprint(preferences_bp)
