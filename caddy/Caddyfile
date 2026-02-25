@@ -48,59 +48,57 @@
     }
   }
 
-  host collegehockeybracket.com {
-    reverse_proxy {
-      # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
-      dynamic a {
-        name {$APP2_DOMAIN}
-        port {$APP2_PORT}
-        refresh 1s
-        dial_timeout 30s
-        versions ipv4 ipv6
-      }
-
-      # configure load balancing settings
-      lb_policy round_robin
-      lb_retries 100
-      lb_try_duration 10s
-      lb_try_interval 250ms
-
-      # configure passive health checks
-      fail_duration 60s
-      max_fails 50
-      unhealthy_latency 5s
-      unhealthy_request_count 200
-
-      # sets the Host header to the header to the dynamic name and port options
-      header_up Host {upstream_hostport}
+  @chb host collegehockeybracket.com
+  reverse_proxy @chb {
+    # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
+    dynamic a {
+      name {$APP2_DOMAIN}
+      port {$APP2_PORT}
+      refresh 1s
+      dial_timeout 30s
+      versions ipv4 ipv6
     }
+
+    # configure load balancing settings
+    lb_policy round_robin
+    lb_retries 100
+    lb_try_duration 10s
+    lb_try_interval 250ms
+
+    # configure passive health checks
+    fail_duration 60s
+    max_fails 50
+    unhealthy_latency 5s
+    unhealthy_request_count 200
+
+    # sets the Host header to the header to the dynamic name and port options
+    header_up Host {upstream_hostport}
   }
 
-  host *.niklasb.com {
-    reverse_proxy {
-      # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
-      dynamic a {
-        name {$APP_DOMAIN}
-        port {$APP_PORT}
-        refresh 1s
-        dial_timeout 30s
-        versions ipv4 ipv6
-      }
-
-      # configure load balancing settings
-      lb_policy round_robin
-      lb_retries 100
-      lb_try_duration 10s
-      lb_try_interval 250ms
-
-      # configure passive health checks
-      fail_duration 60s
-      max_fails 50
-      unhealthy_latency 5s
-      unhealthy_request_count 200
-
-      # sets the Host header to the header to the dynamic name and port options
-      header_up Host {upstream_hostport}
+  @niklasb host *.niklasb.com
+  reverse_proxy @niklasb {
+    # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
+    dynamic a {
+      name {$APP_DOMAIN}
+      port {$APP_PORT}
+      refresh 1s
+      dial_timeout 30s
+      versions ipv4 ipv6
     }
+
+    # configure load balancing settings
+    lb_policy round_robin
+    lb_retries 100
+    lb_try_duration 10s
+    lb_try_interval 250ms
+
+    # configure passive health checks
+    fail_duration 60s
+    max_fails 50
+    unhealthy_latency 5s
+    unhealthy_request_count 200
+
+    # sets the Host header to the header to the dynamic name and port options
+    header_up Host {upstream_hostport}
   }
 }
