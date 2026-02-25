@@ -1488,70 +1488,57 @@ import{d as t,h as x,j as Te,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
         <div class="wa-stack">
           <h2>${this.bracket.name}</h2>
           <div class="flex justify-evenly">
-            <div class="flex">
-              <span
-                ><p class="bracket-details-content">
-                  ${this.bracket?.rank??"--"}
-                </p>
-                <p class="bracket-details-label">Rank</p></span
-              >
+            <div>
+              <p class="bracket-details-content">
+                ${this.bracket?.rank??"--"}
+              </p>
+              <p class="bracket-details-label">Rank</p>
             </div>
-            <div class="flex">
-              <wa-divider orientation="vertical"></wa-divider>
-              <span
-                ><p class="bracket-details-content">${this.bracket?.points}</p>
-                <p class="bracket-details-label">Points</p></span
-              >
+            <div><wa-divider orientation="vertical"></wa-divider></div>
+            <div>
+              <p class="bracket-details-content">${this.bracket?.points}</p>
+              <p class="bracket-details-label">Points</p>
             </div>
-            <div class="flex">
-              <wa-divider orientation="vertical"></wa-divider>
-              <span
-                ><p class="bracket-details-content">
-                  ${this.bracket?.max_points}
-                </p>
-                <p class="bracket-details-label">Max points</p></span
-              >
+            <div><wa-divider orientation="vertical"></wa-divider></div>
+            <div>
+              <p class="bracket-details-content">${this.bracket?.max_points}</p>
+              <p class="bracket-details-label">Max points</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="bracket-sub-details wa-stack">
-        <div class="flex justify-evenly">
-          <div class="flex">
-            <span
-              ><p class="bracket-details-content">
+          <div class="flex justify-evenly">
+            <div>
+              <p class="bracket-details-content">
                 ${this.bracket?.round_one_points??"--"} / 80
               </p>
-              <p class="bracket-details-label">Round 1</p></span
-            >
-          </div>
-          <div class="flex">
-            <wa-divider orientation="vertical"></wa-divider>
-            <span
-              ><p class="bracket-details-content">
+              <p class="bracket-details-label">Round 1</p>
+            </div>
+            <div>
+              <wa-divider class="m-0" orientation="vertical"></wa-divider>
+            </div>
+            <div>
+              <p class="bracket-details-content">
                 ${this.bracket?.round_two_points??"--"} / 80
               </p>
-              <p class="bracket-details-label">Round 2</p></span
-            >
-          </div>
-          <div class="flex">
-            <wa-divider orientation="vertical"></wa-divider>
-            <span
-              ><p class="bracket-details-content">
+              <p class="bracket-details-label">Round 2</p>
+            </div>
+            <div>
+              <wa-divider class="m-0" orientation="vertical"></wa-divider>
+            </div>
+            <div>
+              <p class="bracket-details-content">
                 ${this.bracket?.round_three_points??"--"} / 80
               </p>
-              <p class="bracket-details-label">Frozen Four</p></span
-            >
-          </div>
-          <div class="flex">
-            <wa-divider orientation="vertical"></wa-divider>
-            <span
-              ><p class="bracket-details-content">
+              <p class="bracket-details-label">Frozen Four</p>
+            </div>
+            <div>
+              <wa-divider class="m-0" orientation="vertical"></wa-divider>
+            </div>
+            <div>
+              <p class="bracket-details-content">
                 ${this.bracket?.round_four_points??"--"} / 80
               </p>
-              <p class="bracket-details-label">Championship</p></span
-            >
+              <p class="bracket-details-label">Championship</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1774,4 +1761,4 @@ import{d as t,h as x,j as Te,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);
-//# sourceMappingURL=nb.SIWNAHZR.mjs.map
+//# sourceMappingURL=nb.YRJANUJJ.mjs.map
