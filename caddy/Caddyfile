@@ -75,7 +75,7 @@
     header_up Host {upstream_hostport}
   }
 
-  reverse_proxy host niklasb.com {
+  reverse_proxy host *.niklasb.com {
     # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
     dynamic a {
       name {$APP_DOMAIN}
