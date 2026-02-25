@@ -1,4 +1,4 @@
-import { StandingsGrid } from "./nb-standings-grid.mjs";
+import "./nb-standings-grid.mjs";
 import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 
@@ -45,7 +45,7 @@ export class Standings extends NikElement {
     return html`<wa-card
       ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
         <wa-icon
-          style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
+          style="color:var(--color-amber-500);font-size:var(--wa-font-size-3xl);"
           name="trophy"
           library="hero"
           variant="outline"

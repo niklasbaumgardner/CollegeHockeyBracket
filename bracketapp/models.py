@@ -269,7 +269,7 @@ class CorrectBracket(BaseModel, SqidSerializerMixin):
     round_three_points = 80
     round_four_points = 80
     rank = "-"
-    user = {"username": "NB Bracket App"}
+    user = {"username": ""}
 
     def games(self):
         d = {}

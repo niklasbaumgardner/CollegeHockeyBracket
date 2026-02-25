@@ -677,7 +677,7 @@ import{d as t,h as x,j as Te,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
     />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let s=document.createElement("nb-bracket-column");return s.bracket=r.data,s}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=b(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:t`<div class="flex justify-center">No brackets yet</div>`}};customElements.define("nb-standings-grid",p);var g=class extends n{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:s,year:o}=a;this.brackets=r,this.winners=s,this.year=o}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
       ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
         <wa-icon
-          style="color:var(--color-amber-50);font-size:var(--wa-font-size-3xl);"
+          style="color:var(--color-amber-500);font-size:var(--wa-font-size-3xl);"
           name="trophy"
           library="hero"
           variant="outline"
@@ -1761,4 +1761,4 @@ import{d as t,h as x,j as Te,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
       .brackets=${this.brackets}
       year=${this.year}
     ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);
-//# sourceMappingURL=nb.YRJANUJJ.mjs.map
+//# sourceMappingURL=nb.VTNNRNGC.mjs.map
