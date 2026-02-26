@@ -153,3 +153,10 @@ wa-dropdown-item:has(a) {
     padding: 0.5rem 1rem;
   }
 }
+
+#scoreboard-button {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 99999;
+}
