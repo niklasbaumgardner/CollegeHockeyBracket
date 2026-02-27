@@ -17,9 +17,8 @@ class BracketUtilsClass {
     }
 
     if (!this.gamesRequestPromise) {
-      this.gamesRequestPromise = fetch(
-        `/static/json/${CURRENT_YEAR}.games.json`,
-      );
+      let url = STATIC_FILE_MAP[`/static/json/${CURRENT_YEAR}.games.json`];
+      this.gamesRequestPromise = fetch(url);
     }
 
     let response = await this.gamesRequestPromise;
@@ -39,15 +38,15 @@ class BracketUtilsClass {
     }
 
     if (!this.standingsRequestPromise) {
-      this.standingsRequestPromise = fetch(
-        `/static/json/${CURRENT_YEAR}.standings.json`,
-      );
+      let standingsUrl =
+        STATIC_FILE_MAP[`/static/json/${CURRENT_YEAR}.standings.json`];
+      this.standingsRequestPromise = fetch(standingsUrl);
     }
 
     if (!this.confStandingsRequestPromise) {
-      this.confStandingsRequestPromise = fetch(
-        `/static/json/${CURRENT_YEAR}.conference.json`,
-      );
+      let confStandingsUrl =
+        STATIC_FILE_MAP[`/static/json/${CURRENT_YEAR}.conference.json`];
+      this.confStandingsRequestPromise = fetch(confStandingsUrl);
     }
 
     const [standingsResponse, conferenceResponse] = await Promise.all([

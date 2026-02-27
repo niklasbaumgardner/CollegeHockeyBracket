@@ -8,7 +8,7 @@ const watchMode = args.filter((arg) => arg === "--watch").length > 0;
 let buildFunction = watchMode ? esbuild.context : esbuild.build;
 
 const destDir = "./bracketapp/static/dist/esbuild/";
-const jsonFilesForMapping = [];
+const extraFilesForMapping = [];
 
 const result = await buildFunction({
   entryPoints: {
@@ -59,34 +59,78 @@ const result = await buildFunction({
         });
       },
     },
-    // {
-    //   name: "json",
-    //   setup(build) {
-    //     build.onEnd(async () => {
-    //       const path = "./bracketapp/static/json/";
-    //       const files = fs.readdirSync(path);
-    //       for (let filename of files) {
-    //         let file = fs.readFileSync(path + filename, "utf8");
-    //         let json = JSON.stringify(JSON.parse(file));
-    //         const hash = crypto
-    //           .createHash("sha256")
-    //           .update(json)
-    //           .digest("hex")
-    //           .slice(0, 16);
+    {
+      name: "json",
+      setup(build) {
+        build.onEnd(async () => {
+          const path = "./bracketapp/static/json/";
+          const files = fs.readdirSync(path);
+          for (let filename of files) {
+            if (!fs.lstatSync(path + filename).isFile()) {
+              continue;
+            }
 
-    //         let [year, name, ext] = filename.split(".");
-    //         const destFile = `${destDir}${year}.${name}.${hash}.${ext}`;
+            let file = fs.readFileSync(path + filename, "utf8");
+            let json = JSON.stringify(JSON.parse(file));
+            const hash = crypto
+              .createHash("sha256")
+              .update(json)
+              .digest("hex")
+              .slice(0, 16);
 
-    //         jsonFilesForMapping.push([
-    //           "/static/json/" + filename,
-    //           destFile.replace("./bracketapp", ""),
-    //         ]);
+            let [year, name, ext] = filename.split(".");
+            const destFile = `${destDir}${year}.${name}.${hash}.${ext}`;
 
-    //         fs.writeFileSync(destFile, json);
-    //       }
-    //     });
-    //   },
-    // },
+            extraFilesForMapping.push([
+              "/static/json/" + filename,
+              destFile.replace("./bracketapp", ""),
+            ]);
+
+            fs.writeFileSync(destFile, json);
+          }
+        });
+      },
+    },
+    {
+      name: "svg",
+      setup(build) {
+        build.onEnd(async () => {
+          const path = "./bracketapp/static/images/";
+          const files = fs.readdirSync(path);
+          for (let filename of files) {
+            if (
+              !filename.endsWith(".svg") ||
+              !fs.lstatSync(path + filename).isFile()
+            ) {
+              continue;
+            }
+
+            let file = fs.readFileSync(path + filename, "utf8");
+            let svg = file;
+            // TODO: confirm that trimming works
+            // .split("\n")
+            // .map((l) => l.trim())
+            // .join("");
+
+            const hash = crypto
+              .createHash("sha256")
+              .update(svg)
+              .digest("hex")
+              .slice(0, 16);
+
+            let [name, ext] = filename.split(".");
+            const destFile = `${destDir}${name}.${hash}.${ext}`;
+
+            extraFilesForMapping.push([
+              "/static/images/" + filename,
+              destFile.replace("./bracketapp", ""),
+            ]);
+
+            fs.writeFileSync(destFile, svg);
+          }
+        });
+      },
+    },
   ],
 });
 
@@ -157,8 +201,8 @@ function buildTemplate(result) {
   }
 
   const jsonFilesMapScript = `<script>
-  const JSON_FILE_MAP = {
-${jsonFilesForMapping
+  const STATIC_FILE_MAP = {
+${extraFilesForMapping
   .map(([k, v]) => {
     if (k.includes(".")) {
       return `    "${k}": "${v}",`;

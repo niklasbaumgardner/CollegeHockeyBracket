@@ -42,9 +42,11 @@ export class EditMatchup extends NikElement {
       return null;
     }
 
+    let iconUrl = STATIC_FILE_MAP[team.team.icon_path];
+
     return html`<img
       class="team-img"
-      src="${team.team.icon_path}"
+      src="${iconUrl}"
       alt="${team.team.name}"
     />`;
   }

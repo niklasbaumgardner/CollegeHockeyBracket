@@ -24,11 +24,13 @@ class Bracket extends NikElement {
       return null;
     }
 
+    let iconUrl = STATIC_FILE_MAP[team.team.icon_path];
+
     let isWinnerCorrect =
       force || !this.correct.winner_id || this.correct.winner_id === team.id;
     return html`<img
       class="winner-img ${isWinnerCorrect ? "" : "greyscale"}"
-      src="${team.team.icon_path}"
+      src="${iconUrl}"
       alt="${team.team.name}"
     />`;
   }

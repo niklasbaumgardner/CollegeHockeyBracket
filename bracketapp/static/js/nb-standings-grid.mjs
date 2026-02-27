@@ -123,9 +123,11 @@ export class StandingsGrid extends BaseGrid {
       return null;
     }
 
+    let iconUrl = STATIC_FILE_MAP[winner_team.team.icon_path];
+
     return `<img
       class="standings-img"
-      src="${winner_team.team.icon_path}"
+      src="${iconUrl}"
       alt="${winner_team.team.name}"
     />`;
   }

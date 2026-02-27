@@ -1,0 +1,692 @@
+[
+  {
+    "content": [
+      {
+        "ID": 10492,
+        "title": "Hagens, Martone In Sync From Across the Country",
+        "headline": "Hagens, Martone In Sync From Across the Country",
+        "relevance": 2,
+        "filename": "21_Hagens-Martone-In-Sync-From.php",
+        "directory": "news\/2026\/02",
+        "articleCat": "news",
+        "subhead": "Each Nets Hat Trick in Wins Friday, Each Reaches 20 Goals",
+        "publishDate": "2026-02-21",
+        "unixPubDate": 1771650000,
+        "teaser": "In a bit of college hockey synchronicity, blue chippers James Hagens of Boston College and Porter Martone of Michigan State scored hat tricks...",
+        "teaser_image": "",
+        "authorID": 1,
+        "firstname": "Staff Report",
+        "lastname": "",
+        "other_author": "",
+        "kwAssoc": {
+          "articleCat": ["news"],
+          "name": ["James Hagens", "Porter Martone"],
+          "team": ["9", "32"]
+        },
+        "commentString": "",
+        "pubDateStr": "Feb. 21"
+      },
+      {
+        "ID": 10477,
+        "title": "Above the Noise",
+        "headline": "Above the Noise",
+        "relevance": 5,
+        "filename": "16_Above-the-Noise.php",
+        "directory": "news\/2026\/02",
+        "articleCat": "feature",
+        "subhead": "Porter Martone Thriving at Michigan State After Becoming a Trail Blazer",
+        "publishDate": "2026-02-16",
+        "unixPubDate": 1771218000,
+        "teaser": "Porter Martone thriving at Michigan State after becoming a trail blazer.",
+        "teaser_image": "2526-bb\/porter-martone-0217.jpg",
+        "authorID": 32,
+        "firstname": "Jashvina",
+        "lastname": "Shah",
+        "other_author": "",
+        "kwAssoc": {
+          "conf": ["10"],
+          "name": ["Porter Martone"],
+          "team": ["32"],
+          "articleCat": ["feature"]
+        },
+        "commentString": "",
+        "pubDateStr": "Feb. 16"
+      },
+      {
+        "ID": 10463,
+        "title": "This Week in College Hockey: Feb. 5, 2026",
+        "headline": "This Week in College Hockey: Feb. 5, 2026",
+        "relevance": 3,
+        "filename": "05_This-Week-in-College-Hockey.php",
+        "directory": "news\/2026\/02",
+        "articleCat": "column",
+        "subhead": "",
+        "publishDate": "2026-02-05",
+        "unixPubDate": 1770267600,
+        "teaser": "The big story this week, of course, centered around Gavin McKenna...",
+        "teaser_image": "",
+        "authorID": 10,
+        "firstname": "Mike",
+        "lastname": "McMahon",
+        "other_author": "",
+        "kwAssoc": {
+          "team": ["32", "31", "36", "40"],
+          "articleCat": ["column"]
+        },
+        "commentString": "",
+        "pubDateStr": "Feb. 05"
+      },
+      {
+        "ID": 10457,
+        "title": "Michigan State Honors Sturges During Memorial Service at Munn",
+        "headline": "Michigan State Honors Sturges During Memorial Service at Munn",
+        "relevance": 3,
+        "filename": "04_Michigan-State-Honors-Sturges.php",
+        "directory": "news\/2026\/02",
+        "articleCat": "news",
+        "subhead": "",
+        "publishDate": "2026-02-04",
+        "unixPubDate": 1770181200,
+        "teaser": "Michigan State held a memorial service at Munn Arena on Monday evening for Dan Sturges, the team&#39;s Director of Hockey Operations who passed...",
+        "teaser_image": "",
+        "authorID": 1,
+        "firstname": "Staff Report",
+        "lastname": "",
+        "other_author": "",
+        "kwAssoc": {
+          "name": ["Dan Sturges"],
+          "team": ["32"],
+          "articleCat": ["news"]
+        },
+        "commentString": "",
+        "pubDateStr": "Feb. 04"
+      },
+      {
+        "ID": 10446,
+        "title": "This Week in College Hockey: Jan. 29, 2026",
+        "headline": "This Week in College Hockey: Jan. 29, 2026",
+        "relevance": 3,
+        "filename": "29_This-Week-in-College-Hockey.php",
+        "directory": "news\/2026\/01",
+        "articleCat": "column",
+        "subhead": "",
+        "publishDate": "2026-01-29",
+        "unixPubDate": 1769662800,
+        "teaser": "The NCAA Division I Cabinet has approved a proposal allowing programs to begin using commercial logos or patches on uniforms and equipment for...",
+        "teaser_image": "",
+        "authorID": 10,
+        "firstname": "Mike",
+        "lastname": "McMahon",
+        "other_author": "",
+        "kwAssoc": {
+          "articleCat": ["column"],
+          "team": ["32", "33", "36", "38", "60"]
+        },
+        "commentString": "",
+        "pubDateStr": "Jan. 29"
+      },
+      {
+        "ID": 10442,
+        "title": "Pair Of San Jose Goalie Prospects Announce NCAA Commitments",
+        "headline": "Pair Of San Jose Goalie Prospects Announce NCAA Commitments",
+        "relevance": 2,
+        "filename": "28_Pair-Of-San-Jose-Goalie-Prospects.php",
+        "directory": "news\/2026\/01",
+        "articleCat": "news",
+        "subhead": "San Jose Picks Joshua Ravensbergen and Christian Kirsch Commit To Michigan State and Quinnipiac",
+        "publishDate": "2026-01-28",
+        "unixPubDate": 1769576400,
+        "teaser": "A pair of San Jose goalie prospects will be playing college hockey. Joshua Ravensbergen announced his commitment to Michigan State on Monday...",
+        "teaser_image": "",
+        "authorID": 47,
+        "firstname": "Jordan",
+        "lastname": "McAlpine",
+        "other_author": "",
+        "kwAssoc": {
+          "articleType": ["rec"],
+          "team": ["32"],
+          "articleCat": ["news"]
+        },
+        "commentString": "",
+        "pubDateStr": "Jan. 28"
+      }
+    ],
+    "calendar": [
+      {
+        "tdclass": "",
+        "day_of_week": "0",
+        "day_of_month": "27",
+        "monthStr": "Sep"
+      },
+      { "tdclass": "", "day_of_week": "1", "day_of_month": "28" },
+      { "tdclass": "", "day_of_week": "2", "day_of_month": "29" },
+      { "tdclass": "", "day_of_week": "3", "day_of_month": "30" },
+      {
+        "tdclass": "",
+        "day_of_week": "4",
+        "day_of_month": "1",
+        "monthStr": "Oct"
+      },
+      { "tdclass": "", "day_of_week": "5", "day_of_month": "2" },
+      { "tdclass": "", "day_of_week": "6", "day_of_month": "3" },
+      { "tdclass": "", "day_of_week": "0", "day_of_month": "4" },
+      { "tdclass": "", "day_of_week": "1", "day_of_month": "5" },
+      { "tdclass": "", "day_of_week": "2", "day_of_month": "6" },
+      { "tdclass": "", "day_of_week": "3", "day_of_month": "7" },
+      { "tdclass": "", "day_of_week": "4", "day_of_month": "8" },
+      { "tdclass": "", "day_of_week": "5", "day_of_month": "9" },
+      { "tdclass": "", "day_of_week": "6", "day_of_month": "10" },
+      { "tdclass": "", "day_of_week": "0", "day_of_month": "11" },
+      { "tdclass": "", "day_of_week": "1", "day_of_month": "12" },
+      { "tdclass": "", "day_of_week": "2", "day_of_month": "13" },
+      { "tdclass": "", "day_of_week": "3", "day_of_month": "14" },
+      { "tdclass": "", "day_of_week": "4", "day_of_month": "15" },
+      { "tdclass": "", "day_of_week": "5", "day_of_month": "16" },
+      { "tdclass": "", "day_of_week": "6", "day_of_month": "17" }
+    ],
+    "standings": "<table width=\"100%\" cellpadding=\"2\" cellspacing=\"0\" border=\"0\" class=\"data\">\n\t    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Michigan\/31\">Michigan<\/a><\/td>\n\t\t<td align=\"right\">46<\/td>\n\t<\/tr>\n    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Michigan-State\/32\">Michigan State<\/a><\/td>\n\t\t<td align=\"right\">45<\/td>\n\t<\/tr>\n    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Penn-State\/60\">Penn State<\/a><\/td>\n\t\t<td align=\"right\">38<\/td>\n\t<\/tr>\n    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Wisconsin\/58\">Wisconsin<\/a><\/td>\n\t\t<td align=\"right\">33<\/td>\n\t<\/tr>\n    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Ohio-State\/44\">Ohio State<\/a><\/td>\n\t\t<td align=\"right\">23<\/td>\n\t<\/tr>\n    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Minnesota\/34\">Minnesota<\/a><\/td>\n\t\t<td align=\"right\">22<\/td>\n\t<\/tr>\n    \t<tr>\n\t\t<td><a href=\"\/reports\/team\/Notre-Dame\/43\">Notre Dame<\/a><\/td>\n\t\t<td align=\"right\">9<\/td>\n\t<\/tr>\n    \t<\/table>\n<p><a href=\"\/standings\/?conf=10\">Full Standings<\/a><\/p>",
+    "lastgame": {
+      "ID": 111458,
+      "sked": "2026-02-20 18:00:00",
+      "visID": "43",
+      "homeID": "32",
+      "vscore": 2,
+      "hscore": 8,
+      "neutral": "",
+      "confID": 10,
+      "tournID": 0,
+      "ots": 0,
+      "tz": 0,
+      "note": "",
+      "forfeit": null,
+      "modtime": "2026-02-20 20:44:15",
+      "attendance": 6555,
+      "arenaID": 147,
+      "ref": "Andrew Bruggeman,Jonathan Sitarski",
+      "aref": "Christopher Williams,Matthew Heinen",
+      "tv": "82",
+      "season": 20252026,
+      "gen_id": 42046,
+      "have_box": 1,
+      "skedStr": "Friday, February 20, 2026",
+      "skeddate": "2026-02-20",
+      "unixsked": 1771628400,
+      "arenaname": "Munn Ice Arena",
+      "location": "East Lansing, Mich.",
+      "rinkAtlasID": 868,
+      "tournname": null,
+      "whenis": null,
+      "otType": "3x3",
+      "conftype": "bt",
+      "SOwinTeamID": null,
+      "SOwscore": null,
+      "SOlscore": null,
+      "SOrounds": null,
+      "homename": "Michigan State",
+      "visname": "Notre Dame",
+      "hcode": "msu",
+      "vcode": "ndm",
+      "boxlinkCHN": "\/box\/final\/20260220\/ndm\/msu\/",
+      "boxfilename": "mndmmsu.json",
+      "boxfilepath": "20252026\/02\/20",
+      "timeStrWtz": "6:00 ET",
+      "scoringStr": {
+        "43": "Mastrodomenico; Fimis",
+        "32": "M\u00e4nnist\u00f6; Jurecki; West; Lee(2); Martone(3)"
+      },
+      "goalieStr": { "32": "Dolan Gilbert", "43": "Luke Pearson" },
+      "oppID": "43",
+      "oppname": "Notre Dame",
+      "oppnameandlink": "<a href=\"\/reports\/team\/Notre-Dame\/43\">Notre Dame<\/a>",
+      "oppbrandname": "",
+      "m": "vs.",
+      "matchup": "<strong>MICHIGAN STATE<\/strong> vs. Notre Dame",
+      "dateStr": "February 20, 2026",
+      "timeStr": "6:00",
+      "ourscore": 8,
+      "theirscore": 2,
+      "result": "W",
+      "r": "<span class=\"result W\">W<\/span>",
+      "resStr": "8-2 <span class=\"result W\">W<\/span>"
+    },
+    "nextgame": {
+      "ID": 111459,
+      "sked": "2026-02-27 20:30:00",
+      "visID": "44",
+      "homeID": "32",
+      "vscore": null,
+      "hscore": null,
+      "neutral": "",
+      "confID": 10,
+      "tournID": 0,
+      "ots": null,
+      "tz": 0,
+      "note": "",
+      "forfeit": null,
+      "modtime": "2025-10-10 08:23:46",
+      "attendance": null,
+      "arenaID": 147,
+      "ref": null,
+      "aref": null,
+      "tv": "82",
+      "season": 20252026,
+      "gen_id": 42047,
+      "have_box": null,
+      "skedStr": "Friday, February 27, 2026",
+      "skeddate": "2026-02-27",
+      "unixsked": 1772242200,
+      "arenaname": "Munn Ice Arena",
+      "location": "East Lansing, Mich.",
+      "rinkAtlasID": 868,
+      "tournname": null,
+      "whenis": null,
+      "otType": "3x3",
+      "conftype": "bt",
+      "SOwinTeamID": null,
+      "SOwscore": null,
+      "SOlscore": null,
+      "SOrounds": null,
+      "homename": "Michigan State",
+      "visname": "Ohio State",
+      "hcode": "msu",
+      "vcode": "osu",
+      "boxlinkCHN": "\/box\/final\/20260227\/osu\/msu\/",
+      "boxfilename": "mosumsu.json",
+      "boxfilepath": "20252026\/02\/27",
+      "timeStrWtz": "8:30 ET",
+      "arenaStr": "Munn Ice Arena, East Lansing, Mich.",
+      "tvStr": "BTen",
+      "streaming": {
+        "link_generic": "https:\/\/www.btnplus.com",
+        "source": "BTN+",
+        "premium": true
+      },
+      "tournStr": "",
+      "oppID": "44",
+      "oppname": "Ohio State",
+      "oppnameandlink": "<a href=\"\/reports\/team\/Ohio-State\/44\">Ohio State<\/a>",
+      "oppbrandname": "",
+      "m": "vs.",
+      "matchup": "<strong>MICHIGAN STATE<\/strong> vs. Ohio State",
+      "dateStr": "February 27, 2026",
+      "timeStr": "8:30"
+    },
+    "ncaaTitles": ["1966,1986,2007,<br \/", 3],
+    "captains": "",
+    "overallRecord": "93-41-9, .682",
+    "schoolRecord": "same"
+  },
+  {
+    "teamdata": {
+      "teamname": "Michigan State",
+      "teamcode": "msu",
+      "urlname": "Michigan-State",
+      "record": "24-6-0",
+      "logo": "msu.png"
+    },
+    "news": [
+      {
+        "title": "Jeff Jackson's Baby Fully Grown",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/24_QA-With--Jeff-Jackson.php",
+        "description": "Jeff Jackson was the first head coach of the U.S. National Team Development Program, leaving Lake Superior State to start the program after having won two national championships there as a head coach, and another as an assistant. He was much more than that, though. He had to start the entire program, including figuring out exactly what its mission would be, how it would operate, how it would attract...",
+        "pubDate": "Tue, 24 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Team of the Week: Bentley",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/24_Team-of-the-Week-Bentley.php",
+        "description": "Last season, Bentley had its first 20-win season, first Atlantic Hockey Tournament championship, and first NCAA Tournament appearance in program history. Those were heady times.But this season, as it approaches 20 wins again (18-9-5), has been about not stopping that momentum.To that end, Bentley took another step, and maybe the hardest one yet, when it defeated RIT last weekend to wrap up the Atlantic...",
+        "pubDate": "Tue, 24 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Bracket Breakdown",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/23_Bracket-Breakdown.php",
+        "description": "I've been writing these NCAA Tournament analysis articles for decades now, and over the years, they've become increasingly routine.That's largely because the makeup of what was the Pairwise became more and more straightforward over the years.And now, with the move to NPI, the algorithm is entirely straightforward.For better or worse (and a few coaches, but not most, have said it's worse), the NPI ...",
+        "pubDate": "Mon, 23 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Boston University Baffled By Inability to Pull Things Together",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/23_Boston-University-Baffled.php",
+        "description": "Consistency, and lack thereof, has defined the Boston University Terriers this season.\u201cOur team\u2019s having a tough time sustaining the same type of play for the whole game,\u201d coach Jay Pandolfo said after BU\u2019s 6-2 loss to Boston College in the Beanpot Final on Feb. 9.With three games left in the regular season, their record stands at a disappointing 14-15-2. Currently 28th on the NPI, the only...",
+        "pubDate": "Mon, 23 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Upton Named Next Brown Coach",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/23_Upton-Named-Next-Brown-Coach.php",
+        "description": "Brown has named Tom Upton its new head coach, replacing Brendan Whittet, who stepped down last week.Upton is currently an assistant coach at Massachusetts. He will remain there through the end of the season, while Jason Smith continues as Brown's interim head coach.\"Tom's track record as a skillful and proven leader, a respected builder of programs and culture, and a strong connector made him the ...",
+        "pubDate": "Mon, 23 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Ohio State Battling to Make Something of Tough Season",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/22_Ohio-State.php",
+        "description": "Despite Ohio State losing critical pieces over the offseason, its roster still looked solid on paper and good enough to keep up with any team in the nation. The Buckeyes' top-6 was solid, outside of losing their leading scorer, their back end was still steady and their goaltending had potential to be really good.\u201cWhen you have some change over, you're not sure where it's going to come from. And ...",
+        "pubDate": "Sun, 22 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Staying Power",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/21_Staying-Power.php",
+        "description": "North Dakota fans themselves might not get too much sympathy from others for what may feel like longstanding suffering, but the reality for the Fighting Hawks is this: since winning the national championship a decade ago, UND hasn't returned to the Frozen Four, and in fact missed the NCAA Tournament entirely in two of the past three seasons.But up until 2016, North Dakota was no stranger to the big...",
+        "pubDate": "Sat, 21 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Maryville Set to Formally Announce Start of New Program",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/21_Maryville-Set-to-Formally.php",
+        "description": "Maryville University has received approval to launch its new Division I hockey program. An official announcement is expected in the coming week.The school announced last year at the Frozen Four in St. Louis that it would upgrade to NCAA D-I if it could meet a fundraising goal of $5.5 million. The funding was needed to upgrade its facilities.Maryville recently closed in on $4 million towards its goal...",
+        "pubDate": "Sat, 21 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "McKenna's 8-Point Night Most in NCAA in 39 Years",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/21_McKennas-8-Point-Night-Most.php",
+        "description": "Gavin McKenna has had his ups and downs this season, but Friday's on-ice performance ranks as spectacular.McKenna had 1 goal and 7 assists (5 primaries) in Penn State's 11-4 win over Ohio State. The 8 points in one game are the most since CHN started recording game-by-game statistics. The last player to have seven in a game was Maine's Brian Flynn, in 2010.It's believed the last player in an NCAA ...",
+        "pubDate": "Sat, 21 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Hagens, Martone In Sync From Across the Country",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/21_Hagens-Martone-In-Sync-From.php",
+        "description": "In a bit of college hockey synchronicity, blue chippers James Hagens of Boston College and Porter Martone of Michigan State scored hat tricks in games Friday, and in each case, the player reached his 20th goal of the season in doing so.Martone and Hagens were also the No. 6 and 7 overall picks in the 2025 NHL Draft.Martone, a freshman who made the jump from Major Junior to the NCAA after getting drafted...",
+        "pubDate": "Sat, 21 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Bentley Captures Program's First Regular-Season Championship",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/21_Bentley-Captures-Program.php",
+        "description": "Bentley defeated RIT on Friday, clinching the program's first regular-season championship.Bentley is up eight points on RIT with just two games remaining for each team.Last season, Bentley won its first-ever postseason championship, when it won the Atlantic Hockey Tournament and went on to the NCAA Tournament.After finishing 23-15-2 last season, the Falcons are currently 18-9-5 and No. 25 in the NPI...",
+        "pubDate": "Sat, 21 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Here's Johnny!",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/19_Heres-Johnny.php",
+        "description": "In 1789, Benjamin Franklin penned his famous quote about inevitability, noting that nothing \u2014 including, at the time, the future of the United States \u2014 was certain, \"except death and taxes.\"Well, he didn't know about goaltending at the University of Denver \u2014 a certainty if there ever was one.Only three months ago, freshman Quentin Miller, the latest in Denver's long succession of goaltenders...",
+        "pubDate": "Thu, 19 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "This Week in College Hockey: Feb. 19, 2026",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/19_This-Week-in-College-Hockey.php",
+        "description": "It\u2019s always worth pausing to appreciate the long arcs of player development, especially when the payoff arrives.Brandon Bussi left Western Michigan four years ago and signed with the Boston Bruins. After a handful of call-ups \u2014 none of them resulting in game action \u2014 he signed with the Florida Panthers on July 1, only to be claimed off waivers by the Carolina Hurricanes in October when he didn...",
+        "pubDate": "Thu, 19 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Gundarah's Journey",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/19_Gundarahs-Journey.php",
+        "description": "Around the age of 17, the parents of Sacred Heart\u2019s Ajeet Gundarah moved to Canada from India, the country where they were born. The Gundarahs settled into Richmond, B.C., a city 10 miles, or 16.2 kilometers, south of Vancouver.With a heavy Southeast Asian demographic, the area was a comfortable landing spot for the Gundarah family and for Ajeet growing up.And thus blossomed a love of hockey.\u201c...",
+        "pubDate": "Thu, 19 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Valuable Valente",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/18_Valuable-Valente.php",
+        "description": "Liam Valente put up 20 points over his two seasons at Providence, as the Swedish forward skated in 59 games for the Friars.Valente committed to Providence relatively late in the game and had never previously considered college hockey. However, one of his best friends and childhood teammates \u2013 Philip Svedeb\u00e4ck \u2013 was a Providence commit, and the Friars expressed interest in the left-shot forward...",
+        "pubDate": "Wed, 18 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Surging Minnesota State Eyes Top-4 Finish",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/18_Surging-Minnesota-State-Eyes.php",
+        "description": "With four regular-season games left before the CCHA\u2019s Mason Cup Playoffs, the Minnesota State Mavericks sit on the outside looking in at home-ice advantage.For Minnesota State, a program that has won the conference three times since the CCHA reformed in 2021-22, finishing outside of the top four would be something unfamiliar. A 16-9-5 record has the Mavericks sitting at 41 points, where they slimly...",
+        "pubDate": "Wed, 18 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Brown Coaching Search Heating Up",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/18_Brown-Coaching-Search-Heating.php",
+        "description": "Brown has narrowed its coaching choices to four, according to Providence hockey reporter Mark Divver.According to his report, Brown is zeroing in on Dartmouth assistant Jason Tapp; Brown alum Scott Ford, who is an assistant coach in the NHL with Columbus; Tommy Upton, an assistant at Massachusetts; and Arizona State assistant Dana Borges.Current Brown coach Brendan Whittet announced he was stepping...",
+        "pubDate": "Wed, 18 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Meet Hayden Stavroff",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/17_Meet-Hayden-Stavroff.php",
+        "description": "The only time a Dartmouth player led the nation in goals was during World War II. That\u2019s when sophomore center Dick Rondeau hit the net 45 times and helped the Big Green earn an unofficial national championship...",
+        "pubDate": "Tue, 17 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Wisconsin Trying to Flip the Script Back, Just in Time For Postseason",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/17_Wisconsin-Trying-to-Flip-.php",
+        "description": "Mike Hastings was hired as the head coach at Wisconsin on March 30, 2023, following the release of Tony Granato. The Badgers had been caught in a slump during the 2022-23 campaign, finishing 13-23 overall, and 6-18 in conference.After three seasons with the red and white, Hastings now holds a 57-43-7 record. He entered the season with a 338-140-30 record in his 27 years of coaching. There is only ...",
+        "pubDate": "Tue, 17 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Penn State's Dowiak to Miss Rest of Season",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/17_Penn-States-Dowiak-to-Miss.php",
+        "description": "Penn State center Dane Dowiak said today that he will miss the remainder of the season with an upper-body injury suffered in last Friday's game against Michigan...",
+        "pubDate": "Tue, 17 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Team of the Week: Connecticut",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/17_Team-of-the-Week-Connecticut.php",
+        "description": "Last season, Connecticut's historic first NCAA Tournament appearance ended one shot from the Frozen Four...",
+        "pubDate": "Tue, 17 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Ohio State Adds Pair Of Commits",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/17_Ohio-State-Adds-Pair-Of-Commits.php",
+        "description": "Ohio State has secured a pair of commitments this week in right-shot forward William Tomko, along with left-shot defenseman Jakub Fibigr...",
+        "pubDate": "Tue, 17 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Above the Noise",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/16_Above-the-Noise.php",
+        "description": "When Canada lost to Czechia in the semifinals of the World Junior Championship, Michigan State head coach Adam Nightingale texted Spartan forward Porter Martone...",
+        "pubDate": "Mon, 16 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "This Week in College Hockey: Feb. 13, 2026",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/13_This-Week-in-College-Hockey.php",
+        "description": "Last week on social media, someone asked whether Michigan State's\u00a0penalty issues might become a problem as the Spartans chase a national championship this spring...",
+        "pubDate": "Fri, 13 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Richter Award Semi-Finalists Named",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/13_Richter-Award-Finalists-Name.php",
+        "description": "The 10 semi-finalists for this year's Mike Richter Award as top goaltender are...",
+        "pubDate": "Fri, 13 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Rinkrat to Rink Star: At Union, Dunbar Finds Place to Thrive",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/12_Rinkrat-to-Rink-Star-At-.php",
+        "description": "Union junior defenseman Tyler Dunbar didn\u2019t blink. He stared for a brief moment. It was as if the idea of giving up on hockey was incomprehensible...",
+        "pubDate": "Thu, 12 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Team of the Week: Quinnipiac",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/11_Team-of-the-Week-Quinnipiac.php",
+        "description": "Maybe you haven't noticed, but Quinnipiac is churning along, already surpassing 20 wins for the seventh straight season (not including the COVID-shortened year). That also means it's on its way to a seventh straight trip to the NCAA Tournament. Two of those seasons had 30 wins, and one of them included a national championship...",
+        "pubDate": "Wed, 11 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Canisius Gearing Up For Stretch Run",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/11_Canisius.php",
+        "description": "Canisius head coach Trevor Large knows what it takes to win inside Atlantic Hockey. He knows how maintaining consistency year over year is not an easy thing to do...",
+        "pubDate": "Wed, 11 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "BC's Beanpot Drought Ends Decisively",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/10_BCs-Beanpot-Drought-Ends.php",
+        "description": "Andre Gasseau remembers how it felt...",
+        "pubDate": "Tue, 10 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Brown's Whittet Leaving With Head Held High",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/10_Browns-Whittet-Leaving-With.php",
+        "description": "Brendan Whittet has arguably held one of the most difficult jobs in college hockey for 17 years, as head coach at Brown. For Whittet, however, it is a job he has poured everything he had into year after year and a job he has loved for so long...",
+        "pubDate": "Tue, 10 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "McKenna Expected to Play This Weekend",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/10_McKenna-Expected-to-Play-.php",
+        "description": "Gavin McKenna, who has been charged with misdemeanor assault after a recent fight in downtown State College, is expected to play this weekend when Penn State takes on Michigan...",
+        "pubDate": "Tue, 10 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Wolverines Land Top '09 Prospect",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/10_Wolverines-Land-Top-09-Prospect.php",
+        "description": "One of the top 2009-born prospects is off the board, as right-shot forward Ryerson Edgar committed to Michigan Tuesday morning...",
+        "pubDate": "Tue, 10 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Plenty on the Line For BU, BC Beyond the Beanpot Title",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/08_Plenty-on-the-Line-For-BU.php",
+        "description": "Boston College versus Boston University...",
+        "pubDate": "Sun, 08 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "UMD's Adam Gajan Chases Olympic Dream",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/07_UMDs-Adam-Gajan-Chases-Olympic.php",
+        "description": "Minnesota Duluth netminder Adam Gajan has been the glue for the Bulldogs this season, as UMD finds itself No. in the NPI...",
+        "pubDate": "Sat, 07 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Lessard is More",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/06_Lessard-is-More.php",
+        "description": "Growing up in Quebec, Union defenseman Etienne Lessard got started on hockey young. Lessard started skating around two years old, grew up watching players like Kris Letang, and rooted for the Canadiens. He quickly became a part of the hockey culture that defines Canada and Quebec...",
+        "pubDate": "Fri, 06 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Felony Charge Against McKenna Dropped",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/06_Felony-Charge-Against-McKenna.php",
+        "description": "The Centre County District Attorney's office in Pennsylvania said today that it was dropped the felony charge against Penn State forward Gavin McKenna...",
+        "pubDate": "Fri, 06 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Rickwood The Rock",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/05_Rickwood-The-Rock.php",
+        "description": "Ellis Rickwood played 96 games over the past three seasons at Clarkson and was coming off a career-high 35-point campaign...",
+        "pubDate": "Thu, 05 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "This Week in College Hockey: Feb. 5, 2026",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/05_This-Week-in-College-Hockey.php",
+        "description": "The big story this week, of course, centered around Gavin McKenna...",
+        "pubDate": "Thu, 05 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Miami Breaks Up Top Line ... For Now",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/05_Miami-Breaks-Up-Top-Line--.php",
+        "description": "When the two freshmen, Ilia Morozov and Kocha Delic, stepped into drills with junior Canisius transfer Matteo Giampa prior to the start of Miami's season, there was immediately a special feeling...",
+        "pubDate": "Thu, 05 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Michigan Goaltending Still in Good Hands Ahead of Huge Michigan State Weekend",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/05_Michigan-Goaltending-Still.php",
+        "description": "Jack Ivankovic has been Michigan\u2019s backbone all season and is a huge reason why the Wolverines are the top team in the country. He\u2019s fifth in the nation with a 1.92 goals-against average and leads all rookie goaltenders with 17 wins...",
+        "pubDate": "Thu, 05 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Gavin McKenna Charged With Felony Assault",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/04_Report-Gavin-McKenna-Charged.php",
+        "description": "Gavin McKenna, Penn State's freshman phenom and favorite to be No. 1 overall pick in the 2026 NHL Draft, has been charged with felony assault and three other charges following an incident near campus Saturday...",
+        "pubDate": "Wed, 04 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Focus on Shooting The Puck: SHU\u2019s Felix Trudeau",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/04_Focus-on-Shooting-The-Puck.php",
+        "description": "Who first proclaimed that a shot on goal is never a bad play? Maybe it was the same person who said, \u201cYou can\u2019t score if you don\u2019t shoot...",
+        "pubDate": "Wed, 04 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Michigan State Honors Sturges During Memorial Service at Munn",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/04_Michigan-State-Honors-Sturges.php",
+        "description": "Michigan State held a memorial service at Munn Arena on Monday evening for Dan Sturges, the team's Director of Hockey Operations who passed away suddenly two weeks ago. Sturges was 40 years old...",
+        "pubDate": "Wed, 04 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Team of the Week: Miami",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/03_Team-of-the-Week-Miami.php",
+        "description": "After going 3-28-3 last season, the Miami RedHawks have climbed to 16-8-2 and 7-7-2 in NCHC play, and No. 19 in the NPI, following a series sweep at St. Cloud State last weekend. For a program that has spent years buried at the bottom of the standings, the turnaround under second-year head coach Anthony Noreen has been remarkable to see...",
+        "pubDate": "Tue, 03 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "It's BU, BC Again in Beanpot Final",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/03_Its-BU-BC-Again-in-Beanpot.php",
+        "description": "And the two shall meet again...",
+        "pubDate": "Tue, 03 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Roundup: Tech Halts St. Thomas' 11-Game Win Streak",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/01_Roundup-Tech-Halts-St-Thomas.php",
+        "description": "St. Thomas had its 11-game winning streak snapped Saturday, at home against Michigan Tech...",
+        "pubDate": "Sun, 01 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Roundup: Denver Wins in OT to Sweep UMD; Miami Surges to 19 in NPI",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/01_Roundup-Denver-Wins-in-OT.php",
+        "description": "The key matchup of the weekend took place in Denver, where Minnesota Duluth came to town...",
+        "pubDate": "Sun, 01 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Roundup: Providence Surge Continues With OT Win at Maine",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/01_Roundup-Providence-Surge.php",
+        "description": "The play of Providence freshman goalie Jack Parsons has been one of the better stories this year, and he won six straight entering the weekend since assuming the top job after the injury to senior Philip Svedeback...",
+        "pubDate": "Sun, 01 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Roundup: Dartmouth, Cornell, Quinnipiac Continue Battle at Top of ECAC",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/01_Roundup-Dartmouth-Cornell.php",
+        "description": "The top of the ECAC standings have consolidated around four teams. Princeton was in the mix for a while, but some recent setbacks, including losing Saturday to previously-last-place St. Lawrence, has dropped the Tigers off the pace...",
+        "pubDate": "Sun, 01 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Roundup: Michigan State Spoils Penn State's Party",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/01_Roundup-Michigan-State-Spoils.php",
+        "description": "It was already a big enough weekend, with two of the top teams nationally squaring off in just another Big Ten weekend. But Penn State helped make it extra special, scheduling an outdoor game in famed Beaver Stadium in front of 75,000 people...",
+        "pubDate": "Sun, 01 Feb 2026 10:00:00 +0000"
+      }
+    ],
+    "teamnews": [
+      {
+        "title": "Hagens, Martone In Sync From Across the Country",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/21_Hagens-Martone-In-Sync-From.php",
+        "description": "In a bit of college hockey synchronicity, blue chippers James Hagens of Boston College and Porter Martone of Michigan State scored hat tricks in games Friday, and in each case, the player reached his 20th goal of the season in doing so.Martone and Hagens were also the No. 6 and 7 overall picks in the 2025 NHL Draft.Martone, a freshman who made the jump from Major Junior to the NCAA after getting drafted...",
+        "pubDate": "Sat, 21 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Above the Noise",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/16_Above-the-Noise.php",
+        "description": "When Canada lost to Czechia in the semifinals of the World Junior Championship, Michigan State head coach Adam Nightingale texted Spartan forward Porter Martone...",
+        "pubDate": "Mon, 16 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "This Week in College Hockey: Feb. 5, 2026",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/05_This-Week-in-College-Hockey.php",
+        "description": "The big story this week, of course, centered around Gavin McKenna...",
+        "pubDate": "Thu, 05 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Michigan State Honors Sturges During Memorial Service at Munn",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/04_Michigan-State-Honors-Sturges.php",
+        "description": "Michigan State held a memorial service at Munn Arena on Monday evening for Dan Sturges, the team's Director of Hockey Operations who passed away suddenly two weeks ago. Sturges was 40 years old...",
+        "pubDate": "Wed, 04 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Roundup: Michigan State Spoils Penn State's Party",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/02\/01_Roundup-Michigan-State-Spoils.php",
+        "description": "It was already a big enough weekend, with two of the top teams nationally squaring off in just another Big Ten weekend. But Penn State helped make it extra special, scheduling an outdoor game in famed Beaver Stadium in front of 75,000 people...",
+        "pubDate": "Sun, 01 Feb 2026 10:00:00 +0000"
+      },
+      {
+        "title": "This Week in College Hockey: Jan. 29, 2026",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/01\/29_This-Week-in-College-Hockey.php",
+        "description": "The NCAA Division I Cabinet has approved a proposal allowing programs to begin using commercial logos or patches on uniforms and equipment for non-NCAA championship games, including the regular season...",
+        "pubDate": "Thu, 29 Jan 2026 10:00:00 +0000"
+      },
+      {
+        "title": "Pair Of San Jose Goalie Prospects Announce NCAA Commitments",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/01\/28_Pair-Of-San-Jose-Goalie-Prospects.php",
+        "description": "A pair of San Jose goalie prospects will be playing college hockey. Joshua Ravensbergen announced his commitment to Michigan State on Monday, while Christian Kirsch committed to Quinnipiac on Tuesday...",
+        "pubDate": "Wed, 28 Jan 2026 10:00:00 +0000"
+      },
+      {
+        "title": "M\u00e4nnist\u00f6 Makes His Presence Felt For Michigan State",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/01\/22_M\u00e4nnist\u00f6-Makes-His-Presence.php",
+        "description": "Whenever Michigan State decides to dump the puck into the attacking...",
+        "pubDate": "Thu, 22 Jan 2026 10:00:00 +0000"
+      },
+      {
+        "title": "This Week in College Hockey: Jan. 15, 2026",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/01\/16_This-Week-in-College-Hockey.php",
+        "description": "There\u2019s been plenty of discussion this week at the annual NCAA Convention about off-ice rules and regulations \u2014 and more specifically, what the next version of the transfer landscape should look like...",
+        "pubDate": "Fri, 16 Jan 2026 10:00:00 +0000"
+      },
+      {
+        "title": "10 NCAA Players Bring Home Medals From World Juniors",
+        "link": "https:\/\/www.collegehockeynews.com\/news\/2026\/01\/06_10-NCAA-Players-Bring-Home.php",
+        "description": "College hockey made its mark on the international stage with 10 players taking home medals at the World Junior Championship. One of those players, Boston University\u2019s Sascha Boumedienne, scored the gold medal-winning goal for Sweden, helping the country to its first championship since 2012...",
+        "pubDate": "Tue, 06 Jan 2026 10:00:00 +0000"
+      }
+    ]
+  }
+]

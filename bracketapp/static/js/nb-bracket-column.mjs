@@ -15,9 +15,11 @@ export class BracketColumn extends NikElement {
       return null;
     }
 
+    let iconUrl = STATIC_FILE_MAP[winner_team.team.icon_path];
+
     return html`<img
       class="standings-img"
-      src="${winner_team.team.icon_path}"
+      src="${iconUrl}"
       alt="${winner_team.team.name}"
     />`;
   }

@@ -37,7 +37,6 @@ export class SHNScoreboard extends NikElement {
     const previousCallBack = localStorage.getItem("previousCallBack");
     if (previousCallBack === callback) {
       this.games = JSON.parse(localStorage.getItem(previousCallBack));
-      console.log("got games from localStorage");
     } else {
       const script = document.createElement("script");
       script.src = CHN_BASE_URL + callback;
@@ -60,7 +59,7 @@ export class SHNScoreboard extends NikElement {
    * This is for testing only
    */
   async getJson() {
-    const file = "./static/json/live.final.json";
+    const file = "./static/json/dev/live.final.json";
     let response = await fetch(file);
     let json = await response.json();
     this.games = json;

@@ -8,7 +8,7 @@ export class BracketeCardContent extends NikElement {
     return html`<div class="wa-cluster">
       <img
         class="standings-img"
-        src=${this.bracket.winner_team.team.icon_path}
+        src=${STATIC_FILE_MAP[this.bracket.winner_team.team.icon_path]}
       />
       <div class="wa-stack gap-(--wa-space-xs)">
         <span>${this.bracket.name}</span>

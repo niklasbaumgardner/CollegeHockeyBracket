@@ -11,9 +11,11 @@ export class ArchiveYears extends NikElement {
       return null;
     }
 
+    let iconUrl = STATIC_FILE_MAP[winner_team.team.icon_path];
+
     return html`<img
       class="w-[75px] h-[75px]"
-      src=${winner_team.team.icon_path}
+      src=${iconUrl}
       alt=${winner_team.team.name}
     />`;
   }
