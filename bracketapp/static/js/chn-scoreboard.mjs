@@ -69,7 +69,6 @@ export class SHNScoreboard extends NikElement {
     const scoreboardOpen =
       (localStorage.getItem("scoreboardState") ?? "open") === "open";
     this.button = document.getElementById("scoreboard-button");
-    this.button.hidden = true;
 
     await this.getJsonP();
 
