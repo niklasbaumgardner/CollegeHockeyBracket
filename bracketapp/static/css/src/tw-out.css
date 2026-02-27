@@ -303,6 +303,9 @@
   .\@container {
     container-type: inline-size;
   }
+  .pointer-events-none {
+    pointer-events: none;
+  }
   .\!visible {
     visibility: visible !important;
   }

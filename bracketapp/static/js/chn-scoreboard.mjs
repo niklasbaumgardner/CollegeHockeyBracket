@@ -1,6 +1,5 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
-import { DeferredTask } from "./DeferredTask.mjs";
 
 const CHN_BASE_URL =
   "https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=";
@@ -8,12 +7,29 @@ const CHN_BASE_URL =
 export class SHNScoreboard extends NikElement {
   static properties = { games: { type: Array } };
 
-  static queries = { drawer: "wa-drawer" };
+  static queries = {
+    drawer: "wa-drawer",
+    desktopEl: ".wa-desktop-only",
+    mobileEl: ".wa-mobile-only",
+    closeButton: "#close-scoreboard",
+  };
 
   connectedCallback() {
     super.connectedCallback();
 
     this.init();
+  }
+
+  get isOpen() {
+    return this.checkVisibility();
+  }
+
+  get isMobile() {
+    return this.mobileEl.checkVisibility();
+  }
+
+  get isDesktop() {
+    return this.desktopEl.checkVisibility();
   }
 
   async getJsonP() {
@@ -51,14 +67,30 @@ export class SHNScoreboard extends NikElement {
   }
 
   async init() {
+    const scoreboardOpen =
+      (localStorage.getItem("scoreboardState") ?? "open") === "open";
+    this.button = document.getElementById("scoreboard-button");
+    this.button.hidden = true;
+
     await this.getJsonP();
 
-    const button = document.getElementById("scoreboard-button");
-    button.addEventListener("click", this);
-
     if (this.games.length === 0) {
-      button.remove();
+      this.button.remove();
       this.remove();
+      return;
+    }
+
+    await this.updateComplete;
+
+    this.button.addEventListener("click", this);
+    this.closeButton.addEventListener("click", this);
+
+    if (this.isMobile) {
+      this.button.hidden = false;
+    }
+
+    if (this.isDesktop && !scoreboardOpen) {
+      this.hide();
     }
   }
 
@@ -67,7 +99,27 @@ export class SHNScoreboard extends NikElement {
       return;
     }
 
-    this.drawer.open = !this.drawer.open;
+    if (event.target === this.button) {
+      if (this.isMobile) {
+        this.drawer.open = !this.drawer.open;
+      } else {
+        this.show();
+      }
+    } else if (event.target === this.closeButton) {
+      this.hide();
+    }
+  }
+
+  show() {
+    this.desktopEl.hidden = false;
+    this.button.hidden = true;
+    localStorage.setItem("scoreboardState", "open");
+  }
+
+  hide() {
+    this.desktopEl.hidden = true;
+    this.button.hidden = false;
+    localStorage.setItem("scoreboardState", "closed");
   }
 
   teamTemplate(name, team) {
@@ -130,6 +182,20 @@ export class SHNScoreboard extends NikElement {
               ><img
                 src="https://www.collegehockeynews.com/images/logos/chn2006-notext-50x20-trans.png"
             /></a>
+            <wa-button
+              class="wa-desktop-only"
+              appearance="plain"
+              variant="neutral"
+              id="close-scoreboard"
+            >
+              <wa-icon
+                auto-width
+                class="pointer-events-none"
+                label="Close"
+                name="system/close-large-line"
+                library="remix"
+              ></wa-icon>
+            </wa-button>
           </th>
         </thead>
         <tbody>
@@ -155,7 +221,9 @@ export class SHNScoreboard extends NikElement {
   render() {
     return html`<aside>
       <div class="wa-desktop-only">${this.template()}</div>
-      <wa-drawer class="wa-mobile-only">${this.template()}</wa-drawer>
+      <div class="wa-mobile-only">
+        <wa-drawer>${this.template()}</wa-drawer>
+      </div>
     </aside>`;
   }
 }

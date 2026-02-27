@@ -1,10 +1,14 @@
 import * as esbuild from "esbuild";
 import { cleanPlugin } from "esbuild-clean-plugin";
 import fs from "fs";
+import crypto from "crypto";
 
 const args = process.argv.slice(2);
 const watchMode = args.filter((arg) => arg === "--watch").length > 0;
 let buildFunction = watchMode ? esbuild.context : esbuild.build;
+
+const destDir = "./bracketapp/static/dist/esbuild/";
+const jsonFilesForMapping = [];
 
 const result = await buildFunction({
   entryPoints: {
@@ -36,7 +40,7 @@ const result = await buildFunction({
   minify: true,
   splitting: true,
   format: "esm",
-  outdir: "./bracketapp/static/dist/esbuild/",
+  outdir: destDir,
   entryNames: "[name].[hash]",
   outExtension: { ".js": ".mjs" },
   metafile: true,
@@ -55,6 +59,34 @@ const result = await buildFunction({
         });
       },
     },
+    // {
+    //   name: "json",
+    //   setup(build) {
+    //     build.onEnd(async () => {
+    //       const path = "./bracketapp/static/json/";
+    //       const files = fs.readdirSync(path);
+    //       for (let filename of files) {
+    //         let file = fs.readFileSync(path + filename, "utf8");
+    //         let json = JSON.stringify(JSON.parse(file));
+    //         const hash = crypto
+    //           .createHash("sha256")
+    //           .update(json)
+    //           .digest("hex")
+    //           .slice(0, 16);
+
+    //         let [year, name, ext] = filename.split(".");
+    //         const destFile = `${destDir}${year}.${name}.${hash}.${ext}`;
+
+    //         jsonFilesForMapping.push([
+    //           "/static/json/" + filename,
+    //           destFile.replace("./bracketapp", ""),
+    //         ]);
+
+    //         fs.writeFileSync(destFile, json);
+    //       }
+    //     });
+    //   },
+    // },
   ],
 });
 
@@ -124,8 +156,22 @@ function buildTemplate(result) {
     }
   }
 
+  const jsonFilesMapScript = `<script>
+  const JSON_FILE_MAP = {
+${jsonFilesForMapping
+  .map(([k, v]) => {
+    if (k.includes(".")) {
+      return `    "${k}": "${v}",`;
+    } else {
+      return `    ${k}: "${v}",`;
+    }
+  })
+  .join("\n")}
+  };
+</script>`;
+
   const cssFilesMapScript = `<script>
-  const CSS_FILE_MAP = { 
+  const CSS_FILE_MAP = {
 ${Object.entries(cssFilesMap)
   .map(([k, v]) => {
     if (k.includes(".")) {
@@ -167,6 +213,8 @@ ${Object.entries(cssFilesMap)
 />
 
 ${cssFilesMapScript}
+
+${jsonFilesMapScript}
 
 ${linkFiles.join("\n")}
 

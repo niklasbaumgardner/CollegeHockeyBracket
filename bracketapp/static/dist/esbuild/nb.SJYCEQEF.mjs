@@ -1,4 +1,4 @@
-import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b as $e,c as Ee,d as w}from"./chunk-YTZDMNTQ.mjs";import{a as u,c as Ce,d as xe,e as Re,f as R,i as Se}from"./chunk-QPYYSUDA.mjs";function Ne(i,e){return()=>i.querySelector(e)}function Ge(i,e){return()=>i.querySelectorAll(e)}var n=class extends ye{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ge(this,r.all)}):Object.defineProperty(this,a,{get:Ne(this,r)})}createRenderRoot(){return this}};var S=class extends n{render(){return t`<wa-card
+import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b as $e,c as Ee,d as w}from"./chunk-YTZDMNTQ.mjs";import{a as u,c as Ce,d as xe,e as Se,f as S,i as Re}from"./chunk-QPYYSUDA.mjs";function Ne(i,e){return()=>i.querySelector(e)}function Ge(i,e){return()=>i.querySelectorAll(e)}var n=class extends ye{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ge(this,r.all)}):Object.defineProperty(this,a,{get:Ne(this,r)})}createRenderRoot(){return this}};var R=class extends n{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -11,7 +11,7 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
           <wa-button variant="brand" type="submit">Add team</wa-button>
         </div>
       </form></wa-card
-    >`}};customElements.define("nb-add-team",S);var B=class extends n{render(){return t`<wa-card>
+    >`}};customElements.define("nb-add-team",R);var B=class extends n{render(){return t`<wa-card>
       <div class="wa-stack">
         <wa-button variant="brand" href=${UPDATE_ALL_POINTS_URL}
           >Update all points</wa-button
@@ -122,7 +122,7 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         </h4>
         ${this.countdownTemplate()}
       </div></wa-card
-    >`}};customElements.define("nb-countdown",j);var Ie=[["Mich.","Michigan"],["St.","State"],["U.","University"],["UConn","Connecticut"]];function h(i){for(let[e,a]of Ie)if(i.endsWith(e))return i.replace(e,a);return i}var O=class{constructor(){this.cache=new Map,this.gamesRequestPromise=null,this.gamesJsonPromise=null,this.standingsRequestPromise=null,this.standingsJsonPromise=null,this.confStandingsRequestPromise=null,this.confStandingsJsonPromise=null}async getGames(){this.cache.has(`${CURRENT_YEAR}.games`)&&this.cache.get(`${CURRENT_YEAR}.games`),this.gamesRequestPromise||(this.gamesRequestPromise=fetch(`/static/json/${CURRENT_YEAR}.games.json`));let e=await this.gamesRequestPromise;this.gamesJsonPromise||(this.gamesJsonPromise=e.json());let a=await this.gamesJsonPromise;return this.cache.set(`${CURRENT_YEAR}.games`,a),a}async getStandings(){this.cache.has(`${CURRENT_YEAR}.standings`)&&this.cache.get(`${CURRENT_YEAR}.standings`),this.standingsRequestPromise||(this.standingsRequestPromise=fetch(`/static/json/${CURRENT_YEAR}.standings.json`)),this.confStandingsRequestPromise||(this.confStandingsRequestPromise=fetch(`/static/json/${CURRENT_YEAR}.conference.json`));let[e,a]=await Promise.all([this.standingsRequestPromise,this.confStandingsRequestPromise]);this.standingsJsonPromise||(this.standingsJsonPromise=e.json()),this.confStandingsJsonPromise||(this.confStandingsJsonPromise=a.json());let r=await Promise.all([this.standingsJsonPromise,this.confStandingsJsonPromise]);return this.cache.set(`${CURRENT_YEAR}.standings`,r),r}getRecordFromGames(e,a){let r=[0,0,0];for(let s of a)s.tie?r[2]+=1:s.winner===e?r[0]+=1:r[1]+=1;return r}async getHeadToHeadGames(e,a){let r=h(e.name),s=h(a.name),o=await this.getGames(),l=[];for(let m of o)(m.home===r&&m.away===s||m.home===s&&m.away===r)&&l.push(m);return[this.getRecordFromGames(r,l),this.getRecordFromGames(s,l)]}async getHomeAwayNeutralRecord(e){let a=h(e.name),r=await this.getGames(),s=[],o=[],l=[];for(let m of r)m.home===a?m.neutralSite?l.push(m):s.push(m):m.away===a&&(m.neutralSite?l.push(m):o.push(m));return[this.getRecordFromGames(a,s),this.getRecordFromGames(a,o),this.getRecordFromGames(a,l)]}async getStandingsForTeam(e){let a=h(e.name),[r,s]=await this.getStandings(),o=r[a],l=s[a];return!o||!l?(console.log("NO STATS FOR",e,a),null):{...o,...l}}async getNotableWins(e){let a=h(e.name),r=await this.getGames(),s=[];for(let o of r)(o.home===a||o.away===a)&&o.winner===a&&o.notable&&s.push(o);return s}async getNPIRank(e){let a=h(e.name),[r,s]=await this.getStandings();return r[a].rank}},d=new O;var U=class extends n{static properties={topTeam:{type:Object},topTeamStats:{type:Object},bottomTeam:{type:Object},bottomTeamStats:{type:Object},game:{type:String}};requestUpdate(e,a){return e==="topTeam"&&(this.topTeamStats=null,this.requestTopTeamStats()),e==="bottomTeam"&&(this.bottomTeamStats=null,this.requestBottomTeamStats()),(e==="topTeamStats"||e==="bottomTeamStats")&&this.topTeamStats&&this.bottomTeamStats&&this.requestHeadToHeadStats(),super.requestUpdate(e,a)}async requestHeadToHeadStats(){if(!(this.topTeam?.team&&this.bottomTeam?.team&&this.topTeamStats&&this.bottomTeamStats))return;let[e,a]=await d.getHeadToHeadGames(this.topTeam.team,this.bottomTeam.team);this.topTeamStats.h2h=e,this.bottomTeamStats.h2h=a,this.requestUpdate()}statsTemplate(e,a=!1){let r=a?"self-end text-right":"";return t`<small class="${r}">NPI: ${e.rank}</small>
+    >`}};customElements.define("nb-countdown",j);var Ie=[["Mich.","Michigan"],["St.","State"],["U.","University"],["UConn","Connecticut"]];function h(i){for(let[e,a]of Ie)if(i.endsWith(e))return i.replace(e,a);return i}var O=class{constructor(){this.cache=new Map,this.gamesRequestPromise=null,this.gamesJsonPromise=null,this.standingsRequestPromise=null,this.standingsJsonPromise=null,this.confStandingsRequestPromise=null,this.confStandingsJsonPromise=null}async getGames(){if(this.cache.has(`${CURRENT_YEAR}.games`)&&this.cache.get(`${CURRENT_YEAR}.games`),!this.gamesRequestPromise){let r=JSON_FILE_MAP[`/static/json/${CURRENT_YEAR}.games.json`];this.gamesRequestPromise=fetch(r)}let e=await this.gamesRequestPromise;this.gamesJsonPromise||(this.gamesJsonPromise=e.json());let a=await this.gamesJsonPromise;return this.cache.set(`${CURRENT_YEAR}.games`,a),a}async getStandings(){this.cache.has(`${CURRENT_YEAR}.standings`)&&this.cache.get(`${CURRENT_YEAR}.standings`),this.standingsRequestPromise||(this.standingsRequestPromise=fetch(`/static/json/${CURRENT_YEAR}.standings.json`)),this.confStandingsRequestPromise||(this.confStandingsRequestPromise=fetch(`/static/json/${CURRENT_YEAR}.conference.json`));let[e,a]=await Promise.all([this.standingsRequestPromise,this.confStandingsRequestPromise]);this.standingsJsonPromise||(this.standingsJsonPromise=e.json()),this.confStandingsJsonPromise||(this.confStandingsJsonPromise=a.json());let r=await Promise.all([this.standingsJsonPromise,this.confStandingsJsonPromise]);return this.cache.set(`${CURRENT_YEAR}.standings`,r),r}getRecordFromGames(e,a){let r=[0,0,0];for(let s of a)s.tie?r[2]+=1:s.winner===e?r[0]+=1:r[1]+=1;return r}async getHeadToHeadGames(e,a){let r=h(e.name),s=h(a.name),o=await this.getGames(),l=[];for(let m of o)(m.home===r&&m.away===s||m.home===s&&m.away===r)&&l.push(m);return[this.getRecordFromGames(r,l),this.getRecordFromGames(s,l)]}async getHomeAwayNeutralRecord(e){let a=h(e.name),r=await this.getGames(),s=[],o=[],l=[];for(let m of r)m.home===a?m.neutralSite?l.push(m):s.push(m):m.away===a&&(m.neutralSite?l.push(m):o.push(m));return[this.getRecordFromGames(a,s),this.getRecordFromGames(a,o),this.getRecordFromGames(a,l)]}async getStandingsForTeam(e){let a=h(e.name),[r,s]=await this.getStandings(),o=r[a],l=s[a];return!o||!l?(console.log("NO STATS FOR",e,a),null):{...o,...l}}async getNotableWins(e){let a=h(e.name),r=await this.getGames(),s=[];for(let o of r)(o.home===a||o.away===a)&&o.winner===a&&o.notable&&s.push(o);return s}async getNPIRank(e){let a=h(e.name),[r,s]=await this.getStandings();return r[a].rank}},d=new O;var U=class extends n{static properties={topTeam:{type:Object},topTeamStats:{type:Object},bottomTeam:{type:Object},bottomTeamStats:{type:Object},game:{type:String}};requestUpdate(e,a){return e==="topTeam"&&(this.topTeamStats=null,this.requestTopTeamStats()),e==="bottomTeam"&&(this.bottomTeamStats=null,this.requestBottomTeamStats()),(e==="topTeamStats"||e==="bottomTeamStats")&&this.topTeamStats&&this.bottomTeamStats&&this.requestHeadToHeadStats(),super.requestUpdate(e,a)}async requestHeadToHeadStats(){if(!(this.topTeam?.team&&this.bottomTeam?.team&&this.topTeamStats&&this.bottomTeamStats))return;let[e,a]=await d.getHeadToHeadGames(this.topTeam.team,this.bottomTeam.team);this.topTeamStats.h2h=e,this.bottomTeamStats.h2h=a,this.requestUpdate()}statsTemplate(e,a=!1){let r=a?"self-end text-right":"";return t`<small class="${r}">NPI: ${e.rank}</small>
       <small class="${r}"
         >${e.conference.name}: ${e.conference.rank}</small
       >
@@ -1171,7 +1171,7 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         @click=${this.resetRounding}
         >Reset</wa-button
       >
-    </div>`}bgNumberRadioTemplate(){if(!this.backgroundColorSelect){this.updateComplete.then(()=>this.requestUpdate());return}let e=this.backgroundColorSelect.value?.toLowerCase();if(R.includes(e))return Re.map(a=>t`<input
+    </div>`}bgNumberRadioTemplate(){if(!this.backgroundColorSelect){this.updateComplete.then(()=>this.requestUpdate());return}let e=this.backgroundColorSelect.value?.toLowerCase();if(S.includes(e))return Se.map(a=>t`<input
           @input=${this.handleBackgroundNumberChange}
           class="box-radio bg-(--color-${e}-${a})"
           style="background-color: var(--color-${e}-${a});"
@@ -1185,7 +1185,7 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         id="background-color"
         label="Background Color"
         @input=${this.handleBackgroundColorChange}
-        >${R.map(e=>t`<wa-option
+        >${S.map(e=>t`<wa-option
               ?selected=${this.theme.backgroundColor?.includes(e)}
               value=${e}
               >${C(e)}
@@ -1218,7 +1218,7 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
             id="color-palette"
             label="Color Palette"
             @input=${this.handleColorPaletteChange}
-            >${Se.map(e=>t`<wa-option
+            >${Re.map(e=>t`<wa-option
                   ?selected=${this.theme.colorPalette===e}
                   value=${e}
                   >${C(e)}</wa-option
@@ -1760,7 +1760,7 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
     </div>`}bracketsTemplate(){return t`<nb-group-standings-grid
       .brackets=${this.brackets}
       year=${this.year}
-    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);var Ue="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",Te=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer"};connectedCallback(){super.connectedCallback(),this.init()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a)),console.log("got games from localStorage");else{let r=document.createElement("script");r.src=Ue+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("./static/json/live.final.json")).json();this.games=r}async init(){await this.getJsonP();let e=document.getElementById("scoreboard-button");e.addEventListener("click",this),this.games.length===0&&(e.remove(),this.remove())}handleEvent(e){e.type==="click"&&(this.drawer.open=!this.drawer.open)}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
+    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);var Ue="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",Te=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:".wa-desktop-only",mobileEl:".wa-mobile-only",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a)),console.log("got games from localStorage");else{let r=document.createElement("script");r.src=Ue+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("./static/json/live.final.json")).json();this.games=r}async init(){let e=(localStorage.getItem("scoreboardState")??"open")==="open";if(this.button=document.getElementById("scoreboard-button"),this.button.hidden=!0,await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}await this.updateComplete,this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!e&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
       <div class="flex">
         <div class="wa-body-s min-w-[4ch]">${a.npi_rank?`(${a.npi_rank})`:""}</div>
         ${e}
@@ -1793,6 +1793,20 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
               ><img
                 src="https://www.collegehockeynews.com/images/logos/chn2006-notext-50x20-trans.png"
             /></a>
+            <wa-button
+              class="wa-desktop-only"
+              appearance="plain"
+              variant="neutral"
+              id="close-scoreboard"
+            >
+              <wa-icon
+                auto-width
+                class="pointer-events-none"
+                label="Close"
+                name="system/close-large-line"
+                library="remix"
+              ></wa-icon>
+            </wa-button>
           </th>
         </thead>
         <tbody>
@@ -1814,6 +1828,8 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         >
       </div>`}render(){return t`<aside>
       <div class="wa-desktop-only">${this.template()}</div>
-      <wa-drawer class="wa-mobile-only">${this.template()}</wa-drawer>
+      <div class="wa-mobile-only">
+        <wa-drawer>${this.template()}</wa-drawer>
+      </div>
     </aside>`}};customElements.define("chn-scoreboard",Te);
-//# sourceMappingURL=nb.OKYUFU6C.mjs.map
+//# sourceMappingURL=nb.SJYCEQEF.mjs.map
