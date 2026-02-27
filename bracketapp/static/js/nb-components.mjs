@@ -19,3 +19,4 @@ import "./nb-standings.mjs";
 import "./nb-bracket.mjs";
 import "./nb-bracket.mjs";
 import "./nb-group-standings.mjs";
+import "./chn-scoreboard.mjs";

@@ -492,6 +492,9 @@
   .min-w-33 {
     min-width: calc(var(--spacing) * 33);
   }
+  .min-w-\[4ch\] {
+    min-width: 4ch;
+  }
   .min-w-\[7rem\] {
     min-width: 7rem;
   }
