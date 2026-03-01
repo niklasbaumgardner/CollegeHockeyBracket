@@ -56,6 +56,7 @@ const result = await buildFunction({
             buildTemplate(result);
             console.log("Build completed");
           }
+          extraFilesForMapping.length = 0;
         });
       },
     },
@@ -142,6 +143,7 @@ if (watchMode) {
   runWatch();
 } else {
   buildTemplate(result);
+  // console.log(await esbuild.analyzeMetafile(result.metafile));
 }
 
 function scriptTemplate(filename, defer = false) {
@@ -199,6 +201,7 @@ function buildTemplate(result) {
       }
     }
   }
+  // console.log(extraFilesForMapping);
 
   const jsonFilesMapScript = `<script>
   const STATIC_FILE_MAP = {

@@ -3,7 +3,16 @@ import { html } from "lit";
 
 const CHN_BASE_URL =
   "https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=";
-
+const BLACK_LISTED_PAGES = new Set([
+  "login",
+  "signup",
+  "profile",
+  "preferences",
+  "password_request",
+  "password_reset",
+]);
+const SHOW_SIDEBAR_PAGES = new Set(["leaderboard", "group", "bracket"]);
+// The rest of pages will show the button
 export class SHNScoreboard extends NikElement {
   static properties = { games: { type: Array } };
 
@@ -59,24 +68,81 @@ export class SHNScoreboard extends NikElement {
    * This is for testing only
    */
   async getJson() {
-    const file = "./static/json/dev/live.final.json";
+    const file = "/static/json/dev/live.otgame.json";
     let response = await fetch(file);
     let json = await response.json();
     this.games = json;
   }
 
+  sortGames() {
+    this.games.sort((a, b) => {
+      let ret = 0;
+      if (a.gamestatus.includes("Final") && b.gamestatus.includes("Final")) {
+        ret = 0;
+      } else if (a.gamestatus === b.gamestatus) {
+        ret = 0;
+      } else if (a.gamestatus.includes("Final")) {
+        ret = 1;
+      } else if (b.gamestatus.includes("Final")) {
+        ret = -1;
+      } else {
+        let isATime = !isNaN(a.gamestatus[0]);
+        let isBTime = !isNaN(b.gamestatus[0]);
+        if (isATime && !isBTime) {
+          ret = -1;
+        } else if (!isATime && isBTime) {
+          ret = 1;
+        } else if (a.gamestatus.includes("in SO")) {
+          ret = -1;
+        } else if (b.gamestatus.includes("in SO")) {
+          ret = 1;
+        } else {
+          ret = a.gamestatus.localeCompare(b.gamestatus);
+        }
+      }
+
+      // console.log(a.gamestatus, b.gamestatus, ret);
+      return ret;
+    });
+  }
+
+  shouldShowOnPage() {
+    let currentUrl = new URL(location.href);
+    let path = currentUrl.pathname.split("/").at(1);
+    if (BLACK_LISTED_PAGES.has(path)) {
+      return -1;
+    } else if (SHOW_SIDEBAR_PAGES.has(path)) {
+      return 1;
+    }
+
+    return 0;
+  }
+
   async init() {
-    const scoreboardOpen =
-      (localStorage.getItem("scoreboardState") ?? "open") === "open";
     this.button = document.getElementById("scoreboard-button");
+    const shouldShow = this.shouldShowOnPage();
+    if (shouldShow === -1) {
+      this.button.remove();
+      this.remove();
+      return;
+    }
+
+    const scoreboardOpen =
+      (localStorage.getItem("scoreboardState") ?? "open") === "open" &&
+      shouldShow === 1;
 
     await this.getJsonP();
+    // await this.getJson();
+    // console.log(this.games);
 
     if (this.games.length === 0) {
       this.button.remove();
       this.remove();
       return;
     }
+
+    this.sortGames();
+    this.requestUpdate();
 
     await this.updateComplete;
 
@@ -131,11 +197,11 @@ export class SHNScoreboard extends NikElement {
   }
 
   gameTemplate(g) {
-    let badgeColor = "warning";
-    if (g.gamestatus === "Final") {
+    let badgeColor = "danger";
+    if (g.gamestatus.startsWith("Final")) {
       badgeColor = "neutral";
-    } else if (g.gamestatus.includes("Per.")) {
-      badgeColor = "danger";
+    } else if (!isNaN(g.gamestatus[0])) {
+      badgeColor = "warning";
     }
 
     return html`<div>
