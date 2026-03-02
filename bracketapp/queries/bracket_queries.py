@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import contains_eager, joinedload, noload
 
 from bracketapp import cache, db
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
 from bracketapp.models import (
     Bracket,
     Game,

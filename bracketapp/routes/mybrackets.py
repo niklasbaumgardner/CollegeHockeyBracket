@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.config import YEAR
+from bracketapp.globals import YEAR
 from bracketapp.queries import bracket_queries, group_queries
 from bracketapp.utils.constants import my_bracket_years_cache_key, my_brackets_cache_key
 

@@ -1,7 +1,7 @@
 from flask_login import current_user
 
 from bracketapp import cache
-from bracketapp.config import YEAR
+from bracketapp.globals import YEAR
 from bracketapp.queries import bracket_queries, group_queries, user_queries
 from bracketapp.utils.constants import (
     ARCHIVE_YEARS_CACHE_KEY,

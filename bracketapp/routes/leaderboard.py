@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user
 
 from bracketapp import cache
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
 from bracketapp.utils import bracket_utils
 from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
 

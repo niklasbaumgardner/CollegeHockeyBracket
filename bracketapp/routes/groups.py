@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.config import CAN_EDIT_BRACKET
+from bracketapp.globals import CAN_EDIT_BRACKET
 from bracketapp.queries import group_queries
 from bracketapp.utils import bracket_utils, cache_invalidator
 from bracketapp.utils.constants import group_cache_key, group_membership_cache_key

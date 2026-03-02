@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import joinedload
 
 from bracketapp import cache, db
-from bracketapp.config import YEAR
+from bracketapp.globals import YEAR
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,

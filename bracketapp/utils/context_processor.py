@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_login import current_user
 
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
 from bracketapp.queries import bracket_queries, user_settings_queries
 
 context_processor_bp = Blueprint("context_processor_bp", __name__)

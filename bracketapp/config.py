@@ -20,7 +20,3 @@ class Config:
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     FLASK_DEBUG = os.environ.get("FLASK_DEBUG")
     CACHE_MEMCACHED_SERVER = os.environ.get("CACHE_MEMCACHED_SERVER")
-
-
-YEAR = int(os.environ.get("YEAR"))
-CAN_EDIT_BRACKET = os.environ.get("CAN_EDIT_BRACKET") == "True"

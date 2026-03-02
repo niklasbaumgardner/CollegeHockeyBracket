@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user
 
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
 from bracketapp.queries import (
     bracket_queries,
     correct_bracket_queries,

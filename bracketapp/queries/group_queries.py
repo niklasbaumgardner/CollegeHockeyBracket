@@ -17,7 +17,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from bracketapp import db
-from bracketapp.config import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
 from bracketapp.models import Bracket, Group, GroupBracket, GroupMember
 
 
