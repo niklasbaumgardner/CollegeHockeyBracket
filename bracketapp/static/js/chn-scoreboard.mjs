@@ -68,6 +68,8 @@ export class SHNScoreboard extends NikElement {
    * This is for testing only
    */
   async getJson() {
+    this.games = [];
+    return;
     const file = "/static/json/dev/live.otgame.json";
     let response = await fetch(file);
     let json = await response.json();
@@ -139,6 +141,8 @@ export class SHNScoreboard extends NikElement {
       this.button.remove();
       this.remove();
       return;
+    } else {
+      this.style.removeProperty("width");
     }
 
     this.sortGames();
