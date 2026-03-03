@@ -460,6 +460,10 @@ export class Theme {
   }
 
   updateSettings(args) {
+    if (!CURRENT_USER?.id) {
+      return;
+    }
+
     if (!this.updateTask) {
       this.updateTask = new DeferredTask(
         (callbackArgs) => {
