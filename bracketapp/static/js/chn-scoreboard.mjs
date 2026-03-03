@@ -18,8 +18,8 @@ export class SHNScoreboard extends NikElement {
 
   static queries = {
     drawer: "wa-drawer",
-    desktopEl: ".wa-desktop-only",
-    mobileEl: ".wa-mobile-only",
+    desktopEl: "#desktop",
+    mobileEl: "#mobile",
     closeButton: "#close-scoreboard",
   };
 
@@ -68,8 +68,6 @@ export class SHNScoreboard extends NikElement {
    * This is for testing only
    */
   async getJson() {
-    this.games = [];
-    return;
     const file = "/static/json/dev/live.otgame.json";
     let response = await fetch(file);
     let json = await response.json();
@@ -111,7 +109,7 @@ export class SHNScoreboard extends NikElement {
   shouldShowOnPage() {
     let currentUrl = new URL(location.href);
     let path = currentUrl.pathname.split("/").at(1);
-    if (BLACK_LISTED_PAGES.has(path)) {
+    if (!CURRENT_USER?.id || BLACK_LISTED_PAGES.has(path)) {
       return -1;
     } else if (SHOW_SIDEBAR_PAGES.has(path)) {
       return 1;
@@ -147,8 +145,6 @@ export class SHNScoreboard extends NikElement {
 
     this.sortGames();
     this.requestUpdate();
-
-    await this.updateComplete;
 
     this.button.addEventListener("click", this);
     this.closeButton.addEventListener("click", this);
@@ -222,23 +218,19 @@ export class SHNScoreboard extends NikElement {
 
   gamesTemplate() {
     if (!this.games?.length) {
-      return html`<tr>
-        No games today
-      </tr>`;
+      return html`<div>No games today</div>`;
     }
 
     return this.games.map(
-      (g) =>
-        html`<tr>
-          <td>${this.gameTemplate(g)}</td>
-        </tr>`,
+      (g) => html`<wa-card>${this.gameTemplate(g)}</wa-card>`,
     );
   }
 
   template() {
-    return html`<table>
-        <thead>
-          <th
+    return html`<div class="wa-stack p-(--wa-space-m)">
+      <div>
+        <div class="wa-desktop-only">
+          <div
             class="wa-cluster top-[calc(100% - 60px)] left-[calc(100% - 80px)]"
           >
             <a
@@ -264,12 +256,12 @@ export class SHNScoreboard extends NikElement {
                 library="remix"
               ></wa-icon>
             </wa-button>
-          </th>
-        </thead>
-        <tbody>
-          ${this.gamesTemplate()}
-        </tbody>
-      </table>
+          </div>
+        </div>
+      </div>
+
+      ${this.gamesTemplate()}
+
       <div class="flex justify-center gap-(--wa-space-2xs)">
         More at CHN:
         <a href="https://www.collegehockeynews.com/stats/" target="_blank"
@@ -283,14 +275,46 @@ export class SHNScoreboard extends NikElement {
         <a href="https://www.collegehockeynews.com/ratings/" target="_blank"
           >Pairwise</a
         >
-      </div>`;
+      </div>
+    </div>`;
   }
 
   render() {
     return html`<aside>
-      <div class="wa-desktop-only">${this.template()}</div>
-      <div class="wa-mobile-only">
-        <wa-drawer>${this.template()}</wa-drawer>
+      <div id="desktop" class="wa-desktop-only">${this.template()}</div>
+      <div id="mobile" class="wa-mobile-only">
+        <wa-drawer
+          ><div class="wa-mobile-only" slot="label">
+            <div
+              class="wa-cluster top-[calc(100% - 60px)] left-[calc(100% - 80px)]"
+            >
+              <a
+                class="wa-heading-l"
+                href="https://www.collegehockeynews.com/scoreboard"
+                target="_blank"
+                >Live Scoreboard from CHN</a
+              ><a href="https://www.collegehockeynews.com" target="_blank"
+                ><img
+                  src="https://www.collegehockeynews.com/images/logos/chn2006-notext-50x20-trans.png"
+              /></a>
+              <wa-button
+                class="wa-desktop-only"
+                appearance="plain"
+                variant="neutral"
+                id="close-scoreboard"
+              >
+                <wa-icon
+                  auto-width
+                  class="pointer-events-none"
+                  label="Close"
+                  name="system/close-large-line"
+                  library="remix"
+                ></wa-icon>
+              </wa-button>
+            </div>
+          </div>
+          ${this.template()}</wa-drawer
+        >
       </div>
     </aside>`;
   }

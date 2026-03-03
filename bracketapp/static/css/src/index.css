@@ -160,3 +160,7 @@ wa-dropdown-item:has(a) {
   right: 32px;
   z-index: 99999;
 }
+
+wa-drawer::part(dialog) {
+  background-color: var(--wa-color-surface-default);
+}

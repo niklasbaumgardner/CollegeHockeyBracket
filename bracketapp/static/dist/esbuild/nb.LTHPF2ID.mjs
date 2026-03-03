@@ -1,4 +1,4 @@
-import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b as $e,c as Ee,d as w}from"./chunk-YTZDMNTQ.mjs";import{a as u,c as Ce,d as xe,e as Se,f as S,i as Re}from"./chunk-QPYYSUDA.mjs";function Ne(i,e){return()=>i.querySelector(e)}function Ge(i,e){return()=>i.querySelectorAll(e)}var n=class extends _e{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ge(this,r.all)}):Object.defineProperty(this,a,{get:Ne(this,r)})}createRenderRoot(){return this}};var R=class extends n{render(){return t`<wa-card
+import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b as $e,c as Ee,d as w}from"./chunk-YTZDMNTQ.mjs";import{a as u,c as Ce,d as xe,e as Se,f as S,i as Re}from"./chunk-QPYYSUDA.mjs";function Ne(i,e){return()=>i.querySelector(e)}function Ge(i,e){return()=>i.querySelectorAll(e)}var n=class extends ye{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ge(this,r.all)}):Object.defineProperty(this,a,{get:Ne(this,r)})}createRenderRoot(){return this}};var R=class extends n{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -97,7 +97,7 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
       <wa-dropdown-item id="dark" type="checkbox" value="dark"
         >Dark</wa-dropdown-item
       >
-    </wa-dropdown>`}};customElements.define("nb-theme-selector",P);var y=new Date("2025-03-27T18:00:00.000Z"),A=class extends n{static properties={bracketsOpen:Boolean};get countdown(){let e=y-Date.now(),a=e/1e3,r=new Date(e),s=Math.floor(a/(3600*24)),o=r.toISOString().substring(11,13),l=r.toISOString().substring(14,16),m=r.toISOString().substring(17,19);return{days:s,hours:o,mins:l,secs:m}}connectedCallback(){super.connectedCallback(),!this.maybeDestroy()&&(this.intervalID=setInterval(()=>{this.maybeRequestUpdate()},1e3))}maybeRequestUpdate(){this.maybeDestroy()||this.requestUpdate()}destroy(){clearInterval(this.intervalID),this.remove()}maybeDestroy(){let e=y-Date.now();return!CAN_EDIT_BRACKET||e<0?(this.destroy(),!0):!1}timeCardTemplate(e,a){return t`<wa-card class="default-bg default-border"
+    </wa-dropdown>`}};customElements.define("nb-theme-selector",P);var _=new Date("2025-03-27T18:00:00.000Z"),A=class extends n{static properties={bracketsOpen:Boolean};get countdown(){let e=_-Date.now(),a=e/1e3,r=new Date(e),s=Math.floor(a/(3600*24)),o=r.toISOString().substring(11,13),l=r.toISOString().substring(14,16),m=r.toISOString().substring(17,19);return{days:s,hours:o,mins:l,secs:m}}connectedCallback(){super.connectedCallback(),!this.maybeDestroy()&&(this.intervalID=setInterval(()=>{this.maybeRequestUpdate()},1e3))}maybeRequestUpdate(){this.maybeDestroy()||this.requestUpdate()}destroy(){clearInterval(this.intervalID),this.remove()}maybeDestroy(){let e=_-Date.now();return!CAN_EDIT_BRACKET||e<0?(this.destroy(),!0):!1}timeCardTemplate(e,a){return t`<wa-card class="default-bg default-border"
       ><div class="wa-stack items-center gap-(--wa-space-xs)">
         <h5>${e}</h5>
         <span>${a+(e==1?"":"s")}</span>
@@ -109,13 +109,13 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
         <h4>
           Brackets will close on
           <wa-format-date
-            date=${y}
+            date=${_}
             month="long"
             day="numeric"
           ></wa-format-date>
           at
           <wa-format-date
-            date=${y}
+            date=${_}
             hour="numeric"
             minute="numeric"
           ></wa-format-date>
@@ -641,7 +641,7 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
           <a href="${SIGNUP_URL}">Sign Up</a>
         </p>
       </div>
-    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",D);import Pe from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var $=class extends n{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?$e:ye}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return Ee.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:"var(--wa-color-surface-super-raised)",borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var E=class extends n{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){if(!e)return null;let a=STATIC_FILE_MAP[e.team.icon_path];return t`<img
+    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",D);import Pe from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var $=class extends n{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?$e:_e}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return Ee.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:"var(--wa-color-surface-super-raised)",borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var E=class extends n{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){if(!e)return null;let a=STATIC_FILE_MAP[e.team.icon_path];return t`<img
       class="standings-img"
       src="${a}"
       alt="${e.team.name}"
@@ -1254,7 +1254,7 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
           </div>
         </div>
       </div>
-    </wa-card>`:null}};customElements.define("nb-preferences",pe);var Ae="Email taken. Please choose a different email or login.",Ue="Username taken. Please choose a different username.",_=class extends n{static properties={email:{type:String},emailValid:{type:Boolean},usernameValid:{type:Boolean}};static queries={emailInput:"#email",usernameInput:"#username",submitButton:"#submitButtn"};async checkEmailUnique(e){let a=await fetch(EMAIL_UNIQUE_URL+"?"+new URLSearchParams({email:e}));return a=await a.json(),a}async checkUsernameUnique(e){let a=await fetch(USERNAME_UNIQUE_URL+"?"+new URLSearchParams({username:e}));return a=await a.json(),a}async handleEmailInput(){this.emailTask||(this.emailTask=new u(async()=>{let e=this.emailInput.value,a=await this.checkEmailUnique(e);console.log("email is unique",a.isUnique),a.isUnique?(this.emailInput.hint="",this.emailValid=!0):(this.emailInput.hint=Ae,this.emailValid=!1)},300)),this.emailTask.arm()}async handleUsernameInput(){this.usernameTask||(this.usernameTask=new u(async()=>{let e=this.usernameInput.value,a=await this.checkUsernameUnique(e);console.log("username is unique",a.isUnique),a.isUnique?(this.usernameInput.hint="",this.usernameValid=!0):(this.usernameInput.hint=Ue,this.usernameValid=!1)},300)),this.usernameTask.arm()}render(){return t`<wa-card>
+    </wa-card>`:null}};customElements.define("nb-preferences",pe);var Ae="Email taken. Please choose a different email or login.",Ue="Username taken. Please choose a different username.",y=class extends n{static properties={email:{type:String},emailValid:{type:Boolean},usernameValid:{type:Boolean}};static queries={emailInput:"#email",usernameInput:"#username",submitButton:"#submitButtn"};async checkEmailUnique(e){let a=await fetch(EMAIL_UNIQUE_URL+"?"+new URLSearchParams({email:e}));return a=await a.json(),a}async checkUsernameUnique(e){let a=await fetch(USERNAME_UNIQUE_URL+"?"+new URLSearchParams({username:e}));return a=await a.json(),a}async handleEmailInput(){this.emailTask||(this.emailTask=new u(async()=>{let e=this.emailInput.value,a=await this.checkEmailUnique(e);console.log("email is unique",a.isUnique),a.isUnique?(this.emailInput.hint="",this.emailValid=!0):(this.emailInput.hint=Ae,this.emailValid=!1)},300)),this.emailTask.arm()}async handleUsernameInput(){this.usernameTask||(this.usernameTask=new u(async()=>{let e=this.usernameInput.value,a=await this.checkUsernameUnique(e);console.log("username is unique",a.isUnique),a.isUnique?(this.usernameInput.hint="",this.usernameValid=!0):(this.usernameInput.hint=Ue,this.usernameValid=!1)},300)),this.usernameTask.arm()}render(){return t`<wa-card>
       <form id="signup-form" action="${SIGNUP_URL}" method="POST"></form>
       <div class="wa-stack">
         <h2>Sign Up</h2>
@@ -1303,7 +1303,7 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
           >Sign Up</wa-button
         >
       </div>
-    </wa-card>`}};customElements.define("nb-signup",_);var ue=class extends _{static properties={username:{type:String}};async handleEmailInput(){if(this.emailInput.value===this.email){this.emailInput.helpText="",this.emailValid=!1;return}super.handleEmailInput()}async handleUsernameInput(){if(this.usernameInput.value===this.username){this.usernameInput.helpText="",this.usernameValid=!1;return}super.handleUsernameInput()}render(){return t`<wa-card>
+    </wa-card>`}};customElements.define("nb-signup",y);var ue=class extends y{static properties={username:{type:String}};async handleEmailInput(){if(this.emailInput.value===this.email){this.emailInput.helpText="",this.emailValid=!1;return}super.handleEmailInput()}async handleUsernameInput(){if(this.usernameInput.value===this.username){this.usernameInput.helpText="",this.usernameValid=!1;return}super.handleUsernameInput()}render(){return t`<wa-card>
       <form id="profile-form" action="" method="POST" autocomplete="off"></form>
       <div class="wa-stack">
         <h2>Profile</h2>
@@ -1760,7 +1760,7 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
     </div>`}bracketsTemplate(){return t`<nb-group-standings-grid
       .brackets=${this.brackets}
       year=${this.year}
-    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);var Oe="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",je=new Set(["login","signup","profile","preferences","password_request","password_reset"]),Le=new Set(["leaderboard","group","bracket"]),Te=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:".wa-desktop-only",mobileEl:".wa-mobile-only",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a));else{let r=document.createElement("script");r.src=Oe+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){this.games=[]}sortGames(){this.games.sort((e,a)=>{let r=0;if(e.gamestatus.includes("Final")&&a.gamestatus.includes("Final"))r=0;else if(e.gamestatus===a.gamestatus)r=0;else if(e.gamestatus.includes("Final"))r=1;else if(a.gamestatus.includes("Final"))r=-1;else{let s=!isNaN(e.gamestatus[0]),o=!isNaN(a.gamestatus[0]);s&&!o?r=-1:!s&&o?r=1:e.gamestatus.includes("in SO")?r=-1:a.gamestatus.includes("in SO")?r=1:r=e.gamestatus.localeCompare(a.gamestatus)}return r})}shouldShowOnPage(){let a=new URL(location.href).pathname.split("/").at(1);return je.has(a)?-1:Le.has(a)?1:0}async init(){this.button=document.getElementById("scoreboard-button");let e=this.shouldShowOnPage();if(e===-1){this.button.remove(),this.remove();return}let a=(localStorage.getItem("scoreboardState")??"open")==="open"&&e===1;if(await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}else this.style.removeProperty("width");this.sortGames(),this.requestUpdate(),await this.updateComplete,this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!a&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
+    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);var Oe="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",je=new Set(["login","signup","profile","preferences","password_request","password_reset"]),Le=new Set(["leaderboard","group","bracket"]),Te=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:"#desktop",mobileEl:"#mobile",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a));else{let r=document.createElement("script");r.src=Oe+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("/static/json/dev/live.otgame.json")).json();this.games=r}sortGames(){this.games.sort((e,a)=>{let r=0;if(e.gamestatus.includes("Final")&&a.gamestatus.includes("Final"))r=0;else if(e.gamestatus===a.gamestatus)r=0;else if(e.gamestatus.includes("Final"))r=1;else if(a.gamestatus.includes("Final"))r=-1;else{let s=!isNaN(e.gamestatus[0]),o=!isNaN(a.gamestatus[0]);s&&!o?r=-1:!s&&o?r=1:e.gamestatus.includes("in SO")?r=-1:a.gamestatus.includes("in SO")?r=1:r=e.gamestatus.localeCompare(a.gamestatus)}return r})}shouldShowOnPage(){let a=new URL(location.href).pathname.split("/").at(1);return!CURRENT_USER?.id||je.has(a)?-1:Le.has(a)?1:0}async init(){this.button=document.getElementById("scoreboard-button");let e=this.shouldShowOnPage();if(e===-1){this.button.remove(),this.remove();return}let a=(localStorage.getItem("scoreboardState")??"open")==="open"&&e===1;if(await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}else this.style.removeProperty("width");this.sortGames(),this.requestUpdate(),this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!a&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
       <div class="flex">
         <div class="wa-body-s min-w-[4ch]">${a.npi_rank?`(${a.npi_rank})`:""}</div>
         ${e}
@@ -1775,13 +1775,10 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
         >
       </div>
       <div class="wa-body-xs">${e.arenaname} - ${e.location}</div>
-    </div>`}gamesTemplate(){return this.games?.length?this.games.map(e=>t`<tr>
-          <td>${this.gameTemplate(e)}</td>
-        </tr>`):t`<tr>
-        No games today
-      </tr>`}template(){return t`<table>
-        <thead>
-          <th
+    </div>`}gamesTemplate(){return this.games?.length?this.games.map(e=>t`<wa-card>${this.gameTemplate(e)}</wa-card>`):t`<div>No games today</div>`}template(){return t`<div class="wa-stack p-(--wa-space-m)">
+      <div>
+        <div class="wa-desktop-only">
+          <div
             class="wa-cluster top-[calc(100% - 60px)] left-[calc(100% - 80px)]"
           >
             <a
@@ -1807,12 +1804,12 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
                 library="remix"
               ></wa-icon>
             </wa-button>
-          </th>
-        </thead>
-        <tbody>
-          ${this.gamesTemplate()}
-        </tbody>
-      </table>
+          </div>
+        </div>
+      </div>
+
+      ${this.gamesTemplate()}
+
       <div class="flex justify-center gap-(--wa-space-2xs)">
         More at CHN:
         <a href="https://www.collegehockeynews.com/stats/" target="_blank"
@@ -1826,10 +1823,42 @@ import{d as t,h as x,j as _e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as ye,b 
         <a href="https://www.collegehockeynews.com/ratings/" target="_blank"
           >Pairwise</a
         >
-      </div>`}render(){return t`<aside>
-      <div class="wa-desktop-only">${this.template()}</div>
-      <div class="wa-mobile-only">
-        <wa-drawer>${this.template()}</wa-drawer>
+      </div>
+    </div>`}render(){return t`<aside>
+      <div id="desktop" class="wa-desktop-only">${this.template()}</div>
+      <div id="mobile" class="wa-mobile-only">
+        <wa-drawer
+          ><div class="wa-mobile-only" slot="label">
+            <div
+              class="wa-cluster top-[calc(100% - 60px)] left-[calc(100% - 80px)]"
+            >
+              <a
+                class="wa-heading-l"
+                href="https://www.collegehockeynews.com/scoreboard"
+                target="_blank"
+                >Live Scoreboard from CHN</a
+              ><a href="https://www.collegehockeynews.com" target="_blank"
+                ><img
+                  src="https://www.collegehockeynews.com/images/logos/chn2006-notext-50x20-trans.png"
+              /></a>
+              <wa-button
+                class="wa-desktop-only"
+                appearance="plain"
+                variant="neutral"
+                id="close-scoreboard"
+              >
+                <wa-icon
+                  auto-width
+                  class="pointer-events-none"
+                  label="Close"
+                  name="system/close-large-line"
+                  library="remix"
+                ></wa-icon>
+              </wa-button>
+            </div>
+          </div>
+          ${this.template()}</wa-drawer
+        >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Te);
-//# sourceMappingURL=nb.6XBKFUK7.mjs.map
+//# sourceMappingURL=nb.LTHPF2ID.mjs.map

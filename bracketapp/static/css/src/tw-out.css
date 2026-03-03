@@ -619,6 +619,9 @@
   .p-\(--wa-space-l\) {
     padding: var(--wa-space-l);
   }
+  .p-\(--wa-space-m\) {
+    padding: var(--wa-space-m);
+  }
   .p-0 {
     padding: calc(var(--spacing) * 0);
   }
