@@ -23,7 +23,7 @@ const result = await buildFunction({
     // CSS bundle
     bundle: "./bracketapp/static/css/src/bundle.css",
     // Themes
-    shoelace: "./bracketapp/static/css/src/themes/shoelace.css",
+    // shoelace: "./bracketapp/static/css/src/themes/shoelace.css",
     // Palettes
     "anodized.palette": "./bracketapp/static/css/src/color/anodized.css",
     "base.palette": "./bracketapp/static/css/src/color/base.css",
@@ -190,9 +190,11 @@ function buildTemplate(result) {
       myFiles.push({ path, orignal: fileObject.entryPoint });
       if (origFilename === "bundle.css") {
         linkFiles.unshift(linkTemplate(filename));
-      } else if (origFilename === "shoelace.css" && !path.includes("palette")) {
-        shoelaceFile = "/static/dist/esbuild/" + filename;
-      } else {
+      }
+      // else if (origFilename === "shoelace.css" && !path.includes("palette")) {
+      //   shoelaceFile = "/static/dist/esbuild/" + filename;
+      // }
+      else {
         let name = origFilename.split(".")[0];
         if (path.includes("palette")) {
           name += ".palette";
@@ -245,13 +247,6 @@ ${Object.entries(cssFilesMap)
 </script>`;
 
   const fileContents = `<link
-  id="theme"
-  rel="stylesheet"
-  href="${shoelaceFile}"
-  render="blocking"
-  fetchpriority="high"
-/>
-<link
   id="palette"
   rel="stylesheet"
   href=""

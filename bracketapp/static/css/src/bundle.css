@@ -1,4 +1,5 @@
 @import url("webawesome.css");
+@import url("./themes/shoelace.css");
 
 @import url("ag-grid-overrides.css");
 @import url("host.css");
