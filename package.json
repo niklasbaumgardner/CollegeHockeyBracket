@@ -13,7 +13,7 @@
     "build": "npm run tw-build && npm run wp-build"
   },
   "dependencies": {
-    "@awesome.me/webawesome-pro": "^3.2.1",
+    "@awesome.me/webawesome-pro": "^3.3.1",
     "@tailwindcss/cli": "^4.2.1",
     "ag-grid-community": "^35.1.0",
     "lit": "^3.3.2",
