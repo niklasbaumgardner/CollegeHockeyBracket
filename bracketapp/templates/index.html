@@ -1,0 +1,146 @@
+{% extends "base.html" %} {% block admin %}active{% endblock admin %} {% block
+head %}
+
+<title>Admin</title>
+<script>
+  const UPDATE_ALL_POINTS_URL = "{{ url_for('admin_bp.update_points') }}";
+  const CORRECT_BRACKET_PAGE = "{{ url_for('admin_bp.update_correct') }}";
+  const DEFAULT_BRACKET_PAGE = "{{ url_for('admin_bp.update_default') }}";
+  const FLUSH_CACHE_URL = "{{ url_for('admin_bp.flush_cache') }}";
+</script>
+
+{% endblock head %} {% block content %}
+
+<wa-card class="large-card">
+  <h2>NPI Probability Matrix</h2>
+  <p>
+    These are the results of 20,000 Monte Carlo simulations of the remaining
+    games prior to Selection Day. The winner of each game in the simulation was
+    determined randomly, weighted by KRACH. When that simulation was completed
+    -- playing out the six conference tournaments -- a NPI was calculated based
+    upon those results.
+  </p>
+  <p>
+    The numbers in the chart represent the percentage of times (among the total
+    simulations run) each team placed in that spot in the NPI. Note that just
+    placing in the top 16 does not indicate the team made it, due to automatic
+    bids (AQ).
+  </p>
+  <p>Last updated: February 22</p>
+  <div>
+    <b>Key</b>
+    <div>
+      IN - % of simulations in which a team qualified for the NCAA tournament
+    </div>
+    <div>AL - % qualified as an At Large</div>
+    <div>
+      AQ - % qualified as an Automatic Qualifier (won the conference tournament
+      in the simulation) % in red, if any, indicates number of times team
+      qualified for NCAAs on criteria, but was ineligible by virtue of having a
+      <.500 record.
+    </div>
+  </div>
+  <wa-scroller style="--shadow-color: var(--wa-color-surface-raised)"
+    ><table class="wa-hover-rows">
+      <thead>
+        <tr></tr>
+      </thead>
+      <tbody></tbody></table
+  ></wa-scroller>
+</wa-card>
+
+<script type="module">
+  let response = await fetch("/static/json/tournament.json");
+  let json = await response.json();
+  console.log(json);
+
+  const headRow = [
+    "Rank",
+    "Team",
+    "In",
+    "AL",
+    "AQ",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "42",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51",
+    "52",
+    "53",
+    "54",
+    "55",
+    "56",
+    "57",
+    "58",
+    "59",
+    "60",
+    "61",
+    "62",
+    "63",
+  ];
+
+  function makeElement(element, content) {
+    let el = document.createElement(element);
+    if (content) {
+      el.textContent = content;
+    }
+    return el;
+  }
+  const thead = document.querySelector("wa-scroller thead > tr");
+  const tbody = document.querySelector("wa-scroller tbody");
+
+  thead.append(...headRow.map((h) => makeElement("th", h)));
+  for (let row of json) {
+    let tRow = makeElement("tr");
+    tRow.append(...row.map((r) => makeElement("td", r)));
+    tbody.append(tRow);
+  }
+</script>
+
+{% endblock content %}
