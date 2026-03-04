@@ -1,4 +1,4 @@
-import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b as $e,c as Ee,d as w}from"./chunk-YTZDMNTQ.mjs";import{a as u,c as Ce,d as xe,e as Se,f as S,i as Re}from"./chunk-XLOY4CXF.mjs";function Ne(i,e){return()=>i.querySelector(e)}function Ge(i,e){return()=>i.querySelectorAll(e)}var n=class extends ye{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ge(this,r.all)}):Object.defineProperty(this,a,{get:Ne(this,r)})}createRenderRoot(){return this}};var R=class extends n{render(){return t`<wa-card
+import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b as $e,c as Ee,d as w}from"./chunk-YTZDMNTQ.mjs";import{a as u,c as Ce,d as xe,e as Se,f as S,i as Re}from"./chunk-P43BX2YJ.mjs";function Ne(i,e){return()=>i.querySelector(e)}function Ge(i,e){return()=>i.querySelectorAll(e)}var n=class extends ye{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Ge(this,r.all)}):Object.defineProperty(this,a,{get:Ne(this,r)})}createRenderRoot(){return this}};var R=class extends n{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -1861,4 +1861,4 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Te);
-//# sourceMappingURL=nb.4ZNXEYEA.mjs.map
+//# sourceMappingURL=nb.Z5YRBOSO.mjs.map

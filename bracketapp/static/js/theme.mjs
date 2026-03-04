@@ -371,7 +371,7 @@ export class Theme {
     }
 
     this.paletteLinkEl.href =
-      CSS_FILE_MAP[this.colorPalette + ".palette"] ?? "";
+      STATIC_FILE_MAP[this.colorPalette + ".palette"] ?? "";
 
     if (!this.#initing) {
       this.updateSettings({ color_palette: this.colorPalette });

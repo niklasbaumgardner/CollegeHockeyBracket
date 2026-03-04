@@ -163,9 +163,9 @@ function buildTemplate(result) {
   const linkFiles = [];
   const scriptFiles = [];
   const cssFilesMap = {};
+  const staticFiles = [...extraFilesForMapping];
   let themeFile = null;
   let sentryFile = null;
-  let shoelaceFile = null;
 
   const { outputs } = result.metafile;
   for (let [path, fileObject] of Object.entries(outputs)) {
@@ -190,38 +190,21 @@ function buildTemplate(result) {
       myFiles.push({ path, orignal: fileObject.entryPoint });
       if (origFilename === "bundle.css") {
         linkFiles.unshift(linkTemplate(filename));
-      }
-      // else if (origFilename === "shoelace.css" && !path.includes("palette")) {
-      //   shoelaceFile = "/static/dist/esbuild/" + filename;
-      // }
-      else {
+      } else {
         let name = origFilename.split(".")[0];
         if (path.includes("palette")) {
           name += ".palette";
         }
         cssFilesMap[name] = "/static/dist/esbuild/" + filename;
+        staticFiles.push([name, "/static/dist/esbuild/" + filename]);
       }
     }
   }
-  // console.log(extraFilesForMapping);
 
   const jsonFilesMapScript = `<script>
   const STATIC_FILE_MAP = {
-${extraFilesForMapping
-  .map(([k, v]) => {
-    if (k.includes(".")) {
-      return `    "${k}": "${v}",`;
-    } else {
-      return `    ${k}: "${v}",`;
-    }
-  })
-  .join("\n")}
-  };
-</script>`;
-
-  const cssFilesMapScript = `<script>
-  const CSS_FILE_MAP = {
-${Object.entries(cssFilesMap)
+${staticFiles
+  .sort((a, b) => a[0].localeCompare(b[0]))
   .map(([k, v]) => {
     if (k.includes(".")) {
       return `    "${k}": "${v}",`;
@@ -235,7 +218,7 @@ ${Object.entries(cssFilesMap)
   const myPalette = "{{ user_settings.settings.color_palette }}";
   if (myPalette.length) {
     let paletteLink = document.getElementById("palette");
-    paletteLink.href = CSS_FILE_MAP[myPalette + ".palette"] ?? "";
+    paletteLink.href = STATIC_FILE_MAP[myPalette + ".palette"] ?? "";
   }
 </script>`;
 
@@ -253,8 +236,6 @@ ${Object.entries(cssFilesMap)
   render="blocking"
   fetchpriority="high"
 />
-
-${cssFilesMapScript}
 
 ${jsonFilesMapScript}
 

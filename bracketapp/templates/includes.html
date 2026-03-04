@@ -7,30 +7,7 @@
 />
 
 <script>
-  const CSS_FILE_MAP = {
-    "bright.palette": "/static/dist/esbuild/bright.palette.4U3Z2VEM.css",
-    "elegant.palette": "/static/dist/esbuild/elegant.palette.BESGV7HV.css",
-    "mild.palette": "/static/dist/esbuild/mild.palette.ESAXWICN.css",
-    "natural.palette": "/static/dist/esbuild/natural.palette.WGSI542K.css",
-    "rudimentary.palette": "/static/dist/esbuild/rudimentary.palette.FM3GLSBJ.css",
-    "shoelace.palette": "/static/dist/esbuild/shoelace.palette.VIT5FZA2.css",
-    "vogue.palette": "/static/dist/esbuild/vogue.palette.FY32WZXZ.css",
-    "anodized.palette": "/static/dist/esbuild/anodized.palette.N2MTE5BX.css",
-    "base.palette": "/static/dist/esbuild/base.palette.CU2AYW2R.css",
-  };
-
-  const myPalette = "{{ user_settings.settings.color_palette }}";
-  if (myPalette.length) {
-    let paletteLink = document.getElementById("palette");
-    paletteLink.href = CSS_FILE_MAP[myPalette + ".palette"] ?? "";
-  }
-</script>
-
-<script>
   const STATIC_FILE_MAP = {
-    "/static/json/2025.conference.json": "/static/dist/esbuild/2025.conference.8db7ab6fd84d50ed.json",
-    "/static/json/2025.games.json": "/static/dist/esbuild/2025.games.79b90293deee9126.json",
-    "/static/json/2025.standings.json": "/static/dist/esbuild/2025.standings.7fbaa3d6f089eaf3.json",
     "/static/images/AirForce.svg": "/static/dist/esbuild/AirForce.7bc60230c0b5afc6.svg",
     "/static/images/AlasAnchorage.svg": "/static/dist/esbuild/AlasAnchorage.3da1cdd6b7bfed49.svg",
     "/static/images/AlasFairbanks.svg": "/static/dist/esbuild/AlasFairbanks.3c72fd54f89936e8.svg",
@@ -96,7 +73,25 @@
     "/static/images/WesternMich.svg": "/static/dist/esbuild/WesternMich.76cd39b1d80026d2.svg",
     "/static/images/Wisconsin.svg": "/static/dist/esbuild/Wisconsin.95e290d81bb86f62.svg",
     "/static/images/Yale.svg": "/static/dist/esbuild/Yale.b21f2de9498a490e.svg",
+    "/static/json/2025.conference.json": "/static/dist/esbuild/2025.conference.8db7ab6fd84d50ed.json",
+    "/static/json/2025.games.json": "/static/dist/esbuild/2025.games.79b90293deee9126.json",
+    "/static/json/2025.standings.json": "/static/dist/esbuild/2025.standings.7fbaa3d6f089eaf3.json",
+    "anodized.palette": "/static/dist/esbuild/anodized.palette.N2MTE5BX.css",
+    "base.palette": "/static/dist/esbuild/base.palette.CU2AYW2R.css",
+    "bright.palette": "/static/dist/esbuild/bright.palette.4U3Z2VEM.css",
+    "elegant.palette": "/static/dist/esbuild/elegant.palette.BESGV7HV.css",
+    "mild.palette": "/static/dist/esbuild/mild.palette.ESAXWICN.css",
+    "natural.palette": "/static/dist/esbuild/natural.palette.WGSI542K.css",
+    "rudimentary.palette": "/static/dist/esbuild/rudimentary.palette.FM3GLSBJ.css",
+    "shoelace.palette": "/static/dist/esbuild/shoelace.palette.VIT5FZA2.css",
+    "vogue.palette": "/static/dist/esbuild/vogue.palette.FY32WZXZ.css",
   };
+
+  const myPalette = "{{ user_settings.settings.color_palette }}";
+  if (myPalette.length) {
+    let paletteLink = document.getElementById("palette");
+    paletteLink.href = STATIC_FILE_MAP[myPalette + ".palette"] ?? "";
+  }
 </script>
 
 <link 
@@ -109,12 +104,12 @@
 <script type="module">
   import {
     Theme
-  } from "/static/dist/esbuild/theme.VV6ITG3L.mjs";
+  } from "/static/dist/esbuild/theme.ZJZET7F7.mjs";
   window.THEME = new Theme({{ user_settings.settings|tojson }});
 </script>
 <script src="/static/dist/esbuild/main.2TREV4PV.mjs" type="module" ></script>
 <script src="/static/dist/esbuild/agGrid.YD523LOU.mjs" type="module" ></script>
-<script src="/static/dist/esbuild/nb.4ZNXEYEA.mjs" type="module" ></script>
+<script src="/static/dist/esbuild/nb.Z5YRBOSO.mjs" type="module" ></script>
 
 <script
   src="https://js.sentry-cdn.com/d1913311367ec68822f82f8ced7bc88f.min.js"
