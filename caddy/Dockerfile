@@ -13,6 +13,7 @@ COPY /caddy/caddy_start.sh /caddy/Caddyfile .
 COPY /bracketapp/static/dist  ./static/dist
 COPY /bracketapp/static/images  ./static/images
 COPY /bracketapp/static/json  ./static/json
+COPY /bracketapp/static/manifest.webmanifest  ./static/manifest.webmanifest
 
 RUN chmod a+x caddy_start.sh
 
