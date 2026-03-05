@@ -150,10 +150,10 @@ function scriptTemplate(filename, defer = false) {
   return `<script src="/static/dist/esbuild/${filename}" type="module" ${defer ? "defer" : ""}></script>`;
 }
 function linkTemplate(filename) {
-  return `<link 
-  rel="stylesheet" 
-  href="/static/dist/esbuild/${filename}" 
-  render="blocking" 
+  return `<link
+  rel="stylesheet"
+  href="/static/dist/esbuild/${filename}"
+  render="blocking"
   fetchpriority="high"
 />`;
 }

@@ -17,6 +17,7 @@
     "@tailwindcss/cli": "^4.2.1",
     "ag-grid-community": "^35.1.0",
     "lit": "^3.3.2",
+    "profanity-cleaner": "^0.0.3",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
