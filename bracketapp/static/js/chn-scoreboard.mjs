@@ -68,7 +68,7 @@ export class SHNScoreboard extends NikElement {
    * This is for testing only
    */
   async getJson() {
-    const file = "/static/json/dev/live.otgame.json";
+    const file = "/static/json/dev/live.3-5.json";
     let response = await fetch(file);
     let json = await response.json();
     this.games = json;
@@ -89,13 +89,9 @@ export class SHNScoreboard extends NikElement {
         let isATime = !isNaN(a.gamestatus[0]);
         let isBTime = !isNaN(b.gamestatus[0]);
         if (isATime && !isBTime) {
-          ret = -1;
+          ret = 1;
         } else if (!isATime && isBTime) {
-          ret = 1;
-        } else if (a.gamestatus.includes("in SO")) {
           ret = -1;
-        } else if (b.gamestatus.includes("in SO")) {
-          ret = 1;
         } else {
           ret = a.gamestatus.localeCompare(b.gamestatus);
         }
@@ -204,15 +200,21 @@ export class SHNScoreboard extends NikElement {
       badgeColor = "warning";
     }
 
-    return html`<div>
-      ${this.teamTemplate(g.visname, g.v)} ${this.teamTemplate(g.homename, g.h)}
-      <div>
+    return html`<div class="flex flex-col gap-(--wa-space-2xs)">
+      <div class="flex justify-between">
+        <div class="wa-heading-m">
+          ${g.tournname ? html`${g.tournname}` : null}
+        </div>
         <wa-badge appearance="filled-outlined" variant=${badgeColor}
           >${g.gamestatus.includes("Per.") ? "LIVE - " : ""}
           ${g.gamestatus}</wa-badge
         >
       </div>
-      <div class="wa-body-xs">${g.arenaname} - ${g.location}</div>
+      <div>
+        ${this.teamTemplate(g.visname, g.v)}
+        ${this.teamTemplate(g.homename, g.h)}
+      </div>
+      <div class="wa-caption-xs">${g.arenaname} - ${g.location}</div>
     </div>`;
   }
 
@@ -221,9 +223,10 @@ export class SHNScoreboard extends NikElement {
       return html`<div>No games today</div>`;
     }
 
-    return this.games.map(
-      (g) => html`<wa-card>${this.gameTemplate(g)}</wa-card>`,
-    );
+    return this.games.flatMap((g) => [
+      html`<div>${this.gameTemplate(g)}</div>`,
+      html`<wa-divider class="m-0"></wa-divider>`,
+    ]);
   }
 
   template() {

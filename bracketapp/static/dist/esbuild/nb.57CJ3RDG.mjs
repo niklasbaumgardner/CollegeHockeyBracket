@@ -1760,22 +1760,28 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
     </div>`}bracketsTemplate(){return t`<nb-group-standings-grid
       .brackets=${this.brackets}
       year=${this.year}
-    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);var Oe="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",je=new Set(["login","signup","profile","preferences","password_request","password_reset"]),Le=new Set(["leaderboard","group","bracket"]),Te=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:"#desktop",mobileEl:"#mobile",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a));else{let r=document.createElement("script");r.src=Oe+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("/static/json/dev/live.otgame.json")).json();this.games=r}sortGames(){this.games.sort((e,a)=>{let r=0;if(e.gamestatus.includes("Final")&&a.gamestatus.includes("Final"))r=0;else if(e.gamestatus===a.gamestatus)r=0;else if(e.gamestatus.includes("Final"))r=1;else if(a.gamestatus.includes("Final"))r=-1;else{let s=!isNaN(e.gamestatus[0]),o=!isNaN(a.gamestatus[0]);s&&!o?r=-1:!s&&o?r=1:e.gamestatus.includes("in SO")?r=-1:a.gamestatus.includes("in SO")?r=1:r=e.gamestatus.localeCompare(a.gamestatus)}return r})}shouldShowOnPage(){let a=new URL(location.href).pathname.split("/").at(1);return!CURRENT_USER?.id||je.has(a)?-1:Le.has(a)?1:0}async init(){this.button=document.getElementById("scoreboard-button");let e=this.shouldShowOnPage();if(e===-1){this.button.remove(),this.remove();return}let a=(localStorage.getItem("scoreboardState")??"open")==="open"&&e===1;if(await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}else this.style.removeProperty("width");this.sortGames(),this.requestUpdate(),this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!a&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
+    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",ve);var Oe="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",je=new Set(["login","signup","profile","preferences","password_request","password_reset"]),Le=new Set(["leaderboard","group","bracket"]),Te=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:"#desktop",mobileEl:"#mobile",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a));else{let r=document.createElement("script");r.src=Oe+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("/static/json/dev/live.3-5.json")).json();this.games=r}sortGames(){this.games.sort((e,a)=>{let r=0;if(e.gamestatus.includes("Final")&&a.gamestatus.includes("Final"))r=0;else if(e.gamestatus===a.gamestatus)r=0;else if(e.gamestatus.includes("Final"))r=1;else if(a.gamestatus.includes("Final"))r=-1;else{let s=!isNaN(e.gamestatus[0]),o=!isNaN(a.gamestatus[0]);s&&!o?r=1:!s&&o?r=-1:r=e.gamestatus.localeCompare(a.gamestatus)}return r})}shouldShowOnPage(){let a=new URL(location.href).pathname.split("/").at(1);return!CURRENT_USER?.id||je.has(a)?-1:Le.has(a)?1:0}async init(){this.button=document.getElementById("scoreboard-button");let e=this.shouldShowOnPage();if(e===-1){this.button.remove(),this.remove();return}let a=(localStorage.getItem("scoreboardState")??"open")==="open"&&e===1;if(await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}else this.style.removeProperty("width");this.sortGames(),this.requestUpdate(),this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!a&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
       <div class="flex">
         <div class="wa-body-s min-w-[4ch]">${a.npi_rank?`(${a.npi_rank})`:""}</div>
         ${e}
       </div>
       <div">${a.score}</div>
-    </div>`}gameTemplate(e){let a="danger";return e.gamestatus.startsWith("Final")?a="neutral":isNaN(e.gamestatus[0])||(a="warning"),t`<div>
-      ${this.teamTemplate(e.visname,e.v)} ${this.teamTemplate(e.homename,e.h)}
-      <div>
+    </div>`}gameTemplate(e){let a="danger";return e.gamestatus.startsWith("Final")?a="neutral":isNaN(e.gamestatus[0])||(a="warning"),t`<div class="flex flex-col gap-(--wa-space-2xs)">
+      <div class="flex justify-between">
+        <div class="wa-heading-m">
+          ${e.tournname?t`${e.tournname}`:null}
+        </div>
         <wa-badge appearance="filled-outlined" variant=${a}
           >${e.gamestatus.includes("Per.")?"LIVE - ":""}
           ${e.gamestatus}</wa-badge
         >
       </div>
-      <div class="wa-body-xs">${e.arenaname} - ${e.location}</div>
-    </div>`}gamesTemplate(){return this.games?.length?this.games.map(e=>t`<wa-card>${this.gameTemplate(e)}</wa-card>`):t`<div>No games today</div>`}template(){return t`<div class="wa-stack p-(--wa-space-m)">
+      <div>
+        ${this.teamTemplate(e.visname,e.v)}
+        ${this.teamTemplate(e.homename,e.h)}
+      </div>
+      <div class="wa-caption-xs">${e.arenaname} - ${e.location}</div>
+    </div>`}gamesTemplate(){return this.games?.length?this.games.flatMap(e=>[t`<div>${this.gameTemplate(e)}</div>`,t`<wa-divider class="m-0"></wa-divider>`]):t`<div>No games today</div>`}template(){return t`<div class="wa-stack p-(--wa-space-m)">
       <div>
         <div class="wa-desktop-only">
           <div
@@ -1861,4 +1867,4 @@ import{d as t,h as x,j as ye,k as f}from"./chunk-XGX4NMMB.mjs";import{a as _e,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Te);
-//# sourceMappingURL=nb.Z5YRBOSO.mjs.map
+//# sourceMappingURL=nb.57CJ3RDG.mjs.map
