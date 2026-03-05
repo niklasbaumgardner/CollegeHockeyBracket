@@ -1,6 +1,7 @@
 import { html } from "lit";
 import "./nb-delete-group.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
+import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 
 export class EditGroup extends BaseDialog {
   inputEvent = true;
@@ -14,6 +15,7 @@ export class EditGroup extends BaseDialog {
     ...BaseDialog.queries,
     form: "#edit-group-form",
     saveButton: "#save-button",
+    nameInput: "#name",
   };
 
   async firstUpdated() {
@@ -29,6 +31,13 @@ export class EditGroup extends BaseDialog {
 
   async handleInput() {
     await this.updateComplete;
+
+    this.nameInput.value = profanityCleaner.clean(this.nameInput.value, {
+      keepFirstAndLastChar: true,
+      replacePartialWords: true,
+    });
+    await this.nameInput.updateComplete;
+
     let currentFormData = new FormData(this.form);
     let currentEntriesArr = [...currentFormData.entries()];
 

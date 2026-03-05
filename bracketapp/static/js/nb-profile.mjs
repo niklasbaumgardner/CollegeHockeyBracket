@@ -1,5 +1,6 @@
 import { html } from "lit";
 import { SignupCard } from "./nb-signup.mjs";
+import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 
 export class ProfileCard extends SignupCard {
   static properties = {
@@ -17,6 +18,16 @@ export class ProfileCard extends SignupCard {
   }
 
   async handleUsernameInput() {
+    this.usernameInput.value = profanityCleaner.clean(
+      this.usernameInput.value,
+      {
+        keepFirstAndLastChar: true,
+        replacePartialWords: true,
+      },
+    );
+
+    await this.usernameInput.updateComplete;
+
     if (this.usernameInput.value === this.username) {
       this.usernameInput.helpText = "";
       this.usernameValid = false;

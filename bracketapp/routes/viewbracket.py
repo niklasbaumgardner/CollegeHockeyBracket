@@ -47,6 +47,7 @@ def view_bracket(sqid):
         name=bracket.name,
         year=bracket.year,
         my_bracket=my_bracket,
+        og_title=bracket.name,
     )
 
 
@@ -67,4 +68,5 @@ def view_cbracket(year):
         correct=correct.to_dict(),
         default=default.to_dict(),
         year=correct.year,
+        og_title=f"{correct.year} Final Bracket",
     )

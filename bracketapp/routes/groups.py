@@ -31,7 +31,11 @@ def view_group(sqid):
         flash("Sorry. This group doesn't exist")
         return redirect(url_for("leaderboard_bp.index"))
 
-    return render_template("view_group.html", group=group)
+    return render_template(
+        "view_group.html",
+        group=group,
+        og_title=group["name"],
+    )
 
 
 @groups_bp.get("/api/group/<string:sqid>")

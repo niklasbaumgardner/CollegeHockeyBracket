@@ -1,15 +1,5 @@
 {% extends "base.html" %} {% block admin %}active{% endblock admin %} {% block
-head %}
-
-<title>Admin</title>
-<script>
-  const UPDATE_ALL_POINTS_URL = "{{ url_for('admin_bp.update_points') }}";
-  const CORRECT_BRACKET_PAGE = "{{ url_for('admin_bp.update_correct') }}";
-  const DEFAULT_BRACKET_PAGE = "{{ url_for('admin_bp.update_default') }}";
-  const FLUSH_CACHE_URL = "{{ url_for('admin_bp.flush_cache') }}";
-</script>
-
-{% endblock head %} {% block content %}
+head %} {% endblock head %} {% block content %}
 
 <wa-card class="large-card">
   <h2>NPI Probability Matrix</h2>

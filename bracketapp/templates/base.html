@@ -12,7 +12,10 @@
       name="description"
       content="The road to the Frozen Four starts here. Create your bracket and compete live in the NB Bracket Challenge."
     />
-    <meta property="og:title" content="{{ og_title }}" />
+    <meta
+      property="og:title"
+      content="{{ og_title or 'NB Brakcet Challenge' }}"
+    />
     <meta
       property="og:description"
       content="The road to the Frozen Four starts here. Create your bracket and compete live in the NB Bracket Challenge."
@@ -32,7 +35,6 @@
       rel="icon"
       href="{% block icon %}/static/images/logo.svg{% endblock icon %}"
     />
-    <title>NB Bracket Challenge</title>
 
     <script>
         // URL for updating user settings
@@ -72,6 +74,8 @@
     </script>
 
     {% block head %}{% endblock head %}
+
+    <title>{{ og_title or "NB Bracket Challenge" }}</title>
   </head>
 
   <style>

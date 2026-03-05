@@ -1,7 +1,8 @@
-import { html, nothing } from "lit";
+import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-edit-matchup.mjs";
 import { BracketUtils } from "./BracketUtils.mjs";
+import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
 
 export class EditBracket extends NikElement {
   matchupTagName = "nb-edit-matchup";
@@ -22,6 +23,7 @@ export class EditBracket extends NikElement {
     saveButtonEl: "#save-button",
     winnerGoals: "#winner_goals",
     loserGoals: "#loser_goals",
+    nameInput: "#name-input",
   };
 
   get teams() {
@@ -417,6 +419,11 @@ export class EditBracket extends NikElement {
   async handleInput() {
     await this.updateComplete;
     this.maybeToggleSaveButton();
+
+    this.nameInput.value = profanityCleaner.clean(this.nameInput.value, {
+      keepFirstAndLastChar: true,
+      replacePartialWords: true,
+    });
   }
 
   handleSubmit() {
@@ -533,6 +540,7 @@ export class EditBracket extends NikElement {
         <div class="wa-stack">
           <h2>${this.bracket?.year} Bracket Challenge</h2>
           <wa-input
+            id="name-input"
             name="name"
             maxlength="60"
             label="Bracket name"

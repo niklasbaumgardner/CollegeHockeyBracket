@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block standings %}active{% endblock standings %} {%
 block head %}
 
-<title>{{ group.name }}</title>
+<title>{{ og_title }}</title>
 
 <script>
   const MY_BRACKETS_URL = "{{ url_for('mybrackets_bp.my_brackets') }}";

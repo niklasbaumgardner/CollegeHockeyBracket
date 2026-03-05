@@ -72,6 +72,7 @@ export class StandingsGrid extends BaseGrid {
     for (let bracket of this.brackets) {
       bracket.safeName = profanityCleaner.clean(bracket.name, {
         keepFirstAndLastChar: true,
+        replacePartialWords: true,
       });
     }
   }
