@@ -1,0 +1,24 @@
+name: Post-Deployment Actions
+on:
+  deployment_status:
+    states: [success]
+
+jobs:
+  post-deploy:
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+    steps:
+      - name: Purge collegehockeybracket.com cache
+        if: github.event.deployment.environment == 'production'
+        run: |
+          curl https://api.cloudflare.com/client/v4/zones/${{ secrets.COLLEGEHOCKEYBRACKET_TOKEN }}/purge_cache \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -d '{"purge_everything": true}'
+      - name: Purge bracket.niklasb.com cache
+        if: github.event.deployment.environment == 'production'
+        run: |
+          curl https://api.cloudflare.com/client/v4/zones/${{ secrets.NIKLASB_TOKEN }}/purge_cache \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -d '{"purge_everything": true}'
