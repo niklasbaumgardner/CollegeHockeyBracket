@@ -61,15 +61,18 @@ export class Standings extends NikElement {
   }
 
   messageTemplate() {
-    if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
-      return html`<nb-countdown></nb-countdown>`;
-    } else if (this.numWinners > 0) {
+    //     if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
+    // return html`<nb-countdown></nb-countdown>`;
+    //     } else
+    if (this.numWinners > 0) {
       return this.winnersTemplate();
-    } // TODO: Do we really need below options?
-    else if (this.brackets.length && this.year === CURRENT_YEAR) {
-      return "View the current standings below.";
     }
-    return "View the final standings below.";
+    return html`<nb-countdown></nb-countdown>`;
+    // TODO: Do we really need below options?
+    // else if (this.brackets.length && this.year === CURRENT_YEAR) {
+    //   return "View the current standings below.";
+    // }
+    // return "View the final standings below.";
   }
 
   bracketsTemplate() {

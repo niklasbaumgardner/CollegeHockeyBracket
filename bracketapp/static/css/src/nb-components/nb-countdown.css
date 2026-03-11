@@ -1,17 +1,49 @@
 nb-countdown {
-  > wa-card {
-    background-color: light-dark(
-      var(--wa-color-red-90),
-      var(--wa-color-red-10)
+  --default-card-bg-color: light-dark(
+    var(--wa-color-red-90),
+    var(--wa-color-red-10)
+  );
+  --default-card-border-color: light-dark(
+    var(--wa-color-red-90),
+    var(--wa-color-red-10)
+  );
+
+  --nested-card-bg-color: light-dark(
+    var(--wa-color-red-70),
+    var(--wa-color-red-30)
+  );
+  --nested-card-border-color: light-dark(
+    var(--wa-color-red-70),
+    var(--wa-color-red-30)
+  );
+
+  &[type="timeToOpen"] {
+    --default-card-bg-color: light-dark(
+      var(--wa-color-blue-90),
+      var(--wa-color-blue-10)
     );
-    border-color: light-dark(var(--wa-color-red-90), var(--wa-color-red-10));
+    --default-card-border-color: light-dark(
+      var(--wa-color-blue-90),
+      var(--wa-color-blue-10)
+    );
+
+    --nested-card-bg-color: light-dark(
+      var(--wa-color-blue-70),
+      var(--wa-color-blue-30)
+    );
+    --nested-card-border-color: light-dark(
+      var(--wa-color-blue-70),
+      var(--wa-color-blue-30)
+    );
+  }
+
+  > wa-card {
+    background-color: var(--default-card-bg-color);
+    border-color: var(--default-card-border-color);
 
     wa-card {
-      background-color: light-dark(
-        var(--wa-color-red-70),
-        var(--wa-color-red-30)
-      );
-      border-color: light-dark(var(--wa-color-red-70), var(--wa-color-red-30));
+      background-color: var(--nested-card-bg-color);
+      border-color: var(--nested-card-border-color);
       border-radius: var(--wa-border-radius-l);
 
       &::part(body) {

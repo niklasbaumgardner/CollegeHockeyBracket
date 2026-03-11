@@ -48,6 +48,7 @@
           "{{ url_for('auth_bp.password_request') }}";
         const USERNAME_UNIQUE_URL = "{{ url_for('auth_bp.username_unique') }}";
         const EMAIL_UNIQUE_URL = "{{ url_for('auth_bp.email_unique') }}";
+        const PROFILE_URL = "{{ url_for('profile_bp.profile') }}";
 
         {% if current_user.is_authenticated %}
           const CURRENT_USER = {{ current_user.to_dict()|tojson }};

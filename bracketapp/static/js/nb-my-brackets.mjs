@@ -98,6 +98,17 @@ export class MyBrackets extends Standings {
 
     let { brackets, groups, year, years } = data;
 
+    if (
+      !CAN_EDIT_BRACKET &&
+      !brackets.length &&
+      !groups.length &&
+      !years.includes(year)
+    ) {
+      year = Math.max(...years);
+      data = await this.requestContentForYear(year);
+      ({ brackets, groups, year, years } = data);
+    }
+
     this.brackets = brackets;
     this.groups = groups;
     this.year = year;
@@ -220,7 +231,7 @@ export class MyBrackets extends Standings {
 
   messageTemplate() {
     let content = null;
-    if (true || this.canEditThisYearsBrackets) {
+    if (this.canEditThisYearsBrackets) {
       content = html`<nb-countdown></nb-countdown>`;
     }
     if (this.year !== CURRENT_YEAR) {

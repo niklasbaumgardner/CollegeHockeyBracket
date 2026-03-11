@@ -195,7 +195,7 @@ export class StandingsGrid extends BaseGrid {
 
   render() {
     if (!this.brackets.length) {
-      return html`<div class="flex justify-center">No brackets yet</div>`;
+      return null;
     }
 
     return html`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`;

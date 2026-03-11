@@ -481,3 +481,11 @@ class GroupBracket(BaseModel, SqidSerializerMixin):
 
     def delete_url(self):
         return url_for("deletebracket_bp.delete_group_bracket", sqid=self.sqid_id())
+
+
+# class EmailUpdates(BaseModel):
+#     __tablename__ = "email_updates"
+#     __table_args__ = (UniqueConstraint("user_id", "year"),)
+
+#     user_id: Mapped[user_fk]
+#     year: Mapped[int]
