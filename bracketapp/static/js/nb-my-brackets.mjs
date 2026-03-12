@@ -225,8 +225,10 @@ export class MyBrackets extends Standings {
 
   previewYearMessage() {
     return html`<wa-callout variant="brand"
-      >You are viewing brackets from a previous year.</wa-callout
-    >`;
+      ><div class="wa-cluster">
+        You are viewing brackets from a previous year.
+        <nb-countdown size="small"></nb-countdown></div
+    ></wa-callout>`;
   }
 
   messageTemplate() {

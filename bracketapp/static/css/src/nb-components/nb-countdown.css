@@ -40,14 +40,47 @@ nb-countdown {
   > wa-card {
     background-color: var(--default-card-bg-color);
     border-color: var(--default-card-border-color);
+  }
 
-    wa-card {
-      background-color: var(--nested-card-bg-color);
-      border-color: var(--nested-card-border-color);
-      border-radius: var(--wa-border-radius-l);
+  .time-card {
+    background-color: var(--nested-card-bg-color);
+    border-color: var(--nested-card-border-color);
+    border-radius: var(--wa-border-radius-l);
 
+    &::part(body) {
+      padding: var(--wa-space-s);
+    }
+
+    > div {
+      gap: var(--wa-space-xs);
+    }
+
+    span {
+      font-size: var(--wa-font-size-s);
+    }
+
+    .time-value {
+      font-size: var(--wa-font-size-xl);
+      font-weight: var(--wa-font-weight-bold);
+    }
+  }
+
+  &[size="small"] {
+    .time-card {
       &::part(body) {
-        padding: var(--wa-space-s);
+        padding: var(--wa-space-2xs);
+      }
+
+      > div {
+        gap: 0;
+      }
+
+      span {
+        font-size: var(--wa-font-size-2xs);
+      }
+
+      .time-value {
+        font-size: var(--wa-font-size-m);
       }
     }
   }

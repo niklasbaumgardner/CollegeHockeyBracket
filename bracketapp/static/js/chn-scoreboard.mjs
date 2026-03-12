@@ -276,7 +276,7 @@ export class SHNScoreboard extends NikElement {
         >
         |
         <a href="https://www.collegehockeynews.com/ratings/" target="_blank"
-          >Pairwise</a
+          >NPI</a
         >
       </div>
     </div>`;

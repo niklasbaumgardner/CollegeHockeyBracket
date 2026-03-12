@@ -1,10 +1,7 @@
 {% extends "base.html" %} {% block standings %}active{% endblock standings %} {%
 block head %}
 
-<title>
-  {% if year == CURRENT_YEAR %}Leaderboard{% else %}History {{ year }}{% endif
-  %}
-</title>
+<title>{% if year %}History {{ year }}{% else %}Leaderboard{% endif %}</title>
 
 <script>
   const LEADERBOARD_CONTENT_URL = "{{ content_url }}";

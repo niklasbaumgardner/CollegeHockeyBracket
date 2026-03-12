@@ -2,17 +2,20 @@ import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-email-updates.mjs";
 
-const BRACKET_CLOSE = new Date("2025-03-27T18:00:00.000Z");
+const BRACKET_CLOSE = new Date("2026-03-26T18:00:00.000Z");
 const BRACKET_OPEN = new Date("2026-03-23T00:00:00.000Z");
 
-// TODO: 2026 guess is
-// const BRACKET_CLOSE = new Date("2025-03-26T18:00:00.000Z");
+// Times for testing
+// const BRACKET_CLOSE = Date.now() + 5000;
+// const BRACKET_OPEN = Date.now() + 5000;
 
 export class Countdown extends NikElement {
-  static properties = { type: { type: String, reflect: true } };
+  static properties = {
+    type: { type: String, reflect: true },
+    size: { type: String },
+  };
 
-  get timeToClose() {
-    const ms = BRACKET_CLOSE - Date.now();
+  extractFromMs(ms) {
     let seconds = ms / 1000;
     let newDate = new Date(ms);
 
@@ -20,113 +23,115 @@ export class Countdown extends NikElement {
     let hours = newDate.toISOString().substring(11, 13);
     let mins = newDate.toISOString().substring(14, 16);
     let secs = newDate.toISOString().substring(17, 19);
+
     return { days, hours, mins, secs };
+  }
+
+  get timeToClose() {
+    const ms = BRACKET_CLOSE - Date.now();
+    return this.extractFromMs(ms);
   }
 
   get timeToOpen() {
     const ms = BRACKET_OPEN - Date.now();
-    let seconds = ms / 1000;
-    let newDate = new Date(ms);
-
-    let days = Math.floor(seconds / (3600 * 24));
-    let hours = newDate.toISOString().substring(11, 13);
-    let mins = newDate.toISOString().substring(14, 16);
-    let secs = newDate.toISOString().substring(17, 19);
-    return { days, hours, mins, secs };
+    return this.extractFromMs(ms);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (!CAN_EDIT_BRACKET && BRACKET_OPEN - Date.now() > 0) {
-      this.type = "timeToOpen";
-    } else if (CAN_EDIT_BRACKET && BRACKET_CLOSE - Date.now() < 0) {
-      this.type = "timeToClose";
+    const ttc = BRACKET_CLOSE - Date.now();
+    if (!CAN_EDIT_BRACKET && ttc < 0) {
+      this.remove();
     }
+  }
 
-    if (this.maybeDestroy()) {
+  startInterval() {
+    if (this.intervalID) {
       return;
     }
 
     this.intervalID = setInterval(() => {
-      this.maybeRequestUpdate();
+      this.intervalHandler();
     }, 1000);
   }
 
-  maybeRequestUpdate() {
-    if (this.maybeDestroy()) {
-      return;
+  intervalHandler() {
+    const tto = BRACKET_OPEN - Date.now();
+    if (!CAN_EDIT_BRACKET && tto < 0) {
+      setTimeout(() => location.reload(), 10000);
+      this.stopInterval();
     }
 
     this.requestUpdate();
   }
 
-  destroy() {
+  stopInterval() {
     clearInterval(this.intervalID);
-    this.remove();
   }
 
-  maybeDestroy() {
+  messageTemplate() {
     const tto = BRACKET_OPEN - Date.now();
-    if (!CAN_EDIT_BRACKET && tto > 0) {
-      return false;
-    }
-
     const ttc = BRACKET_CLOSE - Date.now();
-    if (!CAN_EDIT_BRACKET || ttc < 0) {
-      this.destroy();
-      return true;
-    }
+    const oneHourMs = 3600000;
 
-    return false;
+    if (!CAN_EDIT_BRACKET && tto > 0) {
+      this.type = "timeToOpen";
+      this.startInterval();
+      return html`${CURRENT_YEAR} brackets will be available on
+        <wa-format-date
+          date=${BRACKET_OPEN}
+          month="long"
+          day="numeric"
+        ></wa-format-date>`;
+    } else if (!CAN_EDIT_BRACKET && tto < 0 && tto > -oneHourMs) {
+      this.type = "timeToOpen";
+      this.stopInterval();
+      return "Brackets will be available shortly. Check back soon.";
+    } else if (CAN_EDIT_BRACKET && ttc > 0) {
+      this.type = "timeToClose";
+      this.startInterval();
+      return html`Brackets will close on
+        <wa-format-date
+          date=${BRACKET_CLOSE}
+          month="long"
+          day="numeric"
+        ></wa-format-date>
+        at
+        <wa-format-date
+          date=${BRACKET_CLOSE}
+          hour="numeric"
+          minute="numeric"
+        ></wa-format-date>`;
+    } else if (CAN_EDIT_BRACKET && ttc < 0) {
+      this.type = "timeToClose";
+      setTimeout(() => location.reload(), 10000);
+      this.stopInterval();
+      return "Let the madness begin!";
+    }
+    // I think that's it?
   }
 
   timeCardTemplate(value, unit) {
-    return html`<wa-card class="default-bg default-border"
-      ><div class="wa-stack items-center gap-(--wa-space-xs)">
-        <span class="wa-heading-xl">${value}</span>
+    return html`<wa-card class="default-bg default-border time-card"
+      ><div class="wa-stack items-center">
+        <span class="time-value">${value}</span>
         <span class="uppercase">${unit + (value == 1 ? "" : "s")}</span>
       </div></wa-card
     >`;
   }
 
-  countdownTemplate() {
-    let { days, hours, mins, secs } = this.timeToClose;
-    return html`<div class="wa-cluster">
-      ${[
-        [days, "day"],
-        [hours, "hour"],
-        [mins, "minute"],
-        [secs, "second"],
-      ].map((arr) => this.timeCardTemplate(...arr))}
-    </div>`;
-  }
+  timerTemplate() {
+    let { days, hours, mins, secs } =
+      this.type === "timeToOpen" ? this.timeToOpen : this.timeToClose;
 
-  timeToCloseTemplate() {
-    return html`<wa-card class="default-bg default-border"
-      ><div class="wa-stack items-center">
-        <h4>
-          Brackets will close on
-          <wa-format-date
-            date=${BRACKET_CLOSE}
-            month="long"
-            day="numeric"
-          ></wa-format-date>
-          at
-          <wa-format-date
-            date=${BRACKET_CLOSE}
-            hour="numeric"
-            minute="numeric"
-          ></wa-format-date>
-        </h4>
-        ${this.countdownTemplate()}
-      </div></wa-card
-    >`;
-  }
+    if (days < 0) {
+      return null;
+    }
 
-  countupTemplate() {
-    let { days, hours, mins, secs } = this.timeToOpen;
-    return html`<div class="wa-cluster">
+    return html`<div
+      class="wa-cluster ${this.size === "small" ? "gap-(--wa-space-xs)" : ""}"
+    >
       ${[
         [days, "day"],
         [hours, "hour"],
@@ -146,29 +151,7 @@ export class Countdown extends NikElement {
     this.emailUpdatesEl.show();
   }
 
-  timeToOpenTemplate() {
-    const tto = BRACKET_OPEN - Date.now();
-    if (tto < 0) {
-      return html`<wa-card class="default-bg default-border"
-        ><div class="wa-stack items-center">
-          <h4>Brackets will be available shortly. Check back soon.</h4>
-        </div></wa-card
-      >`;
-    }
-    return html`<wa-card class="default-bg default-border"
-      ><div class="wa-stack items-center">
-        <h4>
-          Brackets will be available on
-          <wa-format-date
-            date=${BRACKET_OPEN}
-            month="long"
-            day="numeric"
-          ></wa-format-date>
-        </h4>
-        ${this.countupTemplate()}
-      </div></wa-card
-    >`;
-
+  subscribeButtonTemplate() {
     // html`<wa-button
     //   appearance="plain"
     //   variant="brand"
@@ -178,11 +161,18 @@ export class Countdown extends NikElement {
   }
 
   render() {
-    if (this.type === "timeToClose") {
-      return this.timeToCloseTemplate();
-    } else if (this.type === "timeToOpen") {
-      return this.timeToOpenTemplate();
+    if (this.size === "small") {
+      return html`<div class="wa-cluster">
+        <div>${this.messageTemplate()}</div>
+        ${this.timerTemplate()}
+      </div>`;
     }
+    return html`<wa-card class="default-bg default-border"
+      ><div class="wa-stack items-center">
+        <h4>${this.messageTemplate()}</h4>
+        ${this.timerTemplate()}
+      </div></wa-card
+    >`;
   }
 }
 
