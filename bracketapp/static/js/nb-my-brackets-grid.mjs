@@ -75,7 +75,7 @@ export class MyBracketsGrid extends StandingsGrid {
   }
 
   updateData(brackets, groups, year) {
-    this.dataGrid.destroy();
+    this.dataGrid?.destroy();
 
     this.brackets = brackets;
     this.groups = groups;

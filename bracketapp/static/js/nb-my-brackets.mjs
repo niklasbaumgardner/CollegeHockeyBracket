@@ -32,9 +32,7 @@ export class MyBrackets extends Standings {
   }
 
   get canCreateBracket() {
-    return (
-      CAN_EDIT_BRACKET && this.year === CURRENT_YEAR && this.brackets.length > 5
-    );
+    return this.canEditThisYearsBrackets && this.brackets.length < 5;
   }
 
   get canEditThisYearsBrackets() {

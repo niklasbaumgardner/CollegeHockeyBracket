@@ -2,7 +2,12 @@ from flask_login import current_user
 
 from bracketapp import cache
 from bracketapp.globals import YEAR
-from bracketapp.queries import bracket_queries, group_queries, user_queries
+from bracketapp.queries import (
+    bracket_queries,
+    correct_bracket_queries,
+    group_queries,
+    user_queries,
+)
 from bracketapp.utils.constants import (
     ARCHIVE_YEARS_CACHE_KEY,
     LEADERBOARD_CACHE_KEY,
@@ -12,6 +17,7 @@ from bracketapp.utils.constants import (
     default_bracket_cache_key,
     group_cache_key,
     my_bracket_count_cahce_key,
+    my_bracket_years_cache_key,
     my_brackets_cache_key,
     user_cache_key,
     user_settings_cache_key,
@@ -189,3 +195,22 @@ def update_user_settings():
 
 def archive():
     cache.delete(ARCHIVE_YEARS_CACHE_KEY)
+
+
+def flush_main_caches():
+    user_ids = user_queries.get_all_user_ids()
+    years = correct_bracket_queries.get_all_bracket_years()
+    my_brackets_keys_list = []
+    for u_id in user_ids:
+        my_brackets_keys_list.append(my_brackets_cache_key(u_id))
+        for year in years:
+            my_brackets_keys_list.append(my_brackets_cache_key(u_id, year))
+
+    cache_keys = [
+        LEADERBOARD_CACHE_KEY,
+        *my_brackets_keys_list,
+        *[my_bracket_count_cahce_key(u_id) for u_id in user_ids],
+        *[my_bracket_years_cache_key(u_id) for u_id in user_ids],
+    ]
+
+    cache.delete_many(cache_keys)

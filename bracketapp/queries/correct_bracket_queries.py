@@ -36,7 +36,16 @@ def create_correct_bracket():
 def get_all_completed_correct_brackets():
     stmt = (
         select(CorrectBracket)
-        .where(CorrectBracket.winner_id != None)
+        .where(CorrectBracket.winner_id.is_not(None))
+        .order_by(CorrectBracket.year.desc())
+    )
+    return db.session.scalars(stmt).unique().all()
+
+
+def get_all_bracket_years():
+    stmt = (
+        select(CorrectBracket.year)
+        .where(CorrectBracket.winner_id.is_not(None))
         .order_by(CorrectBracket.year.desc())
     )
     return db.session.scalars(stmt).unique().all()

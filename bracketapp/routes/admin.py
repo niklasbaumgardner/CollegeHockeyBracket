@@ -101,11 +101,21 @@ def go_live():
     return "", 503
 
 
-@admin_bp.get("/flush_cache")
+@admin_bp.get("/flush_entire_cache")
 @login_required
-def flush_cache():
+def flush_entire_cache():
     if not current_user.is_admin():
         return redirect(url_for("leaderboard_bp.index"))
 
     cache.flush_all()
+    return redirect(url_for("admin_bp.admin"))
+
+
+@admin_bp.get("/flush_main_caches")
+@login_required
+def flush_main_caches():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
+
+    cache_invalidator.flush_main_caches()
     return redirect(url_for("admin_bp.admin"))
