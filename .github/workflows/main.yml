@@ -21,4 +21,4 @@ jobs:
           curl https://api.cloudflare.com/client/v4/zones/${{ secrets.NIKLASB_TOKEN }}/purge_cache \
             -H 'Content-Type: application/json' \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -d '{"purge_everything": true}'
+            -d '{"hosts": ["bracket.niklasb.com", "hockey.niklasb.com"]}'
