@@ -63,6 +63,20 @@ nb-countdown {
       font-size: var(--wa-font-size-xl);
       font-weight: var(--wa-font-weight-bold);
     }
+
+    @media (max-width: 1024px) {
+      &::part(body) {
+        padding: var(--wa-space-2xs);
+      }
+
+      span {
+        font-size: var(--wa-font-size-xs);
+      }
+
+      .time-value {
+        font-size: var(--wa-font-size-l);
+      }
+    }
   }
 
   &[size="small"] {
