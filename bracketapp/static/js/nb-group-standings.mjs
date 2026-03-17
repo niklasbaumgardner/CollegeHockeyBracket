@@ -76,7 +76,7 @@ export class GroupStandings extends Standings {
 
   memeberTemplate() {
     if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
-      return html`<nb-countdown></nb-countdown>
+      return html`${super.messageTemplate()}
         <div class="wa-cluster">
           <wa-button
             class="grow"
@@ -93,8 +93,7 @@ export class GroupStandings extends Standings {
           >
         </div>`;
     } else if (this.canEditGroupBracket) {
-      return html`<nb-countdown></nb-countdown
-        ><wa-button
+      return html`${super.messageTemplate()}<wa-button
           variant="brand"
           appearance="outlined"
           href=${MY_BRACKETS_URL + "#group_" + this.group.id}
@@ -143,8 +142,8 @@ export class GroupStandings extends Standings {
         >${passwordTemplate}
       </div>
       ${this.group.year !== CURRENT_YEAR
-        ? html`<wa-alert open>
-            You are viewing a group from ${this.group.year}</wa-alert
+        ? html`<wa-callout open>
+            You are viewing a group from ${this.group.year}</wa-callout
           >`
         : null}`;
   }
@@ -152,9 +151,9 @@ export class GroupStandings extends Standings {
   messageTemplate() {
     let template = this.groupInfoTemplate();
     if (this.isMember) {
-      return html`${template}${this.memeberTemplate()}${super.messageTemplate()}`;
+      return html`${template}${this.memeberTemplate()}`;
     } else {
-      return html`${template}${this.nonMemberTemplate()}${super.messageTemplate()}`;
+      return html`${template}${this.nonMemberTemplate()}`;
     }
   }
 

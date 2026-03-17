@@ -349,3 +349,31 @@ wa-icon[name="x-circle"] {
     opacity: 0.75;
   }
 }
+
+.bracket-card-container {
+  display: grid;
+  grid-template-areas:
+    "image name"
+    "image stats";
+
+  img {
+    grid-area: image;
+  }
+
+  h3 {
+    grid-area: name;
+  }
+
+  div {
+    grid-area: stats;
+  }
+}
+
+@media (max-width: 467px) {
+  .bracket-card-container {
+    grid-template-areas:
+      "image name"
+      "image name"
+      "stats stats";
+  }
+}

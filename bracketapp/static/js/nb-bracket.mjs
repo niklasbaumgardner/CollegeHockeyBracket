@@ -294,6 +294,16 @@ class Bracket extends NikElement {
     ></nb-group-bracket-details>`;
   }
 
+  calloutTemplate() {
+    if (this.bracket && this.bracket.year !== CURRENT_YEAR) {
+      return html`<wa-callout
+        >You are viewing a bracket from ${this.bracket.year}</wa-callout
+      >`;
+    }
+
+    return null;
+  }
+
   topCardStats() {
     if (this.type === "correct") {
       let loser_team;
@@ -313,63 +323,97 @@ class Bracket extends NikElement {
       </div> `;
     }
 
+    return html`<div class="wa-stack">
+      ${this.calloutTemplate()}
+      <div class="bracket-card-container">
+        ${this.getImageElement(this.bracket?.winner_team, true)}
+        <h3>${this.bracket.name}</h3>
+        <div class="flex justify-evenly">
+          <div>
+            <p class="bracket-details-content">${this.bracket?.rank ?? "--"}</p>
+            <p class="bracket-details-label">Rank</p>
+          </div>
+          <div><wa-divider orientation="vertical"></wa-divider></div>
+          <div>
+            <p class="bracket-details-content">${this.bracket?.points}</p>
+            <p class="bracket-details-label">Points</p>
+          </div>
+          <div><wa-divider orientation="vertical"></wa-divider></div>
+          <div>
+            <p class="bracket-details-content">${this.bracket?.max_points}</p>
+            <p class="bracket-details-label">Max points</p>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
     // TODO: this can still be better on mobile
     return html`<div class="wa-stack">
+      ${this.calloutTemplate()}
       <div class="wa-cluster">
         ${this.getImageElement(this.bracket?.winner_team, true)}
         <div class="wa-stack">
-          <h2>${this.bracket.name}</h2>
-          <div class="flex justify-evenly">
-            <div>
-              <p class="bracket-details-content">
-                ${this.bracket?.rank ?? "--"}
-              </p>
-              <p class="bracket-details-label">Rank</p>
+          <h3>${this.bracket.name}</h3>
+          <div class="flex justify-evenly flex-wrap">
+            <div class="flex justify-evenly">
+              <div>
+                <p class="bracket-details-content">
+                  ${this.bracket?.rank ?? "--"}
+                </p>
+                <p class="bracket-details-label">Rank</p>
+              </div>
+              <div><wa-divider orientation="vertical"></wa-divider></div>
+              <div>
+                <p class="bracket-details-content">${this.bracket?.points}</p>
+                <p class="bracket-details-label">Points</p>
+              </div>
+              <div><wa-divider orientation="vertical"></wa-divider></div>
+              <div>
+                <p class="bracket-details-content">
+                  ${this.bracket?.max_points}
+                </p>
+                <p class="bracket-details-label">Max points</p>
+              </div>
             </div>
-            <div><wa-divider orientation="vertical"></wa-divider></div>
-            <div>
-              <p class="bracket-details-content">${this.bracket?.points}</p>
-              <p class="bracket-details-label">Points</p>
+            <div class="wa-desktop-only hidden">
+              <wa-divider orientation="vertical"></wa-divider>
             </div>
-            <div><wa-divider orientation="vertical"></wa-divider></div>
-            <div>
-              <p class="bracket-details-content">${this.bracket?.max_points}</p>
-              <p class="bracket-details-label">Max points</p>
-            </div>
-          </div>
-          <div class="flex justify-evenly">
-            <div>
-              <p class="bracket-details-content">
-                ${this.bracket?.round_one_points ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Round 1</p>
-            </div>
-            <div>
-              <wa-divider class="m-0" orientation="vertical"></wa-divider>
-            </div>
-            <div>
-              <p class="bracket-details-content">
-                ${this.bracket?.round_two_points ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Round 2</p>
-            </div>
-            <div>
-              <wa-divider class="m-0" orientation="vertical"></wa-divider>
-            </div>
-            <div>
-              <p class="bracket-details-content">
-                ${this.bracket?.round_three_points ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Frozen Four</p>
-            </div>
-            <div>
-              <wa-divider class="m-0" orientation="vertical"></wa-divider>
-            </div>
-            <div>
-              <p class="bracket-details-content">
-                ${this.bracket?.round_four_points ?? "--"} / 80
-              </p>
-              <p class="bracket-details-label">Championship</p>
+            <div
+              class="flex justify-evenly text-(length:--wa-font-size-smaller) hidden"
+            >
+              <div>
+                <p class="bracket-details-content">
+                  ${this.bracket?.round_one_points ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Round 1</p>
+              </div>
+              <div>
+                <wa-divider class="m-0" orientation="vertical"></wa-divider>
+              </div>
+              <div>
+                <p class="bracket-details-content">
+                  ${this.bracket?.round_two_points ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Round 2</p>
+              </div>
+              <div>
+                <wa-divider class="m-0" orientation="vertical"></wa-divider>
+              </div>
+              <div>
+                <p class="bracket-details-content">
+                  ${this.bracket?.round_three_points ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Frozen Four</p>
+              </div>
+              <div>
+                <wa-divider class="m-0" orientation="vertical"></wa-divider>
+              </div>
+              <div>
+                <p class="bracket-details-content">
+                  ${this.bracket?.round_four_points ?? "--"} / 80
+                </p>
+                <p class="bracket-details-label">Championship</p>
+              </div>
             </div>
           </div>
         </div>

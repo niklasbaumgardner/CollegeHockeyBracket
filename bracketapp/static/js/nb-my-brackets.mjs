@@ -107,6 +107,12 @@ export class MyBrackets extends Standings {
       ({ brackets, groups, year, years } = data);
     }
 
+    for (let b of brackets) {
+      b.group_brackets?.sort((a, b) =>
+        a.group.name.localeCompare(b.group.name),
+      );
+    }
+
     this.brackets = brackets;
     this.groups = groups;
     this.year = year;

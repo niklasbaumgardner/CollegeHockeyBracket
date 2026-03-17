@@ -667,6 +667,9 @@
   .text-\(length\:--wa-font-size-s\) {
     font-size: var(--wa-font-size-s);
   }
+  .text-\(length\:--wa-font-size-smaller\) {
+    font-size: var(--wa-font-size-smaller);
+  }
   .text-\(length\:--wa-font-size-xs\) {
     font-size: var(--wa-font-size-xs);
   }
