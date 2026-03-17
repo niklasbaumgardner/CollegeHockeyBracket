@@ -8,6 +8,7 @@
 
 <script>
   const STATIC_FILE_MAP = {
+    "/static/images/_logo.svg": "/static/dist/esbuild/_logo.bfdd2941c442f4ce.svg",
     "/static/images/AirForce.svg": "/static/dist/esbuild/AirForce.7bc60230c0b5afc6.svg",
     "/static/images/AlasAnchorage.svg": "/static/dist/esbuild/AlasAnchorage.3da1cdd6b7bfed49.svg",
     "/static/images/AlasFairbanks.svg": "/static/dist/esbuild/AlasFairbanks.3c72fd54f89936e8.svg",
@@ -33,7 +34,8 @@
     "/static/images/HolyCross.svg": "/static/dist/esbuild/HolyCross.77bbb16c6db0de97.svg",
     "/static/images/LakeSuperiorSt.svg": "/static/dist/esbuild/LakeSuperiorSt.6f4d041126e5823a.svg",
     "/static/images/Lindenwood.svg": "/static/dist/esbuild/Lindenwood.cc5cfc8d3344ba4f.svg",
-    "/static/images/logo.svg": "/static/dist/esbuild/logo.bfdd2941c442f4ce.svg",
+    "/static/images/logo-big.svg": "/static/dist/esbuild/logo-big.b32ef4b23f6ed260.svg",
+    "/static/images/logo.svg": "/static/dist/esbuild/logo.f610abe753cf1428.svg",
     "/static/images/LongIsland.svg": "/static/dist/esbuild/LongIsland.6cd1378da01e7a33.svg",
     "/static/images/Maine.svg": "/static/dist/esbuild/Maine.98cd760521771b13.svg",
     "/static/images/Massachusetts.svg": "/static/dist/esbuild/Massachusetts.071125facc19fe84.svg",
@@ -92,6 +94,8 @@
     let paletteLink = document.getElementById("palette");
     paletteLink.href = STATIC_FILE_MAP[myPalette + ".palette"] ?? "";
   }
+  const iconEl = document.getElementById("icon");
+  iconEl.href = STATIC_FILE_MAP["/static/images/logo.svg"]; 
 </script>
 
 <link

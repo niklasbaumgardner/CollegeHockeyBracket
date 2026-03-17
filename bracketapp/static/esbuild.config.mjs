@@ -220,6 +220,8 @@ ${staticFiles
     let paletteLink = document.getElementById("palette");
     paletteLink.href = STATIC_FILE_MAP[myPalette + ".palette"] ?? "";
   }
+  const iconEl = document.getElementById("icon");
+  iconEl.href = STATIC_FILE_MAP["/static/images/logo.svg"];
 </script>`;
 
   const themeImportScript = `<script type="module">
