@@ -2,8 +2,8 @@ import { html } from "lit";
 import { NikElement } from "./nik-element.mjs";
 import "./nb-email-updates.mjs";
 
+const BRACKET_OPEN = new Date("2026-03-22T20:00:00.000Z");
 const BRACKET_CLOSE = new Date("2026-03-26T18:00:00.000Z");
-const BRACKET_OPEN = new Date("2026-03-23T00:00:00.000Z");
 
 // Times for testing
 // const BRACKET_CLOSE = Date.now() + 5000;

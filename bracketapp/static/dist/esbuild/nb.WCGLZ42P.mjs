@@ -123,7 +123,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         class="grow"
         variant="brand"
         >Subscribe</wa-button
-      >`}};customElements.define("nb-email-updates",U);var v=new Date("2026-03-26T18:00:00.000Z"),$=new Date("2026-03-23T00:00:00.000Z"),O=class extends n{static properties={type:{type:String,reflect:!0},size:{type:String}};extractFromMs(e){let a=e/1e3,r=new Date(e),s=Math.floor(a/(3600*24)),o=r.toISOString().substring(11,13),l=r.toISOString().substring(14,16),m=r.toISOString().substring(17,19);return{days:s,hours:o,mins:l,secs:m}}get timeToClose(){let e=v-Date.now();return this.extractFromMs(e)}get timeToOpen(){let e=$-Date.now();return this.extractFromMs(e)}connectedCallback(){super.connectedCallback();let e=v-Date.now();!CAN_EDIT_BRACKET&&e<0&&this.remove()}startInterval(){this.intervalID||(this.intervalID=setInterval(()=>{this.intervalHandler()},1e3))}intervalHandler(){let e=$-Date.now();!CAN_EDIT_BRACKET&&e<0&&(setTimeout(()=>location.reload(),1e4),this.stopInterval()),this.requestUpdate()}stopInterval(){clearInterval(this.intervalID)}messageTemplate(){let e=$-Date.now(),a=v-Date.now(),r=36e5;if(!CAN_EDIT_BRACKET&&e>0)return this.type="timeToOpen",this.startInterval(),t`${CURRENT_YEAR} brackets will be available on
+      >`}};customElements.define("nb-email-updates",U);var $=new Date("2026-03-22T20:00:00.000Z"),v=new Date("2026-03-26T18:00:00.000Z"),O=class extends n{static properties={type:{type:String,reflect:!0},size:{type:String}};extractFromMs(e){let a=e/1e3,r=new Date(e),s=Math.floor(a/(3600*24)),o=r.toISOString().substring(11,13),l=r.toISOString().substring(14,16),m=r.toISOString().substring(17,19);return{days:s,hours:o,mins:l,secs:m}}get timeToClose(){let e=v-Date.now();return this.extractFromMs(e)}get timeToOpen(){let e=$-Date.now();return this.extractFromMs(e)}connectedCallback(){super.connectedCallback();let e=v-Date.now();!CAN_EDIT_BRACKET&&e<0&&this.remove()}startInterval(){this.intervalID||(this.intervalID=setInterval(()=>{this.intervalHandler()},1e3))}intervalHandler(){let e=$-Date.now();!CAN_EDIT_BRACKET&&e<0&&(setTimeout(()=>location.reload(),1e4),this.stopInterval()),this.requestUpdate()}stopInterval(){clearInterval(this.intervalID)}messageTemplate(){let e=$-Date.now(),a=v-Date.now(),r=36e5;if(!CAN_EDIT_BRACKET&&e>0)return this.type="timeToOpen",this.startInterval(),t`${CURRENT_YEAR} brackets will be available on
         <wa-format-date
           date=${$}
           month="long"
@@ -1855,4 +1855,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.AZLRXCE5.mjs.map
+//# sourceMappingURL=nb.WCGLZ42P.mjs.map
