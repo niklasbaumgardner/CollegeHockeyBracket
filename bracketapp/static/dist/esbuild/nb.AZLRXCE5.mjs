@@ -913,9 +913,13 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
             ></wa-icon>
             <div class="flex flex-col group-name">
               <span class="underline">${this.group.name}</span>
-              <span class="group-size"
-                >Group size: ${this.group.member_count}</span
-              >
+              <div class="wa-cluster group-size">
+                <span>Group size: ${this.group.member_count}</span>
+                <span
+                  >Group type:
+                  ${this.group.is_private?"Private":"Public"}</span
+                >
+              </div>
             </div>
           </a>
           ${this.buttonsTemplate()}
@@ -1851,4 +1855,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.O3J7DALZ.mjs.map
+//# sourceMappingURL=nb.AZLRXCE5.mjs.map

@@ -5,7 +5,7 @@ from typing import Annotated, Any, Optional
 
 from flask import url_for
 from flask_login import UserMixin
-from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer
 from sqlalchemy import BigInteger, ForeignKey, Identity, UniqueConstraint, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -419,6 +419,19 @@ class Group(BaseModel, SqidSerializerMixin):
     def brackets(self, brackets):
         self.__brackets__ = brackets
 
+    def get_join_key(self):
+        s = URLSafeSerializer(os.environ.get("SECRET_KEY"))
+        return s.dumps(self.password)
+
+    @staticmethod
+    def verify_join_key(token):
+        s = URLSafeSerializer(os.environ.get("SECRET_KEY"))
+        try:
+            password = s.loads(token)
+        except:
+            return None
+        return password
+
     def url(self):
         return url_for("groups_bp.view_group", sqid=self.sqid_id())
 
@@ -442,7 +455,7 @@ class Group(BaseModel, SqidSerializerMixin):
             return url_for(
                 "groups_bp.join_group",
                 sqid=self.sqid_id(),
-                password=self.password,
+                join_key=self.get_join_key(),
                 _external=external,
                 _scheme=scheme,
             )

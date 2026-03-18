@@ -159,9 +159,14 @@ def join_group(sqid):
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     if group.is_private:
-        password_get = request.args.get("password")
+        join_key = request.args.get("join_key")
         password_post = request.form.get("password")
-        password = password_get or password_post
+
+        if join_key:
+            password = group.verify_join_key(join_key)
+        elif password_post:
+            password = password_post
+
         if password != group.password:
             flash("Incorrect password. Please try again.", "danger")
             # Go pass to viewing private group password page
