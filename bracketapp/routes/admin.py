@@ -133,6 +133,7 @@ def test_redis():
         "local_can_edit": [],
         "local_year": [],
     }
+
     for i in range(100):
         v, t = g.r_CAN_EDIT_BRACKET
         times["redis_can_edit"].append(t)
