@@ -16,5 +16,4 @@ dependencies = [
     "redis>=7.3.0",
     "sentry-sdk>=2.54.0",
     "sqids>=0.5.2",
-    "valkey>=6.1.1",
 ]

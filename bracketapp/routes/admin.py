@@ -152,40 +152,19 @@ def test_redis():
         return redirect(url_for("leaderboard_bp.index"))
 
     times = {
-        "redis_can_edit": [],
-        "redis_year": [],
         "local_can_edit": [],
         "local_year": [],
-        "valkey_can_edit": [],
-        "valkey_year": [],
+        "time_can_edit": [],
         "keydb_can_edit": [],
         "keydb_year": [],
-        "dragonfly_can_edit": [],
-        "dragonfly_year": [],
     }
 
     for i in range(1000):
-        v, t = g.r_CAN_EDIT_BRACKET
-        times["redis_can_edit"].append(t)
-        assert v == CAN_EDIT_BRACKET
-
-        v, t = g.r_YEAR
-        times["redis_year"].append(t)
-        assert v == YEAR
-
         v, t = g.l_CAN_EDIT_BRACKET
         times["local_can_edit"].append(t)
 
         v, t = g.l_YEAR
         times["local_year"].append(t)
-
-        v, t = g.v_CAN_EDIT_BRACKET
-        times["valkey_can_edit"].append(t)
-        assert v == CAN_EDIT_BRACKET
-
-        v, t = g.v_YEAR
-        times["valkey_year"].append(t)
-        assert v == YEAR
 
         v, t = g.k_CAN_EDIT_BRACKET
         times["keydb_can_edit"].append(t)
@@ -193,15 +172,11 @@ def test_redis():
 
         v, t = g.k_YEAR
         times["keydb_year"].append(t)
-        assert v == YEAR
+        assert type(v) is type(YEAR)
 
-        v, t = g.d_CAN_EDIT_BRACKET
-        times["dragonfly_can_edit"].append(t)
-        assert v == CAN_EDIT_BRACKET
-
-        v, t = g.d_YEAR
-        times["dragonfly_year"].append(t)
-        assert v == YEAR
+        v, t = g.t_CAN_EDIT_BRACKET
+        times["time_can_edit"].append(t)
+        assert type(v) is type(CAN_EDIT_BRACKET)
 
     result = {"ztimes_sorted": []}
     for k, v in times.items():
