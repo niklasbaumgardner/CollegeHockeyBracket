@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.globals import BRACKET_CLOSE_TIME, CAN_EDIT_BRACKET, g
+from bracketapp.globals import BRACKET_CLOSE_TIME, CAN_EDIT_BRACKET, YEAR, g
 from bracketapp.queries import (
     correct_bracket_queries,
     default_bracket_queries,
@@ -132,14 +132,22 @@ def test_redis():
         "redis_year": [],
         "local_can_edit": [],
         "local_year": [],
+        "valkey_can_edit": [],
+        "valkey_year": [],
+        "keydb_can_edit": [],
+        "keydb_year": [],
+        "dragonfly_can_edit": [],
+        "dragonfly_year": [],
     }
 
-    for i in range(100):
+    for i in range(1000):
         v, t = g.r_CAN_EDIT_BRACKET
         times["redis_can_edit"].append(t)
+        assert v == CAN_EDIT_BRACKET
 
         v, t = g.r_YEAR
         times["redis_year"].append(t)
+        assert v == YEAR
 
         v, t = g.l_CAN_EDIT_BRACKET
         times["local_can_edit"].append(t)
@@ -147,10 +155,37 @@ def test_redis():
         v, t = g.l_YEAR
         times["local_year"].append(t)
 
-    result = {}
+        v, t = g.v_CAN_EDIT_BRACKET
+        times["valkey_can_edit"].append(t)
+        assert v == CAN_EDIT_BRACKET
+
+        v, t = g.v_YEAR
+        times["valkey_year"].append(t)
+        assert v == YEAR
+
+        v, t = g.k_CAN_EDIT_BRACKET
+        times["keydb_can_edit"].append(t)
+        assert v == CAN_EDIT_BRACKET
+
+        v, t = g.k_YEAR
+        times["keydb_year"].append(t)
+        assert v == YEAR
+
+        v, t = g.d_CAN_EDIT_BRACKET
+        times["dragonfly_can_edit"].append(t)
+        assert v == CAN_EDIT_BRACKET
+
+        v, t = g.d_YEAR
+        times["dragonfly_year"].append(t)
+        assert v == YEAR
+
+    result = {"ztimes_sorted": []}
     for k, v in times.items():
         avg = sum(v) / len(v)
         print(f"{k}: {avg}")
         result[k] = avg
+        result["ztimes_sorted"].append([k, avg])
+
+    result["ztimes_sorted"].sort(key=lambda x: x[1])
 
     return result

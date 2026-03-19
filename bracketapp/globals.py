@@ -3,6 +3,7 @@ import os
 import time
 
 import redis
+import valkey
 
 BRACKET_CLOSE_TIME = datetime.datetime.strptime(
     "2026-03-26 18:00:00", "%Y-%m-%d %H:%M:%S"
@@ -16,12 +17,49 @@ CAN_EDIT_BRACKET = os.environ.get("CAN_EDIT_BRACKET") == "True"
 
 
 class Global:
-    remote_client = redis.Redis(
+    redis_client = redis.Redis(
         host=os.environ.get("REDIS_HOST"),
         port=os.environ.get("REDIS_PORT"),
         password=os.environ.get("REDIS_PASSWORD"),
         decode_responses=True,  # Optional: automatically decode responses
     )
+
+    valkey_client = client = valkey.Valkey(
+        host=os.environ.get("VALKEY_HOST"),
+        port=os.environ.get("VALKEY_PORT"),
+        password=os.environ.get("VALKEY_PASSWORD"),
+        decode_responses=True,
+    )
+
+    keydb_client = redis.Redis(
+        host=os.environ.get("KEYDB_HOST"),
+        port=os.environ.get("KEYDB_PORT"),
+        password=os.environ.get("KEYDB_PASSWORD"),
+        decode_responses=True,  # Optional: automatically decode responses
+    )
+
+    dragonfly_client = redis.Redis(
+        host=os.environ.get("DRAGONFLY_HOST"),
+        port=os.environ.get("DRAGONFLY_PORT"),
+        password=os.environ.get("DRAGONFLY_PASSWORD"),
+        decode_responses=True,  # Optional: automatically decode responses
+    )
+
+    print(
+        redis_client.ping(),
+        valkey_client.ping(),
+        keydb_client.ping(),
+        dragonfly_client.ping(),
+    )
+
+    # is_can_edit_set = dragonfly_client.get("CAN_EDIT_BRACKET")
+    # is_year_set = dragonfly_client.get("YEAR")
+
+    # if is_can_edit_set is None:
+    #     dragonfly_client.set("CAN_EDIT_BRACKET", "True")
+
+    # if is_year_set is None:
+    #     dragonfly_client.set("YEAR", 2025)
 
     # BRACKET_CLOSE_TIME = datetime.datetime.strptime(
     #     "2026-03-26 18:00:00", "%Y-%m-%d %H:%M:%S"
@@ -54,7 +92,7 @@ class Global:
     @property
     def r_CAN_EDIT_BRACKET(self):
         start_time = time.perf_counter()
-        val = self.remote_client.get("CAN_EDIT_BRACKET") == "True"
+        val = self.redis_client.get("CAN_EDIT_BRACKET") == "True"
         end_time = time.perf_counter()
 
         # print(f"Execution time: {end_time - start_time:.4f} seconds")
@@ -63,7 +101,61 @@ class Global:
     @property
     def r_YEAR(self):
         start_time = time.perf_counter()
-        val = int(self.remote_client.get("YEAR"))
+        val = int(self.redis_client.get("YEAR"))
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def v_CAN_EDIT_BRACKET(self):
+        start_time = time.perf_counter()
+        val = self.valkey_client.get("CAN_EDIT_BRACKET") == "True"
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def v_YEAR(self):
+        start_time = time.perf_counter()
+        val = int(self.valkey_client.get("YEAR"))
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def k_CAN_EDIT_BRACKET(self):
+        start_time = time.perf_counter()
+        val = self.keydb_client.get("CAN_EDIT_BRACKET") == "True"
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def k_YEAR(self):
+        start_time = time.perf_counter()
+        val = int(self.keydb_client.get("YEAR"))
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def d_CAN_EDIT_BRACKET(self):
+        start_time = time.perf_counter()
+        val = self.dragonfly_client.get("CAN_EDIT_BRACKET") == "True"
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def d_YEAR(self):
+        start_time = time.perf_counter()
+        val = int(self.dragonfly_client.get("YEAR"))
         end_time = time.perf_counter()
 
         # print(f"Execution time: {end_time - start_time:.4f} seconds")
