@@ -676,7 +676,11 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
           <a href="${SIGNUP_URL}">Sign Up</a>
         </p>
       </div>
-    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",F);import Oe from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var E=class extends n{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?Ce:Ee}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return xe.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:"var(--wa-color-surface-super-raised)",borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var C=class extends n{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){if(!e)return null;let a=STATIC_FILE_MAP[e.team.icon_path];return t`<img
+    </wa-card>`}render(){return this.waTmeplate()}};customElements.define("nb-login",F);import Oe from"https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";var E=class extends n{get currentColorScheme(){return(document.documentElement.classList.contains("wa-dark")?"dark":"light")==="dark"?Ce:Ee}get gridTheme(){let e=4*window.THEME.rounding,a=window.THEME.theme==="shoelace"?"var(--wa-color-neutral-20)":"var(--wa-color-neutral-10)";return xe.withPart(this.currentColorScheme).withParams({borderRadius:e,wrapperBorderRadius:e,borderWidth:1,headerRowBorder:!0,rowBorder:!0,backgroundColor:"var(--wa-color-surface-super-raised)",borderColor:"light-dark(var(--wa-color-neutral-90), var(--wa-color-neutral-30))",cellTextColor:"var(--wa-color-text-normal)",headerTextColor:"var(--wa-color-text-normal)",fontFamily:"inherit"})}get baseGridOptions(){return{defaultColDef:{resizable:!1},domLayout:"autoHeight",suppressCellFocus:!0,suppressMovableColumns:!0,theme:this.gridTheme}}setupThemeWatcher(){this.mutationObserver=new MutationObserver(()=>{this.dataGrid?.setGridOption("theme",this.gridTheme)}),this.mutationObserver.observe(document.documentElement,{attributes:!0})}render(){return t`<div id="grid" style="--ag-grid-size: 4px;"></div>`}};var C=class extends n{static properties={bracket:{type:Object}};get bracketName(){return this.bracket.safeName??this.bracket.name}getImageElement(e){if(!e)return t`<img
+        class="standings-img"
+        src=${STATIC_FILE_MAP["/static/images/bracketlogoborder.svg"]}
+        alt="NB Bracket Challenge logo"
+      />`;let a=STATIC_FILE_MAP[e.team.icon_path];return t`<img
       class="standings-img"
       src="${a}"
       alt="${e.team.name}"
@@ -690,9 +694,12 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
       >
       ${this.groupsTemplate()}`}nameTemplate(){return t`<span class="standings-bracket-name underline"
         >${this.bracketName}</span
-      ><span class="standings-username">${this.bracket.user.username}</span>`}safeTemplate(){return t`<div class="name-cell">
-      <span class="standings-bracket-name">${this.bracketName}</span
-      ><span class="standings-username">${this.bracket.user.username}</span>
+      ><span class="standings-username">${this.bracket.user.username}</span>`}safeTemplate(){return t`<div class="flex gap-(--wa-space-xs)">
+      ${this.getImageElement()}
+      <div class="name-cell">
+        <span class="standings-bracket-name">${this.bracketName}</span
+        ><span class="standings-username">${this.bracket.user.username}</span>
+      </div>
     </div>`}render(){let e=null;return this.bracket.url&&this.bracket.winner_team?e=this.clickableTemplate():e=this.safeTemplate(),t`<div
       class="wa-stack pt-(--wa-space-2xs) pb-(--wa-space-xs) gap-(--wa-space-xs)"
     >
@@ -1855,4 +1862,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.WCGLZ42P.mjs.map
+//# sourceMappingURL=nb.FDWNXRF7.mjs.map

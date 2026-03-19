@@ -12,7 +12,11 @@ export class BracketColumn extends NikElement {
 
   getImageElement(winner_team) {
     if (!winner_team) {
-      return null;
+      return html`<img
+        class="standings-img"
+        src=${STATIC_FILE_MAP["/static/images/bracketlogoborder.svg"]}
+        alt="NB Bracket Challenge logo"
+      />`;
     }
 
     let iconUrl = STATIC_FILE_MAP[winner_team.team.icon_path];
@@ -48,9 +52,12 @@ export class BracketColumn extends NikElement {
   }
 
   safeTemplate() {
-    return html`<div class="name-cell">
-      <span class="standings-bracket-name">${this.bracketName}</span
-      ><span class="standings-username">${this.bracket.user.username}</span>
+    return html`<div class="flex gap-(--wa-space-xs)">
+      ${this.getImageElement()}
+      <div class="name-cell">
+        <span class="standings-bracket-name">${this.bracketName}</span
+        ><span class="standings-username">${this.bracket.user.username}</span>
+      </div>
     </div>`;
   }
 
