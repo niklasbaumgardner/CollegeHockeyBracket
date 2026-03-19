@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.globals import CAN_EDIT_BRACKET
+from bracketapp.globals import g
 from bracketapp.queries import group_queries
 from bracketapp.utils import bracket_utils, cache_invalidator
 from bracketapp.utils.constants import group_cache_key, group_membership_cache_key
@@ -24,7 +24,7 @@ def view_group(sqid):
 
     # TODO: fix viewability
     # ESPN allows viewing any group (public and private) while logged in and not logged in
-    # maybe it's not allowed while CAN_EDIT_BRACKET?
+    # maybe it's not allowed while g.CAN_EDIT_BRACKET?
     # maybe just leave this?
 
     if not group:
@@ -55,8 +55,8 @@ def api_view_group(sqid):
             group_id=group_id, year=group.year
         )
 
-        brackets_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in brackets]
-        winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
+        brackets_dict = [b.to_dict(safe_only=g.CAN_EDIT_BRACKET) for b in brackets]
+        winners_dict = [b.to_dict(safe_only=g.CAN_EDIT_BRACKET) for b in winners]
         group_dict = group.to_dict()
 
         group_data = dict(

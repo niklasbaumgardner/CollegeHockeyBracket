@@ -1,7 +1,7 @@
 from flask_login import current_user
 
 from bracketapp import cache
-from bracketapp.globals import YEAR
+from bracketapp.globals import g
 from bracketapp.queries import (
     bracket_queries,
     correct_bracket_queries,
@@ -71,12 +71,15 @@ def delete_bracket(bracket_id):
 
 def correct_bracket():
     cache.delete_many(
-        [correct_bracket_cache_key(YEAR, True), correct_bracket_cache_key(YEAR, False)]
+        [
+            correct_bracket_cache_key(g.YEAR, True),
+            correct_bracket_cache_key(g.YEAR, False),
+        ]
     )
 
 
 def default_bracket():
-    cache.delete(default_bracket_cache_key(YEAR))
+    cache.delete(default_bracket_cache_key(g.YEAR))
 
 
 def new_group():

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.queries import bracket_queries, group_queries
 from bracketapp.utils.constants import my_bracket_years_cache_key, my_brackets_cache_key
 
@@ -33,18 +33,18 @@ def api_my_brackets(year=None):
         groups = group_queries.get_all_groups_for_user(year)
         # TODO: Make this better?
         # I unfortunately don't have a better way to do this.
-        for g in groups:
+        for group in groups:
             group_brackets = []
-            for b in g.brackets:
+            for b in group.brackets:
                 group_brackets.append(b.to_dict(safe_only=False))
-            g.brackets = group_brackets
+            group.brackets = group_brackets
 
-        groups = [g.to_dict() for g in groups]
+        groups = [group.to_dict() for group in groups]
 
         brackets_data = dict(
             brackets=brackets,
             groups=groups,
-            year=year or YEAR,
+            year=year or g.YEAR,
         )
     else:
         cache_hits += 1
@@ -58,10 +58,10 @@ def api_my_brackets(year=None):
     if cache_hits == 2:
         return dict(**brackets_data, years=years)
 
-    if CAN_EDIT_BRACKET and year is None:
+    if g.CAN_EDIT_BRACKET and year is None:
         # Add the current year to years
-        if years[0] != YEAR:
-            years = [YEAR] + years
+        if years[0] != g.YEAR:
+            years = [g.YEAR] + years
     cache.set_many({my_b_cache_key: brackets_data, years_cache_key: years})
 
     return dict(**brackets_data, years=years)

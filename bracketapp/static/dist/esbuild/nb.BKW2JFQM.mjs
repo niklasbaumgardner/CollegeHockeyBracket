@@ -28,6 +28,36 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         <wa-button appearance="outlined" href=${FLUSH_MAIN_CACHES_URL}
           >Flush the main caches</wa-button
         >
+
+        <wa-divider></wa-divider>
+        <form
+          id="can_edit_bracket"
+          method="POST"
+          action=${UPDATE_CAN_EDIT_BRACKET_URL}
+        ></form>
+        <div class="wa-cluster">
+          <wa-input
+            form="can_edit_bracket"
+            label="CAN_EDIT_BRACKET"
+            value=${CAN_EDIT_BRACKET}
+            name="CAN_EDIT_BRACKET"
+          ></wa-input>
+          <wa-button form="can_edit_bracket" type="submit"
+            >Update CAN_EDIT_BRACKET</wa-button
+          >
+        </div>
+
+        <wa-divider></wa-divider>
+        <form id="year" method="POST" action=${UPDATE_YEAR_URL}></form>
+        <div class="wa-cluster">
+          <wa-input
+            form="year"
+            label="YEAR"
+            value=${CURRENT_YEAR}
+            name="YEAR"
+          ></wa-input>
+          <wa-button form="year" type="submit">Update YEAR</wa-button>
+        </div>
       </div>
     </wa-card>`}};customElements.define("nb-admin",N);var I=class extends n{static properties={archivedYears:{type:Array}};imgTemplate(e){if(!e)return null;let a=STATIC_FILE_MAP[e.team.icon_path];return t`<img
       class="w-[75px] h-[75px]"
@@ -704,7 +734,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
       class="wa-stack pt-(--wa-space-2xs) pb-(--wa-space-xs) gap-(--wa-space-xs)"
     >
       ${e}
-    </div>`}};customElements.define("nb-bracket-column",C);var Y=class extends C{groupsTemplate(){return this.bracket.group_brackets.length?t`<nb-group-bracket-details
+    </div>`}};customElements.define("nb-bracket-column",C);var W=class extends C{groupsTemplate(){return this.bracket.group_brackets.length?t`<nb-group-bracket-details
       size="small"
       .groupBrackets=${this.bracket.group_brackets}
     ></nb-group-bracket-details>`:null}nameTemplate(){return t`<span
@@ -712,7 +742,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
       >${this.bracketName}</span
     >`}render(){return this.bracket.id===-1?t`<wa-button href="${CREATE_BRACKET_LINK}" variant="brand"
         >Create new bracket</wa-button
-      >`:super.render()}};customElements.define("nb-my-bracket-column",Y);var p=class extends E{#e="agGridPaginationPageSize";static properties={brackets:{type:Object},year:{type:Number},headerName:{type:String}};constructor(){super(),this.headerName="Brackets",this.useSafeName=!0}static queries={standingsGridEl:"#standingsGrid"};get storedPageSize(){let e=parseInt(window.localStorage.getItem(this.#e));return isNaN(e)?25:e}get defaultBracketColumnWidth(){return 256}get gridOptions(){return{...super.baseGridOptions,rowHeight:50,autoSizeStrategy:{type:"fitGridWidth",columnLimits:[{colId:"rank",minWidth:65,maxWidth:65},{colId:"name",minWidth:this.defaultBracketColumnWidth,flex:1},{colId:"actions",minWidth:208},{colId:"points",minWidth:75,maxWidth:75},{colId:"max_points",minWidth:75,maxWidth:75},{colId:"round_one_points",minWidth:57,maxWidth:57},{colId:"round_two_points",minWidth:57,maxWidth:57},{colId:"round_three_points",minWidth:57,maxWidth:57},{colId:"round_four_points",minWidth:57,maxWidth:57}]},defaultColDef:{resizable:!1}}}cleanBracketNames(){for(let e of this.brackets)e.safeName=Oe.clean(e.name,{keepFirstAndLastChar:!0,replacePartialWords:!0})}sortBrackets(){this.brackets=this.brackets.sort((e,a)=>e.name.localeCompare(a.name)),CAN_EDIT_BRACKET&&CURRENT_YEAR===this.year||this.brackets.sort((e,a)=>e.rank==="-"?-1:a.rank==="-"?1:e.rank-a.rank)}firstUpdated(){this.init()}async init(){await this.updateComplete,this.cleanBracketNames(),this.sortBrackets(),this.createDataGrid(),this.setupThemeWatcher()}getImageElement(e){return e?`<img
+      >`:super.render()}};customElements.define("nb-my-bracket-column",W);var p=class extends E{#e="agGridPaginationPageSize";static properties={brackets:{type:Object},year:{type:Number},headerName:{type:String}};constructor(){super(),this.headerName="Brackets",this.useSafeName=!0}static queries={standingsGridEl:"#standingsGrid"};get storedPageSize(){let e=parseInt(window.localStorage.getItem(this.#e));return isNaN(e)?25:e}get defaultBracketColumnWidth(){return 256}get gridOptions(){return{...super.baseGridOptions,rowHeight:50,autoSizeStrategy:{type:"fitGridWidth",columnLimits:[{colId:"rank",minWidth:65,maxWidth:65},{colId:"name",minWidth:this.defaultBracketColumnWidth,flex:1},{colId:"actions",minWidth:208},{colId:"points",minWidth:75,maxWidth:75},{colId:"max_points",minWidth:75,maxWidth:75},{colId:"round_one_points",minWidth:57,maxWidth:57},{colId:"round_two_points",minWidth:57,maxWidth:57},{colId:"round_three_points",minWidth:57,maxWidth:57},{colId:"round_four_points",minWidth:57,maxWidth:57}]},defaultColDef:{resizable:!1}}}cleanBracketNames(){for(let e of this.brackets)e.safeName=Oe.clean(e.name,{keepFirstAndLastChar:!0,replacePartialWords:!0})}sortBrackets(){this.brackets=this.brackets.sort((e,a)=>e.name.localeCompare(a.name)),CAN_EDIT_BRACKET&&CURRENT_YEAR===this.year||this.brackets.sort((e,a)=>e.rank==="-"?-1:a.rank==="-"?1:e.rank-a.rank)}firstUpdated(){this.init()}async init(){await this.updateComplete,this.cleanBracketNames(),this.sortBrackets(),this.createDataGrid(),this.setupThemeWatcher()}getImageElement(e){return e?`<img
       class="standings-img"
       src="${STATIC_FILE_MAP[e.team.icon_path]}"
       alt="${e.team.name}"
@@ -751,7 +781,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         id="delete-button"
         variant="danger"
         >Delete bracket</wa-button
-      >`}};customElements.define("nb-delete-bracket",H);var z=class extends p{sortBrackets(){for(let e of this.brackets)e.rank=e.group_bracket?.group_rank;super.sortBrackets()}};customElements.define("nb-group-standings-grid",z);var J=class extends n{static properties={bracket:{type:Object}};render(){return t`<div class="wa-cluster">
+      >`}};customElements.define("nb-delete-bracket",H);var z=class extends p{sortBrackets(){for(let e of this.brackets)e.rank=e.group_bracket?.group_rank;super.sortBrackets()}};customElements.define("nb-group-standings-grid",z);var K=class extends n{static properties={bracket:{type:Object}};render(){return t`<div class="wa-cluster">
       <img
         class="standings-img"
         src=${STATIC_FILE_MAP[this.bracket.winner_team.team.icon_path]}
@@ -780,11 +810,11 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
           </div>
         </div>
       </div>
-    </div>`}};customElements.define("nb-bracket-card-content",J);var V=class extends n{static properties={bracket:{type:Object}};render(){return t`<wa-card style="--spacing:var(--wa-space-s);"
+    </div>`}};customElements.define("nb-bracket-card-content",K);var J=class extends n{static properties={bracket:{type:Object}};render(){return t`<wa-card style="--spacing:var(--wa-space-s);"
       ><nb-bracket-card-content
         .bracket=${this.bracket}
       ></nb-bracket-card-content
-    ></wa-card>`}};customElements.define("nb-bracket-card",V);var K=class extends n{static properties={group:{type:Object}};render(){return t`<div class="wa-cluster">
+    ></wa-card>`}};customElements.define("nb-bracket-card",J);var V=class extends n{static properties={group:{type:Object}};render(){return t`<div class="wa-cluster">
       <wa-icon
         style="font-size:var(--wa-font-size-2xl);"
         name="trophy"
@@ -804,7 +834,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
           >
         </div>
       </div>
-    </div>`}};customElements.define("nb-group-card-content",K);var Q=class extends n{static properties={group:{type:Object}};render(){return t`<wa-card style="--spacing:var(--wa-space-s);"
+    </div>`}};customElements.define("nb-group-card-content",V);var Q=class extends n{static properties={group:{type:Object}};render(){return t`<wa-card style="--spacing:var(--wa-space-s);"
       ><nb-group-card-content .group=${this.group}></nb-group-card-content
     ></wa-card>`}};customElements.define("nb-group-card",Q);var _=class extends n{static properties={label:{type:String},value:{type:String},name:{type:String},icon:{type:String},form:{type:String}};static queries={input:"input"};iconTemplate(){return this.icon?t`<wa-icon name=${this.icon}></wa-icon>`:null}labelTemplate(){return t`<span>${this.label}</span>`}render(){return t`<wa-card class="nb-radio-item">
       <label class="wa-cluster w-full">
@@ -1755,7 +1785,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
     </div>`}bracketsTemplate(){return t`<nb-group-standings-grid
       .brackets=${this.brackets}
       year=${this.year}
-    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",_e);var qe="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",Fe=new Set(["login","signup","profile","preferences","password_request","password_reset"]),We=new Set(["leaderboard","group","bracket"]),ye=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:"#desktop",mobileEl:"#mobile",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a));else{let r=document.createElement("script");r.src=qe+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("/static/json/dev/live.3-5.json")).json();this.games=r}sortGames(){this.games.sort((e,a)=>{let r=0;if(e.gamestatus.includes("Final")&&a.gamestatus.includes("Final"))r=0;else if(e.gamestatus===a.gamestatus)r=0;else if(e.gamestatus.includes("Final"))r=1;else if(a.gamestatus.includes("Final"))r=-1;else{let s=!isNaN(e.gamestatus[0]),o=!isNaN(a.gamestatus[0]);s&&!o?r=1:!s&&o?r=-1:r=e.gamestatus.localeCompare(a.gamestatus)}return r})}shouldShowOnPage(){let a=new URL(location.href).pathname.split("/").at(1);return!CURRENT_USER?.id||Fe.has(a)?-1:We.has(a)?1:0}async init(){this.button=document.getElementById("scoreboard-button");let e=this.shouldShowOnPage();if(e===-1){this.button.remove(),this.remove();return}let a=(localStorage.getItem("scoreboardState")??"open")==="open"&&e===1;if(await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}else this.style.removeProperty("width");this.sortGames(),this.requestUpdate(),this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!a&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
+    ></nb-group-standings-grid>`}render(){return this.year?t`${super.render()}`:null}};customElements.define("nb-group-standings",_e);var qe="https://www.collegehockeynews.com/external/widgets/ajaxprocess/makeJSONP.php?datafile=liveScoreboardData.json&callback=",Fe=new Set(["login","signup","profile","preferences","password_request","password_reset"]),Ye=new Set(["leaderboard","group","bracket"]),ye=class extends n{static properties={games:{type:Array}};static queries={drawer:"wa-drawer",desktopEl:"#desktop",mobileEl:"#mobile",closeButton:"#close-scoreboard"};connectedCallback(){super.connectedCallback(),this.init()}get isOpen(){return this.checkVisibility()}get isMobile(){return this.mobileEl.checkVisibility()}get isDesktop(){return this.desktopEl.checkVisibility()}async getJsonP(){let e="callback_"+Math.floor(Date.now()/6e4),a=localStorage.getItem("previousCallBack");if(a===e)this.games=JSON.parse(localStorage.getItem(a));else{let r=document.createElement("script");r.src=qe+e,document.head.append(r),this.games=await new Promise(s=>{window[e]=o=>{localStorage.removeItem(a),localStorage.setItem("previousCallBack",e),localStorage.setItem(e,JSON.stringify(o)),s(o),r.remove()}})}}async getJson(){let r=await(await fetch("/static/json/dev/live.3-5.json")).json();this.games=r}sortGames(){this.games.sort((e,a)=>{let r=0;if(e.gamestatus.includes("Final")&&a.gamestatus.includes("Final"))r=0;else if(e.gamestatus===a.gamestatus)r=0;else if(e.gamestatus.includes("Final"))r=1;else if(a.gamestatus.includes("Final"))r=-1;else{let s=!isNaN(e.gamestatus[0]),o=!isNaN(a.gamestatus[0]);s&&!o?r=1:!s&&o?r=-1:r=e.gamestatus.localeCompare(a.gamestatus)}return r})}shouldShowOnPage(){let a=new URL(location.href).pathname.split("/").at(1);return!CURRENT_USER?.id||Fe.has(a)?-1:Ye.has(a)?1:0}async init(){this.button=document.getElementById("scoreboard-button");let e=this.shouldShowOnPage();if(e===-1){this.button.remove(),this.remove();return}let a=(localStorage.getItem("scoreboardState")??"open")==="open"&&e===1;if(await this.getJsonP(),this.games.length===0){this.button.remove(),this.remove();return}else this.style.removeProperty("width");this.sortGames(),this.requestUpdate(),this.button.addEventListener("click",this),this.closeButton.addEventListener("click",this),this.isMobile&&(this.button.hidden=!1),this.isDesktop&&!a&&this.hide()}handleEvent(e){e.type==="click"&&(e.target===this.button?this.isMobile?this.drawer.open=!this.drawer.open:this.show():e.target===this.closeButton&&this.hide())}show(){this.desktopEl.hidden=!1,this.button.hidden=!0,localStorage.setItem("scoreboardState","open")}hide(){this.desktopEl.hidden=!0,this.button.hidden=!1,localStorage.setItem("scoreboardState","closed")}teamTemplate(e,a){return t`<div class="flex justify-between wa-heading-m">
       <div class="flex">
         <div class="wa-body-s min-w-[4ch]">${a.npi_rank?`(${a.npi_rank})`:""}</div>
         ${e}
@@ -1862,4 +1892,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.FDWNXRF7.mjs.map
+//# sourceMappingURL=nb.BKW2JFQM.mjs.map

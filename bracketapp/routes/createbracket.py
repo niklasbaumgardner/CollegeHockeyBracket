@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 
-from bracketapp.globals import CAN_EDIT_BRACKET
+from bracketapp.globals import g
 from bracketapp.queries import bracket_queries, default_bracket_queries, group_queries
 from bracketapp.utils import cache_invalidator
 from bracketapp.utils.Sqids import sqids
@@ -12,7 +12,7 @@ createbracket_bp = Blueprint("createbracket_bp", __name__)
 @createbracket_bp.get("/create_bracket")
 @login_required
 def create_bracket():
-    if not CAN_EDIT_BRACKET:
+    if not g.CAN_EDIT_BRACKET:
         # if we don't have a bracket id and we can't edit, go to viewing my brackets
         flash("Editing is disabled", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
@@ -35,7 +35,7 @@ def create_bracket():
 @createbracket_bp.post("/create_bracket")
 @login_required
 def create_bracket_post():
-    if not CAN_EDIT_BRACKET:
+    if not g.CAN_EDIT_BRACKET:
         # if we can't edit, go to viewing my brackets
         return redirect(url_for("mybrackets_bp.my_brackets"))
 

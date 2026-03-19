@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import joinedload
 
 from bracketapp import cache, db
-from bracketapp.globals import YEAR
+from bracketapp.globals import g
 from bracketapp.models import (
     CorrectBracket,
     CorrectGame,
@@ -13,7 +13,7 @@ from bracketapp.utils.Sqids import sqids
 
 
 def create_correct_bracket():
-    stmt = insert(CorrectBracket).values(year=YEAR)
+    stmt = insert(CorrectBracket).values(year=g.YEAR)
     result = db.session.execute(stmt)
 
     new_correct_bracket_id = result.inserted_primary_key[0]
@@ -51,7 +51,7 @@ def get_all_bracket_years():
     return db.session.scalars(stmt).unique().all()
 
 
-def get_correct_bracket(year=YEAR, include_games=False):
+def get_correct_bracket(year=g.YEAR, include_games=False):
     cache_key = correct_bracket_cache_key(year, include_games)
     if result := cache.get(cache_key):
         return result
@@ -78,7 +78,7 @@ def update_correct_bracket_from_form(form_data):
         .where(
             and_(
                 CorrectBracket.id == correct_bracket.id,
-                CorrectBracket.year == YEAR,
+                CorrectBracket.year == g.YEAR,
             )
         )
         .values(update_dict)

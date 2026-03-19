@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user
 
 from bracketapp import cache
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.utils import bracket_utils
 from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
 
@@ -34,13 +34,13 @@ def api_leaderboard():
     # page to show correct winners on brackets table?
     # I'm pretty sure I meant to make this exactly like the archive page
     standings, winners, correct = bracket_utils.get_bracket_standings()
-    standings_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in standings]
-    winners_dict = [b.to_dict(safe_only=CAN_EDIT_BRACKET) for b in winners]
+    standings_dict = [b.to_dict(safe_only=g.CAN_EDIT_BRACKET) for b in standings]
+    winners_dict = [b.to_dict(safe_only=g.CAN_EDIT_BRACKET) for b in winners]
 
     value = dict(
         standings=standings_dict,
         winners=winners_dict,
-        year=YEAR,
+        year=g.YEAR,
     )
 
     cache.set(LEADERBOARD_CACHE_KEY, value)

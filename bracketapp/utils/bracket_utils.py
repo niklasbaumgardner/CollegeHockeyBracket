@@ -3,7 +3,7 @@ import os.path
 from flask import url_for
 from flask_login import current_user
 
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.queries import bracket_queries, correct_bracket_queries, group_queries
 from bracketapp.utils import cache_invalidator
 
@@ -50,7 +50,7 @@ def get_winner(standings):
 
 
 def get_standings_message(standings, winner=None, force=False):
-    if force or not CAN_EDIT_BRACKET:
+    if force or not g.CAN_EDIT_BRACKET:
         winner = get_winner(standings=standings) if not winner else winner
 
         if winner:
@@ -101,7 +101,7 @@ def get_archive_message(standings):
 
 def get_group_message(brackets, group_id, is_member, is_private):
     message = ""
-    if CAN_EDIT_BRACKET:
+    if g.CAN_EDIT_BRACKET:
         # Pre tournament message
         start_date_time = "Thursday, March 28 at 2:00PM ET"
         create_bracket_message = ""
@@ -173,7 +173,7 @@ def get_winners(standings, correct):
     return winners
 
 
-def get_bracket_standings(year=YEAR):
+def get_bracket_standings(year=g.YEAR):
     brackets = bracket_queries.get_all_brackets(year)
     correct = correct_bracket_queries.get_correct_bracket(year)
 

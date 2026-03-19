@@ -121,6 +121,30 @@ def flush_main_caches():
     return redirect(url_for("admin_bp.admin"))
 
 
+@admin_bp.post("/update_year")
+@login_required
+def update_year():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
+
+    g.YEAR = request.form.get("YEAR")
+    cache_invalidator.flush_main_caches()
+
+    return redirect(url_for("admin_bp.admin"))
+
+
+@admin_bp.post("/update_can_edit_bracket")
+@login_required
+def update_can_edit_bracket():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
+
+    g.CAN_EDIT_BRACKET = request.form.get("CAN_EDIT_BRACKET")
+    cache_invalidator.flush_main_caches()
+
+    return redirect(url_for("admin_bp.admin"))
+
+
 @admin_bp.get("/test_redis")
 @login_required
 def test_redis():

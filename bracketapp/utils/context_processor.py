@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_login import current_user
 
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.queries import bracket_queries, user_settings_queries
 
 context_processor_bp = Blueprint("context_processor_bp", __name__)
@@ -21,6 +21,6 @@ def globals():
         if user_settings
         else {"settings": {"theme": "shoelace"}},
         MY_BRACKET_COUNT=my_bracket_count,
-        CURRENT_YEAR=YEAR,
-        CAN_EDIT_BRACKET=CAN_EDIT_BRACKET,
+        CURRENT_YEAR=g.YEAR,
+        CAN_EDIT_BRACKET=g.CAN_EDIT_BRACKET,
     )

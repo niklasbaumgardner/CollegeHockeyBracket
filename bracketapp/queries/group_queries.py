@@ -17,13 +17,13 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from bracketapp import db
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.models import Bracket, Group, GroupBracket, GroupMember
 
 
 def get_all_groups_for_user(year=None):
     if year is None:
-        year = YEAR
+        year = g.YEAR
 
     stmt = (
         select(Group, Bracket, GroupBracket)
@@ -52,15 +52,15 @@ def get_all_groups_for_user(year=None):
     return_groups = []
     seen_groups = {}
 
-    for index, [g, b, gb] in enumerate(groups):
-        if g.id not in seen_groups:
-            seen_groups[g.id] = [g, index]
+    for index, [group, b, gb] in enumerate(groups):
+        if group.id not in seen_groups:
+            seen_groups[group.id] = [group, index]
 
         if b:
             b_copy = deepcopy(b)
             b_copy.group_bracket = gb
 
-            return_group, _ = seen_groups[g.id]
+            return_group, _ = seen_groups[group.id]
             return_group.brackets.append(b_copy)
 
     for value in seen_groups.values():
@@ -82,12 +82,12 @@ def get_my_group(group_id):
     return db.session.scalars(stmt.limit(1)).first()
 
 
-def get_all_groups(year=YEAR):
+def get_all_groups(year=g.YEAR):
     stmt = select(Group).where(Group.year == year)
     return db.session.scalars(stmt).unique().all()
 
 
-def get_all_group_ids_for_year(year=YEAR):
+def get_all_group_ids_for_year(year=g.YEAR):
     stmt = select(distinct(Group.id)).where(Group.year == year)
     return db.session.scalars(stmt).all()
 
@@ -153,7 +153,7 @@ def search_groups(group_name):
 
     stmt = select(Group).where(
         and_(
-            Group.year == YEAR,
+            Group.year == g.YEAR,
             Group.name.ilike(f"%{group_name}%"),
             Group.locked == False,
         )
@@ -163,7 +163,7 @@ def search_groups(group_name):
 
 def create_group(name, is_private, password):
     stmt = insert(Group).values(
-        year=YEAR,
+        year=g.YEAR,
         name=name,
         is_private=is_private,
         locked=False,
@@ -199,7 +199,7 @@ def update_group(group_id, name=None, is_private=None, password=None, locked=Non
         .values(update_dict)
         .where(
             and_(
-                Group.year == YEAR,
+                Group.year == g.YEAR,
                 Group.id == group_id,
                 Group.creator_id == current_user.id,
             )
@@ -245,7 +245,7 @@ def upsert_group_member(group_id):
         literal(current_user.id).label("user_id"),
     ).where(
         and_(
-            select(1).where(and_(Group.id == group_id, Group.year == YEAR)).exists(),
+            select(1).where(and_(Group.id == group_id, Group.year == g.YEAR)).exists(),
         )
     )
 
@@ -280,12 +280,12 @@ def create_group_bracket(group_id, bracket_id):
                 )
             )
             .exists(),
-            select(1).where(and_(Group.id == group_id, Group.year == YEAR)).exists(),
+            select(1).where(and_(Group.id == group_id, Group.year == g.YEAR)).exists(),
             select(1)
             .where(
                 and_(
                     Bracket.id == bracket_id,
-                    Bracket.year == YEAR,
+                    Bracket.year == g.YEAR,
                     Bracket.user_id == current_user.id,
                 )
             )
@@ -318,7 +318,7 @@ def get_my_group_bracket_for_id(group_bracket_id):
 
 
 def delete_group_bracket(group_bracket_id):
-    if not CAN_EDIT_BRACKET:
+    if not g.CAN_EDIT_BRACKET:
         return
 
     stmt = (
@@ -336,13 +336,13 @@ def delete_group_bracket(group_bracket_id):
                 )
                 .exists(),
                 select(1)
-                .where(and_(Group.id == GroupBracket.group_id, Group.year == YEAR))
+                .where(and_(Group.id == GroupBracket.group_id, Group.year == g.YEAR))
                 .exists(),
                 select(1)
                 .where(
                     and_(
                         Bracket.id == GroupBracket.bracket_id,
-                        Bracket.year == YEAR,
+                        Bracket.year == g.YEAR,
                         Bracket.user_id == current_user.id,
                     )
                 )
@@ -366,14 +366,14 @@ def delete_group_bracket(group_bracket_id):
 
 
 def delete_group(group_id):
-    if not CAN_EDIT_BRACKET:
+    if not g.CAN_EDIT_BRACKET:
         return
 
     stmt = delete(Group).where(
         and_(
             Group.id == group_id,
             Group.creator_id == current_user.id,
-            Group.year == YEAR,
+            Group.year == g.YEAR,
         )
     )
 

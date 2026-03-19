@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import contains_eager, joinedload, noload
 
 from bracketapp import cache, db
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.models import (
     Bracket,
     Game,
@@ -26,7 +26,7 @@ def get_empty_bracket_dict():
     return dict(
         user_id=None,
         name="",
-        year=YEAR,
+        year=g.YEAR,
         games=dict(),
         form_url=url_for("createbracket_bp.create_bracket_post"),
     )
@@ -41,7 +41,7 @@ def create_bracket_from_form(form_data):
     stmt = insert(Bracket).values(
         user_id=current_user.id,
         name=name[:60].strip(),
-        year=YEAR,
+        year=g.YEAR,
         winner_id=sqids.decode_one(game15),
         winner_goals=winner_goals,
         loser_goals=loser_goals,
@@ -82,7 +82,7 @@ def update_bracket_from_form(bracket_id, form_data):
         .where(
             Bracket.id == bracket_id,
             Bracket.user_id == current_user.id,
-            Bracket.year == YEAR,
+            Bracket.year == g.YEAR,
         )
         .values(update_dict)
     )
@@ -122,7 +122,7 @@ def get_my_bracket_for_bracket_id(bracket_id, include_games=False):
         and_(
             Bracket.id == bracket_id,
             Bracket.user_id == current_user.id,
-            Bracket.year == YEAR,
+            Bracket.year == g.YEAR,
         )
     )
     if include_games:
@@ -152,7 +152,7 @@ def get_bracket_for_bracket_id(bracket_id):
 
     bracket = db.session.scalars(stmt.limit(1)).first()
 
-    # if not (bracket.year == YEAR and CAN_EDIT_BRACKET):
+    # if not (bracket.year == g.YEAR and g.CAN_EDIT_BRACKET):
     # Do not cache
     cache.set(cache_key, bracket)
 
@@ -170,7 +170,7 @@ def my_bracket_count():
             return count
 
         stmt = select(func.count(1)).where(
-            and_(Bracket.user_id == current_user.id, Bracket.year == YEAR)
+            and_(Bracket.user_id == current_user.id, Bracket.year == g.YEAR)
         )
         count = db.session.execute(stmt).scalar_one()
 
@@ -182,7 +182,7 @@ def my_bracket_count():
 
 def get_my_brackets(year=None):
     if year is None:
-        year = YEAR
+        year = g.YEAR
 
     stmt = (
         select(Bracket)
@@ -216,7 +216,7 @@ def get_bracket_ids_for_group(group_id):
     return db.session.scalars(stmt).all()
 
 
-def get_bracket_ids_for_year(year=YEAR):
+def get_bracket_ids_for_year(year=g.YEAR):
     stmt = select(distinct(Bracket.id)).where(Bracket.year == year)
 
     return db.session.scalars(stmt).all()
@@ -244,14 +244,14 @@ def get_my_bracket_years():
 
 
 def delete_bracket(bracket_id):
-    if not CAN_EDIT_BRACKET:
+    if not g.CAN_EDIT_BRACKET:
         return
 
     stmt = delete(Bracket).where(
         and_(
             Bracket.id == bracket_id,
             Bracket.user_id == current_user.id,
-            Bracket.year == YEAR,
+            Bracket.year == g.YEAR,
         )
     )
     result = db.session.execute(stmt)
@@ -263,20 +263,20 @@ def delete_bracket(bracket_id):
 def get_all_brackets_joined():
     stmt = (
         select(Bracket)
-        .where(Bracket.year == YEAR)
+        .where(Bracket.year == g.YEAR)
         .options(joinedload(Bracket.group_brackets), joinedload(Bracket.games_list))
     )
 
     return db.session.scalars(stmt).unique().all()
 
 
-def get_all_brackets(year=YEAR):
+def get_all_brackets(year=g.YEAR):
     stmt = select(Bracket).where(Bracket.year == year)
 
     return db.session.scalars(stmt).unique().all()
 
 
-def get_all_group_brackets(year=YEAR):
+def get_all_group_brackets(year=g.YEAR):
     stmt = (
         select(GroupBracket)
         .join(Bracket, GroupBracket.bracket_id == Bracket.id)

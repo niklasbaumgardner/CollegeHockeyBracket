@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user
 
-from bracketapp.globals import CAN_EDIT_BRACKET, YEAR
+from bracketapp.globals import g
 from bracketapp.queries import (
     bracket_queries,
     correct_bracket_queries,
@@ -23,7 +23,7 @@ def view_bracket(sqid):
 
     my_bracket = current_user.is_authenticated and bracket.user_id == current_user.id
 
-    if CAN_EDIT_BRACKET and bracket.year == YEAR:
+    if g.CAN_EDIT_BRACKET and bracket.year == g.YEAR:
         if my_bracket:
             if not force_view:
                 return redirect(url_for("editbracket_bp.edit_bracket", sqid=sqid))
@@ -53,7 +53,7 @@ def view_bracket(sqid):
 
 @viewbracket_bp.get("/finalbracket/<int:year>")
 def view_cbracket(year):
-    if (CAN_EDIT_BRACKET and year == YEAR) and not current_user.is_admin():
+    if (g.CAN_EDIT_BRACKET and year == g.YEAR) and not current_user.is_admin():
         return redirect(url_for("archive_bp.archive"))
 
     correct = correct_bracket_queries.get_correct_bracket(year, include_games=True)

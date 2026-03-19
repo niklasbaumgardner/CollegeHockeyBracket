@@ -8,6 +8,9 @@ head %}
   const DEFAULT_BRACKET_PAGE = "{{ url_for('admin_bp.update_default') }}";
   const FLUSH_ENTIRE_CACHE_URL = "{{ url_for('admin_bp.flush_entire_cache') }}";
   const FLUSH_MAIN_CACHES_URL = "{{ url_for('admin_bp.flush_main_caches') }}";
+  const UPDATE_CAN_EDIT_BRACKET_URL =
+    "{{ url_for('admin_bp.update_can_edit_bracket') }}";
+  const UPDATE_YEAR_URL = "{{ url_for('admin_bp.update_year') }}";
 </script>
 
 {% endblock head %} {% block content %}
