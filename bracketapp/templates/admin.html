@@ -15,6 +15,9 @@ head %}
 
 {% endblock head %} {% block content %}
 
-<nb-admin class="small-card"></nb-admin>
+<nb-admin
+  class="small-card"
+  keydb_contents='{{ keydb_contents|tojson }}'
+></nb-admin>
 
 {% endblock content %}

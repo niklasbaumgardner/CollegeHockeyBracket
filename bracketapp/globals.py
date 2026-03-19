@@ -27,6 +27,10 @@ class Global:
         decode_responses=True,  # Optional: automatically decode responses
     )
 
+    def get_all_contents(self):
+        keys = self.keydb_client.keys("*")
+        return {k: self.keydb_client.get(k) for k in keys}
+
     @property
     def CAN_EDIT_BRACKET(self):
         can_edit = self.keydb_client.get("CAN_EDIT_BRACKET")

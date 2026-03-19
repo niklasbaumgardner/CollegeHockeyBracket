@@ -2,6 +2,8 @@ import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 
 export class Admin extends NikElement {
+  static properties = { keydb_contents: { type: Object } };
+
   render() {
     return html`<wa-card>
       <div class="wa-stack">
@@ -50,6 +52,14 @@ export class Admin extends NikElement {
           ></wa-input>
           <wa-button form="year" type="submit">Update YEAR</wa-button>
         </div>
+
+        <wa-divider></wa-divider>
+        <label>Key DB contents</label>
+        <ul>
+          ${Object.entries(this.keydb_contents).map(
+            ([k, v]) => html`<li><strong>${k}</strong>: ${v}</li>`,
+          )}
+        </ul>
       </div>
     </wa-card>`;
   }

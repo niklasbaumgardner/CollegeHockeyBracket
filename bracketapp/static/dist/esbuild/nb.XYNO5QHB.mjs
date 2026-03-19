@@ -11,7 +11,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
           <wa-button variant="brand" type="submit">Add team</wa-button>
         </div>
       </form></wa-card
-    >`}};customElements.define("nb-add-team",B);var N=class extends n{render(){return t`<wa-card>
+    >`}};customElements.define("nb-add-team",B);var N=class extends n{static properties={keydb_contents:{type:Object}};render(){return t`<wa-card>
       <div class="wa-stack">
         <wa-button variant="brand" href=${UPDATE_ALL_POINTS_URL}
           >Update all points</wa-button
@@ -58,6 +58,12 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
           ></wa-input>
           <wa-button form="year" type="submit">Update YEAR</wa-button>
         </div>
+
+        <wa-divider></wa-divider>
+        <label>Key DB contents</label>
+        <ul>
+          ${Object.entries(this.keydb_contents).map(([e,a])=>t`<li><strong>${e}</strong>: ${a}</li>`)}
+        </ul>
       </div>
     </wa-card>`}};customElements.define("nb-admin",N);var I=class extends n{static properties={archivedYears:{type:Array}};imgTemplate(e){if(!e)return null;let a=STATIC_FILE_MAP[e.team.icon_path];return t`<img
       class="w-[75px] h-[75px]"
@@ -1892,4 +1898,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.BKW2JFQM.mjs.map
+//# sourceMappingURL=nb.XYNO5QHB.mjs.map

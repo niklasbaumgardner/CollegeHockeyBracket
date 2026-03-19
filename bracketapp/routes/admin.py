@@ -21,7 +21,9 @@ def admin():
     if not current_user.is_admin():
         return redirect(url_for("leaderboard_bp.index"))
 
-    return render_template("admin.html")
+    keydb_contents = g.get_all_contents()
+
+    return render_template("admin.html", keydb_contents=keydb_contents)
 
 
 @admin_bp.route("/update_points")
