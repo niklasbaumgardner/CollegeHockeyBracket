@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.globals import BRACKET_CLOSE_TIME, CAN_EDIT_BRACKET
+from bracketapp.globals import BRACKET_CLOSE_TIME, CAN_EDIT_BRACKET, g
 from bracketapp.queries import (
     correct_bracket_queries,
     default_bracket_queries,
@@ -119,3 +119,37 @@ def flush_main_caches():
 
     cache_invalidator.flush_main_caches()
     return redirect(url_for("admin_bp.admin"))
+
+
+@admin_bp.get("/test_redis")
+@login_required
+def test_redis():
+    if not current_user.is_admin():
+        return redirect(url_for("leaderboard_bp.index"))
+
+    times = {
+        "redis_can_edit": [],
+        "redis_year": [],
+        "local_can_edit": [],
+        "local_year": [],
+    }
+    for i in range(100):
+        v, t = g.r_CAN_EDIT_BRACKET
+        times["redis_can_edit"].append(t)
+
+        v, t = g.r_YEAR
+        times["redis_year"].append(t)
+
+        v, t = g.l_CAN_EDIT_BRACKET
+        times["local_can_edit"].append(t)
+
+        v, t = g.l_YEAR
+        times["local_year"].append(t)
+
+    result = {}
+    for k, v in times.items():
+        avg = sum(v) / len(v)
+        print(f"{k}: {avg}")
+        result[k] = avg
+
+    return result

@@ -13,6 +13,7 @@ dependencies = [
     "gunicorn>=25.1.0",
     "psycopg2>=2.9.11",
     "pymemcache>=4.0.0",
+    "redis>=7.3.0",
     "sentry-sdk>=2.54.0",
     "sqids>=0.5.2",
 ]
