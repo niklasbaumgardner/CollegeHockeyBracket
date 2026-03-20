@@ -1,6 +1,6 @@
 import { html } from "lit";
-import { NikElement } from "./nik-element.mjs";
 import { BracketUtils } from "./BracketUtils.mjs";
+import { NikElement } from "./nik-element.mjs";
 
 export class MatchupInfo extends NikElement {
   static properties = {
@@ -96,7 +96,7 @@ export class MatchupInfo extends NikElement {
   }
 
   async requestTopTeamStats() {
-    if (!this.topTeam.team) {
+    if (!this.topTeam?.team) {
       this.topTeamStats = null;
       return;
     }
@@ -111,7 +111,7 @@ export class MatchupInfo extends NikElement {
   }
 
   async requestBottomTeamStats() {
-    if (!this.bottomTeam.team) {
+    if (!this.bottomTeam?.team) {
       this.bottomTeamStats = null;
       return;
     }

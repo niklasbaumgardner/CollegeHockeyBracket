@@ -217,7 +217,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
             class="flex justify-between text-(length:--wa-font-size-2xs)!"
           >
             <small>H2H</small><span>${e.h2h.join("-")}</span>
-          </div>`:null}`}async requestTopTeamStats(){if(!this.topTeam.team){this.topTeamStats=null;return}let e=await d.getStandingsForTeam(this.topTeam.team),a=await d.getHomeAwayNeutralRecord(this.topTeam.team);this.topTeamStats={...e,records:a}}async requestBottomTeamStats(){if(!this.bottomTeam.team){this.bottomTeamStats=null;return}let e=await d.getStandingsForTeam(this.bottomTeam.team),a=await d.getHomeAwayNeutralRecord(this.bottomTeam.team);this.bottomTeamStats={...e,records:a}}topTeamStatsTemplate(){return this.topTeamStats?t`<div class="grow flex flex-col w-1/2 min-w-[7rem]">
+          </div>`:null}`}async requestTopTeamStats(){if(!this.topTeam?.team){this.topTeamStats=null;return}let e=await d.getStandingsForTeam(this.topTeam.team),a=await d.getHomeAwayNeutralRecord(this.topTeam.team);this.topTeamStats={...e,records:a}}async requestBottomTeamStats(){if(!this.bottomTeam?.team){this.bottomTeamStats=null;return}let e=await d.getStandingsForTeam(this.bottomTeam.team),a=await d.getHomeAwayNeutralRecord(this.bottomTeam.team);this.bottomTeamStats={...e,records:a}}topTeamStatsTemplate(){return this.topTeamStats?t`<div class="grow flex flex-col w-1/2 min-w-[7rem]">
       <div>${this.topTeam.team.name}</div>
       <div class="flex flex-col w-full">
         ${this.statsTemplate(this.topTeamStats)}
@@ -1898,4 +1898,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.XYNO5QHB.mjs.map
+//# sourceMappingURL=nb.WN3HUW4F.mjs.map
