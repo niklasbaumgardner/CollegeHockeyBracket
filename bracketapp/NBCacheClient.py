@@ -197,14 +197,14 @@ def create_cache(type, config, simple=False):
         )
 
     elif type == "valkey":
-        if simple:
-            return SimpleValkeyClient(
-                host=config.VALKEY_HOST,
-                port=config.VALKEY_PORT,
-                password=config.VALKEY_PASSWORD,
-            )
-
         return ValkeyClient(
+            host=config.VALKEY_HOST,
+            port=config.VALKEY_PORT,
+            password=config.VALKEY_PASSWORD,
+        )
+
+    elif type == "simple_valkey":
+        return SimpleValkeyClient(
             host=config.VALKEY_HOST,
             port=config.VALKEY_PORT,
             password=config.VALKEY_PASSWORD,

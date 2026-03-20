@@ -54,7 +54,7 @@ export class Admin extends NikElement {
         </div>
 
         <wa-divider></wa-divider>
-        <label>Key DB contents</label>
+        <label>Gloabl State DB Contents</label>
         <ul>
           ${Object.entries(this.keydb_contents).map(
             ([k, v]) => html`<li><strong>${k}</strong>: ${v}</li>`,

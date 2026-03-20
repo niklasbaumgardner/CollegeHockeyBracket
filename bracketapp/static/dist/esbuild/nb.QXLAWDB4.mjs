@@ -60,7 +60,7 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         </div>
 
         <wa-divider></wa-divider>
-        <label>Key DB contents</label>
+        <label>Gloabl State DB Contents</label>
         <ul>
           ${Object.entries(this.keydb_contents).map(([e,a])=>t`<li><strong>${e}</strong>: ${a}</li>`)}
         </ul>
@@ -1898,4 +1898,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.WN3HUW4F.mjs.map
+//# sourceMappingURL=nb.QXLAWDB4.mjs.map

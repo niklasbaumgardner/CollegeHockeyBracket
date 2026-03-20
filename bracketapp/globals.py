@@ -22,21 +22,20 @@ CAN_EDIT_BRACKET = os.environ.get("CAN_EDIT_BRACKET") == "True"
 
 
 class Global:
-    keydb_client = create_cache("keydb", Config)
-    valkey_client = create_cache("valkey", Config, simple=True)
+    # keydb_client = create_cache("keydb", Config)
+    # valkey_client = create_cache("simple_valkey", Config)
+    keydb_client = None
+    valkey_client = None
 
-    keydb_client.set("CAN_EDIT_BRACKET", False)
-    keydb_client.set("YEAR", 2026)
-    valkey_client.set("CAN_EDIT_BRACKET", False)
-    valkey_client.set("YEAR", 2026)
+    client = create_cache("simple_valkey", Config)
 
     def get_all_contents(self):
-        keys = self.keydb_client.keys("*")
-        return {k: self.keydb_client.get(k) for k in keys}
+        keys = self.client.keys("*")
+        return {k: self.client.get(k) for k in keys}
 
     @property
     def CAN_EDIT_BRACKET(self):
-        can_edit = self.keydb_client.get("CAN_EDIT_BRACKET")
+        can_edit = self.client.get("CAN_EDIT_BRACKET")
 
         if can_edit is None:
             return CAN_EDIT_BRACKET
@@ -45,7 +44,7 @@ class Global:
 
     @property
     def YEAR(self):
-        year = self.keydb_client.get("YEAR")
+        year = self.client.get("YEAR")
         if year is None:
             return YEAR
 
@@ -56,14 +55,14 @@ class Global:
         if not current_user.is_admin():
             return
 
-        self.keydb_client.set("CAN_EDIT_BRACKET", can_edit)
+        self.client.set("CAN_EDIT_BRACKET", can_edit)
 
     @YEAR.setter
     def YEAR(self, year):
         if not current_user.is_admin():
             return
 
-        return self.keydb_client.set("YEAR", year)
+        return self.client.set("YEAR", year)
 
     @property
     def t_CAN_EDIT_BRACKET(self):
