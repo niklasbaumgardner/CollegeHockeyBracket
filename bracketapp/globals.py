@@ -30,7 +30,7 @@ class Global:
     client = create_cache("simple_valkey", Config)
 
     def get_all_contents(self):
-        keys = self.client.keys("*")
+        keys = ["CAN_EDIT_BRACKET", "YEAR"]
         return {k: self.client.get(k) for k in keys}
 
     @property
