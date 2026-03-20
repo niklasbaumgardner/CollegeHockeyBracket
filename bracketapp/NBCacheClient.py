@@ -21,6 +21,20 @@ class SimpleValkeyClient(Valkey):
             return None
         return pickle.loads(value)
 
+    def set_many(self, values: Dict[bytes | str, Any]):
+        return super().mset({k: pickle.dumps(v) for k, v in values.items()})
+
+    def get_many(self, keys: Iterable[bytes | str]) -> Dict[bytes | str, Any]:
+        values = super().mget(keys)
+
+        result = {}
+        for i in range(len(keys)):
+            value = values[i]
+            if value is not None:
+                result[keys[i]] = pickle.loads(value)
+
+        return result
+
     def keys(self, name):
         keys = super().keys(name)
 
@@ -39,6 +53,20 @@ class RedisClient(Redis):
         if value is None:
             return None
         return pickle.loads(value)
+
+    def set_many(self, values: Dict[bytes | str, Any]):
+        return super().mset({k: pickle.dumps(v) for k, v in values.items()})
+
+    def get_many(self, keys: Iterable[bytes | str]) -> Dict[bytes | str, Any]:
+        values = super().mget(keys)
+
+        result = {}
+        for i in range(len(keys)):
+            value = values[i]
+            if value is not None:
+                result[keys[i]] = pickle.loads(value)
+
+        return result
 
     def keys(self, name):
         keys = super().keys(name)
@@ -186,7 +214,7 @@ class ValkeyClient(Valkey):
         return [k.decode("utf-8") for k in keys]
 
 
-def create_cache(type, config, simple=False):
+def create_cache(type, config):
     if type == "pymemcache":
         return NBClient(
             config.CACHE_MEMCACHED_SERVER,
