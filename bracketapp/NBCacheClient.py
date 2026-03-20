@@ -143,27 +143,41 @@ class NBClient(Client):
 
 class ValkeyClient(Valkey):
     @sentry_sdk.trace(op="cache.set", name="valkey_cache")
-    def set(self, key: bytes | str, value: Any) -> bool | None:
+    def set(
+        self,
+        name,
+        value,
+        ex=None,
+        px=None,
+        nx=False,
+        xx=False,
+        keepttl=False,
+        get=False,
+        exat=None,
+        pxat=None,
+    ):
         span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", [key])
+        span.set_data("cache.key", [name])
 
         if value is None:
-            self.delete(key)
+            self.delete(name)
 
-        return super().set(key, pickle.dumps(value))
+        return super().set(
+            name, pickle.dumps(value), ex, px, nx, xx, keepttl, get, exat, pxat
+        )
 
     @sentry_sdk.trace(op="cache.set_many", name="valkey_cache")
-    def set_many(self, values: Dict[bytes | str, Any]):
+    def set_many(self, mapping):
         span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", list(values.keys()))
+        span.set_data("cache.key", list(mapping.keys()))
 
-        return super().mset({k: pickle.dumps(v) for k, v in values.items()})
+        return self.mset({k: pickle.dumps(v) for k, v in mapping.items()})
 
     @sentry_sdk.trace(op="cache.get", name="valkey_cache")
-    def get(self, key: bytes | str) -> Any:
+    def get(self, name):
         span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", [key])
-        value = super().get(key)
+        span.set_data("cache.key", [name])
+        value = super().get(name)
         if value is None:
             span.set_data("cache.hit", False)
             return None
@@ -172,10 +186,10 @@ class ValkeyClient(Valkey):
         return pickle.loads(value)
 
     @sentry_sdk.trace(op="cache.get_many", name="valkey_cache")
-    def get_many(self, keys: Iterable[bytes | str]) -> Dict[bytes | str, Any]:
+    def get_many(self, keys, *args):
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", keys)
-        values = super().mget(keys)
+        values = self.mget(keys, *args)
 
         result = {}
         for i in range(len(keys)):
@@ -191,25 +205,23 @@ class ValkeyClient(Valkey):
         return result
 
     @sentry_sdk.trace(op="cache.delete", name="valkey_cache")
-    def delete(self, key: bytes | str, noreply: bool | None = None) -> bool:
+    def delete(self, *names):
         span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", [key])
-        return super().delete(key, noreply)
+        span.set_data("cache.key", names)
+        return super().delete(*names)
 
     @sentry_sdk.trace(op="cache.delete_many", name="valkey_cache")
-    def delete_many(
-        self, keys: Iterable[bytes | str], noreply: bool | None = None
-    ) -> bool:
+    def delete_many(self, names):
         span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", keys)
-        return super().delete(*keys, noreply)
+        span.set_data("cache.key", names)
+        return super().delete(*names)
 
     @sentry_sdk.trace(op="cache.flush_all", name="valkey_cache")
-    def flush_all(self, delay: int = 0, noreply: bool | None = None) -> bool:
-        return super().flushall()
+    def flush_all(self):
+        return self.flushall()
 
-    def keys(self, name):
-        keys = super().keys(name)
+    def keys(self, pattern="*", **kwargs):
+        keys = super().keys(pattern, **kwargs)
 
         return [k.decode("utf-8") for k in keys]
 

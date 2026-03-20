@@ -51,7 +51,7 @@ keydb_cache = None
 valkey_cache = None
 if Config.VALKEY_HOST:
     keydb_cache = create_cache("keydb", Config)
-    valkey_cache = create_cache("simple_valkey", Config)
+    valkey_cache = create_cache("valkey", Config)
 
 
 # ruff: noqa: E402
