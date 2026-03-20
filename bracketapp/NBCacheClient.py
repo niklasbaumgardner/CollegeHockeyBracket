@@ -47,7 +47,7 @@ class RedisClient(Redis):
 
 
 class NBClient(Client):
-    @sentry_sdk.trace(op="cache.set", name="pymemcache")
+    # @sentry_sdk.trace(op="cache.set", name="pymemcache")
     def set(
         self,
         key: bytes | str,
@@ -56,8 +56,8 @@ class NBClient(Client):
         noreply: bool | None = None,
         flags: int | None = None,
     ) -> bool | None:
-        span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", [key])
+        # span = sentry_sdk.get_current_span()
+        # span.set_data("cache.key", [key])
         return super().set(key, value, expire, noreply, flags)
 
     @sentry_sdk.trace(op="cache.set_many", name="pymemcache")
@@ -72,15 +72,15 @@ class NBClient(Client):
         span.set_data("cache.key", list(values.keys()))
         return super().set_many(values, expire, noreply, flags)
 
-    @sentry_sdk.trace(op="cache.get", name="pymemcache")
+    # @sentry_sdk.trace(op="cache.get", name="pymemcache")
     def get(self, key: bytes | str, default: Any | None = None) -> Any:
-        span = sentry_sdk.get_current_span()
-        span.set_data("cache.key", [key])
+        # span = sentry_sdk.get_current_span()
+        # span.set_data("cache.key", [key])
         value = super().get(key, default)
-        if value is None:
-            span.set_data("cache.hit", False)
-        else:
-            span.set_data("cache.hit", True)
+        # if value is None:
+        #     span.set_data("cache.hit", False)
+        # else:
+        #     span.set_data("cache.hit", True)
         return value
 
     @sentry_sdk.trace(op="cache.get_many", name="pymemcache")

@@ -21,7 +21,7 @@ def index():
 @leaderboard_bp.get("/cache_test")
 def cache_test():
     times = {"memcache": [], "keydb_cahce": [], "valkey_cache": []}
-    for i in range(100):
+    for i in range(1000):
         for name, c in [
             ["memcache", cache],
             ["keydb_cahce", keydb_cache],
