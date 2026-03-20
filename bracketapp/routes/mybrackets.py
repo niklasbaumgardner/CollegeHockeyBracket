@@ -1,9 +1,7 @@
-import time
-
 from flask import Blueprint, render_template
 from flask_login import current_user, login_required
 
-from bracketapp import cache, keydb_cache, valkey_cache
+from bracketapp import cache
 from bracketapp.globals import g
 from bracketapp.queries import bracket_queries, group_queries
 from bracketapp.utils.constants import my_bracket_years_cache_key, my_brackets_cache_key
@@ -15,62 +13,6 @@ mybrackets_bp = Blueprint("mybrackets_bp", __name__)
 @login_required
 def my_brackets():
     return render_template("my_brackets.html")
-
-
-@mybrackets_bp.get("/cache_test_my_brackets")
-def cache_test(year=2025):
-    my_b_cache_key = my_brackets_cache_key(current_user.id, year)
-    years_cache_key = my_bracket_years_cache_key(current_user.id)
-
-    brackets = [
-        b.to_dict(safe_only=False) for b in bracket_queries.get_my_brackets(year)
-    ]
-
-    groups = group_queries.get_all_groups_for_user(year)
-    # TODO: Make this better?
-    # I unfortunately don't have a better way to do this.
-    for group in groups:
-        group_brackets = []
-        for b in group.brackets:
-            group_brackets.append(b.to_dict(safe_only=False))
-        group.brackets = group_brackets
-
-    groups = [group.to_dict() for group in groups]
-
-    brackets_data = dict(
-        brackets=brackets,
-        groups=groups,
-        year=year or g.YEAR,
-    )
-
-    years = bracket_queries.get_my_bracket_years()
-    years = list(years)
-
-    cache.set_many({my_b_cache_key: brackets_data, years_cache_key: years})
-    keydb_cache.set_many({my_b_cache_key: brackets_data, years_cache_key: years})
-    valkey_cache.set_many({my_b_cache_key: brackets_data, years_cache_key: years})
-
-    times = {"memcache": [], "keydb_cahce": [], "valkey_cache": []}
-    for i in range(1000):
-        for name, c in [
-            ["memcache", cache],
-            ["keydb_cahce", keydb_cache],
-            ["valkey_cache", valkey_cache],
-        ]:
-            s = time.perf_counter()
-            c.get_many([my_b_cache_key, years_cache_key])
-            e = time.perf_counter()
-            times[name].append(e - s)
-
-    results = {"ztimes_sorted": []}
-    for k, v in times.items():
-        avg = sum(v) / len(v)
-        results[k] = avg
-        results["ztimes_sorted"].append([k, avg])
-
-    results["ztimes_sorted"].sort(key=lambda x: x[1])
-
-    return results
 
 
 @mybrackets_bp.get("/api/my_brackets")

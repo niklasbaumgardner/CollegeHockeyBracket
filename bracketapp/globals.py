@@ -1,5 +1,4 @@
 import os
-import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -22,16 +21,17 @@ CAN_EDIT_BRACKET = os.environ.get("CAN_EDIT_BRACKET") == "True"
 
 
 class Global:
-    # keydb_client = create_cache("keydb", Config)
-    # valkey_client = create_cache("simple_valkey", Config)
-    keydb_client = None
-    valkey_client = None
-
     client = create_cache("simple_valkey", Config)
 
+    global_keys = ["CAN_EDIT_BRACKET", "YEAR"]
+
     def get_all_contents(self):
-        keys = ["CAN_EDIT_BRACKET", "YEAR"]
-        return {k: self.client.get(k) for k in keys}
+        return {k: self.client.get(k) for k in self.global_keys} | {
+            "keys": self.get_all_keys()
+        }
+
+    def get_all_keys(self):
+        return self.client.keys("*")
 
     @property
     def CAN_EDIT_BRACKET(self):
@@ -63,69 +63,6 @@ class Global:
             return
 
         return self.client.set("YEAR", year)
-
-    @property
-    def t_CAN_EDIT_BRACKET(self):
-        start_time = time.perf_counter()
-        val = BRACKET_OPEN_TIME < datetime.now(tz=tz) < BRACKET_CLOSE_TIME
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
-
-    @property
-    def l_CAN_EDIT_BRACKET(self):
-        start_time = time.perf_counter()
-        val = CAN_EDIT_BRACKET
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
-
-    @property
-    def l_YEAR(self):
-        start_time = time.perf_counter()
-        val = YEAR
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
-
-    @property
-    def k_CAN_EDIT_BRACKET(self):
-        start_time = time.perf_counter()
-        val = self.keydb_client.get("CAN_EDIT_BRACKET") == "True"
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
-
-    @property
-    def k_YEAR(self):
-        start_time = time.perf_counter()
-        val = int(self.keydb_client.get("YEAR"))
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
-
-    @property
-    def v_CAN_EDIT_BRACKET(self):
-        start_time = time.perf_counter()
-        val = self.valkey_client.get("CAN_EDIT_BRACKET") == "True"
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
-
-    @property
-    def v_YEAR(self):
-        start_time = time.perf_counter()
-        val = int(self.valkey_client.get("YEAR"))
-        end_time = time.perf_counter()
-
-        # print(f"Execution time: {end_time - start_time:.4f} seconds")
-        return val, end_time - start_time
 
 
 g = Global()
