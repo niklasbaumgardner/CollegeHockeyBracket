@@ -4,13 +4,12 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy_lite import SQLAlchemy
-from pymemcache import serde
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from bracketapp.config import Config
-from bracketapp.NBCacheClient import NBClient, RedisClient, ValkeyClient
+from bracketapp.NBCacheClient import NBClient, RedisClient, ValkeyClient, create_cache
 
 
 class BaseModel(DeclarativeBase):
@@ -46,24 +45,12 @@ login_manager.login_message_category = "brand"
 mail = Mail()
 mail.init_app(app)
 
-cache = NBClient(
-    Config.CACHE_MEMCACHED_SERVER,
-    serde=serde.pickle_serde,
-    connect_timeout=2,
-    timeout=1,
-    ignore_exc=True,
-)
+
+cache = create_cache("pymemcache", Config)
 
 if Config.VALKEY_HOST:
-    keydb_cache = RedisClient(
-        host=Config.KEYDB_HOST, port=Config.KEYDB_PORT, password=Config.KEYDB_PASSWORD
-    )
-
-    valkey_cache = ValkeyClient(
-        host=Config.VALKEY_HOST,
-        port=Config.VALKEY_PORT,
-        password=Config.VALKEY_PASSWORD,
-    )
+    keydb_cache = create_cache("redis", Config)
+    valkey_cache = create_cache("valkey", Config)
 
 
 # ruff: noqa: E402
