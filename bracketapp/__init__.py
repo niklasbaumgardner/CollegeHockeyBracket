@@ -9,7 +9,7 @@ from sqlalchemy.pool import NullPool
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from bracketapp.config import Config
-from bracketapp.NBCacheClient import NBClient, RedisClient, ValkeyClient, create_cache
+from bracketapp.NBCacheClient import create_cache
 
 
 class BaseModel(DeclarativeBase):

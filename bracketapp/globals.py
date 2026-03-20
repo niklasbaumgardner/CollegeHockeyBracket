@@ -46,9 +46,6 @@ class Global:
         password=os.environ.get("KEYDB_PASSWORD"),
     )
 
-    # revert me
-    keydb_client.flushdb()
-
     def get_all_contents(self):
         keys = self.keydb_client.keys("*")
         return {k: self.keydb_client.get(k) for k in keys}
