@@ -1,8 +1,9 @@
 import time
+
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user
 
-from bracketapp import cache, valkey_cache, keydb_cache
+from bracketapp import cache, keydb_cache, valkey_cache
 from bracketapp.globals import g
 from bracketapp.utils import bracket_utils
 from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
@@ -21,7 +22,7 @@ def index():
 @leaderboard_bp.get("/cache_test")
 def cache_test():
     times = {"memcache": [], "keydb_cahce": [], "valkey_cache": []}
-    for i in range(100):
+    for i in range(1000):
         for name, c in [
             ["memcache", cache],
             ["keydb_cahce", keydb_cache],
