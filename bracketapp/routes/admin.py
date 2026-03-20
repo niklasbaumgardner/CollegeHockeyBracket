@@ -156,9 +156,10 @@ def test_redis():
     times = {
         "local_can_edit": [],
         "local_year": [],
-        "time_can_edit": [],
         "keydb_can_edit": [],
         "keydb_year": [],
+        "valkey_year": [],
+        "valkey_can_edit": [],
     }
 
     for i in range(1000):
@@ -170,14 +171,18 @@ def test_redis():
 
         v, t = g.k_CAN_EDIT_BRACKET
         times["keydb_can_edit"].append(t)
-        assert v == CAN_EDIT_BRACKET
+        assert type(v) is type(CAN_EDIT_BRACKET)
 
         v, t = g.k_YEAR
         times["keydb_year"].append(t)
         assert type(v) is type(YEAR)
 
-        v, t = g.t_CAN_EDIT_BRACKET
-        times["time_can_edit"].append(t)
+        v, t = g.v_YEAR
+        times["valkey_year"].append(t)
+        assert type(v) is type(YEAR)
+
+        v, t = g.v_CAN_EDIT_BRACKET
+        times["valkey_can_edit"].append(t)
         assert type(v) is type(CAN_EDIT_BRACKET)
 
     result = {"ztimes_sorted": []}

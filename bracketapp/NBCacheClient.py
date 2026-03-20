@@ -7,23 +7,24 @@ from pymemcache.client.base import Client
 from redis import Redis
 from valkey import Valkey
 
-# class ValkeyClient(Valkey):
-#     def set(self, name, value):
-#         if value is None:
-#             self.delete(name)
 
-#         return super().set(name, pickle.dumps(value))
+class SimpleValkeyClient(Valkey):
+    def set(self, name, value):
+        if value is None:
+            self.delete(name)
 
-#     def get(self, name):
-#         value = super().get(name)
-#         if value is None:
-#             return None
-#         return pickle.loads(value)
+        return super().set(name, pickle.dumps(value))
 
-#     def keys(self, name):
-#         keys = super().keys(name)
+    def get(self, name):
+        value = super().get(name)
+        if value is None:
+            return None
+        return pickle.loads(value)
 
-#         return [k.decode("utf-8") for k in keys]
+    def keys(self, name):
+        keys = super().keys(name)
+
+        return [k.decode("utf-8") for k in keys]
 
 
 class RedisClient(Redis):
@@ -185,7 +186,7 @@ class ValkeyClient(Valkey):
         return [k.decode("utf-8") for k in keys]
 
 
-def create_cache(type, config):
+def create_cache(type, config, simple=False):
     if type == "pymemcache":
         return NBClient(
             config.CACHE_MEMCACHED_SERVER,
@@ -196,13 +197,20 @@ def create_cache(type, config):
         )
 
     elif type == "valkey":
+        if simple:
+            return SimpleValkeyClient(
+                host=config.VALKEY_HOST,
+                port=config.VALKEY_PORT,
+                password=config.VALKEY_PASSWORD,
+            )
+
         return ValkeyClient(
             host=config.VALKEY_HOST,
             port=config.VALKEY_PORT,
             password=config.VALKEY_PASSWORD,
         )
 
-    elif type == "redis":
+    elif type == "keydb":
         return RedisClient(
             host=config.KEYDB_HOST,
             port=config.KEYDB_PORT,

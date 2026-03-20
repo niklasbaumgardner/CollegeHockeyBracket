@@ -1,11 +1,12 @@
 import os
-import pickle
 import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from flask_login import current_user
-from redis import Redis
+
+from bracketapp.config import Config
+from bracketapp.NBCacheClient import create_cache
 
 tz = ZoneInfo("America/New_York")
 
@@ -20,31 +21,14 @@ YEAR = int(os.environ.get("YEAR"))
 CAN_EDIT_BRACKET = os.environ.get("CAN_EDIT_BRACKET") == "True"
 
 
-class RedisClient(Redis):
-    def set(self, name, value):
-        if value is None:
-            self.delete(name)
-
-        return super().set(name, pickle.dumps(value))
-
-    def get(self, name):
-        value = super().get(name)
-        if value is None:
-            return None
-        return pickle.loads(value)
-
-    def keys(self, name):
-        keys = super().keys(name)
-
-        return [k.decode("utf-8") for k in keys]
-
-
 class Global:
-    keydb_client = RedisClient(
-        host=os.environ.get("KEYDB_HOST"),
-        port=os.environ.get("KEYDB_PORT"),
-        password=os.environ.get("KEYDB_PASSWORD"),
-    )
+    keydb_client = create_cache("keydb", Config)
+    valkey_client = create_cache("valkey", Config, simple=True)
+
+    keydb_client.set("CAN_EDIT_BRACKET", False)
+    keydb_client.set("YEAR", 2026)
+    valkey_client.set("CAN_EDIT_BRACKET", False)
+    valkey_client.set("YEAR", 2026)
 
     def get_all_contents(self):
         keys = self.keydb_client.keys("*")
@@ -121,6 +105,24 @@ class Global:
     def k_YEAR(self):
         start_time = time.perf_counter()
         val = int(self.keydb_client.get("YEAR"))
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def v_CAN_EDIT_BRACKET(self):
+        start_time = time.perf_counter()
+        val = self.valkey_client.get("CAN_EDIT_BRACKET") == "True"
+        end_time = time.perf_counter()
+
+        # print(f"Execution time: {end_time - start_time:.4f} seconds")
+        return val, end_time - start_time
+
+    @property
+    def v_YEAR(self):
+        start_time = time.perf_counter()
+        val = int(self.valkey_client.get("YEAR"))
         end_time = time.perf_counter()
 
         # print(f"Execution time: {end_time - start_time:.4f} seconds")
