@@ -141,7 +141,7 @@ def update_can_edit_bracket():
     if not current_user.is_admin():
         return redirect(url_for("leaderboard_bp.index"))
 
-    g.CAN_EDIT_BRACKET = request.form.get("CAN_EDIT_BRACKET")
+    g.CAN_EDIT_BRACKET = request.form.get("CAN_EDIT_BRACKET") == "on"
     cache_invalidator.flush_main_caches()
 
     return redirect(url_for("admin_bp.admin"))

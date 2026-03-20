@@ -30,12 +30,12 @@ export class Admin extends NikElement {
           action=${UPDATE_CAN_EDIT_BRACKET_URL}
         ></form>
         <div class="wa-cluster">
-          <wa-input
+          <wa-switch
+            ?checked=${CAN_EDIT_BRACKET}
             form="can_edit_bracket"
-            label="CAN_EDIT_BRACKET"
-            value=${CAN_EDIT_BRACKET}
             name="CAN_EDIT_BRACKET"
-          ></wa-input>
+            >CAN_EDIT_BRACKET</wa-switch
+          >
           <wa-button form="can_edit_bracket" type="submit"
             >Update CAN_EDIT_BRACKET</wa-button
           >

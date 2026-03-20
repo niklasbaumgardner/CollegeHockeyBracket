@@ -36,12 +36,12 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
           action=${UPDATE_CAN_EDIT_BRACKET_URL}
         ></form>
         <div class="wa-cluster">
-          <wa-input
+          <wa-switch
+            ?checked=${CAN_EDIT_BRACKET}
             form="can_edit_bracket"
-            label="CAN_EDIT_BRACKET"
-            value=${CAN_EDIT_BRACKET}
             name="CAN_EDIT_BRACKET"
-          ></wa-input>
+            >CAN_EDIT_BRACKET</wa-switch
+          >
           <wa-button form="can_edit_bracket" type="submit"
             >Update CAN_EDIT_BRACKET</wa-button
           >
@@ -1898,4 +1898,4 @@ import{d as t,h as S,j as $e,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Ee,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",ye);
-//# sourceMappingURL=nb.QXLAWDB4.mjs.map
+//# sourceMappingURL=nb.SH5NMAPK.mjs.map
