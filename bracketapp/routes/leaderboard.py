@@ -1,7 +1,8 @@
+import time
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user
 
-from bracketapp import cache
+from bracketapp import cache, valkey_cache, keydb_cache
 from bracketapp.globals import g
 from bracketapp.utils import bracket_utils
 from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
@@ -9,12 +10,35 @@ from bracketapp.utils.constants import LEADERBOARD_CACHE_KEY
 leaderboard_bp = Blueprint("leaderboard_bp", __name__)
 
 
-@leaderboard_bp.route("/", methods=["GET"])
+@leaderboard_bp.get("/")
 def index():
     if current_user.is_authenticated:
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     return redirect(url_for("leaderboard_bp.leaderboard"))
+
+
+@leaderboard_bp.get("/cache_test")
+    for i in range(100):
+        for name, c in [
+            ["memcache", cache],
+            ["keydb_cahce", keydb_cache],
+            ["valkey_cache", valkey_cache],
+        ]:
+            s = time.perf_counter()
+            c.get(LEADERBOARD_CACHE_KEY)
+            e = time.perf_counter()
+            times[name].append(e - s)
+
+    results = {"ztimes_sorted": []}
+    for k, v in times.items():
+        avg = sum(v) / len(v)
+        results[k] = avg
+        results["ztimes_sorted"].append([k, avg])
+
+    results["ztimes_sorted"].sort(key=lambda x: x[1])
+
+    return results
 
 
 @leaderboard_bp.route("/leaderboard", methods=["GET"])

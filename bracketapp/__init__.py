@@ -10,7 +10,7 @@ from sqlalchemy.pool import NullPool
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from bracketapp.config import Config
-from bracketapp.NBCacheClient import NBClient
+from bracketapp.NBCacheClient import NBClient, RedisClient, ValkeyClient
 
 
 class BaseModel(DeclarativeBase):
@@ -53,6 +53,17 @@ cache = NBClient(
     timeout=1,
     ignore_exc=True,
 )
+
+if Config.VALKEY_HOST:
+    keydb_cache = RedisClient(
+        host=Config.KEYDB_HOST, port=Config.KEYDB_PORT, password=Config.KEYDB_PASSWORD
+    )
+
+    valkey_cache = ValkeyClient(
+        host=Config.VALKEY_HOST,
+        port=Config.VALKEY_PORT,
+        password=Config.VALKEY_PASSWORD,
+    )
 
 
 # ruff: noqa: E402

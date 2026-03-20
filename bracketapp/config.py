@@ -11,12 +11,26 @@ class Config:
     MAIL_USERNAME = os.environ.get("EMAIL_USER")
     MAIL_PASSWORD = os.environ.get("EMAIL_PASS")
     MAIL_DEFAULT_SENDER = (APP_NAME, "hockey@niklasb.com")
+
     ERROR_LOGGING_EMAIL = os.environ.get("ERROR_LOGGING_EMAIL")
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     REMEMBER_COOKIE_NAME = os.environ.get("REMEMBER_COOKIE_NAME")
     REMEMBER_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN")
     SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME")
     SESSION_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN")
+
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
+
     FLASK_DEBUG = os.environ.get("FLASK_DEBUG")
+
     CACHE_MEMCACHED_SERVER = os.environ.get("CACHE_MEMCACHED_SERVER")
+
+    KEYDB_HOST = os.environ.get("KEYDB_HOST")
+    KEYDB_PASSWORD = os.environ.get("KEYDB_PASSWORD")
+    KEYDB_PORT = os.environ.get("KEYDB_PORT")
+
+    VALKEY_HOST = os.environ.get("VALKEY_HOST")
+    VALKEY_PASSWORD = os.environ.get("VALKEY_PASSWORD")
+    VALKEY_PORT = os.environ.get("VALKEY_PORT")

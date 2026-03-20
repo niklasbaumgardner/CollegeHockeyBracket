@@ -3,6 +3,48 @@ from typing import Any, Dict, Iterable, List
 import sentry_sdk
 from pymemcache.client.base import Client
 
+from valkey import Valkey
+from redis import Redis
+import pickle
+
+
+class ValkeyClient(Valkey):
+    def set(self, name, value):
+        if value is None:
+            self.delete(name)
+
+        return super().set(name, pickle.dumps(value))
+
+    def get(self, name):
+        value = super().get(name)
+        if value is None:
+            return None
+        return pickle.loads(value)
+
+    def keys(self, name):
+        keys = super().keys(name)
+
+        return [k.decode("utf-8") for k in keys]
+
+
+class RedisClient(Redis):
+    def set(self, name, value):
+        if value is None:
+            self.delete(name)
+
+        return super().set(name, pickle.dumps(value))
+
+    def get(self, name):
+        value = super().get(name)
+        if value is None:
+            return None
+        return pickle.loads(value)
+
+    def keys(self, name):
+        keys = super().keys(name)
+
+        return [k.decode("utf-8") for k in keys]
+
 
 class NBClient(Client):
     @sentry_sdk.trace(op="cache.set", name="pymemcache")

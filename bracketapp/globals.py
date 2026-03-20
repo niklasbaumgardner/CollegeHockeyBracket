@@ -1,9 +1,10 @@
+import pickle
 import os
 import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-import redis
+from redis import Redis
 from flask_login import current_user
 
 tz = ZoneInfo("America/New_York")
@@ -19,12 +20,30 @@ YEAR = int(os.environ.get("YEAR"))
 CAN_EDIT_BRACKET = os.environ.get("CAN_EDIT_BRACKET") == "True"
 
 
+class RedisClient(Redis):
+    def set(self, name, value):
+        if value is None:
+            self.delete(name)
+
+        return super().set(name, pickle.dumps(value))
+
+    def get(self, name):
+        value = super().get(name)
+        if value is None:
+            return None
+        return pickle.loads(value)
+
+    def keys(self, name):
+        keys = super().keys(name)
+
+        return [k.decode("utf-8") for k in keys]
+
+
 class Global:
-    keydb_client = redis.Redis(
+    keydb_client = RedisClient(
         host=os.environ.get("KEYDB_HOST"),
         port=os.environ.get("KEYDB_PORT"),
         password=os.environ.get("KEYDB_PASSWORD"),
-        decode_responses=True,  # Optional: automatically decode responses
     )
 
     def get_all_contents(self):
