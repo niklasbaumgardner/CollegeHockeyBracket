@@ -129,7 +129,7 @@ def update_year():
     if not current_user.is_admin():
         return redirect(url_for("leaderboard_bp.index"))
 
-    g.YEAR = request.form.get("YEAR")
+    g.YEAR = request.form.get("YEAR", type=int)
     cache_invalidator.flush_main_caches()
 
     return redirect(url_for("admin_bp.admin"))
