@@ -40,7 +40,7 @@ class Global:
         if can_edit is None:
             return CAN_EDIT_BRACKET
 
-        return can_edit == "True"
+        return can_edit
 
     @property
     def YEAR(self):
@@ -48,7 +48,7 @@ class Global:
         if year is None:
             return YEAR
 
-        return int(year)
+        return year
 
     @CAN_EDIT_BRACKET.setter
     def CAN_EDIT_BRACKET(self, can_edit):
