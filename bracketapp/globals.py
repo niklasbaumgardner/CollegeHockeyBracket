@@ -11,7 +11,7 @@ tz = ZoneInfo("America/New_York")
 
 
 BRACKET_OPEN_TIME = datetime(2026, 3, 22, 16, 0, tzinfo=tz)
-BRACKET_CLOSE_TIME = datetime(2026, 3, 26, 14, 0, tzinfo=tz)
+BRACKET_CLOSE_TIME = datetime(2026, 3, 26, 13, 30, tzinfo=tz)
 
 
 YEAR = int(os.environ.get("YEAR"))
