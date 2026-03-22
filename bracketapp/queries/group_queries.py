@@ -256,13 +256,12 @@ def upsert_group_member(group_id):
     )
     result = db.session.execute(upsert_stmt)
 
-    new_group_member_id = result.inserted_primary_key[0]
-
-    if new_group_member_id:
+    rowcount = result.rowcount
+    if rowcount > 0:
         update_group_member_count(group_id, commit=False)
 
     db.session.commit()
-    return new_group_member_id
+    return rowcount
 
 
 def create_group_bracket(group_id, bracket_id):

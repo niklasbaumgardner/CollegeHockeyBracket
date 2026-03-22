@@ -177,9 +177,8 @@ def join_group(sqid):
                 url_for("groups_bp.view_group", sqid=sqid, _anchor="join-private-group")
             )
 
-    new_group_member_id = group_queries.upsert_group_member(group_id=group_id)
-
-    if new_group_member_id:
+    rowcount = group_queries.upsert_group_member(group_id=group_id)
+    if rowcount > 0:
         cache_invalidator.join_group(group_id)
 
     return redirect(url_for("groups_bp.view_group", sqid=sqid))
