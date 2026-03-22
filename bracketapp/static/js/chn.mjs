@@ -3,6 +3,7 @@ const REPLACEMENTS = [
   ["St.", "State"],
   ["U.", "University"],
   ["UConn", "Connecticut"],
+  ["Minn. Duluth", "Minnesota-Duluth"],
 ];
 
 export function getCHNName(teamName) {

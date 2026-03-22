@@ -462,16 +462,6 @@ export class EditBracket extends NikElement {
       }
       await new Promise((r) => setTimeout(r, 10));
     }
-
-    // TODO: Should I randomly set the goals or just leave blank?
-    this.winnerGoals.value = this.getRandomInt(1, 10, 3 / 4);
-    this.loserGoals.value = this.getRandomInt(0, this.winnerGoals.value);
-
-    await this.winnerGoals.updateComplete;
-    await this.loserGoals.updateComplete;
-
-    this.winnerGoals.checkValidity();
-    this.loserGoals.checkValidity();
   }
 
   async topSeed() {
@@ -602,7 +592,7 @@ export class EditBracket extends NikElement {
                 ${this.roundTwoRightTemplate()}
               </div>
 
-              <div class="round-one-right round-one">
+              <div class="round-one-right">
                 <wa-card class="round-details">Round 1</wa-card>
                 ${this.roundOneRightTemplate()}
               </div>

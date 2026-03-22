@@ -63,7 +63,7 @@ export class MatchupInfo extends NikElement {
 
   statsTemplate(stats, rightSide = false) {
     let rightSideClass = rightSide ? "self-end text-right" : "";
-    return html`<small class="${rightSideClass}">NPI: ${stats.rank}</small>
+    return html`<small class="${rightSideClass}">NPI: ${stats.npi.rank}</small>
       <small class="${rightSideClass}"
         >${stats.conference.name}: ${stats.conference.rank}</small
       >
@@ -75,6 +75,9 @@ export class MatchupInfo extends NikElement {
           >`
         : null}
       <wa-divider class="my-(--wa-space-xs)"></wa-divider>
+      <div class="flex justify-between text-(length:--wa-font-size-2xs)!">
+        <span>SOS Rank</span><span>${stats.krach.sosRank}</span>
+      </div>
       <div class="flex justify-between text-(length:--wa-font-size-2xs)!">
         <small>Home</small><span>${stats.records[0].join("-")}</span>
       </div>

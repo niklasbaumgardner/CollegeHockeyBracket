@@ -1,72 +1,114 @@
 import { getCHNName } from "./chn.mjs";
 
+const GAMES_CACHE_KEY = `${CURRENT_YEAR}.games`;
+const GAMES_FILENAME = `/static/json/${CURRENT_YEAR}.games.json`;
+
+const NPI_CACHE_KEY = `${CURRENT_YEAR}.npi`;
+const NPI_FILENAME = `/static/json/${CURRENT_YEAR}.npi.json`;
+
+const KRACH_CACHE_KEY = `${CURRENT_YEAR}.krach`;
+const KRACH_FILENAME = `/static/json/${CURRENT_YEAR}.krach.json`;
+
+const CONFERENCE_CACHE_KEY = `${CURRENT_YEAR}.conference`;
+const CONFERENCE_FILENAME = `/static/json/${CURRENT_YEAR}.conference.json`;
+
 class BracketUtilsClass {
   constructor() {
     this.cache = new Map();
     this.gamesRequestPromise = null;
     this.gamesJsonPromise = null;
-    this.standingsRequestPromise = null;
-    this.standingsJsonPromise = null;
+    this.npiRequestPromise = null;
+    this.npiJsonPromise = null;
+    this.krachRequestPromise = null;
+    this.krachJsonPromise = null;
     this.confStandingsRequestPromise = null;
     this.confStandingsJsonPromise = null;
   }
 
   async getGames() {
-    if (this.cache.has(`${CURRENT_YEAR}.games`)) {
-      this.cache.get(`${CURRENT_YEAR}.games`);
+    if (this.cache.has(GAMES_CACHE_KEY)) {
+      this.cache.get(GAMES_CACHE_KEY);
     }
 
     if (!this.gamesRequestPromise) {
-      let url = STATIC_FILE_MAP[`/static/json/${CURRENT_YEAR}.games.json`];
+      const url = STATIC_FILE_MAP[GAMES_FILENAME];
       this.gamesRequestPromise = fetch(url);
     }
 
-    let response = await this.gamesRequestPromise;
+    const response = await this.gamesRequestPromise;
 
     if (!this.gamesJsonPromise) {
       this.gamesJsonPromise = response.json();
     }
 
-    let data = await this.gamesJsonPromise;
-    this.cache.set(`${CURRENT_YEAR}.games`, data);
+    const data = await this.gamesJsonPromise;
+    this.cache.set(GAMES_CACHE_KEY, data);
     return data;
   }
 
-  async getStandings() {
-    if (this.cache.has(`${CURRENT_YEAR}.standings`)) {
-      this.cache.get(`${CURRENT_YEAR}.standings`);
+  async getKrach() {
+    if (this.cache.has(KRACH_CACHE_KEY)) {
+      this.cache.get(KRACH_CACHE_KEY);
     }
 
-    if (!this.standingsRequestPromise) {
-      let standingsUrl =
-        STATIC_FILE_MAP[`/static/json/${CURRENT_YEAR}.standings.json`];
-      this.standingsRequestPromise = fetch(standingsUrl);
+    if (!this.krachRequestPromise) {
+      const krachUrl = STATIC_FILE_MAP[KRACH_FILENAME];
+      this.krachRequestPromise = fetch(krachUrl);
+    }
+
+    const krachResponse = await this.krachRequestPromise;
+
+    if (!this.krachJsonPromise) {
+      this.krachJsonPromise = krachResponse.json();
+    }
+
+    const data = await this.krachJsonPromise;
+
+    this.cache.set(KRACH_CACHE_KEY, data);
+    return data;
+  }
+
+  async getNPI() {
+    if (this.cache.has(NPI_CACHE_KEY)) {
+      this.cache.get(NPI_CACHE_KEY);
+    }
+
+    if (!this.npiRequestPromise) {
+      const npiUrl = STATIC_FILE_MAP[NPI_FILENAME];
+      this.npiRequestPromise = fetch(npiUrl);
+    }
+
+    const npiResponse = await this.npiRequestPromise;
+
+    if (!this.npiJsonPromise) {
+      this.npiJsonPromise = npiResponse.json();
+    }
+
+    const data = await this.npiJsonPromise;
+
+    this.cache.set(NPI_CACHE_KEY, data);
+    return data;
+  }
+
+  async getConference() {
+    if (this.cache.has(CONFERENCE_CACHE_KEY)) {
+      this.cache.get(CONFERENCE_CACHE_KEY);
     }
 
     if (!this.confStandingsRequestPromise) {
-      let confStandingsUrl =
-        STATIC_FILE_MAP[`/static/json/${CURRENT_YEAR}.conference.json`];
+      const confStandingsUrl = STATIC_FILE_MAP[CONFERENCE_FILENAME];
       this.confStandingsRequestPromise = fetch(confStandingsUrl);
     }
 
-    const [standingsResponse, conferenceResponse] = await Promise.all([
-      this.standingsRequestPromise,
-      this.confStandingsRequestPromise,
-    ]);
-
-    if (!this.standingsJsonPromise) {
-      this.standingsJsonPromise = standingsResponse.json();
-    }
+    const conferenceResponse = await this.confStandingsRequestPromise;
 
     if (!this.confStandingsJsonPromise) {
       this.confStandingsJsonPromise = conferenceResponse.json();
     }
 
-    const data = await Promise.all([
-      this.standingsJsonPromise,
-      this.confStandingsJsonPromise,
-    ]);
-    this.cache.set(`${CURRENT_YEAR}.standings`, data);
+    const data = await this.confStandingsJsonPromise;
+
+    this.cache.set(CONFERENCE_CACHE_KEY, data);
     return data;
   }
 
@@ -139,16 +181,21 @@ class BracketUtilsClass {
   async getStandingsForTeam(team) {
     const chnName = getCHNName(team.name);
 
-    const [STANDINGS, CONFERENCE_STANDINGS] = await this.getStandings();
+    const [krach, conf, npi] = await Promise.all([
+      this.getKrach(),
+      this.getConference(),
+      this.getNPI(),
+    ]);
 
-    let stats = STANDINGS[chnName];
-    let conferenceStats = CONFERENCE_STANDINGS[chnName];
-    if (!stats || !conferenceStats) {
+    const krachStats = krach[chnName];
+    const confStats = conf[chnName];
+    const npiStats = npi[chnName];
+    if (!krachStats || !confStats || !npiStats) {
       console.log("NO STATS FOR", team, chnName);
       return null;
     }
 
-    return { ...stats, ...conferenceStats };
+    return { ...krachStats, ...confStats, ...npiStats };
   }
 
   async getNotableWins(team) {
@@ -171,10 +218,10 @@ class BracketUtilsClass {
 
   async getNPIRank(team) {
     const chnName = getCHNName(team.name);
-    let [standings, _] = await this.getStandings();
+    const data = await this.getNPI();
 
-    let stats = standings[chnName];
-    return stats.rank;
+    const stats = data[chnName];
+    return stats.npi.rank;
   }
 }
 const BracketUtils = new BracketUtilsClass();
