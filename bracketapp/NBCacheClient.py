@@ -100,7 +100,9 @@ class NBClient(Client):
     ) -> List[bytes | str]:
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", list(values.keys()))
-        return super().set_many([v for v in values if v], expire, noreply, flags)
+        return super().set_many(
+            {k: v for k, v in values.items() if k}, expire, noreply, flags
+        )
 
     @sentry_sdk.trace(op="cache.get", name="pymemcache")
     def get(self, key: bytes | str, default: Any | None = None) -> Any:

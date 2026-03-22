@@ -43,7 +43,7 @@ def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
     g_cache_key = group_cache_key(group_id)
-    gm_cache_key = None
+    gm_cache_key = ""
     if current_user.is_authenticated:
         gm_cache_key = group_membership_cache_key(current_user.id, group_id)
     cache_dict = cache.get_many([g_cache_key, gm_cache_key])
