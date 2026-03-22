@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from sentry_sdk import metrics
@@ -94,7 +96,7 @@ def password_request():
         user = user_queries.get_user_by_email(email=email)
         send_email.send_reset_email(user)
         flash(
-            "An email has been sent with instructions to reset your password. (Check spam folder)",
+            "An email has been sent with instructions to reset your password. Check spam folder.",
             "primary",
         )
         return redirect(url_for("auth_bp.login"))
@@ -151,6 +153,48 @@ def email_unique():
     email = request.args.get("email")
 
     return {"isUnique": user_queries.is_email_unique(email)}
+
+
+@auth_bp.route("/email_login", methods=["GET", "POST"])
+def email_login():
+    if current_user.is_authenticated:
+        return redirect(url_for("mybrackets_bp.my_brackets"))
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        user = user_queries.get_user_by_email(email=email)
+        if not user:
+            user_queries.create_user(
+                email=email,
+                username=email.split("@")[0] + f"{round(datetime.now().timestamp())}",
+            )
+            user = user_queries.get_user_by_email(email=email)
+            send_email.send_login_email(user, True)
+            metrics.count(
+                "user_signup",
+                1,
+            )
+        else:
+            send_email.send_login_email(user, False)
+
+        flash(
+            "An email has been sent with a link to login. Check spam folder.",
+            "primary",
+        )
+        return redirect(url_for("auth_bp.login"))
+
+    return render_template("email_login.html")
+
+
+@auth_bp.get("/passwordless_login/<string:token>")
+def passwordless_login(token):
+    user, user_created = User.verify_login_token(token)
+    login_user(user, remember=True)
+
+    if user_created:
+        return redirect(url_for("profile_bp.profile"))
+
+    return redirect(url_for("mybrackets_bp.my_brackets"))
 
 
 # @auth_bp.get("/create_streamchat_token")

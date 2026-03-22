@@ -1,5 +1,4 @@
 import datetime
-import os
 from enum import IntFlag
 from typing import Annotated, Any, Optional
 
@@ -10,7 +9,7 @@ from sqlalchemy import BigInteger, ForeignKey, Identity, UniqueConstraint, selec
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from bracketapp import BaseModel, cache, db, login_manager
+from bracketapp import BaseModel, cache, login_manager
 from bracketapp.config import Config
 from bracketapp.utils.constants import user_cache_key
 from bracketapp.utils.Serializer import SerializerMixin
@@ -34,8 +33,9 @@ def load_user(id):
     if result := cache.get(cache_key):
         return result
 
-    stmt = select(User).where(User.id == id)
-    user = db.session.scalars(stmt.limit(1)).first()
+    from bracketapp.queries.user_queries import get_user_by_id
+
+    user = get_user_by_id(id)
     cache.set(cache_key, user)
     return user
 
@@ -78,17 +78,36 @@ class User(BaseModel, UserMixin, SqidSerializerMixin):
         return Role.ADMIN in Role(self.role)
 
     def get_reset_token(self):
-        s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
+        s = URLSafeTimedSerializer(Config.SECRET_KEY)
         return s.dumps({"user_id": self.id})
 
     @staticmethod
     def verify_reset_token(token, expire_sec=600):
-        s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
+        s = URLSafeTimedSerializer(Config.SECRET_KEY)
         try:
             user_id = s.loads(token, max_age=expire_sec).get("user_id")
         except:
             return None
-        return db.session.get(User, user_id)
+        from bracketapp.queries.user_queries import get_user_by_id
+
+        return get_user_by_id(user_id)
+
+    def get_login_token(self, user_created):
+        s = URLSafeTimedSerializer(Config.SECRET_KEY)
+        return s.dumps({"user_id": self.id, "user_created": user_created})
+
+    @staticmethod
+    def verify_login_token(token, expire_sec=600):
+        s = URLSafeTimedSerializer(Config.SECRET_KEY)
+        try:
+            data = s.loads(token, max_age=expire_sec)
+            id = data.get("user_id")
+            user_created = data.get("user_created")
+        except:
+            return None, None
+        from bracketapp.queries.user_queries import get_user_by_id
+
+        return get_user_by_id(id), user_created
 
 
 class UserSettings(BaseModel, SqidSerializerMixin):
@@ -420,12 +439,12 @@ class Group(BaseModel, SqidSerializerMixin):
         self.__brackets__ = brackets
 
     def get_join_key(self):
-        s = URLSafeSerializer(os.environ.get("SECRET_KEY"))
+        s = URLSafeSerializer(Config.SECRET_KEY)
         return s.dumps(self.password)
 
     @staticmethod
     def verify_join_key(token):
-        s = URLSafeSerializer(os.environ.get("SECRET_KEY"))
+        s = URLSafeSerializer(Config.SECRET_KEY)
         try:
             password = s.loads(token)
         except:

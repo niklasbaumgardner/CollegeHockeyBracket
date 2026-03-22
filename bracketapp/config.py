@@ -10,7 +10,7 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("EMAIL_USER")
     MAIL_PASSWORD = os.environ.get("EMAIL_PASS")
-    MAIL_DEFAULT_SENDER = (APP_NAME, "hockey@niklasb.com")
+    MAIL_DEFAULT_SENDER = (APP_NAME, "bracket@niklasb.com")
 
     ERROR_LOGGING_EMAIL = os.environ.get("ERROR_LOGGING_EMAIL")
 

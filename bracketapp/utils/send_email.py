@@ -13,7 +13,7 @@ def async_email_sender(a_app, msg):
 
 
 def send_async_email(msg):
-    Thread(target=send_async_email, args=(app, msg)).start()
+    Thread(target=async_email_sender, args=(app, msg)).start()
 
 
 def send_reset_email(user):
@@ -24,6 +24,22 @@ def send_reset_email(user):
     msg = Message("Password Reset Request", recipients=[user.email])
     msg.body = f"""To reset your password, visit the following link:
 {url_for("auth_bp.password_reset", token=token, _external=True)}
+The link is only valid for 10 minutes.
+If you did not make this request then please ignore this email and no changes will be made.
+"""
+
+    send_async_email(msg)
+
+
+def send_login_email(user, user_created):
+    if not user:
+        return
+
+    token = user.get_login_token(user_created)
+    msg = Message("NB Bracket Challenge Login Link", recipients=[user.email])
+    msg.body = f"""To login, click the following link:
+{url_for("auth_bp.passwordless_login", token=token, _external=True)}
+The link is only valid for 10 minutes.
 If you did not make this request then please ignore this email and no changes will be made.
 """
 

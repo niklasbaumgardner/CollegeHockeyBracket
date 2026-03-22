@@ -130,10 +130,14 @@ export class LoginCard extends NikElement {
           >
         </div>
 
-        <p>
-          Don't have an account?
-          <a href="${SIGNUP_URL}">Sign Up</a>
-        </p>
+        <div>
+          <div>Don't have an account yet?</div>
+          <div class="">
+            <a href="${SIGNUP_URL}">Sign up here</a>
+            <span>or</span>
+            <span><a href="${EMAIL_LOGIN_URL}">Email a link to login</a></span>
+          </div>
+        </div>
       </div>
     </wa-card>`;
   }

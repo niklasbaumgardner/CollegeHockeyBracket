@@ -1,7 +1,7 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
 
-export class PasswordResetRequestCard extends NikElement {
+export class EmailLogin extends NikElement {
   static properties = {
     email: { type: String },
   };
@@ -10,12 +10,12 @@ export class PasswordResetRequestCard extends NikElement {
 
   render() {
     return html`<wa-card>
-      <form id="password-reset-request-form" action="" method="POST"></form>
+      <form id="email-login-form" action="" method="POST"></form>
       <div class="wa-stack">
-        <h2>Reset Password</h2>
+        <h2>Email Link To Login</h2>
 
         <wa-input
-          form="password-reset-request-form"
+          form="email-login-form"
           type="email"
           name="email"
           label="Email"
@@ -24,15 +24,15 @@ export class PasswordResetRequestCard extends NikElement {
         ></wa-input>
 
         <wa-button
-          form="password-reset-request-form"
+          form="email-login-form"
           type="submit"
           variant="brand"
           class="w-full"
-          >Request Link To Reset Password</wa-button
+          >Request Link To Login</wa-button
         >
       </div>
     </wa-card>`;
   }
 }
 
-customElements.define("nb-password-reset-request", PasswordResetRequestCard);
+customElements.define("nb-email-login", EmailLogin);

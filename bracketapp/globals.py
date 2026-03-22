@@ -33,18 +33,31 @@ class Global:
     def get_all_keys(self):
         return self.client.keys("*")
 
+    def can_edit_by_time(self):
+        if Config.FLASK_DEBUG:
+            return CAN_EDIT_BRACKET
+
+        return BRACKET_OPEN_TIME < datetime.now(tz) < BRACKET_CLOSE_TIME
+
     @property
     def CAN_EDIT_BRACKET(self):
-        can_edit = self.client.get("CAN_EDIT_BRACKET")
+        try:
+            can_edit = self.client.get("CAN_EDIT_BRACKET")
+        except:
+            can_edit = None
 
         if can_edit is None:
-            return CAN_EDIT_BRACKET
+            return self.can_edit_by_time()
 
         return can_edit
 
     @property
     def YEAR(self):
-        year = self.client.get("YEAR")
+        try:
+            year = self.client.get("YEAR")
+        except:
+            year = None
+
         if year is None:
             return YEAR
 

@@ -11,6 +11,7 @@ import "./nb-login.mjs";
 import "./nb-my-brackets.mjs";
 import "./nb-create-group.mjs";
 import "./nb-password-reset-request.mjs";
+import "./nb-email-login.mjs";
 import "./nb-reset-password.mjs";
 import "./nb-preferences.mjs";
 import "./nb-profile.mjs";

@@ -9,8 +9,13 @@ from bracketapp.models import User
 ##
 
 
-def create_user(email, username, password):
-    hash_ = hash_password(password=password)
+def create_user(email, username, password=None):
+    if password:
+        hash_ = hash_password(password=password)
+    else:
+        # Password will be invalid until it is reset
+        hash_ = "passwordless login"
+
     stmt = insert(User).values(email=email, username=username, password=hash_)
     result = db.session.execute(stmt)
     user_id = result.inserted_primary_key.id
