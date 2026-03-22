@@ -27,7 +27,7 @@ def get_all_groups_for_user(year=None):
 
     stmt = (
         select(Group, Bracket, GroupBracket)
-        .outerjoin(GroupMember, Group.id == GroupMember.group_id)
+        .join(GroupMember, Group.id == GroupMember.group_id)
         .outerjoin(GroupBracket, Group.id == GroupBracket.group_id)
         .outerjoin(Bracket, Bracket.id == GroupBracket.bracket_id)
         .where(
