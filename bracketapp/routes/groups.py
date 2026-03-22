@@ -91,7 +91,7 @@ def create_group():
         name=group_name, is_private=is_private, password=password
     )
 
-    # group_queries.upsert_group_member(group_id=group_id)
+    group_queries.upsert_group_member(group_id=group_id)
 
     cache_invalidator.new_group()
 
