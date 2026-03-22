@@ -84,6 +84,8 @@ class NBClient(Client):
         noreply: bool | None = None,
         flags: int | None = None,
     ) -> bool | None:
+        if not key:
+            return
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", [key])
         return super().set(key, value, expire, noreply, flags)
@@ -98,10 +100,12 @@ class NBClient(Client):
     ) -> List[bytes | str]:
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", list(values.keys()))
-        return super().set_many(values, expire, noreply, flags)
+        return super().set_many([v for v in values if v], expire, noreply, flags)
 
     @sentry_sdk.trace(op="cache.get", name="pymemcache")
     def get(self, key: bytes | str, default: Any | None = None) -> Any:
+        if not key:
+            return None
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", [key])
         value = super().get(key, default)
@@ -115,7 +119,7 @@ class NBClient(Client):
     def get_many(self, keys: Iterable[bytes | str]) -> Dict[bytes | str, Any]:
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", keys)
-        value = super().get_many(keys)
+        value = super().get_many([k for k in keys if k])
         if len(value) == 0:
             span.set_data("cache.hit", False)
         else:
@@ -124,6 +128,9 @@ class NBClient(Client):
 
     @sentry_sdk.trace(op="cache.delete", name="pymemcache")
     def delete(self, key: bytes | str, noreply: bool | None = None) -> bool:
+        if not key:
+            return False
+
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", [key])
         return super().delete(key, noreply)
@@ -134,7 +141,7 @@ class NBClient(Client):
     ) -> bool:
         span = sentry_sdk.get_current_span()
         span.set_data("cache.key", keys)
-        return super().delete_many(keys, noreply)
+        return super().delete_many([k for k in keys if k], noreply)
 
     @sentry_sdk.trace(op="cache.flush_all", name="pymemcache")
     def flush_all(self, delay: int = 0, noreply: bool | None = None) -> bool:

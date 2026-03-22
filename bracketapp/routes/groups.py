@@ -43,7 +43,9 @@ def api_view_group(sqid):
     group_id = sqids.decode_one(sqid)
 
     g_cache_key = group_cache_key(group_id)
-    gm_cache_key = group_membership_cache_key(current_user.id, group_id)
+    gm_cache_key = None
+    if current_user.is_authenticated:
+        gm_cache_key = group_membership_cache_key(current_user.id, group_id)
     cache_dict = cache.get_many([g_cache_key, gm_cache_key])
 
     cache_hits = 0
@@ -161,6 +163,7 @@ def join_group(sqid):
     if group.is_private:
         join_key = request.args.get("join_key")
         password_post = request.form.get("password")
+        password = None
 
         if join_key:
             password = group.verify_join_key(join_key)
