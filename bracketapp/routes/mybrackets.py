@@ -60,7 +60,7 @@ def api_my_brackets(year=None):
 
     if g.CAN_EDIT_BRACKET and year is None:
         # Add the current year to years
-        if years[0] != g.YEAR:
+        if len(years) > 0 and years[0] != g.YEAR:
             years = [g.YEAR] + years
     cache.set_many({my_b_cache_key: brackets_data, years_cache_key: years})
 
