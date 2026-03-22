@@ -1,5 +1,5 @@
-import { BaseDialog } from "./nb-base-dialog.mjs";
 import { html } from "lit";
+import { BaseDialog } from "./nb-base-dialog.mjs";
 
 export class JoinPrivateGroup extends BaseDialog {
   static properties = { group: { type: Object } };
@@ -12,7 +12,7 @@ export class JoinPrivateGroup extends BaseDialog {
     return html`<form
       id="join-private-group"
       action=${this.group.join_url}
-      method="GET"
+      method="POST"
       class="wa-stack"
     >
       <p>This group is private. Please enter the password to join.</p>

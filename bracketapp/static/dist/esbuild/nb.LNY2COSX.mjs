@@ -1,4 +1,4 @@
-import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b as Ne,c as Ie,d as b}from"./chunk-YTZDMNTQ.mjs";import{a as h,c as Pe,d as Ge,e as Ae,f as R,i as Ue}from"./chunk-P43BX2YJ.mjs";function je(i,e){return()=>i.querySelector(e)}function Le(i,e){return()=>i.querySelectorAll(e)}var n=class extends Re{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Le(this,r.all)}):Object.defineProperty(this,a,{get:je(this,r)})}createRenderRoot(){return this}};var B=class extends n{render(){return t`<wa-card
+import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b as Ne,c as Ie,d as b}from"./chunk-YTZDMNTQ.mjs";import{a as h,c as Pe,d as Ae,e as Ge,f as R,i as Ue}from"./chunk-P43BX2YJ.mjs";function je(i,e){return()=>i.querySelector(e)}function Le(i,e){return()=>i.querySelectorAll(e)}var n=class extends Re{constructor(){super();let{queries:e}=this.constructor;if(e)for(let[a,r]of Object.entries(e))r.all?Object.defineProperty(this,a,{get:Le(this,r.all)}):Object.defineProperty(this,a,{get:je(this,r)})}createRenderRoot(){return this}};var B=class extends n{render(){return t`<wa-card
       ><form method="POST">
         <div class="wa-stack">
           <wa-input
@@ -103,12 +103,12 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
           library="remix"
         ></wa-icon
       ></wa-button>
-    </wa-callout>`}};customElements.define("nb-alert",P);var G=class extends n{static properties={messages:{type:Array,converter:(e,a)=>!e||!e.length||e==="[]"?[]:[...e.match(/(?<=\()[^()]+(?=\))/g)].map(r=>r.replaceAll("'","").split(", "))}};render(){return this.messages.length?t`<div id="alerts" class="wa-stack items-center">
+    </wa-callout>`}};customElements.define("nb-alert",P);var A=class extends n{static properties={messages:{type:Array,converter:(e,a)=>!e||!e.length||e==="[]"?[]:[...e.match(/(?<=\()[^()]+(?=\))/g)].map(r=>r.replaceAll("'","").split(", "))}};render(){return this.messages.length?t`<div id="alerts" class="wa-stack items-center">
       ${this.messages.map(([e,...a])=>t`<nb-alert
             category=${e}
             message=${a.join(", ")}
           ></nb-alert>`)}
-    </div>`:null}};customElements.define("nb-alert-manager",G);var A=class extends n{static properties={theme:{type:Object}};static queries={dropdown:"wa-dropdown",icon:"#icon",themeItems:{all:"wa-dropdown-item"}};get currentThemeIcon(){return this.theme?.mode==="dark"?this.darkIcon:this.lightIcon}connectedCallback(){super.connectedCallback(),this.init()}async init(){await this.updateComplete,this.theme=THEME,this.setupThemeWatcher()}setupThemeWatcher(){this.mutationObserver=new MutationObserver(e=>this.handleThemeChange(e)),this.mutationObserver.observe(document.documentElement,{attributes:!0}),this.handleThemeChange()}handleThemeChange(){for(let e of this.themeItems)e.checked=e.id===this.theme.mode;this.icon.name=this.getThemeIconName(),window.localStorage.setItem("theme.mode",this.theme.mode)}setTheme(e){this.theme.mode=e;for(let a of this.themeItems)a.checked=a.id===this.theme.mode;this.icon.name=this.getThemeIconName(),console.log("setting theme mode",this.theme.mode)}handleThemeSelect(e){let a=e.detail.item;this.setTheme(a.value)}getThemeIconName(){return this.theme?.mode==="dark"?"moon-outline":"sunny-outline"}render(){return t`<wa-dropdown @wa-select=${this.handleThemeSelect}>
+    </div>`:null}};customElements.define("nb-alert-manager",A);var G=class extends n{static properties={theme:{type:Object}};static queries={dropdown:"wa-dropdown",icon:"#icon",themeItems:{all:"wa-dropdown-item"}};get currentThemeIcon(){return this.theme?.mode==="dark"?this.darkIcon:this.lightIcon}connectedCallback(){super.connectedCallback(),this.init()}async init(){await this.updateComplete,this.theme=THEME,this.setupThemeWatcher()}setupThemeWatcher(){this.mutationObserver=new MutationObserver(e=>this.handleThemeChange(e)),this.mutationObserver.observe(document.documentElement,{attributes:!0}),this.handleThemeChange()}handleThemeChange(){for(let e of this.themeItems)e.checked=e.id===this.theme.mode;this.icon.name=this.getThemeIconName(),window.localStorage.setItem("theme.mode",this.theme.mode)}setTheme(e){this.theme.mode=e;for(let a of this.themeItems)a.checked=a.id===this.theme.mode;this.icon.name=this.getThemeIconName(),console.log("setting theme mode",this.theme.mode)}handleThemeSelect(e){let a=e.detail.item;this.setTheme(a.value)}getThemeIconName(){return this.theme?.mode==="dark"?"moon-outline":"sunny-outline"}render(){return t`<wa-dropdown @wa-select=${this.handleThemeSelect}>
       <wa-button
         id="theme-button"
         variant="brand"
@@ -136,7 +136,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
       <wa-dropdown-item id="dark" type="checkbox" value="dark"
         >Dark</wa-dropdown-item
       >
-    </wa-dropdown>`}};customElements.define("nb-theme-selector",A);var c=class extends n{inputEvent=!1;submitEvent=!0;static queries={dialog:"wa-dialog",submitButton:"wa-button[type='submit']"};show(){customElements.whenDefined("wa-dialog").then(()=>{this.updateComplete.then(()=>{this.dialog.updateComplete.then(()=>{this.dialog.open=!0})})})}hide(){this.dialog.open=!1}handleDialogShow(e){e.target===this.dialog&&this.querySelector("wa-input")?.focus()}handleWaHide(e){e.target===this.dialog&&e.explicitOriginalTarget.localName==="wa-option"&&e.preventDefault()}handleInput(){}handleSubmit(){this.submitButton.disabled=!0,this.submitButton.loading=!0}lableTemplate(){return null}contentTemplate(){return null}footerTemplate(){return null}cancelButtonTemplate(){return t`<wa-button
+    </wa-dropdown>`}};customElements.define("nb-theme-selector",G);var c=class extends n{inputEvent=!1;submitEvent=!0;static queries={dialog:"wa-dialog",submitButton:"wa-button[type='submit']"};show(){customElements.whenDefined("wa-dialog").then(()=>{this.updateComplete.then(()=>{this.dialog.updateComplete.then(()=>{this.dialog.open=!0})})})}hide(){this.dialog.open=!1}handleDialogShow(e){e.target===this.dialog&&this.querySelector("wa-input")?.focus()}handleWaHide(e){e.target===this.dialog&&e.explicitOriginalTarget.localName==="wa-option"&&e.preventDefault()}handleInput(){}handleSubmit(){this.submitButton.disabled=!0,this.submitButton.loading=!0}lableTemplate(){return null}contentTemplate(){return null}footerTemplate(){return null}cancelButtonTemplate(){return t`<wa-button
       class="grow"
       data-dialog="close"
       variant="neutral"
@@ -1269,7 +1269,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         @click=${this.resetRounding}
         >Reset</wa-button
       >
-    </div>`}bgNumberRadioTemplate(){if(!this.backgroundColorSelect){this.updateComplete.then(()=>this.requestUpdate());return}let e=this.backgroundColorSelect.value?.toLowerCase();if(R.includes(e))return Ae.map(a=>t`<input
+    </div>`}bgNumberRadioTemplate(){if(!this.backgroundColorSelect){this.updateComplete.then(()=>this.requestUpdate());return}let e=this.backgroundColorSelect.value?.toLowerCase();if(R.includes(e))return Ge.map(a=>t`<input
           @input=${this.handleBackgroundNumberChange}
           class="box-radio bg-(--color-${e}-${a})"
           style="background-color: var(--color-${e}-${a});"
@@ -1290,7 +1290,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
             </wa-option>`)}</wa-select
       >
       <div class="wa-cluster wa-nativ">${this.bgNumberRadioTemplate()}</div>
-    </div>`}variantsTemplate(){return Ge.map(e=>t`<wa-select
+    </div>`}variantsTemplate(){return Ae.map(e=>t`<wa-select
           with-clear
           id="${e}-color"
           name=${e}
@@ -1734,7 +1734,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
       >`}async connectedCallback(){super.connectedCallback(),await this.updateComplete,this.private=this.group.is_private}};customElements.define("nb-edit-group",Ee);var Ce=class extends c{static properties={group:{type:Object}};lableTemplate(){return t`Join ${this.group.name}`}contentTemplate(){return t`<form
       id="join-private-group"
       action=${this.group.join_url}
-      method="GET"
+      method="POST"
       class="wa-stack"
     >
       <p>This group is private. Please enter the password to join.</p>
@@ -1927,4 +1927,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.A77XYVYZ.mjs.map
+//# sourceMappingURL=nb.LNY2COSX.mjs.map
