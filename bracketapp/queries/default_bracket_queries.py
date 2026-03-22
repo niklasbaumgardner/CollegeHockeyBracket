@@ -101,7 +101,7 @@ def update_bracket_teams_from_form(form_data):
 
         bracket_teams.append(
             dict(
-                id=sqids.decode_one(form_data.get(f"game{i}-top-bracket-team-id")),
+                id=sqids.decode_one(form_data.get(f"game{i}-bottom-bracket-team-id")),
                 team_id=sqids.decode_one(form_data.get(f"game{i}-bottom-team-id")),
                 rank=form_data.get(f"game{i}-bottom-team-rank"),
                 # year=g.YEAR,
