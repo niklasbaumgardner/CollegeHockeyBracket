@@ -715,7 +715,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
           <div class="">
             <a href="${SIGNUP_URL}">Sign up here</a>
             <span>or</span>
-            <span><a href="${EMAIL_LOGIN_URL}">Email a link to login</a></span>
+            <span><a href="${EMAIL_LOGIN_URL}">Email me a login link</a></span>
           </div>
         </div>
       </div>
@@ -1927,4 +1927,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.NIVZMXZR.mjs.map
+//# sourceMappingURL=nb.DJY7A2US.mjs.map
