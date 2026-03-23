@@ -1,5 +1,10 @@
 import { html } from "lit";
 import { BaseDialog } from "./nb-base-dialog.mjs";
+import { DeferredTask } from "./DeferredTask.mjs";
+import profanityCleaner from "https://cdn.jsdelivr.net/npm/profanity-cleaner@0.0.3/+esm";
+
+const GROUP_UNIQUE_HELP_TEXT =
+  "Group name is already taken. Please choose a different name.";
 
 export class CreateGroup extends BaseDialog {
   static properties = {
@@ -11,6 +16,7 @@ export class CreateGroup extends BaseDialog {
     isPrivateCheckbox: "#is_private",
     password: "#password",
     form: "form",
+    nameInput: "#name",
   };
 
   constructor() {
@@ -37,6 +43,52 @@ export class CreateGroup extends BaseDialog {
     this.private = !this.private;
   }
 
+  async checkGroupNameUnique(name) {
+    let response = await fetch(
+      GROUP_NAME_UNIQUE_URL +
+        "?" +
+        new URLSearchParams({
+          name,
+        }),
+    );
+    response = await response.json();
+    return response;
+  }
+
+  async handleGroupNameInput() {
+    this.submitButton.disabled = true;
+
+    this.nameInput.value = profanityCleaner.clean(this.nameInput.value, {
+      keepFirstAndLastChar: true,
+      replacePartialWords: true,
+    });
+
+    await this.nameInput.updateComplete;
+
+    if (!this.groupNameTask) {
+      this.groupNameTask = new DeferredTask(async () => {
+        const groupName = this.nameInput.value.trim();
+
+        if (groupName.length === 0) {
+          return;
+        }
+
+        const result = await this.checkGroupNameUnique(groupName);
+        console.log("Group name is unique", result.isUnique);
+
+        if (result.isUnique) {
+          this.nameInput.hint = "";
+          this.submitButton.disabled = false;
+        } else {
+          this.nameInput.hint = GROUP_UNIQUE_HELP_TEXT;
+          this.submitButton.disabled = true;
+        }
+      }, 300);
+    }
+
+    this.groupNameTask.arm();
+  }
+
   lableTemplate() {
     return html`Create A Group`;
   }
@@ -58,6 +110,7 @@ export class CreateGroup extends BaseDialog {
           maxlength="60"
           required
           autofocus
+          @input=${this.handleGroupNameInput}
         ></wa-input>
 
         <wa-checkbox
@@ -91,6 +144,7 @@ export class CreateGroup extends BaseDialog {
       variant="brand"
       type="submit"
       form="new-group-form"
+      disabled
       >Create</wa-button
     >`;
   }

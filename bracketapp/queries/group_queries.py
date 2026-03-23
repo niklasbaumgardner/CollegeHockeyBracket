@@ -384,3 +384,9 @@ def delete_group(group_id):
     db.session.commit()
 
     return result.rowcount
+
+
+def is_group_name_unique(name):
+    stmt = select(func.count(1)).where(and_(Group.name == name, Group.year == g.YEAR))
+    count = db.session.execute(stmt).scalar_one()
+    return count == 0

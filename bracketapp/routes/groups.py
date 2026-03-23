@@ -90,6 +90,10 @@ def create_group():
     is_private = request.form.get("is_private", type=bool, default=False)
     password = request.form.get("password")
 
+    if not group_queries.is_group_name_unique(group_name):
+        flash("Group name is already taken. Please choose a different name.", "danger")
+        return redirect(url_for("mybrackets_bp.my_brackets", _anchor="groups"))
+
     group_id = group_queries.create_group(
         name=group_name, is_private=is_private, password=password
     )
@@ -99,6 +103,14 @@ def create_group():
     cache_invalidator.new_group()
 
     return redirect(url_for("groups_bp.view_group", sqid=sqids.encode_one(group_id)))
+
+
+@groups_bp.get("/is_group_name_unique")
+@login_required
+def is_group_name_unique():
+    name = request.args.get("name")
+
+    return {"isUnique": group_queries.is_group_name_unique(name)}
 
 
 @groups_bp.post("/edit_group/<string:sqid>")

@@ -25,7 +25,7 @@ if True or not Config.FLASK_DEBUG:
         dsn=Config.SENTRY_DSN,
         traces_sample_rate=1.0,
         send_default_pii=True,
-        release="nbbracketchallenge@3.0.10",
+        release="nbbracketchallenge@3.0.11",
     )
 
 
