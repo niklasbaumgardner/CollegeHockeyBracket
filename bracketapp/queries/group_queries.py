@@ -28,20 +28,24 @@ def get_all_groups_for_user(year=None):
     stmt = (
         select(Group, Bracket, GroupBracket)
         .join(GroupMember, Group.id == GroupMember.group_id)
-        .outerjoin(GroupBracket, Group.id == GroupBracket.group_id)
-        .outerjoin(Bracket, Bracket.id == GroupBracket.bracket_id)
+        .outerjoin(
+            GroupBracket,
+            and_(
+                GroupBracket.group_id == Group.id,
+                GroupBracket.user_id == current_user.id,
+            ),
+        )
+        .outerjoin(
+            Bracket,
+            and_(
+                Bracket.id == GroupBracket.bracket_id,
+                Bracket.user_id == current_user.id,
+            ),
+        )
         .where(
             and_(
                 Group.year == year,
                 GroupMember.user_id == current_user.id,
-                or_(
-                    Bracket.id.is_(None),
-                    Bracket.user_id == current_user.id,
-                ),
-                or_(
-                    GroupBracket.id.is_(None),
-                    GroupBracket.user_id == current_user.id,
-                ),
             )
         )
         .order_by(collate(Group.name, "en_US"))

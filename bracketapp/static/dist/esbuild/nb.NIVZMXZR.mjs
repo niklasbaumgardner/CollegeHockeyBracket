@@ -759,26 +759,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
       class="standings-img"
       src="${STATIC_FILE_MAP[e.team.icon_path]}"
       alt="${e.team.name}"
-    />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let s=document.createElement("nb-bracket-column");return s.bracket=r.data,s}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=b(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:null}};customElements.define("nb-standings-grid",u);var w=class extends n{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:s,year:o}=a;this.brackets=r,this.winners=s,this.year=o}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
-      ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
-        <wa-icon
-          style="color:var(--color-amber-500);font-size:var(--wa-font-size-3xl);"
-          name="trophy"
-          library="hero"
-          variant="outline"
-        ></wa-icon>
-        <p>${e}</p>
-        <p>${a}</p>
-      </div></wa-card
-    >`}titleTemplate(){return t`<div><h2>${this.year} Leaderboard</h2></div>`}messageTemplate(){return this.numWinners>0?this.winnersTemplate():t`<nb-countdown></nb-countdown>`}bracketsTemplate(){return t`<nb-standings-grid
-      year=${this.year}
-      .brackets=${this.brackets}
-    ></nb-standings-grid>`}render(){return this.year?t`<wa-card>
-      <div class="wa-stack">
-        ${this.titleTemplate()} ${this.messageTemplate()}
-        ${this.bracketsTemplate()}
-      </div>
-    </wa-card>`:null}};customElements.define("nb-standings",w);var V=class extends c{static properties={bracket:{type:Object}};lableTemplate(){return t`Delete bracket named "${this.bracket.name}"?`}contentTemplate(){return t`<form
+    />`:null}createDataGrid(){if(!this.brackets.length)return;let e=[];e.push({field:"rank"},{field:"name",headerName:this.headerName,autoHeight:!0,valueGetter:r=>r.data.safeName,cellRenderer:r=>{let s=document.createElement("nb-bracket-column");return s.bracket=r.data,s}},{field:"points"},{field:"max_points",headerName:"Max"}),(this.year<CURRENT_YEAR||!CAN_EDIT_BRACKET)&&e.push({field:"round_one_points",headerName:"R1"},{field:"round_two_points",headerName:"R2"},{field:"round_three_points",headerName:"R3"},{field:"round_four_points",headerName:"R4"});let a={columnDefs:e,rowData:this.brackets,...this.gridOptions,pagination:!0,paginationPageSize:this.storedPageSize,paginationPageSizeSelector:[25,50,75,100],onPaginationChanged:r=>this.handlePaginationChangedEvent(r)};this.dataGrid=b(this.standingsGridEl,a)}handlePaginationChangedEvent(e){e.newPageSize&&window.localStorage.setItem(this.#e,this.dataGrid.paginationGetPageSize())}render(){return this.brackets.length?t`<div id="standingsGrid" style="--ag-grid-size: 4px;"></div>`:null}};customElements.define("nb-standings-grid",u);var V=class extends c{static properties={bracket:{type:Object}};lableTemplate(){return t`Delete bracket named "${this.bracket.name}"?`}contentTemplate(){return t`<form
         id="delete-bracket-form"
         action=${this.bracket.delete_url}
         method="POST"
@@ -1054,7 +1035,26 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         @input=${this.handleInputEvent}
         ><wa-icon name="search" slot="start"></wa-icon></wa-input
       >${this.resultsTemplate()}</wa-popup
-    >`}};customElements.define("nb-search-groups",ue);var he=class extends w{cache={};updatedBrackets=!0;updatedGroups=!0;static properties={groups:{type:Object},shouldShowBrackets:{type:Boolean}};static queries={tabGroup:"wa-tab-group",yearSelect:"#year-select",bracketGrid:"nb-my-brackets-grid",groupGrids:{all:"nb-my-brackets-group-standings"}};constructor(){super(),this.url=new URL(window.location),this.initialTabPanel=this.url.hash.includes("group")?"groups":"my-brackets"}get canCreateBracket(){return this.canEditThisYearsBrackets&&this.brackets.length<5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year===CURRENT_YEAR}connectedCallback(){super.connectedCallback(),document.addEventListener("wa-tab-show",this),window.addEventListener("hashchange",this)}handleEvent(e){switch(e.type){case"wa-tab-show":{this.handleTabShow(e);break}case"hashchange":{this.handleHashChange(e);break}}}handleTabShow(e){let a=e.detail.name;a==="my-brackets"&&(this.shouldShowBrackets=!0,this.maybeUpdateBracketsGrid()),a==="groups"?(window.location.hash="groups",this.maybeUpdateGroupsGrids()):window.location.hash=""}handleHashChange(e){new URL(e.newURL).hash==="#groups"?this.tabGroup.active="groups":this.tabGroup.active="my-brackets"}async requestContentForYear(e=null){return(await fetch(MY_BRACKETS_CONTENT_URL+(e?`/${e}`:""))).json()}async requestContent(){let e=await this.requestContentForYear(),{brackets:a,groups:r,year:s,years:o}=e;!CAN_EDIT_BRACKET&&!a.length&&!r.length&&!o.includes(s)&&(s=Math.max(...o),e=await this.requestContentForYear(s),{brackets:a,groups:r,year:s,years:o}=e);for(let m of a)m.group_brackets?.sort((l,p)=>l.group.name.localeCompare(p.group.name));this.brackets=a,this.groups=r,this.year=s,this.years=o,this.cache[s]=e}maybeUpdateBracketsGrid(){!this.updatedBrackets&&this.bracketGrid&&window.location.hash===""&&(this.bracketGrid?.updateData(this.brackets,this.groups,this.year),this.updatedBrackets=!0)}maybeUpdateGroupsGrids(){!this.updatedGroups&&this.groupGrids&&window.location.hash==="#groups"&&([...this.groupGrids].map(e=>e.updateData(this.brackets,e.group,this.year)),this.updatedGroups=!0)}async handleYearChange(){this.updatedBrackets=!1,this.updatedGroups=!1;let e=this.yearSelect.value,a;this.cache[e]?a=this.cache[e]:(a=await this.requestContentForYear(e),this.cache[e]=a);let{brackets:r,groups:s,year:o}=a;this.brackets=r,this.groups=s,this.year=o,this.requestUpdate(),await this.updateComplete,this.maybeUpdateBracketsGrid(),this.maybeUpdateGroupsGrids()}async updated(){!this.openedToGroups&&this.tabGroup&&this.initialTabPanel==="groups"&&(await this.tabGroup.updateComplete,this.tabGroup.active="groups",this.openedToGroups=!0,this.url.hash.includes("group_")&&document.querySelector(this.url.hash).addABracket())}handleCreateGroupClick(){document.dispatchEvent(new CustomEvent("CreateNewGroup"))}yearsDropdown(){return!this.years||this.years?.length<2?this.year:t`<wa-select
+    >`}};customElements.define("nb-search-groups",ue);var w=class extends n{static properties={brackets:{type:Object},winners:{type:Object},year:{type:Number}};get numWinners(){return this.winners.length}connectedCallback(){super.connectedCallback(),this.requestContent()}async requestContent(){let a=await(await fetch(LEADERBOARD_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{standings:r,winners:s,year:o}=a;this.brackets=r,this.winners=s,this.year=o}winnersTemplate(){let e="Winner"+(this.numWinners>1?"s":""),a=this.winners.flatMap(r=>[t`<b>${r.name}</b> <small>(${r.user.username})</small>`,t`, `]).slice(0,-1);return t`<wa-card
+      ><div class="wa-stack gap-(--wa-space-s) justify-center items-center">
+        <wa-icon
+          style="color:var(--color-amber-500);font-size:var(--wa-font-size-3xl);"
+          name="trophy"
+          library="hero"
+          variant="outline"
+        ></wa-icon>
+        <p>${e}</p>
+        <p>${a}</p>
+      </div></wa-card
+    >`}titleTemplate(){return t`<div><h2>${this.year} Leaderboard</h2></div>`}messageTemplate(){return this.numWinners>0?this.winnersTemplate():t`<nb-countdown></nb-countdown>`}bracketsTemplate(){return t`<nb-standings-grid
+      year=${this.year}
+      .brackets=${this.brackets}
+    ></nb-standings-grid>`}render(){return this.year?t`<wa-card>
+      <div class="wa-stack">
+        ${this.titleTemplate()} ${this.messageTemplate()}
+        ${this.bracketsTemplate()}
+      </div>
+    </wa-card>`:null}};customElements.define("nb-standings",w);var he=class extends w{cache={};updatedBrackets=!0;updatedGroups=!0;static properties={groups:{type:Object},shouldShowBrackets:{type:Boolean}};static queries={tabGroup:"wa-tab-group",yearSelect:"#year-select",bracketGrid:"nb-my-brackets-grid",groupGrids:{all:"nb-my-brackets-group-standings"}};constructor(){super(),this.url=new URL(window.location),this.initialTabPanel=this.url.hash.includes("group")?"groups":"my-brackets"}get canCreateBracket(){return this.canEditThisYearsBrackets&&this.brackets.length<5}get canEditThisYearsBrackets(){return CAN_EDIT_BRACKET&&this.year===CURRENT_YEAR}connectedCallback(){super.connectedCallback(),document.addEventListener("wa-tab-show",this),window.addEventListener("hashchange",this)}handleEvent(e){switch(e.type){case"wa-tab-show":{this.handleTabShow(e);break}case"hashchange":{this.handleHashChange(e);break}}}handleTabShow(e){let a=e.detail.name;a==="my-brackets"&&(this.shouldShowBrackets=!0,this.maybeUpdateBracketsGrid()),a==="groups"?(window.location.hash="groups",this.maybeUpdateGroupsGrids()):window.location.hash=""}handleHashChange(e){new URL(e.newURL).hash==="#groups"?this.tabGroup.active="groups":this.tabGroup.active="my-brackets"}async requestContentForYear(e=null){return(await fetch(MY_BRACKETS_CONTENT_URL+(e?`/${e}`:""))).json()}async requestContent(){let e=await this.requestContentForYear(),{brackets:a,groups:r,year:s,years:o}=e;!CAN_EDIT_BRACKET&&!a.length&&!r.length&&!o.includes(s)&&(s=Math.max(...o),e=await this.requestContentForYear(s),{brackets:a,groups:r,year:s,years:o}=e);for(let m of a)m.group_brackets?.sort((l,p)=>l.group.name.localeCompare(p.group.name));this.brackets=a,this.groups=r,this.year=s,this.years=o,this.cache[s]=e}maybeUpdateBracketsGrid(){!this.updatedBrackets&&this.bracketGrid&&window.location.hash===""&&(this.bracketGrid?.updateData(this.brackets,this.groups,this.year),this.updatedBrackets=!0)}maybeUpdateGroupsGrids(){!this.updatedGroups&&this.groupGrids&&window.location.hash==="#groups"&&([...this.groupGrids].map(e=>e.updateData(this.brackets,e.group,this.year)),this.updatedGroups=!0)}async handleYearChange(){this.updatedBrackets=!1,this.updatedGroups=!1;let e=this.yearSelect.value,a;this.cache[e]?a=this.cache[e]:(a=await this.requestContentForYear(e),this.cache[e]=a);let{brackets:r,groups:s,year:o}=a;this.brackets=r,this.groups=s,this.year=o,this.requestUpdate(),await this.updateComplete,this.maybeUpdateBracketsGrid(),this.maybeUpdateGroupsGrids()}async updated(){!this.openedToGroups&&this.tabGroup&&this.initialTabPanel==="groups"&&(await this.tabGroup.updateComplete,this.tabGroup.active="groups",this.openedToGroups=!0,this.url.hash.includes("group_")&&document.querySelector(this.url.hash).addABracket())}handleCreateGroupClick(){document.dispatchEvent(new CustomEvent("CreateNewGroup"))}yearsDropdown(){return!this.years||this.years?.length<2?this.year:t`<wa-select
       id="year-select"
       class="w-5"
       @input=${this.handleYearChange}
@@ -1927,4 +1927,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.ZRTE2BQE.mjs.map
+//# sourceMappingURL=nb.NIVZMXZR.mjs.map
