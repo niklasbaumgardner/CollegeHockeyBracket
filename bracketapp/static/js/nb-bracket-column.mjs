@@ -1,5 +1,5 @@
-import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
+import { NikElement } from "./nik-element.mjs";
 
 export class BracketColumn extends NikElement {
   static properties = {
@@ -14,7 +14,7 @@ export class BracketColumn extends NikElement {
     if (!winner_team) {
       return html`<img
         class="standings-img"
-        src=${STATIC_FILE_MAP["/static/images/bracketlogoborder.svg"]}
+        src=${STATIC_FILE_MAP["/static/images/logoWithBracket.svg"]}
         alt="NB Bracket Challenge logo"
       />`;
     }
