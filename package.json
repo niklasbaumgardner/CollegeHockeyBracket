@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@awesome.me/webawesome-pro": "^3.3.1",
-    "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/cli": "^4.2.2",
     "ag-grid-community": "^35.1.0",
     "lit": "^3.3.2",
     "profanity-cleaner": "^0.0.3",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "esbuild": "^0.27.3",
+    "esbuild": "^0.27.4",
     "esbuild-clean-plugin": "^2.0.0"
   }
 }
