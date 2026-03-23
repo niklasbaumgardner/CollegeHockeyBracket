@@ -5,7 +5,7 @@ from typing import Annotated, Any, Optional
 from flask import url_for
 from flask_login import UserMixin
 from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer
-from sqlalchemy import BigInteger, ForeignKey, Identity, UniqueConstraint, select
+from sqlalchemy import BigInteger, ForeignKey, Identity, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -92,22 +92,24 @@ class User(BaseModel, UserMixin, SqidSerializerMixin):
 
         return get_user_by_id(user_id)
 
-    def get_login_token(self, user_created):
+    def get_login_token(self):
         s = URLSafeTimedSerializer(Config.SECRET_KEY)
-        return s.dumps({"user_id": self.id, "user_created": user_created})
+        return s.dumps({"user_id": self.id, "new_user": False})
+
+    @staticmethod
+    def get_new_user_login_token(email):
+        s = URLSafeTimedSerializer(Config.SECRET_KEY)
+        return s.dumps({"email": email, "new_user": True})
 
     @staticmethod
     def verify_login_token(token, expire_sec=600):
         s = URLSafeTimedSerializer(Config.SECRET_KEY)
         try:
             data = s.loads(token, max_age=expire_sec)
-            id = data.get("user_id")
-            user_created = data.get("user_created")
-        except:
-            return None, None
-        from bracketapp.queries.user_queries import get_user_by_id
 
-        return get_user_by_id(id), user_created
+        except:
+            return None
+        return data
 
 
 class UserSettings(BaseModel, SqidSerializerMixin):

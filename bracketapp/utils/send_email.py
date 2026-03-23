@@ -5,6 +5,7 @@ from flask import url_for
 from flask_mail import Message
 
 from bracketapp import app, mail
+from bracketapp.models import User
 
 
 def async_email_sender(a_app, msg):
@@ -31,11 +32,27 @@ If you did not make this request then please ignore this email and no changes wi
     send_async_email(msg)
 
 
-def send_login_email(user, user_created):
+def send_new_user_login_email(email):
+    if not email:
+        return
+
+    token = User.get_new_user_login_token(email)
+
+    msg = Message("NB Bracket Challenge Login Link", recipients=[email])
+    msg.body = f"""To login, click the following link:
+{url_for("auth_bp.passwordless_login", token=token, _external=True)}
+The link is only valid for 10 minutes.
+If you did not make this request then please ignore this email and no changes will be made.
+"""
+
+    send_async_email(msg)
+
+
+def send_login_email(user):
     if not user:
         return
 
-    token = user.get_login_token(user_created)
+    token = user.get_login_token()
     msg = Message("NB Bracket Challenge Login Link", recipients=[user.email])
     msg.body = f"""To login, click the following link:
 {url_for("auth_bp.passwordless_login", token=token, _external=True)}

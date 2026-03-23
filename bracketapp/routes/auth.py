@@ -164,18 +164,9 @@ def email_login():
         email = request.form.get("email")
         user = user_queries.get_user_by_email(email=email)
         if not user:
-            user_queries.create_user(
-                email=email,
-                username=email.split("@")[0] + f"{round(datetime.now().timestamp())}",
-            )
-            user = user_queries.get_user_by_email(email=email)
-            send_email.send_login_email(user, True)
-            metrics.count(
-                "user_signup",
-                1,
-            )
+            send_email.send_new_user_login_email(email)
         else:
-            send_email.send_login_email(user, False)
+            send_email.send_login_email(user)
 
         flash(
             "An email has been sent with a link to login. Check spam folder.",
@@ -188,10 +179,35 @@ def email_login():
 
 @auth_bp.get("/passwordless_login/<string:token>")
 def passwordless_login(token):
-    user, user_created = User.verify_login_token(token)
+    token_data = User.verify_login_token(token)
+    id = token_data.get("user_id")
+    email = token_data.get("email")
+    new_user = token_data.get("new_user")
+
+    # The user could exist if the link is clicked a second time?
+    user = user_queries.get_user_by_email(email)
+    if new_user and not user:
+        user_queries.create_user(
+            email=email,
+            username=email.split("@")[0] + f"{round(datetime.now().timestamp())}",
+        )
+        metrics.count(
+            "user_signup",
+            1,
+        )
+
+    if id and not user:
+        user = user_queries.get_user_by_id(id)
+    elif email and not user:
+        user = user_queries.get_user_by_email(email)
+
+    if not user:
+        flash("Something went wrong.", "danger")
+        return redirect(url_for("auth_bp.login"))
+
     login_user(user, remember=True)
 
-    if user_created:
+    if new_user:
         return redirect(url_for("profile_bp.profile"))
 
     return redirect(url_for("mybrackets_bp.my_brackets"))
