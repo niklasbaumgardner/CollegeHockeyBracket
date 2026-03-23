@@ -1207,7 +1207,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
           >Request Link To Login</wa-button
         >
       </div>
-    </wa-card>`}};customElements.define("nb-email-login",be);var Oe="Passwords do not match.",fe=class extends n{static properties={passwordsMatch:{type:Boolean}};static queries={password1:"#password1",password2:"#password2"};checkPasswordsMatch(){let e=this.password1.value,a=this.password2.value;e===a?(this.passwordsMatch=!0,this.password2.helpText=""):a.length<e.length?(this.passwordsMatch=!1,e.substring(0,a.length)===a?this.password2.helpText="":this.password2.helpText=Oe):(this.passwordsMatch=!1,this.password2.helpText=Oe)}render(){return t`<wa-card @input=${this.checkPasswordsMatch}>
+    </wa-card>`}};customElements.define("nb-email-login",be);var Oe="Passwords do not match.",fe=class extends n{static properties={passwordsMatch:{type:Boolean}};static queries={password1:"#password1",password2:"#password2"};checkPasswordsMatch(){let e=this.password1.value,a=this.password2.value;e===a?(this.passwordsMatch=!0,this.password2.helpText=""):a?.length<e?.length?(this.passwordsMatch=!1,e.substring(0,a.length)===a?this.password2.helpText="":this.password2.helpText=Oe):(this.passwordsMatch=!1,this.password2.helpText=Oe)}render(){return t`<wa-card @input=${this.checkPasswordsMatch}>
       <form id="password-reset-form" action="" method="POST"></form>
       <div class="wa-stack">
         <h2>Reset Password</h2>
@@ -1927,4 +1927,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.LX7ZLABW.mjs.map
+//# sourceMappingURL=nb.ZRTE2BQE.mjs.map

@@ -1,5 +1,5 @@
-import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
+import { NikElement } from "./nik-element.mjs";
 
 const PASSWORD_MATCH_HELP_TEXT = "Passwords do not match.";
 
@@ -15,7 +15,7 @@ export class ResetPasswordCard extends NikElement {
     if (p1Val === p2Val) {
       this.passwordsMatch = true;
       this.password2.helpText = "";
-    } else if (p2Val.length < p1Val.length) {
+    } else if (p2Val?.length < p1Val?.length) {
       this.passwordsMatch = false;
       let p1Substr = p1Val.substring(0, p2Val.length);
       if (p1Substr === p2Val) {
