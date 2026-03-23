@@ -44,7 +44,7 @@
       }
       key {remote_host}
       events 1
-      window 10s
+      window 5s
     }
   }
 
