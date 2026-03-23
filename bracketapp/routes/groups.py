@@ -147,7 +147,23 @@ def delete_group(sqid):
     return redirect(url_for("mybrackets_bp.my_brackets"))
 
 
-@groups_bp.route("/join_group/<string:sqid>", methods=["GET", "POST"])
+@groups_bp.get("/join_group/<string:sqid>")
+def join_group_preview(sqid):
+    group_id = sqids.decode_one(sqid)
+    group = group_queries.get_group(group_id=group_id)
+    if not group:
+        flash("Something went wrong", "danger")
+        return redirect(url_for("leaderboard_bp.index"))
+
+    return render_template(
+        "join_group.html",
+        join_key=request.args.get("join_key"),
+        sqid=sqid,
+        og_title=f"Join {group.name}!",
+    )
+
+
+@groups_bp.post("/join_group/<string:sqid>")
 @login_required
 def join_group(sqid):
     group_id = sqids.decode_one(sqid)
@@ -161,7 +177,7 @@ def join_group(sqid):
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     if group.is_private:
-        join_key = request.args.get("join_key")
+        join_key = request.form.get("join_key")
         password_post = request.form.get("password")
         password = None
 

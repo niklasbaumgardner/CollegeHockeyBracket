@@ -472,7 +472,7 @@ class Group(BaseModel, SqidSerializerMixin):
 
         if self.is_private:
             return url_for(
-                "groups_bp.join_group",
+                "groups_bp.join_group_preview",
                 sqid=self.sqid_id(),
                 join_key=self.get_join_key(),
                 _external=external,
@@ -480,7 +480,7 @@ class Group(BaseModel, SqidSerializerMixin):
             )
 
         return url_for(
-            "groups_bp.join_group",
+            "groups_bp.join_group_preview",
             sqid=self.sqid_id(),
             _external=external,
             _scheme=scheme,
