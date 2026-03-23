@@ -65,7 +65,7 @@ class SqidSerializerMixin(SerializerMixin):
 class User(BaseModel, UserMixin, SqidSerializerMixin):
     __tablename__ = "user"
 
-    serialize_only = ("id", "username", "email", "role", "streamchat_token")
+    serialize_only = ("id", "username", "role", "streamchat_token")
 
     id: Mapped[int_pk]
     username: Mapped[str] = mapped_column(unique=True)
