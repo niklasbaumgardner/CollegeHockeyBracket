@@ -57,8 +57,9 @@ def api_view_group(sqid):
             group_id=group_id, year=group.year
         )
 
-        brackets_dict = [b.to_dict(safe_only=g.CAN_EDIT_BRACKET) for b in brackets]
-        winners_dict = [b.to_dict(safe_only=g.CAN_EDIT_BRACKET) for b in winners]
+        can_edit_group = group.year == g.YEAR and g.CAN_EDIT_BRACKET
+        brackets_dict = [b.to_dict(safe_only=can_edit_group) for b in brackets]
+        winners_dict = [b.to_dict(safe_only=can_edit_group) for b in winners]
         group_dict = group.to_dict()
 
         group_data = dict(
