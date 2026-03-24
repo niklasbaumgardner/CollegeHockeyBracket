@@ -24,28 +24,29 @@ def login():
     if email:
         return render_template("login.html", email=email)
 
-    email = request.form.get("email")
-    password = request.form.get("password").strip()
-    remember = request.form.get("remember")
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password").strip()
+        remember = request.form.get("remember")
 
-    if email and password:
-        user = user_queries.get_user_by_email(email=email)
+        if email and password:
+            user = user_queries.get_user_by_email(email=email)
 
-        if user and bcrypt.check_password_hash(user.password, password):
-            remember = True if remember == "True" else False
-            login_user(user, remember=remember)
+            if user and bcrypt.check_password_hash(user.password, password):
+                remember = True if remember == "True" else False
+                login_user(user, remember=remember)
 
-            next_url = request.args.get("next")
-            if not next_url:
-                next_url = url_for("mybrackets_bp.my_brackets")
-            return redirect(next_url)
+                next_url = request.args.get("next")
+                if not next_url:
+                    next_url = url_for("mybrackets_bp.my_brackets")
+                return redirect(next_url)
 
-        elif user:
-            flash("Password was incorrect. Try again", "danger")
-            return redirect(url_for("auth_bp.login", email=email))
+            elif user:
+                flash("Password was incorrect. Try again", "danger")
+                return redirect(url_for("auth_bp.login", email=email))
 
-        flash("User not found. Please create an acount", "neutral")
-        return redirect(url_for("auth_bp.login"))
+            flash("User not found. Please create an acount", "neutral")
+            return redirect(url_for("auth_bp.login"))
 
     return render_template("login.html", email=email)
 
