@@ -1,10 +1,22 @@
+import io
 import re
 from pathlib import Path
+
+"""
+.git/hooks/pre-commit
+#!/bin/sh
+
+python hooks/increment_version.py
+
+python -c "import time; time.sleep(5)"
+
+git add .
+"""
 
 base_dir = Path(__file__).resolve().parent.parent
 
 
-init_file = open(base_dir / "bracketapp" / "__init__.py", "r+")
+init_file = io.open(base_dir / "bracketapp" / "__init__.py", "r+", newline="\n")
 init_file_contents = str(init_file.read())
 init_match = re.search(r"nbbracketchallenge@(\d+\.\d+\.\d+)", init_file_contents)
 
@@ -23,7 +35,9 @@ if init_match:
 
 init_file.close()
 
-sentry_file = open(base_dir / "bracketapp" / "static" / "js" / "sentry.mjs", "r+")
+sentry_file = io.open(
+    base_dir / "bracketapp" / "static" / "js" / "sentry.mjs", "r+", newline="\n"
+)
 sentry_file_contents = str(sentry_file.read())
 
 sentry_match = re.search(
