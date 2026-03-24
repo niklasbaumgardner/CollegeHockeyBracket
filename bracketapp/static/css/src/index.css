@@ -135,9 +135,11 @@ wa-page {
   width: 40px;
 }
 
+/*
+This is only for debugging
 *:not(:defined) {
   border: 2px solid red;
-}
+} */
 
 nb-my-bracket-actions,
 nb-my-group-bracket-actions {
