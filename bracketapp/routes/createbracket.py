@@ -44,8 +44,6 @@ def create_bracket_post():
     if group_sqid:
         group_id = sqids.decode_one(group_sqid)
 
-    print(f"group_sqid: {group_sqid}, group_id: {group_id}")
-
     my_bracket_count = bracket_queries.my_bracket_count()
     if my_bracket_count >= 5:
         # if we don't have a bracket id and we are already at the max number of
@@ -59,7 +57,6 @@ def create_bracket_post():
     flash("Bracket created", "success")
 
     if group_id:
-        print("how are we here????", group_id)
         group_queries.create_group_bracket(group_id=group_id, bracket_id=new_bracket_id)
 
         return redirect(url_for("groups_bp.view_group", sqid=group_sqid))

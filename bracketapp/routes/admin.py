@@ -1,10 +1,8 @@
-import datetime
-
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from bracketapp import cache
-from bracketapp.globals import BRACKET_CLOSE_TIME, CAN_EDIT_BRACKET, YEAR, g
+from bracketapp.globals import g
 from bracketapp.queries import (
     correct_bracket_queries,
     default_bracket_queries,
@@ -88,19 +86,6 @@ def update_default():
         )
 
     return redirect(url_for("admin_bp.update_default"))
-
-
-@admin_bp.get("/go_live")
-def go_live():
-    current_time = datetime.datetime.now(datetime.UTC)
-
-    if CAN_EDIT_BRACKET and current_time < BRACKET_CLOSE_TIME:
-        return "ok", 200
-
-    elif not CAN_EDIT_BRACKET and current_time >= BRACKET_CLOSE_TIME:
-        return "ok", 200
-
-    return "", 503
 
 
 @admin_bp.get("/flush_entire_cache")

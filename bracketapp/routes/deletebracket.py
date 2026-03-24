@@ -31,10 +31,10 @@ def delete_group_bracket(sqid):
     rowcount, bracket_id, group_id = group_queries.delete_group_bracket(
         group_bracket_id=group_bracket_id
     )
+    cache_invalidator.delete_group_bracket(group_id, bracket_id)
 
     if rowcount == 1:
         flash("Bracket successfully removed from group")
-        cache_invalidator.delete_group_bracket(group_id, bracket_id)
     else:
         flash("Something went wrong", "danger")
 

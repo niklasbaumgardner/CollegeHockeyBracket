@@ -191,7 +191,7 @@ def join_group(sqid):
 
     if group.is_private:
         join_key = request.form.get("join_key")
-        password_post = request.form.get("password")
+        password_post = request.form.get("password").strip()
         password = None
 
         if join_key:

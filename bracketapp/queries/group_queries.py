@@ -155,6 +155,8 @@ def search_groups(group_name):
     if not group_name:
         return []
 
+    group_name = group_name.strip()
+
     stmt = select(Group).where(
         and_(
             Group.year == g.YEAR,
@@ -166,6 +168,10 @@ def search_groups(group_name):
 
 
 def create_group(name, is_private, password):
+    name = name.strip()
+    if password is not None:
+        password = password.strip()
+
     stmt = insert(Group).values(
         year=g.YEAR,
         name=name,
@@ -191,7 +197,7 @@ def update_group(group_id, name=None, is_private=None, password=None, locked=Non
         update_dict["is_private"] = is_private
 
         if is_private and password is not None:
-            update_dict["password"] = password
+            update_dict["password"] = password.strip()
         else:
             update_dict["password"] = None
 

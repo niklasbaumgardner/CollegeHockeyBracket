@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from bracketapp.queries import user_queries
@@ -13,6 +13,15 @@ def profile():
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
+
+        if not user_queries.is_username_unique(
+            username
+        ) and not user_queries.is_email_unique(email):
+            flash(
+                "Username and email are already taken. Please choose different ones",
+                "danger",
+            )
+            return redirect(url_for("profile_bp.profile"))
 
         user_queries.update_user(email=email, username=username)
         if username != current_user.username:

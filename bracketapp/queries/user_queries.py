@@ -16,6 +16,9 @@ def create_user(email, username, password=None):
         # Password will be invalid until it is reset
         hash_ = "passwordless login"
 
+    email = email.strip().lower()
+    username = username.strip()
+
     stmt = insert(User).values(email=email, username=username, password=hash_)
     result = db.session.execute(stmt)
     user_id = result.inserted_primary_key.id
@@ -29,16 +32,17 @@ def get_user_by_id(id):
 
 
 def get_user_by_email(email):
+    email = email.strip().lower()
     stmt = select(User).where(User.email == email)
     return db.session.scalars(stmt.limit(1)).first()
 
 
 def update_user(username, email):
     update_dict = dict()
-    if username is not None:
+    if username is not None and is_username_unique(username):
         update_dict["username"] = username.strip()
-    if email is not None:
-        update_dict["email"] = email.strip()
+    if email is not None and is_email_unique(email):
+        update_dict["email"] = email.strip().lower()
 
     stmt = update(User).where(User.id == current_user.id).values(update_dict)
 
@@ -66,12 +70,14 @@ def hash_password(password):
 
 
 def is_email_unique(email):
+    email = email.strip().lower()
     stmt = select(func.count(1)).where(User.email == email)
     count = db.session.execute(stmt).scalar_one()
     return count == 0
 
 
 def is_username_unique(username):
+    username = username.strip()
     stmt = select(func.count(1)).where(User.username == username)
     count = db.session.execute(stmt).scalar_one()
     return count == 0

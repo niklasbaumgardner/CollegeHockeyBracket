@@ -25,7 +25,7 @@ def login():
         return render_template("login.html", email=email)
 
     email = request.form.get("email")
-    password = request.form.get("password")
+    password = request.form.get("password").strip()
     remember = request.form.get("remember")
 
     if email and password:
@@ -55,7 +55,7 @@ def signup():
     if request.method == "POST":
         email = request.form.get("email")
         username = request.form.get("username")
-        password1 = request.form.get("password1")
+        password1 = request.form.get("password1").strip()
 
         if not user_queries.is_email_unique(email):
             flash("Email already exists. Please log in", "brand")
@@ -116,8 +116,8 @@ def password_reset():
             else:
                 return redirect(url_for("auth_bp.password_request"))
 
-        password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
+        password1 = request.form.get("password1").strip()
+        password2 = request.form.get("password2").strip()
 
         if password1 != password2:
             flash("Passwords are not equal. Please try again", "warning")
@@ -161,7 +161,7 @@ def email_login():
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     if request.method == "POST":
-        email = request.form.get("email")
+        email = request.form.get("email").strip().lower()
         user = user_queries.get_user_by_email(email=email)
         if not user:
             send_email.send_new_user_login_email(email)
@@ -181,7 +181,7 @@ def email_login():
 def passwordless_login(token):
     token_data = User.verify_login_token(token)
     id = token_data.get("user_id")
-    email = token_data.get("email")
+    email = token_data.get("email").strip().lower()
     new_user = token_data.get("new_user")
 
     # The user could exist if the link is clicked a second time?
