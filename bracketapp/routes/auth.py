@@ -182,7 +182,7 @@ def email_login():
 def passwordless_login(token):
     token_data = User.verify_login_token(token)
     id = token_data.get("user_id")
-    email = token_data.get("email").strip().lower()
+    email = token_data.get("email")
     new_user = token_data.get("new_user")
 
     # The user could exist if the link is clicked a second time?

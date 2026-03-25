@@ -32,6 +32,9 @@ def get_user_by_id(id):
 
 
 def get_user_by_email(email):
+    if not email:
+        return None
+
     email = email.strip().lower()
     stmt = select(User).where(User.email == email)
     return db.session.scalars(stmt.limit(1)).first()
