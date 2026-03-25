@@ -12,8 +12,14 @@ nb-radio-item {
   }
 
   &:has(input:checked) {
-    background-color: var(--wa-color-brand-05);
-    border-color: var(--wa-color-brand-30);
+    background-color: light-dark(
+      var(--wa-color-brand-95),
+      var(--wa-color-brand-05)
+    );
+    border-color: light-dark(
+      var(--wa-color-brand-70),
+      var(--wa-color-brand-30)
+    );
     /* border-radius: var(--wa-border-radius-medium); */
   }
 }
