@@ -75,7 +75,7 @@
     header_up Host {upstream_hostport}
   }
 
-  @chs host collegehockeybrackets.com
+  @chbs host collegehockeybrackets.com
   reverse_proxy @chbs {
     # for private networking replicas are exposed as multiple dns results, use those dns results as the upstreams
     dynamic a {
