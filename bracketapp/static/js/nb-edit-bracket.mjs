@@ -478,30 +478,31 @@ export class EditBracket extends NikElement {
   }
 
   async simulate() {
-    function winProbabilityFromRanks(rankA, rankB) {
-      // 1 vs 33 with k=1 => 0.9999999999999873
-      // 1 vs 33 with k=10 => 0.9608342772032357
-      const k = 10;
-      const diff = Math.abs(rankB - rankA);
-      return 1 / (1 + Math.exp(-diff / k));
+    function winProbability(topTeamKrach, bottomTeamKrach) {
+      const topRating = topTeamKrach.krach.krachRating;
+      const bottomRating = bottomTeamKrach.krach.krachRating;
+
+      return topRating / (topRating + bottomRating);
     }
 
-    function simulateWinner(topTeamRank, bottomTeamRank) {
-      const topTeamWinProbability = winProbabilityFromRanks(
-        topTeamRank,
-        bottomTeamRank,
+    function simulateWinner(topTeamKrach, bottomTeamKrach) {
+      const topTeamWinProbability = winProbability(
+        topTeamKrach,
+        bottomTeamKrach,
       );
-      return Math.random() < topTeamWinProbability
-        ? topTeamRank
-        : bottomTeamRank;
+
+      const r = Math.random();
+      return r < topTeamWinProbability ? "top" : "bottom";
     }
 
     for (let matchup of this.matchupsSorted) {
-      let topRank = await BracketUtils.getNPIRank(matchup.winnerTop.team);
-      let bottomRank = await BracketUtils.getNPIRank(matchup.winnerBottom.team);
+      let topKrach = await BracketUtils.getKrachInfo(matchup.winnerTop.team);
+      let bottomKrach = await BracketUtils.getKrachInfo(
+        matchup.winnerBottom.team,
+      );
 
-      let winnerRank = simulateWinner(topRank, bottomRank);
-      if (winnerRank === topRank) {
+      let winnerIndex = simulateWinner(topKrach, bottomKrach);
+      if (winnerIndex === "top") {
         matchup.topInputEl.click();
       } else {
         matchup.bottomInputEl.click();

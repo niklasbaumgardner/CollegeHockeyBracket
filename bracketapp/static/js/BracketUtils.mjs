@@ -223,6 +223,13 @@ class BracketUtilsClass {
     const stats = data[chnName];
     return stats.npi.rank;
   }
+
+  async getKrachInfo(team) {
+    const chnName = getCHNName(team.name);
+    const data = await this.getKrach();
+
+    return data[chnName];
+  }
 }
 const BracketUtils = new BracketUtilsClass();
 export { BracketUtils };
