@@ -404,6 +404,7 @@ class Group(BaseModel, SqidSerializerMixin):
         "url",
         "edit_url",
         "join_url",
+        "join_safe_url",
         "share_url",
         "add_bracket_url",
         "create_bracket_url",
@@ -467,7 +468,10 @@ class Group(BaseModel, SqidSerializerMixin):
     def join_url(self):
         return self.share_url(external=False)
 
-    def share_url(self, external=True):
+    def join_safe_url(self):
+        return self.share_url(external=False, unsafe=True)
+
+    def share_url(self, external=True, unsafe=False):
         scheme = None
         if Config.FLASK_DEBUG and external:
             scheme = "http"
@@ -475,6 +479,14 @@ class Group(BaseModel, SqidSerializerMixin):
             scheme = "https"
 
         if self.is_private:
+            if unsafe:
+                return url_for(
+                    "groups_bp.join_group_preview",
+                    sqid=self.sqid_id(),
+                    _external=external,
+                    _scheme=scheme,
+                )
+
             return url_for(
                 "groups_bp.join_group_preview",
                 sqid=self.sqid_id(),

@@ -11,7 +11,7 @@ export class JoinPrivateGroup extends BaseDialog {
   contentTemplate() {
     return html`<form
       id="join-private-group"
-      action=${this.group.join_url}
+      action=${this.group.join_safe_url}
       method="POST"
       class="wa-stack"
     >

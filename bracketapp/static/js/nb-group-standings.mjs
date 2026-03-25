@@ -26,6 +26,11 @@ export class GroupStandings extends Standings {
     return CAN_EDIT_BRACKET && CURRENT_YEAR === this.group.year;
   }
 
+  get joinKey() {
+    const params = new URLSearchParams(location.search);
+    return params.get("join_key");
+  }
+
   async requestContent() {
     let response = await fetch(VIEW_GROUP_CONTENT_URL, {
       credentials: "include",
@@ -103,18 +108,34 @@ export class GroupStandings extends Standings {
   }
 
   nonMemberTemplate() {
-    if (!CAN_EDIT_BRACKET || this.group.locked || !CURRENT_USER.id) {
+    if (!CAN_EDIT_BRACKET || this.group.locked) {
       return;
     }
 
-    if (this.group.is_private) {
+    // If the user is logged in then there shouldn't be a join key in the url so show the join dialog.
+    // Is is possible for the user to have a join key in the url and be logged in?
+    if (CURRENT_USER.id && this.group.is_private) {
       return html`<wa-button variant="brand" @click=${this.handleJoinGroupClick}
         >Join Group</wa-button
       >`;
     } else {
-      return html`<wa-button variant="brand" href=${this.group.join_url}
-        >Join Group</wa-button
-      >`;
+      return html`<form
+        action=${this.group.join_safe_url}
+        method="POST"
+        class="flex"
+      >
+        ${this.joinKey
+          ? html`<input
+              name="join_key"
+              value=${this.joinKey}
+              class="hidden"
+              hidden
+            />`
+          : null}
+        <wa-button class="grow" variant="brand" type="submit"
+          >Join Group</wa-button
+        >
+      </form>`;
     }
   }
 

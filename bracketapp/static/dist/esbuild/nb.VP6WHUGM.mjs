@@ -1749,7 +1749,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >Save</wa-button
       >`}async connectedCallback(){super.connectedCallback(),await this.updateComplete,this.private=this.group.is_private}};customElements.define("nb-edit-group",Ee);var Ce=class extends c{static properties={group:{type:Object}};lableTemplate(){return t`Join ${this.group.name}`}contentTemplate(){return t`<form
       id="join-private-group"
-      action=${this.group.join_url}
+      action=${this.group.join_safe_url}
       method="POST"
       class="wa-stack"
     >
@@ -1769,7 +1769,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         form="join-private-group"
         variant="brand"
         >Join</wa-button
-      >`}};customElements.define("nb-join-private-group",Ce);var xe=class extends w{static properties={group:{type:Object},isMember:{type:Boolean,converter:(e,a)=>e==="True"}};static queries={bracketDialog:"#create-bracket-dialog"};get canEditGroupBracket(){return CAN_EDIT_BRACKET&&CURRENT_YEAR===this.group.year}async requestContent(){let a=await(await fetch(VIEW_GROUP_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{brackets:r,winners:s,group:o,is_member:m}=a;this.brackets=r,this.winners=s,this.group=o,this.year=this.group.year,this.isMember=m,!this.isMember&&location.hash==="#join-private-group"&&this.handleJoinGroupClick()}handleJoinGroupClick(){this.joinDialog||(this.joinDialog=document.createElement("nb-join-private-group"),this.joinDialog.group=this.group,document.body.appendChild(this.joinDialog)),this.joinDialog.show()}handleCreateBracketButtonClick(){this.bracketDialog.show()}handleEditGroupClick(){this.editGroup||(this.editGroup=document.createElement("nb-edit-group"),this.editGroup.group=this.group,this.editGroup.private=this.group.is_private,document.body.appendChild(this.editGroup)),this.editGroup.show()}closeDialog(e){e.target.closest("wa-dialog").hide()}memeberTemplate(){if(this.canEditGroupBracket&&MY_BRACKET_COUNT<5)return t`${super.messageTemplate()}
+      >`}};customElements.define("nb-join-private-group",Ce);var xe=class extends w{static properties={group:{type:Object},isMember:{type:Boolean,converter:(e,a)=>e==="True"}};static queries={bracketDialog:"#create-bracket-dialog"};get canEditGroupBracket(){return CAN_EDIT_BRACKET&&CURRENT_YEAR===this.group.year}get joinKey(){return new URLSearchParams(location.search).get("join_key")}async requestContent(){let a=await(await fetch(VIEW_GROUP_CONTENT_URL,{credentials:"include",mode:"no-cors"})).json(),{brackets:r,winners:s,group:o,is_member:m}=a;this.brackets=r,this.winners=s,this.group=o,this.year=this.group.year,this.isMember=m,!this.isMember&&location.hash==="#join-private-group"&&this.handleJoinGroupClick()}handleJoinGroupClick(){this.joinDialog||(this.joinDialog=document.createElement("nb-join-private-group"),this.joinDialog.group=this.group,document.body.appendChild(this.joinDialog)),this.joinDialog.show()}handleCreateBracketButtonClick(){this.bracketDialog.show()}handleEditGroupClick(){this.editGroup||(this.editGroup=document.createElement("nb-edit-group"),this.editGroup.group=this.group,this.editGroup.private=this.group.is_private,document.body.appendChild(this.editGroup)),this.editGroup.show()}closeDialog(e){e.target.closest("wa-dialog").hide()}memeberTemplate(){if(this.canEditGroupBracket&&MY_BRACKET_COUNT<5)return t`${super.messageTemplate()}
         <div class="wa-cluster">
           <wa-button
             class="grow"
@@ -1789,11 +1789,23 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
           appearance="outlined"
           href=${MY_BRACKETS_URL+"#group_"+this.group.id}
           >Add A Bracket</wa-button
-        >`}nonMemberTemplate(){if(!(!CAN_EDIT_BRACKET||this.group.locked||!CURRENT_USER.id))return this.group.is_private?t`<wa-button variant="brand" @click=${this.handleJoinGroupClick}
+        >`}nonMemberTemplate(){if(!(!CAN_EDIT_BRACKET||this.group.locked))return CURRENT_USER.id&&this.group.is_private?t`<wa-button variant="brand" @click=${this.handleJoinGroupClick}
         >Join Group</wa-button
-      >`:t`<wa-button variant="brand" href=${this.group.join_url}
-        >Join Group</wa-button
-      >`}groupInfoTemplate(){let e=null;return this.group.is_private&&this.isMember&&(e=t`<small
+      >`:t`<form
+        action=${this.group.join_safe_url}
+        method="POST"
+        class="flex"
+      >
+        ${this.joinKey?t`<input
+              name="join_key"
+              value=${this.joinKey}
+              class="hidden"
+              hidden
+            />`:null}
+        <wa-button class="grow" variant="brand" type="submit"
+          >Join Group</wa-button
+        >
+      </form>`}groupInfoTemplate(){let e=null;return this.group.is_private&&this.isMember&&(e=t`<small
         ><span class="font-semibold">Password</span> ${this.group.password}</small
       >`),t`<div class="wa-cluster">
         <small
@@ -1943,4 +1955,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.C7BVOMJT.mjs.map
+//# sourceMappingURL=nb.VP6WHUGM.mjs.map

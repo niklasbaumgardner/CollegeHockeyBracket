@@ -76,9 +76,18 @@ def api_view_group(sqid):
         cache_hits += 1
 
     if cache_hits == 2:
+        # Remove join and share urls if not a member since they contain the join key
+        if not is_member:
+            del group_data["group"]["join_url"]
+            del group_data["group"]["share_url"]
         return dict(**group_data, is_member=is_member)
 
     cache.set_many({g_cache_key: group_data, gm_cache_key: is_member})
+
+    if not is_member:
+        # Remove join and share urls if not a member since they contain the join key
+        del group_data["group"]["join_url"]
+        del group_data["group"]["share_url"]
 
     return dict(**group_data, is_member=is_member)
 

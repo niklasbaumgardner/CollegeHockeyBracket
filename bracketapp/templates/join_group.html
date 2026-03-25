@@ -15,6 +15,10 @@
 </form>
 
 <script>
-  document.getElementById("join-group-form").submit();
+  {% if current_user.is_authenticated %}
+    document.getElementById("join-group-form").submit();
+  {% else %}
+    window.location.href = "{{ url_for('groups_bp.view_group', sqid=sqid, join_key=join_key) }}";
+  {% endif %}
 </script>
 {% endblock content %}
