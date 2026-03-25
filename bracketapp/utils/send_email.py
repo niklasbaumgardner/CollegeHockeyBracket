@@ -17,11 +17,11 @@ def send_async_email(msg):
     Thread(target=async_email_sender, args=(app, msg)).start()
 
 
-def send_reset_email(user):
+def send_reset_email(user, next_url):
     if not user:
         return
 
-    token = user.get_reset_token()
+    token = user.get_reset_token(next_url)
     msg = Message("Password Reset Request", recipients=[user.email])
     msg.body = f"""To reset your password, visit the following link:
 {url_for("auth_bp.password_reset", token=token, _external=True)}
@@ -32,11 +32,11 @@ If you did not make this request then please ignore this email and no changes wi
     send_async_email(msg)
 
 
-def send_new_user_login_email(email):
+def send_new_user_login_email(email, next_url):
     if not email:
         return
 
-    token = User.get_new_user_login_token(email)
+    token = User.get_new_user_login_token(email, next_url)
 
     msg = Message("NB Bracket Challenge Login Link", recipients=[email])
     msg.body = f"""To login, click the following link:
@@ -48,11 +48,11 @@ If you did not make this request then please ignore this email and no changes wi
     send_async_email(msg)
 
 
-def send_login_email(user):
+def send_login_email(user, next_url):
     if not user:
         return
 
-    token = user.get_login_token()
+    token = user.get_login_token(next_url)
     msg = Message("NB Bracket Challenge Login Link", recipients=[user.email])
     msg.body = f"""To login, click the following link:
 {url_for("auth_bp.passwordless_login", token=token, _external=True)}

@@ -77,29 +77,31 @@ class User(BaseModel, UserMixin, SqidSerializerMixin):
     def is_admin(self):
         return Role.ADMIN in Role(self.role)
 
-    def get_reset_token(self):
+    def get_reset_token(self, next_url=None):
         s = URLSafeTimedSerializer(Config.SECRET_KEY)
-        return s.dumps({"user_id": self.id})
+        return s.dumps({"user_id": self.id, "next_url": next_url})
 
     @staticmethod
     def verify_reset_token(token, expire_sec=600):
         s = URLSafeTimedSerializer(Config.SECRET_KEY)
         try:
-            user_id = s.loads(token, max_age=expire_sec).get("user_id")
+            data = s.loads(token, max_age=expire_sec)
+            user_id = data.get("user_id")
+            next_url = data.get("next_url")
         except:
-            return None
+            return None, None
         from bracketapp.queries.user_queries import get_user_by_id
 
-        return get_user_by_id(user_id)
+        return get_user_by_id(user_id), next_url
 
-    def get_login_token(self):
+    def get_login_token(self, next_url=None):
         s = URLSafeTimedSerializer(Config.SECRET_KEY)
-        return s.dumps({"user_id": self.id, "new_user": False})
+        return s.dumps({"user_id": self.id, "new_user": False, "next_url": next_url})
 
     @staticmethod
-    def get_new_user_login_token(email):
+    def get_new_user_login_token(email, next_url=None):
         s = URLSafeTimedSerializer(Config.SECRET_KEY)
-        return s.dumps({"email": email, "new_user": True})
+        return s.dumps({"email": email, "new_user": True, "next_url": next_url})
 
     @staticmethod
     def verify_login_token(token, expire_sec=600):

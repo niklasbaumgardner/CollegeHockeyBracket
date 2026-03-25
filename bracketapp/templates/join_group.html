@@ -9,7 +9,9 @@
   method="POST"
   action="{{ url_for('groups_bp.join_group', sqid=sqid) }}"
 >
+  {% if join_key %}
   <input class="hidden" name="join_key" value="{{ join_key }}" hidden />
+  {% endif %}
 </form>
 
 <script>

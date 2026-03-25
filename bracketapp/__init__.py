@@ -25,7 +25,7 @@ if True or not Config.FLASK_DEBUG:
         dsn=Config.SENTRY_DSN,
         traces_sample_rate=1.0,
         send_default_pii=True,
-        release="nbbracketchallenge@3.0.17",
+        release="nbbracketchallenge@3.0.18",
     )
 
 
@@ -81,6 +81,7 @@ app.register_blueprint(profile_bp)
 app.register_blueprint(user_settings_bp)
 app.register_blueprint(viewbracket_bp)
 app.register_blueprint(context_processor_bp)
+
 
 # with app.app_context():
 #     BaseModel.metadata.create_all(db.engine)

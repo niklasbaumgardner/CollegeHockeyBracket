@@ -10,7 +10,16 @@ export class PasswordResetRequestCard extends NikElement {
 
   render() {
     return html`<wa-card>
-      <form id="password-reset-request-form" action="" method="POST"></form>
+      <form id="password-reset-request-form" action="" method="POST">
+        ${localStorage.getItem("next")
+          ? html`<input
+              name="next"
+              value=${localStorage.getItem("next")}
+              class="hidden"
+              hidden
+            />`
+          : null}
+      </form>
       <div class="wa-stack">
         <h2>Reset Password</h2>
 

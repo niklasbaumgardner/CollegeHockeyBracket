@@ -191,13 +191,13 @@ def join_group(sqid):
 
     if group.is_private:
         join_key = request.form.get("join_key")
-        password_post = request.form.get("password").strip()
+        password_post = request.form.get("password")
         password = None
 
         if join_key:
             password = group.verify_join_key(join_key)
         elif password_post:
-            password = password_post
+            password = password_post.strip()
 
         if password != group.password:
             flash("Incorrect password. Please try again.", "danger")

@@ -6,11 +6,22 @@ export class EmailLogin extends NikElement {
     email: { type: String },
   };
 
-  static queries = {};
+  static queries = {
+    form: "#email-login-form",
+  };
 
   render() {
     return html`<wa-card>
-      <form id="email-login-form" action="" method="POST"></form>
+      <form id="email-login-form" action="" method="POST">
+        ${localStorage.getItem("next")
+          ? html`<input
+              name="next"
+              value=${localStorage.getItem("next")}
+              class="hidden"
+              hidden
+            />`
+          : null}
+      </form>
       <div class="wa-stack">
         <h2>Email Link To Login</h2>
 

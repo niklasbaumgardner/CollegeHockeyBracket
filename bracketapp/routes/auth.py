@@ -4,7 +4,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from sentry_sdk import metrics
 
-from bracketapp import bcrypt
+from bracketapp import bcrypt, login_manager
 from bracketapp.models import User
 from bracketapp.queries import user_queries
 from bracketapp.utils import cache_invalidator, send_email
@@ -15,14 +15,21 @@ from bracketapp.utils import cache_invalidator, send_email
 auth_bp = Blueprint("auth_bp", __name__)
 
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    next_url = request.path
+    join_key = request.form.get("join_key")
+
+    if join_key is not None:
+        next_url += f"?join_key={join_key}"
+
+    return redirect(url_for("auth_bp.login", next=next_url))
+
+
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("mybrackets_bp.my_brackets"))
-
-    email = request.args.get("email")
-    if email:
-        return render_template("login.html", email=email)
 
     if request.method == "POST":
         email = request.form.get("email")
@@ -48,6 +55,7 @@ def login():
             flash("User not found. Please create an acount", "neutral")
             return redirect(url_for("auth_bp.login"))
 
+    email = request.args.get("email")
     return render_template("login.html", email=email)
 
 
@@ -94,8 +102,9 @@ def password_request():
 
     if request.method == "POST":
         email = request.form.get("email")
+        next_url = request.form.get("next")
         user = user_queries.get_user_by_email(email=email)
-        send_email.send_reset_email(user)
+        send_email.send_reset_email(user, next_url)
         flash(
             "An email has been sent with instructions to reset your password. Check spam folder.",
             "primary",
@@ -109,7 +118,7 @@ def password_request():
 def password_reset():
     token = request.args.get("token")
     if request.method == "POST":
-        user = User.verify_reset_token(token)
+        user, next_url = User.verify_reset_token(token)
         if not user:
             flash("That is an invalid or expired token", "danger")
             if current_user.is_authenticated:
@@ -129,7 +138,7 @@ def password_reset():
             "Your password has been updated! You are now able to log in",
             "success",
         )
-        return redirect(url_for("auth_bp.login"))
+        return redirect(url_for("auth_bp.login", email=user.email, next=next_url))
 
     return render_template("password_reset.html")
 
@@ -163,11 +172,12 @@ def email_login():
 
     if request.method == "POST":
         email = request.form.get("email").strip().lower()
+        next_url = request.form.get("next")
         user = user_queries.get_user_by_email(email=email)
         if not user:
-            send_email.send_new_user_login_email(email)
+            send_email.send_new_user_login_email(email, next_url)
         else:
-            send_email.send_login_email(user)
+            send_email.send_login_email(user, next_url)
 
         flash(
             "An email has been sent with a link to login. Check spam folder.",
@@ -184,6 +194,7 @@ def passwordless_login(token):
     id = token_data.get("user_id")
     email = token_data.get("email")
     new_user = token_data.get("new_user")
+    next_url = token_data.get("next_url")
 
     # The user could exist if the link is clicked a second time?
     user = user_queries.get_user_by_email(email)
@@ -207,6 +218,9 @@ def passwordless_login(token):
         return redirect(url_for("auth_bp.login"))
 
     login_user(user, remember=True)
+
+    if next_url:
+        return redirect(next_url)
 
     if new_user:
         return redirect(url_for("profile_bp.profile"))

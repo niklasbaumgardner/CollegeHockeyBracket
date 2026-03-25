@@ -1166,7 +1166,14 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
       disabled
       >Create</wa-button
     >`}};customElements.define("nb-create-group",ge);var we=class extends n{static properties={email:{type:String}};static queries={};render(){return t`<wa-card>
-      <form id="password-reset-request-form" action="" method="POST"></form>
+      <form id="password-reset-request-form" action="" method="POST">
+        ${localStorage.getItem("next")?t`<input
+              name="next"
+              value=${localStorage.getItem("next")}
+              class="hidden"
+              hidden
+            />`:null}
+      </form>
       <div class="wa-stack">
         <h2>Reset Password</h2>
 
@@ -1187,8 +1194,15 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
           >Request Link To Reset Password</wa-button
         >
       </div>
-    </wa-card>`}};customElements.define("nb-password-reset-request",we);var be=class extends n{static properties={email:{type:String}};static queries={};render(){return t`<wa-card>
-      <form id="email-login-form" action="" method="POST"></form>
+    </wa-card>`}};customElements.define("nb-password-reset-request",we);var be=class extends n{static properties={email:{type:String}};static queries={form:"#email-login-form"};render(){return t`<wa-card>
+      <form id="email-login-form" action="" method="POST">
+        ${localStorage.getItem("next")?t`<input
+              name="next"
+              value=${localStorage.getItem("next")}
+              class="hidden"
+              hidden
+            />`:null}
+      </form>
       <div class="wa-stack">
         <h2>Email Link To Login</h2>
 
@@ -1929,4 +1943,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.V3YXLBIS.mjs.map
+//# sourceMappingURL=nb.LQQJLLMS.mjs.map

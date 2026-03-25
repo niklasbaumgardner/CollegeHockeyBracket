@@ -73,6 +73,9 @@ def hash_password(password):
 
 
 def is_email_unique(email):
+    if not email:
+        return None
+
     email = email.strip().lower()
     stmt = select(func.count(1)).where(User.email == email)
     count = db.session.execute(stmt).scalar_one()
@@ -80,6 +83,9 @@ def is_email_unique(email):
 
 
 def is_username_unique(username):
+    if not username:
+        return None
+
     username = username.strip()
     stmt = select(func.count(1)).where(User.username == username)
     count = db.session.execute(stmt).scalar_one()
