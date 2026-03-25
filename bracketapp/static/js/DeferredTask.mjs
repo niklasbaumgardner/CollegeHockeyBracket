@@ -29,9 +29,12 @@ export class DeferredTask {
     this.#currentArgs = args;
 
     this.#timeoutId = setTimeout(() => {
-      this.#callback(this.#currentArgs);
-      this.#timeoutId = null;
-      this.#currentArgs = {};
+      try {
+        this.#callback(this.#currentArgs);
+      } finally {
+        this.#timeoutId = null;
+        this.#currentArgs = {};
+      }
     }, this.#timeout);
   }
 
@@ -47,7 +50,9 @@ export class DeferredTask {
     if (this.isArmed) {
       let args = this.#currentArgs;
       this.disarm();
-      return this.#callback(args);
+      try {
+        return this.#callback(args);
+      } catch {}
     }
   }
 }
