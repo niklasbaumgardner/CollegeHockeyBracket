@@ -134,7 +134,7 @@ export class MyBracketsGroupStandings extends NikElement {
             <div class="flex flex-col group-name">
               <span class="underline">${this.group.name}</span>
               <div class="wa-cluster group-size">
-                <span>Group size: ${this.group.member_count}</span>
+                <span>Group size: ${this.group.bracket_count}</span>
                 <span
                   >Group type:
                   ${this.group.is_private ? "Private" : "Public"}</span

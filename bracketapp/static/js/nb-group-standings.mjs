@@ -1,8 +1,8 @@
 import { html } from "lit";
-import { Standings } from "./nb-standings.mjs";
-import "./nb-group-standings-grid.mjs";
 import "./nb-edit-group.mjs";
+import "./nb-group-standings-grid.mjs";
 import "./nb-join-private-group.mjs";
+import { Standings } from "./nb-standings.mjs";
 
 export class GroupStandings extends Standings {
   static properties = {
@@ -80,30 +80,26 @@ export class GroupStandings extends Standings {
   }
 
   memeberTemplate() {
+    const existingBracketButton = html`<wa-button
+      class="grow"
+      variant="brand"
+      appearance="outlined"
+      href=${MY_BRACKETS_URL + "#group_" + this.group.id}
+      >Add Existing Bracket</wa-button
+    >`;
+
     if (this.canEditGroupBracket && MY_BRACKET_COUNT < 5) {
-      return html`${super.messageTemplate()}
-        <div class="wa-cluster">
-          <wa-button
-            class="grow"
-            variant="brand"
-            appearance="outlined"
-            href=${this.group.create_bracket_url}
-            >Create New Bracket</wa-button
-          ><wa-button
-            class="grow"
-            variant="brand"
-            appearance="outlined"
-            href=${MY_BRACKETS_URL + "#group_" + this.group.id}
-            >Add Existing Bracket</wa-button
-          >
-        </div>`;
-    } else if (this.canEditGroupBracket) {
-      return html`${super.messageTemplate()}<wa-button
+      return html`<div class="wa-cluster">
+        <wa-button
+          class="grow"
           variant="brand"
           appearance="outlined"
-          href=${MY_BRACKETS_URL + "#group_" + this.group.id}
-          >Add A Bracket</wa-button
-        >`;
+          href=${this.group.create_bracket_url}
+          >Create New Bracket</wa-button
+        >${existingBracketButton}
+      </div>`;
+    } else if (this.canEditGroupBracket) {
+      return existingBracketButton;
     }
   }
 
@@ -150,9 +146,6 @@ export class GroupStandings extends Standings {
 
     return html`<div class="wa-cluster">
         <small
-          ><span class="font-semibold">Members</span> ${this.group
-            .member_count}</small
-        ><small
           ><span class="font-semibold">Brackets</span> ${this.group
             .bracket_count}</small
         >
@@ -170,12 +163,14 @@ export class GroupStandings extends Standings {
   }
 
   messageTemplate() {
-    let template = this.groupInfoTemplate();
+    let memberTemplate = null;
     if (this.isMember) {
-      return html`${template}${this.memeberTemplate()}`;
+      memberTemplate = this.memeberTemplate();
     } else {
-      return html`${template}${this.nonMemberTemplate()}`;
+      memberTemplate = this.nonMemberTemplate();
     }
+
+    return html`${this.groupInfoTemplate()}${super.messageTemplate()}${memberTemplate}`;
   }
 
   titleTemplate() {
