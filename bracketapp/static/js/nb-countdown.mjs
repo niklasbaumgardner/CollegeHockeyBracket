@@ -20,9 +20,9 @@ export class Countdown extends NikElement {
     let newDate = new Date(ms);
 
     let days = Math.floor(seconds / (3600 * 24));
-    let hours = newDate.toISOString().substring(11, 13);
-    let mins = newDate.toISOString().substring(14, 16);
-    let secs = newDate.toISOString().substring(17, 19);
+    let hours = Number(newDate.toISOString().substring(11, 13));
+    let mins = Number(newDate.toISOString().substring(14, 16));
+    let secs = Number(newDate.toISOString().substring(17, 19));
 
     return { days, hours, mins, secs };
   }

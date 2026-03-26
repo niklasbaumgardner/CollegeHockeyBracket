@@ -9,6 +9,10 @@ export class EditCorrectBracket extends EditBracket {
     // do nothing
   }
 
+  handleInput() {
+    // do nothing
+  }
+
   matchupTemplate(options) {
     return html`<nb-edit-correct-matchup
       id=${options.game}

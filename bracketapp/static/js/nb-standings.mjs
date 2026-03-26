@@ -60,14 +60,88 @@ export class Standings extends NikElement {
     return html`<div><h2>${this.year} Leaderboard</h2></div>`;
   }
 
+  calculateStats() {
+    if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
+      this.stats = {};
+      return;
+    }
+
+    let stats = {};
+    stats.perfectBrackets = this.brackets.filter(
+      (b) => b.max_points === 320,
+    ).length;
+    stats.possiblePerfectBrackets = this.brackets.filter(
+      (b) => b.points > 0,
+    ).length;
+
+    let winnerIdCounts = {};
+    for (let bracket of this.brackets) {
+      if (winnerIdCounts[bracket.winner_team.team.name]) {
+        winnerIdCounts[bracket.winner_team.team.name][1] += 1;
+      } else {
+        winnerIdCounts[bracket.winner_team.team.name] = [
+          bracket.winner_team.team.icon_path,
+          1,
+        ];
+      }
+    }
+
+    winnerIdCounts = Object.entries(winnerIdCounts)
+      .sort((a, b) => b[1][1] - a[1][1])
+      .slice(0, 3);
+
+    stats.mostPickedWinners = winnerIdCounts;
+
+    this.stats = stats;
+  }
+
+  statsTemplate() {
+    if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
+      return null;
+    }
+
+    return html`<wa-card
+      ><div class="wa-stack">
+        ${this.stats.possiblePerfectBrackets > 0
+          ? html`<div class="flex justify-center items-center wa-gap-m">
+              <span>Perfect brackets remaining</span>
+              <h2>${this.stats.perfectBrackets}</h2>
+            </div>`
+          : null}
+        <div class="wa-cluster justify-center">
+          ${this.stats.mostPickedWinners.map(
+            ([name, [icon_path, count]]) =>
+              html`<wa-card
+                ><div
+                  class="flex flex-col justify-center items-center wa-gap-2xs"
+                >
+                  <div class="flex items-center wa-gap-xs">
+                    <img
+                      src=${STATIC_FILE_MAP[icon_path]}
+                      class="standings-img"
+                      alt=${name}
+                    />
+                    <h2>${(100 * count) / this.brackets.length}%</h2>
+                  </div>
+                  <span>${name}</span>
+                </div></wa-card
+              >`,
+          )}
+        </div>
+      </div>
+    </wa-card>`;
+  }
+
   messageTemplate() {
+    this.calculateStats();
     //     if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
     // return html`<nb-countdown></nb-countdown>`;
     //     } else
     if (this.numWinners > 0) {
       return this.winnersTemplate();
     }
-    return html`<nb-countdown></nb-countdown>`;
+    return html`<nb-countdown></nb-countdown>${this.statsTemplate()}`;
+
     // TODO: Do we really need below options?
     // else if (this.brackets.length && this.year === CURRENT_YEAR) {
     //   return "View the current standings below.";
