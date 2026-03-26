@@ -1063,7 +1063,9 @@ import{d as a,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
                       class="standings-img"
                       alt=${e}
                     />
-                    <h2>${100*r/this.brackets.length}%</h2>
+                    <h2>
+                      ${(100*r/this.brackets.length).toFixed(2)}%
+                    </h2>
                   </div>
                   <span>${e}</span>
                 </div></wa-card
@@ -1972,4 +1974,4 @@ import{d as a,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.6RQOBQPK.mjs.map
+//# sourceMappingURL=nb.ALXEM6XK.mjs.map

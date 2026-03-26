@@ -121,7 +121,9 @@ export class Standings extends NikElement {
                       class="standings-img"
                       alt=${name}
                     />
-                    <h2>${(100 * count) / this.brackets.length}%</h2>
+                    <h2>
+                      ${((100 * count) / this.brackets.length).toFixed(2)}%
+                    </h2>
                   </div>
                   <span>${name}</span>
                 </div></wa-card
