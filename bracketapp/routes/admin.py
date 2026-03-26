@@ -115,7 +115,7 @@ def update_year():
         return redirect(url_for("leaderboard_bp.index"))
 
     g.YEAR = request.form.get("YEAR", type=int)
-    cache_invalidator.flush_main_caches()
+    cache.flush_all()
 
     return redirect(url_for("admin_bp.admin"))
 
@@ -127,6 +127,6 @@ def update_can_edit_bracket():
         return redirect(url_for("leaderboard_bp.index"))
 
     g.CAN_EDIT_BRACKET = request.form.get("CAN_EDIT_BRACKET") == "on"
-    cache_invalidator.flush_main_caches()
+    cache.flush_all()
 
     return redirect(url_for("admin_bp.admin"))
