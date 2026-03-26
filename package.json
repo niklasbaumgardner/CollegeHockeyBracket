@@ -13,9 +13,9 @@
     "build": "npm run tw-build && npm run wp-build"
   },
   "dependencies": {
-    "@awesome.me/webawesome-pro": "^3.3.1",
+    "@awesome.me/webawesome-pro": "^3.4.0",
     "@tailwindcss/cli": "^4.2.2",
-    "ag-grid-community": "^35.1.0",
+    "ag-grid-community": "^35.2.0",
     "lit": "^3.3.2",
     "profanity-cleaner": "^0.0.3",
     "tailwindcss": "^4.1.18"
