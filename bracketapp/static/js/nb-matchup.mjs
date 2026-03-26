@@ -164,14 +164,15 @@ class Matchup extends NikElement {
         timeStyle: "long",
         timeZone: "America/New_York",
       });
+      let startTime = timeFormatter.format(gameStart).replace(":00", "");
+      if (startTime === "12:00 AM EDT") {
+        startTime = "TBA";
+      }
       const dateFormatter = new Intl.DateTimeFormat(undefined, {
         month: "short",
         day: "numeric",
       });
-      content =
-        dateFormatter.format(gameStart) +
-        " " +
-        timeFormatter.format(gameStart).replace(":00", "");
+      content = dateFormatter.format(gameStart) + " " + startTime;
     } else if (this.correct.winner_id) {
       content = "Final";
       if (this.correct.overtime) {

@@ -13,6 +13,7 @@
 
 .standings-bracket-name {
   line-height: var(--wa-line-height-normal);
+  text-wrap: wrap;
 }
 
 .standings-username {

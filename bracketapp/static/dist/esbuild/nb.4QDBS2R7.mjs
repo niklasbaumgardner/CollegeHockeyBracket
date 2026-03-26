@@ -1492,7 +1492,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
       Pick:
       <span class="team-name">${this.winnerTop.team.short_name}</span> over
       <span class="team-name">${this.winnerBottom.team.short_name}</span>
-    </div>`}gameInfoTemplate(){let e=new Date(Date.parse(this.correct.start_time)),a=new Date,r=null;if(a<e){let s=new Intl.DateTimeFormat(void 0,{timeStyle:"long",timeZone:"America/New_York"});r=new Intl.DateTimeFormat(void 0,{month:"short",day:"numeric"}).format(e)+" "+s.format(e).replace(":00","")}else if(this.correct.winner_id){if(r="Final",this.correct.overtime){let s="";this.correct.number_overtimes>1&&(s=this.correct.number_overtimes),r+=` ${s}OT`}}else r="Live";return t`<div class="text-[10px] text-right user-pick">${r}</div>`}getTopLoserTeamClass(){let e=this.type==="default"?this.default.top_team_id:this.correctTop?.id;return this.correct.winner_id&&this.correct.winner_id!==e?"loser-team":""}getBottomLoserTeamClass(){let e=this.type==="default"?this.default.bottom_team_id:this.correctBottom?.id;return this.correct.winner_id&&this.correct.winner_id!==e?"loser-team":""}defaultMatchupTemplate(){return t`${this.gameInfoTemplate()}
+    </div>`}gameInfoTemplate(){let e=new Date(Date.parse(this.correct.start_time)),a=new Date,r=null;if(a<e){let o=new Intl.DateTimeFormat(void 0,{timeStyle:"long",timeZone:"America/New_York"}).format(e).replace(":00","");o==="12:00 AM EDT"&&(o="TBA"),r=new Intl.DateTimeFormat(void 0,{month:"short",day:"numeric"}).format(e)+" "+o}else if(this.correct.winner_id){if(r="Final",this.correct.overtime){let s="";this.correct.number_overtimes>1&&(s=this.correct.number_overtimes),r+=` ${s}OT`}}else r="Live";return t`<div class="text-[10px] text-right user-pick">${r}</div>`}getTopLoserTeamClass(){let e=this.type==="default"?this.default.top_team_id:this.correctTop?.id;return this.correct.winner_id&&this.correct.winner_id!==e?"loser-team":""}getBottomLoserTeamClass(){let e=this.type==="default"?this.default.bottom_team_id:this.correctBottom?.id;return this.correct.winner_id&&this.correct.winner_id!==e?"loser-team":""}defaultMatchupTemplate(){return t`${this.gameInfoTemplate()}
       <div class="nb-team ${this.getTopLoserTeamClass()}">
         ${this.getImageElement(this.default.top_team)}
         <span class="team-name">${this.defaultTopTeamName}</span
@@ -1620,6 +1620,7 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
           </div>
         </div>
       </div>
+      ${this.groupsTemplate()}
     </div>`}topCardTemplate(){return t`<div class="flex justify-center">
       <wa-card>${this.topCardStats()}</wa-card>
     </div>`}render(){return t`<div class="w-full wa-stack">
@@ -1955,4 +1956,4 @@ import{d as t,h as S,j as Re,k as f}from"./chunk-XGX4NMMB.mjs";import{a as Be,b 
         >
       </div>
     </aside>`}};customElements.define("chn-scoreboard",Se);
-//# sourceMappingURL=nb.VP6WHUGM.mjs.map
+//# sourceMappingURL=nb.4QDBS2R7.mjs.map

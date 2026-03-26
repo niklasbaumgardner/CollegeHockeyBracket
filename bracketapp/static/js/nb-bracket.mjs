@@ -345,6 +345,7 @@ class Bracket extends NikElement {
           </div>
         </div>
       </div>
+      ${this.groupsTemplate()}
     </div>`;
 
     // TODO: this can still be better on mobile

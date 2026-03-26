@@ -20,13 +20,12 @@ app = Flask(__name__)
 
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
-if True or not Config.FLASK_DEBUG:
-    sentry_sdk.init(
-        dsn=Config.SENTRY_DSN,
-        traces_sample_rate=1.0,
-        send_default_pii=True,
-        release="nbbracketchallenge@3.0.25",
-    )
+sentry_sdk.init(
+    dsn=Config.SENTRY_DSN,
+    traces_sample_rate=1.0,
+    send_default_pii=True,
+    release="nbbracketchallenge@3.0.26",
+)
 
 
 app.config.from_object(Config)
