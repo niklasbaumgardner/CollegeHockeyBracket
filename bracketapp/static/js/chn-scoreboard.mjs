@@ -77,7 +77,11 @@ export class SHNScoreboard extends NikElement {
   parseGameStartTimes() {
     for (let game of this.games) {
       let startTime = game.start_time ?? game.timeStrWtz;
-      if (!startTime || startTime.endsWith("ET")) {
+      if (
+        !startTime ||
+        startTime.endsWith("ET") ||
+        game.gamestatus !== startTime
+      ) {
         continue;
       }
 

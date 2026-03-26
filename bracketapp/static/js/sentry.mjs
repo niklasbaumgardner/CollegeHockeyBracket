@@ -1,7 +1,7 @@
 if (window.Sentry) {
   Sentry.onLoad(function () {
     Sentry.init({
-      release: "nbbracketchallengefront@3.0.31",
+      release: "nbbracketchallengefront@3.0.32",
       environment: "production",
       integrations: [Sentry.browserTracingIntegration()],
       tracesSampleRate: 1.0,
