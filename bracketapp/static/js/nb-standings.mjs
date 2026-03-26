@@ -122,10 +122,12 @@ export class Standings extends NikElement {
                       alt=${name}
                     />
                     <h2>
-                      ${((100 * count) / this.brackets.length).toFixed(2)}%
+                      ${Math.round((100 * count) / this.brackets.length)}%
                     </h2>
                   </div>
-                  <span>${name}</span>
+                  <span class="wa-font-size-xs"
+                    >Picked <b>${name}</b> as Champ</span
+                  >
                 </div></wa-card
               >`,
           )}
