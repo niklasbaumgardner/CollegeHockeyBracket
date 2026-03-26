@@ -74,6 +74,34 @@ export class SHNScoreboard extends NikElement {
     this.games = json;
   }
 
+  parseGameStartTimes() {
+    for (let game of this.games) {
+      let startTime = game.start_time ?? game.timeStrWtz;
+      if (!startTime || startTime.endsWith("ET")) {
+        continue;
+      }
+
+      let timeDiff = 0;
+      if (startTime.endsWith("CT")) {
+        timeDiff = 1;
+      } else if (startTime.endsWith("MT")) {
+        timeDiff = 2;
+      } else if (startTime.endsWith("PT")) {
+        timeDiff = 3;
+      } else if (startTime.endsWith("AT")) {
+        timeDiff = 4;
+      }
+
+      if (timeDiff === 0) {
+        continue;
+      }
+
+      let ctTime = startTime.replace(" CT", "").trim().split(":");
+      let etTime = Number(ctTime[0]) + timeDiff;
+      game.gamestatus = `${etTime}:${ctTime[1]} ET`;
+    }
+  }
+
   sortGames() {
     this.games.sort((a, b) => {
       let ret = 0;
@@ -139,6 +167,7 @@ export class SHNScoreboard extends NikElement {
       this.style.removeProperty("width");
     }
 
+    this.parseGameStartTimes();
     this.sortGames();
     this.requestUpdate();
 

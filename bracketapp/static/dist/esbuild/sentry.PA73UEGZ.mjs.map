@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../js/sentry.mjs"],
-  "sourcesContent": ["if (window.Sentry) {\n  Sentry.onLoad(function () {\n    Sentry.init({\n      release: \"nbbracketchallengefront@3.0.30\",\n      environment: \"production\",\n      integrations: [Sentry.browserTracingIntegration()],\n      tracesSampleRate: 1.0,\n      sendDefaultPii: true,\n    });\n  });\n}\n"],
-  "mappings": "AAAI,OAAO,QACT,OAAO,OAAO,UAAY,CACxB,OAAO,KAAK,CACV,QAAS,iCACT,YAAa,aACb,aAAc,CAAC,OAAO,0BAA0B,CAAC,EACjD,iBAAkB,EAClB,eAAgB,EAClB,CAAC,CACH,CAAC",
-  "names": []
-}
