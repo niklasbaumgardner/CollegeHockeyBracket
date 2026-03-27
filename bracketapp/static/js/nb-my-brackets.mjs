@@ -39,6 +39,10 @@ export class MyBrackets extends Standings {
     return CAN_EDIT_BRACKET && this.year === CURRENT_YEAR;
   }
 
+  get canJoinGroup() {
+    return this.year === CURRENT_YEAR;
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -281,7 +285,7 @@ export class MyBrackets extends Standings {
   }
 
   newGroupButtonTemplate() {
-    if (this.canEditThisYearsBrackets) {
+    if (this.canJoinGroup) {
       return html`<wa-button
         class="w-full"
         variant="brand"
@@ -295,7 +299,7 @@ export class MyBrackets extends Standings {
   }
 
   searchGroupsTemplate() {
-    if (this.canEditThisYearsBrackets) {
+    if (this.canJoinGroup) {
       return html`<nb-search-groups></nb-search-groups>`;
     }
 
@@ -327,7 +331,7 @@ export class MyBrackets extends Standings {
   }
 
   groupSearchAndButtonTemplate() {
-    if (this.canEditThisYearsBrackets) {
+    if (this.canJoinGroup) {
       return html`<div class="wa-cluster">
         <div class="grow">${this.newGroupButtonTemplate()}</div>
         <div class="grow">${this.searchGroupsTemplate()}</div>

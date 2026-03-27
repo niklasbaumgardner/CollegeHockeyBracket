@@ -99,12 +99,13 @@ export class GroupStandings extends Standings {
         >${existingBracketButton}
       </div>`;
     } else if (this.canEditGroupBracket) {
+      // || this.group.year === CURRENT_YEAR
       return existingBracketButton;
     }
   }
 
   nonMemberTemplate() {
-    if (!CAN_EDIT_BRACKET || this.group.locked) {
+    if (this.group.year !== CURRENT_YEAR || this.group.locked) {
       return;
     }
 

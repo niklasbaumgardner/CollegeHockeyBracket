@@ -1,7 +1,7 @@
 import { html } from "lit";
-import "./nb-radio-item.mjs";
-import "./nb-group-card.mjs";
 import { BaseDialog } from "./nb-base-dialog.mjs";
+import "./nb-group-card.mjs";
+import "./nb-radio-item.mjs";
 
 export class GroupAddBracket extends BaseDialog {
   static properties = {
@@ -43,7 +43,7 @@ export class GroupAddBracket extends BaseDialog {
     }
 
     let newBracket = null;
-    if (MY_BRACKET_COUNT < 5) {
+    if (CAN_EDIT_BRACKET && MY_BRACKET_COUNT < 5) {
       newBracket = html`<wa-button
         class="w-full"
         appearance="outlined"

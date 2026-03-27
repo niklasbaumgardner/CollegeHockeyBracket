@@ -1,8 +1,8 @@
 import { html } from "lit";
-import { NikElement } from "./nik-element.mjs";
-import "./nb-group-standings-grid.mjs";
 import "./nb-group-add-bracket.mjs";
+import "./nb-group-standings-grid.mjs";
 import "./nb-my-group-brackets-grid.mjs";
+import { NikElement } from "./nik-element.mjs";
 
 export class MyBracketsGroupStandings extends NikElement {
   static properties = {
@@ -31,6 +31,10 @@ export class MyBracketsGroupStandings extends NikElement {
 
   get canEditThisYearsBrackets() {
     return CAN_EDIT_BRACKET && this.year === CURRENT_YEAR;
+  }
+
+  get canAddBracket() {
+    return this.group.year === CURRENT_YEAR;
   }
 
   async updateData(myBrackets, group, year) {
@@ -88,7 +92,7 @@ export class MyBracketsGroupStandings extends NikElement {
   }
 
   buttonsTemplate() {
-    if (!this.canEditThisYearsBrackets) {
+    if (!this.canAddBracket) {
       return null;
     }
 

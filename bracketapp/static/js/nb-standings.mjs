@@ -1,6 +1,6 @@
+import { html } from "lit";
 import "./nb-standings-grid.mjs";
 import { NikElement } from "./nik-element.mjs";
-import { html } from "lit";
 
 export class Standings extends NikElement {
   static properties = {
@@ -96,7 +96,10 @@ export class Standings extends NikElement {
   }
 
   statsTemplate() {
-    if (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR) {
+    if (
+      !this.brackets?.length ||
+      (CAN_EDIT_BRACKET && this.year === CURRENT_YEAR)
+    ) {
       return null;
     }
 
