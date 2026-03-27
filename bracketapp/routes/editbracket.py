@@ -74,4 +74,5 @@ def bracket_join_group(sqid):
         flash("Something went wrong", "danger")
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
-    return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
+    # return redirect(url_for("groups_bp.view_group", sqid=group_sqid))
+    return redirect(url_for("mybrackets_bp.my_brackets", _anchor="groups"))

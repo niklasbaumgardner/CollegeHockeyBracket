@@ -244,7 +244,8 @@ def group_add_bracket(sqid):
         return redirect(url_for("mybrackets_bp.my_brackets"))
 
     # TODO: go to my_brackets
-    return redirect(url_for("groups_bp.view_group", sqid=sqid))
+    # return redirect(url_for("groups_bp.view_group", sqid=sqid))
+    return redirect(url_for("mybrackets_bp.my_brackets", _anchor="groups"))
 
 
 @groups_bp.get("/search_groups")

@@ -1,6 +1,6 @@
 import { NikElement } from "./nik-element.mjs";
 import { html } from "lit";
-import { StandingsGrid } from "./nb-standings-grid.mjs";
+import { GroupStandingsGrid } from "./nb-group-standings-grid.mjs";
 import "./nb-delete-group-bracket.mjs";
 import * as agGrid from "./agGrid.mjs";
 import "./nb-bracket-column.mjs";
@@ -38,7 +38,7 @@ class MyGroupBracketActions extends NikElement {
 }
 customElements.define("nb-my-group-bracket-actions", MyGroupBracketActions);
 
-export class MyGroupBracketsGrid extends StandingsGrid {
+export class MyGroupBracketsGrid extends GroupStandingsGrid {
   useSafeName = false;
 
   static properties = {
