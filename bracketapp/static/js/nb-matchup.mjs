@@ -155,7 +155,7 @@ class Matchup extends NikElement {
   }
 
   gameInfoTemplate() {
-    const gameStart = new Date(Date.parse(this.correct.start_time));
+    const gameStart = new Date(Date.parse(this.correct.start_time + "-04:00")); // Force ET
     const now = new Date();
 
     let content = null;
